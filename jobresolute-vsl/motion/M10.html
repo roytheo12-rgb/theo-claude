@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M10 · DÉCIDER · L'entonnoir inversé : chacun reçoit sa réponse · « Et personne ne reste sans réponse. » · 3,5 s -->
+<link rel="stylesheet" href="base.css">
+<style>svg{position:absolute;left:0;top:0}</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>III</b> · Décider</div>
+<div class="stage" id="stage"><svg width="1920" height="1080" viewBox="0 0 1920 1080" id="s"></svg></div>
+<div class="cap" id="cap">Et personne ne reste sans *réponse*.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 3.5;
+const $ = id => document.getElementById(id);
+const C = [960, 430], R = 300, n = 10;
+const A = [...Array(n)].map((_, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [C[0] + R * Math.cos(a), C[1] + R * 0.78 * Math.sin(a)]; });
+const s = $('s');
+s.innerHTML =
+  `<defs><filter id="bl"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
+  A.map((p, i) => `<line id="ray${i}" x1="${C[0]}" y1="${C[1]}" x2="${p[0]}" y2="${p[1]}" stroke="#b89560" stroke-width="2" opacity=".8"/>`).join('') +
+  `<rect id="core" x="${C[0] - 90}" y="${C[1] - 58}" width="180" height="116" rx="18" fill="#f4efe6"/>
+   <text x="${C[0]}" y="${C[1] - 8}" text-anchor="middle" font-family="IT" font-weight="600" font-size="13" letter-spacing="2" fill="#5e1a24">COMPTE-RENDU</text>
+   <rect x="${C[0] - 60}" y="${C[1] + 12}" width="120" height="8" rx="4" fill="#e3dbcf"/><rect x="${C[0] - 60}" y="${C[1] + 28}" width="90" height="8" rx="4" fill="#e3dbcf"/>` +
+  A.map((p, i) => `<g id="a${i}"><circle cx="${p[0]}" cy="${p[1]}" r="38" fill="#e2d9cc"/>
+     <g filter="url(#bl)"><circle cx="${p[0]}" cy="${p[1] - 8}" r="12" fill="#8c7a6a"/><path d="M${p[0] - 20} ${p[1] + 24} Q${p[0]} ${p[1] - 2} ${p[0] + 20} ${p[1] + 24} Z" fill="#8c7a6a"/></g>
+     <g id="ck${i}"><circle cx="${p[0] + 28}" cy="${p[1] - 26}" r="15" fill="#5e1a24" stroke="#d4af74" stroke-width="2"/>
+     <path d="M${p[0] + 21} ${p[1] - 26} l5 5 l9 -10" stroke="#f4efe6" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>`).join('');
+const cw = words($('cap'));
+window.seek = t => {
+  // Le cercle des candidats apparaît
+  A.forEach((p, i) => { const k = spring(prog(t, 0.05 + i * 0.04, 0.6)); const g = $('a' + i); g.setAttribute('opacity', clamp(k * 1.3)); g.setAttribute('transform', `translate(${p[0] * (1 - k)} ${p[1] * (1 - k)}) scale(${k})`); });
+  const c = spring(prog(t, 0.2, 0.6)); $('core').setAttribute('opacity', c);
+  // Chacun reçoit sa réponse, l'un après l'autre : personne ne tombe
+  A.forEach((p, i) => {
+    const r = easeOut(prog(t, 0.7 + i * 0.1, 0.35)); const L = Math.hypot(p[0] - C[0], p[1] - C[1]);
+    const ray = $('ray' + i); ray.setAttribute('stroke-dasharray', L); ray.setAttribute('stroke-dashoffset', L * (1 - r));
+    ray.setAttribute('opacity', 0.8 * (1 - prog(t, 1.2 + i * 0.1, 0.6) * 0.6));
+    const k = spring(prog(t, 0.95 + i * 0.1, 0.4)); const ck = $('ck' + i);
+    ck.setAttribute('opacity', clamp(k * 1.5)); ck.setAttribute('transform', `translate(${(p[0] + 28) * (1 - k)} ${(p[1] - 26) * (1 - k)}) scale(${k})`);
+  });
+  revealWords(cw, t, 1.6);
+  fx(t, 3.5, { push: 0.035 });
+};
+window.seek(0);
+</script>
+</body></html>

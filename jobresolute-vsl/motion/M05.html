@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M05 · OBSERVER · Chez Julien, les identités se floutent · « Julien voit ce qu'elle fait. Pas qui elle est. » · 4 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+#lap{left:430px;top:140px;width:1060px}
+#lap .scr{height:600px;padding:40px 46px}
+.top{display:flex;align-items:center;justify-content:space-between}
+.rw{display:flex;align-items:center;gap:18px;height:74px;border-radius:16px;background:var(--ivoire2);margin-top:14px;padding:0 20px}
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#8c7a6a,#4a3a30)}
+.nm{flex:0 0 260px}.nm .ln{margin-top:0;height:12px;background:#b8ab9c}.nm .ln+.ln{margin-top:9px;height:9px;width:60%;background:#d3c9bc}
+.obsv{flex:1;display:flex;gap:10px}
+.chip{height:26px;border-radius:13px;background:rgba(94,26,36,.12)}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>I</b> · Observer</div>
+<div class="stage" id="stage">
+  <div class="laptop" id="lap"><div class="lid"><div class="scr">
+    <div class="top"><div><div class="kt">Pipeline</div><div class="h" style="margin-top:6px">Chef de Rang, service gastronomique</div></div><div class="anon" id="anon">Identité masquée</div></div>
+    <div id="rows"></div>
+  </div></div><div class="base"></div></div>
+</div>
+<div class="cap" id="cap">Julien voit ce qu'elle *fait*. Pas qui elle est.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 4;
+const $ = id => document.getElementById(id);
+const W = [[80, 140, 110], [120, 90, 150], [100, 130, 70], [140, 80, 120], [90, 150, 100]];
+$('rows').innerHTML = W.map((w, i) => `<div class="rw" id="r${i}"><div class="av"></div><div class="nm"><div class="ln"></div><div class="ln"></div></div><div class="obsv">${w.map(x => `<div class="chip" style="width:${x}px"></div>`).join('')}</div></div>`).join('');
+const idEls = [...document.querySelectorAll('.av,.nm')];
+const cw = words($('cap'));
+window.seek = t => {
+  enter3d($('lap'), t, 0, { ry0: -20, ry1: -12, rx: 6 });
+  W.forEach((_, i) => fadeUp($('r' + i), t, 0.3 + i * 0.08, 0.45, 10));
+  // Les identités (photo, nom) se floutent ; les observations restent nettes
+  const b = easeOut(prog(t, 1.0, 0.8));
+  idEls.forEach(el => { el.style.filter = `blur(${b * 9}px)`; el.style.opacity = 1 - b * 0.35; });
+  const a = $('anon'); const p = easeOut(prog(t, 1.4, 0.4));
+  a.style.opacity = p; a.style.transform = `scale(${lerp(0.9, 1, p)})`;
+  revealWords(cw, t, 1.5);
+  fx(t, 4);
+};
+window.seek(0);
+</script>
+</body></html>

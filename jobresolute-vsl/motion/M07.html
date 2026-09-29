@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M07 · ASSOCIER · Carte de Cohésion : la place de Nadia dans l'équipe · « Et sa place dans ton équipe. » · 4 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+#card{left:460px;top:130px;width:1000px;height:640px;padding:40px 46px}
+svg{position:absolute;left:46px;top:110px}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>II</b> · Associer</div>
+<div class="stage" id="stage">
+  <div class="card" id="card">
+    <div class="kt">Carte de Cohésion</div><div class="h" style="margin-top:6px">Équipe de salle · Le Beauregard</div>
+    <svg width="908" height="500" viewBox="0 0 908 500" id="map"></svg>
+  </div>
+</div>
+<div class="cap" id="cap">Et sa place dans ton *équipe*.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 4;
+const $ = id => document.getElementById(id);
+// L'équipe : 5 membres. Nadia (N) vient se placer. Aucun chiffre, seulement des formes.
+const P = [[200, 150], [430, 90], [660, 170], [300, 360], [600, 390]];
+const N = [470, 260];
+const links = [[0, 1], [1, 2], [0, 3], [2, 4], [3, 4]];
+const nlinks = [0, 1, 2, 3, 4];
+const svg = $('map');
+svg.innerHTML =
+  links.map((l, i) => `<line id="l${i}" x1="${P[l[0]][0]}" y1="${P[l[0]][1]}" x2="${P[l[1]][0]}" y2="${P[l[1]][1]}" stroke="#b9ab98" stroke-width="2"/>`).join('') +
+  nlinks.map(i => `<line id="n${i}" x1="${N[0]}" y1="${N[1]}" x2="${P[i][0]}" y2="${P[i][1]}" stroke="#b89560" stroke-width="2.5"/>`).join('') +
+  P.map((p, i) => `<circle id="c${i}" cx="${p[0]}" cy="${p[1]}" r="34" fill="#e2d9cc" stroke="#c9bcaa" stroke-width="2"/>`).join('') +
+  `<circle id="halo" cx="${N[0]}" cy="${N[1]}" r="60" fill="rgba(94,26,36,.10)"/><circle id="nc" cx="${N[0]}" cy="${N[1]}" r="40" fill="#5e1a24" stroke="#d4af74" stroke-width="3"/>`;
+const len = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const cw = words($('cap'));
+window.seek = t => {
+  enter3d($('card'), t, 0, { ry0: -18, ry1: -10, rx: 5 });
+  P.forEach((p, i) => { const s = spring(prog(t, 0.3 + i * 0.08, 0.6)); const c = $('c' + i); c.setAttribute('r', 34 * s); });
+  links.forEach((l, i) => { const L = len(P[l[0]], P[l[1]]); const e = $('l' + i); e.setAttribute('stroke-dasharray', L); e.setAttribute('stroke-dashoffset', L * (1 - easeOut(prog(t, 0.7 + i * 0.06, 0.6)))); });
+  // Nadia arrive de la gauche et se place
+  const m = spring(prog(t, 1.3, 1.0), 7);
+  const x = lerp(-80, N[0], m), y = lerp(N[1] + 60, N[1], m);
+  ['nc', 'halo'].forEach(id => { $(id).setAttribute('cx', x); $(id).setAttribute('cy', y); });
+  $('nc').setAttribute('opacity', clamp(prog(t, 1.3, 0.2)));
+  $('halo').setAttribute('r', 60 + 14 * Math.sin(t * 3));
+  $('halo').setAttribute('opacity', clamp(prog(t, 1.9, 0.4)));
+  nlinks.forEach((i, k) => { const L = len(N, P[i]); const e = $('n' + i); e.setAttribute('stroke-dasharray', L); e.setAttribute('stroke-dashoffset', L * (1 - easeOut(prog(t, 2.0 + k * 0.08, 0.5)))); });
+  revealWords(cw, t, 1.7);
+  fx(t, 4);
+};
+window.seek(0);
+</script>
+</body></html>

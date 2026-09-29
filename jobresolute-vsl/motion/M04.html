@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M04 · OBSERVER · La situation « 20h15, table 8 », réponse, ✓ · « Ton seul boulot : vivre l'expérience. » · 4 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+#ph{left:790px;top:110px}
+.ghost{position:absolute;width:340px;height:690px;border-radius:52px;background:#0d0a08;padding:14px;filter:blur(5px)}
+.ghost .scr{width:100%;height:100%;border-radius:40px;background:var(--ivoire2)}
+.q{margin-top:14px;font:600 22px/1.28 "ID";letter-spacing:-.01em}
+.opt{transition:none}
+#okl{margin-top:16px;opacity:0}
+.timer{position:absolute;right:24px;top:58px;font:600 13px "IT";color:var(--taupe)}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>I</b> · Observer</div>
+<div class="stage" id="stage">
+  <div class="ghost" id="g2" style="left:1130px;top:150px"><div class="scr"></div></div>
+  <div class="ghost" id="g1" style="left:1000px;top:130px"><div class="scr"></div></div>
+  <div class="phone" id="ph"><div class="scr"><div class="notch"></div>
+    <div class="k">Situation 1 / 3 · 20h15</div>
+    <div class="q">Table 8 attend son plat depuis 35 minutes. Il a un train à 21h30.</div>
+    <div class="opt" id="o1">A · Je préviens le chef de salle</div>
+    <div class="opt" id="o2">B · Je vais en cuisine, je reviens avec une solution</div>
+    <div class="opt" id="o3">C · Je propose un geste commercial</div>
+    <div class="ok" id="okl">✓ Observation enregistrée</div>
+  </div></div>
+  <div class="tap" id="tap"></div>
+</div>
+<div class="cap" id="cap">Ton seul boulot : *vivre* l'expérience.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 4;
+const $ = id => document.getElementById(id);
+const cw = words($('cap'));
+window.seek = t => {
+  enter3d($('ph'), t, 0, { ry0: 24, ry1: 16, rx: 4 });
+  enter3d($('g1'), t, 0.1, { ry0: 30, ry1: 22, rx: 4, maxOp: 0.55 });
+  enter3d($('g2'), t, 0.2, { ry0: 34, ry1: 26, rx: 4, maxOp: 0.3 });
+  ['o1', 'o2', 'o3'].forEach((id, i) => fadeUp($(id), t, 0.35 + i * 0.12, 0.45, 10));
+  // Nadia choisit la réponse B (1,5 s)
+  const s = easeOut(prog(t, 1.5, 0.3));
+  const o2 = $('o2');
+  o2.style.background = `rgba(${Math.round(lerp(235, 94, s))},${Math.round(lerp(228, 26, s))},${Math.round(lerp(216, 36, s))},1)`;
+  o2.style.color = s > 0.5 ? 'var(--ivoire)' : '#3d332d';
+  const k = prog(t, 1.45, 0.5);
+  $('tap').style.left = '930px'; $('tap').style.top = '495px';
+  $('tap').style.opacity = k > 0 && k < 1 ? (1 - k) : 0;
+  $('tap').style.transform = `scale(${lerp(0.4, 1.6, k)})`;
+  fadeUp($('okl'), t, 2.0, 0.4, 6);
+  revealWords(cw, t, 1.2);
+  fx(t, 4);
+};
+window.seek(0);
+</script>
+</body></html>

@@ -34,6 +34,20 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 - « Décision humaine » · « Validé par Julien »
 - Carte de Cohésion : les formes seulement, aucun chiffre ni formule
 
+## Textes de la voix off (PLAN.md §2), repris en légende à l'écran
+- « Voici JobResolute. »
+- Nadia : démontrer, sans contrainte · Julien : évaluer, sans a priori · Nadia : comprendre son résultat · Julien : décider, en connaissance de cause
+- « Un clic, Nadia. Pas de CV. » · « Ton seul boulot : vivre l'expérience. » · « Julien voit ce qu'elle fait. Pas qui elle est. »
+- « Un résultat qui s'explique. » · « Et sa place dans ton équipe. »
+- « Le même résultat, des deux côtés. » · « Une rencontre qu'on prépare ensemble. » · « Et personne ne reste sans réponse. »
+- « Pas un outil de plus. Tout le parcours. »
+
+## Libellés d'interface ajoutés pour l'acte II (à valider par Théo)
+- « Offre · Le Beauregard, Paris » · « Pipeline » · « Compte-rendu · Chef de Rang » · « Fiche d'entretien · Chef de Rang » · « 3 questions pour l'entretien »
+- « Carte de Cohésion · Équipe de salle · Le Beauregard »
+- « Nadia · en premier » · « Julien · ensuite »
+- Étapes du parcours (M11) : Je suis intéressée · Situation 20h15 · Identité masquée · Fit expliqué · Carte de Cohésion · Compte-rendu · Fiche d'entretien · Décision humaine
+
 ## Chiffres et preuves autorisés
 - 44 % des 319 000 projets de recrutement CHR jugés difficiles à pourvoir en 2026 (France Travail, enquête BMO 2026)
 - Protocole de validation en 8 étapes

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M09 · DÉCIDER · La fiche d'entretien sort de l'écran · « Une rencontre qu'on prépare ensemble. » · 3,5 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+#lap{left:300px;top:200px;width:900px}
+#lap .scr{height:500px;padding:34px 40px}
+#sheet{left:1010px;top:120px;width:560px;height:700px;padding:46px 44px;border-radius:10px;transform-origin:0% 50%}
+.qn{display:flex;gap:16px;margin-top:22px;font:400 17px/1.45 "IT";color:#3d332d}
+.qn b{flex:0 0 34px;height:34px;border-radius:50%;background:var(--bordeaux);color:var(--ivoire);font:600 16px/34px "ID";text-align:center}
+.rule{height:1px;background:#d9cfc1;margin:24px 0 4px}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>III</b> · Décider</div>
+<div class="stage" id="stage">
+  <div class="laptop" id="lap"><div class="lid"><div class="scr">
+    <div class="k">Compte-rendu · Chef de Rang</div><div class="h" style="margin-top:8px">Fit contextualisé · 74 / 100</div>
+    <div class="ln" style="width:90%;margin-top:26px"></div><div class="ln" style="width:75%"></div><div class="ln" style="width:84%"></div><div class="ln" style="width:66%"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:58%"></div>
+  </div></div><div class="base"></div></div>
+  <div class="card" id="sheet">
+    <div class="k">Fiche d'entretien · Chef de Rang</div>
+    <div class="h" style="font-size:32px;margin-top:12px">3 questions pour l'entretien</div>
+    <div class="rule"></div>
+    <div class="qn" id="q0"><b>1</b><span>Quel est le protocole exact pour les VIP et les allergènes ici ?</span></div>
+    <div class="qn" id="q1"><b>2</b><span>Comment fonctionne la coordination entre la salle et la cuisine pendant les services chargés ?</span></div>
+    <div class="qn" id="q2"><b>3</b><span>Quelles sont vos attentes précises sur la transmission de service ?</span></div>
+  </div>
+</div>
+<div class="cap" id="cap">Une rencontre qu'on *prépare* ensemble.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 3.5;
+const $ = id => document.getElementById(id);
+const cw = words($('cap'));
+window.seek = t => {
+  enter3d($('lap'), t, 0, { ry0: 22, ry1: 14, rx: 6 });
+  // La fiche sort de l'écran, se redresse et vient vers nous
+  const s = spring(prog(t, 0.35, 1.1), 7);
+  const sh = $('sheet');
+  sh.style.opacity = clamp(prog(t, 0.35, 0.25));
+  sh.style.transform = `translate(${lerp(-520, 0, s)}px, ${lerp(120, 0, s)}px) rotateY(${lerp(40, -8, s)}deg) scale(${lerp(0.55, 1, s)})`;
+  $('lap').style.filter = `blur(${easeOut(prog(t, 0.8, 0.8)) * 4}px)`;
+  [0, 1, 2].forEach(i => fadeUp($('q' + i), t, 1.1 + i * 0.15, 0.45, 10));
+  revealWords(cw, t, 1.4);
+  fx(t, 3.5);
+};
+window.seek(0);
+</script>
+</body></html>

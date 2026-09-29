@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M03 · OBSERVER · Un clic, « Je suis intéressée » · « Un clic, Nadia. Pas de CV. » · 3 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+#ph{left:790px;top:110px}
+.hero{height:170px;border-radius:18px;background:linear-gradient(135deg,#3a2616,#1c130d);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(224,160,80,.55),transparent 60%)}
+#btn{position:absolute;left:24px;right:24px;bottom:34px;text-align:center}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>I</b> · Observer</div>
+<div class="stage" id="stage">
+  <div class="phone" id="ph"><div class="scr"><div class="notch"></div>
+    <div class="k">Offre · Le Beauregard, Paris</div>
+    <div class="h" style="margin-top:12px">Chef de Rang, service gastronomique</div>
+    <div class="hero" style="margin-top:18px"></div>
+    <div class="ln" style="width:92%;margin-top:22px"></div><div class="ln" style="width:78%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:60%"></div>
+    <div class="btn" id="btn">Je suis intéressée</div>
+  </div></div>
+  <div class="tap" id="tap"></div>
+  <div class="cursor" id="cur"></div>
+</div>
+<div class="cap" id="cap">Un clic, Nadia. Pas de *CV*.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 3;
+const $ = id => document.getElementById(id);
+$('cur').innerHTML = CURSOR;
+const cw = words($('cap'));
+window.seek = t => {
+  enter3d($('ph'), t, 0, { ry0: 26, ry1: 16, rx: 4 });
+  // Le doigt arrive sur le bouton et touche (1,05 s)
+  const c = easeOut(prog(t, 0.45, 0.6));
+  $('cur').style.left = lerp(1260, 985, c) + 'px'; $('cur').style.top = lerp(900, 735, c) + 'px';
+  $('cur').style.opacity = clamp(prog(t, 0.4, 0.2)) * (1 - prog(t, 1.6, 0.3));
+  const k = prog(t, 1.05, 0.5);
+  $('tap').style.left = 955 + 'px'; $('tap').style.top = 705 + 'px';
+  $('tap').style.opacity = k > 0 && k < 1 ? (1 - k) : 0;
+  $('tap').style.transform = `scale(${lerp(0.4, 1.6, k)})`;
+  const b = $('btn'); const on = t >= 1.05;
+  b.style.transform = `scale(${on ? lerp(0.96, 1, easeOut(prog(t, 1.05, 0.3))) : 1})`;
+  b.style.boxShadow = on ? `0 0 ${30 * (1 - prog(t, 1.4, 1))}px rgba(212,175,116,.6)` : 'none';
+  revealWords(cw, t, 1.2);
+  fx(t, 3);
+};
+window.seek(0);
+</script>
+</body></html>

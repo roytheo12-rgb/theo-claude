@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M01 · Entrée dans l'écran, le cadre passe de 1.37 à 16:9, logo · « Voici JobResolute. » · 4 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+.screen{position:absolute;left:50%;top:50%;width:312px;height:662px;margin:-331px 0 0 -156px;border-radius:40px;overflow:hidden;
+  background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(224,160,80,.30) 0%,rgba(224,160,80,.07) 45%,transparent 70%),linear-gradient(#1f150e,#120b07);
+  box-shadow:0 0 120px rgba(224,160,80,.35),0 0 0 14px #0d0a08}
+.ring{position:absolute;left:50%;top:50%;border:1.5px solid var(--laiton);border-radius:50%;opacity:0}
+.logo{position:absolute;left:0;right:0;top:50%;margin-top:-62px;text-align:center;font:600 112px "ID";letter-spacing:-.04em;color:var(--ivoire)}
+.logo .w:nth-child(2){color:var(--laiton2)}
+</style></head>
+<body>
+<div class="bg" id="bg" style="opacity:0"></div>
+<div class="stage" id="stage">
+  <div class="screen" id="screen"></div>
+  <div class="ring" id="r0"></div><div class="ring" id="r1"></div><div class="ring" id="r2"></div>
+  <div class="logo" id="logo"><span class="w">Job</span><span class="w">Resolute</span></div>
+</div>
+<div class="mask" id="mL" style="left:0;top:0;bottom:0;width:220px"></div>
+<div class="mask" id="mR" style="right:0;top:0;bottom:0;width:220px"></div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 4;
+const $ = id => document.getElementById(id);
+const letters = [...document.querySelectorAll('#logo .w')];
+window.seek = t => {
+  // 1. L'écran du téléphone grandit jusqu'à remplir l'image (entrée dans l'écran)
+  const g = easeOut(prog(t, 0.15, 1.3));
+  const s = $('screen');
+  s.style.width = lerp(312, 1960, g) + 'px'; s.style.height = lerp(662, 1120, g) + 'px';
+  s.style.marginLeft = -lerp(312, 1960, g) / 2 + 'px'; s.style.marginTop = -lerp(662, 1120, g) / 2 + 'px';
+  s.style.borderRadius = lerp(40, 0, g) + 'px';
+  $('bg').style.opacity = g > 0.98 ? 1 : 0;
+  // 2. Le cadre s'élargit : 1.37 → 16:9 (les bandes noires glissent hors champ)
+  const m = easeOut(prog(t, 0.9, 0.9));
+  $('mL').style.width = $('mR').style.width = lerp(220, 0, m) + 'px';
+  // 3. Cercles concentriques en laiton
+  ['r0', 'r1', 'r2'].forEach((id, i) => {
+    const p = easeOut(prog(t, 1.4 + i * 0.18, 1.6));
+    const d = lerp(80, 520 + i * 240, p);
+    const r = $(id); r.style.width = r.style.height = d + 'px'; r.style.marginLeft = r.style.marginTop = -d / 2 + 'px';
+    r.style.opacity = p < 0.02 ? 0 : (0.55 - i * 0.12) * (1 - prog(t, 2.8 + i * 0.1, 0.9) * 0.7);
+  });
+  // 4. Le logo apparaît en fondu flou
+  revealWords(letters, t, 1.6, 0.12, 0.6);
+  fx(t, 4, { push: 0.02, blurIn: 0, blurOut: 0.25 });
+};
+window.seek(0);
+</script>
+</body></html>
