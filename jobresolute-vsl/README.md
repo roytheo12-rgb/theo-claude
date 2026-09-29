@@ -30,4 +30,5 @@ npx skills add emilkowalski/skills --skill apple-design
 - [x] M06 (acte II)
 - [ ] Voix off ElevenLabs V01–V19 → durées à transmettre pour caler l'acte II
 - [ ] K04 / K05 → test du miroir → Seedance P04 + P05
-- [ ] Reste de l'acte II, acte IV
+- [x] Acte II complet (`rendus/ACTE2.mp4`, 49,7 s) : à recaler sur la voix off
+- [ ] Acte IV
