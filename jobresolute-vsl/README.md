@@ -14,7 +14,7 @@
 
 ```bash
 cd jobresolute-vsl/tools && npm install && cd ..
-NODE_PATH=tools/node_modules node tools/render.js motion/M06.html rendus/M06.mp4
+python3 tools/build.py tout   # rend et assemble ACTE2, ACTE4_DRH, ACTE4_BA
 ```
 Il faut Chromium (`CHROME_PATH`) et ffmpeg (`FFMPEG_PATH`).
 
@@ -30,5 +30,5 @@ npx skills add emilkowalski/skills --skill apple-design
 - [x] M06 (acte II)
 - [ ] Voix off ElevenLabs V01–V19 → durées à transmettre pour caler l'acte II
 - [ ] K04 / K05 → test du miroir → Seedance P04 + P05
-- [x] Acte II complet (`rendus/ACTE2.mp4`, 49,7 s) : à recaler sur la voix off
-- [ ] Acte IV
+- [x] Acte II complet V2 (`rendus/ACTE2.mp4`, 62 s) avec transitions : à recaler sur la voix off
+- [x] Acte IV : `rendus/ACTE4_DRH.mp4` (25 s) et `rendus/ACTE4_BA.mp4` (28 s)
