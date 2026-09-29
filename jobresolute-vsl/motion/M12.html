@@ -36,7 +36,7 @@ window.seek = t => {
   // Le cadre passe en cinémascope 2.39:1 (bandes de 138 px en haut et en bas)
   const m = easeOut(prog(t, 1.2, 0.9));
   $('mT').style.height = $('mB').style.height = lerp(0, 138, m) + 'px';
-  fx(t, 2.5, { push: 0, blurIn: 0.2, blurOut: 0 });
+  fx(t, 2.5, { push: 0 });
 };
 window.seek(0);
 </script>

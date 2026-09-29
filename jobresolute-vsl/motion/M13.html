@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M13 · Acte IV · Le coût du problème, puis les preuves honnêtes · pas de voix off (musique) · 9 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+.stat{position:absolute;left:0;right:0;top:300px;text-align:center}
+.num{font:600 220px/1 "ID";letter-spacing:-.05em;color:var(--ivoire);font-variant-numeric:tabular-nums}
+.num span{color:var(--laiton2)}
+.sub{margin-top:26px;font:500 38px "ID";letter-spacing:-.015em;color:rgba(244,239,230,.85)}
+.src{margin-top:18px;font:500 15px "IT";letter-spacing:.24em;text-transform:uppercase;color:rgba(244,239,230,.4)}
+.tiles{position:absolute;left:0;right:0;top:330px;display:flex;justify-content:center;gap:28px}
+.tile{width:420px;height:210px;border-radius:24px;background:rgba(244,239,230,.06);border:1px solid rgba(212,175,116,.35);padding:34px 32px;position:relative;overflow:hidden}
+.tile .kt{color:var(--laiton)}
+.tile .h{color:var(--ivoire);font-size:30px;margin-top:14px}
+.found{position:absolute;left:0;right:0;top:640px;text-align:center;font:500 34px "ID";letter-spacing:-.015em;color:var(--ivoire)}
+.found span{color:var(--laiton2)}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="stage" id="stage">
+  <div class="stat" id="s1"><div class="num"><em id="n1" style="font-style:normal">0</em><span> €</span></div>
+    <div class="sub">Le coût moyen d'un départ en période d'essai.</div><div class="src">Cornell University · 2025</div></div>
+  <div class="stat" id="s2"><div class="num"><em id="n2" style="font-style:normal">0</em><span> %</span></div>
+    <div class="sub">des recrutements en hôtellerie-restauration jugés difficiles en 2026.</div><div class="src">France Travail · enquête BMO 2026</div></div>
+  <div class="tiles" id="tiles">
+    <div class="tile" id="t0"><div class="kt">Méthode</div><div class="h">Protocole de validation en 8 étapes</div></div>
+    <div class="tile" id="t1"><div class="kt">Conformité</div><div class="h">Conçu pour l'AI Act et le RGPD</div></div>
+    <div class="tile" id="t2"><div class="kt">Accompagnement</div><div class="h">Incubé chez BIC Innov'Up</div></div>
+  </div>
+  <div class="found" id="found">Fondé par des professionnels de <span>l'hôtellerie de luxe</span>.</div>
+</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 9;
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString('fr-FR').replace(/ | /g, ' ');
+// Apparition / disparition façon Apple : fondu + flou + léger zoom
+function beat(el, t, a, b) {
+  const i = easeOut(prog(t, a, 0.6)), o = easeOut(prog(t, b - 0.5, 0.5));
+  const v = i * (1 - o);
+  el.style.opacity = v; el.style.filter = `blur(${(1 - i) * 14 + o * 16}px)`;
+  el.style.transform = `scale(${lerp(0.96, 1, i) + o * 0.04})`;
+}
+window.seek = t => {
+  beat($('s1'), t, 0.1, 3.0);
+  $('n1').textContent = fmt(Math.round(5400 * easeOut(prog(t, 0.2, 1.4)) / 10) * 10);
+  beat($('s2'), t, 3.0, 5.6);
+  $('n2').textContent = Math.round(44 * easeOut(prog(t, 3.1, 1.2)));
+  [0, 1, 2].forEach(i => {
+    const e = $('t' + i), p = spring(prog(t, 5.6 + i * 0.15, 0.8));
+    e.style.opacity = clamp(p * 1.3); e.style.transform = `translateY(${(1 - p) * 40}px)`;
+    sheen(e, t, 6.0 + i * 0.15);
+  });
+  fadeUp($('found'), t, 6.8, 0.6, 12);
+  fx(t, 9, { push: 0.02 });
+};
+window.seek(0);
+</script>
+</body></html>

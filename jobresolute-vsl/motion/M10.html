@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M10 · DÉCIDER · L'entonnoir inversé : chacun reçoit sa réponse · « Et personne ne reste sans réponse. » · 3,5 s -->
+<!-- M10 · DÉCIDER · L'entonnoir inversé : chacun reçoit sa réponse · « Et personne ne reste sans réponse. » · 4,2 s -->
 <link rel="stylesheet" href="base.css">
 <style>svg{position:absolute;left:0;top:0}</style></head>
 <body>
 <div class="bg"></div>
 <div class="chap"><b>III</b> · Décider</div>
-<div class="stage" id="stage"><svg width="1920" height="1080" viewBox="0 0 1920 1080" id="s"></svg></div>
+<div class="stage" id="stage"><svg width="1920" height="1080" viewBox="0 0 1920 1080" id="s"></svg>
+<div id="other" style="position:absolute;left:1390px;top:398px;opacity:0"><div class="card" style="position:relative;padding:16px 22px;border-radius:16px"><div class="k" style="font-size:12px">Non retenu ici</div><div class="h" style="font-size:21px;margin-top:4px">Autres offres compatibles</div></div></div></div>
 <div class="cap" id="cap">Et personne ne reste sans *réponse*.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
-window.DURATION = 3.5;
+window.DURATION = 4.2;
 const $ = id => document.getElementById(id);
 const C = [960, 430], R = 300, n = 10;
 const A = [...Array(n)].map((_, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [C[0] + R * Math.cos(a), C[1] + R * 0.78 * Math.sin(a)]; });
@@ -26,6 +27,8 @@ s.innerHTML =
      <g filter="url(#bl)"><circle cx="${p[0]}" cy="${p[1] - 8}" r="12" fill="#8c7a6a"/><path d="M${p[0] - 20} ${p[1] + 24} Q${p[0]} ${p[1] - 2} ${p[0] + 20} ${p[1] + 24} Z" fill="#8c7a6a"/></g>
      <g id="ck${i}"><circle cx="${p[0] + 28}" cy="${p[1] - 26}" r="15" fill="#5e1a24" stroke="#d4af74" stroke-width="2"/>
      <path d="M${p[0] + 21} ${p[1] - 26} l5 5 l9 -10" stroke="#f4efe6" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g></g>`).join('');
+const OUT = [1, 2, 3];
+s.insertAdjacentHTML('beforeend', OUT.map(i => `<path id="o${i}" d="M${A[i][0] + 40} ${A[i][1]} Q ${(A[i][0] + 1390) / 2} ${(A[i][1] + 430) / 2 - 40} 1385 430" fill="none" stroke="#d4af74" stroke-width="2" stroke-dasharray="6 7"/>`).join(''));
 const cw = words($('cap'));
 window.seek = t => {
   // Le cercle des candidats apparaît
@@ -39,8 +42,11 @@ window.seek = t => {
     const k = spring(prog(t, 0.95 + i * 0.1, 0.4)); const ck = $('ck' + i);
     ck.setAttribute('opacity', clamp(k * 1.5)); ck.setAttribute('transform', `translate(${(p[0] + 28) * (1 - k)} ${(p[1] - 26) * (1 - k)}) scale(${k})`);
   });
+  // Ceux qui ne sont pas retenus repartent vers d'autres offres : jamais une impasse
+  OUT.forEach((i, k) => { const p = easeOut(prog(t, 2.2 + k * 0.12, 0.6)); const e = $('o' + i); e.setAttribute('opacity', p); e.setAttribute('stroke-dashoffset', (1 - p) * 60); });
+  fadeUp($('other'), t, 2.4, 0.5, 10);
   revealWords(cw, t, 1.6);
-  fx(t, 3.5, { push: 0.035 });
+  fx(t, 4.2, { push: 0.03 });
 };
 window.seek(0);
 </script>

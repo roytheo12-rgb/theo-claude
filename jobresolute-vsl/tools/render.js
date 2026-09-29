@@ -6,7 +6,9 @@ const { spawn } = require('child_process');
 const puppeteer = require('puppeteer-core');
 
 const [input, output] = process.argv.slice(2);
-const fps = Number((process.argv.join(' ').match(/--fps (\d+)/) || [])[1] || 25);
+const argv = process.argv.join(' ');
+const fps = Number((argv.match(/--fps (\d+)/) || [])[1] || 25);
+const tail = Number((argv.match(/--tail ([\d.]+)/) || [])[1] || 0);
 const chrome = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const ffmpeg = process.env.FFMPEG_PATH || 'ffmpeg';
 
@@ -17,7 +19,7 @@ const ffmpeg = process.env.FFMPEG_PATH || 'ffmpeg';
   await page.goto('file://' + path.resolve(input), { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
   const duration = await page.evaluate(() => window.DURATION);
-  const frames = Math.round(duration * fps);
+  const frames = Math.round((duration + tail) * fps);
   const enc = spawn(ffmpeg, ['-y', '-v', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-i', '-',
     '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', output], { stdio: ['pipe', 'inherit', 'inherit'] });
   for (let i = 0; i < frames; i++) {

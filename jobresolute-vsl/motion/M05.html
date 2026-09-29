@@ -39,6 +39,7 @@ window.seek = t => {
   idEls.forEach(el => { el.style.filter = `blur(${b * 9}px)`; el.style.opacity = 1 - b * 0.35; });
   const a = $('anon'); const p = easeOut(prog(t, 1.4, 0.4));
   a.style.opacity = p; a.style.transform = `scale(${lerp(0.9, 1, p)})`;
+  sheen($('lap').querySelector('.scr'), t, 0.5);
   revealWords(cw, t, 1.5);
   fx(t, 4);
 };

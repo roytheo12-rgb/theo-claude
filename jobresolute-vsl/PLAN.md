@@ -3,6 +3,25 @@
 Durée : **≈ 1:58** · Langue : français · Voix off : Henry (ou ElevenLabs en secours)
 Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente).
 
+> **Mises à jour V2 : acte II complété, acte IV construit (elles priment sur le reste du document)**
+> - **Acte II, nouveaux plans :**
+>   - **M03a**, Julien publie son offre : « Rien à installer. Personne à former. »
+>   - **M10b**, Hidden Gems, avec un badge « Bientôt » visible.
+> - **Acte II, plans corrigés :**
+>   - **M03** : l'offre affiche salaire net, formation, évolution et contraintes à confirmer.
+>   - **M04** : la situation « 20h15 » est présentée comme un *exemple illustratif*, à côté des **cinq dimensions évaluées**. On ne montre ni le nombre ni la forme des épreuves (non arrêtés).
+>   - **M08** : boutons « Valider » et « Signaler une inexactitude ».
+>   - **M09** : **chacun se prépare**. Nadia reçoit « Vos 3 questions pour l'entretien » (ce sont ses questions, comme dans la démo), Julien reçoit sa fiche « Observé / À approfondir ».
+>   - **M10** : les non-retenus repartent vers « Autres offres compatibles ».
+>   - **M11** : le parcours commence par « Offre publiée » et se termine par « Suivi J+7 · J+30 · J+90 » (« Et bien après »).
+> - **Acte IV :**
+>   - **M13** : 5 400 € (coût moyen d'un départ en période d'essai, Cornell 2025), puis 44 % (BMO 2026), puis 8 étapes · AI Act/RGPD · BIC Innov'Up, puis « Fondé par des professionnels de l'hôtellerie de luxe ».
+>   - **M14** : la vision, avec les 8 moteurs (tous « Bientôt ») et « Le système nerveux RH de l'hospitalité ».
+>   - **M15D** (fin DRH) / **M15B** (fin BA).
+>   - **Aucun prix, aucune feuille de route datée.**
+> - **Transitions :** assemblage avec `tools/build.py`. Fondus enchaînés, glissés doux Julien ↔ Nadia, raccords invisibles (même téléphone, même cercle), coupes franches sur les cartons. Aucun plan n'est raccourci.
+> - **Voix off : 3 lignes ajoutées** (section 2 ci-dessous : V8a, V15b, V18b).
+
 > **Mises à jour depuis la version initiale (elles priment sur le reste du document)**
 > - **Voix off : ElevenLabs** (Henry n'enregistre pas). Voix française masculine, 55-65 ans, posée ; modèle Multilingual ; une génération par ligne (V01 à V19). Offre payante (Starter) avant toute diffusion à un DRH ou un BA.
 > - **Budget Seedance : 500 crédits CapCut.** Seedance 2.0 en 720p, **4 plans seulement** : P04, P05, P09, P11 (≈ 20 s, ≈ 300 crédits, le reste pour les essais ratés).
@@ -107,6 +126,7 @@ V5  Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'observe
 V6  Voici JobResolute.
 V7  Nadia : démontrer, sans contrainte. Julien : évaluer, sans a priori.
     Nadia : comprendre son résultat. Julien : décider, en connaissance de cause.
+V8a Julien, tu décris le poste. Rien à installer, personne à former.        (M03a, nouveau)
 V8  Un clic, Nadia. Pas de CV.
 V9  Ton seul boulot : vivre l'expérience.
 V10 Julien voit ce qu'elle fait. Pas qui elle est.
@@ -115,9 +135,11 @@ V12 Et sa place dans ton équipe.
 V13 Le même résultat, des deux côtés.
 V14 Une rencontre qu'on prépare ensemble.
 V15 Et personne ne reste sans réponse.
+V15b Et demain, les talents que le CV aurait écartés refont surface.       (M10b, nouveau)
 V16 Pas un outil de plus. Tout le parcours.
 V17 La décision finale sera la tienne, Julien.
 V18 Et toi, Nadia, quelle que soit la décision, on reste à tes côtés.
+V18b Notre ambition : devenir le système nerveux RH de l'hospitalité.     (M14, nouveau)
 V19 JobResolute. La technologie au service de l'humain.
 ```
 

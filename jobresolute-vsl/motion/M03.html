@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M03 · OBSERVER · Un clic, « Je suis intéressée » · « Un clic, Nadia. Pas de CV. » · 3 s -->
+<!-- M03 · OBSERVER · Un clic, « Je suis intéressée » · « Un clic, Nadia. Pas de CV. » · 3,5 s -->
 <link rel="stylesheet" href="base.css">
 <style>
 #ph{left:790px;top:110px}
 .hero{height:170px;border-radius:18px;background:linear-gradient(135deg,#3a2616,#1c130d);position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(224,160,80,.55),transparent 60%)}
-#btn{position:absolute;left:24px;right:24px;bottom:34px;text-align:center}
+#btn{position:absolute;left:24px;right:24px;bottom:30px;text-align:center}
+.rowi{display:flex;justify-content:space-between;align-items:center;font:500 14px "IT";color:#3d332d;height:34px;border-bottom:1px solid #e6ded1}
+.rowi s{height:9px;border-radius:5px;background:#d3c9bc}
+.cons{margin-top:14px;border-radius:14px;background:var(--ivoire2);padding:12px 14px;font:500 13px/1.35 "IT";color:#3d332d}
 </style></head>
 <body>
 <div class="bg"></div>
@@ -15,8 +18,11 @@
   <div class="phone" id="ph"><div class="scr"><div class="notch"></div>
     <div class="k">Offre · Le Beauregard, Paris</div>
     <div class="h" style="margin-top:12px">Chef de Rang, service gastronomique</div>
-    <div class="hero" style="margin-top:18px"></div>
-    <div class="ln" style="width:92%;margin-top:22px"></div><div class="ln" style="width:78%"></div><div class="ln" style="width:85%"></div><div class="ln" style="width:60%"></div>
+    <div class="hero" style="margin-top:16px;height:110px"></div>
+    <div class="rowi" id="i1"><span>Salaire net / mois</span><s style="width:70px"></s></div>
+    <div class="rowi" id="i2"><span>Formation</span><s style="width:96px"></s></div>
+    <div class="rowi" id="i3"><span>Évolution</span><s style="width:84px"></s></div>
+    <div class="cons" id="i4"><div class="k" style="font-size:11px">Contraintes du poste</div><div style="margin-top:6px"><b style="display:inline-block;width:13px;height:13px;border:1.5px solid #9a8b7f;border-radius:3px;vertical-align:-2px;margin-right:6px"></b>Je confirme pouvoir accepter ces contraintes de poste</div></div>
     <div class="btn" id="btn">Je suis intéressée</div>
   </div></div>
   <div class="tap" id="tap"></div>
@@ -26,7 +32,7 @@
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
-window.DURATION = 3;
+window.DURATION = 3.5;
 const $ = id => document.getElementById(id);
 $('cur').innerHTML = CURSOR;
 const cw = words($('cap'));
@@ -43,8 +49,10 @@ window.seek = t => {
   const b = $('btn'); const on = t >= 1.05;
   b.style.transform = `scale(${on ? lerp(0.96, 1, easeOut(prog(t, 1.05, 0.3))) : 1})`;
   b.style.boxShadow = on ? `0 0 ${30 * (1 - prog(t, 1.4, 1))}px rgba(212,175,116,.6)` : 'none';
+  ['i1', 'i2', 'i3', 'i4'].forEach((id, i) => fadeUp($(id), t, 0.3 + i * 0.1, 0.4, 8));
+  sheen($('ph').querySelector('.scr'), t, 0.35);
   revealWords(cw, t, 1.2);
-  fx(t, 3);
+  fx(t, 3.5);
 };
 window.seek(0);
 </script>

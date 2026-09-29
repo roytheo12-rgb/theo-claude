@@ -26,7 +26,7 @@ function grain(t, fps = 25) { const g = document.querySelector('.grain'); if (!g
 // Effets communs à chaque plan : travelling de caméra, fondu flou d'entrée et de sortie, grain.
 // opts : push (avance caméra), blurIn, blurOut (durées en s, 0 = coupe franche)
 function fx(t, D, opts = {}) {
-  const { push = 0.03, blurIn = 0.2, blurOut = 0.25 } = opts;
+  const { push = 0.03, blurIn = 0, blurOut = 0 } = opts;
   const st = document.getElementById('stage');
   if (st) st.style.transform = `scale(${lerp(1, 1 + push, t / D)})`;
   const i = blurIn ? 1 - prog(t, 0, blurIn) : 0;
@@ -45,3 +45,12 @@ function enter3d(el, t, start, { dy = 40, ry0, ry1, rx = 5, dur = 0.9, maxOp = 1
 }
 const fadeUp = (el, t, start, dur = 0.5, dy = 12) => { const p = easeOut(prog(t, start, dur)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; return p; };
 const CURSOR = '<svg viewBox="0 0 24 24"><path d="M4 2l16 9-7 2-3 7z" fill="#f4efe6" stroke="#1a1411" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+
+// Reflet de lumière qui balaie un écran ou une carte quand il se pose (finition Apple).
+function sheen(container, t, start, dur = 1.0) {
+  let s = container.querySelector(':scope > .sheen');
+  if (!s) { s = document.createElement('div'); s.className = 'sheen'; container.appendChild(s); }
+  const p = prog(t, start, dur);
+  s.style.transform = `translateX(${lerp(-160, 260, easeOut(p))}%) skewX(-18deg)`;
+  s.style.opacity = p > 0 && p < 1 ? Math.sin(p * Math.PI) : 0;
+}

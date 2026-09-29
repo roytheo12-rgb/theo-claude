@@ -39,3 +39,8 @@ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000
 .cursor{position:absolute;width:34px;height:34px;z-index:20;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45))}
 .tap{position:absolute;width:70px;height:70px;border-radius:50%;border:2px solid var(--laiton2);z-index:19;opacity:0}
 .mask{position:absolute;background:#000;z-index:60}
+
+.sheen{position:absolute;top:-20%;bottom:-20%;left:0;width:45%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);pointer-events:none;z-index:9;mix-blend-mode:soft-light}
+.card{overflow:hidden}
+.soon{display:inline-block;font:600 12px "IT";letter-spacing:.16em;text-transform:uppercase;color:var(--laiton2);border:1px solid rgba(212,175,116,.6);border-radius:99px;padding:6px 12px}
+.chip2{display:inline-block;font:500 14px "IT";color:#3d332d;background:var(--ivoire2);border-radius:99px;padding:8px 14px;margin:0 8px 8px 0}

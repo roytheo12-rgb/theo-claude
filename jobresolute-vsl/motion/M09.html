@@ -1,50 +1,65 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M09 · DÉCIDER · La fiche d'entretien sort de l'écran · « Une rencontre qu'on prépare ensemble. » · 3,5 s -->
+<!-- M09 · DÉCIDER · Chacun prépare la rencontre : les questions de Nadia, la fiche d'entretien de Julien · « Une rencontre qu'on prépare ensemble. » · 4,5 s
+     Correction : dans la démo, les 3 questions sont celles de la candidate (« Vos 3 questions pour l'entretien »). -->
 <link rel="stylesheet" href="base.css">
 <style>
-#lap{left:300px;top:200px;width:900px}
-#lap .scr{height:500px;padding:34px 40px}
-#sheet{left:1010px;top:120px;width:560px;height:700px;padding:46px 44px;border-radius:10px;transform-origin:0% 50%}
-.qn{display:flex;gap:16px;margin-top:22px;font:400 17px/1.45 "IT";color:#3d332d}
-.qn b{flex:0 0 34px;height:34px;border-radius:50%;background:var(--bordeaux);color:var(--ivoire);font:600 16px/34px "ID";text-align:center}
-.rule{height:1px;background:#d9cfc1;margin:24px 0 4px}
+.desk{position:absolute;left:0;right:0;top:830px;bottom:0;background:linear-gradient(#2a1a10,#130b06)}
+.desk::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--laiton);opacity:.55}
+#ph{left:330px;top:150px;transform:scale(.97)}
+#lap{left:820px;top:230px;width:840px}
+#lap .scr{height:470px}
+#sheet{left:1040px;top:120px;width:520px;height:640px;padding:40px 40px;border-radius:10px}
+.qn{display:flex;gap:10px;margin-top:14px;font:400 13.5px/1.4 "IT";color:#3d332d}
+.qn b{flex:0 0 24px;height:24px;border-radius:50%;background:var(--bordeaux);color:var(--ivoire);font:600 12px/24px "ID";text-align:center}
+.blk{margin-top:20px;background:var(--ivoire2);border-radius:14px;padding:16px 18px;font:400 16px/1.45 "IT";color:#3d332d}
+.blk .k{margin-bottom:8px}
+.lbl{position:absolute;top:880px;font:600 15px "IT";letter-spacing:.3em;text-transform:uppercase;color:var(--laiton2);text-align:center}
 </style></head>
 <body>
 <div class="bg"></div>
 <div class="chap"><b>III</b> · Décider</div>
 <div class="stage" id="stage">
-  <div class="laptop" id="lap"><div class="lid"><div class="scr">
-    <div class="k">Compte-rendu · Chef de Rang</div><div class="h" style="margin-top:8px">Fit contextualisé · 74 / 100</div>
-    <div class="ln" style="width:90%;margin-top:26px"></div><div class="ln" style="width:75%"></div><div class="ln" style="width:84%"></div><div class="ln" style="width:66%"></div><div class="ln" style="width:88%"></div><div class="ln" style="width:58%"></div>
-  </div></div><div class="base"></div></div>
-  <div class="card" id="sheet">
-    <div class="k">Fiche d'entretien · Chef de Rang</div>
-    <div class="h" style="font-size:32px;margin-top:12px">3 questions pour l'entretien</div>
-    <div class="rule"></div>
+  <div class="desk"></div>
+  <div class="phone" id="ph"><div class="scr" id="ps"><div class="notch"></div>
+    <div class="k">Votre compte-rendu</div>
+    <div class="h" style="margin-top:8px;font-size:21px">Vos 3 questions pour l'entretien</div>
     <div class="qn" id="q0"><b>1</b><span>Quel est le protocole exact pour les VIP et les allergènes ici ?</span></div>
     <div class="qn" id="q1"><b>2</b><span>Comment fonctionne la coordination entre la salle et la cuisine pendant les services chargés ?</span></div>
     <div class="qn" id="q2"><b>3</b><span>Quelles sont vos attentes précises sur la transmission de service ?</span></div>
+  </div></div>
+  <div class="laptop" id="lap"><div class="lid"><div class="scr"></div></div><div class="base"></div></div>
+  <div class="card" id="sheet">
+    <div class="k">Fiche d'entretien · Chef de Rang</div>
+    <div class="h" style="font-size:30px;margin-top:10px">Préparer la rencontre</div>
+    <div class="blk" id="b0"><div class="k">Observé</div>Sous pression, priorise une solution concrète avant d'escalader.</div>
+    <div class="blk" id="b1"><div class="k" style="color:#9a6a1f">À approfondir en entretien</div>Protocoles VIP et allergènes.</div>
   </div>
+  <div class="lbl" id="ln" style="left:330px;width:340px">Nadia se prépare</div>
+  <div class="lbl" id="lj" style="left:1040px;width:520px">Julien se prépare</div>
 </div>
 <div class="cap" id="cap">Une rencontre qu'on *prépare* ensemble.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
-window.DURATION = 3.5;
+window.DURATION = 4.5;
 const $ = id => document.getElementById(id);
 const cw = words($('cap'));
 window.seek = t => {
-  enter3d($('lap'), t, 0, { ry0: 22, ry1: 14, rx: 6 });
-  // La fiche sort de l'écran, se redresse et vient vers nous
-  const s = spring(prog(t, 0.35, 1.1), 7);
-  const sh = $('sheet');
-  sh.style.opacity = clamp(prog(t, 0.35, 0.25));
-  sh.style.transform = `translate(${lerp(-520, 0, s)}px, ${lerp(120, 0, s)}px) rotateY(${lerp(40, -8, s)}deg) scale(${lerp(0.55, 1, s)})`;
-  $('lap').style.filter = `blur(${easeOut(prog(t, 0.8, 0.8)) * 4}px)`;
-  [0, 1, 2].forEach(i => fadeUp($('q' + i), t, 1.1 + i * 0.15, 0.45, 10));
-  revealWords(cw, t, 1.4);
-  fx(t, 3.5);
+  // Le téléphone de Nadia reste en place (raccord avec M08) : ses questions apparaissent
+  [0, 1, 2].forEach(i => fadeUp($('q' + i), t, 0.3 + i * 0.15, 0.45, 8));
+  sheen($('ps'), t, 0.25);
+  // La fiche de Julien sort de l'écran, se redresse et vient vers nous
+  const s = spring(prog(t, 0.5, 1.1), 7), sh = $('sheet');
+  sh.style.opacity = clamp(prog(t, 0.5, 0.25));
+  sh.style.transform = `translate(${lerp(-260, 0, s)}px, ${lerp(140, 0, s)}px) rotateY(${lerp(38, -6, s)}deg) scale(${lerp(0.55, 1, s)})`;
+  $('lap').style.filter = `blur(${easeOut(prog(t, 0.8, 0.8)) * 5}px)`;
+  $('lap').style.opacity = 1 - easeOut(prog(t, 0.8, 0.8)) * 0.5;
+  ['b0', 'b1'].forEach((id, i) => fadeUp($(id), t, 1.3 + i * 0.18, 0.45, 10));
+  sheen(sh, t, 1.5);
+  fadeUp($('ln'), t, 0.6, 0.4, 6); fadeUp($('lj'), t, 1.4, 0.4, 6);
+  revealWords(cw, t, 1.9);
+  fx(t, 4.5, { push: 0.02 });
 };
 window.seek(0);
 </script>

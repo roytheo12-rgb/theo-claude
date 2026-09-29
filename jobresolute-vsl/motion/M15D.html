@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M15D · Fin DRH / programme pilote · logo, « Être, et faire. », appel à l'action · 8 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+.pre{position:absolute;left:0;right:0;top:400px;text-align:center}
+.pre .l{font:600 72px/1.15 "ID";letter-spacing:-.035em;color:var(--ivoire)}
+.end{position:absolute;left:0;right:0;top:310px;text-align:center}
+.logo{font:600 150px "ID";letter-spacing:-.045em;color:var(--ivoire)}
+.logo .w:nth-child(2){color:var(--laiton2)}
+.tag2{margin-top:14px;font:500 46px "ID";letter-spacing:-.02em;color:var(--ivoire)}
+.tag3{margin-top:18px;font:500 20px "IT";letter-spacing:.2em;text-transform:uppercase;color:rgba(244,239,230,.5)}
+.cta{position:absolute;left:0;right:0;top:760px;text-align:center}
+.cta .btn{font-size:21px;padding:20px 34px;position:relative;overflow:hidden}
+.cta .kt{color:rgba(244,239,230,.55);margin-bottom:16px}
+.ring{position:absolute;left:50%;top:43%;border:1.5px solid var(--laiton);border-radius:50%;opacity:0}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="stage" id="stage">
+  
+  <div class="ring" id="r0"></div><div class="ring" id="r1"></div>
+  <div class="end" id="end"><div class="logo" id="logo"><span class="w">Job</span><span class="w">Resolute</span></div>
+    <div class="tag2" id="t2">Être, et *faire*.</div>
+    <div class="tag3" id="t3">La technologie au service de l’humain</div></div>
+  <div class="cta" id="cta"><div class="kt">Programme pilote fondateur</div><div class="btn" id="btn">Vérifier l’éligibilité de votre établissement</div></div>
+  <div class="tap" id="tap"></div><div class="cursor" id="cur"></div>
+</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 8;
+const $ = id => document.getElementById(id);
+$('cur').innerHTML = CURSOR;
+const O = 0;
+const lw = [...document.querySelectorAll('#logo .w')], tw = words($('t2'));
+const pre = [...document.querySelectorAll('.pre .l')].map(words);
+window.seek = t => {
+  // Phrase d'ouverture (version BA uniquement)
+  pre.forEach((ws, i) => { revealWords(ws, t, 0.2 + i * 1.1); const o = easeOut(prog(t, O - 0.6, 0.5)); ws.forEach(w => { if (t > O - 0.6) { w.style.opacity = 1 - o; w.style.filter = `blur(${o * 14}px)`; } }); });
+  // Cercles en laiton, écho de M01
+  ['r0', 'r1'].forEach((id, i) => { const p = easeOut(prog(t, O + i * 0.2, 1.8)); const d = lerp(100, 900 + i * 300, p); const r = $(id); r.style.width = r.style.height = d + 'px'; r.style.marginLeft = r.style.marginTop = -d / 2 + 'px'; r.style.opacity = p < 0.02 ? 0 : (0.4 - i * 0.12) * (1 - p * 0.6); });
+  revealWords(lw, t, O + 0.1, 0.12, 0.6);
+  revealWords(tw, t, O + 0.9);
+  fadeUp($('t3'), t, O + 1.6, 0.5, 8);
+  // Appel à l'action, cliqué
+  fadeUp($('cta'), t, O + 2.4, 0.6, 14);
+  const c = easeOut(prog(t, O + 2.9, 0.6));
+  $('cur').style.left = lerp(1300, 1010, c) + 'px'; $('cur').style.top = lerp(1000, 845, c) + 'px';
+  $('cur').style.opacity = clamp(prog(t, O + 2.85, 0.2)) * (1 - prog(t, O + 4.2, 0.3));
+  const k = prog(t, O + 3.55, 0.5);
+  $('tap').style.left = '975px'; $('tap').style.top = '815px';
+  $('tap').style.opacity = k > 0 && k < 1 ? (1 - k) : 0; $('tap').style.transform = `scale(${lerp(0.4, 1.6, k)})`;
+  const on = t >= O + 3.55; $('btn').style.boxShadow = on ? `0 0 ${34 * (1 - prog(t, O + 3.8, 1.2))}px rgba(212,175,116,.65)` : 'none';
+  sheen($('btn'), t, O + 3.6, 0.9);
+  fx(t, 8, { push: 0.015 });
+};
+window.seek(0);
+</script>
+</body></html>

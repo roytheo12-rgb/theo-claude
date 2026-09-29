@@ -48,6 +48,22 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 - « Nadia · en premier » · « Julien · ensuite »
 - Étapes du parcours (M11) : Je suis intéressée · Situation 20h15 · Identité masquée · Fit expliqué · Carte de Cohésion · Compte-rendu · Fiche d'entretien · Décision humaine
 
+## Ajouts V2 (repris de la démo, sauf mention)
+- Création d'offre : « Nouvelle fiche de rôle » · les 9 étapes (Informations du poste, Assistant de rédaction, Tâches critiques, Contraintes, Situations, Pondération du Fit, Barème, Ressources, Récapitulatif) · « Publier l'offre → » · « L'assistant propose, vous décidez. » · « Rien à installer. Personne à former. »
+- Compétences et valeurs affichées dans M03a (**validées par Théo**) : Service à la française · Accords mets-vins · Gestion de rang · Calme sous pression · Esprit d'équipe · Discrétion · Exigence · Hospitalité
+- Offre côté candidat : Salaire net / mois · Formation · Évolution · « Contraintes du poste » · « Je confirme pouvoir accepter ces contraintes de poste » (aucun montant affiché)
+- « Mise en situation · Exemple illustratif » · « Évaluation sur cinq dimensions » (les 5 dimensions du Fit). **Le nombre et la forme des épreuves ne sont pas arrêtés : ne jamais les afficher.**
+- « Fit sur cinq dimensions » · « Valider » · « Signaler une inexactitude »
+- Préparation : « Vos 3 questions pour l'entretien » (côté Nadia) · « Préparer la rencontre » · « À approfondir en entretien : protocoles VIP et allergènes » (côté Julien)
+- « Non retenu ici · Autres offres compatibles »
+- Hidden Gems : « Profils non détectés par les candidatures classiques » · « Vivier de talents » · « Réceptionniste, CDI, réception principale » · « Déjà évaluée · disponible » · **toujours avec le badge « Bientôt »**
+- Suivi : « Suivi J+7 · J+30 · J+90 » · « Et bien après »
+- Coût : 5 400 €, coût moyen d'un départ en période d'essai (Cornell University, 2025)
+- Vision : « Le système nerveux RH de l'hospitalité » · « De l'embauche sur preuves jusqu'au pilotage des équipes. Sans jamais retirer la décision aux humains. » · les 8 moteurs (Work Intelligence, JobFit contextualisé, Team Intelligence, Hidden Gems, Potential Intelligence, Workforce Intelligence, Management Copilot, Integration Intelligence), **tous marqués « Bientôt »**
+- « Fondé par des professionnels de l'hôtellerie de luxe » (**à confirmer avec Henry**)
+- Fin DRH : « Programme pilote fondateur · Vérifier l'éligibilité de votre établissement » · Fin BA : « Découvrir l'opportunité »
+- Interdits ajoutés : **aucun prix, aucun modèle économique, aucune feuille de route datée.**
+
 ## Chiffres et preuves autorisés
 - 44 % des 319 000 projets de recrutement CHR jugés difficiles à pourvoir en 2026 (France Travail, enquête BMO 2026)
 - Protocole de validation en 8 étapes

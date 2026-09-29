@@ -45,7 +45,7 @@
   <div class="card back" id="back"><div class="pl">Pipeline · Chef de Rang</div>
     <div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div></div>
   <div class="card main" id="main">
-    <div class="hdr"><div class="av"></div><div class="nm">Candidate · Chef de Rang<small>Le Beauregard, Paris · 3 situations observées</small></div><div class="anon">Identité masquée</div></div>
+    <div class="hdr"><div class="av"></div><div class="nm">Candidate · Chef de Rang<small>Le Beauregard, Paris · Fit sur cinq dimensions</small></div><div class="anon">Identité masquée</div></div>
     <div class="row">
       <div class="score"><div class="big"><em id="n" style="font-style:normal">0</em><span> /100</span></div><div class="conf"><b></b>Fit contextualisé · confiance moyenne</div></div>
       <div class="bars">
@@ -69,7 +69,7 @@ const capWords = words($('cap'));
 const bars = [...document.querySelectorAll('.t i')];
 window.seek = t => {
   // Caméra : avance lente de 3 % sur tout le plan
-  $('stage').style.transform = `scale(${lerp(1, 1.03, t / 4)})`;
+  $('stage').style.transform = `scale(${lerp(1, 1.03, t / 4)})`;  // caméra
   // Carte principale : montée de 40 px, rotation qui se stabilise (ressort amorti)
   const m = spring(prog(t, 0, 0.9));
   $('main').style.opacity = clamp(m * 1.4);
@@ -92,11 +92,8 @@ window.seek = t => {
   $('dec').style.boxShadow = `0 0 ${d * 28}px rgba(212,175,116,${d * 0.45})`;
   // Légende mot à mot
   revealWords(capWords, t, 1.6);
-  // Sortie floue sur les 0,25 dernières secondes
-  const x = prog(t, 3.75, 0.25);
-  document.body.style.filter = x > 0 ? `blur(${x * 14}px)` : '';
-  document.body.style.opacity = 1 - x * 0.6;
-  grain(t);
+  sheen($('main'), t, 0.55);
+  fx(t, 4, { push: 0 });
 };
 window.seek(0);
 </script>
