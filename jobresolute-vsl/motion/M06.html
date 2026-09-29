@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M06 · ASSOCIER · « Un résultat qui s'explique. » · 4 s — voir MOTION.md §7 -->
+<link rel="stylesheet" href="base.css">
+<style>
+.stage{position:absolute;inset:0;perspective:2200px;transform-origin:50% 45%}
+.card{position:absolute;background:var(--ivoire);color:var(--encre);border-radius:26px;box-shadow:0 60px 120px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.4) inset}
+.back{left:150px;top:250px;width:760px;height:540px;padding:36px}
+.main{left:510px;top:170px;width:900px;height:650px;padding:46px 52px}
+.pl{font:600 13px "IT";letter-spacing:.14em;text-transform:uppercase;color:var(--taupe)}
+.pc{margin-top:12px;height:64px;border-radius:14px;background:#e6ded1;display:flex;align-items:center;padding:0 16px;gap:12px}
+.pc i{width:34px;height:34px;border-radius:50%;background:#bdb1a4;filter:blur(3px)}
+.pc s{flex:1;height:10px;border-radius:5px;background:#cfc5b8}
+.hdr{display:flex;align-items:center;gap:18px}
+.av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#8c7a6a,#4a3a30);filter:blur(7px)}
+.nm{font:600 26px "ID";letter-spacing:-.01em}
+.nm small{display:block;font:500 16px "IT";color:var(--taupe);letter-spacing:0;margin-top:4px}
+.anon{margin-left:auto;font:600 13px "IT";letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);background:rgba(94,26,36,.08);padding:9px 14px;border-radius:99px}
+.row{display:flex;gap:46px;margin-top:38px}
+.score{width:250px}
+.big{font:600 128px/.9 "ID";letter-spacing:-.05em;color:var(--encre);font-variant-numeric:tabular-nums}
+.big span{font-size:34px;color:#9a8b7f;letter-spacing:0}
+.conf{margin-top:14px;font:500 17px "IT";color:#5c5048}
+.conf b{display:inline-block;width:10px;height:10px;border-radius:50%;background:#c9913f;margin-right:8px}
+.bars{flex:1}
+.b{margin-bottom:17px}
+.b div{display:flex;justify-content:space-between;font:500 16px "IT";color:#4a3f38;margin-bottom:7px}
+.b div span{font-weight:600;color:var(--encre)}
+.t{height:8px;border-radius:9px;background:#e6ded1;overflow:hidden}
+.t i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,var(--bordeaux2),var(--bordeaux));width:0}
+.obs{display:flex;gap:22px;margin-top:22px}
+.o{flex:1;background:var(--ivoire2);border-radius:16px;padding:18px 20px;font:400 15.5px/1.45 "IT";color:#3d332d}
+.o h4{font:600 13px "IT";letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);margin-bottom:8px}
+.o.u h4{color:#9a6a1f}
+.dec{position:absolute;right:52px;bottom:40px;font:600 17px "IT";background:var(--bordeaux);color:var(--ivoire);padding:14px 22px;border-radius:99px}
+.dec b{color:var(--laiton2)}
+.cap{position:absolute;left:0;right:0;bottom:92px;text-align:center;font:600 46px "ID";letter-spacing:-.025em}
+.chap{position:absolute;left:96px;top:78px;font:500 15px "IT";letter-spacing:.32em;text-transform:uppercase;color:rgba(244,239,230,.45)}
+.chap b{color:var(--laiton);font-weight:600}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="chap"><b>II</b> · Associer</div>
+<div class="stage" id="stage">
+  <div class="card back" id="back"><div class="pl">Pipeline · Chef de Rang</div>
+    <div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div></div>
+  <div class="card main" id="main">
+    <div class="hdr"><div class="av"></div><div class="nm">Candidate · Chef de Rang<small>Le Beauregard, Paris · 3 situations observées</small></div><div class="anon">Identité masquée</div></div>
+    <div class="row">
+      <div class="score"><div class="big"><em id="n" style="font-style:normal">0</em><span> /100</span></div><div class="conf"><b></b>Fit contextualisé · confiance moyenne</div></div>
+      <div class="bars">
+        <div class="b"><div>Compétences techniques<span>82</span></div><div class="t"><i data-v="82"></i></div></div>
+        <div class="b"><div>Comportement sous pression<span>78</span></div><div class="t"><i data-v="78"></i></div></div>
+        <div class="b"><div>Valeurs de l'établissement<span>85</span></div><div class="t"><i data-v="85"></i></div></div>
+        <div class="b"><div>Compréhension des standards<span>61</span></div><div class="t"><i data-v="61"></i></div></div>
+        <div class="b"><div>Compatibilité des conditions<span>70</span></div><div class="t"><i data-v="70"></i></div></div>
+      </div></div>
+    <div class="obs" id="obs"><div class="o"><h4>Observé</h4>Sous pression, priorise une solution concrète avant d'escalader.</div><div class="o u"><h4>Reste incertain</h4>Protocoles VIP et allergènes, à approfondir en entretien.</div></div>
+    <div class="dec" id="dec"><b>◉</b> Décision humaine</div>
+  </div>
+</div>
+<div class="cap" id="cap">Un résultat qui *s'explique*.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 4;
+const $ = id => document.getElementById(id);
+const capWords = words($('cap'));
+const bars = [...document.querySelectorAll('.t i')];
+window.seek = t => {
+  // Caméra : avance lente de 3 % sur tout le plan
+  $('stage').style.transform = `scale(${lerp(1, 1.03, t / 4)})`;
+  // Carte principale : montée de 40 px, rotation qui se stabilise (ressort amorti)
+  const m = spring(prog(t, 0, 0.9));
+  $('main').style.opacity = clamp(m * 1.4);
+  $('main').style.transform = `translateY(${(1 - m) * 40}px) rotateY(${lerp(-20, -13, m)}deg) rotateX(5deg)`;
+  // Panneau pipeline, second plan flou
+  const b = spring(prog(t, 0.1, 0.9));
+  $('back').style.opacity = b * 0.55;
+  $('back').style.filter = 'blur(5px)';
+  $('back').style.transform = `translateY(${(1 - b) * 40}px) rotateY(${lerp(28, 22, b)}deg) rotateX(6deg)`;
+  // Le score compte de 0 à 74
+  $('n').textContent = Math.round(74 * easeOut(prog(t, 0.4, 0.9)));
+  $('n').parentElement.style.opacity = easeOut(prog(t, 0.3, 0.3));
+  // Les 5 barres, 0,12 s d'écart
+  bars.forEach((el, i) => { el.style.width = (Number(el.dataset.v) * easeOut(prog(t, 0.4 + i * 0.12, 0.6))) + '%'; });
+  // Observé / incertain
+  const o = easeOut(prog(t, 1.3, 0.5));
+  $('obs').style.opacity = o; $('obs').style.transform = `translateY(${(1 - o) * 12}px)`;
+  // Décision humaine s'allume
+  const d = easeOut(prog(t, 1.8, 0.5));
+  $('dec').style.boxShadow = `0 0 ${d * 28}px rgba(212,175,116,${d * 0.45})`;
+  // Légende mot à mot
+  revealWords(capWords, t, 1.6);
+  // Sortie floue sur les 0,25 dernières secondes
+  const x = prog(t, 3.75, 0.25);
+  document.body.style.filter = x > 0 ? `blur(${x * 14}px)` : '';
+  document.body.style.opacity = 1 - x * 0.6;
+  grain(t);
+};
+window.seek(0);
+</script>
+</body></html>

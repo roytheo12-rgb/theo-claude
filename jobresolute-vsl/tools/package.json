@@ -1,0 +1,1 @@
+{ "name": "jobresolute-vsl-tools", "private": true, "dependencies": { "puppeteer-core": "^23.0.0" } }
