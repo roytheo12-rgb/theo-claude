@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14101a">
+<title>Ma Parfumerie</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><h1>Ma Parfumerie</h1><span id="count" class="muted"></span></header>
+<main id="view"></main>
+<nav class="tabs" id="tabs">
+  <button data-tab="today" class="on"><i>☼</i>Aujourd'hui</button>
+  <button data-tab="collection"><i>❖</i>Collection</button>
+  <button data-tab="discover"><i>✦</i>Découvrir</button>
+  <button data-tab="settings"><i>⚙</i>Réglages</button>
+</nav>
+<dialog id="dlg"></dialog>
+<script src="data.js"></script>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
