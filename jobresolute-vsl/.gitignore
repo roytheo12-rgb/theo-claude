@@ -1,1 +1,4 @@
 node_modules/
+# Rendus intermédiaires : régénérables avec tools/build-acte2.sh
+rendus/*
+!rendus/ACTE2.mp4
