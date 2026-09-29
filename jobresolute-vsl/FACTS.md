@@ -64,6 +64,12 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 - Fin DRH : « Programme pilote fondateur · Vérifier l'éligibilité de votre établissement » · Fin BA : « Découvrir l'opportunité »
 - Interdits ajoutés : **aucun prix, aucun modèle économique, aucune feuille de route datée.**
 
+## Ajouts V3
+- Acte II sans prénoms : « Le candidat » · « Le recruteur » · « Vous » · « la personne »
+- Légendes : « Un clic. Pas de CV. » · « Le candidat démontre ce qu'il sait faire. » · « Vous voyez ce que la personne fait. Pas qui elle est. » · « Et sa place dans votre équipe. » · « Chacun prépare la rencontre. »
+- « Le candidat · en premier » · « Le recruteur · ensuite » · « Le candidat se prépare » · « Le recruteur se prépare » · « Décision validée · tracée » · « Profil déjà évalué · disponible »
+- Fin unique : « Établissements et groupes · Rejoindre le programme pilote fondateur » · « Investisseurs · Découvrir l'opportunité »
+
 ## Chiffres et preuves autorisés
 - 44 % des 319 000 projets de recrutement CHR jugés difficiles à pourvoir en 2026 (France Travail, enquête BMO 2026)
 - Protocole de validation en 8 étapes

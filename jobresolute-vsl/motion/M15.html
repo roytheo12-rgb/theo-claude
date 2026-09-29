@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- M15 · Fin unique pour les deux publics : entreprises clientes (et partenaires-investisseurs) + business angels · 12 s -->
+<link rel="stylesheet" href="base.css">
+<style>
+.pre{position:absolute;left:0;right:0;top:400px;text-align:center}
+.pre .l{font:600 72px/1.15 "ID";letter-spacing:-.035em;color:var(--ivoire)}
+.end{position:absolute;left:0;right:0;top:250px;text-align:center}
+.logo{font:600 150px "ID";letter-spacing:-.045em;color:var(--ivoire)}
+.logo .w:nth-child(2){color:var(--laiton2)}
+.tag2{margin-top:14px;font:500 46px "ID";letter-spacing:-.02em;color:var(--ivoire)}
+.tag3{margin-top:18px;font:500 20px "IT";letter-spacing:.2em;text-transform:uppercase;color:rgba(244,239,230,.5)}
+.ctas{position:absolute;left:0;right:0;top:720px;display:flex;justify-content:center;gap:40px}
+.cta{width:520px;border-radius:24px;padding:28px 30px;text-align:left;position:relative;overflow:hidden;background:rgba(244,239,230,.06);border:1px solid rgba(212,175,116,.4)}
+.cta .kt{color:var(--laiton)}
+.cta .h{color:var(--ivoire);font-size:28px;margin-top:10px}
+.cta.main{background:var(--bordeaux);border-color:var(--laiton2)}
+.ring{position:absolute;left:50%;top:36%;border:1.5px solid var(--laiton);border-radius:50%;opacity:0}
+</style></head>
+<body>
+<div class="bg"></div>
+<div class="stage" id="stage">
+  <div class="pre" id="pre"><div class="l">Nous ne digitalisons pas le recrutement.</div><div class="l">Nous changeons ce que l'on *mesure*.</div></div>
+  <div class="ring" id="r0"></div><div class="ring" id="r1"></div>
+  <div class="end" id="end"><div class="logo" id="logo"><span class="w">Job</span><span class="w">Resolute</span></div>
+    <div class="tag2" id="t2">Être, et *faire*.</div>
+    <div class="tag3" id="t3">La technologie au service de l'humain</div></div>
+  <div class="ctas">
+    <div class="cta main" id="c0"><div class="kt" style="color:var(--laiton2)">Établissements et groupes</div><div class="h">Rejoindre le programme pilote fondateur</div></div>
+    <div class="cta" id="c1"><div class="kt">Investisseurs</div><div class="h">Découvrir l'opportunité</div></div>
+  </div>
+</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 12;
+const $ = id => document.getElementById(id);
+const O = 3.4;
+const lw = [...document.querySelectorAll('#logo .w')], tw = words($('t2'));
+const pre = [...document.querySelectorAll('.pre .l')].map(words);
+window.seek = t => {
+  pre.forEach((ws, i) => { revealWords(ws, t, 0.2 + i * 1.1); if (t > O - 0.6) { const o = easeOut(prog(t, O - 0.6, 0.5)); ws.forEach(w => { w.style.opacity = 1 - o; w.style.filter = `blur(${o * 14}px)`; }); } });
+  ['r0', 'r1'].forEach((id, i) => { const p = easeOut(prog(t, O + i * 0.2, 1.8)); const d = lerp(100, 900 + i * 300, p); const r = $(id); r.style.width = r.style.height = d + 'px'; r.style.marginLeft = r.style.marginTop = -d / 2 + 'px'; r.style.opacity = p < 0.02 ? 0 : (0.4 - i * 0.12) * (1 - p * 0.6); });
+  revealWords(lw, t, O + 0.1, 0.12, 0.6);
+  revealWords(tw, t, O + 0.9);
+  fadeUp($('t3'), t, O + 1.6, 0.5, 8);
+  // Deux portes d'entrée, même film
+  [0, 1].forEach(i => { const e = $('c' + i), p = spring(prog(t, O + 2.4 + i * 0.25, 0.8)); e.style.opacity = clamp(p * 1.3); e.style.transform = `translateY(${(1 - p) * 30}px)`; sheen(e, t, O + 3.2 + i * 0.3, 1.0); });
+  $('c0').style.boxShadow = `0 0 ${24 + 10 * Math.sin(t * 2.5)}px rgba(212,175,116,${0.25 * clamp(prog(t, O + 3, 0.5))})`;
+  fx(t, 12, { push: 0.015 });
+};
+window.seek(0);
+</script>
+</body></html>

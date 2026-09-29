@@ -37,12 +37,17 @@ function fx(t, D, opts = {}) {
   grain(t);
 }
 // Entrée d'un élément 3D : montée + rotation qui se stabilise (ressort amorti).
-function enter3d(el, t, start, { dy = 40, ry0, ry1, rx = 5, dur = 0.9, maxOp = 1 } = {}) {
+// drift : après s'être posé, l'objet continue de tourner lentement (degrés par seconde) — rien n'est jamais figé.
+function enter3d(el, t, start, { dy = 40, ry0, ry1, rx = 5, dur = 0.9, maxOp = 1, drift } = {}) {
   const p = spring(prog(t, start, dur));
+  const d = drift === undefined ? Math.sign(ry1 - ry0) * 1.1 : drift;
+  const float = Math.sin(t * 1.3) * 4;
   el.style.opacity = clamp(p * 1.4) * maxOp;
-  el.style.transform = `translateY(${(1 - p) * dy}px) rotateY(${lerp(ry0, ry1, p)}deg) rotateX(${rx}deg)`;
+  el.style.transform = `translateY(${(1 - p) * dy + float}px) rotateY(${lerp(ry0, ry1, p) + d * Math.max(0, t - start)}deg) rotateX(${rx}deg)`;
   return p;
 }
+// Texte qui s'écrit lettre par lettre
+function typeText(el, t, start, cps = 28) { const full = el.dataset.full || (el.dataset.full = el.textContent); const n = Math.max(0, Math.floor((t - start) * cps)); el.textContent = full.slice(0, n); el.style.borderRight = n < full.length && t > start ? '2px solid var(--bordeaux)' : 'none'; }
 const fadeUp = (el, t, start, dur = 0.5, dy = 12) => { const p = easeOut(prog(t, start, dur)); el.style.opacity = p; el.style.transform = `translateY(${(1 - p) * dy}px)`; return p; };
 const CURSOR = '<svg viewBox="0 0 24 24"><path d="M4 2l16 9-7 2-3 7z" fill="#f4efe6" stroke="#1a1411" stroke-width="1.4" stroke-linejoin="round"/></svg>';
 

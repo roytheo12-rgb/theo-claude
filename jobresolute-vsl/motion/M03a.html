@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M03a · OBSERVER · Julien publie son offre au format JobResolute · « Rien à installer. Personne à former. » · 4 s -->
+<!-- M03a · OBSERVER · Vous publiez votre offre au format JobResolute · « Rien à installer. Personne à former. » · 4 s -->
 <link rel="stylesheet" href="base.css">
 <style>
 #lap{left:400px;top:130px;width:1120px}
@@ -23,7 +23,7 @@
     <div class="side" id="side"></div>
     <div class="main">
       <div class="kt">Nouvelle fiche de rôle</div>
-      <div class="h" style="margin-top:6px;font-size:28px">Chef de Rang, service gastronomique</div>
+      <div class="h" id="ttl" style="margin-top:6px;font-size:28px;display:inline-block;min-height:35px">Chef de Rang, service gastronomique</div>
       <div class="dim" id="d1"><div class="kt">Compétences techniques</div><span class="chip2">Service à la française</span><span class="chip2">Accords mets-vins</span><span class="chip2">Gestion de rang</span></div>
       <div class="dim" id="d2"><div class="kt">Savoir-être</div><span class="chip2">Calme sous pression</span><span class="chip2">Esprit d'équipe</span><span class="chip2">Discrétion</span></div>
       <div class="dim" id="d3"><div class="kt">Valeurs de l'établissement</div><span class="chip2">Exigence</span><span class="chip2">Hospitalité</span></div>
@@ -46,6 +46,7 @@ $('side').innerHTML = STEPS.map((s, i) => `<div class="st" id="s${i}"><i>${i + 1
 const cw = words($('cap'));
 window.seek = t => {
   enter3d($('lap'), t, 0, { ry0: -18, ry1: -10, rx: 6 });
+  typeText($('ttl'), t, 0.35, 34);
   // Les 9 étapes se valident l'une après l'autre
   STEPS.forEach((_, i) => $('s' + i).classList.toggle('on', t > 0.45 + i * 0.13));
   ['d1', 'd2', 'd3'].forEach((id, i) => fadeUp($(id), t, 0.5 + i * 0.25, 0.45, 10));

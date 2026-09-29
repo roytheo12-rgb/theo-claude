@@ -4,7 +4,7 @@
 Chaque plan est rendu avec une marge (« tail ») égale à la durée de sa transition de sortie :
 la transition se joue dans cette marge, donc aucun plan n'est raccourci.
 
-Usage : python3 tools/build.py acte2 | acte4-drh | acte4-ba | tout
+Usage : python3 tools/build.py acte2 | acte4 | tout
 Variables : FFMPEG_PATH, CHROME_PATH.
 """
 import os, re, subprocess, sys
@@ -34,10 +34,9 @@ ACTES = {
         ('M11', ('fade', 0.6)),
         ('M12', None),
     ],
-    'acte4-drh': [('M13', ('fade', 0.7)), ('M14', ('fade', 0.7)), ('M15D', None)],
-    'acte4-ba': [('M13', ('fade', 0.7)), ('M14', ('fade', 0.7)), ('M15B', None)],
+    'acte4': [('M13', ('fade', 0.7)), ('M14', ('fade', 0.7)), ('M15', None)],
 }
-SORTIE = {'acte2': 'ACTE2.mp4', 'acte4-drh': 'ACTE4_DRH.mp4', 'acte4-ba': 'ACTE4_BA.mp4'}
+SORTIE = {'acte2': 'ACTE2.mp4', 'acte4': 'ACTE4.mp4'}
 
 
 def duration(seq):

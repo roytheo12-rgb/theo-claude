@@ -3,6 +3,12 @@
 Durée : **≈ 1:58** · Langue : français · Voix off : Henry (ou ElevenLabs en secours)
 Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente).
 
+> **Mises à jour V3 (elles priment sur tout le reste)**
+> - **Une seule vidéo pour tous les publics** : entreprises clientes (y compris les partenaires qui investiraient) et business angels. **Une fin unique (M15)** : « Nous ne digitalisons pas le recrutement. Nous changeons ce que l'on mesure. », le logo, puis **deux boutons côte à côte** : « Établissements et groupes · Rejoindre le programme pilote fondateur » et « Investisseurs · Découvrir l'opportunité ». Les versions DRH et BA séparées sont supprimées.
+> - **Présentation produit (acte II) sans prénoms** : on parle du produit au niveau de l'entreprise, façon VSL. « Vous » pour l'établissement, « le candidat » ou « la personne » pour les candidats. Nadia et Julien restent les personnages des actes I et III.
+> - **Des écrans vivants** : après leur entrée, ils continuent de pivoter et de flotter doucement, le texte s'écrit (M03a), le pipeline défile (M05), les barres se remplissent (M08).
+> - **Voix off de l'acte II réécrite** (section 2) : V7, V8a, V8, V9, V10, V12, V14, V18c.
+
 > **Mises à jour V2 : acte II complété, acte IV construit (elles priment sur le reste du document)**
 > - **Acte II, nouveaux plans :**
 >   - **M03a**, Julien publie son offre : « Rien à installer. Personne à former. »
@@ -124,22 +130,23 @@ V3  Et toi, Julien… as-tu enfin trouvé la perle rare ?
 V4  Ce serait dommage de passer à côté d'une belle rencontre…
 V5  Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'observer.
 V6  Voici JobResolute.
-V7  Nadia : démontrer, sans contrainte. Julien : évaluer, sans a priori.
-    Nadia : comprendre son résultat. Julien : décider, en connaissance de cause.
-V8a Julien, tu décris le poste. Rien à installer, personne à former.        (M03a, nouveau)
-V8  Un clic, Nadia. Pas de CV.
-V9  Ton seul boulot : vivre l'expérience.
-V10 Julien voit ce qu'elle fait. Pas qui elle est.
+V7  Pour le candidat : démontrer, sans contrainte. Pour le recruteur : évaluer, sans a priori.
+    Pour le candidat : comprendre son résultat. Pour le recruteur : décider, en connaissance de cause.
+V8a Vous décrivez le poste. Rien à installer, personne à former.
+V8  Le candidat postule en un clic. Sans CV.
+V9  Puis il démontre ce qu'il sait faire, sur les cinq dimensions du poste.
+V10 Vous voyez ce que la personne fait. Pas qui elle est.
 V11 Un résultat qui s'explique.
-V12 Et sa place dans ton équipe.
-V13 Le même résultat, des deux côtés.
-V14 Une rencontre qu'on prépare ensemble.
+V12 Et sa place dans votre équipe.
+V13 Le même résultat, des deux côtés. Le candidat le reçoit en premier.
+V14 Chacun prépare la rencontre.
 V15 Et personne ne reste sans réponse.
-V15b Et demain, les talents que le CV aurait écartés refont surface.       (M10b, nouveau)
+V15b Et demain, les talents que le CV aurait écartés refont surface.
 V16 Pas un outil de plus. Tout le parcours.
 V17 La décision finale sera la tienne, Julien.
 V18 Et toi, Nadia, quelle que soit la décision, on reste à tes côtés.
-V18b Notre ambition : devenir le système nerveux RH de l'hospitalité.     (M14, nouveau)
+V18b Notre ambition : devenir le système nerveux RH de l'hospitalité.     (M14)
+V18c Nous ne digitalisons pas le recrutement. Nous changeons ce que l'on mesure.   (M15, fin unique)
 V19 JobResolute. La technologie au service de l'humain.
 ```
 

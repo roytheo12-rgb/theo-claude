@@ -2,5 +2,4 @@ node_modules/
 # Rendus intermédiaires : régénérables avec tools/build.py
 rendus/*
 !rendus/ACTE2.mp4
-!rendus/ACTE4_DRH.mp4
-!rendus/ACTE4_BA.mp4
+!rendus/ACTE4.mp4

@@ -14,7 +14,7 @@
 
 ```bash
 cd jobresolute-vsl/tools && npm install && cd ..
-python3 tools/build.py tout   # rend et assemble ACTE2, ACTE4_DRH, ACTE4_BA
+python3 tools/build.py tout   # rend et assemble ACTE2 et ACTE4
 ```
 Il faut Chromium (`CHROME_PATH`) et ffmpeg (`FFMPEG_PATH`).
 
@@ -31,4 +31,4 @@ npx skills add emilkowalski/skills --skill apple-design
 - [ ] Voix off ElevenLabs V01–V19 → durées à transmettre pour caler l'acte II
 - [ ] K04 / K05 → test du miroir → Seedance P04 + P05
 - [x] Acte II complet V2 (`rendus/ACTE2.mp4`, 62 s) avec transitions : à recaler sur la voix off
-- [x] Acte IV : `rendus/ACTE4_DRH.mp4` (25 s) et `rendus/ACTE4_BA.mp4` (28 s)
+- [x] Acte IV : `rendus/ACTE4.mp4`, une seule fin pour tous les publics

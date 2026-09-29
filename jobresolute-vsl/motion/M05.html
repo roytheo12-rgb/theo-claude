@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M05 · OBSERVER · Chez Julien, les identités se floutent · « Julien voit ce qu'elle fait. Pas qui elle est. » · 4 s -->
+<!-- M05 · OBSERVER · Côté recruteur, les identités se floutent · « Vous voyez ce que la personne fait. Pas qui elle est. » · 4 s -->
 <link rel="stylesheet" href="base.css">
 <style>
 #lap{left:430px;top:140px;width:1060px}
@@ -18,22 +18,23 @@
 <div class="stage" id="stage">
   <div class="laptop" id="lap"><div class="lid"><div class="scr">
     <div class="top"><div><div class="kt">Pipeline</div><div class="h" style="margin-top:6px">Chef de Rang, service gastronomique</div></div><div class="anon" id="anon">Identité masquée</div></div>
-    <div id="rows"></div>
+    <div style="height:470px;overflow:hidden"><div id="rows"></div></div>
   </div></div><div class="base"></div></div>
 </div>
-<div class="cap" id="cap">Julien voit ce qu'elle *fait*. Pas qui elle est.</div>
+<div class="cap" id="cap">Vous voyez ce que la personne *fait*. Pas qui elle est.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
 window.DURATION = 4;
 const $ = id => document.getElementById(id);
-const W = [[80, 140, 110], [120, 90, 150], [100, 130, 70], [140, 80, 120], [90, 150, 100]];
+const W = [[80, 140, 110], [120, 90, 150], [100, 130, 70], [140, 80, 120], [90, 150, 100], [110, 70, 140], [130, 120, 90]];
 $('rows').innerHTML = W.map((w, i) => `<div class="rw" id="r${i}"><div class="av"></div><div class="nm"><div class="ln"></div><div class="ln"></div></div><div class="obsv">${w.map(x => `<div class="chip" style="width:${x}px"></div>`).join('')}</div></div>`).join('');
 const idEls = [...document.querySelectorAll('.av,.nm')];
 const cw = words($('cap'));
 window.seek = t => {
   enter3d($('lap'), t, 0, { ry0: -20, ry1: -12, rx: 6 });
   W.forEach((_, i) => fadeUp($('r' + i), t, 0.3 + i * 0.08, 0.45, 10));
+  $('rows').style.transform = `translateY(${-easeOut(prog(t, 1.2, 2.4)) * 176}px)`;
   // Les identités (photo, nom) se floutent ; les observations restent nettes
   const b = easeOut(prog(t, 1.0, 0.8));
   idEls.forEach(el => { el.style.filter = `blur(${b * 9}px)`; el.style.opacity = 1 - b * 0.35; });
