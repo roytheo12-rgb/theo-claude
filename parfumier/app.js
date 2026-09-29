@@ -4,6 +4,7 @@
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const uid = () => Math.random().toString(36).slice(2, 10);
   const KEY = 'parfumerie.v1';
+  const clone = (o) => JSON.parse(JSON.stringify(o));
 
   // ---------- Stockage ----------
   const DEFAULT = {
@@ -12,7 +13,7 @@
     ctx: { ctx: 'perso', with: 'seul', moment: 'jour', mood: 'confiant', style: 'smart', color: 'neutre', fabric: '' },
   };
   let S;
-  try { S = Object.assign({}, DEFAULT, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = JSON.parse(JSON.stringify(DEFAULT)); }
+  try { S = Object.assign(clone(DEFAULT), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = clone(DEFAULT); }
   S.settings = Object.assign({}, DEFAULT.settings, S.settings);
   S.ctx = Object.assign({}, DEFAULT.ctx, S.ctx);
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ } $('#count').textContent = S.collection.length + ' parfum' + (S.collection.length > 1 ? 's' : ''); };
@@ -193,7 +194,10 @@
     });
     $('#f-occ').addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (b) b.classList.toggle('on'); });
     $('#f-cancel').onclick = () => dl.close();
-    if (!isNew) $('#f-del').onclick = () => { if (confirm('Supprimer ' + p.name + ' ?')) { S.collection = S.collection.filter((x) => x.id !== p.id); save(); dl.close(); render(); } };
+    if (!isNew) $('#f-del').onclick = (ev) => {
+      if (!ev.target.dataset.sure) { ev.target.dataset.sure = '1'; ev.target.textContent = 'Confirmer la suppression'; return; }
+      S.collection = S.collection.filter((x) => x.id !== p.id); save(); dl.close(); render();
+    };
     $('#pf').onsubmit = () => {
       const np = {
         id: p.id || uid(), name: $('#f-name').value.trim(), house: $('#f-house').value.trim(), family: $('#f-family').value,
@@ -285,13 +289,23 @@
         <div style="margin-top:12px"><button class="btn" data-act="savepref">Enregistrer</button></div>
       </div>
       <div class="card"><b>Sauvegarde</b><div class="muted small">Tout est stocké sur cet appareil. Exporte de temps en temps.</div>
-        <div class="row wrap" style="margin-top:10px"><button class="btn ghost sm" data-act="export">Exporter (JSON)</button>
-        <label class="btn ghost sm" style="cursor:pointer">Importer<input type="file" id="imp" accept="application/json" hidden></label>
-        <button class="btn ghost sm danger" data-act="reset">Tout effacer</button></div></div>`;
+        <div class="row wrap" style="margin-top:10px"><button class="btn ghost sm" data-act="export">Exporter</button>
+        <label class="btn ghost sm" style="cursor:pointer">Importer un fichier<input type="file" id="imp" accept="application/json" hidden></label>
+        <button class="btn ghost sm danger" data-act="reset">Tout effacer</button></div>
+        <div id="io" style="margin-top:10px"></div>
+        <label class="f">Importer un texte</label><textarea id="imptxt" placeholder="Colle ici une sauvegarde"></textarea>
+        <div class="row sp" style="margin-top:8px"><button class="btn ghost sm" data-act="imptext">Importer le texte</button><span id="impmsg" class="muted small"></span></div></div>`;
     $('#imp').onchange = (e) => {
       const f = e.target.files[0]; if (!f) return;
-      f.text().then((t) => { try { const d = JSON.parse(t); if (!Array.isArray(d.collection)) throw 0; S = Object.assign({}, DEFAULT, d); S.settings = Object.assign({}, DEFAULT.settings, d.settings); S.ctx = Object.assign({}, DEFAULT.ctx, d.ctx); save(); render(); } catch (err) { alert('Fichier invalide.'); } });
+      f.text().then(importData);
     };
+  }
+
+  function importData(t) {
+    try {
+      const d = JSON.parse(t); if (!Array.isArray(d.collection)) throw 0;
+      S = Object.assign(clone(DEFAULT), d); S.settings = Object.assign({}, DEFAULT.settings, d.settings); S.ctx = Object.assign({}, DEFAULT.ctx, d.ctx); save(); render();
+    } catch (err) { const m = $('#impmsg'); if (m) m.textContent = 'Sauvegarde invalide.'; }
   }
 
   // ---------- Événements ----------
@@ -330,10 +344,18 @@
       S.settings.liked = split($('#liked').value); S.settings.avoid = split($('#avoid').value); save(); a.textContent = 'Enregistré ✓';
     }
     else if (act === 'export') {
-      const url = URL.createObjectURL(new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' }));
-      const l = document.createElement('a'); l.href = url; l.download = 'ma-parfumerie.json'; l.click(); URL.revokeObjectURL(url);
+      $('#io').innerHTML = '<textarea id="exp" readonly></textarea><div class="muted small">Copie ce texte et garde-le (notes, mail…). Pour restaurer : colle-le dans « Importer un texte ».</div><button class="btn sm" data-act="copy" style="margin-top:8px">Copier</button>';
+      $('#exp').value = JSON.stringify(S);
     }
-    else if (act === 'reset') { if (confirm('Effacer toute ta collection et tes réglages ?')) { S = JSON.parse(JSON.stringify(DEFAULT)); save(); render(); } }
+    else if (act === 'copy') {
+      const ta = $('#exp'); ta.select();
+      (navigator.clipboard ? navigator.clipboard.writeText(ta.value) : Promise.reject()).then(() => { a.textContent = 'Copié ✓'; }, () => { a.textContent = 'Sélectionné : copie à la main'; });
+    }
+    else if (act === 'imptext') { importData($('#imptxt').value); }
+    else if (act === 'reset') {
+      if (!a.dataset.sure) { a.dataset.sure = '1'; a.textContent = 'Confirmer : tout effacer'; return; }
+      S = JSON.parse(JSON.stringify(DEFAULT)); save(); render();
+    }
   });
   document.addEventListener('input', (e) => {
     if (e.target.id === 'tempr') { W.temp = +e.target.value; W.manual = true; W.label = ''; W.place = ''; W.error = ''; const t = $('#wx .t'); if (t) t.textContent = W.temp + '°'; renderResultsSoon(); }
