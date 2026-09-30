@@ -105,6 +105,11 @@
     ['Jasmin Rouge', 'Tom Ford', 'floral', ['poivre noir', 'poivre blanc', 'sauge sclarée', 'jasmin sambac', 'ylang-ylang', 'labdanum', 'ambre'], 4, 4, 4, 240],
     ['Stellar Times', 'Louis Vuitton', 'ambré', ['ambre', 'fleur d\'oranger', 'baume du Pérou'], 4, 5, 4, 0],
     ['Radical Rose', 'Matière Première', 'floral', ['safran', 'poivre rose', 'bergamote', 'rose centifolia', 'rose de Turquie', 'patchouli', 'labdanum', 'santal'], 4, 4, 3, 0],
+    ['Rouge Trafalgar', 'Dior', 'fruité', ['framboise', 'feuille de cassis', 'patchouli', 'musc'], 4, 5, 4, 0],
+    ['L\'Eau Pâle', 'Courrèges', 'aromatique', ['citron', 'poivre rose', 'petit grain', 'lavande', 'vétiver', 'iris'], 3, 3, 1, 110],
+    ['Imagination', 'Louis Vuitton', 'agrumes', ['bergamote', 'orange de Sicile', 'cédrat', 'néroli', 'gingembre', 'cannelle', 'ambroxan', 'thé noir', 'bois de gaïac', 'oliban'], 4, 4, 2, 345],
+    ['Néroli Amara', 'Van Cleef & Arpels', 'agrumes', ['citron d\'Italie', 'mandarine', 'bergamote', 'poivre rose', 'cyprès', 'fleur d\'oranger'], 2, 3, 1, 200],
+    ['Ombre Nomade', 'Louis Vuitton', 'oud', ['oud', 'benjoin', 'oliban', 'framboise'], 5, 5, 5, 0],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
