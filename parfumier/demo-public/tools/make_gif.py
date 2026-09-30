@@ -22,6 +22,6 @@ for idx in picks:
     h = round(im.height * W / im.width); im = im.resize((W, h), Image.LANCZOS)
     imgs.append(im.quantize(colors=COLORS, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)); durs.append(int(1000 / FPS)); last = idx
 durs[-1] += 1400  # respiration finale avant la boucle
-out = here / 'sillage-story.gif'
+out = here / (sys.argv[4] if len(sys.argv) > 4 else 'sillage-story.gif')
 imgs[0].save(out, save_all=True, append_images=imgs[1:], duration=durs, loop=0, optimize=True, disposal=1)
 print(out, round(out.stat().st_size / 1e6, 2), 'Mo', len(imgs), 'images')

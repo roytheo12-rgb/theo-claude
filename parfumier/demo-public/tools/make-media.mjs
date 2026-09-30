@@ -2,10 +2,11 @@
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 import { chromium, PORT, close } from './serve.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url)), OUT = path.join(here, '../media'); fs.mkdirSync(OUT, { recursive: true });
+const AMARA = process.env.VARIANT === 'amara', SUF = AMARA ? '-neroli' : '';
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 
 // ---------- 1. Image de partage 1200x630 (scène d'accueil)
-{
+if (!AMARA) {
   const ctx = await browser.newContext({ viewport: { width: 1200, height: 630 } }); const pg = await ctx.newPage();
   await pg.goto(`http://localhost:${PORT}/`); await pg.waitForSelector('#onb', { timeout: 9000 }); await pg.waitForTimeout(1900); await pg.addStyleTag({ content: '.onb-skip{display:none}' });
   await pg.screenshot({ path: path.join(OUT, 'og.jpg'), type: 'jpeg', quality: 88 }); await ctx.close();
@@ -20,7 +21,9 @@ await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(3300);
 await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 82, everyNthFrame: 1 });
 const t0 = Date.now(); const wait = (ms) => pg.waitForTimeout(ms);
 await wait(500);
-await pg.click('[data-cat=amour]'); await wait(350); await pg.click('[data-sc=diner2]'); await wait(450); await pg.click('[data-mood=mysterieux]'); await wait(350); await pg.click('[data-wx=froid]'); await wait(700);
+const steps = AMARA ? ['[data-cat=sorties]', '[data-sc=brunch]', '[data-mood=joyeux]', '[data-wx=chaud]'] : ['[data-cat=sorties]', '[data-sc=apero]', '[data-mood=joyeux]', '[data-wx=doux]'];
+for (const sel of steps) { await pg.click(sel); await wait(400); }
+await wait(300);
 await pg.click('#go'); await pg.waitForSelector('#story:not([hidden]) .hero-bottle, #story:not([hidden]) .lead', { timeout: 20000 });
 await wait(1500);                                   // lecture de la journée
 await pg.mouse.click(300, 400); await wait(3300);   // parfum du jour
@@ -28,7 +31,8 @@ await pg.mouse.click(300, 400); await wait(2500);   // notes
 await pg.mouse.click(300, 400); await wait(3300);   // pourquoi
 await pg.mouse.click(300, 400); await wait(4200);   // layering
 await wait(600);
-await cdp.send('Page.stopScreencast'); await pg.close(); await ctx.close(); await browser.close(); close();
+await cdp.send('Page.stopScreencast'); await pg.close(); await ctx.close();
+const vids = fs.readdirSync(OUT).filter((f) => f.endsWith('.webm') && !f.startsWith('sillage')); if (vids.length) fs.renameSync(path.join(OUT, vids[0]), path.join(OUT, `sillage-story${SUF}.webm`)); await browser.close(); close();
 
 // ---------- 3. Fichiers de frames pour Python (assemblage du GIF)
 const dir = path.join(OUT, 'frames'); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir);

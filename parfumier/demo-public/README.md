@@ -62,7 +62,7 @@ Le formulaire demande un consentement explicite avant d'enregistrer un email. Di
 
 Dans `public/` et `media/` :
 
-- `sillage-story.gif` (4,5 Mo) : à mettre directement dans le post, il se lit en boucle.
+- `sillage-story.gif` (4,5 Mo) : story « sortie entre amis » qui tombe sur Jazz Club + Fève Nectar. `sillage-story-neroli.gif` : brunch chaud qui tombe volontairement sur Néroli Amara + The Musc. Les deux sont des réponses IA scriptées (tools/serve.mjs), pas un appel réel. Régénérer : `VARIANT=amara node tools/make-media.mjs` puis `python3 tools/make_gif.py 272 10 56 sillage-story-neroli.gif`.
 - `sillage-story.webm` : version vidéo plus légère (à convertir en mp4 si LinkedIn refuse le format).
 - `og.jpg` : image d'aperçu quand tu colles le lien.
 - `/signup.html` : page d'inscription seule, pour « Repostez et envoyez-moi un message ».
