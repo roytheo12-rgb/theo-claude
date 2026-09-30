@@ -1,0 +1,93 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Sillage · teaser</title>
+<style>html,body{margin:0;background:#08080a}canvas{display:block}</style></head><body><canvas id="c" width="2160" height="3840" style="width:540px;height:960px"></canvas>
+<script>
+// Teaser Sillage : tout est fonction du temps. window.seek(t) dessine l'image exacte à l'instant t (secondes).
+const V = new URLSearchParams(location.search).get('v') === 'amara' ? 'amara' : 'normal';
+const D = V === 'amara'
+  ? { ctx: ['Brunch entre amis', 'Joyeux', '29° · Chaud'], hero: 'neroliamara', name: 'Néroli Amara', house: 'Van Cleef & Arpels', vibe: ['frais', 'lumineux', 'solaire'], notes: 'citron d’Italie · mandarine · bergamote', mate: 'musc', mateName: 'The Musc', fx: 'Le musc arrondit l’agrume et le fait durer.', warm: [.9, .55, .3] }
+  : { ctx: ['Apéro entre amis', 'Joyeux', '18° · Doux'], hero: 'jazz', name: 'Jazz Club', house: 'Maison Margiela', vibe: ['convivial', 'ambré', 'magnétique'], notes: 'poivre rose · citron · néroli', mate: 'feve', mateName: 'Fève Nectar', fx: 'La vanille chocolatée adoucit le rhum.', warm: [.85, .45, .25] };
+const W = 540, H = 960, S = 4, DUR = 32;
+const cv = document.getElementById('c'), c = cv.getContext('2d');
+const names = ['lemale', 'jazz', 'br540', 'tobacco', 'naxos', 'gris', D.hero, D.mate];
+const IM = {}; window.ready = Promise.all([...new Set(names)].map((n) => new Promise((r) => { const i = new Image(); i.onload = () => { IM[n] = i; r(); }; i.src = '../public/img/' + n + '.webp'; })));
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), seg = (t, a, b) => cl((t - a) / (b - a));
+const eo = (k) => 1 - Math.pow(1 - k, 3), ei = (k) => k * k * k, eio = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+const eb = (k) => { const s = 1.70158; k = cl(k); return 1 + (s + 1) * Math.pow(k - 1, 3) + s * Math.pow(k - 1, 2); };
+const CREAM = '244,240,234', MUTED = '148,144,138', WINE = '180,57,74';
+const FONT = '"SF Pro Display","Inter","Helvetica Neue",Arial,sans-serif';
+let seed = 7; const rnd = () => ((seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296);
+const DUST = [...Array(46)].map(() => ({ x: rnd() * W, y: rnd() * H, v: 6 + rnd() * 14, r: .7 + rnd() * 1.7, a: .04 + rnd() * .07, ph: rnd() * 6.28, dx: (rnd() - .5) * 8 }));
+
+function txt(s, x, y, size, o = {}) {
+  c.save(); c.font = `${o.w || 300} ${size}px ${FONT}`; c.letterSpacing = (o.ls || 0) + 'px'; c.textAlign = o.al || 'center'; c.textBaseline = 'alphabetic';
+  c.fillStyle = `rgba(${o.col || CREAM},${o.a == null ? 1 : o.a})`; if (o.ls && c.textAlign === 'center') x += o.ls / 2; c.fillText(o.up ? s.toUpperCase() : s, x, y); c.restore();
+}
+// ligne qui monte derrière un masque (entrée), puis repart vers le haut (sortie)
+function line(s, x, y, size, tin, tout, t, o = {}) {
+  const ki = eo(seg(t, tin, tin + .7)), ko = ei(seg(t, tout, tout + .5)); if (ki <= 0 || ko >= 1) return;
+  c.save(); c.beginPath(); c.rect(0, y - size * 1.05, W, size * 1.45); c.clip();
+  txt(s, x, y + (1 - ki) * size * 1.15 - ko * size * 1.15, size, o); c.restore();
+}
+function rr(x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); }
+function bottle(n, cx, base, h, a = 1, o = {}) {
+  const im = IM[n]; if (!im || a <= 0) return; const w = h * im.naturalWidth / im.naturalHeight;
+  c.save(); c.globalAlpha = a * .5; const g = c.createRadialGradient(cx, base + 4, 2, cx, base + 4, w * .7); g.addColorStop(0, 'rgba(0,0,0,.9)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  c.fillStyle = g; c.save(); c.translate(cx, base + 4); c.scale(1, .12); c.translate(-cx, -(base + 4)); c.beginPath(); c.arc(cx, base + 4, w * .7, 0, 6.29); c.fill(); c.restore();
+  c.globalAlpha = a; c.drawImage(im, cx - w / 2, base - h, w, h); c.restore();
+}
+function glow(cx, cy, r, col, a) { if (a <= 0) return; const g = c.createRadialGradient(cx, cy, 0, cx, cy, r); g.addColorStop(0, `rgba(${col},${a})`); g.addColorStop(1, `rgba(${col},0)`); c.fillStyle = g; c.fillRect(0, 0, W, H); }
+
+window.seek = (t) => {
+  c.setTransform(S, 0, 0, S, 0, 0); c.clearRect(0, 0, W, H); c.fillStyle = '#08080a'; c.fillRect(0, 0, W, H);
+  // fond : lueur bordeaux qui respire, très douce
+  const br = .5 + .5 * Math.sin(t * .8); glow(W * .5, -60, 620, '120,22,40', .38 + .1 * br); glow(W * .5, H + 80, 520, '60,10,20', .3);
+  // poussière très transparente
+  DUST.forEach((p) => { const y = ((p.y - t * p.v) % H + H) % H, x = p.x + Math.sin(t * .4 + p.ph) * 10 + p.dx * .3; c.fillStyle = `rgba(${CREAM},${p.a * (.6 + .4 * Math.sin(t + p.ph))})`; c.beginPath(); c.arc(x, y, p.r, 0, 6.29); c.fill(); });
+
+  // 1. Signature
+  { const k = eo(seg(t, .2, 1.8)), ko = ei(seg(t, 2.7, 3.3)); if (k > 0 && ko < 1) { const ls = 36 - 24 * eo(seg(t, .2, 2.4)); txt('SILLAGE', W / 2, H / 2 - ko * 30, 34, { w: 600, ls, a: k * (1 - ko) });
+      const lw = 90 * eo(seg(t, .9, 2)); c.fillStyle = `rgba(${WINE},${(1 - ko)})`; c.fillRect(W / 2 - lw / 2, H / 2 + 26 - ko * 30, lw, 1.5); } }
+  // 2. Accroche
+  line('Ton parfum du jour.', W / 2, 430, 40, 3.4, 6.5, t, { w: 200 }); line('Météo. Mood. Tenue.', W / 2, 486, 22, 4.3, 6.4, t, { w: 300, col: MUTED, ls: 3 });
+
+  // 3. Défilé de flacons
+  { const a = seg(t, 6.9, 7.6) * (1 - seg(t, 11.0, 11.6)); if (a > 0) { const list = ['lemale', 'jazz', 'br540', 'tobacco', 'naxos', 'gris'], pos = 5 * eio(seg(t, 7.2, 11.2));
+      list.forEach((n, i) => { const d = i - pos, ad = Math.abs(d), s = 1 - .38 * Math.min(1, ad), x = W / 2 + d * 205; bottle(n, x, 560 + ad * 10, 330 * s, a * (1 - .55 * Math.min(1, ad))); });
+      const nm = ['Le Male', 'Jazz Club', 'Baccarat Rouge 540', 'Tobacco Vanille', 'Naxos', 'Gris Charnel'][cl(Math.round(pos), 0, 5)];
+      txt(nm, W / 2, 640, 17, { w: 300, ls: 2.5, a: a * .85, up: true }); txt('Toute ta collection', W / 2, 220, 13, { w: 500, ls: 3.5, col: MUTED, a: a * .8, up: true }); } }
+
+  // 4. Il dit sa journée : trois pastilles puis le bouton
+  { const ko = ei(seg(t, 15.0, 15.6)); D.ctx.forEach((s, i) => { const k = eb(seg(t, 11.8 + i * .55, 12.5 + i * .55)); if (k <= 0 || ko >= 1) return; c.font = `400 17px ${FONT}`; const w = c.measureText(s).width + 44, h = 46, y = 300 + i * 68;
+      c.save(); c.globalAlpha = cl(k) * (1 - ko); c.translate(W / 2, y + h / 2 - ko * 24); c.scale(.85 + .15 * k, .85 + .15 * k); rr(-w / 2, -h / 2, w, h, 4); c.strokeStyle = `rgba(${i === 1 ? WINE : CREAM},${i === 1 ? .9 : .38})`; c.lineWidth = 1; c.stroke(); if (i === 1) { c.fillStyle = `rgba(${WINE},.16)`; c.fill(); }
+      txt(s, 0, 6, 17, { w: 400, col: i === 1 ? '246,241,232' : CREAM }); c.restore(); });
+    const kb = eb(seg(t, 13.5, 14.2)), press = Math.sin(Math.PI * seg(t, 14.5, 14.9)); if (kb > 0 && ko < 1) { c.save(); c.globalAlpha = cl(kb) * (1 - ko); c.translate(W / 2, 560 - ko * 24); const sc = (.9 + .1 * kb) * (1 - .04 * press); c.scale(sc, sc);
+      rr(-120, -26, 240, 52, 3); c.fillStyle = '#eee7da'; c.fill(); txt('TROUVER MON PARFUM', 0, 5, 11.5, { w: 700, ls: 2.4, col: '20,18,20' }); c.restore();
+      const rp = seg(t, 14.6, 15.2); if (rp > 0 && rp < 1) { c.strokeStyle = `rgba(${CREAM},${.5 * (1 - rp)})`; c.lineWidth = 1; rr(-120 - 40 * rp + W / 2, 560 - 26 - 20 * rp, 240 + 80 * rp, 52 + 40 * rp, 6); c.stroke(); } }
+    line('Dis-lui ta journée.', W / 2, 220, 26, 11.4, 15.0, t, { w: 200 }); }
+
+  // 5. Le parfum du jour
+  { const ki = seg(t, 15.4, 17.2), ko = seg(t, 20.2, 20.9); if (ki > 0 && ko < 1) { const a = eo(ki) * (1 - ko); glow(W / 2, 400, 330, D.warm.map((x) => Math.round(x * 255)).join(','), .2 * a);
+      bottle(D.hero, W / 2, 610 + (1 - eo(ki)) * 70 - ko * 40, 400 * (.92 + .08 * eo(ki)), a);
+      txt('TON PARFUM DU JOUR', W / 2, 140, 11.5, { w: 500, ls: 3.2, col: MUTED, a });
+      line(D.name, W / 2, 705, 46, 16.0, 20.2, t, { w: 200 }); line(D.house, W / 2, 738, 15, 16.5, 20.2, t, { w: 300, col: MUTED, ls: 1.5 });
+      D.vibe.forEach((s, i) => { const k = eb(seg(t, 17.2 + i * .25, 17.8 + i * .25)) * (1 - ko); if (k <= 0) return; c.font = `500 11px ${FONT}`; c.letterSpacing = '2px'; const w = c.measureText(s.toUpperCase()).width + 26, x = W / 2 + (i - 1) * 132; c.save(); c.globalAlpha = cl(k); c.translate(x, 790); c.scale(.9 + .1 * k, .9 + .1 * k); rr(-w / 2, -14, w, 28, 2); c.strokeStyle = `rgba(${CREAM},.4)`; c.stroke(); txt(s, 0, 4, 11, { w: 500, ls: 2, up: true }); c.restore(); });
+      line(D.notes, W / 2, 845, 13, 18.0, 20.2, t, { w: 300, col: MUTED, ls: .5 }); } }
+
+  // 6. Le layering
+  { const ki = seg(t, 20.7, 22.0), ko = seg(t, 24.0, 24.6); if (ki > 0 && ko < 1) { const a = 1 - ko, e = eo(ki); glow(W / 2, 400, 320, '150,40,60', .14 * a);
+      bottle(D.hero, W / 2 - 92 + (1 - e) * -120, 560, 300, e * a); bottle(D.mate, W / 2 + 92 + (1 - e) * 120, 560, 300, e * a);
+      const kp = eb(seg(t, 21.6, 22.2)); if (kp > 0) { c.save(); c.globalAlpha = a; c.translate(W / 2, 430); c.scale(kp, kp); txt('+', 0, 12, 38, { w: 200 }); c.restore(); }
+      txt('LAYERING', W / 2, 150, 11.5, { w: 500, ls: 3.2, col: MUTED, a: e * a }); line(`${D.name} + ${D.mateName}`, W / 2, 660, 21, 21.9, 24.0, t, { w: 300 }); line(D.fx, W / 2, 695, 13.5, 22.3, 24.0, t, { w: 300, col: MUTED });
+      const dots = 4 * eo(seg(t, 22.4, 23.2)); for (let i = 0; i < 5; i++) { c.fillStyle = i < Math.floor(dots + .01) ? `rgba(${CREAM},${a})` : `rgba(${CREAM},${.2 * a})`; c.beginPath(); c.arc(W / 2 - 40 + i * 20, 745, 3, 0, 6.29); c.fill(); } } }
+
+  // 7. Mots-clés cinétiques
+  { const words = ['Météo automatique', 'Layering', 'Balade olfactive', 'Wishlist', 'Ma semaine', 'Mode voyage'], t0 = 24.8, st = .62; words.forEach((w, i) => line(w, W / 2, 490, 40, t0 + i * st, t0 + (i + 1) * st - .1, t, { w: 200 })); }
+
+  // 8. Fin
+  { const k = eo(seg(t, 28.7, 29.8)); if (k > 0) { glow(W / 2, 430, 300, '120,22,40', .18 * k); txt('SILLAGE', W / 2, 440, 34, { w: 600, ls: 12, a: k }); c.fillStyle = `rgba(${WINE},${k})`; c.fillRect(W / 2 - 45, 466, 90 * eo(seg(t, 29, 30)), 1.5);
+    line('Essaie-le. 2 essais offerts.', W / 2, 545, 17, 29.6, 99, t, { w: 300, col: MUTED, ls: 1 }); line('Lien en commentaire', W / 2, 585, 13, 30.1, 99, t, { w: 500, ls: 3, up: true, col: WINE.replace(/^/, '') }); } }
+  // fondu d'ouverture / de fermeture
+  const fo = 1 - eo(seg(t, 0, .5)) , fc = seg(t, 31.4, 32); if (fo > 0 || fc > 0) { c.fillStyle = `rgba(8,8,10,${Math.max(fo, fc)})`; c.fillRect(0, 0, W, H); }
+};
+window.DURATION = DUR; window.seek(0);
+</script></body></html>
