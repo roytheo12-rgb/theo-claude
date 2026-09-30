@@ -129,6 +129,10 @@
     ['Dior Homme Intense', 'Dior', 'boisé', ['lavande', 'iris', 'ambrette', 'poire', 'cèdre de Virginie', 'vétiver'], 3, 4, 3, 130],
     ['Stronger With You Intensely', 'Emporio Armani', 'gourmand', ['poivre rose', 'marron glacé', 'vanille', 'accord daim', 'vétiver', 'notes ambrées boisées'], 4, 5, 4, 85],
     ['Pure Musc Blanc', 'Narciso Rodriguez', 'musqué', ['jasmin', 'accord propre', 'musc', 'cèdre', 'vanille'], 3, 4, 1, 70],
+    ['Libre Le Parfum', 'Yves Saint Laurent', 'floral', ['bergamote', 'mandarine', 'gingembre', 'safran', 'fleur d\'oranger', 'lavande', 'lavandin', 'vanille Bourbon', 'miel', 'vétiver'], 4, 5, 4, 140],
+    ['Le Male', 'Jean Paul Gaultier', 'aromatique', ['menthe', 'armoise', 'cardamome', 'bergamote', 'lavande', 'fleur d\'oranger', 'cannelle', 'cumin', 'santal', 'vanille', 'cèdre', 'fève tonka', 'ambre'], 4, 4, 3, 95],
+    ['L\'Interdit Rouge', 'Givenchy', 'floral', ['orange sanguine', 'accord rouge épicé', 'fleur d\'oranger', 'jasmin sambac', 'patchouli', 'santal'], 4, 4, 3, 95],
+    ['Power of You', 'Emporio Armani', 'gourmand', ['fruit de la passion', 'accord frangipanier', 'vanille'], 3, 4, 3, 90],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
