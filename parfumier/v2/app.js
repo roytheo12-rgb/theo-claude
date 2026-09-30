@@ -42,7 +42,7 @@
   const seedOwned = () => window.OWNED.map(([n, r, occ]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   const seedWish = () => window.WISH.map(wishFromName);
-  const DEMO_V = 16;
+  const DEMO_V = 17;
   // Balade olfactive fictive (rue Saint-Honoré) et exemples de semaine / voyage : la démo ne demande rien à l'IA pour les montrer.
   const seedWalk = () => {
     const d = new Date(); d.setDate(d.getDate() - 3); const date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
