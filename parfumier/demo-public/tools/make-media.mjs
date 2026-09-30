@@ -1,4 +1,4 @@
-// Fabrique le GIF de la story, une vidéo WebM et l'image de partage (og.jpg). Lance : node tools/make-media.mjs
+// Fabrique le GIF de la story, les GIF (les vidéos MP4 4K viennent de make-video.mjs) et l'image de partage (og.jpg). Lance : node tools/make-media.mjs
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 import { chromium, PORT, close } from './serve.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url)), OUT = path.join(here, '../media'); fs.mkdirSync(OUT, { recursive: true });
@@ -13,7 +13,7 @@ if (!AMARA) {
 }
 
 // ---------- 2. Enregistrement de la story (frames réelles, avec leur horodatage)
-const ctx = await browser.newContext({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 1, recordVideo: { dir: OUT, size: { width: 400, height: 860 } } });
+const ctx = await browser.newContext({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 1 });
 await ctx.addInitScript(() => { try { localStorage.setItem('sillage.onb', '1'); } catch (e) { /* ok */ } });
 const pg = await ctx.newPage(); const cdp = await ctx.newCDPSession(pg); const frames = [];
 cdp.on('Page.screencastFrame', async (f) => { frames.push({ t: f.metadata.timestamp, data: f.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch (e) { /* fin */ } });
@@ -32,7 +32,6 @@ await pg.mouse.click(300, 400); await wait(3300);   // pourquoi
 await pg.mouse.click(300, 400); await wait(4200);   // layering
 await wait(600);
 await cdp.send('Page.stopScreencast'); await pg.close(); await ctx.close();
-const vids = fs.readdirSync(OUT).filter((f) => f.endsWith('.webm') && !f.startsWith('sillage')); if (vids.length) fs.renameSync(path.join(OUT, vids[0]), path.join(OUT, `sillage-story${SUF}.webm`)); await browser.close(); close();
 
 // ---------- 3. Fichiers de frames pour Python (assemblage du GIF)
 const dir = path.join(OUT, 'frames'); fs.rmSync(dir, { recursive: true, force: true }); fs.mkdirSync(dir);
