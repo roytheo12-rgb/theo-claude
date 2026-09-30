@@ -97,6 +97,11 @@
     ['Straight to Heaven', 'Kilian', 'gourmand', ['rhum', 'muscade', 'vanille', 'fruits secs', 'patchouli', 'cèdre'], 4, 5, 5, 375],
     ['Nasaj', 'Oman Luxury', 'floral', ['mandarine', 'pamplemousse', 'poivre rose', 'cardamome', 'poire', 'tubéreuse', 'jasmin', 'néroli', 'lys', 'magnolia', 'gardénia', 'benjoin', 'santal', 'oliban', 'fève tonka', 'patchouli', 'ambroxan'], 4, 5, 4, 235],
     ['Néroli Hasbaya', 'Atelier Materi', 'floral', ['néroli', 'fleur d\'oranger', 'amande amère', 'pistache', 'rose de Damas', 'musc', 'baume du Pérou', 'santal blanc'], 3, 5, 3, 254],
+    ['Guidance 46', 'Amouage', 'floral', ['eau de rose', 'poire', 'noisette', 'amande amère', 'oliban', 'poivre rose', 'rose', 'osmanthus', 'safran', 'jasmin sambac', 'santal', 'Akigalawood', 'vanille', 'ambrette', 'Georgywood', 'ambre gris', 'labdanum', 'cypriol'], 5, 5, 4, 490],
+    ['Tuxedo', 'Yves Saint Laurent', 'boisé', ['feuille de violette', 'bergamote', 'coriandre', 'rose', 'muguet', 'poivre noir', 'ambre gris', 'patchouli', 'vanille Bourbon'], 4, 5, 4, 300],
+    ['Ambre Russe', 'Parfum d\'Empire', 'ambré', ['vodka', 'champagne', 'thé noir fumé', 'coriandre', 'cannelle', 'ambre gris', 'vanille', 'labdanum', 'cuir de Russie'], 4, 5, 5, 130],
+    ['Tam Dao Eau de Parfum', 'Diptyque', 'boisé', ['cyprès d\'Italie', 'ambre gris', 'santal', 'cèdre', 'ambre', 'bois de rose', 'musc blanc'], 3, 4, 3, 190],
+    ['Fève Nectar', 'Place de la Rêverie', 'gourmand', ['bergamote', 'fleur d\'oranger', 'vanille', 'cacao', 'chocolat', 'fève tonka', 'benjoin', 'ambrette', 'musc'], 3, 5, 4, 245],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
