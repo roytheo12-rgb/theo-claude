@@ -1,5 +1,7 @@
 # Sillage : démo publique (hébergement gratuit)
 
+Nouveau : lis **TUTO.md** pour tout mettre en ligne pas à pas.
+
 Un seul Worker Cloudflare sert le site, garde le prompt du conseil du jour côté serveur, limite chaque visiteur à **2 essais** et récolte les emails.
 
 - Cloudflare Workers + KV : **gratuit** (100 000 requêtes/jour, pas de carte bancaire).
@@ -63,7 +65,7 @@ Le formulaire demande un consentement explicite avant d'enregistrer un email. Di
 Dans `public/` et `media/` :
 
 - `sillage-story.gif` (4,5 Mo) : story « sortie entre amis » qui tombe sur Jazz Club + Fève Nectar. `sillage-story-neroli.gif` : brunch chaud qui tombe volontairement sur Néroli Amara + The Musc. Les deux sont des réponses IA scriptées (tools/serve.mjs), pas un appel réel. Régénérer : `VARIANT=amara node tools/make-media.mjs` puis `python3 tools/make_gif.py 272 10 56 sillage-story-neroli.gif`.
-- `sillage-story.webm` : version vidéo plus légère (à convertir en mp4 si LinkedIn refuse le format).
+- `sillage-story-4k.mp4` et `sillage-story-neroli-4k.mp4` : vidéos verticales 4K (2160×3840, 30 im/s). Voir TUTO.md.
 - `og.jpg` : image d'aperçu quand tu colles le lien.
 - `/signup.html` : page d'inscription seule, pour « Repostez et envoyez-moi un message ».
 
