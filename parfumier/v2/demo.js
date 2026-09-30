@@ -37,6 +37,7 @@
   const TEXT = {
     quota: ['Tes 2 essais sont utilisés', 'Tu as vu ce que fait Sillage. Laisse ton email : je t\'envoie l\'accès complet, et je peux préparer une version sur mesure pour ta collection ou ton activité.'],
     locked: ['Réservé à la version complète', 'Cette fonction (ajout par IA, labo d\'accords, semaine, voyage, balade…) est dans la version complète. Laisse ton email pour l\'obtenir.'],
+    cta: ['Ton Sillage, sur mesure', 'Laisse ton email : je te recontacte pour construire la version qui contient ta vraie collection, tes habitudes et l\'IA sans limite d\'essais.'],
     busy: ['La démo fait une pause', 'Elle est très demandée aujourd\'hui et reprend demain. Laisse ton email, je te préviens.'],
   };
   function upsell(reason) {
@@ -45,12 +46,12 @@
     const pn = H.openSheet(`<div><h2>${esc(title)}</h2><p style="color:var(--muted);margin-top:8px">${esc(text)}</p></div>
       <form id="su" style="display:grid;gap:12px" novalidate>
         <input type="text" id="su-mail" inputmode="email" autocomplete="email" placeholder="ton@email.com" aria-label="Ton email">
-        <div class="chips" id="su-int"><button type="button" class="chip on" data-v="test">Tester la version complète</button><button type="button" class="chip" data-v="custom">Une version sur mesure</button><button type="button" class="chip" data-v="guide">Le guide</button></div>
+        <div class="chips" id="su-int"><button type="button" class="chip ${reason === 'cta' ? '' : 'on'}" data-v="test">Tester la version complète</button><button type="button" class="chip ${reason === 'cta' ? 'on' : ''}" data-v="custom">Une version sur mesure</button><button type="button" class="chip" data-v="guide">Le guide</button></div>
         <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)"><input type="checkbox" id="su-ok" style="width:auto;margin-top:3px"><span>J'accepte de recevoir des nouvelles de Sillage par email. Je peux me désinscrire à tout moment. Mon email ne sert qu'à ça.</span></label>
         <input type="text" id="su-web" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true">
         <button class="cta full" id="su-go"><span>Recevoir l'accès</span></button><p class="mono" id="su-msg" style="text-transform:none;letter-spacing:0"></p>
       </form>`);
-    let interest = 'test';
+    let interest = reason === 'cta' ? 'custom' : 'test';
     pn.querySelectorAll('#su-int .chip').forEach((b) => (b.onclick = () => { interest = b.dataset.v; pn.querySelectorAll('#su-int .chip').forEach((x) => x.classList.toggle('on', x === b)); }));
     pn.querySelector('#su').onsubmit = async (e) => {
       e.preventDefault();

@@ -43,10 +43,10 @@ Dans `wrangler.toml` :
 | `MAX_TRIES` | essais par visiteur | 2 |
 | `IP_MAX_PER_DAY` | essais par adresse IP et par jour | 6 |
 | `DAILY_CAP` | essais IA au total par jour, tous visiteurs confondus | 150 |
-| `MODEL` | `claude-opus-5-5` ou `claude-sonnet-5-5` (moitié moins cher) | opus |
+| `MODEL` | `claude-sonnet-5-5` (défaut) ou `claude-opus-5-5` (≈ 2× plus cher) | sonnet |
 | `EFFORT` | `low`, `medium`, `high` | low |
 
-Ordre de grandeur **estimé, non mesuré** : ≈ 0,04 $ par essai avec Opus 5.5, donc 150 essais/jour ≈ 6 $ maximum. Vérifie ta consommation réelle dans la console Anthropic après les premiers essais, et fixe une limite de dépense mensuelle là-bas.
+Ordre de grandeur **estimé, non mesuré** : ≈ 0,02 $ par essai avec Sonnet 5.5 (≈ 0,04 $ avec Opus), donc 150 essais/jour ≈ 3 $ maximum. Vérifie ta consommation réelle dans la console Anthropic après les premiers essais, et fixe une limite de dépense mensuelle là-bas.
 
 ## 4. Ce que ça protège, et ce que ça ne protège pas
 

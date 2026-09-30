@@ -42,10 +42,22 @@
   const seedOwned = () => window.OWNED.map(([n, r, occ]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   const seedWish = () => window.WISH.map(wishFromName);
-  const DEMO_V = 15;
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: seedOwned(), wishlist: seedWish(), walks: [], log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
+  const DEMO_V = 16;
+  // Balade olfactive fictive (rue Saint-Honoré) et exemples de semaine / voyage : la démo ne demande rien à l'IA pour les montrer.
+  const seedWalk = () => {
+    const d = new Date(); d.setDate(d.getDate() - 3); const date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const T = [['Ganymede', 'love', 'Métallique, minéral, une fleur qui ne ressemble à rien. Je le sens encore une heure après.'], ['Ombre Nomade', 'love', 'Oud fumé et résine, il occupe la pièce. Une signature pour l\'hiver.'], ['Portrait of a Lady', 'ok', 'Rose et patchouli, très dense. Superbe, mais pas pour un jour de chaleur.'], ['Tam Dao Eau de Parfum', 'love', 'Bois crémeux, presque du santal chaud. Calme, propre, facile à porter.'], ['Stellar Times', 'ok', 'Ouverture claire et poivrée, puis il s\'aplatit sur ma peau.'], ['Rouge Trafalgar', 'ok', 'Cuir et fruits rouges. Bien fait, mais j\'ai déjà l\'équivalent.'], ['Jasmin Rouge', 'no', 'Trop sucré sur moi, le jasmin étouffe le reste.'], ['Purpose', 'ok', 'Frais et vert au départ, sage ensuite.']];
+    return { id: 'w-honore', seed: true, date, place: 'Rue Saint-Honoré, Paris', entries: T.map(([n, r, note], i) => { const c = CAT.find((x) => x.name === n); return { id: 'we' + i, sym: i, name: n, house: c.house, family: c.family, notes: [...c.notes], note, rating: r, date }; }) };
+  };
+  const SEED_SUM = { taste: 'Tu vas vers les bois crémeux, les résines et les fleurs un peu étranges, jamais vers le sucré franc. Tes coups de cœur ont tous du relief et de la matière.', keep: [{ name: 'Ombre Nomade', why: 'complète tes ambrés sans les doubler' }, { name: 'Tam Dao Eau de Parfum', why: 'le bois calme qui manque à ta collection' }, { name: 'Ganymede', why: 'ta touche minérale, à tester sur peau' }], skip: 'Jasmin Rouge : trop sucré pour toi, inutile d\'y revenir.' };
+  const byName = (n) => S.collection.find((p) => p.name === n);
+  const wkRows = (rows) => rows.map((r, i) => `<div class="wk" style="--i:${i}">${bt(r.p, { still: true })}<div><span class="d">${esc(r.d)}</span><br><b>${esc(r.p.name)}</b><p>${esc(r.why || '')}</p></div></div>`).join('');
+  const WEEK_SAMPLE = [['Lundi', 'Thé Noir 29', 'Bureau : sec, discret, sérieux.'], ['Mardi', 'Vétiver Extraordinaire', 'Réunions : propre et net, sans envahir.'], ['Mercredi', '724', 'Télétravail : musc doux, on l\'oublie.'], ['Jeudi', 'Tobacco Vanille', 'Dîner à deux : chaud et enveloppant.'], ['Vendredi', 'Jazz Club', 'Afterwork : rhum et tabac, convivial.'], ['Samedi', 'Baccarat Rouge 540', 'Soirée : le sillage qui se remarque.'], ['Dimanche', 'Lazy Sunday Morning', 'En famille : tendre et léger.']];
+  const TRAVEL_SAMPLE = { picks: [['Thé Noir 29', 'Le jour, en réunion', 'Sec et fumé, il tient dans le froid humide sans remplir une salle.'], ['Tobacco Vanille', 'Les dîners du soir', 'Chaud, épicé, il répond au froid de novembre.'], ['Terre d\'Hermès', 'Marches sous la bruine', 'Minéral et poivré, il aime l\'air frais et la pluie.']], tip: 'Prends des atomiseurs de 10 ml : ils passent en cabine et protègent le jus de la chaleur des valises.' };
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: seedOwned(), wishlist: seedWish(), walks: [seedWalk()], log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
   function migrate() {
     S.walks = S.walks || [];
+    if (!S.walks.some((w) => w.seed)) S.walks.unshift(seedWalk());
     // Nouvelle collection de démonstration cohérente : remplace l'ancienne, une seule fois.
     if ((S.seedV || 1) < DEMO_V) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; S.seedV = DEMO_V; }
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
@@ -217,7 +229,7 @@
     $('#view').innerHTML = `
       <section class="hero">
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
-        ${window.SillageDemo ? `<p class="demo-pill">Démo publique · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''} restant${window.SillageDemo.left() > 1 ? 's' : ''}</p>` : ''}
+        ${window.SillageDemo ? `<button class="demo-pill" data-sell>Démo publique · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''} restant${window.SillageDemo.left() > 1 ? 's' : ''} · Avoir la mienne</button>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
@@ -247,6 +259,7 @@
       <section class="sec"><header><h2>Ta collection</h2><span class="mono">${S.collection.length} flacons</span></header>
         <div class="vit">${S.collection.map((p) => `<button data-open="${p.id}">${fxCanvas(`data-p="${p.id}"`, .45)}${bt(p, {})}<b>${esc(p.name)}</b><small>${esc(p.house)}</small></button>`).join('')}</div></section>
       <section class="sec"><div class="row"><button class="ghost" id="weekBtn">Ma semaine</button><button class="ghost" id="travelBtn">Mode voyage</button></div></section>
+      ${sellCard()}
       ${recent.length ? `<section class="sec"><header><h2>Sillage récent</h2></header><div class="strip">${recent.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b>${ago(daysSince(p.id)).replace('porté ', '')}</button>`).join('')}</div></section>` : ''}`;
     const ta = $('#say'); ta.addEventListener('input', () => { SAY = ta.value; });
     $('#go').onclick = () => runDay();
@@ -544,7 +557,8 @@
   function openTravel() {
     const pn = openSheet(`<div><h2>Mode voyage</h2><p style="color:var(--muted);margin-top:6px">Dis-moi où tu vas et ce que tu y fais. Je choisis les 2 ou 3 flacons à emporter.</p></div>
       <textarea id="ttxt" rows="3" placeholder="5 jours à Londres en novembre, réunions le jour, dîners le soir…"></textarea>
-      <button class="cta full" id="tgo"><span>Faire ma valise</span></button><div id="tres" style="display:grid;gap:12px"></div>`);
+      <button class="cta full" id="tgo"><span>Faire ma valise</span></button><div id="tres" style="display:grid;gap:12px"><p class="mono">Exemple : 5 jours à Londres en novembre</p>${wkRows(TRAVEL_SAMPLE.picks.map(([n, d, why]) => ({ d, p: byName(n), why })).filter((r) => r.p))}<p class="mono" style="text-transform:none;letter-spacing:0;font-size:13px">${esc(TRAVEL_SAMPLE.tip)}</p></div>`);
+    $('#ttxt', pn).value = '5 jours à Londres en novembre, réunions le jour, dîners le soir, un peu de marche sous la pluie';
     $('#tgo', pn).onclick = async () => {
       const out = $('#tres', pn), txt = $('#ttxt', pn).value.trim(); if (!txt) { $('#ttxt', pn).focus(); return; }
       out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#tgo', pn).disabled = true;
@@ -603,7 +617,8 @@
   function openWeek() {
     const pn = openSheet(`<div><h2>Ta semaine, parfumée</h2><p style="color:var(--muted);margin-top:6px">Décris ta semaine en vrac. Je répartis les parfums pour ne jamais répéter et toujours coller au jour.</p></div>
       <textarea id="wtxt" rows="4" placeholder="Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, samedi mariage…"></textarea>
-      <button class="cta full" id="wgo"><span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"></div>`);
+      <button class="cta full" id="wgo"><span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"><p class="mono">Exemple de semaine</p>${wkRows(WEEK_SAMPLE.map(([d, n, why]) => ({ d, p: byName(n), why })).filter((r) => r.p))}</div>`);
+    $('#wtxt', pn).value = 'Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, vendredi afterwork, samedi soirée, dimanche en famille';
     $('#wgo', pn).onclick = async () => {
       const out = $('#wres', pn), txt = $('#wtxt', pn).value.trim();
       const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() + i); return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); });
@@ -838,7 +853,7 @@
           <button class="cta full" id="wNew"><span>Commencer une balade</span></button></section>
         ${S.walks.length ? `<section class="sec"><header><h2 style="font-size:20px">Tes balades</h2></header>${[...S.walks].reverse().map((x) => `<button class="wcard" data-w="${x.id}"><span><b>${esc(x.place || 'Balade')}</b><small>${esc(walkDate(x))} · ${x.entries.length} touche${x.entries.length > 1 ? 's' : ''}</small></span><span class="symrow">${x.entries.slice(0, 7).map((e) => symSvg(e.sym, 22)).join('')}</span></button>`).join('')}</section>` : ''}`;
       $('#wNew').onclick = () => {
-        const pn = openSheet(`<div><h2>Nouvelle balade</h2><p style="color:var(--muted);margin-top:6px">Où testes-tu aujourd'hui ?</p></div><input type="text" id="wplace" placeholder="Jovoy, Nose, Sephora… (facultatif)"><button class="cta full" id="wgo2"><span>C'est parti</span></button>`);
+        const pn = openSheet(`<div><h2>Nouvelle balade</h2><p style="color:var(--muted);margin-top:6px">Où testes-tu aujourd'hui ?</p></div><input type="text" id="wplace" placeholder="Rue Saint-Honoré, Marais… (facultatif)"><button class="cta full" id="wgo2"><span>C'est parti</span></button>`);
         $('#wgo2', pn).onclick = () => { const w2 = { id: uid(), date: today(), place: $('#wplace', pn).value.trim(), entries: [] }; S.walks.push(w2); save(); WALK = w2.id; WSEG = 'list'; closeSheet(); viewWalk(); };
       };
       $$('[data-w]').forEach((b) => (b.onclick = () => { WALK = b.dataset.w; WSEG = 'list'; WPEND = null; viewWalk(); }));
@@ -912,7 +927,7 @@
     const out = $('#wsumres'); out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#wSum').disabled = true;
     const lines = w.entries.map((e) => `${e.name} | ${e.house} | ${e.notes.join(', ')} | ${RATE[e.rating]} | ${e.note || ''}`).join('\n');
     try {
-      const j = await aiJson(`Tu es un nez de parfumerie. Voici les parfums que j'ai sentis pendant une balade en boutique (nom | maison | notes | mon avis | ma remarque) :\n${lines}\n\nMa collection actuelle :\n${colLines()}\n\nRéponds UNIQUEMENT par un JSON : {"taste":"ce que mes avis révèlent de mes goûts, 2 phrases, tutoiement","keep":[{"name":"nom exact d'une touche à retenir","why":"pourquoi, 10 mots max"}],"skip":"ce que je peux oublier, 1 phrase"}`, { modelTier: 'default' });
+      const j = w.seed ? SEED_SUM : await aiJson(`Tu es un nez de parfumerie. Voici les parfums que j'ai sentis pendant une balade en boutique (nom | maison | notes | mon avis | ma remarque) :\n${lines}\n\nMa collection actuelle :\n${colLines()}\n\nRéponds UNIQUEMENT par un JSON : {"taste":"ce que mes avis révèlent de mes goûts, 2 phrases, tutoiement","keep":[{"name":"nom exact d'une touche à retenir","why":"pourquoi, 10 mots max"}],"skip":"ce que je peux oublier, 1 phrase"}`, { modelTier: 'default' });
       const keep = (j.keep || []).map((k) => ({ k, e: w.entries.find((e) => E.norm(e.name) === E.norm(k.name)) })).filter((x) => x.e);
       out.innerHTML = `<p style="font-size:17px;font-weight:300">${esc(j.taste || '')}</p>${keep.map((x) => `<div class="wentry"><div class="wsym">${symSvg(x.e.sym, 32)}</div><div class="wbody"><b>${esc(x.e.name)}</b><small>${esc(x.k.why || '')}</small><div class="row" style="margin-top:8px"><button class="ghost" data-kw="${x.e.id}">${hasWish(x.e.name) ? 'Dans la wishlist' : 'Wishlist'}</button></div></div></div>`).join('')}${j.skip ? `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(j.skip)}</p>` : ''}`;
       $$('[data-kw]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.kw); addWish(CAT.find((c) => E.norm(c.name) === E.norm(e.name)) ? wishFromName(CAT.find((c) => E.norm(c.name) === E.norm(e.name)).name) : e); b.textContent = 'Dans la wishlist'; }));
@@ -929,14 +944,14 @@
     try { if (localStorage.getItem('sillage.onb')) return; } catch (e) { /* on affiche quand même */ }
     if (S.log.length) return;
     const pick = (n) => S.collection.find((p) => p.name === n) || S.collection[0];
-    const A = pick('Tobacco Vanille'), B = pick('Thé Noir 29'), C = pick('Baccarat Rouge 540'), D = pick('Naxos');
+    const A = pick('Jazz Club'), B = pick('Fève Nectar'), C = pick('Baccarat Rouge 540'), D = pick('Le Male');
     if (!A) return;
-    const TXT = 'Dîner à deux, 3°, perfecto noir';
+    const TXT = 'Sortie entre amis en ville, 18°, chemise noire';
     const el = document.createElement('div'); el.id = 'onb'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Bienvenue');
     el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><canvas class="fx" id="onbfx" aria-hidden="true"></canvas>
       <button class="onb-skip" id="onbSkip">Passer</button>
       <section class="onb-s on" id="os1"><div class="onb-row">${bt(D, { h: 150, still: false })}${bt(A, { h: 200, spray: true })}${bt(C, { h: 150, still: false })}</div><h2 class="rise" style="--d:300">Sillage</h2><p class="lead rise" style="--d:700">Le bon parfum pour ta journée, choisi dans ta propre collection.</p></section>
-      <section class="onb-s" id="os2"><p class="mono rise">1 · dis ta journée</p><div class="onb-type"><span id="onbT"></span><i class="caret"></i></div><div class="chips onb-chips"><span class="chip on pop" style="--d:1700">Amour</span><span class="chip pop" style="--d:1900">Romantique</span><span class="chip pop" style="--d:2100">Froid</span></div></section>
+      <section class="onb-s" id="os2"><p class="mono rise">1 · dis ta journée</p><div class="onb-type"><span id="onbT"></span><i class="caret"></i></div><div class="chips onb-chips"><span class="chip on pop" style="--d:1700">Sorties</span><span class="chip pop" style="--d:1900">Joyeux</span><span class="chip pop" style="--d:2100">Ville</span></div></section>
       <section class="onb-s" id="os3"><p class="mono rise">2 · ton parfum du jour</p><div class="onb-hero">${bt(A, { h: 230, spray: true })}</div><h2 class="rise" style="--d:300">${esc(A.name)}</h2><p class="soft rise" style="--d:600">${esc(A.house)}</p>
         <div class="onb-lay rise" style="--d:1300">${bt(B, { still: true, h: 54 })}<span><b>+ ${esc(B.name)}</b><small>l'accord qui allonge la tenue</small></span></div></section>
       <section class="onb-s" id="os4"><p class="lead rise">Sans te ruiner, sans y réfléchir : 10 secondes.</p><button class="st-btn rise" style="--d:300" id="onbGo">Trouver mon parfum</button></section>`;
@@ -948,7 +963,7 @@
       if (done) return; done = true; timers.forEach(clearTimeout);
       try { localStorage.setItem('sillage.onb', '1'); } catch (e) { /* ok */ }
       FX.clear(fx); el.remove(); document.body.style.overflow = '';
-      if (go) { CHOICE.cat = 'amour'; CHOICE.sc = 'diner2'; CHOICE.mood = 'romantique'; SAY = scenByKey('diner2')[1]; tab = 'today'; render(); const g = $('#go'); if (g) g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+      if (go) { CHOICE.cat = 'sorties'; CHOICE.sc = 'apero'; CHOICE.mood = 'joyeux'; SAY = scenByKey('apero')[1]; tab = 'today'; render(); const g = $('#go'); if (g) g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
     };
     $('#onbSkip').onclick = () => finish(false); $('#onbGo').onclick = () => finish(true);
     if (REDUCED) { show('os4'); return; }
@@ -958,6 +973,8 @@
     at(8600, () => show('os4'));
   }
 
+  const sellCard = () => (window.SillageDemo ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine, le voyage et les balades.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
+  document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('[data-sell]') && window.SillageDemo) window.SillageDemo.upsell('cta'); });
   window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
 
   // ---------- Démarrage ----------

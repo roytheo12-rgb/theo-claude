@@ -14,7 +14,7 @@ binding = "SILLAGE"
 id = "COLLE_ICI_L_ID_DU_KV"
 
 [vars]
-MODEL = "claude-opus-5-5"   # pour payer deux fois moins : "claude-sonnet-5-5"
+MODEL = "claude-sonnet-5-5"   # pour plus de qualité (2× plus cher) : "claude-opus-5-5"
 EFFORT = "low"
 MAX_TRIES = "2"             # essais par visiteur
 IP_MAX_PER_DAY = "6"        # essais par adresse IP et par jour (contourne les visiteurs qui changent de navigateur)

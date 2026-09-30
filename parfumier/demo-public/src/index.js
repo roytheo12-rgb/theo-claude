@@ -76,7 +76,7 @@ export function makeWorker(deps = {}) {
         try {
           const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
           const res = await client.messages.create({
-            model: env.MODEL || 'claude-opus-5-5',
+            model: env.MODEL || 'claude-sonnet-5-5',
             max_tokens: 3000,
             output_config: { effort: env.EFFORT || 'low' },
             messages: [{ role: 'user', content }],

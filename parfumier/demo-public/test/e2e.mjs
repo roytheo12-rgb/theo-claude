@@ -37,7 +37,7 @@ await pg.waitForTimeout(3000); await pg.screenshot({ path: OUT + '/e2_onb2.png' 
 await pg.waitForTimeout(2800); await pg.screenshot({ path: OUT + '/e3_onb3.png' });
 await pg.waitForTimeout(3000); ok(await pg.isVisible('#onbGo'), 'onboarding : bouton final visible en moins de 12 s');
 await pg.click('#onbGo'); await pg.waitForTimeout(700);
-ok(await pg.locator('[data-sc=diner2].on').count() === 1, 'le clic sur le bouton présélectionne « Dîner romantique »');
+ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
 ok(/Démo publique · 2 essais restants/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
 // 2. météo automatique
 await pg.click('#wxAuto'); await pg.waitForTimeout(1200);
