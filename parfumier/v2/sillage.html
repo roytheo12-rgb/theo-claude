@@ -111,7 +111,7 @@ input[type=range] { width: 100%; accent-color: var(--accent); }
 @keyframes mist { 0% { opacity: 0; transform: translate(0, 0) scale(.3); } 15% { opacity: .85; } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.9); } }
 .aura { position: absolute; inset: 8% -20%; border-radius: 50%; filter: blur(34px); opacity: .6; animation: breathe 7s ease-in-out infinite; z-index: -1; }
 @keyframes breathe { 0%, 100% { transform: scale(.92); opacity: .4; } 50% { transform: scale(1.08); opacity: .7; } }
-.bwrap.photo img { height: 100%; width: auto; max-width: 100%; display: block; margin-inline: auto; filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .65)); -webkit-box-reflect: below 0 linear-gradient(transparent 78%, rgba(255, 255, 255, .13)); }
+.bwrap.photo img { object-fit: contain; height: 100%; width: auto; max-width: 100%; display: block; margin-inline: auto; filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .65)); -webkit-box-reflect: below 0 linear-gradient(transparent 78%, rgba(255, 255, 255, .13)); }
 .bwrap .mp { position: absolute; left: 50%; width: 0; height: 0; }
 .bwrap .mp i { position: absolute; border-radius: 50%; background: rgba(255, 244, 224, .9); opacity: 0; animation: mistp 3s ease-out infinite; }
 @keyframes mistp { 0% { opacity: 0; transform: translate(0, 0) scale(.3); } 15% { opacity: .8; } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(2); } }
@@ -343,7 +343,7 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
     ['Aventus', 'Creed', 'boisé', ['ananas', 'bouleau', 'musc', 'mousse de chêne', 'bergamote'], 4, 4, 3, 380],
     ['Layton', 'Parfums de Marly', 'ambré', ['pomme', 'lavande', 'vanille', 'cardamome', 'santal'], 4, 5, 4, 250],
     ['Tobacco Vanille', 'Tom Ford', 'gourmand', ['feuille de tabac', 'épices', 'vanille', 'cacao', 'fève tonka', 'fleur de tabac', 'fruits secs', 'bois'], 4, 5, 5, 260],
-    ['Terre d\'Hermès', 'Hermès', 'boisé', ['orange', 'silex', 'vétiver', 'poivre', 'cèdre'], 3, 4, 3, 95],
+    ['Terre d\'Hermès', 'Hermès', 'boisé', ['pamplemousse', 'orange', 'silex', 'poivre', 'poivre rose', 'cèdre de l\'Atlas', 'vétiver', 'benjoin'], 3, 4, 3, 90],
     ['Light Blue', 'Dolce & Gabbana', 'agrumes', ['citron', 'pomme', 'cèdre', 'musc'], 3, 3, 1, 85],
     ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['jasmin', 'safran', 'ambre gris', 'bois ambré', 'cèdre'], 5, 5, 4, 270],
     ['Santal 33', 'Le Labo', 'boisé', ['santal', 'cèdre', 'cuir', 'cardamome', 'iris', 'violette'], 3, 4, 3, 220],
@@ -451,6 +451,10 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
     ['Ganymede', 'Marc-Antoine Barrois', 'cuir', ['mandarine d\'Italie', 'safran', 'violette', 'osmanthus', 'Akigalawood', 'immortelle', 'accord daim'], 4, 5, 3, 200],
     ['De Los Santos', 'Byredo', 'boisé', ['sauge sclarée', 'mirabelle', 'iris', 'ciste', 'musc', 'ambroxan', 'palo santo'], 3, 4, 2, 165],
     ['Étoile Filante', 'Louis Vuitton', 'floral', ['osmanthus', 'magnolia', 'abricot', 'cassis', 'jasmin'], 3, 4, 2, 230],
+    ['Boss Bottled', 'Hugo Boss', 'boisé', ['pomme', 'géranium', 'cannelle', 'clou de girofle', 'santal', 'vétiver', 'cèdre', 'bois d\'olivier', 'ambre', 'musc'], 3, 3, 3, 60],
+    ['Bleu de Chanel EDT', 'Chanel', 'boisé', ['citron', 'pamplemousse', 'poivre rose', 'menthe', 'gingembre', 'muscade', 'jasmin', 'encens', 'vétiver', 'cèdre', 'santal', 'labdanum'], 3, 3, 2, 115],
+    ['Pour un Homme de Caron', 'Caron', 'aromatique', ['lavande', 'lavandin', 'rose de Turquie', 'vanille', 'ambre', 'musc'], 3, 4, 3, 80],
+    ['Flacon ailé', '', 'ambré', [], 3, 4, 3, 0],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
@@ -1057,6 +1061,7 @@ ${mist}
 
   // ---------- Données ----------
   const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  const SEED11 = [['Boss Bottled', 4], ['Bleu de Chanel EDT', 4], ['Pour un Homme de Caron', 4], ['Terre d\'Hermès', 4], ['Flacon ailé', 4]];
   const SEED10 = [['Vétiver Extraordinaire', 4], ['De Los Santos', 4], ['Étoile Filante', 4], ['Lazy Sunday Morning', 4], ['Sauvage EDT', 4]];
   const SEED9 = [['Acne Studios', 4], ['Purpose', 4], ['Ambert Sunset', 4], ['Ambre Papier', 4], ['Ganymede', 4]];
   const SEED8 = [['Rouge Trafalgar', 4], ['L\'Eau Pâle', 4], ['Imagination', 4], ['Néroli Amara', 4], ['Ombre Nomade', 4]];
@@ -1078,10 +1083,11 @@ ${mist}
     'Rouge Trafalgar': { s: 'img/trafalgar.webp', nz: 3 }, 'L\'Eau Pâle': { s: 'img/leaupale.webp', nz: 1 }, 'Imagination': { s: 'img/imagination.webp', nz: 4 }, 'Néroli Amara': { s: 'img/neroliamara.webp', nz: 3 }, 'Ombre Nomade': { s: 'img/ombrenomade.webp', nz: 4 },
     'Acne Studios': { s: 'img/acne.webp', nz: 3 }, 'Purpose': { s: 'img/purpose.webp', nz: 3 }, 'Ambert Sunset': { s: 'img/ambert.webp', nz: 3 }, 'Ambre Papier': { s: 'img/ambrepapier.webp', nz: 6 }, 'Ganymede': { s: 'img/ganymede.webp', nz: 3 },
     'Vétiver Extraordinaire': { s: 'img/vetiver.webp', nz: 26 }, 'De Los Santos': { s: 'img/delossantos.webp', nz: 3 }, 'Étoile Filante': { s: 'img/etoile.webp', nz: 3 }, 'Lazy Sunday Morning': { s: 'img/lazy.webp', nz: 2 }, 'Sauvage EDT': { s: 'img/sauvage.webp', nz: 3 },
+    'Boss Bottled': { s: 'img/boss.webp', nz: 3 }, 'Bleu de Chanel EDT': { s: 'img/bleu.webp', nz: 3 }, 'Pour un Homme de Caron': { s: 'img/caron.webp', nz: 2 }, 'Terre d\'Hermès': { s: 'img/terre.webp', nz: 3 }, 'Flacon ailé': { s: 'img/ailes.webp', nz: 10 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 10, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9), seedList(SEED10)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: 11, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9), seedList(SEED10), seedList(SEED11)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   function migrate() {
     S.walks = S.walks || [];
@@ -1096,6 +1102,7 @@ ${mist}
     if ((S.seedV || 1) < 8) { seedList(SEED8).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 8; }
     if ((S.seedV || 1) < 9) { seedList(SEED9).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 9; }
     if ((S.seedV || 1) < 10) { seedList(SEED10).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 10; }
+    if ((S.seedV || 1) < 11) { seedList(SEED11).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 11; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
@@ -1376,7 +1383,7 @@ ${mist}
       const nm = $('#fixin', pn).value.trim(); if (!nm) { $('#fixin', pn).focus(); return; }
       $('#fixmsg', pn).textContent = 'Je cherche…'; $('#fixgo', pn).disabled = true;
       try {
-        const j = await aiJson(`Identifie ce parfum de la maison "${p.house}" : "${nm}". Réponds UNIQUEMENT par un JSON : {"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["6 à 10 notes en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5,"price":nombre en euros indicatif}`, { modelTier: 'default' });
+        const j = await aiJson(`Identifie ce parfum${p.house ? ' de la maison "' + p.house + '"' : ''} : "${nm}". Réponds UNIQUEMENT par un JSON : {"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["6 à 10 notes en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5,"price":nombre en euros indicatif}`, { modelTier: 'default' });
         p.name = String(j.name || nm); p.house = String(j.house || p.house); p.family = E.FAMILIES[j.family] ? j.family : p.family; p.notes = (j.notes || []).map(String).slice(0, 10);
         p.projection = clamp(Math.round(+j.projection || 3), 1, 5); p.longevity = clamp(Math.round(+j.longevity || 3), 1, 5); p.weight = clamp(Math.round(+j.weight || 3), 1, 5); p.price = Math.round(+j.price) || 0; delete p.incomplete; delete p._tags;
         save(); openDetail(id); render(true);

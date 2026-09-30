@@ -9,7 +9,7 @@
     ['Aventus', 'Creed', 'boisé', ['ananas', 'bouleau', 'musc', 'mousse de chêne', 'bergamote'], 4, 4, 3, 380],
     ['Layton', 'Parfums de Marly', 'ambré', ['pomme', 'lavande', 'vanille', 'cardamome', 'santal'], 4, 5, 4, 250],
     ['Tobacco Vanille', 'Tom Ford', 'gourmand', ['feuille de tabac', 'épices', 'vanille', 'cacao', 'fève tonka', 'fleur de tabac', 'fruits secs', 'bois'], 4, 5, 5, 260],
-    ['Terre d\'Hermès', 'Hermès', 'boisé', ['orange', 'silex', 'vétiver', 'poivre', 'cèdre'], 3, 4, 3, 95],
+    ['Terre d\'Hermès', 'Hermès', 'boisé', ['pamplemousse', 'orange', 'silex', 'poivre', 'poivre rose', 'cèdre de l\'Atlas', 'vétiver', 'benjoin'], 3, 4, 3, 90],
     ['Light Blue', 'Dolce & Gabbana', 'agrumes', ['citron', 'pomme', 'cèdre', 'musc'], 3, 3, 1, 85],
     ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['jasmin', 'safran', 'ambre gris', 'bois ambré', 'cèdre'], 5, 5, 4, 270],
     ['Santal 33', 'Le Labo', 'boisé', ['santal', 'cèdre', 'cuir', 'cardamome', 'iris', 'violette'], 3, 4, 3, 220],
@@ -117,6 +117,10 @@
     ['Ganymede', 'Marc-Antoine Barrois', 'cuir', ['mandarine d\'Italie', 'safran', 'violette', 'osmanthus', 'Akigalawood', 'immortelle', 'accord daim'], 4, 5, 3, 200],
     ['De Los Santos', 'Byredo', 'boisé', ['sauge sclarée', 'mirabelle', 'iris', 'ciste', 'musc', 'ambroxan', 'palo santo'], 3, 4, 2, 165],
     ['Étoile Filante', 'Louis Vuitton', 'floral', ['osmanthus', 'magnolia', 'abricot', 'cassis', 'jasmin'], 3, 4, 2, 230],
+    ['Boss Bottled', 'Hugo Boss', 'boisé', ['pomme', 'géranium', 'cannelle', 'clou de girofle', 'santal', 'vétiver', 'cèdre', 'bois d\'olivier', 'ambre', 'musc'], 3, 3, 3, 60],
+    ['Bleu de Chanel EDT', 'Chanel', 'boisé', ['citron', 'pamplemousse', 'poivre rose', 'menthe', 'gingembre', 'muscade', 'jasmin', 'encens', 'vétiver', 'cèdre', 'santal', 'labdanum'], 3, 3, 2, 115],
+    ['Pour un Homme de Caron', 'Caron', 'aromatique', ['lavande', 'lavandin', 'rose de Turquie', 'vanille', 'ambre', 'musc'], 3, 4, 3, 80],
+    ['Flacon ailé', '', 'ambré', [], 3, 4, 3, 0],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
