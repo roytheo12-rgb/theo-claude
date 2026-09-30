@@ -148,6 +148,7 @@
   }
 
   // ---------- État de session ----------
+  let REFINE = false;
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
   const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false };
@@ -226,21 +227,24 @@
     const dt = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
     const hr = new Date().getHours(), hello = hr >= 5 && hr < 12 ? 'Bonjour.' : hr >= 12 && hr < 18 ? 'Bon après-midi.' : 'Bonsoir.';
     const je = worn ? todayEntry(worn.id) : null;
+    const refine = REFINE || !!(CHOICE.mood || WX || CHOICE.place || CHOICE.dur || CHOICE.hum || PHOTO);
     $('#view').innerHTML = `
       <section class="hero">
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
-        ${window.SillageDemo ? `<button class="demo-pill" data-sell>Démo publique · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''} restant${window.SillageDemo.left() > 1 ? 's' : ''} · Avoir la mienne</button>` : ''}
+        ${window.SillageDemo ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
-          <p class="mono">1 · Ta journée</p>
+          <p class="mono">Ta journée</p>
           <div class="cats" id="cats">${Object.entries(CATS).map(([k, v]) => `<button class="${CHOICE.cat === k ? 'on' : ''}" data-cat="${k}">${v}</button>`).join('')}</div>
           <div class="chips">${SCEN[CHOICE.cat].map(([k, l]) => `<button class="chip ${CHOICE.sc === k ? 'on' : ''}" data-sc="${k}">${esc(l)}</button>`).join('')}</div>
           <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Ou écris-la avec tes mots</label>
           <textarea id="say" rows="2" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
-          <p class="mono">2 · Ton mood</p>
+          <button class="more" data-refine aria-expanded="${refine}"><span>Affiner : mood, météo, lieu</span><i>${refine ? '−' : '+'}</i></button>
+          ${refine ? `<div class="refine">
+          <p class="mono">Ton mood</p>
           <div class="chips">${Object.entries(E.MOODS).map(([k, v]) => `<button class="chip ${CHOICE.mood === k ? 'on' : ''}" data-mood="${k}">${esc(v)}</button>`).join('')}</div>
-          <p class="mono">3 · Les conditions</p>
+          <p class="mono">Les conditions</p>
           <div class="chips">${wxButtonHtml()}</div>
           <div class="chips">${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}<button class="chip ${CHOICE.hum ? 'on' : ''}" data-hum="1">Humide</button></div>
           <div class="chips">${Object.entries(E.PLACES).map(([k, v]) => `<button class="chip ${CHOICE.place === k ? 'on' : ''}" data-place="${k}">${esc(v)}</button>`).join('')}${Object.entries(E.DURS).map(([k, v]) => `<button class="chip ${CHOICE.dur === k ? 'on' : ''}" data-dur="${k}">${esc(v)}</button>`).join('')}</div>
@@ -248,6 +252,7 @@
             <button class="chip photo-btn" id="photoBtn" ${CAN_IMG ? '' : 'hidden'}>${PHOTO ? `<img alt="" src="${URL.createObjectURL(PHOTO)}">` : IC.cam}<span>${PHOTO ? 'Tenue ajoutée' : 'Ma tenue en photo'}</span></button>
             <input type="file" id="photoIn" accept="image/*" hidden>
           </div>
+          </div>` : ''}
           <button class="cta full" id="go"><span>Trouver mon parfum</span></button>
         </div>
       </section>
@@ -270,12 +275,13 @@
       let jt; $('#jn').addEventListener('input', (e) => { je.note = e.target.value; clearTimeout(jt); jt = setTimeout(save, 600); });
     }
     mountFx($('#view'));
-    $('#photoBtn').onclick = () => $('#photoIn').click();
-    $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
+    if ($('#photoBtn')) $('#photoBtn').onclick = () => $('#photoIn').click();
+    if ($('#photoIn')) $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
     $$('[data-wx]').forEach((b) => (b.onclick = () => { keepText0(); const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); if (WX) AUTOW = ''; viewToday(); }));
     if ($('#wxAuto')) $('#wxAuto').onclick = () => { keepText0(); autoWeather(true); };
     if ($('#wxCity')) $('#wxCity').onclick = () => { keepText0(); openCity(); };
     const keepText = () => { const t = $('#say'); if (t) SAY = t.value; };
+    $$('[data-refine]').forEach((b) => (b.onclick = () => { keepText(); REFINE = !refine; if (!REFINE) { CHOICE.mood = null; WX = null; CHOICE.place = null; CHOICE.dur = null; CHOICE.hum = false; PHOTO = null; } viewToday(); }));
     $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; viewToday(); }));
     $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
     $$('[data-mood]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.mood = CHOICE.mood === b.dataset.mood ? null : b.dataset.mood; viewToday(); }));
@@ -354,8 +360,7 @@
     if (r.mates.length) reasons.push('Se marie avec ' + r.mates.map((m) => m.name).join(', '));
     return `<article class="rec" style="--tint:${tint(c)}">${fxCanvas(`data-r="${i}"`, .6)}<span class="pct">${r.pct}%</span>${bt(c, { still: false })}
       <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p></div>
-      <p class="mono" style="text-transform:none;letter-spacing:0;font-size:12px">${esc(c.notes.slice(0, 5).join(' · '))}</p>
-      <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+      <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.slice(0, 2).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
       <p class="why" id="why${i}"></p>
       <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? 'Dans ma wishlist' : 'Wishlist'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div>${buyLinks(c.name, c.house)}</article>`;
   }
@@ -803,7 +808,7 @@
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Wishlist</h2><span class="mono">${W.length} parfum${W.length > 1 ? 's' : ''}${total ? ' · ≈ ' + total + ' €' : ''}</span></header>
         <div class="card ask-card"><p class="mono">Ajouter à la wishlist</p><input type="text" id="wlin" placeholder="Nom du parfum, l'IA complète la fiche"><button class="cta" id="wlgo"><span>Ajouter</span></button><p class="mono" id="wlmsg" style="text-transform:none"></p></div></section>
-      <section class="sec">${W.length ? W.map((w, i) => `<article class="wl" style="--i:${i}">${bt(w, { still: true })}<div class="wlb"><b>${esc(w.name)}</b><small>${esc(w.house)}${w.family ? ' · ' + esc(famLabel(w.family)) : ''}${w.price ? ' · ≈ ' + w.price + ' €' : ''}</small>${(w.notes || []).length ? `<small>${esc(w.notes.slice(0, 6).join(' · '))}</small>` : ''}<div class="row" style="margin-top:8px"><button class="ghost" data-wown="${esc(w.name)}">Je l'ai</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${buyLinks(w.name, w.house)}</div></article>`).join('') : '<div class="empty">Ta wishlist est vide. Ajoute un parfum ici, depuis Découvrir ou depuis une balade olfactive.</div>'}</section>`;
+      <section class="sec">${W.length ? W.map((w, i) => `<article class="wl" style="--i:${i}">${bt(w, { still: true })}<div class="wlb"><b>${esc(w.name)}</b><small>${esc(w.house)}${w.family ? ' · ' + esc(famLabel(w.family)) : ''}${w.price ? ' · ≈ ' + w.price + ' €' : ''}</small><div class="row" style="margin-top:10px"><button class="ghost" data-wown="${esc(w.name)}">Je l'ai</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${buyLinks(w.name, w.house)}</div></article>`).join('') : '<div class="empty">Ta wishlist est vide. Ajoute un parfum ici, depuis Découvrir ou depuis une balade olfactive.</div>'}</section>`;
     $$('[data-wrm]').forEach((b) => (b.onclick = () => { rmWish(b.dataset.wrm); viewWish(); }));
     $$('[data-wown]').forEach((b) => (b.onclick = () => { const w = S.wishlist.find((x) => x.name === b.dataset.wown); if (w) { S.collection.push(wishToOwned(w)); rmWish(w.name); viewWish(); } }));
     $('#wlgo').onclick = async () => {
@@ -963,7 +968,7 @@
       if (done) return; done = true; timers.forEach(clearTimeout);
       try { localStorage.setItem('sillage.onb', '1'); } catch (e) { /* ok */ }
       FX.clear(fx); el.remove(); document.body.style.overflow = '';
-      if (go) { CHOICE.cat = 'sorties'; CHOICE.sc = 'apero'; CHOICE.mood = 'joyeux'; SAY = scenByKey('apero')[1]; tab = 'today'; render(); const g = $('#go'); if (g) g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+      if (go) { CHOICE.cat = 'sorties'; CHOICE.sc = 'apero'; SAY = scenByKey('apero')[1]; tab = 'today'; render(); const g = $('#go'); if (g) g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
     };
     $('#onbSkip').onclick = () => finish(false); $('#onbGo').onclick = () => finish(true);
     if (REDUCED) { show('os4'); return; }

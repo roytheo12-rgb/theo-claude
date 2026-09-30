@@ -38,9 +38,9 @@ await pg.waitForTimeout(2800); await pg.screenshot({ path: OUT + '/e3_onb3.png' 
 await pg.waitForTimeout(3000); ok(await pg.isVisible('#onbGo'), 'onboarding : bouton final visible en moins de 12 s');
 await pg.click('#onbGo'); await pg.waitForTimeout(700);
 ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
-ok(/Démo publique · 2 essais restants/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
+ok(/Démo · 2 essais/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
 // 2. météo automatique
-await pg.click('#wxAuto'); await pg.waitForTimeout(1200);
+await pg.click('[data-refine]'); await pg.waitForTimeout(400); await pg.click('#wxAuto'); await pg.waitForTimeout(1200);
 ok(/3° · pluie/.test(await pg.textContent('.hero .mono')), 'météo automatique : 3° · pluie affichée');
 await pg.screenshot({ path: OUT + '/e4_today.png', fullPage: true });
 // 3. essai 1 et 2

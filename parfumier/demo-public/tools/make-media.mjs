@@ -21,7 +21,7 @@ await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(3300);
 await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 82, everyNthFrame: 1 });
 const t0 = Date.now(); const wait = (ms) => pg.waitForTimeout(ms);
 await wait(500);
-const steps = AMARA ? ['[data-cat=sorties]', '[data-sc=brunch]', '[data-mood=joyeux]', '[data-wx=chaud]'] : ['[data-cat=sorties]', '[data-sc=apero]', '[data-mood=joyeux]', '[data-wx=doux]'];
+const steps = AMARA ? ['[data-cat=sorties]', '[data-sc=brunch]', '[data-refine]', '[data-mood=joyeux]', '[data-wx=chaud]'] : ['[data-cat=sorties]', '[data-sc=apero]', '[data-refine]', '[data-mood=joyeux]', '[data-wx=doux]'];
 for (const sel of steps) { await pg.click(sel); await wait(400); }
 await wait(300);
 await pg.click('#go'); await pg.waitForSelector('#story:not([hidden]) .hero-bottle, #story:not([hidden]) .lead', { timeout: 20000 });

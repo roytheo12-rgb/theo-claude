@@ -349,3 +349,28 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .card.sell { display: grid; gap: 10px; border-color: rgba(180, 57, 74, .6); background: linear-gradient(160deg, rgba(180, 57, 74, .16), var(--surface) 60%); }
 .card.sell h2 { font-size: 22px; line-height: 1.2; }
 .card.sell p:not(.mono) { color: var(--muted); font-size: 14px; }
+
+/* ---------- Allègement : plus d'air, moins de bruit ---------- */
+.sec { margin-top: 56px; gap: 20px; }
+.sec h2 { font-size: 28px; }
+.hero { margin-top: 36px; }
+.hero .q { margin-bottom: 32px; }
+.say-wrap { gap: 26px; }
+.say-wrap > .mono, .refine > .mono { margin-bottom: -10px; opacity: .8; }
+.chips { gap: 10px; }
+.chip { padding: 11px 16px; }
+.card { padding: 24px 22px; }
+.demo-pill { margin: 12px 0 0; padding: 4px 10px; font-size: 10px; letter-spacing: .12em; background: transparent; border-color: rgba(180, 57, 74, .45); }
+.more { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 14px 2px; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: none; color: var(--muted); font: 500 12px var(--sf); letter-spacing: .14em; text-transform: uppercase; text-align: left; }
+.more i { font-style: normal; font-size: 20px; line-height: 1; color: var(--accent-deep); }
+.refine { display: grid; gap: 26px; animation: rise .5s both; }
+.shelf { gap: 18px; }
+.pcard { padding: 22px 14px 18px; }
+.wl { padding: 18px; gap: 18px; }
+.rec .buy a:nth-child(2) { display: none; }
+.rec { padding: 26px 22px 22px; }
+.rec ul { line-height: 1.6; }
+.card.sell { padding: 28px 24px; gap: 14px; }
+.wl .buy a:nth-child(2) { display: none; }
+.wl .bwrap { height: 104px; }
+.wl { grid-template-columns: 72px 1fr; }
