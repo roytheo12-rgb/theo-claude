@@ -192,6 +192,7 @@
     if (CHOICE.mood) o.mood = CHOICE.mood;
     if (CHOICE.place) o.place = CHOICE.place;
     if (CHOICE.dur) o.dur = CHOICE.dur;
+    if (WX && WX.hum > 75) o.hum = WX.hum;
     if (CHOICE.hum) o.hum = 85;
     return o;
   };
@@ -216,6 +217,7 @@
     $('#view').innerHTML = `
       <section class="hero">
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
+        ${window.SillageDemo ? `<p class="demo-pill">Démo publique · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''} restant${window.SillageDemo.left() > 1 ? 's' : ''}</p>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
@@ -227,6 +229,7 @@
           <p class="mono">2 · Ton mood</p>
           <div class="chips">${Object.entries(E.MOODS).map(([k, v]) => `<button class="chip ${CHOICE.mood === k ? 'on' : ''}" data-mood="${k}">${esc(v)}</button>`).join('')}</div>
           <p class="mono">3 · Les conditions</p>
+          <div class="chips">${wxButtonHtml()}</div>
           <div class="chips">${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}<button class="chip ${CHOICE.hum ? 'on' : ''}" data-hum="1">Humide</button></div>
           <div class="chips">${Object.entries(E.PLACES).map(([k, v]) => `<button class="chip ${CHOICE.place === k ? 'on' : ''}" data-place="${k}">${esc(v)}</button>`).join('')}${Object.entries(E.DURS).map(([k, v]) => `<button class="chip ${CHOICE.dur === k ? 'on' : ''}" data-dur="${k}">${esc(v)}</button>`).join('')}</div>
           <div class="row">
@@ -256,7 +259,9 @@
     mountFx($('#view'));
     $('#photoBtn').onclick = () => $('#photoIn').click();
     $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
-    $$('[data-wx]').forEach((b) => (b.onclick = () => { keepText0(); const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); viewToday(); }));
+    $$('[data-wx]').forEach((b) => (b.onclick = () => { keepText0(); const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); if (WX) AUTOW = ''; viewToday(); }));
+    if ($('#wxAuto')) $('#wxAuto').onclick = () => { keepText0(); autoWeather(true); };
+    if ($('#wxCity')) $('#wxCity').onclick = () => { keepText0(); openCity(); };
     const keepText = () => { const t = $('#say'); if (t) SAY = t.value; };
     $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; viewToday(); }));
     $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
@@ -552,18 +557,47 @@
     };
   }
 
-  // ---------- Météo automatique (fonctionne hors claude.ai, sinon repli sur les boutons) ----------
-  async function autoWeather() {
+  // ---------- Météo automatique (Open-Meteo, sans clé) ----------
+  // Fonctionne sur le site public. Dans claude.ai la page n'a pas accès au réseau : le bouton disparaît.
+  const WMO = (c) => (c === 0 ? 'ciel dégagé' : c <= 3 ? 'nuageux' : c <= 48 ? 'brouillard' : c <= 57 ? 'bruine' : c <= 67 ? 'pluie' : c <= 77 ? 'neige' : c <= 82 ? 'averses' : c <= 86 ? 'neige' : 'orage');
+  let WXSTATE = 'idle'; // idle | loading | ok | blocked
+  async function fetchWeather(lat, lon, place) {
+    WXSTATE = 'loading'; refreshWxLine();
     try {
-      if (!navigator.geolocation) return;
-      const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { timeout: 6000 }));
-      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current=apparent_temperature,weather_code&timezone=auto`);
-      const c = (await r.json()).current, t = Math.round(c.apparent_temperature);
-      WX = { k: 'auto', l: 'Météo actuelle', t, rain: (c.weather_code >= 51 && c.weather_code <= 67) || (c.weather_code >= 80 && c.weather_code <= 99) };
-      AUTOW = t + '° · ' + (WX.rain ? 'pluie' : 'sec');
-      if (tab === 'today' && $('#story').hidden && $('#sheet').hidden) viewToday();
-    } catch (e) { /* bloqué ou refusé : les boutons de météo restent */ }
+      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`);
+      if (!r.ok) throw new Error('http');
+      const c = (await r.json()).current, t = Math.round(c.apparent_temperature), code = c.weather_code;
+      const rain = (code >= 51 && code <= 67) || (code >= 71 && code <= 99);
+      WX = { k: 'auto', l: 'Météo actuelle', t, rain, hum: c.relative_humidity_2m };
+      AUTOW = `${t}° · ${WMO(code)}${place ? ' · ' + place : ''}`;
+      S.settings.weatherOn = true; S.settings.geo = { lat, lon, place: place || '', ts: Date.now() }; save();
+      WXSTATE = 'ok';
+    } catch (e) { WXSTATE = 'blocked'; }
+    if (tab === 'today' && $('#story').hidden && $('#sheet').hidden) viewToday();
   }
+  function refreshWxLine() { const b = $('#wxAuto'); if (b) b.textContent = 'Je regarde le ciel…'; }
+  async function geocodeCity(name) {
+    const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}&count=1&language=fr`);
+    const g = ((await r.json()).results || [])[0]; if (!g) throw new Error('nf');
+    return { lat: g.latitude, lon: g.longitude, place: g.name };
+  }
+  function autoWeather(interactive) {
+    const g = S.settings.geo;
+    if (g && Date.now() - g.ts < 30 * 60 * 1000 && !interactive) { return fetchWeather(g.lat, g.lon, g.place); }
+    if (g && !interactive) return fetchWeather(g.lat, g.lon, g.place);
+    if (!navigator.geolocation) return openCity();
+    WXSTATE = 'loading'; refreshWxLine();
+    navigator.geolocation.getCurrentPosition((p) => fetchWeather(p.coords.latitude, p.coords.longitude, ''), () => { WXSTATE = 'idle'; openCity(); }, { timeout: 9000, maximumAge: 600000 });
+  }
+  function openCity() {
+    const pn = openSheet(`<div><h2>Ta ville</h2><p style="color:var(--muted);margin-top:6px">Je n'ai pas ta position. Donne-moi ta ville pour la météo du jour.</p></div><input type="text" id="cty" placeholder="Paris, Lyon, Marseille…" value="${esc((S.settings.geo && S.settings.geo.place) || '')}"><button class="cta full" id="ctyGo"><span>Valider</span></button><p class="mono" id="ctyMsg" style="text-transform:none"></p>`);
+    $('#ctyGo', pn).onclick = async () => {
+      const v = $('#cty', pn).value.trim(); if (!v) return;
+      $('#ctyMsg', pn).textContent = 'Je cherche…';
+      try { const g = await geocodeCity(v); closeSheet(); await fetchWeather(g.lat, g.lon, g.place); } catch (e) { $('#ctyMsg', pn).textContent = 'Ville introuvable, ou pas de connexion à la météo.'; }
+    };
+  }
+  const wxButtonHtml = () => (WXSTATE === 'blocked' ? '' : WX && WX.k === 'auto' ? `<button class="chip on" id="wxAuto">${esc(AUTOW)}</button><button class="chip" id="wxCity">Changer de ville</button>` : `<button class="chip" id="wxAuto">Météo automatique</button>`);
 
   // ---------- Planning de la semaine ----------
   function openWeek() {
@@ -625,8 +659,8 @@
     return bits.length ? '\nChoix explicites de l\'utilisateur, à respecter : ' + bits.join(' ; ') + '.' : '';
   };
   async function aiDay(text, wx) {
-    const prompt = `Tu es un nez de parfumerie qui compose avec goût. Ton chaleureux, tutoiement, image sensorielle, jamais de jargon creux. Réponds UNIQUEMENT par un JSON.\n\nMa collection (id | nom | maison | famille | notes | projection | tenue | poids | ma note | dernier port) :\n${colLines()}\n\nMa journée : """${text || '(non précisée)'}"""${explicitLine()}${wx ? `\nMétéo indiquée : ${wx.l}, environ ${wx.t}°C${wx.rain ? ', pluie' : ''}.` : ''}${PHOTO && CAN_IMG ? '\nUne photo de ma tenue est jointe : lis-y les couleurs, matières et le style.' : ''}\nDate : ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}.\n\nFormat : {"cond":{"temp":nombre ou null,"ctx":"pro|perso|date|event|famille|amis","with":"seul|partenaire|premier|collegues|boss|famille|amis|inconnus","moment":"jour|soir|nuit","mood":"confiant|calme|energique|romantique|mysterieux|joyeux|fatigue|creatif","style":"costume|smart|casual|sport|soiree|street","color":"sombre|neutre|clair|colore","fabric":"coton|lin|laine|cuir|denim|soie|technique|","place":"interieur|exterieur|transport|foule|","dur":"courte|longue|"},"read":"ma journée reformulée, 12 mots max","pick":"id du parfum","vibe":["3 mots courts"],"story":"2 phrases : pourquoi celui-là aujourd'hui (météo, tenue, moment, personnes)","alts":[{"id":"","line":"8 mots max"},{"id":"","line":""}],"layers":[{"id":"","effect":"ce que l'accord change, 1 phrase","how":"ordre, dosage en sprays, où vaporiser selon la tenue, 2 phrases","score":1-5},{"id":"","effect":"","how":"","score":1-5}],"avoid":"vide, ou 1 phrase si un parfum est à éviter aujourd'hui"}\nRègles : le mood et les conditions (météo, humidité, lieu, durée) pèsent autant que l'occasion : ne propose jamais un parfum qui les contredit, et cite-les dans "story". N'utilise que les id fournis. Évite ce qui a été porté hier ou aujourd'hui sauf raison forte. Les 2 accords de layering doivent être différents de "pick" et cohérents avec la chaleur et la tenue.`;
-    const j = await aiJson(prompt, { modelTier: 'default', images: PHOTO && CAN_IMG ? [PHOTO] : undefined });
+    const args = { collection: colLines(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
+    const j = window.SillageDemo ? await window.SillageDemo.day(args, PHOTO && CAN_IMG ? PHOTO : null) : await aiJson(window.SillagePrompts.day(args), { modelTier: 'default', images: PHOTO && CAN_IMG ? [PHOTO] : undefined });
     const p = find(j.pick); if (!p) throw { code: 'bad_pick' };
     const cond = normCond(Object.assign({}, j.cond, explicitPreset()), wx);
     let layers = (j.layers || []).map((l) => ({ p: find(l.id), effect: String(l.effect || ''), how: String(l.how || ''), score: clamp(Math.round(+l.score || 4), 1, 5) })).filter((l) => l.p && l.p.id !== p.id).slice(0, 2);
@@ -638,11 +672,12 @@
 
   let LAST = null;
   async function runDay(replayFor) {
+    if (window.SillageDemo && window.SillageDemo.left() <= 0) { window.SillageDemo.upsell('quota'); return; }
     if (!S.collection.length) { tab = 'shelf'; render(); return; }
     openStory(); showLoading();
     let R = null;
     const t0 = Date.now();
-    try { R = await aiDay(SAY.trim(), WX); } catch (e) { R = null; }
+    try { R = await aiDay(SAY.trim(), WX); } catch (e) { R = null; if (e && (e.code === 'rate_limited' || e.code === 'locked')) { closeStory(); return; } }
     if (!R) R = localDay(SAY.trim(), WX);
     const wait = 1800 - (Date.now() - t0); if (wait > 0) await new Promise((r) => setTimeout(r, wait));
     LAST = R; showStory(R);
@@ -888,13 +923,51 @@
     $('#wSum').disabled = false;
   }
 
+
+  // ---------- Onboarding : 10 secondes pour donner envie ----------
+  function showOnboarding() {
+    try { if (localStorage.getItem('sillage.onb')) return; } catch (e) { /* on affiche quand même */ }
+    if (S.log.length) return;
+    const pick = (n) => S.collection.find((p) => p.name === n) || S.collection[0];
+    const A = pick('Tobacco Vanille'), B = pick('Thé Noir 29'), C = pick('Baccarat Rouge 540'), D = pick('Naxos');
+    if (!A) return;
+    const TXT = 'Dîner à deux, 3°, perfecto noir';
+    const el = document.createElement('div'); el.id = 'onb'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Bienvenue');
+    el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><canvas class="fx" id="onbfx" aria-hidden="true"></canvas>
+      <button class="onb-skip" id="onbSkip">Passer</button>
+      <section class="onb-s on" id="os1"><div class="onb-row">${bt(D, { h: 150, still: false })}${bt(A, { h: 200, spray: true })}${bt(C, { h: 150, still: false })}</div><h2 class="rise" style="--d:300">Sillage</h2><p class="lead rise" style="--d:700">Le bon parfum pour ta journée, choisi dans ta propre collection.</p></section>
+      <section class="onb-s" id="os2"><p class="mono rise">1 · dis ta journée</p><div class="onb-type"><span id="onbT"></span><i class="caret"></i></div><div class="chips onb-chips"><span class="chip on pop" style="--d:1700">Amour</span><span class="chip pop" style="--d:1900">Romantique</span><span class="chip pop" style="--d:2100">Froid</span></div></section>
+      <section class="onb-s" id="os3"><p class="mono rise">2 · ton parfum du jour</p><div class="onb-hero">${bt(A, { h: 230, spray: true })}</div><h2 class="rise" style="--d:300">${esc(A.name)}</h2><p class="soft rise" style="--d:600">${esc(A.house)}</p>
+        <div class="onb-lay rise" style="--d:1300">${bt(B, { still: true, h: 54 })}<span><b>+ ${esc(B.name)}</b><small>l'accord qui allonge la tenue</small></span></div></section>
+      <section class="onb-s" id="os4"><p class="lead rise">Sans te ruiner, sans y réfléchir : 10 secondes.</p><button class="st-btn rise" style="--d:300" id="onbGo">Trouver mon parfum</button></section>`;
+    document.body.appendChild(el); document.body.style.overflow = 'hidden';
+    const fx = $('#onbfx'); FX.attach(fx, [A, B], { dark: true, density: .9 });
+    let done = false; const timers = [];
+    const show = (id) => $$('.onb-s', el).forEach((x) => x.classList.toggle('on', x.id === id));
+    const finish = (go) => {
+      if (done) return; done = true; timers.forEach(clearTimeout);
+      try { localStorage.setItem('sillage.onb', '1'); } catch (e) { /* ok */ }
+      FX.clear(fx); el.remove(); document.body.style.overflow = '';
+      if (go) { CHOICE.cat = 'amour'; CHOICE.sc = 'diner2'; CHOICE.mood = 'romantique'; SAY = scenByKey('diner2')[1]; tab = 'today'; render(); const g = $('#go'); if (g) g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+    };
+    $('#onbSkip').onclick = () => finish(false); $('#onbGo').onclick = () => finish(true);
+    if (REDUCED) { show('os4'); return; }
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    at(2900, () => { show('os2'); let i = 0; const t = $('#onbT'); const step = () => { if (done) return; t.textContent = TXT.slice(0, ++i); if (i < TXT.length) timers.push(setTimeout(step, 45)); }; step(); });
+    at(5600, () => show('os3'));
+    at(8600, () => show('os4'));
+  }
+
+  window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
+
   // ---------- Démarrage ----------
   $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { tab = b.dataset.tab; render(); } });
   $('#profileBtn').onclick = openProfile;
   render();
   initStore();
   initAI();
-  autoWeather();
+  if (S.settings.weatherOn) autoWeather(false);
+  setTimeout(showOnboarding, $('#splash') ? 2700 : 200);
   const sp = $('#splash');
   if (sp) { const kill = () => sp.remove(); sp.addEventListener('click', kill); setTimeout(kill, REDUCED ? 500 : 3000); }
 })();

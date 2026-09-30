@@ -1,4 +1,11 @@
-<title>Sillage</title>
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08080a">
+<title>Sillage — ton parfum du jour</title>
+<meta name="description" content="Décris ta journée : Sillage choisit le bon parfum dans ta collection et te montre comment le layerer. 2 essais gratuits.">
+<meta property="og:type" content="website"><meta property="og:title" content="Sillage — ton parfum du jour"><meta property="og:description" content="Météo, mood, tenue, journée : l'IA choisit dans ta collection. 2 essais gratuits.">
+<meta property="og:image" content="https://sillage-demo.example.workers.dev/og.jpg"><meta property="og:url" content="https://sillage-demo.example.workers.dev/"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%2308080a'/%3E%3Cg fill='none' stroke='%23efe8dc' stroke-width='16' stroke-linejoin='round'%3E%3Crect x='166' y='220' width='180' height='200' rx='14'/%3E%3Crect x='214' y='150' width='84' height='70' rx='4'/%3E%3C/g%3E%3Ccircle cx='256' cy='322' r='30' fill='%23b4394a'/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap">
 <style>
@@ -350,6 +357,7 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .demo-pill { display: inline-block; margin: 8px 0 0; padding: 5px 10px; border: 1px solid rgba(180, 57, 74, .7); color: var(--accent-deep); font: 600 10.5px var(--sf); letter-spacing: .14em; text-transform: uppercase; border-radius: 2px; background: rgba(180, 57, 74, .12); }
 
 </style>
+</head><body>
 <div id="app">
   <header class="bar"><div class="mark">sillage</div><button class="iconbtn" id="profileBtn" aria-label="Profil et sauvegarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.8-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></button></header>
   <main id="view"></main>
@@ -1113,13 +1121,84 @@ ${mist}
 
 </script>
 <script>
-// Prompt du conseil du jour. Source unique : le site public l'exécute côté serveur (jamais envoyé au navigateur).
-function dayPrompt(a) {
-  const wx = a.wx, text = String(a.text || '').slice(0, 600);
-  return `Tu es un nez de parfumerie qui compose avec goût. Ton chaleureux, tutoiement, image sensorielle, jamais de jargon creux. Réponds UNIQUEMENT par un JSON.\n\nMa collection (id | nom | maison | famille | notes | projection | tenue | poids | ma note | dernier port) :\n${String(a.collection || '').slice(0, 14000)}\n\nMa journée : """${text || '(non précisée)'}"""${a.explicit || ''}${wx ? `\nMétéo indiquée : ${wx.l}, environ ${wx.t}°C${wx.rain ? ', pluie' : ''}.` : ''}${a.hasPhoto ? '\nUne photo de ma tenue est jointe : lis-y les couleurs, matières et le style.' : ''}\nDate : ${a.date || ''}.\n\nFormat : {"cond":{"temp":nombre ou null,"ctx":"pro|perso|date|event|famille|amis","with":"seul|partenaire|premier|collegues|boss|famille|amis|inconnus","moment":"jour|soir|nuit","mood":"confiant|calme|energique|romantique|mysterieux|joyeux|fatigue|creatif","style":"costume|smart|casual|sport|soiree|street","color":"sombre|neutre|clair|colore","fabric":"coton|lin|laine|cuir|denim|soie|technique|","place":"interieur|exterieur|transport|foule|","dur":"courte|longue|"},"read":"ma journée reformulée, 12 mots max","pick":"id du parfum","vibe":["3 mots courts"],"story":"2 phrases : pourquoi celui-là aujourd'hui (météo, tenue, moment, personnes)","alts":[{"id":"","line":"8 mots max"},{"id":"","line":""}],"layers":[{"id":"","effect":"ce que l'accord change, 1 phrase","how":"ordre, dosage en sprays, où vaporiser selon la tenue, 2 phrases","score":1-5},{"id":"","effect":"","how":"","score":1-5}],"avoid":"vide, ou 1 phrase si un parfum est à éviter aujourd'hui"}\nRègles : le mood et les conditions (météo, humidité, lieu, durée) pèsent autant que l'occasion : ne propose jamais un parfum qui les contredit, et cite-les dans "story". N'utilise que les id fournis. Évite ce qui a été porté hier ou aujourd'hui sauf raison forte. Les 2 accords de layering doivent être différents de "pick" et cohérents avec la chaleur et la tenue.`;
-}
+// Démo publique : remplace l'IA de claude.ai par un petit serveur (Worker) qui limite chaque visiteur à 2 essais.
+(function () {
+  'use strict';
+  const MAX = 2;
+  let left = MAX, vid;
+  try { vid = localStorage.getItem('sillage.vid'); if (!vid) { vid = (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(16).slice(2) + Date.now().toString(16) + 'abcdef0123'); localStorage.setItem('sillage.vid', vid); } } catch (e) { vid = 'anon-' + Math.random().toString(16).slice(2) + Date.now().toString(16) + '0000'; }
+  const headers = () => ({ 'content-type': 'application/json', 'x-visitor': vid });
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-window.SillagePrompts = { day: dayPrompt };
+  async function refresh() { try { const r = await fetch('/api/quota', { headers: headers() }); const j = await r.json(); if (typeof j.left === 'number') left = j.left; } catch (e) { /* hors ligne : on garde la valeur */ } }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => {
+        const k = Math.min(1, 900 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+        c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url); resolve({ media_type: 'image/jpeg', data: c.toDataURL('image/jpeg', .82).split(',')[1] });
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('img')); };
+      img.src = url;
+    });
+  }
+
+  async function day(args, photo) {
+    const body = Object.assign({}, args);
+    if (photo) { try { body.image = await toBase64(photo); } catch (e) { /* sans photo */ } }
+    let r;
+    try { r = await fetch('/api/day', { method: 'POST', headers: headers(), body: JSON.stringify(body) }); } catch (e) { throw { code: 'network' }; }
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : 'quota'); throw { code: 'rate_limited' }; }
+    if (!r.ok) throw { code: 'server' };
+    if (typeof j.left === 'number') left = j.left;
+    return j.data;
+  }
+
+  const TEXT = {
+    quota: ['Tes 2 essais sont utilisés', 'Tu as vu ce que fait Sillage. Laisse ton email : je t\'envoie l\'accès complet, et je peux préparer une version sur mesure pour ta collection ou ton activité.'],
+    locked: ['Réservé à la version complète', 'Cette fonction (ajout par IA, labo d\'accords, semaine, voyage, balade…) est dans la version complète. Laisse ton email pour l\'obtenir.'],
+    busy: ['La démo fait une pause', 'Elle est très demandée aujourd\'hui et reprend demain. Laisse ton email, je te préviens.'],
+  };
+  function upsell(reason) {
+    const H = window.SillageHooks; if (!H) return;
+    const [title, text] = TEXT[reason] || TEXT.quota;
+    const pn = H.openSheet(`<div><h2>${esc(title)}</h2><p style="color:var(--muted);margin-top:8px">${esc(text)}</p></div>
+      <form id="su" style="display:grid;gap:12px" novalidate>
+        <input type="text" id="su-mail" inputmode="email" autocomplete="email" placeholder="ton@email.com" aria-label="Ton email">
+        <div class="chips" id="su-int"><button type="button" class="chip on" data-v="test">Tester la version complète</button><button type="button" class="chip" data-v="custom">Une version sur mesure</button><button type="button" class="chip" data-v="guide">Le guide</button></div>
+        <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted)"><input type="checkbox" id="su-ok" style="width:auto;margin-top:3px"><span>J'accepte de recevoir des nouvelles de Sillage par email. Je peux me désinscrire à tout moment. Mon email ne sert qu'à ça.</span></label>
+        <input type="text" id="su-web" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true">
+        <button class="cta full" id="su-go"><span>Recevoir l'accès</span></button><p class="mono" id="su-msg" style="text-transform:none;letter-spacing:0"></p>
+      </form>`);
+    let interest = 'test';
+    pn.querySelectorAll('#su-int .chip').forEach((b) => (b.onclick = () => { interest = b.dataset.v; pn.querySelectorAll('#su-int .chip').forEach((x) => x.classList.toggle('on', x === b)); }));
+    pn.querySelector('#su').onsubmit = async (e) => {
+      e.preventDefault();
+      const msg = pn.querySelector('#su-msg'), mail = pn.querySelector('#su-mail').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) { msg.textContent = 'Cet email semble incomplet.'; return; }
+      if (!pn.querySelector('#su-ok').checked) { msg.textContent = 'Coche la case pour continuer.'; return; }
+      pn.querySelector('#su-go').disabled = true; msg.textContent = 'Envoi…';
+      try {
+        const r = await fetch('/api/signup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email: mail, consent: true, interest, website: pn.querySelector('#su-web').value, source: 'demo-' + reason }) });
+        if (!r.ok) throw new Error('x');
+        pn.innerHTML = '<div style="padding:24px 4px;text-align:center"><h2>C\'est noté.</h2><p style="color:var(--muted);margin-top:10px">Je reviens vers toi très vite.</p></div>';
+      } catch (er) { msg.textContent = 'Envoi impossible pour l\'instant, réessaie dans un instant.'; pn.querySelector('#su-go').disabled = false; }
+    };
+  }
+
+  // Les autres fonctions IA de l'appli passent par « sample » : ici elles mènent à l'inscription.
+  const locked = Object.assign(async () => { upsell('locked'); throw { code: 'locked' }; }, {
+    json: async () => { upsell('locked'); throw { code: 'locked' }; },
+    limits: async () => ({ maxPromptBytes: 100000, images: { maxCount: 1, maxInputBytes: 8000000, mediaTypes: ['image/jpeg', 'image/png', 'image/webp'] } }),
+  });
+  window.claude = { use: async (name) => (name === 'sample' ? locked : null) };
+  window.SillageDemo = { day, left: () => left, refresh, upsell };
+  refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
+})();
+
 </script>
 <script>
 (function () {
@@ -2097,3 +2176,4 @@ window.SillagePrompts = { day: dayPrompt };
 })();
 
 </script>
+</body></html>

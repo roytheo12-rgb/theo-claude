@@ -1,0 +1,25 @@
+# Sillage : démo publique. Un seul Worker Cloudflare (offre gratuite) sert le site et l'API.
+name = "sillage-demo"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Stockage des essais et des emails. Crée-le avec :  npx wrangler kv namespace create SILLAGE
+# puis colle l'id affiché ci-dessous.
+[[kv_namespaces]]
+binding = "SILLAGE"
+id = "COLLE_ICI_L_ID_DU_KV"
+
+[vars]
+MODEL = "claude-opus-5-5"   # pour payer deux fois moins : "claude-sonnet-5-5"
+EFFORT = "low"
+MAX_TRIES = "2"             # essais par visiteur
+IP_MAX_PER_DAY = "6"        # essais par adresse IP et par jour (contourne les visiteurs qui changent de navigateur)
+DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confondus : ton plafond de dépense
+# Secrets à définir en ligne de commande (jamais dans ce fichier) :
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put ADMIN_KEY
+#   npx wrangler secret put SALT

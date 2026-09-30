@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08080a">
+<title>Sillage — accès complet et version sur mesure</title>
+<meta name="description" content="Laisse ton email pour recevoir l'accès complet à Sillage, le guide, ou une version sur mesure.">
+<meta property="og:title" content="Sillage — accès complet et version sur mesure"><meta property="og:type" content="website"><meta property="og:image" content="og.jpg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap">
+<style>
+:root { color-scheme: dark; --bg: #08080a; --surface: #131215; --ink: #f4f0ea; --muted: #94908a; --line: rgba(255,255,255,.14); --wine: #b4394a; --cream: #efe8dc; --sf: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: radial-gradient(90% 46% at 50% -8%, rgba(122,31,43,.42), transparent 70%), var(--bg); color: var(--ink); font: 16px/1.5 var(--sf); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+main { max-width: 560px; margin: 0 auto; padding: 36px 20px 60px; display: grid; gap: 22px; }
+.mark { font: 600 14px var(--sf); letter-spacing: .38em; text-transform: uppercase; color: var(--cream); }
+h1 { font: 200 clamp(40px, 11vw, 60px)/1.02 var(--sf); letter-spacing: -.045em; margin: 0; text-wrap: balance; }
+p { margin: 0; color: var(--muted); }
+ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+li { border-top: 1px solid var(--line); padding-top: 10px; color: var(--ink); font-weight: 300; }
+li b { font-weight: 500; }
+form { display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }
+input[type=email], select { width: 100%; font: 16px var(--sf); color: var(--ink); background: #1e1c22; border: 1px solid rgba(255,255,255,.24); border-radius: 4px; padding: 14px 16px; }
+input::placeholder { color: #b9b4ad; }
+input:focus, select:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(180,57,74,.22); }
+label.c { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); }
+label.c input { margin-top: 4px; }
+button { border: 0; border-radius: 3px; background: var(--cream); color: #0d0b0c; padding: 16px; font: 600 12.5px var(--sf); letter-spacing: .2em; text-transform: uppercase; cursor: pointer; }
+button[disabled] { opacity: .5; }
+.hp { position: absolute; left: -9999px; opacity: 0; }
+#msg { font-size: 14px; min-height: 1.4em; }
+.ok { text-align: center; padding: 30px 0; }
+a { color: var(--cream); }
+.small { font-size: 12.5px; }
+</style></head><body><main>
+<div class="mark">Sillage</div>
+<h1>Ta collection mérite mieux qu'un tiroir.</h1>
+<p>Sillage choisit ton parfum selon la météo, ta journée, ton mood et ta tenue, et te montre comment le layerer. La démo te donne 2 essais. Ici, tu peux aller plus loin.</p>
+<ul>
+  <li><b>Accès complet</b> : ajout de tes parfums par IA ou photo, labo d'accords, semaine, mode voyage, balade olfactive.</li>
+  <li><b>Version sur mesure</b> : ta collection, ton activité, ton identité visuelle.</li>
+  <li><b>Le guide</b> : comment j'ai construit l'app sans écrire une ligne de code.</li>
+</ul>
+<form id="f" novalidate>
+  <input type="email" id="email" placeholder="ton@email.com" aria-label="Ton email" autocomplete="email" required>
+  <select id="interest" aria-label="Ce qui t'intéresse"><option value="test">Je veux tester la version complète</option><option value="custom">Je veux une version sur mesure</option><option value="guide">Je veux le guide</option></select>
+  <input class="hp" type="text" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <label class="c"><input type="checkbox" id="consent"><span>J'accepte de recevoir des nouvelles de Sillage par email. Je peux me désinscrire à tout moment. Mon email ne sert qu'à ça et n'est jamais revendu.</span></label>
+  <button id="go">Recevoir l'accès</button><p id="msg" role="status"></p>
+</form>
+<p class="small"><a href="/">← Retour à la démo</a></p>
+</main>
+<script>
+document.getElementById('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('msg'), email = document.getElementById('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'Cet email semble incomplet.'; return; }
+  if (!document.getElementById('consent').checked) { msg.textContent = 'Coche la case pour continuer.'; return; }
+  document.getElementById('go').disabled = true; msg.textContent = 'Envoi…';
+  try {
+    const r = await fetch('/api/signup', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email, consent: true, interest: document.getElementById('interest').value, website: document.getElementById('website').value, source: 'page-inscription' }) });
+    if (!r.ok) throw new Error('x');
+    document.getElementById('f').innerHTML = '<div class="ok"><h1 style="font-size:40px">C\'est noté.</h1><p style="margin-top:12px">Je reviens vers toi très vite.</p></div>';
+  } catch (er) { msg.textContent = 'Envoi impossible pour l\'instant, réessaie dans un instant.'; document.getElementById('go').disabled = false; }
+});
+</script></body></html>
