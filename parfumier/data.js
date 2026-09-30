@@ -25,7 +25,7 @@
     ['N°5 EDP', 'Chanel', 'floral', ['aldéhydes', 'ylang-ylang', 'rose', 'jasmin', 'vanille'], 3, 4, 3, 130],
     ['Chance Eau Tendre', 'Chanel', 'fruité', ['pamplemousse', 'coing', 'jasmin', 'musc'], 3, 3, 2, 120],
     ['Miss Dior EDP', 'Dior', 'floral', ['rose', 'muguet', 'pivoine', 'patchouli'], 3, 3, 2, 115],
-    ['J\'adore', 'Dior', 'floral', ['ylang-ylang', 'rose', 'jasmin', 'poire'], 3, 3, 2, 120],
+    ['J\'adore', 'Dior', 'floral', ['ylang-ylang', 'rose de Damas', 'jasmin'], 3, 3, 2, 130],
     ['Oud Ispahan', 'Dior', 'oud', ['oud', 'rose', 'patchouli', 'santal'], 4, 5, 5, 250],
     ['Angel', 'Mugler', 'gourmand', ['patchouli', 'praliné', 'vanille', 'caramel', 'fruits rouges'], 5, 5, 5, 100],
     ['Alien', 'Mugler', 'floral', ['jasmin', 'cachemire', 'ambre blanc'], 4, 5, 3, 90],
@@ -125,6 +125,10 @@
     ['Scandal By Night', 'Jean Paul Gaultier', 'gourmand', ['miel', 'tubéreuse', 'santal', 'fève tonka', 'vanille'], 4, 5, 4, 110],
     ['Paradoxe Intense', 'Prada', 'floral', ['poire', 'néroli', 'bergamote', 'mousse', 'jasmin', 'Ambrofix', 'Serenolide', 'ambre', 'vanille Bourbon'], 4, 4, 3, 115],
     ['Miss Dior Essence', 'Dior', 'floral', ['accord confiture de mûre', 'fleur de sureau', 'jasmin', 'accord chêne'], 4, 5, 3, 115],
+    ['Shalimar', 'Guerlain', 'ambré', ['citron', 'bergamote', 'mandarine', 'cèdre', 'iris', 'patchouli', 'vétiver', 'jasmin', 'rose', 'vanille', 'encens', 'cuir', 'opoponax', 'civette', 'santal', 'fève tonka', 'musc'], 4, 5, 4, 95],
+    ['Dior Homme Intense', 'Dior', 'boisé', ['lavande', 'iris', 'ambrette', 'poire', 'cèdre de Virginie', 'vétiver'], 3, 4, 3, 130],
+    ['Stronger With You Intensely', 'Emporio Armani', 'gourmand', ['poivre rose', 'marron glacé', 'vanille', 'accord daim', 'vétiver', 'notes ambrées boisées'], 4, 5, 4, 85],
+    ['Pure Musc Blanc', 'Narciso Rodriguez', 'musqué', ['jasmin', 'accord propre', 'musc', 'cèdre', 'vanille'], 3, 4, 1, 70],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({

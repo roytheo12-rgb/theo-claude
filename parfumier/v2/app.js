@@ -22,6 +22,7 @@
 
   // ---------- Données ----------
   const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  const SEED13 = [['Shalimar', 4], ['J\'adore', 4], ['Dior Homme Intense', 4], ['Stronger With You Intensely', 4], ['Pure Musc Blanc', 4]];
   const SEED12 = [['Aqua Allegoria Rosa Verde', 4], ['Scandal By Night', 4], ['Paradoxe Intense', 4], ['Miss Dior Essence', 4], ['La Vie est Belle', 4]];
   const SEED11 = [['Boss Bottled', 4], ['Bleu de Chanel EDT', 4], ['Pour un Homme de Caron', 4], ['Terre d\'Hermès', 4], ['Flacon ailé', 4]];
   const SEED10 = [['Vétiver Extraordinaire', 4], ['De Los Santos', 4], ['Étoile Filante', 4], ['Lazy Sunday Morning', 4], ['Sauvage EDT', 4]];
@@ -47,10 +48,11 @@
     'Vétiver Extraordinaire': { s: 'img/vetiver.webp', nz: 26 }, 'De Los Santos': { s: 'img/delossantos.webp', nz: 3 }, 'Étoile Filante': { s: 'img/etoile.webp', nz: 3 }, 'Lazy Sunday Morning': { s: 'img/lazy.webp', nz: 2 }, 'Sauvage EDT': { s: 'img/sauvage.webp', nz: 3 },
     'Boss Bottled': { s: 'img/boss.webp', nz: 3 }, 'Bleu de Chanel EDT': { s: 'img/bleu.webp', nz: 3 }, 'Pour un Homme de Caron': { s: 'img/caron.webp', nz: 2 }, 'Terre d\'Hermès': { s: 'img/terre.webp', nz: 3 }, 'Flacon ailé': { s: 'img/ailes.webp', nz: 10 },
     'Aqua Allegoria Rosa Verde': { s: 'img/rosaverde.webp', nz: 8 }, 'Scandal By Night': { s: 'img/scandal.webp', nz: 6 }, 'Paradoxe Intense': { s: 'img/paradoxe.webp', nz: 12 }, 'Miss Dior Essence': { s: 'img/missessence.webp', nz: 10 }, 'La Vie est Belle': { s: 'img/lavie.webp', nz: 12 },
+    'Shalimar': { s: 'img/shalimar.webp', nz: 4 }, 'J\'adore': { s: 'img/jadore.webp', nz: 3 }, 'Dior Homme Intense': { s: 'img/dhi.webp', nz: 6 }, 'Stronger With You Intensely': { s: 'img/swyi.webp', nz: 4 }, 'Pure Musc Blanc': { s: 'img/muscblanc.webp', nz: 5 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 12, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9), seedList(SEED10), seedList(SEED11), seedList(SEED12)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: 13, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9), seedList(SEED10), seedList(SEED11), seedList(SEED12), seedList(SEED13)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   function migrate() {
     S.walks = S.walks || [];
@@ -67,6 +69,7 @@
     if ((S.seedV || 1) < 10) { seedList(SEED10).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 10; }
     if ((S.seedV || 1) < 11) { seedList(SEED11).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 11; }
     if ((S.seedV || 1) < 12) { seedList(SEED12).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 12; }
+    if ((S.seedV || 1) < 13) { seedList(SEED13).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 13; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
