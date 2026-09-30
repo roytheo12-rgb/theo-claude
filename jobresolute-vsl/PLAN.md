@@ -3,6 +3,8 @@
 Durée : **≈ 1:58** · Langue : français · Voix off : Henry (ou ElevenLabs en secours)
 Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente).
 
+> **Mise à jour V3.1** : le compte-rendu arrive **au même instant** chez le candidat et chez le recruteur. Plus de « en premier » nulle part (la démo le dit encore : à corriger).
+>
 > **Mises à jour V3 (elles priment sur tout le reste)**
 > - **Une seule vidéo pour tous les publics** : entreprises clientes (y compris les partenaires qui investiraient) et business angels. **Une fin unique (M15)** : « Nous ne digitalisons pas le recrutement. Nous changeons ce que l'on mesure. », le logo, puis **deux boutons côte à côte** : « Établissements et groupes · Rejoindre le programme pilote fondateur » et « Investisseurs · Découvrir l'opportunité ». Les versions DRH et BA séparées sont supprimées.
 > - **Présentation produit (acte II) sans prénoms** : on parle du produit au niveau de l'entreprise, façon VSL. « Vous » pour l'établissement, « le candidat » ou « la personne » pour les candidats. Nadia et Julien restent les personnages des actes I et III.
@@ -138,7 +140,7 @@ V9  Puis il démontre ce qu'il sait faire, sur les cinq dimensions du poste.
 V10 Vous voyez ce que la personne fait. Pas qui elle est.
 V11 Un résultat qui s'explique.
 V12 Et sa place dans votre équipe.
-V13 Le même résultat, des deux côtés. Le candidat le reçoit en premier.
+V13 Le même résultat, des deux côtés, au même instant.
 V14 Chacun prépare la rencontre.
 V15 Et personne ne reste sans réponse.
 V15b Et demain, les talents que le CV aurait écartés refont surface.

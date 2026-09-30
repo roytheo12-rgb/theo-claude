@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M08 · DÉCIDER · Le même compte-rendu des deux côtés, le candidat d'abord · « Le même résultat, des deux côtés. » · 4 s -->
+<!-- M08 · DÉCIDER · Le même compte-rendu des deux côtés, au même instant des deux côtés · « Le même résultat, des deux côtés. » · 4 s -->
 <link rel="stylesheet" href="base.css">
 <style>
 .desk{position:absolute;left:0;right:0;top:830px;bottom:0;background:linear-gradient(#2a1a10,#130b06)}
@@ -27,21 +27,24 @@
   <div class="desk"></div>
   <div class="glow" id="gl" style="left:200px;top:200px;width:600px;height:600px"></div>
   <div class="phone" id="ph"><div class="scr"><div class="notch"></div>
-    <div class="notif" id="nt"><small>JobResolute</small>Vous recevez votre compte-rendu en premier</div>
+    <div class="notif" id="nt"><small>JobResolute</small>Votre compte-rendu est prêt</div>
     <div class="k" style="margin-top:96px">Compte-rendu · Chef de Rang</div>
     <div class="n74" style="margin-top:14px">74<span> /100</span></div>
     <div class="mb"><div class="t"><i style="width:82%"></i></div><div class="t"><i style="width:78%"></i></div><div class="t"><i style="width:85%"></i></div></div>
     <div class="sig" id="sig"><span>Valider</span><span class="s2">Signaler une inexactitude</span></div>
-  </div><div class="badge" id="bd">1</div></div>
+  </div></div>
   <div class="laptop" id="lap"><div class="lid"><div class="scr" id="ls">
     <div id="lc" style="opacity:0"><div class="k">Compte-rendu · Chef de Rang</div>
     <div class="mini"><div class="n74">74<span> /100</span></div>
     <div class="mb"><div class="t"><i style="width:82%"></i></div><div class="t"><i style="width:78%"></i></div><div class="t"><i style="width:85%"></i></div><div class="t"><i style="width:61%"></i></div><div class="t"><i style="width:70%"></i></div></div></div></div>
   </div></div><div class="base"></div></div>
-  <div class="lbl" id="ln" style="left:330px;width:340px;text-align:center;color:var(--laiton2)">Le candidat · en premier</div>
-  <div class="lbl" id="lj" style="left:820px;width:840px;text-align:center;color:rgba(244,239,230,.55)">Le recruteur · ensuite</div>
+  <div class="lbl" id="ln" style="left:330px;width:340px;text-align:center;color:var(--laiton2)">Le candidat</div>
+  <div class="lbl" id="lj" style="left:820px;width:840px;text-align:center;color:var(--laiton2)">Le recruteur</div>
+  <div class="glow" id="gl2" style="left:940px;top:170px;width:600px;height:600px"></div>
+  <div id="sync" style="position:absolute;left:672px;top:452px;width:150px;height:2px;background:var(--laiton2);transform-origin:50% 50%"></div>
+  <div id="dot" style="position:absolute;left:739px;top:445px;width:16px;height:16px;border-radius:50%;background:var(--laiton2);box-shadow:0 0 18px rgba(212,175,116,.9)"></div>
 </div>
-<div class="cap" id="cap">Le même résultat, des *deux* *côtés*.</div>
+<div class="cap" id="cap">Le même résultat, *au* *même* *instant*.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
@@ -49,23 +52,26 @@ window.DURATION = 4;
 const $ = id => document.getElementById(id);
 const cw = words($('cap'));
 window.seek = t => {
-  // Même décor, deux appareils : le téléphone de Nadia s'allume en premier
-  const p = fadeUp($('ph'), t, 0, 0.6, 30);
-  const l = fadeUp($('lap'), t, 0.1, 0.6, 30);
-  const n = spring(prog(t, 0.45, 0.6));
+  // Même décor, deux appareils : le compte-rendu arrive des deux côtés AU MÊME INSTANT (T)
+  const T = 0.9;
+  fadeUp($('ph'), t, 0, 0.6, 30);
+  fadeUp($('lap'), t, 0, 0.6, 30);
+  // L'impulsion part du centre vers les deux appareils à la fois
+  const k = easeOut(prog(t, T - 0.35, 0.35));
+  $('sync').style.transform = `scaleX(${k})`; $('sync').style.opacity = k * (1 - prog(t, T + 0.3, 0.6));
+  $('dot').style.opacity = clamp(prog(t, T - 0.45, 0.15)) * (1 - prog(t, T + 0.2, 0.5));
+  $('dot').style.transform = `scale(${1 + 0.4 * Math.sin(t * 12)})`;
+  const n = spring(prog(t, T, 0.6));
   $('nt').style.opacity = clamp(n * 1.4); $('nt').style.transform = `translateY(${(1 - n) * -40}px)`;
-  const b = spring(prog(t, 0.6, 0.5)); $('bd').style.transform = `scale(${b})`;
-  $('gl').style.opacity = easeOut(prog(t, 0.45, 0.6)) * (0.75 + 0.1 * Math.sin(t * 4));
-  fadeUp($('ln'), t, 0.7, 0.4, 6);
-  // Puis l'écran de Julien reçoit le même compte-rendu
-  const c = easeOut(prog(t, 1.25, 0.5)); $('lc').style.opacity = c;
-  document.querySelectorAll('#lc .t i').forEach((el, i) => { const w = el.dataset.w || (el.dataset.w = parseFloat(el.style.width)); el.style.width = w * easeOut(prog(t, 1.35 + i * 0.1, 0.6)) + '%'; });
-  document.querySelectorAll('#ph .mb .t i').forEach((el, i) => { const w = el.dataset.w || (el.dataset.w = parseFloat(el.style.width)); el.style.width = w * easeOut(prog(t, 0.6 + i * 0.1, 0.6)) + '%'; });
-  $('ls').style.boxShadow = `inset 0 0 0 ${c > 0 && c < 1 ? 3 : 0}px rgba(212,175,116,.6)`;
-  fadeUp($('lj'), t, 1.4, 0.4, 6);
-  fadeUp($('sig'), t, 1.0, 0.45, 8);
-  sheen($('ls'), t, 1.2);
-  revealWords(cw, t, 1.3);
+  const c = easeOut(prog(t, T, 0.5)); $('lc').style.opacity = c;
+  document.querySelectorAll('#ph .scr > .k, #ph .scr > .n74, #ph .scr > .mb').forEach(el => el.style.opacity = c);
+  document.querySelectorAll('#lc .t i, #ph .mb .t i').forEach((el, i) => { const w = el.dataset.w || (el.dataset.w = parseFloat(el.style.width)); el.style.width = w * easeOut(prog(t, T + 0.1 + (i % 5) * 0.1, 0.6)) + '%'; });
+  const g = easeOut(prog(t, T, 0.6)) * (0.75 + 0.1 * Math.sin(t * 4));
+  $('gl').style.opacity = g; $('gl2').style.opacity = g;
+  fadeUp($('ln'), t, T + 0.2, 0.4, 6); fadeUp($('lj'), t, T + 0.2, 0.4, 6);
+  fadeUp($('sig'), t, T + 0.5, 0.45, 8);
+  sheen($('ls'), t, T + 0.1); sheen($('ph').querySelector('.scr'), t, T + 0.1);
+  revealWords(cw, t, T + 0.3);
   fx(t, 4);
 };
 window.seek(0);

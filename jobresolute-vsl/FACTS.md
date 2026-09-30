@@ -30,7 +30,7 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
   - Quel est le protocole exact pour les VIP et les allergènes ici ?
   - Comment fonctionne la coordination entre la salle et la cuisine pendant les services chargés ?
   - Quelles sont vos attentes précises sur la transmission de service ?
-- « Vous recevez votre compte-rendu en premier »
+- « Votre compte-rendu est prêt ». **Le compte-rendu arrive au même instant des deux côtés** (validé par Théo ; la démo dit encore « en premier » : à corriger).
 - « Décision humaine » · « Validé par Julien »
 - Carte de Cohésion : les formes seulement, aucun chiffre ni formule
 
@@ -45,7 +45,7 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 ## Libellés d'interface ajoutés pour l'acte II (à valider par Théo)
 - « Offre · Le Beauregard, Paris » · « Pipeline » · « Compte-rendu · Chef de Rang » · « Fiche d'entretien · Chef de Rang » · « 3 questions pour l'entretien »
 - « Carte de Cohésion · Équipe de salle · Le Beauregard »
-- « Nadia · en premier » · « Julien · ensuite »
+- ~~« Nadia · en premier » · « Julien · ensuite »~~ (supprimé)
 - Étapes du parcours (M11) : Je suis intéressée · Situation 20h15 · Identité masquée · Fit expliqué · Carte de Cohésion · Compte-rendu · Fiche d'entretien · Décision humaine
 
 ## Ajouts V2 (repris de la démo, sauf mention)
@@ -67,7 +67,7 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 ## Ajouts V3
 - Acte II sans prénoms : « Le candidat » · « Le recruteur » · « Vous » · « la personne »
 - Légendes : « Un clic. Pas de CV. » · « Le candidat démontre ce qu'il sait faire. » · « Vous voyez ce que la personne fait. Pas qui elle est. » · « Et sa place dans votre équipe. » · « Chacun prépare la rencontre. »
-- « Le candidat · en premier » · « Le recruteur · ensuite » · « Le candidat se prépare » · « Le recruteur se prépare » · « Décision validée · tracée » · « Profil déjà évalué · disponible »
+- « Le candidat » · « Le recruteur » · « Le même résultat, au même instant. » · « Le candidat se prépare » · « Le recruteur se prépare » · « Décision validée · tracée » · « Profil déjà évalué · disponible »
 - Fin unique : « Établissements et groupes · Rejoindre le programme pilote fondateur » · « Investisseurs · Découvrir l'opportunité »
 
 ## Chiffres et preuves autorisés
@@ -78,6 +78,7 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 - Programme pilote fondateur
 
 ## Interdits
+- Dire ou montrer que le candidat reçoit son résultat « en premier » ou « avant » le recruteur
 - Aucun client, logo d'hôtel réel, témoignage ou chiffre d'usage
 - Pas la réduction de « 25-30 % de départs évités » (hypothèse non validée)
 - Pas « 47 ans » tant qu'Henry ne l'a pas confirmé
