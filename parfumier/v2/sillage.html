@@ -2,39 +2,39 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:opsz,wght@9..40,400..700&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Sillage — matcha latte, brume de San Francisco, mouvement doux.
+/* Sillage — brume de San Francisco au lever du jour : lilas, pêche, corail, encre.
    Mise en page : une colonne étroite, cartes molles, dock flottant, stories plein écran. */
 :root {
-  --bg: #eef2e1; --surface: #fbfcf6; --surface2: #e3ebcf; --ink: #1b2a1e; --muted: #5a6b58;
-  --line: rgba(27, 42, 30, .13); --matcha: #86a94a; --matcha-soft: #cfe3a3; --matcha-deep: #3d5c2b;
-  --peach: #ffc9a8; --lilac: #d9ccf6; --sun: #fbe58c;
-  --cta-bg: #1b2a1e; --cta-fg: #eaf5cf; --glass: rgba(251, 252, 246, .8);
-  --shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 18px 34px -22px rgba(40, 70, 30, .45);
+  --bg: #f4f1fa; --surface: #ffffff; --surface2: #ebe6f6; --ink: #1d1a2f; --muted: #665f7e;
+  --line: rgba(29, 26, 47, .12); --accent: #ff6b4a; --accent-soft: #e5dcff; --accent-deep: #4b3fd6;
+  --peach: #ffc7a6; --lilac: #cdbdff; --sun: #ffe08a; --sky: #a9c8ff;
+  --cta-bg: #1d1a2f; --cta-fg: #ffffff; --glass: rgba(255, 255, 255, .78);
+  --shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 20px 36px -24px rgba(60, 40, 120, .45);
   --f-display: "Bricolage Grotesque", "Avenir Next", "Helvetica Neue", system-ui, sans-serif;
   --f-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f1a12; --surface: #17241a; --surface2: #21331f; --ink: #eaf1df; --muted: #9db199;
-    --line: rgba(234, 241, 223, .15); --matcha: #a6c96a; --matcha-soft: #3a5230; --matcha-deep: #c8e39b;
-    --cta-bg: #d6ee9f; --cta-fg: #14200f; --glass: rgba(23, 36, 26, .82);
-    --shadow: 0 1px 0 rgba(255, 255, 255, .05) inset, 0 18px 34px -22px rgba(0, 0, 0, .8);
+    --bg: #0e0c1b; --surface: #1a1730; --surface2: #262244; --ink: #f3efff; --muted: #a59fc0;
+    --line: rgba(243, 239, 255, .14); --accent: #ff8a6e; --accent-soft: #372f66; --accent-deep: #b9adff;
+    --cta-bg: #f3efff; --cta-fg: #1d1a2f; --glass: rgba(26, 23, 48, .84);
+    --shadow: 0 1px 0 rgba(255, 255, 255, .05) inset, 0 20px 36px -24px rgba(0, 0, 0, .85);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0f1a12; --surface: #17241a; --surface2: #21331f; --ink: #eaf1df; --muted: #9db199;
-  --line: rgba(234, 241, 223, .15); --matcha: #a6c96a; --matcha-soft: #3a5230; --matcha-deep: #c8e39b;
-  --cta-bg: #d6ee9f; --cta-fg: #14200f; --glass: rgba(23, 36, 26, .82);
-  --shadow: 0 1px 0 rgba(255, 255, 255, .05) inset, 0 18px 34px -22px rgba(0, 0, 0, .8);
+  --bg: #0e0c1b; --surface: #1a1730; --surface2: #262244; --ink: #f3efff; --muted: #a59fc0;
+  --line: rgba(243, 239, 255, .14); --accent: #ff8a6e; --accent-soft: #372f66; --accent-deep: #b9adff;
+  --cta-bg: #f3efff; --cta-fg: #1d1a2f; --glass: rgba(26, 23, 48, .84);
+  --shadow: 0 1px 0 rgba(255, 255, 255, .05) inset, 0 20px 36px -24px rgba(0, 0, 0, .85);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 var(--f-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 button { font: inherit; color: inherit; cursor: pointer; }
 h1, h2, h3, p { margin: 0; }
-:focus-visible { outline: 2px solid var(--matcha-deep); outline-offset: 3px; border-radius: 10px; }
+:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 3px; border-radius: 10px; }
 .mono { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 
 /* ---------- Coque ---------- */
@@ -44,7 +44,7 @@ h1, h2, h3, p { margin: 0; }
 .mark::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 6px; background: currentColor; opacity: .85;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 6'%3E%3Cpath d='M0 3Q7.5 0 15 3T30 3T45 3T60 3' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E") 0 0 / 30px 6px repeat-x;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 6'%3E%3Cpath d='M0 3Q7.5 0 15 3T30 3T45 3T60 3' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E") 0 0 / 30px 6px repeat-x;
-  animation: wavex 3s linear infinite; color: var(--matcha); }
+  animation: wavex 3s linear infinite; color: var(--accent); }
 @keyframes wavex { to { -webkit-mask-position: 30px 0; mask-position: 30px 0; } }
 .iconbtn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; }
 .iconbtn svg { width: 20px; height: 20px; }
@@ -54,7 +54,7 @@ h1, h2, h3, p { margin: 0; }
 .dock button { position: relative; z-index: 1; border: 0; background: none; padding: 9px 4px 8px; display: grid; justify-items: center; gap: 2px; font-size: 12px; font-weight: 500; color: var(--muted); transition: color .25s; }
 .dock button svg { width: 22px; height: 22px; }
 .dock button.on { color: var(--ink); }
-.dock .ind { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc((100% - 12px) / 3); border-radius: 999px; background: var(--matcha-soft); transition: transform .45s cubic-bezier(.3, 1.3, .5, 1); }
+.dock .ind { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc((100% - 12px) / 3); border-radius: 999px; background: var(--accent-soft); transition: transform .45s cubic-bezier(.3, 1.3, .5, 1); }
 
 /* ---------- Composants ---------- */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 18px; box-shadow: var(--shadow); }
@@ -64,7 +64,7 @@ h1, h2, h3, p { margin: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 8px 14px; font-size: 14px; transition: transform .2s, background .2s; }
 .chip:active { transform: scale(.94); }
-.chip.on { background: var(--matcha-soft); border-color: transparent; font-weight: 600; }
+.chip.on { background: var(--accent-soft); border-color: transparent; font-weight: 600; }
 .cta { position: relative; overflow: hidden; border: 0; border-radius: 999px; background: var(--cta-bg); color: var(--cta-fg); padding: 16px 24px; font: 600 17px var(--f-display); display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: transform .2s; }
 .cta:active { transform: scale(.97); }
 .cta::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .35) 50%, transparent 70%); transform: translateX(-120%); animation: sheen 3.6s ease-in-out infinite; }
@@ -74,10 +74,10 @@ h1, h2, h3, p { margin: 0; }
 .ghost.danger { color: #b3402f; }
 textarea, input[type=text] { width: 100%; font: 16px/1.45 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px 16px; resize: none; }
 textarea::placeholder, input::placeholder { color: var(--muted); opacity: .8; }
-input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
+input[type=range] { width: 100%; accent-color: var(--accent-deep); }
 .dots { display: inline-flex; gap: 3px; }
 .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
-.dots i.f { background: var(--matcha-deep); }
+.dots i.f { background: var(--accent-deep); }
 .tag { font: 500 12px var(--f-mono); letter-spacing: .04em; padding: 3px 9px; border-radius: 999px; background: var(--surface2); }
 .empty { padding: 26px 8px; text-align: center; color: var(--muted); }
 .spark { width: 16px; height: 16px; vertical-align: -3px; }
@@ -85,15 +85,15 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
 /* ---------- Héros Aujourd'hui ---------- */
 .hero { position: relative; overflow: hidden; border-radius: 34px; padding: 22px 18px 20px; margin-top: 10px; isolation: isolate; border: 1px solid var(--line); background: var(--surface2); }
 .hero .blob { position: absolute; z-index: -1; border-radius: 50%; filter: blur(34px); opacity: .85; animation: drift 11s ease-in-out infinite alternate; }
-.hero .b1 { width: 240px; height: 240px; background: var(--matcha-soft); top: -70px; left: -50px; }
-.hero .b2 { width: 200px; height: 200px; background: var(--peach); right: -60px; top: 40px; animation-delay: -3s; animation-duration: 13s; }
-.hero .b3 { width: 200px; height: 200px; background: var(--lilac); bottom: -80px; left: 30%; animation-delay: -6s; }
-.hero .b4 { width: 130px; height: 130px; background: var(--sun); bottom: 10px; right: 6%; animation-delay: -1s; animation-duration: 9s; }
+.hero .b1 { width: 240px; height: 240px; background: var(--sun); top: -70px; left: -50px; }
+.hero .b2 { width: 220px; height: 220px; background: var(--peach); right: -60px; top: 40px; animation-delay: -3s; animation-duration: 13s; }
+.hero .b3 { width: 220px; height: 220px; background: var(--lilac); bottom: -80px; left: 30%; animation-delay: -6s; }
+.hero .b4 { width: 150px; height: 150px; background: var(--sky); bottom: 10px; right: 6%; animation-delay: -1s; animation-duration: 9s; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero .blob { opacity: .35; } }
 :root[data-theme="dark"] .hero .blob { opacity: .35; }
 @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(26px, 22px) scale(1.15); } }
 .hero h1 { font: 700 clamp(32px, 9vw, 44px)/1.02 var(--f-display); letter-spacing: -.035em; margin: 8px 0 16px; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--matcha-deep); }
+.hero h1 em { font-style: normal; background: linear-gradient(90deg, #ff6b4a, #ff8fb1 55%, #8f7bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .say-wrap { display: grid; gap: 12px; }
 .say-wrap textarea { min-height: 96px; background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(6px); }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
@@ -133,7 +133,7 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
 .pcard span { font-size: 13px; color: var(--muted); }
 .pcard:active { transform: scale(.97); }
 .add-tile { border: 1.5px dashed var(--line); background: transparent; color: var(--muted); display: grid; place-items: center; align-content: center; gap: 8px; min-height: 210px; border-radius: 26px; font-weight: 500; }
-.add-tile svg { width: 30px; height: 30px; color: var(--matcha-deep); }
+.add-tile svg { width: 30px; height: 30px; color: var(--accent-deep); }
 @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 
 /* ---------- Découvrir ---------- */
@@ -165,7 +165,7 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
 .big-bottle { position: relative; height: 210px; isolation: isolate; }
 .big-bottle .bwrap { height: 100%; }
 .meter { display: grid; grid-template-columns: 90px 1fr; align-items: center; font-size: 14px; }
-.stars button { border: 0; background: none; font-size: 26px; padding: 0 2px; color: var(--matcha); }
+.stars button { border: 0; background: none; font-size: 26px; padding: 0 2px; color: var(--accent); }
 .pre { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); animation: rise .5s both; animation-delay: calc(var(--i, 0) * 70ms); }
 .pre .bwrap { height: 64px; }
 .pre b { font: 650 16px/1.15 var(--f-display); }
@@ -173,12 +173,12 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
 
 /* ---------- Story plein écran ---------- */
 #story { position: fixed; inset: 0; z-index: 50; color: #fff; overflow: hidden; --h: 150; isolation: isolate;
-  background: linear-gradient(165deg, hsl(var(--h) 56% 20%), hsl(calc(var(--h) + 34) 62% 30%) 55%, hsl(calc(var(--h) - 26) 68% 38%)); background-size: 220% 220%; animation: bgmove 16s ease-in-out infinite alternate; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+  background: linear-gradient(165deg, hsl(var(--h) 56% 20%), hsl(var(--hA) 62% 30%) 55%, hsl(var(--hB) 68% 38%)); background-size: 220% 220%; animation: bgmove 16s ease-in-out infinite alternate; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
 #story[hidden] { display: none; }
 @keyframes bgmove { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
 #story .sb { position: absolute; border-radius: 50%; filter: blur(50px); z-index: -1; animation: drift 10s ease-in-out infinite alternate; }
 #story .sb1 { width: 340px; height: 340px; background: hsl(var(--h) 90% 62% / .5); top: -60px; right: -90px; }
-#story .sb2 { width: 300px; height: 300px; background: hsl(calc(var(--h) + 70) 90% 62% / .4); bottom: -60px; left: -90px; animation-delay: -4s; }
+#story .sb2 { width: 300px; height: 300px; background: hsl(var(--h2) 90% 62% / .4); bottom: -60px; left: -90px; animation-delay: -4s; }
 .prog { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 10px); left: 14px; right: 14px; display: flex; gap: 5px; z-index: 3; }
 .prog b { flex: 1; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .28); overflow: hidden; }
 .prog b i { display: block; height: 100%; background: #fff; transform-origin: left; transform: scaleX(0); }
@@ -246,6 +246,49 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
   .msgs span:first-child { opacity: 1; }
 }
 
+/* ---------- Ambiances (canvas) et photos ---------- */
+canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#story canvas.fx { z-index: 0; }
+.pcard canvas.fx, .rec canvas.fx { z-index: 0; opacity: .8; }
+.pcard > *:not(canvas), .rec > *:not(canvas) { position: relative; z-index: 1; }
+.big-bottle canvas.fx { inset: -30px -18px; width: calc(100% + 36px); height: calc(100% + 60px); z-index: -1; }
+.bwrap.photo img { height: 100%; width: auto; max-width: 100%; display: block; margin-inline: auto; background: #fff; border-radius: 16px; padding: 4px; box-shadow: 0 10px 24px -12px rgba(30, 20, 70, .5); object-fit: contain; }
+.motif { font: 500 12px var(--f-mono); letter-spacing: .04em; color: rgba(255, 255, 255, .8); }
+#stage { z-index: 1; }
+
+/* ---------- Bande d'ouverture ---------- */
+#splash { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; background: linear-gradient(160deg, #1d1a2f, #3b2a6b 60%, #ff6b4a 130%); color: #fff; animation: splashOut .7s 2.2s ease-in forwards; }
+#splash .lg { font: 700 clamp(52px, 17vw, 88px)/1 var(--f-display); letter-spacing: -.05em; display: flex; }
+#splash .lg span { display: inline-block; animation: srise .9s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--i) * 70ms + 200ms); }
+#splash .tg { margin-top: 14px; text-align: center; font: 500 13px var(--f-mono); letter-spacing: .18em; text-transform: uppercase; opacity: .75; animation: srise 1s 1s both; }
+#splash svg { display: block; margin: 8px auto 0; width: 200px; height: 14px; overflow: visible; }
+#splash svg path { stroke-dasharray: 260; stroke-dashoffset: 260; animation: dash 1.4s .5s ease-out forwards; }
+@keyframes dash { to { stroke-dashoffset: 0; } }
+@keyframes splashOut { to { opacity: 0; visibility: hidden; transform: scale(1.04); } }
+
+/* ---------- Bilan, semaine, labo ---------- */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 12px 12px 10px; box-shadow: var(--shadow); min-width: 0; }
+.stat b { display: block; font: 700 22px/1.1 var(--f-display); letter-spacing: -.03em; overflow-wrap: anywhere; }
+.stat span { font: 500 11px var(--f-mono); color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+.wk { display: grid; grid-template-columns: 54px 1fr; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); animation: rise .5s both; animation-delay: calc(var(--i) * 70ms); }
+.wk .bwrap { height: 70px; }
+.wk .d { font: 500 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.wk b { font: 650 16px/1.15 var(--f-display); }
+.wk p { font-size: 13px; color: var(--muted); }
+.pickrow { display: flex; gap: 10px; overflow-x: auto; padding: 6px 2px 12px; scrollbar-width: none; }
+.pickrow::-webkit-scrollbar { display: none; }
+.pk { flex: 0 0 74px; border: 2px solid transparent; border-radius: 20px; background: var(--surface); padding: 8px 4px 6px; text-align: center; font-size: 11px; line-height: 1.2; }
+.pk .bwrap { height: 74px; }
+.pk.sel { border-color: var(--accent); background: var(--accent-soft); }
+.mixstage { position: relative; height: 210px; display: grid; place-items: center; isolation: isolate; }
+.mixstage .bwrap { position: absolute; height: 150px; }
+.mixstage .la { animation: la 1.4s cubic-bezier(.3, 1, .4, 1) both; }
+.mixstage .lb { animation: lb 1.4s cubic-bezier(.3, 1, .4, 1) both; }
+.mixstage .orb { position: absolute; width: 130px; height: 130px; border-radius: 50%; filter: blur(22px); opacity: 0; animation: orb 1s 1s ease-out forwards, breathe 4s 2s ease-in-out infinite; z-index: -1; }
+.score { font: 700 44px var(--f-display); letter-spacing: -.04em; }
+.linkbtn { color: var(--accent-deep); font-weight: 600; font-size: 14px; text-decoration: none; }
+
 </style>
 <div id="app">
   <header class="bar"><div class="mark">sillage</div><button class="iconbtn" id="profileBtn" aria-label="Profil et sauvegarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.8-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></button></header>
@@ -257,6 +300,7 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
   <button data-tab="shelf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="7" y="10" width="10" height="11" rx="2.5"/><path d="M10 10V7.5h4V10M9.5 3.5h5v4h-5z"/></svg>étagère</button>
   <button data-tab="discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2 5.6-5.6 2 2-5.6z"/></svg>découvrir</button>
 </nav>
+<div id="splash" role="presentation"><div><div class="lg"><span style="--i:0">s</span><span style="--i:1">i</span><span style="--i:2">l</span><span style="--i:3">l</span><span style="--i:4">a</span><span style="--i:5">g</span><span style="--i:6">e</span></div><svg viewBox="0 0 200 14" fill="none" stroke="#ff8a6e" stroke-width="2.2" stroke-linecap="round"><path d="M0 7Q12 0 25 7T50 7T75 7T100 7T125 7T150 7T175 7T200 7"/></svg><div class="tg">ton parfum, ta journée</div></div></div>
 <div id="story" hidden></div>
 <div id="sheet" hidden></div>
 <script>
@@ -681,37 +725,84 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
 
 </script>
 <script>
-// Flacons SVG animés : forme, couleur et liquide dérivés du parfum.
+// Flacons SVG animés. Chaque maison a sa silhouette (bouchon, étiquette, verre) dessinée à la main,
+// la couleur du jus vient de la famille olfactive. Aucun vert : les teintes vertes sont déportées.
 (function (root) {
-  const BASE = { agrumes: 48, aquatique: 194, aromatique: 92, vert: 122, floral: 338, fruité: 6, gourmand: 24, ambré: 30, boisé: 148, épicé: 10, cuir: 350, musqué: 16, oud: 272 };
-  const SAT = { musqué: 58, cuir: 50, boisé: 46, oud: 52, ambré: 78, gourmand: 66, épicé: 80 };
+  const BASE = { agrumes: 40, aquatique: 206, aromatique: 226, vert: 194, floral: 326, fruité: 352, gourmand: 18, ambré: 38, boisé: 24, épicé: 6, cuir: 8, musqué: 340, oud: 272 };
+  const SAT = { musqué: 60, cuir: 48, boisé: 44, oud: 50, ambré: 80, gourmand: 66, épicé: 82 };
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   const hash = (s) => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
+  const noGreen = (h) => { h = ((h % 360) + 360) % 360; return h > 44 && h < 178 ? (h < 111 ? 38 : 190) : h; };
   let n = 0;
 
   function pal(p) {
     const f = p.family;
-    const h = ((BASE[f] != null ? BASE[f] : 150) + (hash(p.name) % 44) - 22 + 360) % 360;
+    const h = noGreen((BASE[f] != null ? BASE[f] : 300) + (hash(p.name) % 44) - 22);
     const s = SAT[f] != null ? SAT[f] : 72;
-    return { h, s, a: `hsl(${h} ${s}% 78%)`, b: `hsl(${h} ${Math.min(92, s + 6)}% 60%)`, c: `hsl(${h} ${Math.min(90, s + 8)}% 33%)`, d: `hsl(${h} ${Math.max(18, s - 22)}% 13%)` };
+    return { h, s, a: `hsl(${h} ${s}% 78%)`, b: `hsl(${h} ${Math.min(92, s + 6)}% 60%)`, c: `hsl(${h} ${Math.min(92, s + 8)}% 34%)`, d: `hsl(${h} ${Math.max(18, s - 22)}% 13%)` };
   }
-  const famColor = (f) => `hsl(${BASE[f] != null ? BASE[f] : 150} ${SAT[f] != null ? SAT[f] : 72}% 60%)`;
+  const famColor = (f) => `hsl(${noGreen(BASE[f] != null ? BASE[f] : 300)} ${SAT[f] != null ? SAT[f] : 72}% 62%)`;
 
+  // Corps de flacon (viewBox 120 x 200) : chemin, col, capuchon [x,y,l,h,r], haut/bas du liquide, largeur utile
   const SHAPES = [
-    { body: 'M30 78a8 8 0 0 1 8-8h44a8 8 0 0 1 8 8v94a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8z', neck: [50, 54, 20, 18], cap: [44, 34, 32, 22, 4], top: 70, bottom: 180, nz: [60, 34] },
-    { body: 'M16 125a44 52 0 1 0 88 0a44 52 0 1 0-88 0z', neck: [50, 58, 20, 22], cap: [46, 38, 28, 22, 8], top: 73, bottom: 177, nz: [60, 38] },
-    { body: 'M40 64a14 14 0 0 1 14-14h12a14 14 0 0 1 14 14v108a14 14 0 0 1-14 14H54a14 14 0 0 1-14-14z', neck: [52, 42, 16, 10], cap: [46, 24, 28, 22, 5], top: 50, bottom: 186, nz: [60, 24] },
-    { body: 'M60 62L98 90L92 182H28L22 90z', neck: [50, 50, 20, 14], cap: [47, 30, 26, 24, 4], top: 62, bottom: 182, nz: [60, 30] },
+    { body: 'M30 78a8 8 0 0 1 8-8h44a8 8 0 0 1 8 8v94a8 8 0 0 1-8 8H38a8 8 0 0 1-8-8z', neck: [50, 54, 20, 18], cap: [44, 32, 32, 24, 4], top: 70, bottom: 180, x: [30, 90], nz: [60, 32] },
+    { body: 'M16 125a44 52 0 1 0 88 0a44 52 0 1 0-88 0z', neck: [50, 58, 20, 22], cap: [46, 36, 28, 24, 8], top: 73, bottom: 177, x: [16, 104], nz: [60, 36] },
+    { body: 'M40 64a14 14 0 0 1 14-14h12a14 14 0 0 1 14 14v108a14 14 0 0 1-14 14H54a14 14 0 0 1-14-14z', neck: [52, 42, 16, 10], cap: [45, 22, 30, 24, 5], top: 50, bottom: 186, x: [40, 80], nz: [60, 22] },
+    { body: 'M60 62L98 90L92 182H28L22 90z', neck: [50, 50, 20, 14], cap: [46, 28, 28, 26, 4], top: 62, bottom: 182, x: [24, 96], nz: [60, 28] },
+    { body: 'M34 62a6 6 0 0 1 6-6h40a6 6 0 0 1 6 6v118a6 6 0 0 1-6 6H40a6 6 0 0 1-6-6z', neck: [52, 48, 16, 8], cap: [38, 16, 44, 40, 5], top: 56, bottom: 186, x: [34, 86], nz: [60, 16] },
+    { body: 'M22 96a10 10 0 0 1 10-10h56a10 10 0 0 1 10 10v76a10 10 0 0 1-10 10H32a10 10 0 0 1-10-10z', neck: [50, 74, 20, 12], cap: [42, 50, 36, 26, 6], top: 86, bottom: 182, x: [22, 98], nz: [60, 50] },
   ];
   const WAVE = 'M0 6Q15 0 30 6T60 6T90 6T120 6T150 6T180 6T210 6T240 6V90H0Z';
 
+  // Maison -> silhouette réelle (forme, bouchon, étiquette, verre teinté)
+  function arche(p) {
+    const H = norm(p.house), N = norm(p.name);
+    if (/le labo/.test(H)) return { shape: 0, cap: 'black', label: 'lab' };
+    if (/byredo/.test(H)) return { shape: 4, cap: 'black', label: 'frost' };
+    if (/diptyque/.test(H)) return { shape: 5, cap: 'black', label: 'oval' };
+    if (/kurkdjian/.test(H)) return { shape: 2, cap: 'gold', label: 'mini' };
+    if (/tom ford/.test(H)) return { shape: 5, cap: /tobacco|oud|tuscan|ombre/.test(N) ? 'wood' : 'black', label: 'cream' };
+    if (/margiela/.test(H)) return { shape: 0, cap: 'black', label: 'type' };
+    if (/malle/.test(H)) return { shape: 4, cap: 'black', label: 'plain' };
+    if (/nasomatto/.test(H)) return { shape: 4, cap: 'silver', label: 'gold', dark: true };
+    if (/escentric/.test(H)) return { shape: 2, cap: 'silver', label: 'lab' };
+    if (/marly|creed|xerjoff|initio|amouage/.test(H)) return { shape: hash(H) % 2 ? 2 : 3, cap: 'gold', label: 'cream' };
+    if (/lutens/.test(H)) return { shape: 3, cap: 'black', label: 'cream' };
+    if (/chanel|dior|hermes|guerlain|lancome|saint laurent|armani|givenchy|prada/.test(H)) return { shape: hash(N) % 2 ? 5 : 2, cap: /dior|chanel|saint laurent/.test(H) ? 'black' : 'silver', label: 'plain' };
+    return { shape: hash(p.name) % 4, cap: ['dark', 'black', 'silver', 'gold'][hash(H) % 4], label: 'plain' };
+  }
+
+  const CAPS = { black: ['#4a4a52', '#141418', '#050507'], gold: ['#fbeab0', '#c99a35', '#7c5714'], silver: ['#ffffff', '#b4b8c2', '#6c7079'], wood: ['#b98650', '#7a4d26', '#3d240f'] };
+
+  function capDefs(id, type, P) {
+    const st = CAPS[type] || [P.b, P.c, P.d];
+    return `<linearGradient id="${id}c" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="${st[1]}"/><stop offset=".28" stop-color="${st[0]}"/><stop offset=".62" stop-color="${st[1]}"/><stop offset="1" stop-color="${st[2]}"/></linearGradient>`;
+  }
+  const fit = (t, w, max) => Math.min(max, w / (Math.max(t.length, 1) * 0.62));
+
+  function label(kind, p, sh, midY, P, dark) {
+    const [x0, x1] = sh.x, w = Math.min(x1 - x0 - 10, 50), cx = 60, name = String(p.name).toUpperCase().replace(/ EDP| EDT/g, ''), house = String(p.house || '').toUpperCase();
+    const ink = dark ? '#f3efe6' : '#141418';
+    if (kind === 'lab') return `<rect x="${cx - w / 2}" y="${midY - 20}" width="${w}" height="40" rx="1.5" fill="#fbfbf8"/><text x="${cx}" y="${midY - 8}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="${fit(name, w - 4, 7)}" fill="#141418">${esc(name)}</text><text x="${cx}" y="${midY + 2}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="3.4" letter-spacing=".4" fill="#141418">EAU DE PARFUM</text><line x1="${cx - w / 2 + 4}" x2="${cx + w / 2 - 4}" y1="${midY + 8}" y2="${midY + 8}" stroke="#141418" stroke-width=".4"/><text x="${cx}" y="${midY + 16}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="${fit(house, w - 4, 5)}" letter-spacing=".8" fill="#141418">${esc(house)}</text>`;
+    if (kind === 'oval') return `<ellipse cx="${cx}" cy="${midY}" rx="${w / 2 + 3}" ry="17" fill="#fbfbf8" stroke="#141418" stroke-width="1"/><ellipse cx="${cx}" cy="${midY}" rx="${w / 2 - 1}" ry="14" fill="none" stroke="#141418" stroke-width=".4"/><text x="${cx}" y="${midY - 2}" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="6.4" fill="#141418">${esc(String(p.house).toLowerCase())}</text><text x="${cx}" y="${midY + 7}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="${fit(name, w, 4.4)}" letter-spacing=".5" fill="#141418">${esc(name)}</text>`;
+    if (kind === 'cream') return `<rect x="${cx - w / 2}" y="${midY - 16}" width="${w}" height="32" fill="#f1e7cf" stroke="#b58e3c" stroke-width=".8"/><text x="${cx}" y="${midY - 4}" text-anchor="middle" font-family="Georgia, serif" font-size="${fit(house, w - 4, 4.8)}" letter-spacing="1" fill="#2a1c0a">${esc(house)}</text><line x1="${cx - 10}" x2="${cx + 10}" y1="${midY + 1}" y2="${midY + 1}" stroke="#b58e3c" stroke-width=".6"/><text x="${cx}" y="${midY + 10}" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="${fit(name, w - 4, 5.6)}" fill="#2a1c0a">${esc(p.name)}</text>`;
+    if (kind === 'type') return `<rect x="${cx - w / 2}" y="${midY - 18}" width="${w}" height="36" fill="#efe6d2" stroke="#141418" stroke-width=".6"/><text x="${cx}" y="${midY - 8}" text-anchor="middle" font-family="Courier New, monospace" font-size="3.6" fill="#141418">REPLICA</text><text x="${cx}" y="${midY + 2}" text-anchor="middle" font-family="Courier New, monospace" font-weight="700" font-size="${fit(name, w - 4, 5.4)}" fill="#141418">${esc(name)}</text><text x="${cx}" y="${midY + 12}" text-anchor="middle" font-family="Courier New, monospace" font-size="3.2" fill="#141418">EAU DE TOILETTE</text>`;
+    if (kind === 'frost') return `<rect x="${cx - w / 2}" y="${midY - 18}" width="${w}" height="36" fill="rgba(255,255,255,.72)"/><text x="${cx}" y="${midY - 6}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="${fit(house, w - 4, 6)}" letter-spacing="1.2" fill="#141418">${esc(house)}</text><text x="${cx}" y="${midY + 6}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="${fit(name, w - 4, 4.2)}" letter-spacing=".4" fill="#141418">${esc(name)}</text>`;
+    if (kind === 'gold') return `<rect x="${cx - w / 2}" y="${midY - 14}" width="${w}" height="28" fill="none" stroke="#d9b45a" stroke-width=".8"/><text x="${cx}" y="${midY - 2}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="${fit(name, w - 4, 5.6)}" letter-spacing=".8" fill="#d9b45a">${esc(name)}</text><text x="${cx}" y="${midY + 8}" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="3.2" fill="#d9b45a">${esc(house)}</text>`;
+    if (kind === 'mini') return `<rect x="${cx - 10}" y="${midY - 16}" width="20" height="32" fill="rgba(255,255,255,.85)"/><text transform="translate(${cx + 2.4} ${midY + 13}) rotate(-90)" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="${fit(name, 26, 5)}" letter-spacing=".6" fill="#141418">${esc(name)}</text>`;
+    const ini = String(p.house || p.name).split(/[\s&]+/).filter(Boolean).map((x) => x[0]).join('').slice(0, 3).toUpperCase();
+    return `<rect x="${cx - 18}" y="${midY - 13}" width="36" height="26" rx="3" fill="rgba(255,255,255,.9)"/><text x="${cx}" y="${midY + 4}" text-anchor="middle" font-family="DM Mono, ui-monospace, monospace" font-size="10" font-weight="500" fill="${ink}">${ini}</text>`;
+  }
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
   function bottle(p, o) {
     o = o || {};
-    const P = pal(p), sh = SHAPES[hash(p.name) % 4], id = 'bt' + (++n);
+    const P = pal(p), A = arche(p), sh = SHAPES[A.shape], id = 'bt' + (++n);
     const level = o.level != null ? o.level : 0.7;
     const y = sh.top + (sh.bottom - sh.top) * (1 - level);
-    const ini = String(p.house || p.name).split(/[\s&]+/).filter(Boolean).map((w) => w[0]).join('').slice(0, 3).toUpperCase();
     const [nx, ny, nw, nh] = sh.neck, [cx, cy, cw, ch, cr] = sh.cap;
-    const midY = (sh.top + sh.bottom) / 2;
+    const midY = (sh.top + sh.bottom) / 2 + 2;
+    const liquidA = A.dark ? '#3a3a44' : P.a, liquidB = A.dark ? '#16161c' : P.b, liquidC = A.dark ? '#050507' : P.c;
     let mist = '';
     if (o.spray) {
       for (let i = 0; i < 11; i++) {
@@ -719,38 +810,167 @@ input[type=range] { width: 100%; accent-color: var(--matcha-deep); }
         mist += `<circle class="mist" cx="${sh.nz[0] + 12}" cy="${sh.nz[1] + 6}" r="${r}" fill="${P.a}" style="--dx:${dx}px;--dy:${dy}px;animation-delay:${dl}s"/>`;
       }
     }
+    const bub = [0, 1, 2].map((i) => `<circle class="lb" cx="${sh.x[0] + 12 + i * 15}" cy="${sh.bottom - 8}" r="${1.2 + i * 0.5}" fill="#fff" style="animation-delay:${i * 1.4}s;--rise:${-(sh.bottom - y - 14)}px"/>`).join('');
     return `<svg class="bt" viewBox="-6 -8 132 214" role="img" aria-label="Flacon ${String(p.name).replace(/"/g, '')}">
 <defs>
-<linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${P.a}"/><stop offset=".5" stop-color="${P.b}"/><stop offset="1" stop-color="${P.c}"/></linearGradient>
-<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".45" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity=".3"/></linearGradient>
-<linearGradient id="${id}c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${P.c}"/><stop offset="1" stop-color="${P.d}"/></linearGradient>
+<linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${liquidA}"/><stop offset=".5" stop-color="${liquidB}"/><stop offset="1" stop-color="${liquidC}"/></linearGradient>
+<linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".22" stop-color="#fff" stop-opacity=".08"/><stop offset=".78" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".38"/></linearGradient>
+${capDefs(id, A.cap, P)}
 <clipPath id="${id}k"><path d="${sh.body}"/></clipPath>
 </defs>
-<ellipse class="shadow" cx="60" cy="194" rx="36" ry="5" fill="rgba(20,30,20,.22)"/>
-<rect x="${nx}" y="${ny}" width="${nw}" height="${nh}" fill="url(#${id}g)" stroke="rgba(255,255,255,.7)" stroke-width="1.4"/>
+<ellipse class="shadow" cx="60" cy="195" rx="38" ry="5" fill="rgba(20,16,40,.24)"/>
+<rect x="${nx}" y="${ny}" width="${nw}" height="${nh}" fill="url(#${id}g)" stroke="rgba(255,255,255,.75)" stroke-width="1.3"/>
 <path d="${sh.body}" fill="url(#${id}g)"/>
 <g clip-path="url(#${id}k)">
 <rect x="0" y="${y}" width="120" height="200" fill="url(#${id}l)"/>
-<g transform="translate(0 ${y - 6})"><path class="wv w1" d="${WAVE}" fill="url(#${id}l)"/><path class="wv w2" d="${WAVE}" fill="${P.a}" opacity=".45"/></g>
-<rect class="shine" x="32" y="${sh.top}" width="7" height="${sh.bottom - sh.top}" rx="3.5" fill="#fff" opacity=".4"/>
-<rect x="42" y="${midY - 13}" width="36" height="26" rx="3" fill="rgba(255,255,255,.9)"/>
-<text x="60" y="${midY + 4}" text-anchor="middle" font-family="DM Mono, ui-monospace, monospace" font-size="10" font-weight="500" fill="${P.d}">${ini}</text>
+<g transform="translate(0 ${y - 6})"><path class="wv w1" d="${WAVE}" fill="url(#${id}l)"/><path class="wv w2" d="${WAVE}" fill="${liquidA}" opacity=".4"/></g>
+<ellipse cx="60" cy="${y}" rx="${(sh.x[1] - sh.x[0]) / 2}" ry="2.2" fill="#fff" opacity=".35"/>
+${bub}
+<rect class="shine" x="${sh.x[0] + 4}" y="${sh.top}" width="6" height="${sh.bottom - sh.top}" rx="3" fill="#fff" opacity=".42"/>
+<rect x="${sh.x[0]}" y="${sh.bottom - 10}" width="${sh.x[1] - sh.x[0]}" height="10" fill="#fff" opacity=".2"/>
+${label(A.label, p, sh, midY, P, A.dark)}
 </g>
-<path d="${sh.body}" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.6"/>
+<path d="${sh.body}" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.5"/>
 <rect x="${cx}" y="${cy}" width="${cw}" height="${ch}" rx="${cr}" fill="url(#${id}c)"/>
-<rect x="${cx + 4}" y="${cy + 3}" width="4" height="${ch - 6}" rx="2" fill="#fff" opacity=".28"/>
+<rect x="${cx}" y="${cy + ch - 3}" width="${cw}" height="3" fill="rgba(255,255,255,.28)"/>
+<rect x="${cx + 3.5}" y="${cy + 3}" width="3.5" height="${ch - 6}" rx="1.75" fill="#fff" opacity=".3"/>
 ${mist}
 </svg>`;
   }
 
-  root.Art = { bottle, pal, famColor, hash };
+  root.Art = { bottle, pal, famColor, hash, noGreen };
+})(window);
+
+</script>
+<script>
+// Ambiances animées : chaque parfum reçoit un mouvement tiré de ses notes (fumée pour le tabac,
+// pétales pour la rose, braises pour les épices…). Un seul moteur canvas pilote toutes les zones.
+(function (root) {
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const REDUCED = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const KW = {
+    petals: ['rose', 'jasmin', 'pivoine', 'tubereuse', 'magnolia', 'fleur', 'muguet', 'freesia', 'violette', 'ylang', 'neroli', 'orchidee', 'heliotrope', 'cyclamen', 'iris'],
+    citrus: ['citron', 'bergamote', 'pamplemousse', 'mandarine', 'orange', 'petit grain', 'yuzu'],
+    smoke: ['tabac', 'encens', 'oud', 'fumee', 'resine', 'cannabis', 'myrrhe', 'bouleau', 'gaiac', 'marron chaud'],
+    embers: ['cannelle', 'cardamome', 'poivre', 'safran', 'clou de girofle', 'muscade', 'gingembre', 'cumin', 'coriandre', 'rhum'],
+    bubbles: ['marin', 'sel', 'algue', 'lotus'],
+    gold: ['ambre', 'vanille', 'benjoin', 'miel', 'tonka', 'caramel', 'praline', 'cacao', 'datte', 'cafe', 'opoponax'],
+    leaves: ['vetiver', 'figuier', 'figue', 'the', 'sauge', 'pin', 'cedre', 'cypres', 'basilic', 'feuille', 'mousse', 'lavande', 'romarin', 'genievre', 'thym', 'ciste', 'santal'],
+    musk: ['musc', 'ambrette', 'iso e super', 'linge propre', 'ambroxan'],
+    stitch: ['cuir', 'daim'],
+    drops: ['pomme', 'poire', 'framboise', 'fraise', 'litchi', 'mure', 'cassis', 'coing', 'ananas', 'noix de coco', 'rhubarbe'],
+  };
+  const FAM = { floral: 'petals', agrumes: 'citrus', oud: 'smoke', épicé: 'embers', aquatique: 'bubbles', ambré: 'gold', gourmand: 'gold', vert: 'leaves', aromatique: 'leaves', boisé: 'leaves', musqué: 'musk', cuir: 'stitch', fruité: 'drops' };
+  const LABEL = { petals: 'pétales', citrus: 'agrumes', smoke: 'fumée', embers: 'braises', bubbles: 'bulles marines', gold: 'poussière dorée', leaves: 'feuilles', musk: 'peau tiède', stitch: 'coutures de cuir', drops: 'gouttes de fruit' };
+
+  // Retourne les 2 ambiances dominantes et les notes qui les inspirent.
+  function motifsOf(p) {
+    const notes = (p.notes || []).map(norm), sc = {}, why = {};
+    for (const [m, list] of Object.entries(KW)) {
+      notes.forEach((n, i) => { if (list.some((k) => n === k || n.includes(k))) { sc[m] = (sc[m] || 0) + (2.2 - i * 0.25); (why[m] = why[m] || []).push(p.notes[i]); } });
+    }
+    const f = FAM[p.family]; if (f) sc[f] = (sc[f] || 0) + 2.4;
+    const top = Object.entries(sc).sort((a, b) => b[1] - a[1]).map((e) => e[0]).slice(0, 2);
+    if (!top.length) top.push('gold');
+    return { types: top, label: top.map((m) => LABEL[m]).join(' et '), notes: [...new Set(top.flatMap((m) => why[m] || []))].slice(0, 3) };
+  }
+
+  // ---------- Particules ----------
+  const T = {
+    petals: { n: 14, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(-20, h) : -24; P.s = rnd(7, 15); P.vy = rnd(22, 44); P.vx = rnd(-8, 8); P.r = rnd(0, 6.3); P.vr = rnd(-1.3, 1.3); P.ph = rnd(0, 6.3); P.a = rnd(.55, .9); },
+      up(P, d, t) { P.y += P.vy * d; P.x += P.vx * d + Math.sin(t * 1.3 + P.ph) * 20 * d; P.r += P.vr * d; }, out: (P, w, h) => P.y > h + 30,
+      dr(c, P, k) { c.save(); c.translate(P.x, P.y); c.rotate(P.r); c.globalAlpha = P.a; c.fillStyle = k.f1; const s = P.s; c.beginPath(); c.moveTo(0, -s); c.bezierCurveTo(s * .9, -s * .6, s * .7, s * .7, 0, s); c.bezierCurveTo(-s * .7, s * .7, -s * .9, -s * .6, 0, -s); c.fill(); c.globalAlpha = P.a * .5; c.strokeStyle = k.f2; c.lineWidth = .8; c.beginPath(); c.moveTo(0, -s * .8); c.lineTo(0, s * .8); c.stroke(); c.restore(); } },
+    leaves: { n: 14, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(-20, h) : -24; P.s = rnd(8, 16); P.vy = rnd(26, 50); P.vx = rnd(-14, 14); P.r = rnd(0, 6.3); P.vr = rnd(-1.8, 1.8); P.ph = rnd(0, 6.3); P.a = rnd(.5, .85); },
+      up(P, d, t) { P.y += P.vy * d; P.x += P.vx * d + Math.sin(t * 1.6 + P.ph) * 26 * d; P.r += P.vr * d; }, out: (P, w, h) => P.y > h + 30,
+      dr(c, P, k) { c.save(); c.translate(P.x, P.y); c.rotate(P.r); c.globalAlpha = P.a; c.fillStyle = k.f2; const s = P.s; c.beginPath(); c.moveTo(0, -s); c.quadraticCurveTo(s * .8, 0, 0, s); c.quadraticCurveTo(-s * .8, 0, 0, -s); c.fill(); c.strokeStyle = k.line; c.globalAlpha = P.a * .7; c.lineWidth = .9; c.beginPath(); c.moveTo(0, -s); c.lineTo(0, s * 1.15); c.stroke(); c.restore(); } },
+    citrus: { n: 8, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(0, h) : h + 30; P.s = rnd(12, 24); P.vy = -rnd(14, 30); P.vx = rnd(-6, 6); P.r = rnd(0, 6.3); P.vr = rnd(-.5, .5); P.ph = rnd(0, 6.3); P.a = rnd(.6, .9); },
+      up(P, d, t) { P.y += P.vy * d; P.x += P.vx * d + Math.sin(t + P.ph) * 10 * d; P.r += P.vr * d; }, out: (P) => P.y < -40,
+      dr(c, P, k) { c.save(); c.translate(P.x, P.y); c.rotate(P.r); c.globalAlpha = P.a; c.fillStyle = k.f1; c.beginPath(); c.arc(0, 0, P.s, 0, 6.29); c.fill(); c.strokeStyle = k.f2; c.lineWidth = P.s * .16; c.stroke(); c.strokeStyle = 'rgba(255,255,255,.55)'; c.lineWidth = 1; for (let i = 0; i < 8; i++) { const a = i * .785; c.beginPath(); c.moveTo(0, 0); c.lineTo(Math.cos(a) * P.s * .82, Math.sin(a) * P.s * .82); c.stroke(); } c.restore(); } },
+    smoke: { n: 14, sp(P, w, h, i) { P.x = w * rnd(.2, .8); P.y = i ? rnd(0, h) : h + 40; P.s = rnd(30, 60); P.vy = -rnd(18, 36); P.vx = rnd(-8, 8); P.ph = rnd(0, 6.3); P.age = i ? rnd(0, 1) : 0; P.life = rnd(7, 12); },
+      up(P, d, t, w, h) { P.y += P.vy * d; P.x += P.vx * d + Math.sin(t * .8 + P.ph) * 16 * d; P.age += d / P.life; }, out: (P) => P.age >= 1,
+      dr(c, P, k) { const r = P.s * (1 + P.age * 1.6), a = Math.sin(Math.min(1, P.age) * Math.PI) * k.smokeA; const g = c.createRadialGradient(P.x, P.y, 0, P.x, P.y, r); g.addColorStop(0, `rgba(${k.smoke},${a})`); g.addColorStop(1, `rgba(${k.smoke},0)`); c.fillStyle = g; c.beginPath(); c.arc(P.x, P.y, r, 0, 6.29); c.fill(); } },
+    embers: { n: 34, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(0, h) : h + 10; P.s = rnd(1.2, 3.4); P.vy = -rnd(30, 80); P.vx = rnd(-14, 14); P.ph = rnd(0, 6.3); P.fl = rnd(4, 12); },
+      up(P, d, t) { P.y += P.vy * d; P.x += P.vx * d + Math.sin(t * 2 + P.ph) * 14 * d; }, out: (P) => P.y < -10,
+      dr(c, P, k, t) { const a = .45 + .55 * Math.abs(Math.sin(t * P.fl * .3 + P.ph)); const g = c.createRadialGradient(P.x, P.y, 0, P.x, P.y, P.s * 4); g.addColorStop(0, `rgba(255,236,190,${a})`); g.addColorStop(.35, `rgba(${k.ember},${a * .8})`); g.addColorStop(1, `rgba(${k.ember},0)`); c.fillStyle = g; c.beginPath(); c.arc(P.x, P.y, P.s * 4, 0, 6.29); c.fill(); } },
+    bubbles: { n: 22, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(0, h) : h + 20; P.s = rnd(3, 13); P.vy = -rnd(20, 56); P.ph = rnd(0, 6.3); },
+      up(P, d, t) { P.y += P.vy * d; P.x += Math.sin(t * 2 + P.ph) * 12 * d; }, out: (P) => P.y < -20,
+      dr(c, P, k) { c.strokeStyle = k.line; c.globalAlpha = .75; c.lineWidth = 1.2; c.fillStyle = k.f1; c.beginPath(); c.arc(P.x, P.y, P.s, 0, 6.29); c.globalAlpha = .12; c.fill(); c.globalAlpha = .7; c.stroke(); c.beginPath(); c.arc(P.x - P.s * .3, P.y - P.s * .3, P.s * .35, 3.4, 4.6); c.stroke(); c.globalAlpha = 1; } },
+    gold: { n: 40, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(0, h) : h + 8; P.s = rnd(1.5, 4.5); P.vy = -rnd(6, 18); P.vx = rnd(-4, 4); P.ph = rnd(0, 6.3); P.sp = rnd(1, 3); },
+      up(P, d, t) { P.y += P.vy * d; P.x += P.vx * d + Math.sin(t + P.ph) * 6 * d; }, out: (P) => P.y < -10,
+      dr(c, P, k, t) { const a = Math.abs(Math.sin(t * P.sp + P.ph)); c.save(); c.translate(P.x, P.y); c.globalAlpha = a * .95; c.fillStyle = k.gold; const s = P.s * 2.2; c.beginPath(); c.moveTo(0, -s); c.quadraticCurveTo(0, 0, s, 0); c.quadraticCurveTo(0, 0, 0, s); c.quadraticCurveTo(0, 0, -s, 0); c.quadraticCurveTo(0, 0, 0, -s); c.fill(); c.restore(); } },
+    musk: { n: 6, sp(P, w, h, i) { P.x = w * rnd(.15, .85); P.y = h * rnd(.3, .9); P.age = i ? rnd(0, 1) : 0; P.life = rnd(4, 7); P.s = rnd(60, 140); },
+      up(P, d) { P.age += d / P.life; }, out: (P) => P.age >= 1,
+      dr(c, P, k) { const r = P.s * P.age; c.strokeStyle = k.f1; c.globalAlpha = (1 - P.age) * .5; c.lineWidth = 2 + (1 - P.age) * 8; c.beginPath(); c.arc(P.x, P.y, r, 0, 6.29); c.stroke(); c.globalAlpha = 1; } },
+    stitch: { n: 9, sp(P, w, h, i) { P.y = (h / 10) * ((P.idx % 10) + .5) + rnd(-6, 6); P.x = 0; P.s = rnd(4, 9); P.sp = rnd(10, 28) * (P.idx % 2 ? 1 : -1); P.a = rnd(.25, .55); },
+      up(P, d) { P.off = (P.off || 0) + P.sp * d; }, out: () => false,
+      dr(c, P, k, t, w) { c.save(); c.strokeStyle = k.f1; c.globalAlpha = P.a; c.lineWidth = 1.6; c.lineCap = 'round'; c.setLineDash([P.s, P.s * .7]); c.lineDashOffset = -(P.off || 0); c.beginPath(); c.moveTo(0, P.y); c.bezierCurveTo(w * .3, P.y - 10, w * .6, P.y + 10, w, P.y); c.stroke(); c.restore(); } },
+    drops: { n: 14, sp(P, w, h, i) { P.x = rnd(0, w); P.y = i ? rnd(-20, h) : -20; P.s = rnd(4, 9); P.vy = rnd(20, 60); P.ac = rnd(40, 120); P.a = rnd(.6, .9); },
+      up(P, d) { P.vy += P.ac * d; P.y += P.vy * d; }, out: (P, w, h) => P.y > h + 20,
+      dr(c, P, k) { c.save(); c.translate(P.x, P.y); c.globalAlpha = P.a; c.fillStyle = k.f1; const s = P.s; c.beginPath(); c.moveTo(0, -s * 1.8); c.bezierCurveTo(s * 1.1, -s * .2, s, s, 0, s); c.bezierCurveTo(-s, s, -s * 1.1, -s * .2, 0, -s * 1.8); c.fill(); c.globalAlpha = P.a * .8; c.fillStyle = 'rgba(255,255,255,.7)'; c.beginPath(); c.arc(-s * .3, 0, s * .25, 0, 6.29); c.fill(); c.restore(); } },
+  };
+
+  // ---------- Moteur ----------
+  const active = new Set(); let raf = 0, last = 0;
+  function colors(P, dark) {
+    return dark
+      ? { f1: P.a, f2: P.b, line: 'rgba(255,255,255,.75)', smoke: '255,255,255', smokeA: .12, ember: '255,140,60', gold: '#ffe9ad' }
+      : { f1: P.b, f2: P.c, line: P.c, smoke: '90,70,120', smokeA: .1, ember: '255,120,60', gold: P.c };
+  }
+  function seed(inst) {
+    inst.parts = [];
+    const scale = Math.max(.35, Math.min(1.4, (inst.w * inst.h) / (400 * 800))) * inst.density;
+    inst.types.forEach((type, k) => {
+      const def = T[type], cnt = Math.max(3, Math.round(def.n * scale * (k ? .6 : 1)));
+      for (let i = 0; i < cnt; i++) { const P = { type, idx: i }; def.sp(P, inst.w, inst.h, true); inst.parts.push(P); }
+    });
+  }
+  function measure(inst) {
+    const c = inst.c, w = c.clientWidth, h = c.clientHeight, dpr = Math.min(2, root.devicePixelRatio || 1);
+    if (!w || !h) return false;
+    if (w !== inst.w || h !== inst.h) { inst.w = w; inst.h = h; c.width = Math.round(w * dpr); c.height = Math.round(h * dpr); inst.ctx.setTransform(dpr, 0, 0, dpr, 0, 0); seed(inst); }
+    return true;
+  }
+  function frame(now) {
+    const dt = Math.min(.05, (now - last) / 1000 || .016); last = now;
+    for (const inst of [...active]) {
+      if (!inst.c.isConnected) { active.delete(inst); continue; }
+      if (!measure(inst)) continue;
+      inst.t += dt; const { ctx, w, h } = inst; ctx.clearRect(0, 0, w, h);
+      for (const P of inst.parts) {
+        const def = T[P.type]; def.up(P, dt, inst.t, w, h);
+        if (def.out(P, w, h)) def.sp(P, w, h, false);
+        def.dr(ctx, P, inst.k[P.type] || inst.k.all, inst.t, w, h);
+      }
+    }
+    raf = active.size && !document.hidden ? requestAnimationFrame(frame) : 0;
+  }
+  function start() { if (!raf && !REDUCED) { last = performance.now(); raf = requestAnimationFrame(frame); } }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) start(); });
+
+  // perfumes : un parfum, ou deux (layering : la 2e ambiance vient du 2e parfum)
+  function attach(canvas, perfumes, opts) {
+    opts = opts || {};
+    const list = [].concat(perfumes).filter(Boolean);
+    for (const i of [...active]) if (i.c === canvas) active.delete(i);
+    const types = [], k = {};
+    list.forEach((p, i) => { const m = motifsOf(p); const P = root.Art.pal(p); const kk = colors(P, opts.dark !== false); (i ? m.types.slice(0, 1) : m.types).forEach((t) => { if (!types.includes(t)) { types.push(t); k[t] = kk; } }); });
+    k.all = colors(root.Art.pal(list[0]), opts.dark !== false);
+    const inst = { c: canvas, ctx: canvas.getContext('2d'), types, k, t: 0, w: 0, h: 0, density: opts.density || 1, parts: [] };
+    if (REDUCED) { active.add(inst); measure(inst); frame(performance.now()); active.delete(inst); return inst; }
+    active.add(inst); start(); return inst;
+  }
+  function clear(canvas) { for (const i of [...active]) if (i.c === canvas) active.delete(i); }
+
+  root.FX = { attach, clear, motifsOf };
 })(window);
 
 </script>
 <script>
 (function () {
   'use strict';
-  const E = window.Engine, CAT = window.CATALOG, Art = window.Art;
+  const E = window.Engine, CAT = window.CATALOG, Art = window.Art, FX = window.FX;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -809,13 +1029,27 @@ ${mist}
   };
   const ago = (d) => (d == null ? 'jamais porté' : d === 0 ? 'porté aujourd\'hui' : d === 1 ? 'porté hier' : 'porté il y a ' + d + ' j');
   const tint = (p) => { const P = Art.pal(p); return `hsl(${P.h} ${P.s}% 76% / .75)`; };
-  const bt = (p, o) => { o = o || {}; return `<div class="bwrap ${o.still ? '' : 'bob'}" ${o.h ? `style="height:${o.h}px"` : ''}>${Art.bottle(p, o)}</div>`; };
+  const bt = (p, o) => {
+    o = o || {};
+    const st = o.h ? `style="height:${o.h}px"` : '';
+    if (p.img) return `<div class="bwrap photo ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
+    return `<div class="bwrap ${o.still ? '' : 'bob'}" ${st}>${Art.bottle(p, o)}</div>`;
+  };
+  const fxCanvas = (attr, d) => `<canvas class="fx" ${attr} data-d="${d || .5}" aria-hidden="true"></canvas>`;
+  let RECS = [];
+  function mountFx(root) {
+    $$('canvas.fx[data-p], canvas.fx[data-r]', root).forEach((cv) => {
+      const p = cv.dataset.p ? find(cv.dataset.p) : (RECS[+cv.dataset.r] || {}).c;
+      if (p) FX.attach(cv, p, { dark: false, density: +cv.dataset.d || .5 });
+    });
+  }
+  const wears = (id) => S.log.filter((l) => l.id === id).length;
   const words = (t, base) => String(t || '').split(/\s+/).filter(Boolean).map((w, i) => `<span class="w" style="--i:${i};--d:${base || 0}">${esc(w)}</span>`).join(' ');
   const dots = (n) => '<span class="dots">' + [1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'f' : ''}"></i>`).join('') + '</span>';
   const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))}`).join('\n');
 
   // ---------- IA (sample) ----------
-  let CAN_IMG = false;
+  let CAN_IMG = false, HAS_ASSETS = false, IMG_MAX = 4;
   async function getSample() { const c = window.claude; return c && c.use ? c.use('sample') : null; }
   async function aiJson(prompt, opts) {
     const sample = await getSample();
@@ -824,7 +1058,9 @@ ${mist}
     try { return await sample.json(prompt, Object.assign({ cache: false, signal: ctl.signal }, opts || {})); } finally { clearTimeout(to); }
   }
   async function initAI() {
-    try { const s = await getSample(); if (!s) return; const l = await s.limits(); CAN_IMG = !!(l && l.images); const b = $('#photoBtn'); if (b) b.hidden = !CAN_IMG; } catch (e) { /* pas d'images */ }
+    try { const c = window.claude; const a = c && c.use ? await c.use('assets') : null; HAS_ASSETS = !!a; } catch (e) { /* pas d'assets */ }
+    try { const s = await getSample(); if (!s) return; const l = await s.limits(); CAN_IMG = !!(l && l.images); IMG_MAX = (l && l.images && l.images.maxCount) || 4; const b = $('#photoBtn'); if (b) b.hidden = !CAN_IMG; } catch (e) { /* pas d'images */ }
+    if ($('#story').hidden && $('#sheet').hidden && tab !== 'today') render(true);
   }
 
   // ---------- État de session ----------
@@ -861,11 +1097,13 @@ ${mist}
         </div>
       </section>
       <div class="chips" style="margin-top:14px" id="sugg">${SUGG.slice(0, 3).map((s) => `<button class="chip" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      <section class="sec" style="margin-top:14px"><button class="ghost" id="weekBtn" style="justify-self:start">${IC.spark} Planifier ma semaine</button></section>
       ${worn ? `<section class="sec"><div class="card today-card">${bt(worn, { h: 108 })}<div><p class="mono">aujourd'hui</p><h2 style="font-size:22px">${esc(worn.name)}</h2><p style="color:var(--muted);font-size:14px">${esc(worn.house)}</p><button class="ghost" id="replay" style="margin-top:8px">Revoir l'histoire</button></div></div></section>` : ''}
       ${recent.length ? `<section class="sec"><header><h2>Ton sillage récent</h2></header><div class="strip">${recent.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b>${ago(daysSince(p.id)).replace('porté ', '')}</button>`).join('')}</div></section>` : ''}
       <section class="sec"><p class="mono" style="text-align:center">${S.collection.length} parfums sur ton étagère · l'IA lit ta collection à chaque demande</p></section>`;
     const ta = $('#say'); ta.addEventListener('input', () => { SAY = ta.value; });
     $('#go').onclick = () => runDay();
+    $('#weekBtn').onclick = openWeek;
     $('#photoBtn').onclick = () => $('#photoIn').click();
     $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
     $$('[data-wx]').forEach((b) => (b.onclick = () => { const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); viewToday(); }));
@@ -885,15 +1123,30 @@ ${mist}
         ${P.length ? `<div class="card" style="display:grid;gap:12px"><div class="ribbon">${top.map(([f, n]) => `<i title="${esc(famLabel(f))}" style="flex:${n};background:${Art.famColor(f)}"></i>`).join('')}</div>
           <p style="font-size:15px">${fav.length ? `Ton nez penche vers le <b>${esc(fav.join(' et le '))}</b>.` : ''} ${top.slice(0, 4).map(([f, n]) => `<span class="tag">${esc(famLabel(f))} ${n}</span>`).join(' ')}</p></div>` : ''}
       </section>
+      ${P.length ? shelfStats(P) : ''}
+      <section class="sec"><div class="row"><button class="ghost" id="labBtn">Labo d'accords</button>${HAS_ASSETS ? `<button class="ghost" id="photosBtn">Ajouter mes photos (IA)</button>` : ''}</div></section>
       <section class="sec"><div class="shelf">
-        ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
+        ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
         <button class="add-tile" id="addBtn">${IC.spark.replace('class="spark"', 'style="width:30px;height:30px"')}<span>Ajouter avec l'IA</span><small class="mono">texte ou photo</small></button>
       </div></section>`;
     $$('[data-open]').forEach((b) => (b.onclick = () => openDetail(b.dataset.open)));
     $('#addBtn').onclick = openAdd;
+    $('#labBtn').onclick = openLab;
+    if ($('#photosBtn')) $('#photosBtn').onclick = openPhotos;
+    mountFx($('#view'));
+  }
+  function shelfStats(P) {
+    const value = P.reduce((a, p) => a + (p.price || 0), 0);
+    const month = S.log.filter((l) => (new Date(today()) - new Date(l.date)) / 864e5 <= 30).length;
+    const most = [...P].sort((a, b) => wears(b.id) - wears(a.id))[0];
+    const idle = P.filter((p) => { const d = daysSince(p.id); return d == null || d >= 21; }).slice(0, 8);
+    return `<section class="sec"><div class="stats">
+      <div class="stat"><b>${value ? '≈ ' + value.toLocaleString('fr-FR') + ' €' : '—'}</b><span>valeur</span></div>
+      <div class="stat"><b>${month}</b><span>ports · 30 j</span></div>
+      <div class="stat"><b style="font-size:${wears(most.id) ? 17 : 22}px">${wears(most.id) ? esc(most.name) : '—'}</b><span>le plus porté</span></div></div>
+      ${idle.length ? `<header style="margin-top:6px"><h2 style="font-size:19px">À ressortir</h2><span class="mono">pas portés depuis 3 sem.</span></header><div class="strip">${idle.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b></button>`).join('')}</div>` : ''}</section>`;
   }
 
-  let RECS = [];
   function viewDiscover() {
     const s = S.settings;
     RECS = E.recommend(CAT, S.collection, S.wishlist, s).filter((r) => !s.budget || r.c.price <= s.budget).sort((a, b) => b.total - a.total).slice(0, 8);
@@ -919,13 +1172,14 @@ ${mist}
     $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; S.wishlist = S.wishlist.includes(n) ? S.wishlist.filter((x) => x !== n) : [...S.wishlist, n]; save(); viewDiscover(); }));
     $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c, 4)); S.wishlist = S.wishlist.filter((n) => n !== c.name); save(); viewDiscover(); } }));
     $$('[data-why]').forEach((b) => (b.onclick = () => explain(b)));
+    mountFx($('#view'));
   }
   function recCard(r, i) {
     const c = r.c, reasons = [];
     if (r.hits.length) reasons.push('Tu aimes déjà : ' + r.hits.join(', '));
     if (r.gapLabel) reasons.push('Comble : ' + r.gapLabel);
     if (r.mates.length) reasons.push('Se marie avec ' + r.mates.map((m) => m.name).join(', '));
-    return `<article class="rec" style="--tint:${tint(c)}"><span class="pct">${r.pct}%</span>${bt(c, { still: false })}
+    return `<article class="rec" style="--tint:${tint(c)}">${fxCanvas(`data-r="${i}"`, .6)}<span class="pct">${r.pct}%</span>${bt(c, { still: false })}
       <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p></div>
       <p class="mono" style="text-transform:none;letter-spacing:0;font-size:12px">${esc(c.notes.slice(0, 5).join(' · '))}</p>
       <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
@@ -975,13 +1229,22 @@ ${mist}
   function openDetail(id) {
     const p = find(id); if (!p) return;
     const pn = openSheet(`
-      <div class="big-bottle"><i class="aura" style="background:${tint(p)}"></i>${bt(p, { spray: true })}</div>
+      <div class="big-bottle"><i class="aura" style="background:${tint(p)}"></i>${fxCanvas(`data-p="${p.id}"`, 1)}${bt(p, { spray: true })}</div>
       <div><h2>${esc(p.name)}</h2><p class="mono" style="margin-top:6px">${esc(p.house)} · ${esc(famLabel(p.family))}</p></div>
       <div class="chips">${(p.notes || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>
       <div class="card" style="display:grid;gap:8px"><div class="meter"><span>Projection</span>${dots(p.projection)}</div><div class="meter"><span>Tenue</span>${dots(p.longevity)}</div><div class="meter"><span>Poids</span>${dots(p.weight)}</div></div>
       <div><p class="mono">ma note</p><div class="stars" id="stars">${[1, 2, 3, 4, 5].map((i) => `<button data-r="${i}" aria-label="${i} sur 5">${i <= p.rating ? '★' : '☆'}</button>`).join('')}</div></div>
-      <p style="color:var(--muted)">${esc(ago(daysSince(p.id)))}${p.price ? ' · ≈ ' + p.price + ' €' : ''}</p>
+      <p style="color:var(--muted)">${esc(ago(daysSince(p.id)))} · ${wears(p.id)} port${wears(p.id) > 1 ? 's' : ''}${p.price ? ' · ≈ ' + p.price + ' €' : ''}${p.price && wears(p.id) ? ' · ≈ ' + (p.price / wears(p.id)).toFixed(1).replace('.', ',') + ' € / port' : ''}</p>
+      <p class="mono" style="text-transform:none;letter-spacing:0">${IC.spark} Ambiance : ${esc(FX.motifsOf(p).label)}${FX.motifsOf(p).notes.length ? ' · inspirée de ' + esc(FX.motifsOf(p).notes.join(', ')) : ''}</p>
+      <div class="row" style="gap:14px"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + ' ' + p.house + ' flacon officiel')}">Trouver l'image officielle ↗</a>${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
+      <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
+    mountFx(pn);
+    if ($('#phBtn', pn)) {
+      $('#phBtn', pn).onclick = () => $('#phIn', pn).click();
+      $('#phIn', pn).onchange = async (e) => { const f = e.target.files[0]; if (!f) return; $('#phMsg', pn).textContent = 'Envoi de la photo…'; try { p.img = await putPhoto(f); save(); openDetail(id); render(true); } catch (er) { $('#phMsg', pn).textContent = 'Photo impossible à enregistrer ici.'; } };
+      if ($('#phDel', pn)) $('#phDel', pn).onclick = () => { delete p.img; save(); openDetail(id); render(true); };
+    }
     $('#sx', pn).onclick = closeSheet;
     $$('#stars button', pn).forEach((b) => (b.onclick = () => { p.rating = +b.dataset.r; save(); $$('#stars button', pn).forEach((x) => { x.textContent = +x.dataset.r <= p.rating ? '★' : '☆'; }); }));
     $('#sdel', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer'; return; } S.collection = S.collection.filter((x) => x.id !== id); save(); closeSheet(); render(true); };
@@ -1034,6 +1297,82 @@ ${mist}
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
     $('#niche', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : remplacer'; return; } S.collection = seed(); S.log = []; S.today = null; save(); closeSheet(); render(); };
     $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; save(); closeSheet(); render(); };
+  }
+
+
+  // ---------- Photos réelles (assets) ----------
+  async function shrink(file, max) {
+    const bmp = await createImageBitmap(file), k = Math.min(1, (max || 900) / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas'); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    return new Promise((r) => c.toBlob(r, 'image/jpeg', .86));
+  }
+  async function putPhoto(file) {
+    const c = window.claude, A = c && c.use ? await c.use('assets') : null; if (!A) throw { code: 'unavailable' };
+    const r = await A.upload(await shrink(file, 900)); return r.id;
+  }
+  function openPhotos() {
+    const pn = openSheet(`<div><h2>Tes vraies photos</h2><p style="color:var(--muted);margin-top:6px">Choisis des photos de flacons (captures du site de la marque, photos perso). L'IA reconnaît chaque flacon et le range au bon parfum.</p></div>
+      <input type="file" id="phs" accept="image/*" multiple hidden><button class="cta full" id="phpick">${IC.cam}<span>Choisir jusqu'à ${IMG_MAX} photos</span></button><div id="phres" style="display:grid;gap:10px"></div>`);
+    $('#phpick', pn).onclick = () => $('#phs', pn).click();
+    $('#phs', pn).onchange = async (e) => {
+      const files = [...e.target.files].slice(0, IMG_MAX), out = $('#phres', pn); if (!files.length) return;
+      out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>';
+      try {
+        const prompt = `Chaque image jointe montre un flacon de parfum (photo ou packshot), dans l'ordre 0, 1, 2… Ma collection (id | nom | maison) :\n${S.collection.map((p) => `${p.id} | ${p.name} | ${p.house}`).join('\n')}\n\nPour chaque image, donne l'id du parfum de ma collection qu'elle montre, ou null si tu n'en es pas sûr. Réponds UNIQUEMENT par un JSON : {"matches":[{"index":0,"id":"…","seen":"ce que tu lis sur le flacon"}]}`;
+        const j = await aiJson(prompt, { modelTier: 'default', images: files });
+        let ok = 0; const lines = [];
+        for (const m of (j.matches || [])) { const p = find(m.id), f = files[m.index]; if (!p || !f) { lines.push(`Image ${m.index + 1} : non reconnue`); continue; } try { p.img = await putPhoto(f); ok++; lines.push(`${p.name} ✓`); } catch (er) { lines.push(`${p.name} : envoi impossible`); } }
+        save(); out.innerHTML = `<div class="card"><b>${ok} photo${ok > 1 ? 's' : ''} associée${ok > 1 ? 's' : ''}</b><p style="color:var(--muted);margin-top:6px">${lines.map(esc).join('<br>')}</p></div>`; render(true);
+      } catch (er) { out.innerHTML = `<div class="empty">${er && er.code === 'not_granted' ? 'Autorise l\'IA pour reconnaître les flacons.' : 'Reconnaissance impossible ici. Tu peux ajouter une photo à la main depuis la fiche de chaque parfum.'}</div>`; }
+    };
+  }
+
+  // ---------- Labo d'accords ----------
+  function openLab() {
+    let A = null, B = null;
+    const row = (k) => S.collection.map((p) => `<button class="pk" data-k="${k}" data-id="${p.id}">${bt(p, { still: true })}<span>${esc(p.name)}</span></button>`).join('');
+    const pn = openSheet(`<div><h2>Labo d'accords</h2><p style="color:var(--muted);margin-top:6px">Choisis deux flacons de ta collection, je te dis ce que leur mélange donne.</p></div>
+      <p class="mono">flacon A</p><div class="pickrow" id="rA">${row('A')}</div><p class="mono">flacon B</p><div class="pickrow" id="rB">${row('B')}</div>
+      <button class="cta full" id="mix">${IC.spark}<span>Mélanger</span></button><div id="mixres" style="display:grid;gap:12px"></div>`);
+    $$('.pk', pn).forEach((b) => (b.onclick = () => { $$(`.pk[data-k="${b.dataset.k}"]`, pn).forEach((x) => x.classList.toggle('sel', x === b)); if (b.dataset.k === 'A') A = b.dataset.id; else B = b.dataset.id; }));
+    $('#mix', pn).onclick = async () => {
+      const out = $('#mixres', pn);
+      if (!A || !B || A === B) { out.innerHTML = '<p class="mono" style="text-transform:none">Choisis deux flacons différents.</p>'; return; }
+      const a = find(A), b = find(B), PA = Art.pal(a), PB = Art.pal(b);
+      out.innerHTML = `<div class="mixstage"><i class="orb" style="background:linear-gradient(135deg,${PA.b},${PB.b})"></i><div class="bwrap la">${Art.bottle(a, { level: .6 })}</div><div class="bwrap lb">${Art.bottle(b, { level: .6 })}</div></div><div class="shim"></div><div class="shim" style="width:60%"></div>`;
+      $('#mix', pn).disabled = true;
+      let r;
+      try {
+        r = await aiJson(`Tu es un nez de parfumerie. Évalue la superposition (layering) de ces deux parfums, tutoiement, concret.\nA : ${a.name} (${a.house}) — ${a.family} — ${a.notes.join(', ')}\nB : ${b.name} (${b.house}) — ${b.family} — ${b.notes.join(', ')}\nRéponds UNIQUEMENT par un JSON : {"score":1-5,"verdict":"4 mots max","effect":"ce que le mélange donne, 2 phrases","how":"ordre, dosage en sprays, où vaporiser, 2 phrases","warn":"vide, ou 1 phrase de mise en garde"}`, { modelTier: 'default' });
+      } catch (e) {
+        const ps = E.pairScore(a, b, false), sc = clamp(Math.round(ps.s + 1.5), 1, 5);
+        r = { score: sc, verdict: sc >= 4 ? 'Accord réussi' : sc >= 3 ? 'Bon accord' : 'Accord risqué', effect: ps.shared.length ? `Ils partagent ${ps.shared.join(', ')} : le mélange se fond naturellement.` : 'Deux univers différents : le mélange crée un troisième parfum.', how: 'Applique le plus dense d\'abord, le plus léger par-dessus, 1 à 2 sprays de chaque.', warn: '' };
+      }
+      out.querySelectorAll('.shim').forEach((x) => x.remove());
+      out.insertAdjacentHTML('beforeend', `<div class="row" style="justify-content:space-between;align-items:flex-end"><div><p class="mono">verdict</p><h2>${esc(r.verdict)}</h2></div><span class="score">${clamp(Math.round(+r.score || 3), 1, 5)}<small style="font-size:18px;color:var(--muted)">/5</small></span></div><p>${esc(r.effect)}</p><p style="color:var(--muted)">${esc(r.how)}</p>${r.warn ? `<p style="color:var(--accent)">${esc(r.warn)}</p>` : ''}`);
+      $('#mix', pn).disabled = false;
+    };
+  }
+
+  // ---------- Planning de la semaine ----------
+  function openWeek() {
+    const pn = openSheet(`<div><h2>Ta semaine, parfumée</h2><p style="color:var(--muted);margin-top:6px">Décris ta semaine en vrac. Je répartis les parfums pour ne jamais répéter et toujours coller au jour.</p></div>
+      <textarea id="wtxt" rows="4" placeholder="Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, samedi mariage…"></textarea>
+      <button class="cta full" id="wgo">${IC.spark}<span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"></div>`);
+    $('#wgo', pn).onclick = async () => {
+      const out = $('#wres', pn), txt = $('#wtxt', pn).value.trim();
+      const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() + i); return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); });
+      out.innerHTML = '<div class="shim"></div><div class="shim" style="width:80%"></div><div class="shim" style="width:60%"></div>'; $('#wgo', pn).disabled = true;
+      try {
+        const j = await aiJson(`Tu es un nez de parfumerie. Répartis les parfums de ma collection sur 7 jours, sans répéter deux fois le même, en tenant compte de ce que je fais chaque jour.\nMa collection (id | nom | maison | famille | notes | projection | poids | ma note) :\n${S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${p.notes.join(', ')} | proj ${p.projection} | poids ${p.weight} | ${p.rating}/5`).join('\n')}\nJours : ${days.join(' ; ')}\nMa semaine : """${txt || 'semaine ordinaire, un peu de bureau, un peu de sorties'}"""\nRéponds UNIQUEMENT par un JSON : {"days":[{"day":"nom du jour","pick":"id","why":"10 mots max"}]} (7 entrées, dans l'ordre). N'utilise que les id fournis.`, { modelTier: 'default' });
+        const rows = (j.days || []).slice(0, 7).map((d, i) => ({ d: days[i] || d.day, p: find(d.pick), why: d.why })).filter((r) => r.p);
+        out.innerHTML = rows.map((r, i) => `<div class="wk" style="--i:${i}">${bt(r.p, { still: true })}<div><span class="d">${esc(r.d)}</span><br><b>${esc(r.p.name)}</b><p>${esc(r.why || '')}</p></div></div>`).join('') || '<div class="empty">Pas de plan, reformule.</div>';
+      } catch (e) {
+        out.innerHTML = `<div class="empty">${e && e.code === 'not_granted' ? 'Autorise l\'IA pour planifier ta semaine.' : 'L\'IA n\'est pas disponible dans cette vue.'}</div>`;
+      }
+      $('#wgo', pn).disabled = false;
+    };
   }
 
   // ---------- Journée : IA + repli local ----------
@@ -1093,15 +1432,18 @@ ${mist}
   let ST = null;
   function openStory() {
     const el = $('#story'); el.hidden = false; document.body.style.overflow = 'hidden'; el.classList.remove('paused');
-    el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><div class="prog" id="prog"></div><div class="st-top"><span class="mono" id="stlabel">sillage</span><button class="st-x" id="stx" aria-label="Fermer">✕</button></div><div id="stage"></div>`;
+    el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><canvas class="fx" id="fx" aria-hidden="true"></canvas><div class="prog" id="prog"></div><div class="st-top"><span class="mono" id="stlabel">sillage</span><button class="st-x" id="stx" aria-label="Fermer">✕</button></div><div id="stage"></div>`;
     $('#stx').onclick = (e) => { e.stopPropagation(); closeStory(); };
     ST = { scenes: [], i: 0, R: null };
   }
   function closeStory() { $('#story').hidden = true; $('#story').innerHTML = ''; ST = null; document.body.style.overflow = ''; render(true); }
-  function setHue(p) { $('#story').style.setProperty('--h', Art.pal(p).h); }
+  function setHue(p) {
+    const w = (x) => { x = Art.noGreen(x); return x > 34 && x < 64 ? 22 : x; }, h = w(Art.pal(p).h), st = $('#story').style;
+    st.setProperty('--h', h); st.setProperty('--hA', w(h + 34)); st.setProperty('--hB', w(h - 26)); st.setProperty('--h2', w(h + 70));
+  }
   function showLoading() {
     const ps = [...S.collection].sort(() => Math.random() - 0.5).slice(0, 3);
-    setHue(ps[0]);
+    setHue(ps[0]); FX.attach($('#fx'), ps[0], { dark: true, density: .8 });
     $('#stage').innerHTML = `<div class="load-orbit center">${ps.map((p, i) => `<div class="bwrap" style="animation-delay:${-i * 1.83}s">${Art.bottle(p, {})}</div>`).join('')}</div>
       <div class="msgs center">${['Je lis ta journée…', 'Je sens ton étagère…', 'Je compose l\'accord…'].map((m, i) => `<span style="animation-delay:${i * 2.1}s">${m}</span>`).join('')}</div>`;
     $('#prog').innerHTML = '';
@@ -1111,12 +1453,12 @@ ${mist}
     const p = R.pick, sc = [];
     const nW = (t) => String(t || '').split(/\s+/).filter(Boolean).length;
     sc.push({ label: R.ai ? 'ton nez ia' : 'sillage', dur: 6500, html: () => `<p class="mono rise">si je comprends bien</p><p class="lead">${words(R.read, 200)}</p><div class="chips" style="margin-top:6px">${condChips(R.cond).map((c, i) => `<span class="chip pop" style="--d:${900 + i * 130}">${esc(c)}</span>`).join('')}</div>` });
-    sc.push({ label: 'ton parfum', dur: 7500, hue: p, html: () => `<div class="center" style="display:grid;gap:14px;justify-items:center"><p class="mono rise">ton parfum du jour</p><div class="hero-bottle"><i class="aura"></i>${bt(p, { spray: true, h: 300 })}</div><h2 class="rise" style="--d:500">${words(p.name, 400)}</h2><p class="soft rise" style="--d:1100">${esc(p.house)} · ${esc(famLabel(p.family))}</p><div class="vibes">${R.vibe.map((v, i) => `<span class="pop" style="--d:${1400 + i * 180}">${esc(v)}</span>`).join('')}</div></div>` });
+    sc.push({ label: 'ton parfum', dur: 7500, hue: p, html: () => `<div class="center" style="display:grid;gap:14px;justify-items:center"><p class="mono rise">ton parfum du jour</p><div class="hero-bottle"><i class="aura"></i>${bt(p, { spray: true, h: 300 })}</div><h2 class="rise" style="--d:500">${words(p.name, 400)}</h2><p class="soft rise" style="--d:1100">${esc(p.house)} · ${esc(famLabel(p.family))}</p><p class="motif rise" style="--d:1300">${(() => { const m = FX.motifsOf(p); return m.notes.length ? 'ambiance inspirée de ' + esc(m.notes.join(' · ')) : 'ambiance : ' + esc(m.label); })()}</p><div class="vibes">${R.vibe.map((v, i) => `<span class="pop" style="--d:${1400 + i * 180}">${esc(v)}</span>`).join('')}</div></div>` });
     const n = p.notes || [], a = Math.ceil(n.length / 3);
     const lv = [['ouverture', n.slice(0, a)], ['cœur', n.slice(a, a * 2)], ['fond', n.slice(a * 2)]].filter((x) => x[1].length);
     sc.push({ label: 'ce que tu sentiras', dur: 7000, hue: p, html: () => `<p class="mono rise">ce que tu sentiras</p><div class="pyr">${lv.map(([l, arr], i) => `<div class="lv rise" style="--d:${300 + i * 450}"><span class="mono">${l}</span><b>${esc(arr.join(', '))}</b></div>`).join('')}</div><div class="meter-s rise" style="--d:1800"><span class="soft" style="width:92px">projection</span>${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= p.projection ? 'f' : ''}"></i>`).join('')}</div><div class="meter-s rise" style="--d:1950"><span class="soft" style="width:92px">tenue</span>${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= p.longevity ? 'f' : ''}"></i>`).join('')}</div>` });
     sc.push({ label: 'pourquoi lui', dur: clamp(3800 + nW(R.story) * 280, 6500, 15000), hue: p, html: () => `<p class="mono rise">pourquoi lui</p><p class="lead">${words(R.story, 250)}</p>${R.avoid ? `<p class="soft rise" style="--d:2600">À éviter aujourd'hui : ${esc(R.avoid)}</p>` : ''}` });
-    R.layers.forEach((l) => sc.push({ label: 'layering', dur: 10000, hue: p, html: () => {
+    R.layers.forEach((l) => sc.push({ label: 'layering', dur: 10000, hue: p, fx: [p, l.p], html: () => {
       const steps = String(l.how).split(/(?<=[.!])\s+/).filter(Boolean).slice(0, 3);
       return `<p class="mono rise">accord · ${'●'.repeat(l.score)}${'○'.repeat(5 - l.score)}</p><div class="merge"><i class="orb" style="background:linear-gradient(135deg,${Art.pal(p).b},${Art.pal(l.p).b})"></i><div class="bwrap la">${Art.bottle(p, { level: .6 })}</div><div class="bwrap lb">${Art.bottle(l.p, { level: .6 })}</div><span class="plus">+</span></div><h2 class="rise" style="--d:1500;font-size:clamp(26px,8vw,40px)">${esc(p.name)} <span style="opacity:.6">+</span> ${esc(l.p.name)}</h2><p class="lead rise" style="--d:1900;font-size:19px">${esc(l.effect)}</p><div class="steps">${steps.map((s, i) => `<div class="rise" style="--d:${2500 + i * 350}"><b>${i + 1}</b><span>${esc(s)}</span></div>`).join('')}</div>`;
     } }));
@@ -1137,6 +1479,7 @@ ${mist}
     if (i >= ST.scenes.length) return closeStory();
     ST.i = i; const s = ST.scenes[i];
     if (s.hue) setHue(s.hue); else setHue(ST.R.pick);
+    FX.attach($('#fx'), s.fx || [ST.R.pick], { dark: true, density: 1 });
     $$('#prog b').forEach((b, k) => {
       b.className = k < i ? 'done' : k === i ? 'act' + (s.dur && !REDUCED ? '' : ' hold') : '';
       if (k === i) b.style.setProperty('--dur', s.dur + 'ms');
@@ -1161,7 +1504,7 @@ ${mist}
   function wear(btn) {
     const p = ST.R.pick;
     if (!(S.today && S.today.date === today() && S.today.pickId === p.id)) { S.log.push({ id: p.id, date: today() }); S.log = S.log.slice(-90); S.today = { date: today(), pickId: p.id }; save(); }
-    btn.textContent = 'Porté aujourd\'hui ✓'; petals(p);
+    btn.textContent = 'Porté aujourd\'hui ✓'; petals(p); try { navigator.vibrate && navigator.vibrate([14, 40, 20]); } catch (e) { /* pas de vibration */ }
     setTimeout(() => { if (ST) closeStory(); }, REDUCED ? 600 : 2100);
   }
   function petals(p) {
@@ -1189,6 +1532,8 @@ ${mist}
   render();
   initStore();
   initAI();
+  const sp = $('#splash');
+  if (sp) { const kill = () => sp.remove(); sp.addEventListener('click', kill); setTimeout(kill, REDUCED ? 500 : 3000); }
 })();
 
 </script>

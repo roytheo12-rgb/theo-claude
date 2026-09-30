@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const E = window.Engine, CAT = window.CATALOG, Art = window.Art;
+  const E = window.Engine, CAT = window.CATALOG, Art = window.Art, FX = window.FX;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -59,13 +59,27 @@
   };
   const ago = (d) => (d == null ? 'jamais porté' : d === 0 ? 'porté aujourd\'hui' : d === 1 ? 'porté hier' : 'porté il y a ' + d + ' j');
   const tint = (p) => { const P = Art.pal(p); return `hsl(${P.h} ${P.s}% 76% / .75)`; };
-  const bt = (p, o) => { o = o || {}; return `<div class="bwrap ${o.still ? '' : 'bob'}" ${o.h ? `style="height:${o.h}px"` : ''}>${Art.bottle(p, o)}</div>`; };
+  const bt = (p, o) => {
+    o = o || {};
+    const st = o.h ? `style="height:${o.h}px"` : '';
+    if (p.img) return `<div class="bwrap photo ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
+    return `<div class="bwrap ${o.still ? '' : 'bob'}" ${st}>${Art.bottle(p, o)}</div>`;
+  };
+  const fxCanvas = (attr, d) => `<canvas class="fx" ${attr} data-d="${d || .5}" aria-hidden="true"></canvas>`;
+  let RECS = [];
+  function mountFx(root) {
+    $$('canvas.fx[data-p], canvas.fx[data-r]', root).forEach((cv) => {
+      const p = cv.dataset.p ? find(cv.dataset.p) : (RECS[+cv.dataset.r] || {}).c;
+      if (p) FX.attach(cv, p, { dark: false, density: +cv.dataset.d || .5 });
+    });
+  }
+  const wears = (id) => S.log.filter((l) => l.id === id).length;
   const words = (t, base) => String(t || '').split(/\s+/).filter(Boolean).map((w, i) => `<span class="w" style="--i:${i};--d:${base || 0}">${esc(w)}</span>`).join(' ');
   const dots = (n) => '<span class="dots">' + [1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'f' : ''}"></i>`).join('') + '</span>';
   const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))}`).join('\n');
 
   // ---------- IA (sample) ----------
-  let CAN_IMG = false;
+  let CAN_IMG = false, HAS_ASSETS = false, IMG_MAX = 4;
   async function getSample() { const c = window.claude; return c && c.use ? c.use('sample') : null; }
   async function aiJson(prompt, opts) {
     const sample = await getSample();
@@ -74,7 +88,9 @@
     try { return await sample.json(prompt, Object.assign({ cache: false, signal: ctl.signal }, opts || {})); } finally { clearTimeout(to); }
   }
   async function initAI() {
-    try { const s = await getSample(); if (!s) return; const l = await s.limits(); CAN_IMG = !!(l && l.images); const b = $('#photoBtn'); if (b) b.hidden = !CAN_IMG; } catch (e) { /* pas d'images */ }
+    try { const c = window.claude; const a = c && c.use ? await c.use('assets') : null; HAS_ASSETS = !!a; } catch (e) { /* pas d'assets */ }
+    try { const s = await getSample(); if (!s) return; const l = await s.limits(); CAN_IMG = !!(l && l.images); IMG_MAX = (l && l.images && l.images.maxCount) || 4; const b = $('#photoBtn'); if (b) b.hidden = !CAN_IMG; } catch (e) { /* pas d'images */ }
+    if ($('#story').hidden && $('#sheet').hidden && tab !== 'today') render(true);
   }
 
   // ---------- État de session ----------
@@ -111,11 +127,13 @@
         </div>
       </section>
       <div class="chips" style="margin-top:14px" id="sugg">${SUGG.slice(0, 3).map((s) => `<button class="chip" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      <section class="sec" style="margin-top:14px"><button class="ghost" id="weekBtn" style="justify-self:start">${IC.spark} Planifier ma semaine</button></section>
       ${worn ? `<section class="sec"><div class="card today-card">${bt(worn, { h: 108 })}<div><p class="mono">aujourd'hui</p><h2 style="font-size:22px">${esc(worn.name)}</h2><p style="color:var(--muted);font-size:14px">${esc(worn.house)}</p><button class="ghost" id="replay" style="margin-top:8px">Revoir l'histoire</button></div></div></section>` : ''}
       ${recent.length ? `<section class="sec"><header><h2>Ton sillage récent</h2></header><div class="strip">${recent.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b>${ago(daysSince(p.id)).replace('porté ', '')}</button>`).join('')}</div></section>` : ''}
       <section class="sec"><p class="mono" style="text-align:center">${S.collection.length} parfums sur ton étagère · l'IA lit ta collection à chaque demande</p></section>`;
     const ta = $('#say'); ta.addEventListener('input', () => { SAY = ta.value; });
     $('#go').onclick = () => runDay();
+    $('#weekBtn').onclick = openWeek;
     $('#photoBtn').onclick = () => $('#photoIn').click();
     $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
     $$('[data-wx]').forEach((b) => (b.onclick = () => { const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); viewToday(); }));
@@ -135,15 +153,30 @@
         ${P.length ? `<div class="card" style="display:grid;gap:12px"><div class="ribbon">${top.map(([f, n]) => `<i title="${esc(famLabel(f))}" style="flex:${n};background:${Art.famColor(f)}"></i>`).join('')}</div>
           <p style="font-size:15px">${fav.length ? `Ton nez penche vers le <b>${esc(fav.join(' et le '))}</b>.` : ''} ${top.slice(0, 4).map(([f, n]) => `<span class="tag">${esc(famLabel(f))} ${n}</span>`).join(' ')}</p></div>` : ''}
       </section>
+      ${P.length ? shelfStats(P) : ''}
+      <section class="sec"><div class="row"><button class="ghost" id="labBtn">Labo d'accords</button>${HAS_ASSETS ? `<button class="ghost" id="photosBtn">Ajouter mes photos (IA)</button>` : ''}</div></section>
       <section class="sec"><div class="shelf">
-        ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
+        ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
         <button class="add-tile" id="addBtn">${IC.spark.replace('class="spark"', 'style="width:30px;height:30px"')}<span>Ajouter avec l'IA</span><small class="mono">texte ou photo</small></button>
       </div></section>`;
     $$('[data-open]').forEach((b) => (b.onclick = () => openDetail(b.dataset.open)));
     $('#addBtn').onclick = openAdd;
+    $('#labBtn').onclick = openLab;
+    if ($('#photosBtn')) $('#photosBtn').onclick = openPhotos;
+    mountFx($('#view'));
+  }
+  function shelfStats(P) {
+    const value = P.reduce((a, p) => a + (p.price || 0), 0);
+    const month = S.log.filter((l) => (new Date(today()) - new Date(l.date)) / 864e5 <= 30).length;
+    const most = [...P].sort((a, b) => wears(b.id) - wears(a.id))[0];
+    const idle = P.filter((p) => { const d = daysSince(p.id); return d == null || d >= 21; }).slice(0, 8);
+    return `<section class="sec"><div class="stats">
+      <div class="stat"><b>${value ? '≈ ' + value.toLocaleString('fr-FR') + ' €' : '—'}</b><span>valeur</span></div>
+      <div class="stat"><b>${month}</b><span>ports · 30 j</span></div>
+      <div class="stat"><b style="font-size:${wears(most.id) ? 17 : 22}px">${wears(most.id) ? esc(most.name) : '—'}</b><span>le plus porté</span></div></div>
+      ${idle.length ? `<header style="margin-top:6px"><h2 style="font-size:19px">À ressortir</h2><span class="mono">pas portés depuis 3 sem.</span></header><div class="strip">${idle.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b></button>`).join('')}</div>` : ''}</section>`;
   }
 
-  let RECS = [];
   function viewDiscover() {
     const s = S.settings;
     RECS = E.recommend(CAT, S.collection, S.wishlist, s).filter((r) => !s.budget || r.c.price <= s.budget).sort((a, b) => b.total - a.total).slice(0, 8);
@@ -169,13 +202,14 @@
     $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; S.wishlist = S.wishlist.includes(n) ? S.wishlist.filter((x) => x !== n) : [...S.wishlist, n]; save(); viewDiscover(); }));
     $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c, 4)); S.wishlist = S.wishlist.filter((n) => n !== c.name); save(); viewDiscover(); } }));
     $$('[data-why]').forEach((b) => (b.onclick = () => explain(b)));
+    mountFx($('#view'));
   }
   function recCard(r, i) {
     const c = r.c, reasons = [];
     if (r.hits.length) reasons.push('Tu aimes déjà : ' + r.hits.join(', '));
     if (r.gapLabel) reasons.push('Comble : ' + r.gapLabel);
     if (r.mates.length) reasons.push('Se marie avec ' + r.mates.map((m) => m.name).join(', '));
-    return `<article class="rec" style="--tint:${tint(c)}"><span class="pct">${r.pct}%</span>${bt(c, { still: false })}
+    return `<article class="rec" style="--tint:${tint(c)}">${fxCanvas(`data-r="${i}"`, .6)}<span class="pct">${r.pct}%</span>${bt(c, { still: false })}
       <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p></div>
       <p class="mono" style="text-transform:none;letter-spacing:0;font-size:12px">${esc(c.notes.slice(0, 5).join(' · '))}</p>
       <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
@@ -225,13 +259,22 @@
   function openDetail(id) {
     const p = find(id); if (!p) return;
     const pn = openSheet(`
-      <div class="big-bottle"><i class="aura" style="background:${tint(p)}"></i>${bt(p, { spray: true })}</div>
+      <div class="big-bottle"><i class="aura" style="background:${tint(p)}"></i>${fxCanvas(`data-p="${p.id}"`, 1)}${bt(p, { spray: true })}</div>
       <div><h2>${esc(p.name)}</h2><p class="mono" style="margin-top:6px">${esc(p.house)} · ${esc(famLabel(p.family))}</p></div>
       <div class="chips">${(p.notes || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>
       <div class="card" style="display:grid;gap:8px"><div class="meter"><span>Projection</span>${dots(p.projection)}</div><div class="meter"><span>Tenue</span>${dots(p.longevity)}</div><div class="meter"><span>Poids</span>${dots(p.weight)}</div></div>
       <div><p class="mono">ma note</p><div class="stars" id="stars">${[1, 2, 3, 4, 5].map((i) => `<button data-r="${i}" aria-label="${i} sur 5">${i <= p.rating ? '★' : '☆'}</button>`).join('')}</div></div>
-      <p style="color:var(--muted)">${esc(ago(daysSince(p.id)))}${p.price ? ' · ≈ ' + p.price + ' €' : ''}</p>
+      <p style="color:var(--muted)">${esc(ago(daysSince(p.id)))} · ${wears(p.id)} port${wears(p.id) > 1 ? 's' : ''}${p.price ? ' · ≈ ' + p.price + ' €' : ''}${p.price && wears(p.id) ? ' · ≈ ' + (p.price / wears(p.id)).toFixed(1).replace('.', ',') + ' € / port' : ''}</p>
+      <p class="mono" style="text-transform:none;letter-spacing:0">${IC.spark} Ambiance : ${esc(FX.motifsOf(p).label)}${FX.motifsOf(p).notes.length ? ' · inspirée de ' + esc(FX.motifsOf(p).notes.join(', ')) : ''}</p>
+      <div class="row" style="gap:14px"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + ' ' + p.house + ' flacon officiel')}">Trouver l'image officielle ↗</a>${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
+      <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
+    mountFx(pn);
+    if ($('#phBtn', pn)) {
+      $('#phBtn', pn).onclick = () => $('#phIn', pn).click();
+      $('#phIn', pn).onchange = async (e) => { const f = e.target.files[0]; if (!f) return; $('#phMsg', pn).textContent = 'Envoi de la photo…'; try { p.img = await putPhoto(f); save(); openDetail(id); render(true); } catch (er) { $('#phMsg', pn).textContent = 'Photo impossible à enregistrer ici.'; } };
+      if ($('#phDel', pn)) $('#phDel', pn).onclick = () => { delete p.img; save(); openDetail(id); render(true); };
+    }
     $('#sx', pn).onclick = closeSheet;
     $$('#stars button', pn).forEach((b) => (b.onclick = () => { p.rating = +b.dataset.r; save(); $$('#stars button', pn).forEach((x) => { x.textContent = +x.dataset.r <= p.rating ? '★' : '☆'; }); }));
     $('#sdel', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer'; return; } S.collection = S.collection.filter((x) => x.id !== id); save(); closeSheet(); render(true); };
@@ -284,6 +327,82 @@
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
     $('#niche', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : remplacer'; return; } S.collection = seed(); S.log = []; S.today = null; save(); closeSheet(); render(); };
     $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; save(); closeSheet(); render(); };
+  }
+
+
+  // ---------- Photos réelles (assets) ----------
+  async function shrink(file, max) {
+    const bmp = await createImageBitmap(file), k = Math.min(1, (max || 900) / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas'); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    return new Promise((r) => c.toBlob(r, 'image/jpeg', .86));
+  }
+  async function putPhoto(file) {
+    const c = window.claude, A = c && c.use ? await c.use('assets') : null; if (!A) throw { code: 'unavailable' };
+    const r = await A.upload(await shrink(file, 900)); return r.id;
+  }
+  function openPhotos() {
+    const pn = openSheet(`<div><h2>Tes vraies photos</h2><p style="color:var(--muted);margin-top:6px">Choisis des photos de flacons (captures du site de la marque, photos perso). L'IA reconnaît chaque flacon et le range au bon parfum.</p></div>
+      <input type="file" id="phs" accept="image/*" multiple hidden><button class="cta full" id="phpick">${IC.cam}<span>Choisir jusqu'à ${IMG_MAX} photos</span></button><div id="phres" style="display:grid;gap:10px"></div>`);
+    $('#phpick', pn).onclick = () => $('#phs', pn).click();
+    $('#phs', pn).onchange = async (e) => {
+      const files = [...e.target.files].slice(0, IMG_MAX), out = $('#phres', pn); if (!files.length) return;
+      out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>';
+      try {
+        const prompt = `Chaque image jointe montre un flacon de parfum (photo ou packshot), dans l'ordre 0, 1, 2… Ma collection (id | nom | maison) :\n${S.collection.map((p) => `${p.id} | ${p.name} | ${p.house}`).join('\n')}\n\nPour chaque image, donne l'id du parfum de ma collection qu'elle montre, ou null si tu n'en es pas sûr. Réponds UNIQUEMENT par un JSON : {"matches":[{"index":0,"id":"…","seen":"ce que tu lis sur le flacon"}]}`;
+        const j = await aiJson(prompt, { modelTier: 'default', images: files });
+        let ok = 0; const lines = [];
+        for (const m of (j.matches || [])) { const p = find(m.id), f = files[m.index]; if (!p || !f) { lines.push(`Image ${m.index + 1} : non reconnue`); continue; } try { p.img = await putPhoto(f); ok++; lines.push(`${p.name} ✓`); } catch (er) { lines.push(`${p.name} : envoi impossible`); } }
+        save(); out.innerHTML = `<div class="card"><b>${ok} photo${ok > 1 ? 's' : ''} associée${ok > 1 ? 's' : ''}</b><p style="color:var(--muted);margin-top:6px">${lines.map(esc).join('<br>')}</p></div>`; render(true);
+      } catch (er) { out.innerHTML = `<div class="empty">${er && er.code === 'not_granted' ? 'Autorise l\'IA pour reconnaître les flacons.' : 'Reconnaissance impossible ici. Tu peux ajouter une photo à la main depuis la fiche de chaque parfum.'}</div>`; }
+    };
+  }
+
+  // ---------- Labo d'accords ----------
+  function openLab() {
+    let A = null, B = null;
+    const row = (k) => S.collection.map((p) => `<button class="pk" data-k="${k}" data-id="${p.id}">${bt(p, { still: true })}<span>${esc(p.name)}</span></button>`).join('');
+    const pn = openSheet(`<div><h2>Labo d'accords</h2><p style="color:var(--muted);margin-top:6px">Choisis deux flacons de ta collection, je te dis ce que leur mélange donne.</p></div>
+      <p class="mono">flacon A</p><div class="pickrow" id="rA">${row('A')}</div><p class="mono">flacon B</p><div class="pickrow" id="rB">${row('B')}</div>
+      <button class="cta full" id="mix">${IC.spark}<span>Mélanger</span></button><div id="mixres" style="display:grid;gap:12px"></div>`);
+    $$('.pk', pn).forEach((b) => (b.onclick = () => { $$(`.pk[data-k="${b.dataset.k}"]`, pn).forEach((x) => x.classList.toggle('sel', x === b)); if (b.dataset.k === 'A') A = b.dataset.id; else B = b.dataset.id; }));
+    $('#mix', pn).onclick = async () => {
+      const out = $('#mixres', pn);
+      if (!A || !B || A === B) { out.innerHTML = '<p class="mono" style="text-transform:none">Choisis deux flacons différents.</p>'; return; }
+      const a = find(A), b = find(B), PA = Art.pal(a), PB = Art.pal(b);
+      out.innerHTML = `<div class="mixstage"><i class="orb" style="background:linear-gradient(135deg,${PA.b},${PB.b})"></i><div class="bwrap la">${Art.bottle(a, { level: .6 })}</div><div class="bwrap lb">${Art.bottle(b, { level: .6 })}</div></div><div class="shim"></div><div class="shim" style="width:60%"></div>`;
+      $('#mix', pn).disabled = true;
+      let r;
+      try {
+        r = await aiJson(`Tu es un nez de parfumerie. Évalue la superposition (layering) de ces deux parfums, tutoiement, concret.\nA : ${a.name} (${a.house}) — ${a.family} — ${a.notes.join(', ')}\nB : ${b.name} (${b.house}) — ${b.family} — ${b.notes.join(', ')}\nRéponds UNIQUEMENT par un JSON : {"score":1-5,"verdict":"4 mots max","effect":"ce que le mélange donne, 2 phrases","how":"ordre, dosage en sprays, où vaporiser, 2 phrases","warn":"vide, ou 1 phrase de mise en garde"}`, { modelTier: 'default' });
+      } catch (e) {
+        const ps = E.pairScore(a, b, false), sc = clamp(Math.round(ps.s + 1.5), 1, 5);
+        r = { score: sc, verdict: sc >= 4 ? 'Accord réussi' : sc >= 3 ? 'Bon accord' : 'Accord risqué', effect: ps.shared.length ? `Ils partagent ${ps.shared.join(', ')} : le mélange se fond naturellement.` : 'Deux univers différents : le mélange crée un troisième parfum.', how: 'Applique le plus dense d\'abord, le plus léger par-dessus, 1 à 2 sprays de chaque.', warn: '' };
+      }
+      out.querySelectorAll('.shim').forEach((x) => x.remove());
+      out.insertAdjacentHTML('beforeend', `<div class="row" style="justify-content:space-between;align-items:flex-end"><div><p class="mono">verdict</p><h2>${esc(r.verdict)}</h2></div><span class="score">${clamp(Math.round(+r.score || 3), 1, 5)}<small style="font-size:18px;color:var(--muted)">/5</small></span></div><p>${esc(r.effect)}</p><p style="color:var(--muted)">${esc(r.how)}</p>${r.warn ? `<p style="color:var(--accent)">${esc(r.warn)}</p>` : ''}`);
+      $('#mix', pn).disabled = false;
+    };
+  }
+
+  // ---------- Planning de la semaine ----------
+  function openWeek() {
+    const pn = openSheet(`<div><h2>Ta semaine, parfumée</h2><p style="color:var(--muted);margin-top:6px">Décris ta semaine en vrac. Je répartis les parfums pour ne jamais répéter et toujours coller au jour.</p></div>
+      <textarea id="wtxt" rows="4" placeholder="Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, samedi mariage…"></textarea>
+      <button class="cta full" id="wgo">${IC.spark}<span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"></div>`);
+    $('#wgo', pn).onclick = async () => {
+      const out = $('#wres', pn), txt = $('#wtxt', pn).value.trim();
+      const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() + i); return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); });
+      out.innerHTML = '<div class="shim"></div><div class="shim" style="width:80%"></div><div class="shim" style="width:60%"></div>'; $('#wgo', pn).disabled = true;
+      try {
+        const j = await aiJson(`Tu es un nez de parfumerie. Répartis les parfums de ma collection sur 7 jours, sans répéter deux fois le même, en tenant compte de ce que je fais chaque jour.\nMa collection (id | nom | maison | famille | notes | projection | poids | ma note) :\n${S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${p.notes.join(', ')} | proj ${p.projection} | poids ${p.weight} | ${p.rating}/5`).join('\n')}\nJours : ${days.join(' ; ')}\nMa semaine : """${txt || 'semaine ordinaire, un peu de bureau, un peu de sorties'}"""\nRéponds UNIQUEMENT par un JSON : {"days":[{"day":"nom du jour","pick":"id","why":"10 mots max"}]} (7 entrées, dans l'ordre). N'utilise que les id fournis.`, { modelTier: 'default' });
+        const rows = (j.days || []).slice(0, 7).map((d, i) => ({ d: days[i] || d.day, p: find(d.pick), why: d.why })).filter((r) => r.p);
+        out.innerHTML = rows.map((r, i) => `<div class="wk" style="--i:${i}">${bt(r.p, { still: true })}<div><span class="d">${esc(r.d)}</span><br><b>${esc(r.p.name)}</b><p>${esc(r.why || '')}</p></div></div>`).join('') || '<div class="empty">Pas de plan, reformule.</div>';
+      } catch (e) {
+        out.innerHTML = `<div class="empty">${e && e.code === 'not_granted' ? 'Autorise l\'IA pour planifier ta semaine.' : 'L\'IA n\'est pas disponible dans cette vue.'}</div>`;
+      }
+      $('#wgo', pn).disabled = false;
+    };
   }
 
   // ---------- Journée : IA + repli local ----------
@@ -343,15 +462,18 @@
   let ST = null;
   function openStory() {
     const el = $('#story'); el.hidden = false; document.body.style.overflow = 'hidden'; el.classList.remove('paused');
-    el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><div class="prog" id="prog"></div><div class="st-top"><span class="mono" id="stlabel">sillage</span><button class="st-x" id="stx" aria-label="Fermer">✕</button></div><div id="stage"></div>`;
+    el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><canvas class="fx" id="fx" aria-hidden="true"></canvas><div class="prog" id="prog"></div><div class="st-top"><span class="mono" id="stlabel">sillage</span><button class="st-x" id="stx" aria-label="Fermer">✕</button></div><div id="stage"></div>`;
     $('#stx').onclick = (e) => { e.stopPropagation(); closeStory(); };
     ST = { scenes: [], i: 0, R: null };
   }
   function closeStory() { $('#story').hidden = true; $('#story').innerHTML = ''; ST = null; document.body.style.overflow = ''; render(true); }
-  function setHue(p) { $('#story').style.setProperty('--h', Art.pal(p).h); }
+  function setHue(p) {
+    const w = (x) => { x = Art.noGreen(x); return x > 34 && x < 64 ? 22 : x; }, h = w(Art.pal(p).h), st = $('#story').style;
+    st.setProperty('--h', h); st.setProperty('--hA', w(h + 34)); st.setProperty('--hB', w(h - 26)); st.setProperty('--h2', w(h + 70));
+  }
   function showLoading() {
     const ps = [...S.collection].sort(() => Math.random() - 0.5).slice(0, 3);
-    setHue(ps[0]);
+    setHue(ps[0]); FX.attach($('#fx'), ps[0], { dark: true, density: .8 });
     $('#stage').innerHTML = `<div class="load-orbit center">${ps.map((p, i) => `<div class="bwrap" style="animation-delay:${-i * 1.83}s">${Art.bottle(p, {})}</div>`).join('')}</div>
       <div class="msgs center">${['Je lis ta journée…', 'Je sens ton étagère…', 'Je compose l\'accord…'].map((m, i) => `<span style="animation-delay:${i * 2.1}s">${m}</span>`).join('')}</div>`;
     $('#prog').innerHTML = '';
@@ -361,12 +483,12 @@
     const p = R.pick, sc = [];
     const nW = (t) => String(t || '').split(/\s+/).filter(Boolean).length;
     sc.push({ label: R.ai ? 'ton nez ia' : 'sillage', dur: 6500, html: () => `<p class="mono rise">si je comprends bien</p><p class="lead">${words(R.read, 200)}</p><div class="chips" style="margin-top:6px">${condChips(R.cond).map((c, i) => `<span class="chip pop" style="--d:${900 + i * 130}">${esc(c)}</span>`).join('')}</div>` });
-    sc.push({ label: 'ton parfum', dur: 7500, hue: p, html: () => `<div class="center" style="display:grid;gap:14px;justify-items:center"><p class="mono rise">ton parfum du jour</p><div class="hero-bottle"><i class="aura"></i>${bt(p, { spray: true, h: 300 })}</div><h2 class="rise" style="--d:500">${words(p.name, 400)}</h2><p class="soft rise" style="--d:1100">${esc(p.house)} · ${esc(famLabel(p.family))}</p><div class="vibes">${R.vibe.map((v, i) => `<span class="pop" style="--d:${1400 + i * 180}">${esc(v)}</span>`).join('')}</div></div>` });
+    sc.push({ label: 'ton parfum', dur: 7500, hue: p, html: () => `<div class="center" style="display:grid;gap:14px;justify-items:center"><p class="mono rise">ton parfum du jour</p><div class="hero-bottle"><i class="aura"></i>${bt(p, { spray: true, h: 300 })}</div><h2 class="rise" style="--d:500">${words(p.name, 400)}</h2><p class="soft rise" style="--d:1100">${esc(p.house)} · ${esc(famLabel(p.family))}</p><p class="motif rise" style="--d:1300">${(() => { const m = FX.motifsOf(p); return m.notes.length ? 'ambiance inspirée de ' + esc(m.notes.join(' · ')) : 'ambiance : ' + esc(m.label); })()}</p><div class="vibes">${R.vibe.map((v, i) => `<span class="pop" style="--d:${1400 + i * 180}">${esc(v)}</span>`).join('')}</div></div>` });
     const n = p.notes || [], a = Math.ceil(n.length / 3);
     const lv = [['ouverture', n.slice(0, a)], ['cœur', n.slice(a, a * 2)], ['fond', n.slice(a * 2)]].filter((x) => x[1].length);
     sc.push({ label: 'ce que tu sentiras', dur: 7000, hue: p, html: () => `<p class="mono rise">ce que tu sentiras</p><div class="pyr">${lv.map(([l, arr], i) => `<div class="lv rise" style="--d:${300 + i * 450}"><span class="mono">${l}</span><b>${esc(arr.join(', '))}</b></div>`).join('')}</div><div class="meter-s rise" style="--d:1800"><span class="soft" style="width:92px">projection</span>${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= p.projection ? 'f' : ''}"></i>`).join('')}</div><div class="meter-s rise" style="--d:1950"><span class="soft" style="width:92px">tenue</span>${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= p.longevity ? 'f' : ''}"></i>`).join('')}</div>` });
     sc.push({ label: 'pourquoi lui', dur: clamp(3800 + nW(R.story) * 280, 6500, 15000), hue: p, html: () => `<p class="mono rise">pourquoi lui</p><p class="lead">${words(R.story, 250)}</p>${R.avoid ? `<p class="soft rise" style="--d:2600">À éviter aujourd'hui : ${esc(R.avoid)}</p>` : ''}` });
-    R.layers.forEach((l) => sc.push({ label: 'layering', dur: 10000, hue: p, html: () => {
+    R.layers.forEach((l) => sc.push({ label: 'layering', dur: 10000, hue: p, fx: [p, l.p], html: () => {
       const steps = String(l.how).split(/(?<=[.!])\s+/).filter(Boolean).slice(0, 3);
       return `<p class="mono rise">accord · ${'●'.repeat(l.score)}${'○'.repeat(5 - l.score)}</p><div class="merge"><i class="orb" style="background:linear-gradient(135deg,${Art.pal(p).b},${Art.pal(l.p).b})"></i><div class="bwrap la">${Art.bottle(p, { level: .6 })}</div><div class="bwrap lb">${Art.bottle(l.p, { level: .6 })}</div><span class="plus">+</span></div><h2 class="rise" style="--d:1500;font-size:clamp(26px,8vw,40px)">${esc(p.name)} <span style="opacity:.6">+</span> ${esc(l.p.name)}</h2><p class="lead rise" style="--d:1900;font-size:19px">${esc(l.effect)}</p><div class="steps">${steps.map((s, i) => `<div class="rise" style="--d:${2500 + i * 350}"><b>${i + 1}</b><span>${esc(s)}</span></div>`).join('')}</div>`;
     } }));
@@ -387,6 +509,7 @@
     if (i >= ST.scenes.length) return closeStory();
     ST.i = i; const s = ST.scenes[i];
     if (s.hue) setHue(s.hue); else setHue(ST.R.pick);
+    FX.attach($('#fx'), s.fx || [ST.R.pick], { dark: true, density: 1 });
     $$('#prog b').forEach((b, k) => {
       b.className = k < i ? 'done' : k === i ? 'act' + (s.dur && !REDUCED ? '' : ' hold') : '';
       if (k === i) b.style.setProperty('--dur', s.dur + 'ms');
@@ -411,7 +534,7 @@
   function wear(btn) {
     const p = ST.R.pick;
     if (!(S.today && S.today.date === today() && S.today.pickId === p.id)) { S.log.push({ id: p.id, date: today() }); S.log = S.log.slice(-90); S.today = { date: today(), pickId: p.id }; save(); }
-    btn.textContent = 'Porté aujourd\'hui ✓'; petals(p);
+    btn.textContent = 'Porté aujourd\'hui ✓'; petals(p); try { navigator.vibrate && navigator.vibrate([14, 40, 20]); } catch (e) { /* pas de vibration */ }
     setTimeout(() => { if (ST) closeStory(); }, REDUCED ? 600 : 2100);
   }
   function petals(p) {
@@ -439,4 +562,6 @@
   render();
   initStore();
   initAI();
+  const sp = $('#splash');
+  if (sp) { const kill = () => sp.remove(); sp.addEventListener('click', kill); setTimeout(kill, REDUCED ? 500 : 3000); }
 })();
