@@ -21,20 +21,6 @@
   };
 
   // ---------- Données ----------
-  const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
-  const SEED14 = [['Libre Le Parfum', 4], ['Le Male', 4], ['L\'Interdit Rouge', 4], ['Power of You', 4]];
-  const SEED13 = [['Shalimar', 4], ['J\'adore', 4], ['Dior Homme Intense', 4], ['Stronger With You Intensely', 4], ['Pure Musc Blanc', 4]];
-  const SEED12 = [['Aqua Allegoria Rosa Verde', 4], ['Scandal By Night', 4], ['Paradoxe Intense', 4], ['Miss Dior Essence', 4], ['La Vie est Belle', 4]];
-  const SEED11 = [['Boss Bottled', 4], ['Bleu de Chanel EDT', 4], ['Pour un Homme de Caron', 4], ['Terre d\'Hermès', 4], ['Flacon ailé', 4]];
-  const SEED10 = [['Vétiver Extraordinaire', 4], ['De Los Santos', 4], ['Étoile Filante', 4], ['Lazy Sunday Morning', 4], ['Sauvage EDT', 4]];
-  const SEED9 = [['Acne Studios', 4], ['Purpose', 4], ['Ambert Sunset', 4], ['Ambre Papier', 4], ['Ganymede', 4]];
-  const SEED8 = [['Rouge Trafalgar', 4], ['L\'Eau Pâle', 4], ['Imagination', 4], ['Néroli Amara', 4], ['Ombre Nomade', 4]];
-  const SEED7 = [['Stellar Times', 4], ['Radical Rose', 4]];
-  const SEED6 = [['Musc Ravageur', 4], ['Portrait of a Lady', 4], ['Jasmin Rouge', 4], ['Tobacco Vanille', 5]];
-  const SEED5 = [['Guidance 46', 4], ['Tuxedo', 4], ['Ambre Russe', 4], ['Tam Dao Eau de Parfum', 4], ['Fève Nectar', 4]];
-  const SEED4 = [['Mojave Ghost Absolu', 4], ['Buongiorno Dolce Far Niente', 4], ['Straight to Heaven', 4], ['Nasaj', 4], ['Néroli Hasbaya', 4]];
-  const SEED3 = [['Bianco Latte', 4], ['Fleur Narcotique', 4], ['Baccarat Rouge 540', 5], ['Gris Charnel Extrait', 4], ['Orphéon', 4]];
-  const SEED2 = [['Black Afgano', 4], ['724', 4], ['The Musc', 4], ['Thé Noir 29', 4], ['Ella K', 4]];
   // Photos fournies par Théo (détourées). nz = hauteur du vaporisateur en % pour le nuage de spray.
   const IMG = {
     'Jazz Club': { s: 'img/jazz.webp', nz: 2 }, 'Naxos': { s: 'img/naxos.webp', nz: 1 }, 'Bois Impérial': { s: 'img/bois.webp', nz: 6 }, 'Myrrh & Tonka': { s: 'img/myrrh.webp', nz: 4 }, 'Sydney': { s: 'img/sydney.webp', nz: 7 },
@@ -53,26 +39,17 @@
     'Libre Le Parfum': { s: 'img/libre.webp', nz: 3 }, 'Le Male': { s: 'img/lemale.webp', nz: 3 }, 'L\'Interdit Rouge': { s: 'img/interdit.webp', nz: 5 }, 'Power of You': { s: 'img/powerofyou.webp', nz: 6 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
-  const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 14, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9), seedList(SEED10), seedList(SEED11), seedList(SEED12), seedList(SEED13), seedList(SEED14)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const seedOwned = () => window.OWNED.map(([n, r, occ]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
+  const seedWish = () => window.WISH.map(wishFromName);
+  const DEMO_V = 15;
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: seedOwned(), wishlist: seedWish(), walks: [], log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
   function migrate() {
     S.walks = S.walks || [];
+    // Nouvelle collection de démonstration cohérente : remplace l'ancienne, une seule fois.
+    if ((S.seedV || 1) < DEMO_V) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; S.seedV = DEMO_V; }
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
-    if ((S.seedV || 1) < 2) { seedList(SEED2).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 2; }
-    if ((S.seedV || 1) < 3) { seedList(SEED3).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 3; }
-    if ((S.seedV || 1) < 4) { seedList(SEED4).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 4; }
-    if ((S.seedV || 1) < 5) { seedList(SEED5).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 5; }
-    if ((S.seedV || 1) < 6) { seedList(SEED6).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 6; }
-    if ((S.seedV || 1) < 7) { seedList(SEED7).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 7; }
-    if ((S.seedV || 1) < 8) { seedList(SEED8).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 8; }
-    if ((S.seedV || 1) < 9) { seedList(SEED9).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 9; }
-    if ((S.seedV || 1) < 10) { seedList(SEED10).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 10; }
-    if ((S.seedV || 1) < 11) { seedList(SEED11).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 11; }
-    if ((S.seedV || 1) < 12) { seedList(SEED12).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 12; }
-    if ((S.seedV || 1) < 13) { seedList(SEED13).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 13; }
-    if ((S.seedV || 1) < 14) { seedList(SEED14).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 14; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
@@ -113,13 +90,14 @@
   const bt = (p, o) => {
     o = o || {};
     const st = (o.h || o.style) ? `style="${o.h ? 'height:' + o.h + 'px;' : ''}${o.style || ''}"` : '', cx = o.cls ? ' ' + o.cls : '';
-    const im = p.src ? { s: p.src, nz: p.nz || 6 } : IMG[p.name];
+    const pub = S.settings && S.settings.publicMode;
+    const im = pub ? null : (p.src ? { s: p.src, nz: p.nz || 6 } : IMG[p.name]);
     if (im && !p.img) {
       let mp = '';
       if (o.spray) { for (let k = 0; k < 10; k++) mp += `<i style="width:${3 + (k % 3)}px;height:${3 + (k % 3)}px;--dx:${8 + (k * 7) % 42}px;--dy:${-16 - (k * 9) % 36}px;animation-delay:${(k * 0.22).toFixed(2)}s"></i>`; mp = `<span class="mp" style="top:${im.nz}%">${mp}</span>`; }
       return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="${im.s}">${mp}</div>`;
     }
-    if (p.img) return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
+    if (p.img && !pub) return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
     return `<div class="bwrap${cx} ${o.still ? '' : 'bob'}" ${st}>${Art.bottle(p, o)}</div>`;
   };
   const fxCanvas = (attr, d) => `<canvas class="fx" ${attr} data-d="${d || .5}" aria-hidden="true"></canvas>`;
@@ -159,7 +137,64 @@
 
   // ---------- État de session ----------
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
-  const WXS = { chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 } };
+  const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
+  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false };
+  const CATS = { travail: 'Travail', amour: 'Amour', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
+  // [clé, libellé, réglages]
+  const SCEN = {
+    travail: [
+      ['entretien', 'Entretien d\'embauche', { ctx: 'pro', with: 'boss', moment: 'jour', style: 'costume', mood: 'confiant', place: 'interieur' }],
+      ['client', 'Réunion client', { ctx: 'pro', with: 'boss', moment: 'jour', style: 'smart', place: 'interieur' }],
+      ['bureau', 'Journée de bureau', { ctx: 'pro', with: 'collegues', moment: 'jour', style: 'smart', place: 'interieur', dur: 'longue' }],
+      ['teletravail', 'Télétravail', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'interieur', dur: 'longue', mood: 'creatif' }],
+      ['presentation', 'Présentation / conférence', { ctx: 'pro', with: 'inconnus', moment: 'jour', style: 'costume', mood: 'confiant' }],
+      ['afterwork', 'Afterwork', { ctx: 'amis', with: 'collegues', moment: 'soir', style: 'smart' }],
+      ['networking', 'Salon / networking', { ctx: 'pro', with: 'inconnus', moment: 'jour', style: 'smart', place: 'foule', dur: 'longue' }],
+      ['cocktail', 'Cocktail d\'entreprise', { ctx: 'event', with: 'collegues', moment: 'soir', style: 'smart', place: 'foule' }],
+    ],
+    amour: [
+      ['premier', 'Premier rendez-vous', { ctx: 'date', with: 'premier', moment: 'soir', style: 'smart', mood: 'confiant' }],
+      ['diner2', 'Dîner romantique', { ctx: 'date', with: 'partenaire', moment: 'soir', style: 'soiree', mood: 'romantique' }],
+      ['weekend2', 'Week-end à deux', { ctx: 'date', with: 'partenaire', moment: 'jour', style: 'casual', dur: 'longue', mood: 'calme' }],
+      ['anniv2', 'Anniversaire de couple', { ctx: 'date', with: 'partenaire', moment: 'soir', style: 'soiree', mood: 'romantique' }],
+      ['beauxparents', 'Rencontre avec les beaux-parents', { ctx: 'famille', with: 'famille', moment: 'jour', style: 'smart', mood: 'calme' }],
+      ['retrouvailles', 'Retrouvailles', { ctx: 'date', with: 'partenaire', moment: 'soir', style: 'smart', mood: 'joyeux' }],
+    ],
+    sorties: [
+      ['apero', 'Apéro entre amis', { ctx: 'amis', with: 'amis', moment: 'soir', style: 'casual', mood: 'joyeux' }],
+      ['brunch', 'Brunch', { ctx: 'amis', with: 'amis', moment: 'jour', style: 'casual', mood: 'joyeux' }],
+      ['resto', 'Dîner au restaurant', { ctx: 'amis', with: 'amis', moment: 'soir', style: 'smart' }],
+      ['club', 'Boîte de nuit', { ctx: 'event', with: 'amis', moment: 'nuit', style: 'street', place: 'foule', mood: 'energique' }],
+      ['concert', 'Concert', { ctx: 'event', with: 'amis', moment: 'soir', style: 'street', place: 'foule' }],
+      ['vernissage', 'Vernissage / expo', { ctx: 'event', with: 'inconnus', moment: 'soir', style: 'smart', mood: 'creatif' }],
+      ['mariage', 'Mariage (invité)', { ctx: 'event', with: 'inconnus', moment: 'soir', style: 'costume', dur: 'longue' }],
+      ['gala', 'Gala / soirée chic', { ctx: 'event', with: 'inconnus', moment: 'nuit', style: 'soiree', mood: 'confiant' }],
+      ['cinema', 'Cinéma / théâtre', { ctx: 'perso', with: 'seul', moment: 'soir', style: 'casual', place: 'interieur' }],
+    ],
+    famille: [
+      ['repas', 'Repas de famille', { ctx: 'famille', with: 'famille', moment: 'jour', style: 'casual', mood: 'calme' }],
+      ['fetes', 'Fêtes de fin d\'année', { ctx: 'famille', with: 'famille', moment: 'soir', style: 'smart', mood: 'joyeux' }],
+      ['enfants', 'Journée avec les enfants', { ctx: 'famille', with: 'famille', moment: 'jour', style: 'casual', place: 'exterieur', dur: 'longue' }],
+      ['grandsparents', 'Chez les grands-parents', { ctx: 'famille', with: 'famille', moment: 'jour', style: 'smart', mood: 'calme' }],
+    ],
+    mouvement: [
+      ['sport', 'Sport / salle', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'sport', mood: 'energique' }],
+      ['rando', 'Randonnée', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'exterieur', dur: 'longue' }],
+      ['voyage', 'Journée de voyage', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'transport', dur: 'longue', mood: 'calme' }],
+      ['plage', 'Plage / vacances', { ctx: 'perso', with: 'amis', moment: 'jour', style: 'casual', place: 'exterieur', dur: 'longue', mood: 'joyeux' }],
+      ['ville', 'Balade en ville / shopping', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'exterieur', mood: 'creatif' }],
+      ['festival', 'Festival', { ctx: 'amis', with: 'amis', moment: 'jour', style: 'street', place: 'foule', dur: 'longue', mood: 'energique' }],
+    ],
+  };
+  const scenByKey = (k) => { for (const list of Object.values(SCEN)) { const f = list.find((x) => x[0] === k); if (f) return f; } return null; };
+  const explicitPreset = () => {
+    const sc = CHOICE.sc && scenByKey(CHOICE.sc), o = Object.assign({}, sc ? sc[2] : {});
+    if (CHOICE.mood) o.mood = CHOICE.mood;
+    if (CHOICE.place) o.place = CHOICE.place;
+    if (CHOICE.dur) o.dur = CHOICE.dur;
+    if (CHOICE.hum) o.hum = 85;
+    return o;
+  };
   const SUGG = ['Dîner en terrasse, 24°, chemise en lin', 'Rendez-vous client, costume bleu marine', 'Brunch entre amis, il pleut, pull en maille', 'Vernissage ce soir, perfecto noir', 'Télétravail, jean et t-shirt, grand froid'];
 
   // ---------- Vues ----------
@@ -170,6 +205,7 @@
     if (!keepScroll) window.scrollTo(0, 0);
   }
 
+  const keepText0 = () => { const t = $('#say'); if (t) SAY = t.value; };
   function viewToday() {
     const worn = S.today && S.today.date === today() ? find(S.today.pickId) : null;
     const seen = [], recent = [];
@@ -183,17 +219,23 @@
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
-          <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Écris ici ta journée</label>
-          <textarea id="say" rows="3" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
+          <p class="mono">1 · Ta journée</p>
+          <div class="cats" id="cats">${Object.entries(CATS).map(([k, v]) => `<button class="${CHOICE.cat === k ? 'on' : ''}" data-cat="${k}">${v}</button>`).join('')}</div>
+          <div class="chips">${SCEN[CHOICE.cat].map(([k, l]) => `<button class="chip ${CHOICE.sc === k ? 'on' : ''}" data-sc="${k}">${esc(l)}</button>`).join('')}</div>
+          <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Ou écris-la avec tes mots</label>
+          <textarea id="say" rows="2" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
+          <p class="mono">2 · Ton mood</p>
+          <div class="chips">${Object.entries(E.MOODS).map(([k, v]) => `<button class="chip ${CHOICE.mood === k ? 'on' : ''}" data-mood="${k}">${esc(v)}</button>`).join('')}</div>
+          <p class="mono">3 · Les conditions</p>
+          <div class="chips">${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}<button class="chip ${CHOICE.hum ? 'on' : ''}" data-hum="1">Humide</button></div>
+          <div class="chips">${Object.entries(E.PLACES).map(([k, v]) => `<button class="chip ${CHOICE.place === k ? 'on' : ''}" data-place="${k}">${esc(v)}</button>`).join('')}${Object.entries(E.DURS).map(([k, v]) => `<button class="chip ${CHOICE.dur === k ? 'on' : ''}" data-dur="${k}">${esc(v)}</button>`).join('')}</div>
           <div class="row">
-            ${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}
             <button class="chip photo-btn" id="photoBtn" ${CAN_IMG ? '' : 'hidden'}>${PHOTO ? `<img alt="" src="${URL.createObjectURL(PHOTO)}">` : IC.cam}<span>${PHOTO ? 'Tenue ajoutée' : 'Ma tenue en photo'}</span></button>
             <input type="file" id="photoIn" accept="image/*" hidden>
           </div>
           <button class="cta full" id="go"><span>Trouver mon parfum</span></button>
         </div>
       </section>
-      <div class="chips" style="margin-top:18px" id="sugg">${SUGG.slice(0, 3).map((s) => `<button class="chip" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
       ${worn ? `<section class="sec"><div class="card today-card">${bt(worn, { h: 116 })}<div><p class="mono">porté aujourd'hui</p><h2 style="font-size:24px;margin-top:4px">${esc(worn.name)}</h2><p style="color:var(--muted);font-size:14px">${esc(worn.house)}</p><button class="ghost" id="replay" style="margin-top:10px">Revoir l'histoire</button></div></div></section>
       <section class="sec"><header><h2>Journal olfactif</h2></header><div class="card jr">
         <p class="mono">Compliments</p><div class="chips" id="jc">${['0', '1', '2+'].map((v) => `<button class="chip ${je.compl === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
@@ -214,8 +256,14 @@
     mountFx($('#view'));
     $('#photoBtn').onclick = () => $('#photoIn').click();
     $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
-    $$('[data-wx]').forEach((b) => (b.onclick = () => { const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); viewToday(); }));
-    $$('[data-s]').forEach((b) => (b.onclick = () => { SAY = b.dataset.s; viewToday(); }));
+    $$('[data-wx]').forEach((b) => (b.onclick = () => { keepText0(); const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); viewToday(); }));
+    const keepText = () => { const t = $('#say'); if (t) SAY = t.value; };
+    $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; viewToday(); }));
+    $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
+    $$('[data-mood]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.mood = CHOICE.mood === b.dataset.mood ? null : b.dataset.mood; viewToday(); }));
+    $$('[data-place]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.place = CHOICE.place === b.dataset.place ? null : b.dataset.place; viewToday(); }));
+    $$('[data-dur]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.dur = CHOICE.dur === b.dataset.dur ? null : b.dataset.dur; viewToday(); }));
+    $$('[data-hum]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.hum = !CHOICE.hum; viewToday(); }));
     $$('[data-open]').forEach((b) => (b.onclick = () => openDetail(b.dataset.open)));
     if ($('#replay')) $('#replay').onclick = () => { if (LAST && LAST.pick.id === worn.id) showStory(LAST, true); else { SAY = SAY || ''; runDay(worn); } };
   }
@@ -410,12 +458,14 @@
     const pn = openSheet(`<div><h2>Profil</h2></div>
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
-      <div class="row"><button class="ghost" id="niche">Recharger la collection niche</button><button class="ghost danger" id="reset">Tout vider</button></div>`);
+      <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
+      <div class="row"><button class="ghost" id="niche">Recharger la collection de démo</button><button class="ghost danger" id="reset">Tout vider</button></div>`);
+    $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
-    $('#niche', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : remplacer'; return; } S.collection = seed(); S.log = []; S.today = null; save(); closeSheet(); render(); };
-    $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; save(); closeSheet(); render(); };
+    $('#niche', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : remplacer'; return; } { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; } S.log = []; S.today = null; save(); closeSheet(); render(); };
+    $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; S.wishlist = []; save(); closeSheet(); render(); };
   }
 
 
@@ -539,7 +589,7 @@
   const pickKey = (v, obj, d) => (typeof v === 'string' && v in obj ? v : d);
   function normCond(c, wx) {
     c = c || {};
-    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: 50 };
+    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), dur: pickKey(c.dur, E.DURS, '') };
   }
   function keywordCond(text, wx) {
     const t = E.norm(text), c = { temp: wx ? wx.t : 18 };
@@ -554,6 +604,7 @@
     if (/cuir|perfecto/.test(t)) c.fabric = 'cuir'; else if (/lin/.test(t)) c.fabric = 'lin'; else if (/pull|maille|laine/.test(t)) c.fabric = 'laine';
     if (/pluie|pleut/.test(t)) c.rain = true;
     if (/froid/.test(t) && !m) c.temp = 4; if (/chaud|canicule/.test(t) && !m) c.temp = 29;
+    Object.assign(c, explicitPreset());
     return normCond(c, wx);
   }
   const layerObjs = (p, cond, n) => E.layering(p, S.collection, cond, { daysSince }, n || 2).map((l) => ({ p: l.b, effect: l.what, how: [l.how, l.tip].filter(Boolean).join(' '), score: clamp(Math.round(l.total + 1.5), 2, 5) }));
@@ -564,11 +615,20 @@
     return { cond, read: text ? text : 'Journée ' + E.CONTEXTS[cond.ctx].toLowerCase() + ', ' + Math.round(cond.temp) + '°', pick: top.p, vibe: [famLabel(top.p.family), E.MOODS[cond.mood], (E.MOMENTS[cond.moment] || '').toLowerCase()].filter(Boolean).slice(0, 3),
       story: (top.reasons.slice(0, 3).join('. ') || 'Le meilleur compromis de ton étagère aujourd\'hui') + '.', alts: rk.slice(1, 4).map((r) => ({ p: r.p, line: r.reasons[0] || 'Une belle alternative' })), layers: layerObjs(top.p, cond, 2), avoid: '', ai: false };
   }
+  const explicitLine = () => {
+    const o = explicitPreset(), bits = [];
+    if (o.mood) bits.push('mood : ' + E.MOODS[o.mood]);
+    if (o.place) bits.push('lieu : ' + E.PLACES[o.place]);
+    if (o.dur) bits.push('durée : ' + E.DURS[o.dur]);
+    if (CHOICE.hum) bits.push('air très humide');
+    if (CHOICE.sc) bits.push('type de journée : ' + scenByKey(CHOICE.sc)[1]);
+    return bits.length ? '\nChoix explicites de l\'utilisateur, à respecter : ' + bits.join(' ; ') + '.' : '';
+  };
   async function aiDay(text, wx) {
-    const prompt = `Tu es un nez de parfumerie qui compose avec goût. Ton chaleureux, tutoiement, image sensorielle, jamais de jargon creux. Réponds UNIQUEMENT par un JSON.\n\nMa collection (id | nom | maison | famille | notes | projection | tenue | poids | ma note | dernier port) :\n${colLines()}\n\nMa journée : """${text || '(non précisée)'}"""${wx ? `\nMétéo indiquée : ${wx.l}, environ ${wx.t}°C${wx.rain ? ', pluie' : ''}.` : ''}${PHOTO && CAN_IMG ? '\nUne photo de ma tenue est jointe : lis-y les couleurs, matières et le style.' : ''}\nDate : ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}.\n\nFormat : {"cond":{"temp":nombre ou null,"ctx":"pro|perso|date|event|famille|amis","with":"seul|partenaire|premier|collegues|boss|famille|amis|inconnus","moment":"jour|soir|nuit","mood":"confiant|calme|energique|romantique|mysterieux|joyeux|fatigue|creatif","style":"costume|smart|casual|sport|soiree|street","color":"sombre|neutre|clair|colore","fabric":"coton|lin|laine|cuir|denim|soie|technique|"},"read":"ma journée reformulée, 12 mots max","pick":"id du parfum","vibe":["3 mots courts"],"story":"2 phrases : pourquoi celui-là aujourd'hui (météo, tenue, moment, personnes)","alts":[{"id":"","line":"8 mots max"},{"id":"","line":""}],"layers":[{"id":"","effect":"ce que l'accord change, 1 phrase","how":"ordre, dosage en sprays, où vaporiser selon la tenue, 2 phrases","score":1-5},{"id":"","effect":"","how":"","score":1-5}],"avoid":"vide, ou 1 phrase si un parfum est à éviter aujourd'hui"}\nRègles : n'utilise que les id fournis. Évite ce qui a été porté hier ou aujourd'hui sauf raison forte. Les 2 accords de layering doivent être différents de "pick" et cohérents avec la chaleur et la tenue.`;
+    const prompt = `Tu es un nez de parfumerie qui compose avec goût. Ton chaleureux, tutoiement, image sensorielle, jamais de jargon creux. Réponds UNIQUEMENT par un JSON.\n\nMa collection (id | nom | maison | famille | notes | projection | tenue | poids | ma note | dernier port) :\n${colLines()}\n\nMa journée : """${text || '(non précisée)'}"""${explicitLine()}${wx ? `\nMétéo indiquée : ${wx.l}, environ ${wx.t}°C${wx.rain ? ', pluie' : ''}.` : ''}${PHOTO && CAN_IMG ? '\nUne photo de ma tenue est jointe : lis-y les couleurs, matières et le style.' : ''}\nDate : ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}.\n\nFormat : {"cond":{"temp":nombre ou null,"ctx":"pro|perso|date|event|famille|amis","with":"seul|partenaire|premier|collegues|boss|famille|amis|inconnus","moment":"jour|soir|nuit","mood":"confiant|calme|energique|romantique|mysterieux|joyeux|fatigue|creatif","style":"costume|smart|casual|sport|soiree|street","color":"sombre|neutre|clair|colore","fabric":"coton|lin|laine|cuir|denim|soie|technique|","place":"interieur|exterieur|transport|foule|","dur":"courte|longue|"},"read":"ma journée reformulée, 12 mots max","pick":"id du parfum","vibe":["3 mots courts"],"story":"2 phrases : pourquoi celui-là aujourd'hui (météo, tenue, moment, personnes)","alts":[{"id":"","line":"8 mots max"},{"id":"","line":""}],"layers":[{"id":"","effect":"ce que l'accord change, 1 phrase","how":"ordre, dosage en sprays, où vaporiser selon la tenue, 2 phrases","score":1-5},{"id":"","effect":"","how":"","score":1-5}],"avoid":"vide, ou 1 phrase si un parfum est à éviter aujourd'hui"}\nRègles : le mood et les conditions (météo, humidité, lieu, durée) pèsent autant que l'occasion : ne propose jamais un parfum qui les contredit, et cite-les dans "story". N'utilise que les id fournis. Évite ce qui a été porté hier ou aujourd'hui sauf raison forte. Les 2 accords de layering doivent être différents de "pick" et cohérents avec la chaleur et la tenue.`;
     const j = await aiJson(prompt, { modelTier: 'default', images: PHOTO && CAN_IMG ? [PHOTO] : undefined });
     const p = find(j.pick); if (!p) throw { code: 'bad_pick' };
-    const cond = normCond(j.cond, wx);
+    const cond = normCond(Object.assign({}, j.cond, explicitPreset()), wx);
     let layers = (j.layers || []).map((l) => ({ p: find(l.id), effect: String(l.effect || ''), how: String(l.how || ''), score: clamp(Math.round(+l.score || 4), 1, 5) })).filter((l) => l.p && l.p.id !== p.id).slice(0, 2);
     if (!layers.length) layers = layerObjs(p, cond, 2);
     let alts = (j.alts || []).map((a) => ({ p: find(a.id), line: String(a.line || '') })).filter((a) => a.p && a.p.id !== p.id).slice(0, 3);
@@ -608,7 +668,7 @@
       <div class="msgs center">${['Je lis ta journée…', 'Je sens ton étagère…', 'Je compose l\'accord…'].map((m, i) => `<span style="animation-delay:${i * 2.1}s">${m}</span>`).join('')}</div>`;
     $('#prog').innerHTML = '';
   }
-  const condChips = (c) => [E.CONTEXTS[c.ctx], E.WITHS[c.with], E.MOMENTS[c.moment], Math.round(c.temp) + '°', E.MOODS[c.mood], E.STYLES[c.style] + (c.fabric ? ' · ' + E.FABRICS[c.fabric].toLowerCase() : '')];
+  const condChips = (c) => [E.CONTEXTS[c.ctx], E.WITHS[c.with], E.MOMENTS[c.moment], Math.round(c.temp) + '°' + (c.rain ? ' pluie' : ''), E.MOODS[c.mood], c.place ? E.PLACES[c.place] : null, c.dur ? E.DURS[c.dur] : null, c.hum > 75 ? 'humide' : null, E.STYLES[c.style] + (c.fabric ? ' · ' + E.FABRICS[c.fabric].toLowerCase() : '')].filter(Boolean);
   function buildScenes(R) {
     const p = R.pick, sc = [];
     const nW = (t) => String(t || '').split(/\s+/).filter(Boolean).length;

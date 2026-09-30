@@ -16,7 +16,7 @@
     boisé: { label: 'Boisé', tags: ['élégant', 'confiant', 'naturel', 'calme', 'polyvalent'] },
     épicé: { label: 'Épicé', tags: ['chaud', 'audacieux', 'sensuel', 'énergique'] },
     cuir: { label: 'Cuir', tags: ['audacieux', 'mystérieux', 'élégant', 'nocturne', 'chaud'] },
-    musqué: { label: 'Musqué', tags: ['doux', 'discret', 'confortable', 'propre', 'sensuel'] },
+    musqué: { label: 'Musqué', tags: ['doux', 'confortable', 'propre'] },
     oud: { label: 'Oud', tags: ['dense', 'mystérieux', 'audacieux', 'nocturne', 'chaud', 'statement'] },
   };
 
@@ -28,6 +28,14 @@
   const COLORS = { sombre: 'Sombre', neutre: 'Neutre', clair: 'Clair', colore: 'Coloré' };
   const FABRICS = { coton: 'Coton', lin: 'Lin', laine: 'Laine / maille', cuir: 'Cuir', denim: 'Denim', soie: 'Soie / satin', technique: 'Technique' };
 
+  const PLACES = { interieur: 'Bureau / intérieur', exterieur: 'Extérieur', transport: 'Transports', foule: 'Lieu bondé' };
+  const DURS = { courte: 'Quelques heures', longue: 'Journée entière' };
+  const PLACE = {
+    interieur: { w: { discret: 1, propre: .8, dense: -1, statement: -.5 }, proj: [1, 3] },
+    exterieur: { w: { naturel: .6, frais: .3 }, proj: [3, 5] },
+    transport: { w: { discret: 1.5, léger: 1, propre: .8, dense: -1.5, statement: -1 }, proj: [1, 3] },
+    foule: { w: { statement: 1, audacieux: .5 }, proj: [3, 5] },
+  };
   const CTX = {
     pro: { w: { discret: 2, propre: 2, élégant: 1.5, confiant: 1, frais: 0.5, audacieux: -1.5, dense: -1.5, gourmand: -1.5, sensuel: -1, statement: -1.5, nocturne: -1.5 }, proj: [2, 3] },
     perso: { w: { polyvalent: 1, confortable: 1.5, naturel: 1 }, proj: [2, 4] },
@@ -88,7 +96,7 @@
   const NOTE_TAGS = {
     gourmand: ['vanille', 'tonka', 'caramel', 'praliné', 'miel', 'cacao', 'café', 'datte', 'châtaigne', 'marron'],
     frais: ['citron', 'bergamote', 'pamplemousse', 'mandarine', 'orange', 'marin', 'menthe', 'sel', 'linge propre'],
-    doux: ['musc', 'iris', 'benjoin'],
+    doux: ['iris', 'benjoin'],
   };
 
   function perfumeTags(p) {
@@ -120,6 +128,7 @@
     const m = { frais: heat * 1.2, léger: heat, chaud: -heat * 1.2, dense: -heat * 1.2, polyvalent: (1 - Math.min(1, Math.abs(heat))) * 0.6 };
     if (w.rain) { m.naturel = 0.5; m.confortable = 0.5; m.sportif = -0.5; }
     if ((w.hum || 0) > 75 && t > 22) m.dense -= 1;
+    if ((w.hum || 0) > 75) { m.propre = (m.propre || 0) + .3; m.dense -= .5; }
     return m;
   }
   function weatherLabel(w) {
@@ -147,11 +156,14 @@
     const sum = (map) => tags.reduce((a, t) => a + (map[t] || 0), 0) * k;
     const proj = p.projection || 3;
     const parts = { weather: 0, ctx: 0, mood: 0, outfit: 0, perso: 0 };
-    parts.weather = sum(weatherWant(cond));
+    parts.weather = 1.5 * sum(weatherWant(cond));
     parts.ctx = sum((CTX[cond.ctx] || {}).w || {}) + sum((WITH[cond.with] || {}).w || {}) + sum(MOMENT[cond.moment] || {})
       + 0.8 * (projPenalty((CTX[cond.ctx] || {}).proj, proj) + projPenalty((WITH[cond.with] || {}).proj, proj));
     if ((p.occ || []).includes(cond.ctx)) parts.ctx += 2;
-    parts.mood = 0.8 * sum(MOOD[cond.mood] || {});
+    parts.mood = 1.5 * sum(MOOD[cond.mood] || {});
+    const pl = PLACE[cond.place];
+    if (pl) parts.ctx += sum(pl.w) + 0.8 * projPenalty(pl.proj, proj);
+    if (cond.dur === 'longue') parts.ctx += 0.8 * ((p.longevity || 3) - 3) + ((p.weight || 3) === 3 ? .3 : 0);
     parts.outfit = 0.8 * (sum(STYLE[cond.style] || {}) + sum(COLOR[cond.color] || {}) + sum(FABRIC[cond.fabric] || {}));
     parts.perso = ((p.rating || 3) - 3) * 0.8;
     const days = st.daysSince ? st.daysSince(p.id) : null;
@@ -165,6 +177,8 @@
     if (parts.weather >= 1) r.push(`Météo : ${weatherLabel(cond)}`);
     if (parts.ctx >= 1.5) r.push(`Colle à ta journée (${CONTEXTS[cond.ctx].toLowerCase()} · ${WITHS[cond.with].toLowerCase()})`);
     if (parts.mood >= 1) r.push(`Épouse ton mood (${MOODS[cond.mood].toLowerCase()})`);
+    if (cond.place && parts.ctx >= 1) r.push(`Adapté au lieu (${PLACES[cond.place].toLowerCase()})`);
+    if (cond.dur === 'longue' && (p.longevity || 3) >= 4) r.push('Tient toute la journée');
     if (parts.outfit >= 1) r.push(`Va avec ta tenue (${STYLES[cond.style].toLowerCase()}${cond.fabric ? ', ' + FABRICS[cond.fabric].toLowerCase() : ''})`);
     if ((p.rating || 3) >= 4) r.push('Un de tes chouchous');
     if (parts.perso >= 0.4 && (p.rating || 3) < 4) r.push('Pas porté depuis un moment');
@@ -316,7 +330,7 @@
     return out;
   }
 
-  const api = { norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

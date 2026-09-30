@@ -88,7 +88,7 @@
     ['724', 'Maison Francis Kurkdjian', 'musqué', ['bergamote', 'aldéhydes', 'pois de senteur', 'jasmin d\'Égypte', 'seringat', 'musc blanc', 'santal'], 3, 4, 2, 170],
     ['The Musc', 'Essential Parfums', 'musqué', ['gingembre rouge', 'lavandin', 'cire d\'abeille', 'santal', 'musc blanc'], 3, 4, 3, 82],
     ['Ella K', 'Ella K Parfums', 'ambré', [], 3, 4, 3, 0],
-    ['Bianco Latte', 'Giardini di Toscana', 'gourmand', ['caramel', 'miel', 'coumarine', 'vanille', 'musc blanc'], 3, 4, 4, 125],
+    ['Bianco Latte', 'Giardini di Toscana', 'gourmand', ['caramel', 'miel', 'coumarine', 'vanille', 'musc blanc'], 3, 4, 3, 125],
     ['Fleur Narcotique', 'Ex Nihilo', 'floral', ['bergamote', 'litchi', 'osmanthus', 'jasmin', 'freesia', 'pivoine', 'fleur d\'oranger', 'santal', 'mousse', 'musc'], 4, 5, 3, 420],
     ['Gris Charnel Extrait', 'BDK Parfums', 'boisé', ['cardamome', 'thé noir', 'figue', 'iris', 'ciste', 'vétiver', 'patchouli', 'vanille', 'santal', 'cèdre', 'fève tonka'], 4, 5, 4, 270],
     ['Orphéon', 'Diptyque', 'boisé', ['genièvre', 'jasmin', 'cèdre', 'fève tonka', 'tabac'], 3, 4, 3, 205],
@@ -139,6 +139,22 @@
     name, house, family, notes, projection, longevity, weight, price,
   }));
 
-  if (typeof module !== 'undefined') module.exports = { CATALOG };
-  else root.CATALOG = CATALOG;
+
+  // Collection de démonstration : 30 flacons qui couvrent chaleur, froid, pro, date, événement, famille, pluie, sport...
+  // [nom, note /5, occasions favorisées]
+  const OWNED = [
+    ['Buongiorno Dolce Far Niente', 4, ['perso', 'amis']], ['Néroli Amara', 4, ['pro', 'famille']], ['L\'Eau Pâle', 4, ['pro', 'perso']],
+    ['Sydney', 4, ['amis', 'perso']], ['Imagination', 5, ['pro', 'amis', 'date']], ['Sauvage EDT', 4, ['amis', 'event']],
+    ['Lazy Sunday Morning', 3, ['famille', 'perso']], ['De Los Santos', 4, ['perso', 'pro']], ['Bleu de Chanel EDT', 4, ['pro', 'amis']],
+    ['Bois Impérial', 5, ['pro', 'perso']], ['Vétiver Extraordinaire', 5, ['pro']], ['Terre d\'Hermès', 4, ['pro', 'amis', 'perso']],
+    ['The Musc', 3, ['perso', 'famille']], ['Mojave Ghost Absolu', 4, ['pro', 'date']], ['Dior Homme Intense', 4, ['pro', 'date']],
+    ['Jazz Club', 5, ['date', 'amis']], ['Naxos', 5, ['date', 'event']], ['Musc Ravageur', 4, ['date']],
+    ['Bianco Latte', 4, ['famille', 'date', 'perso']], ['Libre Le Parfum', 4, ['date', 'event']], ['Myrrh & Tonka', 4, ['date', 'perso']],
+    ['Baccarat Rouge 540', 5, ['event', 'date']], ['Black Afgano', 3, ['event']], ['Tuxedo', 4, ['event', 'pro']],
+    ['Guidance 46', 4, ['event']], ['Fleur Narcotique', 4, ['event', 'date']],
+    ['Tobacco Vanille', 5, ['date', 'event', 'perso']], ['Ambre Papier', 4, ['perso', 'date']], ['Thé Noir 29', 5, ['pro', 'perso']], ['Orphéon', 4, ['perso', 'amis']],
+  ];
+  const WISH = ['Tam Dao Eau de Parfum', '724', 'Ambert Sunset', 'Straight to Heaven', 'Gris Charnel Extrait', 'Ombre Nomade', 'Stellar Times', 'Radical Rose', 'Rouge Trafalgar', 'Néroli Hasbaya', 'Nasaj', 'Acne Studios', 'Ganymede', 'Purpose', 'Portrait of a Lady', 'Jasmin Rouge', 'Étoile Filante', 'Paradoxe Intense', 'Miss Dior Essence', 'La Vie est Belle', 'Scandal By Night', 'Aqua Allegoria Rosa Verde', 'Shalimar', 'J\'adore', 'Stronger With You Intensely', 'Power of You', 'L\'Interdit Rouge', 'Le Male', 'Pour un Homme de Caron', 'Boss Bottled', 'Ambre Russe', 'Ella K', 'Fève Nectar', 'Pure Musc Blanc'];
+  if (typeof module !== 'undefined') module.exports = { CATALOG, OWNED, WISH };
+  else { root.CATALOG = CATALOG; root.OWNED = OWNED; root.WISH = WISH; }
 })(typeof window !== 'undefined' ? window : globalThis);
