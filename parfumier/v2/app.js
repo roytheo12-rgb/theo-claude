@@ -7,7 +7,7 @@
   const uid = () => Math.random().toString(36).slice(2, 10);
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
   const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const KEY = 'sillage.v2';
+  const KEY = 'sillage.v3';
   const famLabel = (f) => (E.FAMILIES[f] ? E.FAMILIES[f].label : 'Sans famille');
   const FAMS = Object.keys(E.FAMILIES).join('|');
 
@@ -16,15 +16,17 @@
     bottle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="7" y="10" width="10" height="11" rx="2.5"/><path d="M10 10V7.5h4V10M9.5 3.5h5v4h-5z"/></svg>',
     compass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2 5.6-5.6 2 2-5.6z"/></svg>',
     gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7"/></svg>',
-    spark: '<svg class="spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9zM19 15l.9 2.6L22.5 18.5l-2.6.9L19 22l-.9-2.6-2.6-.9 2.6-.9z"/></svg>',
+    spark: '',
     cam: '<svg class="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 8.5A2.5 2.5 0 015.5 6H8l1.4-2h5.2L16 6h2.5A2.5 2.5 0 0121 8.5v9a2.5 2.5 0 01-2.5 2.5h-13A2.5 2.5 0 013 17.5z"/><circle cx="12" cy="13" r="3.6"/></svg>',
   };
 
   // ---------- Données ----------
-  const SEED = [['Santal 33', 4], ['Another 13', 5], ['Baccarat Rouge 540', 5], ['Gypsy Water', 4], ['Mojave Ghost', 4], ['Philosykos', 5], ['Tam Dao', 3], ['Portrait of a Lady', 3], ['Black Afgano', 3], ['Tobacco Vanille', 5], ['Lazy Sunday Morning', 4], ['Molecule 01', 3]];
+  const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  // Photos fournies par Théo (détourées). nz = hauteur du vaporisateur en % pour le nuage de spray.
+  const IMG = { 'Jazz Club': { s: 'img/jazz.webp', nz: 2 }, 'Naxos': { s: 'img/naxos.webp', nz: 1 }, 'Bois Impérial': { s: 'img/bois.webp', nz: 6 }, 'Myrrh & Tonka': { s: 'img/myrrh.webp', nz: 4 }, 'Sydney': { s: 'img/sydney.webp', nz: 7 } };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [] });
   const seed = () => SEED.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 2, collection: seed(), wishlist: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, collection: seed(), wishlist: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
   S.settings = Object.assign(DEF().settings, S.settings);
@@ -42,7 +44,7 @@
       const id = await user.id(); if (!id) return;
       dbDoc = db.doc('data/users/' + id + '/state');
       const snap = await dbDoc.get();
-      if (snap.exists && snap.data() && snap.data().collection) {
+      if (snap.exists && snap.data() && snap.data().collection && snap.data().v === 3) {
         S = Object.assign(DEF(), JSON.parse(JSON.stringify(snap.data()))); S.settings = Object.assign(DEF().settings, S.settings);
         try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ok */ }
         if (!$('#story') || $('#story').hidden) render(true);
@@ -61,9 +63,15 @@
   const tint = (p) => { const P = Art.pal(p); return `hsl(${P.h} ${P.s}% 76% / .75)`; };
   const bt = (p, o) => {
     o = o || {};
-    const st = o.h ? `style="height:${o.h}px"` : '';
-    if (p.img) return `<div class="bwrap photo ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
-    return `<div class="bwrap ${o.still ? '' : 'bob'}" ${st}>${Art.bottle(p, o)}</div>`;
+    const st = (o.h || o.style) ? `style="${o.h ? 'height:' + o.h + 'px;' : ''}${o.style || ''}"` : '', cx = o.cls ? ' ' + o.cls : '';
+    const im = IMG[p.name];
+    if (im && !p.img) {
+      let mp = '';
+      if (o.spray) { for (let k = 0; k < 10; k++) mp += `<i style="width:${3 + (k % 3)}px;height:${3 + (k % 3)}px;--dx:${8 + (k * 7) % 42}px;--dy:${-16 - (k * 9) % 36}px;animation-delay:${(k * 0.22).toFixed(2)}s"></i>`; mp = `<span class="mp" style="top:${im.nz}%">${mp}</span>`; }
+      return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="${im.s}">${mp}</div>`;
+    }
+    if (p.img) return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
+    return `<div class="bwrap${cx} ${o.still ? '' : 'bob'}" ${st}>${Art.bottle(p, o)}</div>`;
   };
   const fxCanvas = (attr, d) => `<canvas class="fx" ${attr} data-d="${d || .5}" aria-hidden="true"></canvas>`;
   let RECS = [];
@@ -73,6 +81,9 @@
       if (p) FX.attach(cv, p, { dark: false, density: +cv.dataset.d || .5 });
     });
   }
+  const todayEntry = (id) => { let e = [...S.log].reverse().find((l) => l.id === id && l.date === today()); if (!e) { e = { id, date: today() }; S.log.push(e); } return e; };
+  let AUTOW = '';
+  const buyLinks = (name, house) => { const q = encodeURIComponent(name + ' ' + house); return `<div class="buy"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}+parfum+acheter">Où l'acheter</a><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}+site%3Afragrantica.com">Fragrantica</a></div>`; };
   const wears = (id) => S.log.filter((l) => l.id === id).length;
   const words = (t, base) => String(t || '').split(/\s+/).filter(Boolean).map((w, i) => `<span class="w" style="--i:${i};--d:${base || 0}">${esc(w)}</span>`).join(' ');
   const dots = (n) => '<span class="dots">' + [1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'f' : ''}"></i>`).join('') + '</span>';
@@ -111,29 +122,42 @@
     const seen = [], recent = [];
     for (const l of [...S.log].reverse()) { if (!seen.includes(l.id) && find(l.id)) { seen.push(l.id); recent.push(find(l.id)); } if (recent.length >= 8) break; }
     const dt = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+    const hr = new Date().getHours(), hello = hr >= 5 && hr < 12 ? 'Bonjour.' : hr >= 12 && hr < 18 ? 'Bon après-midi.' : 'Bonsoir.';
+    const je = worn ? todayEntry(worn.id) : null;
     $('#view').innerHTML = `
       <section class="hero">
-        <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="blob b4"></i>
-        <p class="mono">${esc(dt)}</p>
-        <h1>Qu'est-ce qui t'attend <em>aujourd'hui</em>&nbsp;?</h1>
+        <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
+        <h1>${hello}</h1>
+        <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
-          <textarea id="say" rows="3" placeholder="Raconte en une phrase : ce que tu fais, avec qui, ce que tu portes…" aria-label="Ta journée">${esc(SAY)}</textarea>
+          <textarea id="say" rows="3" placeholder="Ce que tu fais, avec qui, ce que tu portes…" aria-label="Ta journée">${esc(SAY)}</textarea>
           <div class="row">
             ${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}
-            <button class="chip photo-btn" id="photoBtn" ${CAN_IMG ? '' : 'hidden'}>${PHOTO ? `<img alt="" src="${URL.createObjectURL(PHOTO)}">` : IC.cam}<span>${PHOTO ? 'Ma tenue ✓' : 'Ma tenue en photo'}</span></button>
+            <button class="chip photo-btn" id="photoBtn" ${CAN_IMG ? '' : 'hidden'}>${PHOTO ? `<img alt="" src="${URL.createObjectURL(PHOTO)}">` : IC.cam}<span>${PHOTO ? 'Tenue ajoutée' : 'Ma tenue en photo'}</span></button>
             <input type="file" id="photoIn" accept="image/*" hidden>
           </div>
-          <button class="cta full" id="go">${IC.spark}<span>Trouve mon parfum</span></button>
+          <button class="cta full" id="go"><span>Trouver mon parfum</span></button>
         </div>
       </section>
-      <div class="chips" style="margin-top:14px" id="sugg">${SUGG.slice(0, 3).map((s) => `<button class="chip" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
-      <section class="sec" style="margin-top:14px"><button class="ghost" id="weekBtn" style="justify-self:start">${IC.spark} Planifier ma semaine</button></section>
-      ${worn ? `<section class="sec"><div class="card today-card">${bt(worn, { h: 108 })}<div><p class="mono">aujourd'hui</p><h2 style="font-size:22px">${esc(worn.name)}</h2><p style="color:var(--muted);font-size:14px">${esc(worn.house)}</p><button class="ghost" id="replay" style="margin-top:8px">Revoir l'histoire</button></div></div></section>` : ''}
-      ${recent.length ? `<section class="sec"><header><h2>Ton sillage récent</h2></header><div class="strip">${recent.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b>${ago(daysSince(p.id)).replace('porté ', '')}</button>`).join('')}</div></section>` : ''}
-      <section class="sec"><p class="mono" style="text-align:center">${S.collection.length} parfums sur ton étagère · l'IA lit ta collection à chaque demande</p></section>`;
+      <div class="chips" style="margin-top:18px" id="sugg">${SUGG.slice(0, 3).map((s) => `<button class="chip" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      ${worn ? `<section class="sec"><div class="card today-card">${bt(worn, { h: 116 })}<div><p class="mono">porté aujourd'hui</p><h2 style="font-size:24px;margin-top:4px">${esc(worn.name)}</h2><p style="color:var(--muted);font-size:14px">${esc(worn.house)}</p><button class="ghost" id="replay" style="margin-top:10px">Revoir l'histoire</button></div></div></section>
+      <section class="sec"><header><h2>Journal olfactif</h2></header><div class="card jr">
+        <p class="mono">Compliments</p><div class="chips" id="jc">${['0', '1', '2+'].map((v) => `<button class="chip ${je.compl === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
+        <p class="mono">Tenue sur la peau</p><div class="chips" id="jd">${['moins de 4 h', '4 à 8 h', 'plus de 8 h'].map((v) => `<button class="chip ${je.dur === v ? 'on' : ''}" data-v="${v}">${v}</button>`).join('')}</div>
+        <textarea id="jn" rows="2" placeholder="Comment il évolue sur la peau, ce qu'on t'a dit…">${esc(je.note || '')}</textarea></div></section>` : ''}
+      <section class="sec"><header><h2>Ta collection</h2><span class="mono">${S.collection.length} flacons</span></header>
+        <div class="vit">${S.collection.map((p) => `<button data-open="${p.id}">${fxCanvas(`data-p="${p.id}"`, .45)}${bt(p, {})}<b>${esc(p.name)}</b><small>${esc(p.house)}</small></button>`).join('')}</div></section>
+      <section class="sec"><div class="row"><button class="ghost" id="weekBtn">Ma semaine</button><button class="ghost" id="travelBtn">Mode voyage</button></div></section>
+      ${recent.length ? `<section class="sec"><header><h2>Sillage récent</h2></header><div class="strip">${recent.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b>${ago(daysSince(p.id)).replace('porté ', '')}</button>`).join('')}</div></section>` : ''}`;
     const ta = $('#say'); ta.addEventListener('input', () => { SAY = ta.value; });
     $('#go').onclick = () => runDay();
-    $('#weekBtn').onclick = openWeek;
+    $('#weekBtn').onclick = openWeek; $('#travelBtn').onclick = openTravel;
+    if (worn) {
+      const pick = (id, key) => $$('#' + id + ' .chip').forEach((c) => (c.onclick = () => { je[key] = je[key] === c.dataset.v ? '' : c.dataset.v; save(); $$('#' + id + ' .chip').forEach((x) => x.classList.toggle('on', je[key] === x.dataset.v)); }));
+      pick('jc', 'compl'); pick('jd', 'dur');
+      let jt; $('#jn').addEventListener('input', (e) => { je.note = e.target.value; clearTimeout(jt); jt = setTimeout(save, 600); });
+    }
+    mountFx($('#view'));
     $('#photoBtn').onclick = () => $('#photoIn').click();
     $('#photoIn').onchange = (e) => { PHOTO = e.target.files[0] || null; viewToday(); };
     $$('[data-wx]').forEach((b) => (b.onclick = () => { const k = b.dataset.wx; WX = WX && WX.k === k ? null : Object.assign({ k }, WXS[k]); viewToday(); }));
@@ -157,7 +181,7 @@
       <section class="sec"><div class="row"><button class="ghost" id="labBtn">Labo d'accords</button>${HAS_ASSETS ? `<button class="ghost" id="photosBtn">Ajouter mes photos (IA)</button>` : ''}</div></section>
       <section class="sec"><div class="shelf">
         ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
-        <button class="add-tile" id="addBtn">${IC.spark.replace('class="spark"', 'style="width:30px;height:30px"')}<span>Ajouter avec l'IA</span><small class="mono">texte ou photo</small></button>
+        <button class="add-tile" id="addBtn"><b>+</b><span>Ajouter avec l'IA</span><small class="mono">texte ou photo</small></button>
       </div></section>`;
     $$('[data-open]').forEach((b) => (b.onclick = () => openDetail(b.dataset.open)));
     $('#addBtn').onclick = openAdd;
@@ -214,7 +238,7 @@
       <p class="mono" style="text-transform:none;letter-spacing:0;font-size:12px">${esc(c.notes.slice(0, 5).join(' · '))}</p>
       <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
       <p class="why" id="why${i}"></p>
-      <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? '♥' : '♡'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div></article>`;
+      <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? 'Dans ma wishlist' : 'Wishlist'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div>${buyLinks(c.name, c.house)}</article>`;
   }
   async function explain(btn) {
     const r = RECS[+btn.dataset.why], out = $('#why' + btn.dataset.why);
@@ -237,9 +261,9 @@
       out.innerHTML = items.map((it) => {
         const c = { name: String(it.name || '?'), house: String(it.house || ''), family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: (it.notes || []).map(String).slice(0, 5) };
         const mate = find(it.layer_with);
-        return `<article class="rec" style="--tint:${tint(c)}">${bt(c, {})}<div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)}${it.price ? ' · ≈ ' + Math.round(+it.price) + ' €' : ''}</p><p style="margin-top:6px;font-size:14px">${esc(it.why || '')}</p><p class="mono" style="margin-top:6px;text-transform:none">${esc(it.adds || '')}${mate ? ' · avec ' + esc(mate.name) : ''}</p><button class="ghost" style="margin-top:8px" data-rw="${esc(c.name)}">♡ Wishlist</button></div></article>`;
+        return `<article class="rec" style="--tint:${tint(c)}">${bt(c, {})}<div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)}${it.price ? ' · ≈ ' + Math.round(+it.price) + ' €' : ''}</p><p style="margin-top:6px;font-size:14px">${esc(it.why || '')}</p><p class="mono" style="margin-top:6px;text-transform:none">${esc(it.adds || '')}${mate ? ' · avec ' + esc(mate.name) : ''}</p><button class="ghost" style="margin-top:8px" data-rw="${esc(c.name)}">Wishlist</button></div></article>`;
       }).join('') || '<div class="empty">Pas de résultat, reformule.</div>';
-      $$('[data-rw]', out).forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (!S.wishlist.includes(n)) S.wishlist.push(n); save(); b.textContent = '♥ Ajouté'; }));
+      $$('[data-rw]', out).forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (!S.wishlist.includes(n)) S.wishlist.push(n); save(); b.textContent = 'Ajouté'; }));
     } catch (e) {
       out.innerHTML = `<div class="empty">${e && e.code === 'not_granted' ? 'Autorise l\'IA pour cette recherche.' : 'L\'IA n\'est pas disponible dans cette vue. La sélection ci-dessous reste calculée pour toi.'}</div>`;
     }
@@ -266,7 +290,8 @@
       <div><p class="mono">ma note</p><div class="stars" id="stars">${[1, 2, 3, 4, 5].map((i) => `<button data-r="${i}" aria-label="${i} sur 5">${i <= p.rating ? '★' : '☆'}</button>`).join('')}</div></div>
       <p style="color:var(--muted)">${esc(ago(daysSince(p.id)))} · ${wears(p.id)} port${wears(p.id) > 1 ? 's' : ''}${p.price ? ' · ≈ ' + p.price + ' €' : ''}${p.price && wears(p.id) ? ' · ≈ ' + (p.price / wears(p.id)).toFixed(1).replace('.', ',') + ' € / port' : ''}</p>
       <p class="mono" style="text-transform:none;letter-spacing:0">${IC.spark} Ambiance : ${esc(FX.motifsOf(p).label)}${FX.motifsOf(p).notes.length ? ' · inspirée de ' + esc(FX.motifsOf(p).notes.join(', ')) : ''}</p>
-      <div class="row" style="gap:14px"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + ' ' + p.house + ' flacon officiel')}">Trouver l'image officielle ↗</a>${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
+      <div class="row" style="gap:14px">${buyLinks(p.name, p.house)}${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
+      ${(() => { const notes = S.log.filter((l) => l.id === p.id && (l.note || l.compl || l.dur)).slice(-3).reverse(); return notes.length ? `<div><p class="mono">Journal</p>${notes.map((l) => `<p style="font-size:14px;color:var(--muted);margin-top:6px">${esc(new Date(l.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }))} · ${esc([l.compl ? l.compl + ' compliment(s)' : '', l.dur || '', l.note || ''].filter(Boolean).join(' · '))}</p>`).join('')}</div>` : ''; })()}
       <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
     mountFx(pn);
@@ -364,13 +389,24 @@
     const row = (k) => S.collection.map((p) => `<button class="pk" data-k="${k}" data-id="${p.id}">${bt(p, { still: true })}<span>${esc(p.name)}</span></button>`).join('');
     const pn = openSheet(`<div><h2>Labo d'accords</h2><p style="color:var(--muted);margin-top:6px">Choisis deux flacons de ta collection, je te dis ce que leur mélange donne.</p></div>
       <p class="mono">flacon A</p><div class="pickrow" id="rA">${row('A')}</div><p class="mono">flacon B</p><div class="pickrow" id="rB">${row('B')}</div>
-      <button class="cta full" id="mix">${IC.spark}<span>Mélanger</span></button><div id="mixres" style="display:grid;gap:12px"></div>`);
+      <div class="row"><button class="cta" id="mix"><span>Mélanger</span></button><button class="ghost" id="cmp">Comparer</button></div><div id="mixres" style="display:grid;gap:14px"></div>`);
+    $('#cmp', pn).onclick = async () => {
+      const out = $('#mixres', pn);
+      if (!A || !B || A === B) { out.innerHTML = '<p class="mono">Choisis deux flacons différents.</p>'; return; }
+      const a = find(A), b = find(B), card = (p) => `<div>${bt(p, { still: true })}<b>${esc(p.name)}</b><small>${esc(p.house)} · ${esc(famLabel(p.family))}</small><small>${esc((p.notes || []).join(', '))}</small><div class="meter"><span>Projection</span>${dots(p.projection)}</div><div class="meter"><span>Tenue</span>${dots(p.longevity)}</div><div class="meter"><span>Poids</span>${dots(p.weight)}</div><small>${p.price ? '≈ ' + p.price + ' €' : 'prix à vérifier'} · ${wears(p.id)} port(s)</small></div>`;
+      out.innerHTML = `<div class="cmp">${card(a)}${card(b)}</div><div class="shim"></div><div class="shim" style="width:70%"></div>`;
+      try {
+        const r = await aiJson(`Compare ces deux parfums de ma collection pour m'aider à choisir, tutoiement, concret.\nA : ${a.name} (${a.house}) — ${a.family} — ${a.notes.join(', ')} — proj ${a.projection}/5, tenue ${a.longevity}/5\nB : ${b.name} (${b.house}) — ${b.family} — ${b.notes.join(', ')} — proj ${b.projection}/5, tenue ${b.longevity}/5\nRéponds UNIQUEMENT par un JSON : {"a":"quand choisir A, 14 mots max","b":"quand choisir B, 14 mots max","verdict":"1 phrase de conclusion"}`, { modelTier: 'default' });
+        out.querySelectorAll('.shim').forEach((x) => x.remove());
+        out.insertAdjacentHTML('beforeend', `<p><span class="mono">Choisis ${esc(a.name)}</span><br>${esc(r.a)}</p><p><span class="mono">Choisis ${esc(b.name)}</span><br>${esc(r.b)}</p><p style="color:var(--accent-deep)">${esc(r.verdict)}</p>`);
+      } catch (e) { out.querySelectorAll('.shim').forEach((x) => x.remove()); }
+    };
     $$('.pk', pn).forEach((b) => (b.onclick = () => { $$(`.pk[data-k="${b.dataset.k}"]`, pn).forEach((x) => x.classList.toggle('sel', x === b)); if (b.dataset.k === 'A') A = b.dataset.id; else B = b.dataset.id; }));
     $('#mix', pn).onclick = async () => {
       const out = $('#mixres', pn);
       if (!A || !B || A === B) { out.innerHTML = '<p class="mono" style="text-transform:none">Choisis deux flacons différents.</p>'; return; }
       const a = find(A), b = find(B), PA = Art.pal(a), PB = Art.pal(b);
-      out.innerHTML = `<div class="mixstage"><i class="orb" style="background:linear-gradient(135deg,${PA.b},${PB.b})"></i><div class="bwrap la">${Art.bottle(a, { level: .6 })}</div><div class="bwrap lb">${Art.bottle(b, { level: .6 })}</div></div><div class="shim"></div><div class="shim" style="width:60%"></div>`;
+      out.innerHTML = `<div class="mixstage"><i class="orb" style="background:linear-gradient(135deg,${PA.b},${PB.b})"></i>${bt(a, { still: true, cls: 'la' })}${bt(b, { still: true, cls: 'lb' })}</div><div class="shim"></div><div class="shim" style="width:60%"></div>`;
       $('#mix', pn).disabled = true;
       let r;
       try {
@@ -385,11 +421,41 @@
     };
   }
 
+  // ---------- Mode voyage ----------
+  function openTravel() {
+    const pn = openSheet(`<div><h2>Mode voyage</h2><p style="color:var(--muted);margin-top:6px">Dis-moi où tu vas et ce que tu y fais. Je choisis les 2 ou 3 flacons à emporter.</p></div>
+      <textarea id="ttxt" rows="3" placeholder="5 jours à Londres en novembre, réunions le jour, dîners le soir…"></textarea>
+      <button class="cta full" id="tgo"><span>Faire ma valise</span></button><div id="tres" style="display:grid;gap:12px"></div>`);
+    $('#tgo', pn).onclick = async () => {
+      const out = $('#tres', pn), txt = $('#ttxt', pn).value.trim(); if (!txt) { $('#ttxt', pn).focus(); return; }
+      out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#tgo', pn).disabled = true;
+      try {
+        const j = await aiJson(`Tu es un nez de parfumerie. Je voyage. Choisis 2 ou 3 parfums de ma collection à emporter (couvrir jour, soir, météo du lieu et de la saison), sans redondance.\nMa collection :\n${colLines()}\nVoyage : """${txt}"""\nRéponds UNIQUEMENT par un JSON : {"picks":[{"id":"","when":"quand le porter, 8 mots max","why":"pourquoi, 1 phrase"}],"tip":"conseil de bagage (format voyage, protection du flacon), 1 phrase"}. N'utilise que les id fournis.`, { modelTier: 'default' });
+        const rows = (j.picks || []).map((x) => ({ p: find(x.id), when: x.when, why: x.why })).filter((r) => r.p).slice(0, 3);
+        out.innerHTML = rows.map((r, i) => `<div class="wk" style="--i:${i}">${bt(r.p, { still: true })}<div><span class="d">${esc(r.when || '')}</span><br><b>${esc(r.p.name)}</b><p>${esc(r.why || '')}</p></div></div>`).join('') + (j.tip ? `<p class="mono" style="text-transform:none;letter-spacing:0;font-size:13px">${esc(j.tip)}</p>` : '');
+      } catch (e) { out.innerHTML = `<div class="empty">${e && e.code === 'not_granted' ? 'Autorise l\'IA pour préparer ta valise.' : 'L\'IA n\'est pas disponible dans cette vue.'}</div>`; }
+      $('#tgo', pn).disabled = false;
+    };
+  }
+
+  // ---------- Météo automatique (fonctionne hors claude.ai, sinon repli sur les boutons) ----------
+  async function autoWeather() {
+    try {
+      if (!navigator.geolocation) return;
+      const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, { timeout: 6000 }));
+      const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current=apparent_temperature,weather_code&timezone=auto`);
+      const c = (await r.json()).current, t = Math.round(c.apparent_temperature);
+      WX = { k: 'auto', l: 'Météo actuelle', t, rain: (c.weather_code >= 51 && c.weather_code <= 67) || (c.weather_code >= 80 && c.weather_code <= 99) };
+      AUTOW = t + '° · ' + (WX.rain ? 'pluie' : 'sec');
+      if (tab === 'today' && $('#story').hidden && $('#sheet').hidden) viewToday();
+    } catch (e) { /* bloqué ou refusé : les boutons de météo restent */ }
+  }
+
   // ---------- Planning de la semaine ----------
   function openWeek() {
     const pn = openSheet(`<div><h2>Ta semaine, parfumée</h2><p style="color:var(--muted);margin-top:6px">Décris ta semaine en vrac. Je répartis les parfums pour ne jamais répéter et toujours coller au jour.</p></div>
       <textarea id="wtxt" rows="4" placeholder="Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, samedi mariage…"></textarea>
-      <button class="cta full" id="wgo">${IC.spark}<span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"></div>`);
+      <button class="cta full" id="wgo"><span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"></div>`);
     $('#wgo', pn).onclick = async () => {
       const out = $('#wres', pn), txt = $('#wtxt', pn).value.trim();
       const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() + i); return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); });
@@ -474,7 +540,7 @@
   function showLoading() {
     const ps = [...S.collection].sort(() => Math.random() - 0.5).slice(0, 3);
     setHue(ps[0]); FX.attach($('#fx'), ps[0], { dark: true, density: .8 });
-    $('#stage').innerHTML = `<div class="load-orbit center">${ps.map((p, i) => `<div class="bwrap" style="animation-delay:${-i * 1.83}s">${Art.bottle(p, {})}</div>`).join('')}</div>
+    $('#stage').innerHTML = `<div class="load-orbit center">${ps.map((p, i) => bt(p, { still: true, style: `animation-delay:${-i * 2.33}s` })).join('')}</div>
       <div class="msgs center">${['Je lis ta journée…', 'Je sens ton étagère…', 'Je compose l\'accord…'].map((m, i) => `<span style="animation-delay:${i * 2.1}s">${m}</span>`).join('')}</div>`;
     $('#prog').innerHTML = '';
   }
@@ -490,7 +556,7 @@
     sc.push({ label: 'pourquoi lui', dur: clamp(3800 + nW(R.story) * 280, 6500, 15000), hue: p, html: () => `<p class="mono rise">pourquoi lui</p><p class="lead">${words(R.story, 250)}</p>${R.avoid ? `<p class="soft rise" style="--d:2600">À éviter aujourd'hui : ${esc(R.avoid)}</p>` : ''}` });
     R.layers.forEach((l) => sc.push({ label: 'layering', dur: 10000, hue: p, fx: [p, l.p], html: () => {
       const steps = String(l.how).split(/(?<=[.!])\s+/).filter(Boolean).slice(0, 3);
-      return `<p class="mono rise">accord · ${'●'.repeat(l.score)}${'○'.repeat(5 - l.score)}</p><div class="merge"><i class="orb" style="background:linear-gradient(135deg,${Art.pal(p).b},${Art.pal(l.p).b})"></i><div class="bwrap la">${Art.bottle(p, { level: .6 })}</div><div class="bwrap lb">${Art.bottle(l.p, { level: .6 })}</div><span class="plus">+</span></div><h2 class="rise" style="--d:1500;font-size:clamp(26px,8vw,40px)">${esc(p.name)} <span style="opacity:.6">+</span> ${esc(l.p.name)}</h2><p class="lead rise" style="--d:1900;font-size:19px">${esc(l.effect)}</p><div class="steps">${steps.map((s, i) => `<div class="rise" style="--d:${2500 + i * 350}"><b>${i + 1}</b><span>${esc(s)}</span></div>`).join('')}</div>`;
+      return `<p class="mono rise">accord · ${'●'.repeat(l.score)}${'○'.repeat(5 - l.score)}</p><div class="merge"><i class="orb" style="background:linear-gradient(135deg,${Art.pal(p).b},${Art.pal(l.p).b})"></i>${bt(p, { still: true, cls: 'la' })}${bt(l.p, { still: true, cls: 'lb' })}<span class="plus">+</span></div><h2 class="rise" style="--d:1500;font-size:clamp(26px,8vw,40px)">${esc(p.name)} <span style="opacity:.6">+</span> ${esc(l.p.name)}</h2><p class="lead rise" style="--d:1900;font-size:19px">${esc(l.effect)}</p><div class="steps">${steps.map((s, i) => `<div class="rise" style="--d:${2500 + i * 350}"><b>${i + 1}</b><span>${esc(s)}</span></div>`).join('')}</div>`;
     } }));
     if (R.alts.length) sc.push({ label: 'autres options', dur: 0, html: () => `<h2 class="rise">Ou plutôt…</h2><div style="display:grid;gap:10px">${R.alts.map((x, i) => `<button class="altrow rise" style="--d:${250 + i * 160}" data-alt="${x.p.id}">${bt(x.p, { still: true })}<span><b>${esc(x.p.name)}</b><small>${esc(x.line)}</small></span><span aria-hidden="true">→</span></button>`).join('')}</div>` });
     const wornNow = S.today && S.today.date === today() && S.today.pickId === p.id;
@@ -533,7 +599,7 @@
   }
   function wear(btn) {
     const p = ST.R.pick;
-    if (!(S.today && S.today.date === today() && S.today.pickId === p.id)) { S.log.push({ id: p.id, date: today() }); S.log = S.log.slice(-90); S.today = { date: today(), pickId: p.id }; save(); }
+    if (!(S.today && S.today.date === today() && S.today.pickId === p.id)) { todayEntry(p.id); S.log = S.log.slice(-90); S.today = { date: today(), pickId: p.id }; save(); }
     btn.textContent = 'Porté aujourd\'hui ✓'; petals(p); try { navigator.vibrate && navigator.vibrate([14, 40, 20]); } catch (e) { /* pas de vibration */ }
     setTimeout(() => { if (ST) closeStory(); }, REDUCED ? 600 : 2100);
   }
@@ -562,6 +628,7 @@
   render();
   initStore();
   initAI();
+  autoWeather();
   const sp = $('#splash');
   if (sp) { const kill = () => sp.remove(); sp.addEventListener('click', kill); setTimeout(kill, REDUCED ? 500 : 3000); }
 })();

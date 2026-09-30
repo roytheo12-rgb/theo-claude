@@ -3,7 +3,7 @@ d = pathlib.Path(__file__).parent
 up = d.parent
 shell = f"""<title>Sillage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:opsz,wght@9..40,400..700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap">
 <style>
 {(d/'style.css').read_text()}
 </style>
@@ -17,7 +17,7 @@ shell = f"""<title>Sillage</title>
   <button data-tab="shelf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="7" y="10" width="10" height="11" rx="2.5"/><path d="M10 10V7.5h4V10M9.5 3.5h5v4h-5z"/></svg>étagère</button>
   <button data-tab="discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2 5.6-5.6 2 2-5.6z"/></svg>découvrir</button>
 </nav>
-<div id="splash" role="presentation"><div><div class="lg">{"".join(f'<span style="--i:{i}">{c}</span>' for i,c in enumerate("sillage"))}</div><svg viewBox="0 0 200 14" fill="none" stroke="#ff8a6e" stroke-width="2.2" stroke-linecap="round"><path d="M0 7Q12 0 25 7T50 7T75 7T100 7T125 7T150 7T175 7T200 7"/></svg><div class="tg">ton parfum, ta journée</div></div></div>
+<div id="splash" role="presentation"><div><div class="lg">{"".join(f'<span style="--i:{i}">{c}</span>' for i,c in enumerate("sillage"))}</div><svg viewBox="0 0 200 14" fill="none" stroke="#cfae72" stroke-width="2.2" stroke-linecap="round"><path d="M0 7Q12 0 25 7T50 7T75 7T100 7T125 7T150 7T175 7T200 7"/></svg><div class="tg">Cabinet de parfumerie</div></div></div>
 <div id="story" hidden></div>
 <div id="sheet" hidden></div>
 <script>

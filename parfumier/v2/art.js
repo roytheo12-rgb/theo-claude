@@ -1,7 +1,7 @@
 // Flacons SVG animés. Chaque maison a sa silhouette (bouchon, étiquette, verre) dessinée à la main,
 // la couleur du jus vient de la famille olfactive. Aucun vert : les teintes vertes sont déportées.
 (function (root) {
-  const BASE = { agrumes: 40, aquatique: 206, aromatique: 226, vert: 194, floral: 326, fruité: 352, gourmand: 18, ambré: 38, boisé: 24, épicé: 6, cuir: 8, musqué: 340, oud: 272 };
+  const BASE = { agrumes: 40, aquatique: 204, aromatique: 214, vert: 198, floral: 8, fruité: 356, gourmand: 20, ambré: 34, boisé: 26, épicé: 4, cuir: 12, musqué: 28, oud: 292 };
   const SAT = { musqué: 60, cuir: 48, boisé: 44, oud: 50, ambré: 80, gourmand: 66, épicé: 82 };
   const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   const hash = (s) => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
@@ -11,7 +11,7 @@
   function pal(p) {
     const f = p.family;
     const h = noGreen((BASE[f] != null ? BASE[f] : 300) + (hash(p.name) % 44) - 22);
-    const s = SAT[f] != null ? SAT[f] : 72;
+    const s = Math.round((SAT[f] != null ? SAT[f] : 72) * 0.85);
     return { h, s, a: `hsl(${h} ${s}% 78%)`, b: `hsl(${h} ${Math.min(92, s + 6)}% 60%)`, c: `hsl(${h} ${Math.min(92, s + 8)}% 34%)`, d: `hsl(${h} ${Math.max(18, s - 22)}% 13%)` };
   }
   const famColor = (f) => `hsl(${noGreen(BASE[f] != null ? BASE[f] : 300)} ${SAT[f] != null ? SAT[f] : 72}% 62%)`;
@@ -83,7 +83,7 @@
         mist += `<circle class="mist" cx="${sh.nz[0] + 12}" cy="${sh.nz[1] + 6}" r="${r}" fill="${P.a}" style="--dx:${dx}px;--dy:${dy}px;animation-delay:${dl}s"/>`;
       }
     }
-    const bub = [0, 1, 2].map((i) => `<circle class="lb" cx="${sh.x[0] + 12 + i * 15}" cy="${sh.bottom - 8}" r="${1.2 + i * 0.5}" fill="#fff" style="animation-delay:${i * 1.4}s;--rise:${-(sh.bottom - y - 14)}px"/>`).join('');
+    const bub = [0, 1, 2].map((i) => `<circle class="lbub" cx="${sh.x[0] + 12 + i * 15}" cy="${sh.bottom - 8}" r="${1.2 + i * 0.5}" fill="#fff" style="animation-delay:${i * 1.4}s;--rise:${-(sh.bottom - y - 14)}px"/>`).join('');
     return `<svg class="bt" viewBox="-6 -8 132 214" role="img" aria-label="Flacon ${String(p.name).replace(/"/g, '')}">
 <defs>
 <linearGradient id="${id}l" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${liquidA}"/><stop offset=".5" stop-color="${liquidB}"/><stop offset="1" stop-color="${liquidC}"/></linearGradient>

@@ -36,7 +36,7 @@
     ['Burberry Her', 'Burberry', 'fruité', ['mûre', 'framboise', 'jasmin', 'musc'], 4, 3, 3, 90],
     ['Eau Sauvage', 'Dior', 'agrumes', ['citron', 'basilic', 'hédione', 'vétiver', 'mousse de chêne'], 2, 3, 1, 100],
     ['Fahrenheit', 'Dior', 'cuir', ['violette', 'cuir', 'muscade', 'cèdre'], 4, 4, 4, 90],
-    ['Jazz Club', 'Maison Margiela', 'ambré', ['rhum', 'tabac', 'vanille', 'cuir', 'poivre rose'], 3, 4, 4, 150],
+    ['Jazz Club', 'Maison Margiela', 'ambré', ['poivre rose', 'citron', 'néroli', 'rhum', 'sauge sclarée', 'vétiver', 'styrax', 'tabac', 'vanille'], 3, 4, 4, 135],
     ['By the Fireplace', 'Maison Margiela', 'ambré', ['marron chaud', 'clou de girofle', 'vanille', 'fumée', 'gaïac'], 3, 4, 5, 150],
     ['Lazy Sunday Morning', 'Maison Margiela', 'musqué', ['linge propre', 'iris', 'musc blanc', 'poire', 'fleur d\'oranger'], 2, 3, 1, 150],
     ['Invictus', 'Rabanne', 'aquatique', ['pamplemousse', 'notes marines', 'laurier', 'gaïac', 'ambre gris'], 4, 3, 2, 90],
@@ -73,7 +73,7 @@
     ['Vétiver Extraordinaire', 'Frédéric Malle', 'boisé', ['vétiver', 'pamplemousse', 'cèdre'], 3, 4, 3, 250],
     ['Musc Ravageur', 'Frédéric Malle', 'musqué', ['bergamote', 'lavande', 'clou de girofle', 'musc', 'vanille', 'santal'], 4, 5, 4, 250],
     ['Delina', 'Parfums de Marly', 'floral', ['rose', 'litchi', 'rhubarbe', 'musc', 'vanille'], 4, 4, 3, 290],
-    ['Naxos', 'Xerjoff', 'gourmand', ['lavande', 'miel', 'tabac', 'vanille', 'cannelle'], 4, 5, 4, 230],
+    ['Naxos', 'Xerjoff', 'gourmand', ['bergamote', 'citron', 'lavande', 'jasmin sambac', 'cannelle', 'miel', 'cachemire', 'tabac', 'fève tonka', 'vanille'], 4, 5, 4, 230],
     ['Side Effect', 'Initio', 'gourmand', ['rhum', 'tabac', 'vanille', 'cannelle', 'musc'], 4, 5, 5, 260],
     ['Reflection Man', 'Amouage', 'boisé', ['romarin', 'néroli', 'jasmin', 'iris', 'santal', 'cèdre'], 3, 4, 3, 290],
     ['Interlude Man', 'Amouage', 'épicé', ['poivre', 'encens', 'oud', 'ambre', 'patchouli'], 5, 5, 5, 300],
@@ -82,6 +82,9 @@
     ['Rose 31', 'Le Labo', 'épicé', ['rose', 'cumin', 'poivre', 'cèdre', 'vétiver', 'ambre'], 3, 4, 4, 220],
     ['Thé Noir 29', 'Le Labo', 'boisé', ['thé noir', 'figue', 'tabac', 'cèdre', 'vétiver'], 3, 4, 3, 220],
     ['Oud Satin Mood', 'Maison Francis Kurkdjian', 'oud', ['oud', 'rose', 'violette', 'vanille', 'benjoin'], 5, 5, 5, 300],
+    ['Bois Impérial', 'Essential Parfums', 'boisé', ['basilic thaï', 'poivre Timut', 'vétiver d\'Haïti', 'Georgywood', 'Akigalawood'], 4, 4, 3, 85],
+    ['Myrrh & Tonka', 'Jo Malone', 'ambré', ['lavande', 'myrrhe', 'fève tonka', 'vanille'], 3, 4, 4, 165],
+    ['Sydney', 'Contes de Parfums', 'aquatique', ['bergamote', 'ananas', 'anis', 'accord marin', 'jasmin', 'rose', 'poivre rose', 'muscade', 'cèdre', 'amberwood', 'mousse de chêne', 'musc'], 3, 3, 2, 0],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
