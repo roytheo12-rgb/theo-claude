@@ -70,7 +70,7 @@
   const active = new Set(); let raf = 0, last = 0;
   function colors(P, dark) {
     return dark
-      ? { f1: P.a, f2: P.b, line: 'rgba(255,255,255,.75)', smoke: '255,255,255', smokeA: .12, ember: '255,140,60', gold: '#ffe9ad' }
+      ? { f1: P.a, f2: P.b, line: 'rgba(255,255,255,.75)', smoke: '255,255,255', smokeA: .12, ember: '255,140,60', gold: '#f4efe6' }
       : { f1: P.b, f2: P.c, line: P.c, smoke: '90,70,120', smokeA: .1, ember: '255,120,60', gold: P.c };
   }
   function seed(inst) {

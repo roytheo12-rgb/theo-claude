@@ -58,7 +58,7 @@
     ['L\'Homme', 'Prada', 'musqué', ['iris', 'néroli', 'ambre', 'patchouli'], 2, 3, 2, 95],
     ['Gypsy Water', 'Byredo', 'boisé', ['bergamote', 'citron', 'genièvre', 'encens', 'pin', 'vanille', 'santal'], 3, 3, 3, 165],
     ['Portrait of a Lady', 'Frédéric Malle', 'floral', ['rose', 'patchouli', 'encens', 'cannelle', 'musc'], 5, 5, 5, 230],
-    ['Black Afgano', 'Nasomatto', 'oud', ['cannabis', 'oud', 'café', 'résine', 'tabac'], 5, 5, 5, 190],
+    ['Black Afgano', 'Nasomatto', 'oud', ['café', 'tabac', 'oud', 'encens', 'résine', 'cannabis'], 5, 5, 5, 130],
     ['Club de Nuit Intense Man', 'Armaf', 'boisé', ['citron', 'ananas', 'bouleau', 'musc', 'ambre gris'], 4, 4, 3, 35],
     ['Khamrah', 'Lattafa', 'gourmand', ['cannelle', 'datte', 'praliné', 'vanille', 'fève tonka'], 4, 5, 5, 40],
     ['Yara', 'Lattafa', 'gourmand', ['orchidée', 'héliotrope', 'vanille', 'musc', 'fève tonka'], 3, 4, 3, 30],
@@ -80,11 +80,14 @@
     ['Aqua Universalis', 'Maison Francis Kurkdjian', 'agrumes', ['citron', 'bergamote', 'fleur d\'oranger', 'musc'], 3, 3, 1, 190],
     ['Bergamote 22', 'Le Labo', 'agrumes', ['bergamote', 'pamplemousse', 'petit grain', 'musc', 'ambre'], 3, 3, 1, 220],
     ['Rose 31', 'Le Labo', 'épicé', ['rose', 'cumin', 'poivre', 'cèdre', 'vétiver', 'ambre'], 3, 4, 4, 220],
-    ['Thé Noir 29', 'Le Labo', 'boisé', ['thé noir', 'figue', 'tabac', 'cèdre', 'vétiver'], 3, 4, 3, 220],
+    ['Thé Noir 29', 'Le Labo', 'boisé', ['bergamote', 'figue', 'feuille de laurier', 'thé noir', 'épices', 'cèdre', 'vétiver', 'musc'], 3, 4, 3, 290],
     ['Oud Satin Mood', 'Maison Francis Kurkdjian', 'oud', ['oud', 'rose', 'violette', 'vanille', 'benjoin'], 5, 5, 5, 300],
     ['Bois Impérial', 'Essential Parfums', 'boisé', ['basilic thaï', 'poivre Timut', 'vétiver d\'Haïti', 'Georgywood', 'Akigalawood'], 4, 4, 3, 85],
     ['Myrrh & Tonka', 'Jo Malone', 'ambré', ['lavande', 'myrrhe', 'fève tonka', 'vanille'], 3, 4, 4, 165],
     ['Sydney', 'Contes de Parfums', 'aquatique', ['bergamote', 'ananas', 'anis', 'accord marin', 'jasmin', 'rose', 'poivre rose', 'muscade', 'cèdre', 'amberwood', 'mousse de chêne', 'musc'], 3, 3, 2, 0],
+    ['724', 'Maison Francis Kurkdjian', 'musqué', ['bergamote', 'aldéhydes', 'pois de senteur', 'jasmin d\'Égypte', 'seringat', 'musc blanc', 'santal'], 3, 4, 2, 170],
+    ['The Musc', 'Essential Parfums', 'musqué', ['gingembre rouge', 'lavandin', 'cire d\'abeille', 'santal', 'musc blanc'], 3, 4, 3, 82],
+    ['Ella K', 'Ella K Parfums', 'ambré', [], 3, 4, 3, 0],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
