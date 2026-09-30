@@ -8,7 +8,7 @@
     ['Sauvage Elixir', 'Dior', 'épicé', ['cannelle', 'cardamome', 'lavande', 'réglisse', 'santal'], 5, 5, 5, 155],
     ['Aventus', 'Creed', 'boisé', ['ananas', 'bouleau', 'musc', 'mousse de chêne', 'bergamote'], 4, 4, 3, 380],
     ['Layton', 'Parfums de Marly', 'ambré', ['pomme', 'lavande', 'vanille', 'cardamome', 'santal'], 4, 5, 4, 250],
-    ['Tobacco Vanille', 'Tom Ford', 'gourmand', ['tabac', 'vanille', 'épices', 'fruits secs', 'cacao'], 4, 5, 5, 280],
+    ['Tobacco Vanille', 'Tom Ford', 'gourmand', ['feuille de tabac', 'épices', 'vanille', 'cacao', 'fève tonka', 'fleur de tabac', 'fruits secs', 'bois'], 4, 5, 5, 260],
     ['Terre d\'Hermès', 'Hermès', 'boisé', ['orange', 'silex', 'vétiver', 'poivre', 'cèdre'], 3, 4, 3, 95],
     ['Light Blue', 'Dolce & Gabbana', 'agrumes', ['citron', 'pomme', 'cèdre', 'musc'], 3, 3, 1, 85],
     ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['jasmin', 'safran', 'ambre gris', 'bois ambré', 'cèdre'], 5, 5, 4, 270],
@@ -57,7 +57,7 @@
     ['Legend', 'Montblanc', 'aromatique', ['bergamote', 'lavande', 'ananas', 'fève tonka', 'mousse de chêne'], 3, 3, 2, 55],
     ['L\'Homme', 'Prada', 'musqué', ['iris', 'néroli', 'ambre', 'patchouli'], 2, 3, 2, 95],
     ['Gypsy Water', 'Byredo', 'boisé', ['bergamote', 'citron', 'genièvre', 'encens', 'pin', 'vanille', 'santal'], 3, 3, 3, 165],
-    ['Portrait of a Lady', 'Frédéric Malle', 'floral', ['rose', 'patchouli', 'encens', 'cannelle', 'musc'], 5, 5, 5, 230],
+    ['Portrait of a Lady', 'Frédéric Malle', 'floral', ['cassis', 'framboise', 'clou de girofle', 'rose de Turquie', 'cannelle', 'patchouli', 'santal', 'encens', 'benjoin', 'ambroxan', 'musc blanc'], 5, 5, 5, 235],
     ['Black Afgano', 'Nasomatto', 'oud', ['café', 'tabac', 'oud', 'encens', 'résine', 'cannabis'], 5, 5, 5, 130],
     ['Club de Nuit Intense Man', 'Armaf', 'boisé', ['citron', 'ananas', 'bouleau', 'musc', 'ambre gris'], 4, 4, 3, 35],
     ['Khamrah', 'Lattafa', 'gourmand', ['cannelle', 'datte', 'praliné', 'vanille', 'fève tonka'], 4, 5, 5, 40],
@@ -71,7 +71,7 @@
     ['Ambre Sultan', 'Serge Lutens', 'ambré', ['ambre', 'myrrhe', 'coriandre', 'benjoin', 'vanille'], 4, 5, 5, 140],
     ['Fille en Aiguilles', 'Serge Lutens', 'boisé', ['pin', 'encens', 'miel', 'ciste'], 4, 4, 4, 130],
     ['Vétiver Extraordinaire', 'Frédéric Malle', 'boisé', ['vétiver', 'pamplemousse', 'cèdre'], 3, 4, 3, 250],
-    ['Musc Ravageur', 'Frédéric Malle', 'musqué', ['bergamote', 'lavande', 'clou de girofle', 'musc', 'vanille', 'santal'], 4, 5, 4, 250],
+    ['Musc Ravageur', 'Frédéric Malle', 'ambré', ['bergamote', 'mandarine', 'lavande', 'ambre', 'vanille', 'musc', 'santal'], 4, 5, 4, 260],
     ['Delina', 'Parfums de Marly', 'floral', ['rose', 'litchi', 'rhubarbe', 'musc', 'vanille'], 4, 4, 3, 290],
     ['Naxos', 'Xerjoff', 'gourmand', ['bergamote', 'citron', 'lavande', 'jasmin sambac', 'cannelle', 'miel', 'cachemire', 'tabac', 'fève tonka', 'vanille'], 4, 5, 4, 230],
     ['Side Effect', 'Initio', 'gourmand', ['rhum', 'tabac', 'vanille', 'cannelle', 'musc'], 4, 5, 5, 260],
@@ -102,6 +102,7 @@
     ['Ambre Russe', 'Parfum d\'Empire', 'ambré', ['vodka', 'champagne', 'thé noir fumé', 'coriandre', 'cannelle', 'ambre gris', 'vanille', 'labdanum', 'cuir de Russie'], 4, 5, 5, 130],
     ['Tam Dao Eau de Parfum', 'Diptyque', 'boisé', ['cyprès d\'Italie', 'ambre gris', 'santal', 'cèdre', 'ambre', 'bois de rose', 'musc blanc'], 3, 4, 3, 190],
     ['Fève Nectar', 'Place de la Rêverie', 'gourmand', ['bergamote', 'fleur d\'oranger', 'vanille', 'cacao', 'chocolat', 'fève tonka', 'benjoin', 'ambrette', 'musc'], 3, 5, 4, 245],
+    ['Jasmin Rouge', 'Tom Ford', 'floral', ['poivre noir', 'poivre blanc', 'sauge sclarée', 'jasmin sambac', 'ylang-ylang', 'labdanum', 'ambre'], 4, 4, 4, 240],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
