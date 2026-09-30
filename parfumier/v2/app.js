@@ -22,6 +22,7 @@
 
   // ---------- Données ----------
   const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  const SEED7 = [['Stellar Times', 4], ['Radical Rose', 4]];
   const SEED6 = [['Musc Ravageur', 4], ['Portrait of a Lady', 4], ['Jasmin Rouge', 4], ['Tobacco Vanille', 5]];
   const SEED5 = [['Guidance 46', 4], ['Tuxedo', 4], ['Ambre Russe', 4], ['Tam Dao Eau de Parfum', 4], ['Fève Nectar', 4]];
   const SEED4 = [['Mojave Ghost Absolu', 4], ['Buongiorno Dolce Far Niente', 4], ['Straight to Heaven', 4], ['Nasaj', 4], ['Néroli Hasbaya', 4]];
@@ -35,10 +36,11 @@
     'Mojave Ghost Absolu': { s: 'img/mojave.webp', nz: 8 }, 'Buongiorno Dolce Far Niente': { s: 'img/buongiorno.webp', nz: 4 }, 'Straight to Heaven': { s: 'img/kilian.webp', nz: 3 }, 'Nasaj': { s: 'img/nasaj.webp', nz: 3 }, 'Néroli Hasbaya': { s: 'img/hasbaya.webp', nz: 6 },
     'Guidance 46': { s: 'img/guidance.webp', nz: 3 }, 'Tuxedo': { s: 'img/tuxedo.webp', nz: 2 }, 'Ambre Russe': { s: 'img/ambrerusse.webp', nz: 1 }, 'Tam Dao Eau de Parfum': { s: 'img/tamdao.webp', nz: 8 }, 'Fève Nectar': { s: 'img/feve.webp', nz: 2 },
     'Musc Ravageur': { s: 'img/muscrav.webp', nz: 10 }, 'Portrait of a Lady': { s: 'img/portrait.webp', nz: 10 }, 'Jasmin Rouge': { s: 'img/jasmin.webp', nz: 3 }, 'Tobacco Vanille': { s: 'img/tobacco.webp', nz: 3 },
+    'Stellar Times': { s: 'img/stellar.webp', nz: 36 }, 'Radical Rose': { s: 'img/radical.webp', nz: 3 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 6, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: 7, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   function migrate() {
     S.walks = S.walks || [];
@@ -49,6 +51,7 @@
     if ((S.seedV || 1) < 4) { seedList(SEED4).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 4; }
     if ((S.seedV || 1) < 5) { seedList(SEED5).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 5; }
     if ((S.seedV || 1) < 6) { seedList(SEED6).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 6; }
+    if ((S.seedV || 1) < 7) { seedList(SEED7).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 7; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }

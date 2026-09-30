@@ -103,6 +103,8 @@
     ['Tam Dao Eau de Parfum', 'Diptyque', 'boisé', ['cyprès d\'Italie', 'ambre gris', 'santal', 'cèdre', 'ambre', 'bois de rose', 'musc blanc'], 3, 4, 3, 190],
     ['Fève Nectar', 'Place de la Rêverie', 'gourmand', ['bergamote', 'fleur d\'oranger', 'vanille', 'cacao', 'chocolat', 'fève tonka', 'benjoin', 'ambrette', 'musc'], 3, 5, 4, 245],
     ['Jasmin Rouge', 'Tom Ford', 'floral', ['poivre noir', 'poivre blanc', 'sauge sclarée', 'jasmin sambac', 'ylang-ylang', 'labdanum', 'ambre'], 4, 4, 4, 240],
+    ['Stellar Times', 'Louis Vuitton', 'ambré', ['ambre', 'fleur d\'oranger', 'baume du Pérou'], 4, 5, 4, 0],
+    ['Radical Rose', 'Matière Première', 'floral', ['safran', 'poivre rose', 'bergamote', 'rose centifolia', 'rose de Turquie', 'patchouli', 'labdanum', 'santal'], 4, 4, 3, 0],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
