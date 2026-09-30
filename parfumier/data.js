@@ -20,7 +20,7 @@
     ['Y EDP', 'Yves Saint Laurent', 'aromatique', ['sauge', 'pomme', 'cèdre', 'fève tonka', 'genièvre'], 4, 4, 3, 105],
     ['La Nuit de l\'Homme', 'Yves Saint Laurent', 'épicé', ['cardamome', 'lavande', 'cèdre', 'vétiver'], 3, 3, 3, 95],
     ['Good Girl', 'Carolina Herrera', 'gourmand', ['tubéreuse', 'cacao', 'fève tonka', 'amande'], 4, 4, 4, 110],
-    ['La Vie est Belle', 'Lancôme', 'gourmand', ['iris', 'praliné', 'vanille', 'patchouli'], 4, 4, 4, 100],
+    ['La Vie est Belle', 'Lancôme', 'gourmand', ['bergamote', 'poivre rose', 'framboise', 'rose de Damas', 'ylang-ylang', 'iris', 'patchouli', 'vanille', 'jasmin sambac', 'fleur d\'oranger', 'sucre filé'], 4, 4, 4, 105],
     ['Coco Mademoiselle', 'Chanel', 'floral', ['orange', 'rose', 'jasmin', 'patchouli', 'vétiver'], 4, 4, 3, 120],
     ['N°5 EDP', 'Chanel', 'floral', ['aldéhydes', 'ylang-ylang', 'rose', 'jasmin', 'vanille'], 3, 4, 3, 130],
     ['Chance Eau Tendre', 'Chanel', 'fruité', ['pamplemousse', 'coing', 'jasmin', 'musc'], 3, 3, 2, 120],
@@ -121,6 +121,10 @@
     ['Bleu de Chanel EDT', 'Chanel', 'boisé', ['citron', 'pamplemousse', 'poivre rose', 'menthe', 'gingembre', 'muscade', 'jasmin', 'encens', 'vétiver', 'cèdre', 'santal', 'labdanum'], 3, 3, 2, 115],
     ['Pour un Homme de Caron', 'Caron', 'aromatique', ['lavande', 'lavandin', 'rose de Turquie', 'vanille', 'ambre', 'musc'], 3, 4, 3, 80],
     ['Flacon ailé', '', 'ambré', [], 3, 4, 3, 0],
+    ['Aqua Allegoria Rosa Verde', 'Guerlain', 'vert', ['concombre', 'bergamote', 'menthe', 'rose', 'accord poire', 'feuille de violette', 'iris', 'musc', 'cyprès'], 2, 2, 1, 145],
+    ['Scandal By Night', 'Jean Paul Gaultier', 'gourmand', ['miel', 'tubéreuse', 'santal', 'fève tonka', 'vanille'], 4, 5, 4, 110],
+    ['Paradoxe Intense', 'Prada', 'floral', ['poire', 'néroli', 'bergamote', 'mousse', 'jasmin', 'Ambrofix', 'Serenolide', 'ambre', 'vanille Bourbon'], 4, 4, 3, 115],
+    ['Miss Dior Essence', 'Dior', 'floral', ['accord confiture de mûre', 'fleur de sureau', 'jasmin', 'accord chêne'], 4, 5, 3, 115],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
