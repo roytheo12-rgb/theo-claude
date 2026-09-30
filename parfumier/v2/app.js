@@ -149,6 +149,7 @@
 
   // ---------- État de session ----------
   let REFINE = false;
+  const PRESENT = /[?&]present=1/.test(location.search); // mode présentation : sans bandeau de démo ni carte de vente
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
   const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false };
@@ -231,7 +232,7 @@
     $('#view').innerHTML = `
       <section class="hero">
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
-        ${window.SillageDemo ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
+        ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
@@ -978,7 +979,7 @@
     at(8600, () => show('os4'));
   }
 
-  const sellCard = () => (window.SillageDemo ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine, le voyage et les balades.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
+  const sellCard = () => (window.SillageDemo && !PRESENT ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine, le voyage et les balades.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
   document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('[data-sell]') && window.SillageDemo) window.SillageDemo.upsell('cta'); });
   window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
 
