@@ -110,6 +110,11 @@
     ['Imagination', 'Louis Vuitton', 'agrumes', ['bergamote', 'orange de Sicile', 'cédrat', 'néroli', 'gingembre', 'cannelle', 'ambroxan', 'thé noir', 'bois de gaïac', 'oliban'], 4, 4, 2, 345],
     ['Néroli Amara', 'Van Cleef & Arpels', 'agrumes', ['citron d\'Italie', 'mandarine', 'bergamote', 'poivre rose', 'cyprès', 'fleur d\'oranger'], 2, 3, 1, 200],
     ['Ombre Nomade', 'Louis Vuitton', 'oud', ['oud', 'benjoin', 'oliban', 'framboise'], 5, 5, 5, 0],
+    ['Acne Studios', 'Frédéric Malle', 'floral', ['aldéhydes', 'rose', 'violette', 'fleur d\'oranger', 'pêche', 'vanille', 'santal', 'encens', 'musc'], 4, 5, 3, 300],
+    ['Purpose', 'Amouage', 'boisé', ['piment de la Jamaïque', 'bergamote', 'oliban', 'poivre rose', 'papyrus', 'rose', 'santal', 'vétiver', 'Akigalawood', 'safran', 'daim'], 4, 5, 4, 365],
+    ['Ambert Sunset', 'Librery', 'ambré', ['abricot', 'safran', 'osmanthus', 'rose', 'iris pallida', 'jasmin', 'cuir', 'ambre', 'santal'], 4, 5, 4, 170],
+    ['Ambre Papier', 'Atelier Materi', 'ambré', ['poivre noir', 'piment de la Jamaïque', 'mandarine rouge', 'jasmin', 'myrrhe', 'maté', 'safran', 'benjoin de Siam', 'vétiver d\'Haïti', 'fève tonka'], 3, 5, 4, 254],
+    ['Ganymede', 'Marc-Antoine Barrois', 'cuir', ['mandarine d\'Italie', 'safran', 'violette', 'osmanthus', 'Akigalawood', 'immortelle', 'accord daim'], 4, 5, 3, 200],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
