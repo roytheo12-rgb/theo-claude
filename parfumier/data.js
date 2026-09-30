@@ -92,6 +92,11 @@
     ['Fleur Narcotique', 'Ex Nihilo', 'floral', ['bergamote', 'litchi', 'osmanthus', 'jasmin', 'freesia', 'pivoine', 'fleur d\'oranger', 'santal', 'mousse', 'musc'], 4, 5, 3, 420],
     ['Gris Charnel Extrait', 'BDK Parfums', 'boisé', ['cardamome', 'thé noir', 'figue', 'iris', 'ciste', 'vétiver', 'patchouli', 'vanille', 'santal', 'cèdre', 'fève tonka'], 4, 5, 4, 270],
     ['Orphéon', 'Diptyque', 'boisé', ['genièvre', 'jasmin', 'cèdre', 'fève tonka', 'tabac'], 3, 4, 3, 205],
+    ['Mojave Ghost Absolu', 'Byredo', 'floral', ['ambrette', 'baie de nesberry', 'magnolia', 'santal', 'violette', 'ambre', 'cèdre', 'musc'], 3, 5, 3, 295],
+    ['Buongiorno Dolce Far Niente', 'Acqua di Parma', 'agrumes', ['citron de Sicile', 'petit grain', 'bois de figuier', 'hédione', 'musc', 'cèdre de Virginie'], 2, 3, 1, 290],
+    ['Straight to Heaven', 'Kilian', 'gourmand', ['rhum', 'muscade', 'vanille', 'fruits secs', 'patchouli', 'cèdre'], 4, 5, 5, 375],
+    ['Nasaj', 'Oman Luxury', 'floral', ['mandarine', 'pamplemousse', 'poivre rose', 'cardamome', 'poire', 'tubéreuse', 'jasmin', 'néroli', 'lys', 'magnolia', 'gardénia', 'benjoin', 'santal', 'oliban', 'fève tonka', 'patchouli', 'ambroxan'], 4, 5, 4, 235],
+    ['Néroli Hasbaya', 'Atelier Materi', 'floral', ['néroli', 'fleur d\'oranger', 'amande amère', 'pistache', 'rose de Damas', 'musc', 'baume du Pérou', 'santal blanc'], 3, 5, 3, 254],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
