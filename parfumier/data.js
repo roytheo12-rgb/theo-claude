@@ -11,7 +11,7 @@
     ['Tobacco Vanille', 'Tom Ford', 'gourmand', ['tabac', 'vanille', 'épices', 'fruits secs', 'cacao'], 4, 5, 5, 280],
     ['Terre d\'Hermès', 'Hermès', 'boisé', ['orange', 'silex', 'vétiver', 'poivre', 'cèdre'], 3, 4, 3, 95],
     ['Light Blue', 'Dolce & Gabbana', 'agrumes', ['citron', 'pomme', 'cèdre', 'musc'], 3, 3, 1, 85],
-    ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['safran', 'jasmin', 'ambre', 'cèdre', 'ambre gris'], 5, 5, 4, 300],
+    ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['jasmin', 'safran', 'ambre gris', 'bois ambré', 'cèdre'], 5, 5, 4, 270],
     ['Santal 33', 'Le Labo', 'boisé', ['santal', 'cèdre', 'cuir', 'cardamome', 'iris', 'violette'], 3, 4, 3, 220],
     ['Another 13', 'Le Labo', 'musqué', ['ambroxan', 'musc', 'jasmin', 'mousse', 'citron'], 3, 5, 3, 220],
     ['Oud Wood', 'Tom Ford', 'oud', ['oud', 'bois de rose', 'cardamome', 'santal', 'vanille'], 3, 4, 4, 250],
@@ -88,6 +88,10 @@
     ['724', 'Maison Francis Kurkdjian', 'musqué', ['bergamote', 'aldéhydes', 'pois de senteur', 'jasmin d\'Égypte', 'seringat', 'musc blanc', 'santal'], 3, 4, 2, 170],
     ['The Musc', 'Essential Parfums', 'musqué', ['gingembre rouge', 'lavandin', 'cire d\'abeille', 'santal', 'musc blanc'], 3, 4, 3, 82],
     ['Ella K', 'Ella K Parfums', 'ambré', [], 3, 4, 3, 0],
+    ['Bianco Latte', 'Giardini di Toscana', 'gourmand', ['caramel', 'miel', 'coumarine', 'vanille', 'musc blanc'], 3, 4, 4, 125],
+    ['Fleur Narcotique', 'Ex Nihilo', 'floral', ['bergamote', 'litchi', 'osmanthus', 'jasmin', 'freesia', 'pivoine', 'fleur d\'oranger', 'santal', 'mousse', 'musc'], 4, 5, 3, 420],
+    ['Gris Charnel Extrait', 'BDK Parfums', 'boisé', ['cardamome', 'thé noir', 'figue', 'iris', 'ciste', 'vétiver', 'patchouli', 'vanille', 'santal', 'cèdre', 'fève tonka'], 4, 5, 4, 270],
+    ['Orphéon', 'Diptyque', 'boisé', ['genièvre', 'jasmin', 'cèdre', 'fève tonka', 'tabac'], 3, 4, 3, 205],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({

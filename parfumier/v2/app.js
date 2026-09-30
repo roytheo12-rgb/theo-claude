@@ -22,21 +22,24 @@
 
   // ---------- Données ----------
   const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  const SEED3 = [['Bianco Latte', 4], ['Fleur Narcotique', 4], ['Baccarat Rouge 540', 5], ['Gris Charnel Extrait', 4], ['Orphéon', 4]];
   const SEED2 = [['Black Afgano', 4], ['724', 4], ['The Musc', 4], ['Thé Noir 29', 4], ['Ella K', 4]];
   // Photos fournies par Théo (détourées). nz = hauteur du vaporisateur en % pour le nuage de spray.
   const IMG = {
     'Jazz Club': { s: 'img/jazz.webp', nz: 2 }, 'Naxos': { s: 'img/naxos.webp', nz: 1 }, 'Bois Impérial': { s: 'img/bois.webp', nz: 6 }, 'Myrrh & Tonka': { s: 'img/myrrh.webp', nz: 4 }, 'Sydney': { s: 'img/sydney.webp', nz: 7 },
     'Black Afgano': { s: 'img/afgano.webp', nz: 2 }, '724': { s: 'img/mfk724.webp', nz: 7 }, 'The Musc': { s: 'img/musc.webp', nz: 6 }, 'Thé Noir 29': { s: 'img/thenoir.webp', nz: 5 }, 'Ella K': { s: 'img/ellak.webp', nz: 4 },
+    'Bianco Latte': { s: 'img/bianco.webp', nz: 8 }, 'Fleur Narcotique': { s: 'img/fleur.webp', nz: 4 }, 'Baccarat Rouge 540': { s: 'img/br540.webp', nz: 7 }, 'Gris Charnel Extrait': { s: 'img/gris.webp', nz: 6 }, 'Orphéon': { s: 'img/orpheon.webp', nz: 8 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 2, collection: seedList(SEED).concat(seedList(SEED2)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: 3, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   function migrate() {
     S.walks = S.walks || [];
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
     if ((S.seedV || 1) < 2) { seedList(SEED2).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 2; }
+    if ((S.seedV || 1) < 3) { seedList(SEED3).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 3; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
@@ -147,7 +150,8 @@
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
-          <textarea id="say" rows="3" placeholder="Ce que tu fais, avec qui, ce que tu portes…" aria-label="Ta journée">${esc(SAY)}</textarea>
+          <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Écris ici ta journée</label>
+          <textarea id="say" rows="3" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
           <div class="row">
             ${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}
             <button class="chip photo-btn" id="photoBtn" ${CAN_IMG ? '' : 'hidden'}>${PHOTO ? `<img alt="" src="${URL.createObjectURL(PHOTO)}">` : IC.cam}<span>${PHOTO ? 'Tenue ajoutée' : 'Ma tenue en photo'}</span></button>

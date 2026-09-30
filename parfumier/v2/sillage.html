@@ -53,8 +53,10 @@ h1, h2, h3, p { margin: 0; }
 .cta[disabled] { opacity: .5; }
 .ghost { border: 1px solid var(--line2); background: transparent; border-radius: 3px; padding: 10px 16px; font: 500 11.5px var(--sf); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 .ghost.danger { color: #d8897a; border-color: rgba(216, 137, 122, .4); }
-textarea, input[type=text] { width: 100%; font: 16px/1.45 var(--sf); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; resize: none; }
-textarea::placeholder, input::placeholder { color: var(--muted); opacity: .75; }
+textarea, input[type=text] { width: 100%; font: 16px/1.45 var(--sf); color: var(--ink); background: #1e1c22; border: 1px solid var(--line2); border-radius: 4px; padding: 14px 16px; resize: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); transition: border-color .25s, box-shadow .25s; }
+textarea::placeholder, input::placeholder { color: #b9b4ad; opacity: 1; }
+textarea:focus, input[type=text]:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(180, 57, 74, .22); }
+.fieldlab { display: flex; align-items: center; gap: 8px; font: 600 11px var(--sf); letter-spacing: .16em; text-transform: uppercase; color: var(--accent-deep); }
 input[type=range] { width: 100%; accent-color: var(--accent); }
 .dots { display: inline-flex; gap: 4px; }
 .dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(214, 186, 140, .2); }
@@ -71,7 +73,9 @@ input[type=range] { width: 100%; accent-color: var(--accent); }
 .hero h1 em { font-style: normal; color: var(--accent-deep); font-weight: 300; }
 .hero .q { font: 300 21px/1.3 var(--sf); color: var(--muted); letter-spacing: -.01em; margin-bottom: 20px; }
 .say-wrap { display: grid; gap: 14px; }
-.say-wrap textarea { min-height: 92px; background: transparent; border: 0; border-bottom: 1px solid var(--line2); border-radius: 0; padding: 12px 0; font-size: 18px; font-weight: 300; }
+.say-wrap textarea { min-height: 104px; padding: 16px; font-size: 17px; font-weight: 300; animation: nudge 3.2s ease-in-out infinite; }
+.say-wrap textarea:focus { animation: none; }
+@keyframes nudge { 0%, 100% { border-color: var(--line2); } 50% { border-color: rgba(180, 57, 74, .8); } }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .photo-btn { display: inline-flex; align-items: center; gap: 8px; }
 .photo-btn svg { width: 16px; height: 16px; }
@@ -257,10 +261,12 @@ input[type=range] { width: 100%; accent-color: var(--accent); }
 .petal { position: absolute; top: -20px; width: 10px; height: 14px; border-radius: 80% 0 80% 0; animation: fall linear forwards; z-index: 5; pointer-events: none; }
 @keyframes fall { to { transform: translate(var(--x), 105vh) rotate(var(--r)); opacity: .9; } }
 canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-#story canvas.fx { z-index: 0; }
-.pcard canvas.fx, .rec canvas.fx, .vit canvas.fx { z-index: 0; opacity: .7; }
+#story canvas.fx { z-index: 0; opacity: .4; }
+#story::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to top, rgba(6, 6, 8, .78) 0%, rgba(6, 6, 8, .5) 36%, transparent 64%); }
+#stage .lead, #stage h2, #stage .steps, #stage .pyr { text-shadow: 0 1px 16px rgba(0, 0, 0, .55); }
+.pcard canvas.fx, .rec canvas.fx, .vit canvas.fx { z-index: 0; opacity: .34; }
 .pcard > *:not(canvas), .rec > *:not(canvas), .vit button > *:not(canvas) { position: relative; z-index: 1; }
-.big-bottle canvas.fx { inset: -30px -20px; width: calc(100% + 40px); height: calc(100% + 60px); z-index: -1; }
+.big-bottle canvas.fx { opacity: .5; inset: -30px -20px; width: calc(100% + 40px); height: calc(100% + 60px); z-index: -1; }
 .motif { font: 500 11px var(--sf); letter-spacing: .14em; text-transform: uppercase; color: rgba(242, 235, 224, .6); }
 
 /* ---------- Ouverture ---------- */
@@ -339,7 +345,7 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
     ['Tobacco Vanille', 'Tom Ford', 'gourmand', ['tabac', 'vanille', 'épices', 'fruits secs', 'cacao'], 4, 5, 5, 280],
     ['Terre d\'Hermès', 'Hermès', 'boisé', ['orange', 'silex', 'vétiver', 'poivre', 'cèdre'], 3, 4, 3, 95],
     ['Light Blue', 'Dolce & Gabbana', 'agrumes', ['citron', 'pomme', 'cèdre', 'musc'], 3, 3, 1, 85],
-    ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['safran', 'jasmin', 'ambre', 'cèdre', 'ambre gris'], 5, 5, 4, 300],
+    ['Baccarat Rouge 540', 'Maison Francis Kurkdjian', 'ambré', ['jasmin', 'safran', 'ambre gris', 'bois ambré', 'cèdre'], 5, 5, 4, 270],
     ['Santal 33', 'Le Labo', 'boisé', ['santal', 'cèdre', 'cuir', 'cardamome', 'iris', 'violette'], 3, 4, 3, 220],
     ['Another 13', 'Le Labo', 'musqué', ['ambroxan', 'musc', 'jasmin', 'mousse', 'citron'], 3, 5, 3, 220],
     ['Oud Wood', 'Tom Ford', 'oud', ['oud', 'bois de rose', 'cardamome', 'santal', 'vanille'], 3, 4, 4, 250],
@@ -416,6 +422,10 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
     ['724', 'Maison Francis Kurkdjian', 'musqué', ['bergamote', 'aldéhydes', 'pois de senteur', 'jasmin d\'Égypte', 'seringat', 'musc blanc', 'santal'], 3, 4, 2, 170],
     ['The Musc', 'Essential Parfums', 'musqué', ['gingembre rouge', 'lavandin', 'cire d\'abeille', 'santal', 'musc blanc'], 3, 4, 3, 82],
     ['Ella K', 'Ella K Parfums', 'ambré', [], 3, 4, 3, 0],
+    ['Bianco Latte', 'Giardini di Toscana', 'gourmand', ['caramel', 'miel', 'coumarine', 'vanille', 'musc blanc'], 3, 4, 4, 125],
+    ['Fleur Narcotique', 'Ex Nihilo', 'floral', ['bergamote', 'litchi', 'osmanthus', 'jasmin', 'freesia', 'pivoine', 'fleur d\'oranger', 'santal', 'mousse', 'musc'], 4, 5, 3, 420],
+    ['Gris Charnel Extrait', 'BDK Parfums', 'boisé', ['cardamome', 'thé noir', 'figue', 'iris', 'ciste', 'vétiver', 'patchouli', 'vanille', 'santal', 'cèdre', 'fève tonka'], 4, 5, 4, 270],
+    ['Orphéon', 'Diptyque', 'boisé', ['genièvre', 'jasmin', 'cèdre', 'fève tonka', 'tabac'], 3, 4, 3, 205],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({
@@ -1020,21 +1030,24 @@ ${mist}
 
   // ---------- Données ----------
   const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  const SEED3 = [['Bianco Latte', 4], ['Fleur Narcotique', 4], ['Baccarat Rouge 540', 5], ['Gris Charnel Extrait', 4], ['Orphéon', 4]];
   const SEED2 = [['Black Afgano', 4], ['724', 4], ['The Musc', 4], ['Thé Noir 29', 4], ['Ella K', 4]];
   // Photos fournies par Théo (détourées). nz = hauteur du vaporisateur en % pour le nuage de spray.
   const IMG = {
     'Jazz Club': { s: 'img/jazz.webp', nz: 2 }, 'Naxos': { s: 'img/naxos.webp', nz: 1 }, 'Bois Impérial': { s: 'img/bois.webp', nz: 6 }, 'Myrrh & Tonka': { s: 'img/myrrh.webp', nz: 4 }, 'Sydney': { s: 'img/sydney.webp', nz: 7 },
     'Black Afgano': { s: 'img/afgano.webp', nz: 2 }, '724': { s: 'img/mfk724.webp', nz: 7 }, 'The Musc': { s: 'img/musc.webp', nz: 6 }, 'Thé Noir 29': { s: 'img/thenoir.webp', nz: 5 }, 'Ella K': { s: 'img/ellak.webp', nz: 4 },
+    'Bianco Latte': { s: 'img/bianco.webp', nz: 8 }, 'Fleur Narcotique': { s: 'img/fleur.webp', nz: 4 }, 'Baccarat Rouge 540': { s: 'img/br540.webp', nz: 7 }, 'Gris Charnel Extrait': { s: 'img/gris.webp', nz: 6 }, 'Orphéon': { s: 'img/orpheon.webp', nz: 8 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 2, collection: seedList(SEED).concat(seedList(SEED2)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: 3, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   function migrate() {
     S.walks = S.walks || [];
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
     if ((S.seedV || 1) < 2) { seedList(SEED2).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 2; }
+    if ((S.seedV || 1) < 3) { seedList(SEED3).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 3; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
@@ -1145,7 +1158,8 @@ ${mist}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
         <div class="say-wrap">
-          <textarea id="say" rows="3" placeholder="Ce que tu fais, avec qui, ce que tu portes…" aria-label="Ta journée">${esc(SAY)}</textarea>
+          <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Écris ici ta journée</label>
+          <textarea id="say" rows="3" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
           <div class="row">
             ${Object.entries(WXS).map(([k, v]) => `<button class="chip ${WX && WX.k === k ? 'on' : ''}" data-wx="${k}">${v.l}</button>`).join('')}
             <button class="chip photo-btn" id="photoBtn" ${CAN_IMG ? '' : 'hidden'}>${PHOTO ? `<img alt="" src="${URL.createObjectURL(PHOTO)}">` : IC.cam}<span>${PHOTO ? 'Tenue ajoutée' : 'Ma tenue en photo'}</span></button>
