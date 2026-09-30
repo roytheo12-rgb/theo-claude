@@ -22,6 +22,7 @@
 
   // ---------- Données ----------
   const SEED = [['Jazz Club', 4], ['Naxos', 5], ['Bois Impérial', 4], ['Myrrh & Tonka', 4], ['Sydney', 4]];
+  const SEED10 = [['Vétiver Extraordinaire', 4], ['De Los Santos', 4], ['Étoile Filante', 4], ['Lazy Sunday Morning', 4], ['Sauvage EDT', 4]];
   const SEED9 = [['Acne Studios', 4], ['Purpose', 4], ['Ambert Sunset', 4], ['Ambre Papier', 4], ['Ganymede', 4]];
   const SEED8 = [['Rouge Trafalgar', 4], ['L\'Eau Pâle', 4], ['Imagination', 4], ['Néroli Amara', 4], ['Ombre Nomade', 4]];
   const SEED7 = [['Stellar Times', 4], ['Radical Rose', 4]];
@@ -41,10 +42,11 @@
     'Stellar Times': { s: 'img/stellar.webp', nz: 36 }, 'Radical Rose': { s: 'img/radical.webp', nz: 3 },
     'Rouge Trafalgar': { s: 'img/trafalgar.webp', nz: 3 }, 'L\'Eau Pâle': { s: 'img/leaupale.webp', nz: 1 }, 'Imagination': { s: 'img/imagination.webp', nz: 4 }, 'Néroli Amara': { s: 'img/neroliamara.webp', nz: 3 }, 'Ombre Nomade': { s: 'img/ombrenomade.webp', nz: 4 },
     'Acne Studios': { s: 'img/acne.webp', nz: 3 }, 'Purpose': { s: 'img/purpose.webp', nz: 3 }, 'Ambert Sunset': { s: 'img/ambert.webp', nz: 3 }, 'Ambre Papier': { s: 'img/ambrepapier.webp', nz: 6 }, 'Ganymede': { s: 'img/ganymede.webp', nz: 3 },
+    'Vétiver Extraordinaire': { s: 'img/vetiver.webp', nz: 26 }, 'De Los Santos': { s: 'img/delossantos.webp', nz: 3 }, 'Étoile Filante': { s: 'img/etoile.webp', nz: 3 }, 'Lazy Sunday Morning': { s: 'img/lazy.webp', nz: 2 }, 'Sauvage EDT': { s: 'img/sauvage.webp', nz: 3 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedList = (l) => l.map(([n, r]) => fromCat(CAT.find((c) => c.name === n), r));
-  const DEF = () => ({ v: 3, seedV: 9, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: 10, collection: seedList(SEED).concat(seedList(SEED2), seedList(SEED3), seedList(SEED4), seedList(SEED5), seedList(SEED6), seedList(SEED7), seedList(SEED8), seedList(SEED9), seedList(SEED10)), wishlist: [], walks: [], log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   function migrate() {
     S.walks = S.walks || [];
@@ -58,6 +60,7 @@
     if ((S.seedV || 1) < 7) { seedList(SEED7).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 7; }
     if ((S.seedV || 1) < 8) { seedList(SEED8).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 8; }
     if ((S.seedV || 1) < 9) { seedList(SEED9).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 9; }
+    if ((S.seedV || 1) < 10) { seedList(SEED10).forEach((p) => { if (!S.collection.some((x) => E.norm(x.name) === E.norm(p.name))) S.collection.push(p); }); S.seedV = 10; }
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }

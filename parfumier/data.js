@@ -4,7 +4,7 @@
   const rows = [
     ['Acqua di Giò', 'Armani', 'aquatique', ['notes marines', 'bergamote', 'romarin', 'patchouli'], 3, 3, 1, 85],
     ['Bleu de Chanel EDP', 'Chanel', 'boisé', ['agrumes', 'encens', 'cèdre', 'santal', 'gingembre'], 3, 4, 3, 115],
-    ['Sauvage EDT', 'Dior', 'aromatique', ['bergamote', 'poivre', 'ambroxan', 'lavande'], 4, 4, 2, 105],
+    ['Sauvage EDT', 'Dior', 'aromatique', ['bergamote de Calabre', 'poivre', 'poivre du Sichuan', 'lavande', 'poivre rose', 'vétiver', 'patchouli', 'géranium', 'élémi', 'ambroxan', 'cèdre', 'labdanum'], 4, 4, 2, 105],
     ['Sauvage Elixir', 'Dior', 'épicé', ['cannelle', 'cardamome', 'lavande', 'réglisse', 'santal'], 5, 5, 5, 155],
     ['Aventus', 'Creed', 'boisé', ['ananas', 'bouleau', 'musc', 'mousse de chêne', 'bergamote'], 4, 4, 3, 380],
     ['Layton', 'Parfums de Marly', 'ambré', ['pomme', 'lavande', 'vanille', 'cardamome', 'santal'], 4, 5, 4, 250],
@@ -38,7 +38,7 @@
     ['Fahrenheit', 'Dior', 'cuir', ['violette', 'cuir', 'muscade', 'cèdre'], 4, 4, 4, 90],
     ['Jazz Club', 'Maison Margiela', 'ambré', ['poivre rose', 'citron', 'néroli', 'rhum', 'sauge sclarée', 'vétiver', 'styrax', 'tabac', 'vanille'], 3, 4, 4, 135],
     ['By the Fireplace', 'Maison Margiela', 'ambré', ['marron chaud', 'clou de girofle', 'vanille', 'fumée', 'gaïac'], 3, 4, 5, 150],
-    ['Lazy Sunday Morning', 'Maison Margiela', 'musqué', ['linge propre', 'iris', 'musc blanc', 'poire', 'fleur d\'oranger'], 2, 3, 1, 150],
+    ['Lazy Sunday Morning', 'Maison Margiela', 'musqué', ['muguet', 'poire', 'aldéhydes', 'ambrette', 'iris', 'rose', 'fleur d\'oranger', 'musc blanc', 'patchouli'], 2, 3, 1, 68],
     ['Invictus', 'Rabanne', 'aquatique', ['pamplemousse', 'notes marines', 'laurier', 'gaïac', 'ambre gris'], 4, 3, 2, 90],
     ['1 Million', 'Rabanne', 'épicé', ['pamplemousse', 'cannelle', 'cuir', 'ambre', 'menthe'], 5, 4, 4, 90],
     ['Stronger With You', 'Armani', 'gourmand', ['cardamome', 'châtaigne', 'vanille', 'sauge', 'poivre rose'], 3, 4, 4, 90],
@@ -70,7 +70,7 @@
     ['Do Son', 'Diptyque', 'floral', ['tubéreuse', 'fleur d\'oranger', 'iris', 'gingembre', 'musc'], 3, 3, 2, 150],
     ['Ambre Sultan', 'Serge Lutens', 'ambré', ['ambre', 'myrrhe', 'coriandre', 'benjoin', 'vanille'], 4, 5, 5, 140],
     ['Fille en Aiguilles', 'Serge Lutens', 'boisé', ['pin', 'encens', 'miel', 'ciste'], 4, 4, 4, 130],
-    ['Vétiver Extraordinaire', 'Frédéric Malle', 'boisé', ['vétiver', 'pamplemousse', 'cèdre'], 3, 4, 3, 250],
+    ['Vétiver Extraordinaire', 'Frédéric Malle', 'boisé', ['bergamote', 'orange amère', 'poivre rose', 'clou de girofle', 'vétiver', 'santal', 'cèdre', 'mousse de chêne', 'myrrhe', 'musc'], 3, 5, 3, 225],
     ['Musc Ravageur', 'Frédéric Malle', 'ambré', ['bergamote', 'mandarine', 'lavande', 'ambre', 'vanille', 'musc', 'santal'], 4, 5, 4, 260],
     ['Delina', 'Parfums de Marly', 'floral', ['rose', 'litchi', 'rhubarbe', 'musc', 'vanille'], 4, 4, 3, 290],
     ['Naxos', 'Xerjoff', 'gourmand', ['bergamote', 'citron', 'lavande', 'jasmin sambac', 'cannelle', 'miel', 'cachemire', 'tabac', 'fève tonka', 'vanille'], 4, 5, 4, 230],
@@ -115,6 +115,8 @@
     ['Ambert Sunset', 'Librery', 'ambré', ['abricot', 'safran', 'osmanthus', 'rose', 'iris pallida', 'jasmin', 'cuir', 'ambre', 'santal'], 4, 5, 4, 170],
     ['Ambre Papier', 'Atelier Materi', 'ambré', ['poivre noir', 'piment de la Jamaïque', 'mandarine rouge', 'jasmin', 'myrrhe', 'maté', 'safran', 'benjoin de Siam', 'vétiver d\'Haïti', 'fève tonka'], 3, 5, 4, 254],
     ['Ganymede', 'Marc-Antoine Barrois', 'cuir', ['mandarine d\'Italie', 'safran', 'violette', 'osmanthus', 'Akigalawood', 'immortelle', 'accord daim'], 4, 5, 3, 200],
+    ['De Los Santos', 'Byredo', 'boisé', ['sauge sclarée', 'mirabelle', 'iris', 'ciste', 'musc', 'ambroxan', 'palo santo'], 3, 4, 2, 165],
+    ['Étoile Filante', 'Louis Vuitton', 'floral', ['osmanthus', 'magnolia', 'abricot', 'cassis', 'jasmin'], 3, 4, 2, 230],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({

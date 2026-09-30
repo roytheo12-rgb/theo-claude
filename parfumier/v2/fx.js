@@ -88,15 +88,17 @@
     return true;
   }
   function frame(now) {
-    const dt = Math.min(.05, (now - last) / 1000 || .016); last = now;
+    const dt = Math.max(0, Math.min(.05, (now - last) / 1000)) || .016; last = now;
     for (const inst of [...active]) {
       if (!inst.c.isConnected) { active.delete(inst); continue; }
       if (!measure(inst)) continue;
       inst.t += dt; const { ctx, w, h } = inst; ctx.clearRect(0, 0, w, h);
       for (const P of inst.parts) {
-        const def = T[P.type]; def.up(P, dt, inst.t, w, h);
-        if (def.out(P, w, h)) def.sp(P, w, h, false);
-        def.dr(ctx, P, inst.k[P.type] || inst.k.all, inst.t, w, h);
+        try {
+          const def = T[P.type]; def.up(P, dt, inst.t, w, h);
+          if (def.out(P, w, h)) def.sp(P, w, h, false);
+          def.dr(ctx, P, inst.k[P.type] || inst.k.all, inst.t, w, h);
+        } catch (e) { /* une particule invalide ne doit jamais figer les animations */ }
       }
     }
     raf = active.size && !document.hidden ? requestAnimationFrame(frame) : 0;
