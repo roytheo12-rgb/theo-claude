@@ -65,7 +65,7 @@ Le formulaire demande un consentement explicite avant d'enregistrer un email. Di
 Dans `public/` et `media/` :
 
 - `sillage-story.gif` (4,5 Mo) : story « sortie entre amis » qui tombe sur Jazz Club + Fève Nectar. `sillage-story-neroli.gif` : brunch chaud qui tombe volontairement sur Néroli Amara + The Musc. Les deux sont des réponses IA scriptées (tools/serve.mjs), pas un appel réel. Régénérer : `VARIANT=amara node tools/make-media.mjs` puis `python3 tools/make_gif.py 272 10 56 sillage-story-neroli.gif`.
-- `sillage-story-4k.mp4` et `sillage-story-neroli-4k.mp4` : vidéos verticales 4K (2160×3840, 30 im/s). Voir TUTO.md.
+- `sillage-story-4k.mp4` et `sillage-story-neroli-4k.mp4` : teasers motion 32 s, 4K verticaux (2160×3840, 30 im/s, ≈ 12 Mo). Régénérer : `node tools/make-teaser.mjs` et `VARIANT=amara node tools/make-teaser.mjs`.
 - `og.jpg` : image d'aperçu quand tu colles le lien.
 - `/signup.html` : page d'inscription seule, pour « Repostez et envoyez-moi un message ».
 
