@@ -12,7 +12,7 @@ const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async 
 let aiCalls = 0, lastPrompt = '', identCalls = [];
 const idOf = (p, n) => (p.match(new RegExp('^(\\S+) \\| ' + n.replace(/[()]/g, '\\$&') + ' \\|', 'm')) || [])[1];
 const client = { messages: { async create(req) {
-  if (req.model.includes('haiku')) { identCalls.push(req); return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify({ items: [{ name: 'Santal 33', house: 'Le Labo', family: 'boisé', notes: ['cardamome', 'iris', 'santal', 'cuir'], projection: 4, longevity: 4, weight: 3, price: 220, confidence: 0.9 }] }) }] }; }
+  if (req.model.includes('haiku')) { identCalls.push(req); const hz = /Moonlight in Heaven/.test(req.messages[0].content.at(-1).text); return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify({ items: [hz ? { name: 'Moonlight in Heaven', house: 'Kilian', family: 'floral', notes: ['jasmin', 'santal'], projection: 3, longevity: 3, weight: 3, price: 290, confidence: 0.8 } : { name: 'Santal 33', house: 'Le Labo', family: 'boisé', notes: ['cardamome', 'iris', 'santal', 'cuir'], projection: 4, longevity: 4, weight: 3, price: 220, confidence: 0.9 }] }) }] }; }
   aiCalls++; const p = req.messages[0].content.at(-1).text; lastPrompt = p; await new Promise((r) => setTimeout(r, 500));
   const j = { cond: { temp: 3, ctx: 'date', with: 'partenaire', moment: 'soir', mood: 'romantique', style: 'soiree', color: 'sombre', fabric: 'cuir', place: '', dur: '' }, read: 'Dîner à deux ce soir, perfecto noir, il fait froid', pick: idOf(p, 'Tobacco Vanille'), vibe: ['enveloppant', 'fumé', 'magnétique'], story: 'Il fait 3° et ton perfecto sent déjà la nuit : Tobacco Vanille s’y accroche comme une écharpe de fumée douce.', alts: [{ id: idOf(p, 'Baccarat Rouge 540'), line: 'Plus lumineux, très sillage' }], layers: [{ id: idOf(p, 'Thé Noir 29'), effect: 'Le thé noir assèche la douceur et allonge la tenue.', how: '2 sprays de Tobacco Vanille sur la nuque, puis 1 spray de Thé Noir 29 sur les poignets. Évite le cuir du perfecto.', score: 5 }], avoid: '' };
   return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify(j) }] };
@@ -48,7 +48,7 @@ ok(await pg.locator('#dresses .dchip').count() === 6, 'au moment de choisir le p
 ok(await pg.locator('#emptyAdd').count() === 1 && await pg.locator('.vit button').count() === 0, 'collection vide : invitation à ajouter ses parfums, aucun parfum fictif');
 await pg.click('#emptyAdd'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'tobacco'); await pg.waitForSelector('[data-sug]');
 ok(/Tobacco Vanille/.test(await pg.textContent('#addsug')), 'suggestion du catalogue pendant la frappe');
-await pg.click('[data-sug]'); await pg.type('#addtxt', 'Baccarat Rouge 540, Thé Noir 29'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 8000 });
+await pg.click('[data-sug]'); await pg.type('#addtxt', 'Baccarat Rouge 540\nThé Noir 29'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 8000 });
 ok(identCalls.length === 0, 'parfums du catalogue : aucun appel à l\'IA'); await pg.click('#addok'); await pg.waitForTimeout(600);
 ok(await pg.locator('.pcard').count() === 3, 'trois parfums ajoutés à la collection'); await pg.click('[data-tab=today]'); await pg.waitForTimeout(500);
 ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
@@ -90,10 +90,26 @@ ok(names.includes('Santal 33') && names.includes('Tam Dao Eau de Parfum'), 'les 
 const st33 = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.find((p) => p.name === 'Santal 33'));
 ok(st33.size === 2 && st33.left === 25 && st33.use === 'special', 'stock sauvegardé : 2 ml, il en reste peu, grandes occasions');
 ok(store.has('cand:santal 33') && JSON.parse(store.get('cand:santal 33')).v.length === 1, 'catalogue partagé : le parfum attend la 2e confirmation');
+// 5b2. le grand index : un parfum qui n'est pas au catalogue détaillé est proposé, puis complété par l'IA légère
+await pg.click('#addBtn'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'moonlight in'); await pg.waitForSelector('[data-sug]');
+ok(/Moonlight in Heaven/.test(await pg.textContent('#addsug')) && /Kilian/.test(await pg.textContent('#addsug')), 'grand index : « Moonlight in Heaven · Kilian » proposé pendant la frappe');
+await pg.click('[data-sug]'); ok((await pg.inputValue('#addtxt')).startsWith('Kilian — Moonlight in Heaven'), 'le parfum de l\'index s\'insère avec sa maison');
+const nIdent = identCalls.length; await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
+ok(identCalls.length === nIdent + 1 && /Kilian — Moonlight in Heaven/.test(identCalls.at(-1).messages[0].content.at(-1).text), 'la fiche inconnue est complétée par Haiku (Maison — Nom envoyé)');
+await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);
 const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });
 ok(after.prof.age === 27 && after.has && !after.ov, 'après rechargement : profil et collection sont là, aucun écran d\'accueil revient');
+// 5d. chaque personne a son profil : un nouveau profil démarre vide, l'ancien reste intact
+await pg.click('#profileBtn'); await pg.waitForSelector('#newprof'); await pg.click('#newprof'); await pg.waitForSelector('#prof .gen', { timeout: 8000 });
+const act = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.profiles')));
+ok(act.list.length === 2 && act.active !== 'main', 'nouveau profil créé et actif');
+await pg.click('#pSkip'); await pg.waitForTimeout(500);
+ok(await pg.locator('#emptyAdd').count() === 1, 'le nouveau profil démarre avec une collection vide');
+ok(await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length) >= 3, 'le profil précédent est intact (sa collection est toujours là)');
+await pg.click('#profileBtn'); await pg.waitForSelector('[data-sw=main]'); await pg.click('[data-sw=main]'); await pg.waitForTimeout(3600);
+ok(await pg.evaluate(() => document.querySelectorAll('.vit button').length) >= 3, 'retour au profil principal : sa collection s\'affiche');
 // 6. nouveau visiteur : 2 essais neufs; même IP : plafond
 ok(errs.length === 0, 'aucune erreur JavaScript ' + JSON.stringify(errs));
 // 7. page d'inscription

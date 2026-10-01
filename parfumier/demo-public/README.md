@@ -85,3 +85,8 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - **Stock** : pour chaque parfum, taille du flacon, ce qu'il en reste et usage (au quotidien, grandes occasions, peu importe). Un échantillon passe seul en « grandes occasions ». Le moteur et l'IA ménagent les échantillons, les flacons presque finis et ceux réservés : ils ne gagnent pas une journée ordinaire.
 - **Ajouter un parfum depuis une image** : photo, ou adresse d'une image trouvée sur internet (https). Les parfums déjà connus sont reconnus sans IA ; les autres passent par Claude Haiku 4.5 (`HAIKU_MODEL`), limité par `IDENT_MAX` (6 par visiteur), `IDENT_IP_MAX_PER_DAY` (20) et `IDENT_DAILY_CAP` (400 par jour). Coût non mesuré : de l'ordre d'un centime ou moins par analyse.
 - **Catalogue partagé** : un parfum identifié par l'IA n'entre dans le catalogue de tous qu'après confirmation par 2 personnes d'adresses IP différentes. Les images ne sont jamais stockées côté serveur.
+
+## 9. Profils distincts et grand index de parfums
+
+- **Profils distincts** : chaque personne a son profil (collection, wishlist, journal, tenue, stock). Sur un même appareil, Profil → « Nouveau profil » en crée un autre, et on bascule de l'un à l'autre sans rien mélanger. Les données restent dans le navigateur de chaque personne : la démo n'enregistre aucun profil côté serveur.
+- **Grand index** (`parfumier/index.js`, ≈ 2 500 parfums, 150 maisons) : généré par `python3 tools/build-index.py` depuis `data/raw/*.txt` (ta liste, sans doublons). Il sert aux suggestions pendant la frappe. Les fiches (famille, notes, puissance) des parfums de l'index sont complétées par Haiku quand quelqu'un les ajoute, puis gardées en cache pour tous (coût zéro les fois suivantes).

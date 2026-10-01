@@ -46,7 +46,7 @@ export function makeWorker(deps = {}) {
       if (origin && origin !== url.origin && origin !== env.ALLOWED_ORIGIN) return reply({ code: 'origin' }, 403);
 
       const max = int(env.MAX_TRIES, 2), ipMax = int(env.IP_MAX_PER_DAY, 6), cap = int(env.DAILY_CAP, 150);
-      const identMax = int(env.IDENT_MAX, 6), ipIdentMax = int(env.IDENT_IP_MAX_PER_DAY, 20), identCap = int(env.IDENT_DAILY_CAP, 400);
+      const identMax = int(env.IDENT_MAX, 15), ipIdentMax = int(env.IDENT_IP_MAX_PER_DAY, 40), identCap = int(env.IDENT_DAILY_CAP, 600);
       const kv = env.SILLAGE;
       const ip = request.headers.get('cf-connecting-ip') || '0.0.0.0';
       const ipHash = await sha(ip + (env.SALT || 'sillage'));
@@ -123,13 +123,18 @@ export function makeWorker(deps = {}) {
         const hasImg = img && ['image/jpeg', 'image/png', 'image/webp'].includes(img.media_type) && typeof img.data === 'string' && img.data.length < 1_800_000;
         if (!text && !hasImg && !imgUrl) return reply({ code: 'empty' }, 400);
         if (imgUrl && !/^https:\/\/[^\s"'<>]{4,480}$/.test(imgUrl)) return reply({ code: 'url' }, 400);
+        // Cache : un parfum déjà identifié (par n'importe qui) ne rappelle pas le modèle et ne consomme aucun essai.
+        const lines = hasImg || imgUrl ? [] : text.split(/\n/).map((l) => clean(l, 120)).filter(Boolean).slice(0, 4);
+        const hits = [], misses = [];
+        for (const l of lines) { const raw = await kv.get(`ent:${normName(l)}`); if (raw) hits.push(JSON.parse(raw)); else misses.push(l); }
+        if (lines.length && !misses.length) return reply({ data: { items: hits }, cached: hits.length, identLeft: undefined });
         const used = int(await kv.get(`iv:${vid}`), 0), ipUsed = int(await kv.get(ipIdentKey), 0), capKey = `icap:${today()}`;
         if (used >= identMax || ipUsed >= ipIdentMax) return reply({ code: 'quota', identLeft: 0 }, 429);
         if (int(await kv.get(capKey), 0) >= identCap) return reply({ code: 'busy' }, 429);
         const content = [];
         if (hasImg) content.push({ type: 'image', source: { type: 'base64', media_type: img.media_type, data: img.data } });
         else if (imgUrl) content.push({ type: 'image', source: { type: 'url', url: imgUrl } });
-        content.push({ type: 'text', text: identifyPrompt({ text, families: FAMILIES }) });
+        content.push({ type: 'text', text: identifyPrompt({ text: lines.length ? misses.join('\n') : text, families: FAMILIES }) });
         let items;
         try {
           const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
@@ -138,6 +143,8 @@ export function makeWorker(deps = {}) {
           if (!data || !Array.isArray(data.items)) return reply({ code: 'parse' }, 502);
           items = data.items.map(sanitizeItem).filter(Boolean).slice(0, 4);
         } catch (e) { return reply({ code: 'upstream' }, 502); }
+        if (misses.length === 1 && items.length === 1) await kv.put(`ent:${normName(misses[0])}`, JSON.stringify(items[0]));
+        items = hits.concat(items);
         for (const it of items) { const k = `cand:${normName(it.name)}`; if (!(await kv.get(k))) await kv.put(k, JSON.stringify({ d: it, v: [], p: false })); }
         await kv.put(`iv:${vid}`, String(used + 1)); await kv.put(ipIdentKey, String(ipUsed + 1), { expirationTtl: 172800 }); await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 });
         return reply({ data: { items }, identLeft: Math.max(0, Math.min(identMax - used - 1, ipIdentMax - ipUsed - 1)) });

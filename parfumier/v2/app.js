@@ -7,7 +7,12 @@
   const uid = () => Math.random().toString(36).slice(2, 10);
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
   const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const KEY = 'sillage.v3';
+  // Un profil = une collection, une wishlist, un journal : chaque personne a le sien (jamais mélangé), même sur un appareil partagé.
+  const PROF_KEY = 'sillage.profiles';
+  const loadProfiles = () => { try { const p = JSON.parse(localStorage.getItem(PROF_KEY) || 'null'); if (p && Array.isArray(p.list) && p.list.length && p.list.some((x) => x.id === p.active)) return p; } catch (e) { /* stockage indisponible */ } return { active: 'main', list: [{ id: 'main', name: '' }] }; };
+  const PROFILES = loadProfiles();
+  const saveProfiles = () => { try { localStorage.setItem(PROF_KEY, JSON.stringify(PROFILES)); } catch (e) { /* ok */ } };
+  const KEY = PROFILES.active === 'main' ? 'sillage.v3' : 'sillage.v3.' + PROFILES.active;
   const famLabel = (f) => (E.FAMILIES[f] ? E.FAMILIES[f].label : 'Sans famille');
   const FAMS = Object.keys(E.FAMILIES).join('|');
 
@@ -87,6 +92,7 @@
       const [db, user] = await Promise.all([c.use('db'), c.use('user')]);
       if (!db || !user) return;
       const id = await user.id(); if (!id) return;
+      if (PROFILES.active !== 'main') return; // la base de claude.ai ne suit que le profil principal
       dbDoc = db.doc('data/users/' + id + '/state');
       const snap = await dbDoc.get();
       if (snap.exists && snap.data() && snap.data().collection && snap.data().v === 3) {
@@ -460,6 +466,15 @@
     $('#sdel', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer'; return; } S.collection = S.collection.filter((x) => x.id !== id); save(); closeSheet(); render(true); };
   }
 
+  // Recherche dans le catalogue détaillé (notes, famille) puis dans le grand index (nom + maison, fiche complétée à l'ajout).
+  const IDX = (() => { const o = []; (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, c]) => o.push({ name: n, house: h, conc: c, nn: E.norm(n), nh: E.norm(h + ' ' + n) }))); return o; })();
+  const CONC_L = { EDP: 'EDP', EDT: 'EDT', EXT: 'Extrait', PAR: 'Parfum', COL: 'Cologne' };
+  function searchPerfumes(q, have) {
+    const out = [], seen = new Set(); const push = (r) => { const k = E.norm(r.house + ' ' + r.name); if (!seen.has(k)) { seen.add(k); out.push(r); } };
+    CAT.forEach((c) => { if (!have.has(E.norm(c.name)) && (E.norm(c.name).includes(q) || E.norm(c.house + ' ' + c.name).includes(q))) push({ name: c.name, house: c.house, cat: true, rank: E.norm(c.name).startsWith(q) ? 0 : 1 }); });
+    IDX.forEach((r) => { if (!have.has(r.nn) && r.nh.includes(q)) push({ name: r.name, house: r.house, conc: r.conc, rank: r.nn.startsWith(q) ? 0 : r.nh.startsWith(q) ? 1 : 2 }); });
+    return out.sort((a, b) => a.rank - b.rank).slice(0, 7);
+  }
   let PRE = [], SHELF_FILES = [];
   function openAdd() {
     PRE = []; SHELF_FILES = [];
@@ -469,14 +484,14 @@
       <div class="row"><button class="chip photo-btn" id="addph" ${CAN_IMG ? '' : 'hidden'}>${IC.cam}<span id="addphl">${window.SillageDemo ? 'Photo ou image du flacon' : 'Photo(s) de l\'étagère'}</span></button><input type="file" id="addin" accept="image/*" ${window.SillageDemo ? '' : 'multiple'} hidden></div>
       ${window.SillageDemo ? `<p class="mono" style="text-transform:none;letter-spacing:0">Reconnaissance par une IA légère, quasi gratuite : ${window.SillageDemo.identLeft()} analyse${window.SillageDemo.identLeft() > 1 ? 's' : ''} restante${window.SillageDemo.identLeft() > 1 ? 's' : ''} dans la démo. Les parfums déjà connus ne comptent pas.</p>` : ''}
       <button class="cta full" id="addgo">${IC.spark}<span>Analyser</span></button><div id="addres" style="display:grid;gap:10px"></div>`);
-    // Suggestions du catalogue pendant la frappe : un parfum connu s'ajoute sans IA.
+    // Suggestions pendant la frappe : un parfum connu s'ajoute sans erreur, les fiches inconnues sont complétées par l'IA légère (et gardées en cache pour tous).
     const sug = document.createElement('div'); sug.className = 'chips'; sug.id = 'addsug'; $('#addtxt', pn).after(sug);
     $('#addtxt', pn).addEventListener('input', (e) => {
-      const ta = e.target, parts = ta.value.split(/[\n,]/), last = E.norm(parts[parts.length - 1].trim());
+      const ta = e.target, multi = ta.value.includes('\n'), parts = ta.value.split(multi ? /\n/ : /,/), last = E.norm(parts[parts.length - 1].trim());
       const have = new Set(S.collection.map((p) => E.norm(p.name)));
-      const hits = last.length < 2 ? [] : CAT.filter((c) => !have.has(E.norm(c.name)) && (E.norm(c.name).includes(last) || E.norm(c.house + ' ' + c.name).includes(last))).sort((a, b) => (E.norm(a.name).startsWith(last) ? 0 : 1) - (E.norm(b.name).startsWith(last) ? 0 : 1)).slice(0, 6);
-      sug.innerHTML = hits.map((c) => `<button type="button" class="chip" data-sug="${esc(c.name)}">${esc(c.name)} <small style="color:var(--muted)">${esc(c.house)}</small></button>`).join('');
-      $$('[data-sug]', sug).forEach((b) => (b.onclick = () => { parts[parts.length - 1] = ' ' + b.dataset.sug; ta.value = parts.map((x) => x.trim()).filter(Boolean).join(', ') + ', '; sug.innerHTML = ''; ta.focus(); }));
+      const hits = last.length < 2 ? [] : searchPerfumes(last, have);
+      sug.innerHTML = hits.map((c, i) => `<button type="button" class="chip" data-sug="${i}">${esc(c.name)} <small style="color:var(--muted)">${esc(c.house)}${c.conc && c.conc !== 'EDP' ? ' · ' + esc(c.conc.split(',').map((x) => CONC_L[x] || x).join('/')) : ''}</small></button>`).join('');
+      $$('[data-sug]', sug).forEach((b) => (b.onclick = () => { const c = hits[+b.dataset.sug]; parts[parts.length - 1] = c.cat ? c.name : c.house + ' — ' + c.name; ta.value = parts.map((x) => x.trim()).filter(Boolean).join('\n') + '\n'; sug.innerHTML = ''; ta.focus(); }));
     });
     $('#addph', pn).onclick = () => $('#addin', pn).click();
     $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, window.SillageDemo ? 1 : 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
@@ -488,8 +503,8 @@
     if (imgUrl && !/^https:\/\/\S{4,}$/i.test(imgUrl)) { out.innerHTML = '<div class="empty">L\'adresse de l\'image doit commencer par https://</div>'; return; }
     // Les parfums déjà connus (catalogue de l'app, enrichi par les ajouts confirmés) n'ont pas besoin d'IA : zéro coût, zéro erreur.
     const localHits = [], restLines = [];
-    txt0.split(/\n|,/).map((x) => x.trim()).filter(Boolean).forEach((l) => { const c = CAT.find((x) => E.norm(x.name) === E.norm(l)); if (c) localHits.push(Object.assign(fromCat(c, 4), { conf: 0.95 })); else restLines.push(l); });
-    const txt = restLines.join(', ');
+    txt0.split(txt0.includes('\n') ? /\n/ : /,/).map((x) => x.trim()).filter(Boolean).forEach((l) => { const nm = l.includes(' — ') ? l.split(' — ').slice(1).join(' ') : l; const c = CAT.find((x) => E.norm(x.name) === E.norm(nm)); if (c) localHits.push(Object.assign(fromCat(c, 4), { conf: 0.95 })); else restLines.push(l); });
+    const txt = restLines.join('\n');
     out.innerHTML = '<div class="shim"></div><div class="shim" style="width:80%"></div><div class="shim" style="width:60%"></div>'; $('#addgo', pn).disabled = true;
     let items = null;
     try {
@@ -541,10 +556,14 @@
 
   function openProfile() {
     const s = S.settings;
-    const pf = hasProfile() ? S.profile : { gender: '', age: null };
+    const pf = hasProfile() ? S.profile : { gender: '', age: null, name: '' };
     const pn = openSheet(`<div><h2>Profil</h2></div>
       <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
+        <input type="text" id="pname" maxlength="24" value="${esc(pf.name || '')}" placeholder="Mon prénom" aria-label="Mon prénom">
         <input type="text" id="page" inputmode="numeric" maxlength="2" value="${pf.age || ''}" placeholder="Mon âge" aria-label="Mon âge"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour. Ta tenue, je te la demande quand tu cherches ton parfum.</p></div>
+      <div class="card" style="display:grid;gap:10px"><b>Profils sur cet appareil</b><p class="mono" style="text-transform:none;letter-spacing:0">Chaque profil a sa propre collection, sa wishlist et son journal. Rien n'est mélangé.</p>
+        <div class="chips">${PROFILES.list.map((x, i) => `<button class="chip ${x.id === PROFILES.active ? 'on' : ''}" data-sw="${x.id}">${esc(profLabel(x, i))}</button>`).join('')}<button class="chip" id="newprof">+ Nouveau profil</button></div>
+        ${PROFILES.list.length > 1 ? '<button class="ghost danger" id="delprof" style="justify-self:start">Supprimer ce profil</button>' : ''}</div>
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
@@ -552,6 +571,10 @@
     const pmsg = () => { $('#pmsg', pn).textContent = 'Enregistré ✓'; };
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
     $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
+    $('#pname', pn).onchange = () => { setProfile({ name: $('#pname', pn).value.trim().slice(0, 24) }); pmsg(); };
+    $$('[data-sw]', pn).forEach((b) => (b.onclick = () => switchProfile(b.dataset.sw)));
+    $('#newprof', pn).onclick = newProfile;
+    if ($('#delprof', pn)) $('#delprof', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : supprimer ce profil'; return; } deleteProfile(PROFILES.active); };
     $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
@@ -1025,10 +1048,17 @@
   const dressIcon = (k, px) => `<svg viewBox="0 0 48 48" width="${px || 40}" height="${px || 40}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${DRESS_SVG[k] || ''}</svg>`;
   const hasProfile = () => !!(S.profile && !S.profile.skipped);
   const cleanAge = (v) => { const n = Math.round(+v); return n >= 10 && n <= 99 ? n : null; };
-  const setProfile = (patch) => { S.profile = Object.assign({ gender: '', age: null }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; delete S.profile.dress; delete S.profile.note; save(); };
+  const setProfile = (patch) => {
+    S.profile = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; delete S.profile.dress; delete S.profile.note; save();
+    const me = PROFILES.list.find((x) => x.id === PROFILES.active); if (me && me.name !== (S.profile.name || '')) { me.name = S.profile.name || ''; saveProfiles(); }
+  };
+  const profLabel = (p, i) => p.name || (p.id === 'main' ? 'Moi' : 'Profil ' + (i + 1));
+  const switchProfile = (id) => { PROFILES.active = id; saveProfiles(); location.reload(); };
+  const newProfile = () => { const id = 'u' + Math.random().toString(36).slice(2, 8); PROFILES.list.push({ id, name: '' }); switchProfile(id); };
+  const deleteProfile = (id) => { try { localStorage.removeItem(id === 'main' ? 'sillage.v3' : 'sillage.v3.' + id); } catch (e) { /* ok */ } PROFILES.list = PROFILES.list.filter((x) => x.id !== id); if (!PROFILES.list.length) PROFILES.list = [{ id: 'main', name: '' }]; switchProfile(PROFILES.active === id ? PROFILES.list[0].id : PROFILES.active); };
   function maybeProfile() { if (!S.profile && !PRESENT && !$('#onb') && !$('#prof')) showProfile(); }
   function showProfile() {
-    const d = Object.assign({ gender: '', age: null }, hasProfile() ? S.profile : {});
+    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {});
     const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Ton profil');
     let step = 1;
     const draw = () => {
@@ -1038,12 +1068,13 @@
           <button class="cta full" id="pNext"><span>Continuer</span></button><button class="ghost" id="pSkip">Plus tard</button></div>`
         : `<div class="prof-in"><p class="mono">Ton profil · 2 / 2</p><h2>Quel âge as-tu ?</h2><p class="soft">Les goûts et les occasions changent avec l'âge. Ça reste sur ton appareil.</p>
           <input type="text" id="pAge" inputmode="numeric" maxlength="2" value="${d.age || ''}" placeholder="Ton âge" aria-label="Ton âge" class="agein">
+          <input type="text" id="pName" maxlength="24" value="${esc(d.name || '')}" placeholder="Ton prénom (facultatif)" aria-label="Ton prénom" autocomplete="given-name">
           <button class="cta full" id="pDone"><span>C'est parti</span></button><button class="ghost" id="pBack">Retour</button></div>`;
       $$('[data-g]', el).forEach((b) => (b.onclick = () => { d.gender = b.dataset.g; $$('[data-g]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
       if ($('#pNext', el)) $('#pNext', el).onclick = () => { step = 2; draw(); };
-      if ($('#pBack', el)) $('#pBack', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); step = 1; draw(); };
+      if ($('#pBack', el)) $('#pBack', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); d.name = $('#pName', el).value.trim(); step = 1; draw(); };
       if ($('#pSkip', el)) $('#pSkip', el).onclick = () => end(true);
-      if ($('#pDone', el)) $('#pDone', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); end(false); };
+      if ($('#pDone', el)) $('#pDone', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); d.name = $('#pName', el).value.trim().slice(0, 24); end(false); };
     };
     const end = (skip) => { if (skip) { S.profile = { skipped: true, ts: Date.now() }; save(); } else setProfile(d); el.remove(); document.body.style.overflow = ''; render(true); };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();

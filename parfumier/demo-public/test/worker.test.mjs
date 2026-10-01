@@ -117,3 +117,16 @@ await t('stock : un échantillon réservé ne gagne pas une journée ordinaire, 
   assert.deepEqual(E.stockOf({}), { size: 100, left: 100, ml: 100, use: 'free' });
 });
 console.log(ok, 'tests réussis');
+
+// ---------- Cache d'identification : un parfum déjà connu ne coûte rien
+await t('identify : un parfum déjà identifié sort du cache, sans appel au modèle ni essai consommé', async () => {
+  const one = JSON.stringify({ items: [{ name: 'Santal 33', house: 'Le Labo', family: 'boisé', notes: ['santal', 'cuir'], projection: 4, longevity: 4, weight: 3, price: 220, confidence: 0.9 }] });
+  const wc = makeWorker({ client: { messages: { async create(r) { identCalls.push(r); return { stop_reason: 'end_turn', content: [{ type: 'text', text: one }] }; } } } });
+  const before = identCalls.length;
+  let r = await wc.fetch(req('/api/identify', { method: 'POST', vid: V(60), ip: '60.0.0.1', body: { text: 'Le Labo — Santal 33' } }), envI);
+  assert.equal(r.status, 200); assert.equal(identCalls.length, before + 1);
+  r = await wc.fetch(req('/api/identify', { method: 'POST', vid: V(61), ip: '61.0.0.1', body: { text: 'le labo — santal 33' } }), envI); const j = await r.json();
+  assert.equal(r.status, 200); assert.equal(j.cached, 1); assert.equal(j.data.items[0].name, 'Santal 33'); assert.equal(identCalls.length, before + 1);
+  const q = await (await wc.fetch(req('/api/quota', { vid: V(61), ip: '61.0.0.1' }), envI)).json(); assert.equal(q.identLeft, 3);
+});
+console.log(ok, 'tests réussis');
