@@ -175,6 +175,11 @@
     'Daniela Andrier': ['Parfumeuse de Prada', 'Infusion d\'Iris, L\'Homme Prada, Luna Rossa : l\'élégance sobre et poudrée de la maison.'],
     'Anne Flipo': ['Parfumeuse', 'Libre (Yves Saint Laurent), Lady Million, des Jo Malone : des parfums grand public à forte personnalité.'],
     'Mathilde Laurent': ['Nez de Cartier', 'Baiser Volé, La Panthère, Déclaration d\'un soir : des parfums raffinés, souvent floraux et sensuels.'],
+    'François Demachy': ['Ancien parfumeur-créateur de Dior', 'Nez de Dior de 2006 à 2021 : Sauvage, Miss Dior et une grande partie de la Collection Privée. Son style : élégant, généreux, très français.'],
+    'Ernest Beaux': ['Parfumeur historique de Chanel', 'Il a composé le N°5 de Chanel (1921), qui a popularisé les aldéhydes. Un nom entré dans l\'histoire du parfum.'],
+    'Olivia Giacobetti': ['Parfumeuse', 'Philosykos et Do Son pour Diptyque, En Passant pour Frédéric Malle : un style transparent, aérien, très épuré.'],
+    'Christophe Raynaud': ['Parfumeur', 'L\'un des créateurs de 1 Million de Paco Rabanne (avec Olivier Pescheux et Michel Girard).'],
+    'Jean-Paul Guerlain': ['Ancien nez de Guerlain', 'Héritier de la famille Guerlain : Habit Rouge, Samsara. Un style ambré, poudré, très classique.'],
     'Marie Salamagne': ['Parfumeuse de Maison Margiela Replica', 'Jazz Club, By the Fireplace : l\'art de raconter un souvenir en parfum.'],
     'Antoine Lie': ['Parfumeur', 'Etat Libre d\'Orange (Rien, Jasmin et Cigarette), Interlude Man (Amouage), Nasomatto : des parfums audacieux.'],
     'Mark Buxton': ['Parfumeur indépendant', 'La collection Comme des Garçons (Black, 2), mais aussi Jovoy et Nasomatto : un style graphique, très affirmé.'],
@@ -190,7 +195,27 @@
     'Sophie Labbé': ['Parfumeuse', 'Bvlgari (Omnia, Rose Goldea), Dior, Valentino.'],
     'Annick Menardo': ['Parfumeuse', 'A*Men (Mugler), Bvlgari Black, Hypnotic Poison (Dior).'],
   };
-  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Pierre Bourdon', 'Jérôme Epinette', 'Alessandro Gualtieri', 'Frank Voelkl', 'Daniela Andrier', 'Anne Flipo', 'Mathilde Laurent', 'Marie Salamagne'];
+  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'François Demachy', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Pierre Bourdon', 'Jérôme Epinette', 'Alessandro Gualtieri', 'Frank Voelkl', 'Daniela Andrier', 'Anne Flipo', 'Mathilde Laurent', 'Marie Salamagne'];
   root.NOSE_BIO = NOSE_BIO; root.NOSE_TOP = NOSE_TOP;
+
+  // ---------- Genre : pour lui / pour elle / mixte (repère de commercialisation, pour ne pas recommander un parfum nettement « girly » à un homme, ni l'inverse) ----------
+  const GM = ['Acqua di Giò', 'Bleu de Chanel EDP', 'Bleu de Chanel EDT', 'Sauvage EDT', 'Sauvage EDP', 'Sauvage Elixir', 'Terre d\'Hermès', 'Y EDP', 'La Nuit de l\'Homme', 'Eau Sauvage', 'Fahrenheit', 'Invictus', '1 Million', 'Stronger With You', 'Stronger With You Intensely', 'Le Male', 'Le Male Elixir', 'Grey Vetiver', 'Encre Noire', 'Green Irish Tweed', 'Vétiver', 'Explorer', 'Legend', 'L\'Homme', 'Club de Nuit Intense Man', 'Hawas', 'Voyage', 'Reflection Man', 'Interlude Man', 'Boss Bottled', 'Pour un Homme de Caron', 'Dior Homme Intense', 'Ultra Male', 'Phantom', 'Eros', 'Habit Rouge', 'Gentleman Réserve Privée', 'Le Beau', 'Spicebomb Extreme', 'Aventus', 'Armani Code', 'Ombré Leather'];
+  const GF = ['Light Blue', 'Black Opium', 'Libre', 'Libre Le Parfum', 'Good Girl', 'La Vie est Belle', 'Coco Mademoiselle', 'N°5 EDP', 'Chance Eau Tendre', 'Miss Dior EDP', 'Miss Dior Essence', 'J\'adore', 'Angel', 'Alien', 'Flowerbomb', 'Daisy', 'Si', 'Burberry Her', 'Pure Musc Blanc', 'L\'Interdit Rouge', 'Power of You', 'Scandal', 'Scandal By Night', 'Paradoxe Intense', 'Shalimar', 'Aqua Allegoria Rosa Verde', 'Delina', 'Yara', 'Jasmin Rouge', 'Acne Studios', 'Stellar Times', 'Radical Rose', 'Étoile Filante', 'Contre Moi', 'Coeur Battant'];
+  const GSET = {}; GM.forEach((n) => { GSET[n] = 'm'; }); GF.forEach((n) => { GSET[n] = 'f'; });
+  const WM = /\b(homme|men|man|uomo|male|mâle|lui|him|boy|gentleman|sport|sir|pour monsieur|monsieur|hero|wanted)\b/, WF = /\b(femme|woman|women|donna|her|girl|lady|belle|fille|she|bloom|blossom|princess|miss|mademoiselle|dame|elle|queen|rose goldea|omnia)\b/;
+  function genderOf(name, house) {
+    if (GSET[name]) return GSET[name];
+    const base = String(name || '').replace(/\s+(EDP|EDT|EDC|Elixir|Intense|Parfum|Extrait)$/i, '');
+    if (GSET[base]) return GSET[base];
+    for (const c of ['EDT', 'EDP']) if (GSET[base + ' ' + c]) return GSET[base + ' ' + c];
+    const t = String(name || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    if (WM.test(t)) return 'm';
+    if (WF.test(t)) return 'f';
+    return 'u';
+  }
+  root.genderOf = genderOf;
+  // Maisons du plus au moins connu (pour classer la liste) ; les autres suivent par nombre de parfums
+  const HOUSE_FAME = ['Chanel', 'Dior', 'Yves Saint Laurent', 'Guerlain', 'Hermès', 'Tom Ford', 'Armani', 'Givenchy', 'Louis Vuitton', 'Jean Paul Gaultier', 'Rabanne', 'Prada', 'Gucci', 'Dolce & Gabbana', 'Versace', 'Calvin Klein', 'Burberry', 'Lancôme', 'Mugler', 'Viktor&Rolf', 'Carolina Herrera', 'Montblanc', 'Bvlgari', 'Cartier', 'Valentino', 'Byredo', 'Le Labo', 'Maison Francis Kurkdjian', 'Diptyque', 'Maison Margiela', 'Jo Malone', 'Creed', 'Parfums de Marly', 'Kilian', 'Frédéric Malle', 'Amouage', 'Xerjoff', 'Initio', 'Nishane', 'Acqua di Parma', 'Penhaligon\'s', 'Serge Lutens', 'L\'Artisan Parfumeur', 'Atelier Cologne', 'Maison Crivelli', 'Ex Nihilo', 'BDK Parfums', 'Nasomatto', 'Marc-Antoine Barrois', 'Matière Première', 'Memo Paris', 'Montale', 'Mancera', 'Lattafa', 'Armaf', 'Rasasi', 'Afnan', 'Issey Miyake', 'Kenzo', 'Narciso Rodriguez', 'Marc Jacobs', 'Azzaro', 'Hugo Boss', 'Van Cleef & Arpels', 'Chloé', 'Fragonard', 'Houbigant', 'Essential Parfums', 'Jovoy', 'Etat Libre d\'Orange', 'Juliette Has a Gun', 'Parfum d\'Empire', 'Comme des Garçons', 'Roja Parfums', 'Floris', 'Santa Maria Novella', 'Mizensir', 'Horace', 'Oman Luxury', 'Maison Goutal'];
+  root.HOUSE_FAME = HOUSE_FAME;
   root.DESC = DESC; root.NOSE = NOSE; root.NOSE_HOUSE = NOSE_HOUSE; root.LEX = LEX;
 })(typeof window !== 'undefined' ? window : globalThis);

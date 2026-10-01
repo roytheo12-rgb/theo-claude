@@ -57,7 +57,7 @@
   async function call(sub, method, body) {
     let r; try { r = await fetch('/api/account/' + sub, { method, headers: Object.assign({ 'content-type': 'application/json' }, token ? { authorization: 'Bearer ' + token } : {}), body: body ? JSON.stringify(body) : undefined }); } catch (e) { throw { code: 'network' }; }
     const j = await r.json().catch(() => ({}));
-    if (!r.ok) { if (r.status === 401 && token && sub !== 'login') setSession(null); throw { code: j.code || 'server', status: r.status }; }
+    if (!r.ok) { if (r.status === 401 && token && sub !== 'login') { setSession(null); try { window.dispatchEvent(new Event('sillage:expired')); } catch (e) { /* ok */ } } throw { code: j.code || 'server', status: r.status }; }
     return j;
   }
   // On n'envoie pas les grosses images intégrées (la limite est de 900 Ko) : les photos de la base, elles, sont rechargées par leur nom.

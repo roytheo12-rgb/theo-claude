@@ -5,7 +5,7 @@ export function profileLine(p) {
   const bits = [], age = Math.round(Number(p.age));
   if (GENDERS[p.gender]) bits.push('je suis ' + GENDERS[p.gender]);
   if (age >= 10 && age <= 99) bits.push('j\'ai ' + age + ' ans');
-  return bits.length ? '\nProfil : ' + bits.join(' ; ') + '. Ne te limite pas aux flacons étiquetés « masculin » ou « féminin » : choisis ce qui me va.' : '';
+  return bits.length ? '\nProfil : ' + bits.join(' ; ') + '. Un parfum mixte me va, mais évite les parfums nettement féminins ou girly si je suis un homme, et nettement masculins si je suis une femme.' : '';
 }
 
 // Prompt d'identification d'un parfum à partir d'un nom, d'une image ou d'un lien (modèle léger, côté serveur).

@@ -1,0 +1,159 @@
+# Photos envoyées mais non utilisées
+
+## 1. Non identifiées (à nommer : Maison + parfum)
+
+- 107.jpg
+- 155.jpg
+- 175.jpg
+- 181.jpg
+- 189.jpg
+- 190.jpg
+- 208.jpg
+- 210.jpg
+- 212.jpg
+- 217.jpg
+- 218.jpg
+- 221.jpg
+- 222.jpg
+- 223.jpg
+- 224.jpg
+- 238.jpg
+- 24.jpg
+- 252.jpg
+- 272.jpg
+- 273.jpg
+- 281.jpg
+- 304.jpg
+- 307.jpg
+- 308.jpg
+- 309.jpg
+- 310.jpg
+- 311.jpg
+- 312.jpg
+- 313.jpg
+- 318.jpg
+- 324.jpg
+- 326.jpg
+- 329.jpg
+- 333.jpg
+- 334.jpg
+- 335.jpg
+- 336.jpg
+- 338.jpg
+- 339.jpg
+- 340.jpg
+- 341.jpg
+- 354.jpg
+- 356.jpg
+- 357.jpg
+- 39.jpg
+- 57.jpg
+- fleu narcotique extrait ex nihilo.jpg
+- orphéon dyptique.jpg
+
+## 2. Détourage raté (le flacon n'a pas pu être découpé proprement)
+
+- 105.jpg : Matière Première — Neroli Oranger
+- 114.jpg : Parfums de Marly — Valaya
+- 115.jpg : Kilian — Woman in Gold
+- 133.jpg : Juliette Has a Gun — Musc Invisible
+- 137.jpg : Matière Première — Cologne Cédrat
+- 2.jpg : Dior — Gris Dior
+- 270.jpg : Parfums de Marly — Delina
+- 276.jpg : Byredo — Mojave Ghost
+- 290.jpg : Matière Première — Encens Suave
+- 303.jpg : Dries Van Noten — Fleur du Mal
+- 306.jpg : Place de la Rêverie — Passion Riviera
+- 327.jpg : Dior — Cuir Saddle
+- 330.jpg : Dior — Vanilla Diorama
+- 331.jpg : Dior — Oud Ispahan
+- 342.jpg : Guerlain — Cuir Béluga
+- 343.jpg : Guerlain — Spiritueuse Double Vanille
+- 344.jpg : Guerlain — Fève Gourmande
+- 64.jpg : Guerlain — Cuir Béluga
+- 84.jpg : Byredo — Mojave Ghost
+- 26.jpg : Essential Parfums — Velvet Iris (échec du traitement)
+
+## 3. Doublons ou variantes (sans effet : une photo existe déjà)
+
+- 10.jpg : Jo Malone — Myrrh & Tonka (photo faite à la main déjà en place)
+- 100.jpg : Matière Première — Radical Rose (photo faite à la main déjà en place)
+- 124.jpg : Ex Nihilo — Fleur Narcotique (photo faite à la main déjà en place)
+- 138.jpg : Louis Vuitton — Imagination (photo faite à la main déjà en place)
+- 139.jpg : Courrèges — L'Eau Pâle (photo faite à la main déjà en place)
+- 140.jpg : Narciso Rodriguez — Pure Musc Blanc (photo faite à la main déjà en place)
+- 141.jpg : Givenchy — L'Interdit Rouge (photo faite à la main déjà en place)
+- 142.jpg : Emporio Armani — Power of You (photo faite à la main déjà en place)
+- 143.jpg : Emporio Armani — Stronger With You Intensely (photo faite à la main déjà en place)
+- 144.jpg : Dior — Rouge Trafalgar (photo faite à la main déjà en place)
+- 145.jpg : Dior — Dior Homme Intense (photo faite à la main déjà en place)
+- 146.jpg : Yves Saint Laurent — Libre Le Parfum (photo faite à la main déjà en place)
+- 147.jpg : Jean Paul Gaultier — Le Male (photo faite à la main déjà en place)
+- 187.jpg : Maison Francis Kurkdjian — Oud Satin Mood (même parfum que 184.jpg)
+- 20.jpg : Marc-Antoine Barrois — Ganymede (photo faite à la main déjà en place)
+- 209.jpg : Horace — Vetiver Primavera (même parfum que 14.jpg)
+- 211.jpg : Acqua di Parma — Buongiorno Dolce Far Niente (photo faite à la main déjà en place)
+- 22.jpg : Louis Vuitton — Sun Song (même parfum que 1.jpg)
+- 274.jpg : Byredo — Bal d'Afrique (même parfum que 103.jpg)
+- 288.jpg : Diptyque — Tam Dao (même parfum que 129.jpg)
+- 29.jpg : Narciso Rodriguez — Pure Musc Blanc (photo faite à la main déjà en place)
+- 30.jpg : Emporio Armani — Power of You (photo faite à la main déjà en place)
+- 31.jpg : Yves Saint Laurent — Libre Le Parfum (photo faite à la main déjà en place)
+- 32.jpg : Dior — Dior Homme Intense (photo faite à la main déjà en place)
+- 33.jpg : Emporio Armani — Stronger With You Intensely (photo faite à la main déjà en place)
+- 34.jpg : Givenchy — L'Interdit Rouge (photo faite à la main déjà en place)
+- 347.jpg : Kilian — Angels' Share (même parfum que 118.jpg)
+- 349.jpg : Oman Luxury — Nasaj (photo faite à la main déjà en place)
+- 35.jpg : Jean Paul Gaultier — Le Male (photo faite à la main déjà en place)
+- 36.jpg : Frédéric Malle — Acne Studios (photo faite à la main déjà en place)
+- 37.jpg : Amouage — Purpose (photo faite à la main déjà en place)
+- 38.jpg : Librery — Ambert Sunset (photo faite à la main déjà en place)
+- 40.jpg : Frédéric Malle — Vétiver Extraordinaire (photo faite à la main déjà en place)
+- 41.jpg : Louis Vuitton — Étoile Filante (photo faite à la main déjà en place)
+- 42.jpg : Byredo — De Los Santos (photo faite à la main déjà en place)
+- 43.jpg : Maison Margiela — Lazy Sunday Morning (photo faite à la main déjà en place)
+- 44.jpg : Dior — Sauvage EDT (photo faite à la main déjà en place)
+- 45.jpg : Hugo Boss — Boss Bottled (photo faite à la main déjà en place)
+- 46.jpg : Chanel — Bleu de Chanel EDP (même parfum que 228.jpg)
+- 47.jpg : Hermès — Terre d'Hermès (photo faite à la main déjà en place)
+- 49.jpg : Guerlain — Aqua Allegoria Rosa Verde (photo faite à la main déjà en place)
+- 52.jpg : Dior — Miss Dior Essence (photo faite à la main déjà en place)
+- 53.jpg : Lancôme — La Vie est Belle (photo faite à la main déjà en place)
+- 54.jpg : Guerlain — Shalimar (photo faite à la main déjà en place)
+- 55.jpg : Dior — J'adore (photo faite à la main déjà en place)
+- 56.jpg : Van Cleef & Arpels — Néroli Amara (photo faite à la main déjà en place)
+- 58.jpg : Louis Vuitton — Ombre Nomade (photo faite à la main déjà en place)
+- 59.jpg : Louis Vuitton — Imagination (photo faite à la main déjà en place)
+- 6.jpg : Maison Margiela — Jazz Club (photo faite à la main déjà en place)
+- 60.jpg : Courrèges — L'Eau Pâle (photo faite à la main déjà en place)
+- 61.jpg : Dior — Rouge Trafalgar (photo faite à la main déjà en place)
+- 66.jpg : Byredo — Bibliothèque (même parfum que 271.jpg)
+- 69.jpg : Maison Crivelli — Hibiscus Mahajád (même parfum que 301.jpg)
+- 71.jpg : Essential Parfums — Bois Impérial (photo faite à la main déjà en place)
+- 72.jpg : Jo Malone — Myrrh & Tonka (photo faite à la main déjà en place)
+- 73.jpg : Nasomatto — Black Afgano (photo faite à la main déjà en place)
+- 74.jpg : Contes de Parfums — Sydney (photo faite à la main déjà en place)
+- 75.jpg : Essential Parfums — The Musc (photo faite à la main déjà en place)
+- 76.jpg : Maison Francis Kurkdjian — 724 (photo faite à la main déjà en place)
+- 77.jpg : Le Labo — Thé Noir 29 (photo faite à la main déjà en place)
+- 82.jpg : Maison Francis Kurkdjian — Baccarat Rouge 540 (photo faite à la main déjà en place)
+- 85.jpg : Acqua di Parma — Buongiorno Dolce Far Niente (photo faite à la main déjà en place)
+- 86.jpg : Kilian — Straight to Heaven (photo faite à la main déjà en place)
+- 87.jpg : Atelier Materi — Néroli Hasbaya (photo faite à la main déjà en place)
+- 9.jpg : Essential Parfums — Bois Impérial (photo faite à la main déjà en place)
+- 90.jpg : Amouage — Guidance 46 (photo faite à la main déjà en place)
+- 91.jpg : Parfum d'Empire — Ambre Russe (photo faite à la main déjà en place)
+- 95.jpg : Frédéric Malle — Portrait of a Lady (photo faite à la main déjà en place)
+- 96.jpg : Tom Ford — Jasmin Rouge (photo faite à la main déjà en place)
+- 97.jpg : Tom Ford — Tobacco Vanille (photo faite à la main déjà en place)
+- 98.jpg : Louis Vuitton — Ombre Nomade (photo faite à la main déjà en place)
+- 99.jpg : Louis Vuitton — Stellar Times (photo faite à la main déjà en place)
+- bianco latte.jpg : Giardini di Toscana — Bianco Latte (photo faite à la main déjà en place)
+- gris charnel extrait.jpg : BDK Parfums — Gris Charnel Extrait (photo faite à la main déjà en place)
+- musc ravageur.jpg : Frédéric Malle — Musc Ravageur (photo faite à la main déjà en place)
+- naxos xerjoff.jpg : Xerjoff — Naxos (photo faite à la main déjà en place)
+- oman luxury nasaj.jpg : Oman Luxury — Nasaj (photo faite à la main déjà en place)
+- santal de paris feve nectar.jpg : Place de la Rêverie — Fève Nectar (photo faite à la main déjà en place)
+- tamdao dyptique.jpg : Diptyque — Tam Dao (même parfum que 129.jpg)
+- y de ysl.jpg : Yves Saint Laurent — Y EDP (même parfum que 242.jpg)
+- ysl tuxedo.jpg : Yves Saint Laurent — Tuxedo (photo faite à la main déjà en place)

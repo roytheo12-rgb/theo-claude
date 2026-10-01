@@ -1,0 +1,64 @@
+# Maison|Parfum|Nez retenu — pour les parfums où la liste citait plusieurs nez. Un seul nez par parfum.
+# Hors de ce fichier, on retient le nez le plus présent pour cette maison dans data/noses.txt (choix par défaut, à vérifier).
+Armani|Acqua di Giò|Alberto Morillas
+Armani|Acqua di Giò Profondo|Alberto Morillas
+Le Labo|Santal 33|Frank Voelkl
+Le Labo|Bergamote 22|Frank Voelkl
+Le Labo|Rose 31|Daphné Bugey
+Le Labo|Thé Noir 29|Daphné Bugey
+Tom Ford|Tobacco Vanille|Harry Fremont
+Dior|Sauvage|François Demachy
+Dior|Sauvage Elixir|François Demachy
+Dior|Sauvage Parfum|François Demachy
+Dior|Dior Homme|Olivier Polge
+Dior|Dior Homme Intense|François Demachy
+Dior|Miss Dior|François Demachy
+Dior|J'adore|Calice Becker
+Chanel|Bleu de Chanel|Jacques Polge
+Chanel|Coco Mademoiselle|Jacques Polge
+Chanel|N°5|Ernest Beaux
+Chanel|Coromandel|Jacques Polge
+Chanel|Sycomore|Jacques Polge
+Chanel|Gabrielle|Olivier Polge
+Mugler|Alien|Dominique Ropion
+Mugler|Angel|Olivier Cresp
+Viktor&Rolf|Flowerbomb|Olivier Polge
+Viktor&Rolf|Spicebomb|Olivier Polge
+Dolce & Gabbana|Light Blue|Olivier Cresp
+Rabanne|1 Million|Christophe Raynaud
+Rabanne|Invictus|Anne Flipo
+Lancôme|La Vie est Belle|Olivier Polge
+Yves Saint Laurent|Libre|Anne Flipo
+Yves Saint Laurent|Black Opium|Nathalie Lorson
+Yves Saint Laurent|La Nuit de l'Homme|Dominique Ropion
+Versace|Eros|Aurélien Guichard
+Narciso Rodriguez|For Her|Francis Kurkdjian
+Jean Paul Gaultier|Le Male|Francis Kurkdjian
+Marc Jacobs|Daisy|Alberto Morillas
+Guerlain|Habit Rouge|Jean-Paul Guerlain
+Guerlain|Mon Guerlain|Delphine Jelk
+Diptyque|Philosykos|Olivia Giacobetti
+Byredo|Gypsy Water|Jérôme Epinette
+Byredo|Bal d'Afrique|Jérôme Epinette
+Byredo|Mojave Ghost|Jérôme Epinette
+Byredo|Blanche|Jérôme Epinette
+Frédéric Malle|Musc Ravageur|Maurice Roucel
+Frédéric Malle|Vetiver Extraordinaire|Dominique Ropion
+Frédéric Malle|Geranium Pour Monsieur|Dominique Ropion
+Frédéric Malle|Lipstick Rose|Ralf Schwieger
+Frédéric Malle|En Passant|Olivia Giacobetti
+Frédéric Malle|Une Fleur de Cassie|Dominique Ropion
+Frédéric Malle|Promise|Dominique Ropion
+Frédéric Malle|Music For a While|Dominique Ropion
+Frédéric Malle|L'Eau d'Hiver|Jean-Claude Ellena
+Frédéric Malle|Angéliques Sous La Pluie|Jean-Claude Ellena
+Frédéric Malle|Cologne Bigarade|Jean-Claude Ellena
+Frédéric Malle|Bigarade|Jean-Claude Ellena
+Parfums de Marly|Delina|Quentin Bisch
+Parfums de Marly|Layton|Nicolas Beaulieu
+Kilian|Good Girl Gone Bad|Calice Becker
+Kilian|Love, Don't Be Shy|Alienor Massenet
+Jo Malone|Wood Sage & Sea Salt|Christine Nagel
+Jo Malone|Myrrh & Tonka|Christine Nagel
+Jo Malone|English Pear & Freesia|Christine Nagel
+Hermès|Terre d'Hermès|Jean-Claude Ellena

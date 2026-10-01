@@ -54,7 +54,7 @@ Ordre de grandeur **estimé, non mesuré** : ≈ 0,02 $ par essai avec Sonnet 5.
 
 - Protégé : la clé API (jamais dans le navigateur), le prompt du conseil du jour (construit côté serveur), le nombre d'essais.
 - Non protégé : tout code exécuté dans le navigateur (moteur de recommandation, catalogue) est lisible par quiconque ouvre les outils de développement. Les autres prompts IA sont verrouillés dans la démo mais visibles dans le code.
-- Les photos de flacons sont celles de marques tierces : risque de droits en usage public. Alternative : activer le « Mode public » (flacons dessinés) dans Profil.
+- Les photos de flacons sont celles de marques tierces : risque de droits en usage public.
 
 ## 5. RGPD
 
@@ -107,7 +107,7 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 
 ## 11. Comptes
 
-- **Créer un compte** (email + mot de passe) est proposé juste après l'intro ; il enregistre tout le profil (prénom, genre, âge, goûts, collection, wishlist, journal) côté serveur, automatiquement après chaque modification. Ensuite viennent les questions d'inscription. **Se connecter** sur un autre appareil rapporte le profil complet, sans refaire les questions. **Continuer sans compte** reste possible ; on peut créer un compte plus tard dans Profil. Profil permet aussi de se déconnecter et de **supprimer** le compte (tout est effacé).
+- **Créer un compte** (email + mot de passe) est proposé juste après l'intro ; il enregistre tout le profil (prénom, genre, âge, goûts, collection, wishlist, journal) côté serveur, automatiquement après chaque modification. Ensuite viennent les questions d'inscription. **Se connecter** sur un autre appareil rapporte le profil complet, sans refaire les questions. **Le compte est obligatoire** : sans connexion, l'appli ne s'ouvre pas (seuls `?seed=demo`, `?test=1` et `?present=1` passent, pour les tests). Se déconnecter ou supprimer son compte efface les données de l'appareil et redemande un compte. Profil permet aussi de se déconnecter et de **supprimer** le compte (tout est effacé).
 - Côté Worker : `/api/account/signup|login|data|logout|delete`. Mot de passe haché avec PBKDF2-SHA256 (100 000 itérations, le maximum de Cloudflare Workers) et sel propre à chaque compte, jamais stocké en clair ; session par jeton aléatoire valable 180 jours ; profil limité à 900 Ko ; limites d'essais par adresse IP.
 - **Pas de « mot de passe oublié »** pour l'instant (l'email est stocké, on pourra l'ajouter). Le compte n'existe que dans la version publique (Worker) : l'artifact claude.ai garde son propre enregistrement.
 - Dis aux utilisateurs que l'email ne sert qu'à se reconnecter : c'est ce que dit l'écran. Si tu veux t'en servir pour autre chose (offre sur mesure), il faut un consentement séparé.
@@ -116,5 +116,7 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 
 - `data/noses.txt` : la liste « Parfumeur | Maison | Parfums » (≈ 920 parfums, 60 nez). `tools/build-index.py` rattache chaque parfum à son nez (clé « maison nom »), ajoute à l'index les parfums qui manquent, et écrit `window.NOSE_BY` dans `index.js`.
 - Dans l'appli : onglet **Recherche** → bandeau « Les nez » (les plus connus) ; fiche d'un nez avec sa présentation (`desc.js`, `NOSE_BIO`) et tous ses parfums ; filtre « Parfumeur » ; fiche d'un parfum → « Créé par » cliquable ; explorateur → onglet Parfumeurs.
-- **Attention aux contradictions** : dans la liste, plusieurs nez sont parfois cités pour un même parfum (≈ 260 parfums avec au moins 2 nez, ≈ 100 avec 3 ou plus : Gris Charnel, Tabac Rose, Narciso Rodriguez For Her, Wood Sage & Sea Salt…). L'appli les affiche tous et signale « les sources divergent » à partir de 3. Corrige `data/noses.txt` puis relance `python3 tools/build-index.py`.
+- **Un seul nez par parfum.** Quand la liste en cite plusieurs, `data/noses-choix.txt` (`Maison|Parfum|Nez`) donne le bon (ex. Santal 33 : Frank Voelkl, Acqua di Giò : Alberto Morillas). Sans choix explicite, `build-index.py` garde le nez le plus souvent cité pour cette maison (213 cas, signalés à l'exécution). Corrige `data/noses-choix.txt` puis relance `python3 tools/build-index.py`.
+- **Genre** : `desc.js` (`genderOf`) repère les parfums clairement féminins ou masculins ; le moteur et le prompt IA n'en proposent pas à l'autre genre (les mixtes, et tout ce qui est inconnu, passent).
+- **Maisons** : « Toutes les maisons » suit l'ordre de `HOUSE_FAME` dans `desc.js` (les plus connues d'abord), puis le nombre de parfums.
 - **Photos** : toutes celles de `incoming/` sont associées d'après `data/imgmap.txt` (fichier | maison | nom) ; `python3 tools/build-imgdb.py` (≈ 10 min) détoure et écrit `v2/img/db/` + `imgdb.js`. Les détourages ratés (fond gris, ombres) sont listés dans `data/imgskip.txt` : le flacon dessiné les remplace.

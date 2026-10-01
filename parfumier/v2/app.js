@@ -51,7 +51,7 @@
   const seedWish = () => window.WISH.map(wishFromName);
   const DEMO = /[?&]seed=demo/.test(location.search); // outillage (vidéos, tests) : charge une collection d'exemple
   const DEMO_V = 18;
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   function migrate() {
     // La balade d'exemple (« Rue Saint-Honoré ») s'affichait chez tout le monde : elle est retirée de tous les comptes.
     S.walks = (S.walks || []).filter((x) => !x.seed && x.id !== 'w-honore');
@@ -106,7 +106,7 @@
   migrate(); save();
 
   // ---------- Utilitaires métier ----------
-  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [] });
+  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [], gender: S.profile && S.profile.gender });
   const find = (id) => S.collection.find((p) => p.id === id);
   const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
   const daysSince = (id) => {
@@ -118,14 +118,13 @@
   const bt = (p, o) => {
     o = o || {};
     const st = (o.h || o.style) ? `style="${o.h ? 'height:' + o.h + 'px;' : ''}${o.style || ''}"` : '', cx = o.cls ? ' ' + o.cls : '';
-    const pub = S.settings && S.settings.publicMode;
-    const im = pub ? null : (p.src ? { s: p.src, nz: p.nz || 6 } : imgOf(p));
+    const im = (p.src ? { s: p.src, nz: p.nz || 6 } : imgOf(p));
     if (im && !p.img) {
       let mp = '';
       if (o.spray) { for (let k = 0; k < 10; k++) mp += `<i style="width:${3 + (k % 3)}px;height:${3 + (k % 3)}px;--dx:${8 + (k * 7) % 42}px;--dy:${-16 - (k * 9) % 36}px;animation-delay:${(k * 0.22).toFixed(2)}s"></i>`; mp = `<span class="mp" style="top:${im.nz}%">${mp}</span>`; }
       return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="${im.s}">${mp}</div>`;
     }
-    if (p.img && !pub) return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
+    if (p.img) return `<div class="bwrap photo${cx} ${o.still ? '' : 'bob'}" ${st}><img alt="${esc(p.name)}" src="/_blob/${esc(p.img)}"></div>`;
     return `<div class="bwrap${cx} ${o.still ? '' : 'bob'}" ${st}>${Art.bottle(p, o)}</div>`;
   };
   const fxCanvas = (attr, d) => `<canvas class="fx" ${attr} data-d="${d || .5}" aria-hidden="true"></canvas>`;
@@ -165,6 +164,7 @@
 
   // ---------- État de session ----------
   let REFINE = false;
+  const TESTMODE = DEMO || /[?&]test=1/.test(location.search); // seul usage sans compte : les tests et l'outillage de Théo
   const PRESENT = /[?&]present=1/.test(location.search); // mode présentation : sans bandeau de démo ni carte de vente
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
@@ -364,7 +364,8 @@
   // ---------- Conseils : compléter ta collection, ce qui t'irait, par envie ----------
   function tipsData() {
     const P = S.collection, st = S.settings, cat = CAT.filter((c) => c.notes.length), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
-    const ok = (c) => !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!st.budget || !c.price || c.price <= st.budget);
+    const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), wrong = (c) => { const g = S.profile && S.profile.gender; return (g === 'm' && gd(c) === 'f') || (g === 'f' && gd(c) === 'm'); };
+    const ok = (c) => !wrong(c) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!st.budget || !c.price || c.price <= st.budget);
     const out = { gaps: [], recs: [], tags: [], tips: [] };
     if (P.length) {
       const cov = E.coverage(P).sort((x, y) => x.best - y.best), used = new Set();
@@ -375,7 +376,7 @@
         used.add(cand.c.name); out.gaps.push({ sc, bestP, c: cand.c });
       }
     }
-    const all = E.recommend(cat, P, S.wishlist.map((w) => w.name), st).sort((x, y) => y.total - x.total);
+    const all = E.recommend(cat, P, S.wishlist.map((w) => w.name), Object.assign({}, st, { gender: S.profile && S.profile.gender })).sort((x, y) => y.total - x.total);
     out.recs = all.filter((r) => !st.budget || r.c.price <= st.budget).slice(0, 8);
     const tg = window.tagsOf || (() => []);
     [['niche', 'Un niche pour toi'], ['abordable', 'Un abordable qui te va'], ['luxe', 'Un coup de luxe'], ['prive', 'Une collection privée']].forEach(([t, label]) => { const r = all.find((x) => tg(x.c.name, x.c.house, x.c.price, '').includes(t)); if (r) out.tags.push({ label, r }); });
@@ -612,7 +613,8 @@
     else if (facet === 'tag') db.forEach((e) => (e.tags || []).forEach((t) => put(t, (window.TAGS || {})[t] || t, e)));
     else if (facet === 'nose') db.forEach((e) => (e.noses || []).forEach((n) => put(E.norm(n), n, e)));
     let g = [...m.values()];
-    g = facet === 'brand' || facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'tag' ? g.sort((a, b) => Object.keys(window.TAGS || {}).indexOf(a.key) - Object.keys(window.TAGS || {}).indexOf(b.key)) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
+    const FAME = {}; (window.HOUSE_FAME || []).forEach((h, i) => { FAME[E.norm(h)] = i; }); const fr = (l) => { const k = FAME[E.norm(l)]; return k == null ? 1e6 : k; };
+    g = facet === 'brand' ? g.sort((a, b) => fr(a.label) - fr(b.label) || b.items.length - a.items.length || a.label.localeCompare(b.label, 'fr')) : facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'tag' ? g.sort((a, b) => Object.keys(window.TAGS || {}).indexOf(a.key) - Object.keys(window.TAGS || {}).indexOf(b.key)) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
     return g;
   }
   const entryKey = (e) => E.norm(e.house + ' ' + e.name);
@@ -621,7 +623,7 @@
     return { id: uid(), name: e.name, house: e.house, family: e.family || 'boisé', notes: (e.notes || []).slice(), projection: 3, longevity: 3, weight: e.weight || 3, price: 0, rating: 4, occ: [], incomplete: true, guessed: true, size: 100, left: 100, use: 'free' };
   }
   const tagPills = (e) => (e.tags && e.tags.length ? `<span class="xtg">${e.tags.slice(0, 3).map((t) => `<i>${esc((window.TAGS || {})[t] || t)}</i>`).join('')}</span>` : '');
-  const xThumb = (e) => { const ph = imgOf(e); return ph && !S.settings.publicMode ? `<img class="xth" alt="" loading="lazy" src="${esc(ph.s)}">` : `<span class="xth">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'x' + E.norm(e.house + e.name).length }, { still: true, h: 64 })}</span>`; };
+  const xThumb = (e) => { const ph = imgOf(e); return ph ? `<img class="xth" alt="" loading="lazy" src="${esc(ph.s)}">` : `<span class="xth">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'x' + E.norm(e.house + e.name).length }, { still: true, h: 64 })}</span>`; };
   // mountExplorer : le même explorateur sert à l'ajout en collection, à la wishlist et à l'inscription.
   function mountExplorer(host, o) {
     const sel = new Map(); let facet = 'brand', group = null, q = '', limit = 60;
@@ -826,16 +828,14 @@
       ${window.SillageDemo ? (window.SillageDemo.account.loggedIn() ? `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Connecté : ${esc(window.SillageDemo.account.email())}. Ton profil est sauvegardé automatiquement.</p><div class="row"><button class="ghost" id="alogout">Me déconnecter</button><button class="ghost danger" id="adel">Supprimer mon compte</button></div></div>` : `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Crée un compte pour garder ton profil, ta collection et ta wishlist sur tous tes appareils.</p><button class="cta" id="acreate"><span>Créer un compte ou me connecter</span></button></div>`) : ''}
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
-      <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
       <div class="row"><button class="ghost danger" id="reset">Tout vider</button></div>`);
     const pmsg = () => { $('#pmsg', pn).textContent = 'Enregistré ✓'; };
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
     $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
     $('#pname', pn).onchange = () => { setProfile({ name: $('#pname', pn).value.trim().slice(0, 24) }); pmsg(); };
     if ($('#acreate', pn)) $('#acreate', pn).onclick = () => { closeSheet(); showAccount('profile'); };
-    if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); closeSheet(); render(true); };
-    if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } closeSheet(); render(true); };
-    $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
+    if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
+    if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
@@ -1342,11 +1342,21 @@
     S.profile = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; delete S.profile.dress; delete S.profile.note; save();
     const me = PROFILES.list.find((x) => x.id === PROFILES.active); if (me && me.name !== (S.profile.name || '')) { me.name = S.profile.name || ''; saveProfiles(); }
   };
-  function maybeProfile() {
-    if (S.profile || PRESENT || $('#onb') || $('#prof') || $('#acct')) return;
-    const A = window.SillageDemo && window.SillageDemo.account; let seen = false; try { seen = !!localStorage.getItem('sillage.acct'); } catch (e) { /* ok */ }
-    if (A && !A.loggedIn() && !seen) showAccount(); else showProfile();
+  // Sans compte, pas d'appli : on bloque tant qu'on n'est pas connecté (sauf test / présentation).
+  const needAcct = () => !!(window.SillageDemo && !TESTMODE && !PRESENT && !window.SillageDemo.account.loggedIn());
+  function gate() {
+    if (!needAcct()) return false;
+    if (!$('#acct')) { $$('#onb, #prof').forEach((x) => x.remove()); showAccount('force'); }
+    return true;
   }
+  function maybeProfile() {
+    if (gate()) return;
+    if (S.profile || PRESENT || $('#onb') || $('#prof') || $('#acct')) return;
+    showProfile();
+  }
+  // Déconnexion ou suppression : on efface les données de cet appareil (téléphone partagé) et on redemande un compte.
+  const afterLeave = () => { S = DEF(); S.collection = []; S.wishlist = []; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ok */ } closeSheet(); tab = 'today'; render(true); gate(); };
+  window.addEventListener('sillage:expired', () => { if (needAcct()) afterLeave(); });
   // Compte : créer (puis les questions d'inscription) ou se connecter (le profil complet revient), ou continuer sans compte.
   function showAccount(from) {
     const A = window.SillageDemo.account;
@@ -1361,9 +1371,9 @@
           <p class="mono" id="amsg" role="alert" style="text-transform:none;letter-spacing:0;min-height:18px"></p>
           <button class="cta full" id="ago"><span>${mode === 'signup' ? 'Créer mon compte' : 'Me connecter'}</span></button></form>
         <p class="soft small">Ton email sert uniquement à te reconnecter. Tu peux supprimer ton compte à tout moment dans Profil.</p>
-        <button class="ghost" id="askip">${from === 'profile' ? 'Fermer' : 'Continuer sans compte'}</button></div>`;
+        ${from === 'profile' ? '<button class="ghost" id="askip">Fermer</button>' : ''}</div>`;
       $$('[data-m]', el).forEach((b) => (b.onclick = () => { mode = b.dataset.m; draw(); }));
-      $('#askip', el).onclick = () => { if (from !== 'profile') { try { localStorage.setItem('sillage.acct', 'skip'); } catch (e) { /* ok */ } } close(); if (from !== 'profile') showProfile(); };
+      if ($('#askip', el)) $('#askip', el).onclick = close;
       $('#acf', el).onsubmit = async (ev) => {
         ev.preventDefault(); const em = $('#aem', el).value.trim(), pw = $('#apw', el).value, msg = $('#amsg', el);
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { msg.textContent = MSG.email; return; }

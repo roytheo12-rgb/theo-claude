@@ -103,6 +103,30 @@ for line in (root / 'data/noses.txt').read_text(encoding='utf-8').splitlines():
         if nose not in lst: lst.append(nose)
         nose_names[nose] = nose_names.get(nose, 0) + 1
 
+# ---- Un seul nez par parfum : choix explicites (data/noses-choix.txt), sinon le nez le plus présent pour cette maison
+choix = {}
+for line in (root / 'data/noses-choix.txt').read_text(encoding='utf-8').splitlines():
+    line = line.strip()
+    if not line or line.startswith('#'): continue
+    h_raw, nm, nose = [x.strip() for x in line.split('|', 2)]
+    house = canon_house(h_raw); name = NAME_ALIAS.get((norm(house), norm(clean_name(nm))), clean_name(nm))
+    choix[norm(house) + ' ' + norm(name)] = nose
+per_house = collections.Counter()
+for k2, lst in nose_by.items():
+    for n in lst:
+        per_house[(n, next((h for h in {kk[0] for kk in seen} if k2.startswith(h + ' ')), ''))] += 1
+multi_count = 0
+for k2, lst in list(nose_by.items()):
+    if k2 in choix: nose_by[k2] = [choix[k2]]
+    elif len(lst) > 1:
+        multi_count += 1
+        h = next((h for h in sorted({kk[0] for kk in seen}, key=len, reverse=True) if k2.startswith(h + ' ')), '')
+        nose_by[k2] = [max(lst, key=lambda n: (per_house[(n, h)], -lst.index(n)))]
+nose_names = collections.OrderedDict()
+for lst in nose_by.values():
+    for n in lst: nose_names[n] = nose_names.get(n, 0) + 1
+print(f'nez choisis par défaut (sans choix explicite) : {multi_count}')
+
 by = collections.OrderedDict()
 for k in order:
     e = seen[k]; by.setdefault(e['house'], []).append([e['name'], ','.join(sorted(e['conc'], key=['EDP', 'EDT', 'EXT', 'PAR', 'COL'].index))] + (['P'] if e['p'] else []))

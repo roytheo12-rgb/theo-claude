@@ -202,6 +202,9 @@
     }
     // Notes que la personne adore ou fuit
     const nt = (p.notes || []).map(norm);
+    // Pas de parfum nettement « pour elle » à un homme, ni l'inverse (les mixtes passent)
+    const gd = st.gender && root.genderOf ? root.genderOf(p.name, p.house) : 'u';
+    parts.gender = (st.gender === 'm' && gd === 'f') || (st.gender === 'f' && gd === 'm') ? -3 : 0;
     parts.liked = 0;
     if (st.liked && st.liked.length) parts.liked += Math.min(2, st.liked.filter((l) => l && nt.some((n) => n.includes(norm(l)))).length) * 0.9;
     if (st.avoid && st.avoid.length) parts.liked -= Math.min(3, st.avoid.filter((a) => a && nt.some((n) => n.includes(norm(a)))).length * 1.5);
@@ -361,6 +364,7 @@
     const out = [];
     for (const c of catalog) {
       if (owned.has(norm(c.name))) continue;
+      if (settings.gender && root.genderOf) { const g = root.genderOf(c.name, c.house); if ((settings.gender === 'm' && g === 'f') || (settings.gender === 'f' && g === 'm')) continue; }
       if ((c.notes || []).some((n) => avoid.some((a) => a && norm(n).includes(a)))) continue;
       const t = taste(c, prof);
       let gap = 0, gapLabel = null, gapMax = 0;

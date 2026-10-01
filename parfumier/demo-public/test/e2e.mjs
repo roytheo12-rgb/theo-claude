@@ -38,6 +38,7 @@ await pg.waitForTimeout(3000); await pg.screenshot({ path: OUT + '/e2_onb2.png' 
 await pg.waitForTimeout(2800); await pg.screenshot({ path: OUT + '/e3_onb3.png' });
 await pg.waitForTimeout(3000); ok(await pg.isVisible('#onbGo'), 'onboarding : bouton final visible en moins de 12 s');
 await pg.click('#onbGo'); await pg.waitForSelector('#acct #aem', { timeout: 5000 }); ok(true, 'compte : l\'écran « Garde ton profil » s\'affiche après l\'intro');
+ok(await pg.locator('#askip').count() === 0 && !/sans compte/i.test(await pg.textContent('#acct')), 'compte obligatoire : aucun bouton « continuer sans compte »');
 await pg.screenshot({ path: OUT + '/e3a_compte.png' });
 await pg.fill('#aem', 'lea@exemple.fr'); await pg.fill('#apw', 'court'); await pg.click('#ago'); ok(/8 caractères/.test(await pg.textContent('#amsg')), 'compte : mot de passe trop court refusé');
 await pg.fill('#apw', 'motdepasse1'); await pg.click('#ago'); await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok([...store.keys()].some((k) => k.startsWith('acct:')), 'compte créé : les questions d\'inscription suivent');
@@ -109,6 +110,8 @@ await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden
 await pg.click('#addBtn'); await pg.click('[data-add=base]'); await pg.waitForSelector('[data-xf]');
 ok(await pg.locator('[data-xf]').count() === 6, 'explorateur : 6 façons de parcourir (marques, tags, styles, notes, prix, parfumeurs)');
 ok(await pg.locator('[data-xg]').count() > 100, 'explorateur : plus de 100 marques listées');
+{ const hs = await pg.$$eval('.xg [data-xg]', (b) => b.map((x) => x.dataset.xg)); const at = (h) => hs.indexOf(h);
+  ok(at('chanel') === 0 && at('dior') === 1 && at('kilian') > at('dior') && at('kilian') < hs.length / 2 && hs.length > 100, 'toutes les maisons : classées des plus connues (Chanel, Dior…) aux moins connues, toutes cliquables'); }
 await pg.click('[data-xg="kilian"]'); await pg.waitForSelector('.xc');
 ok(await pg.locator('.xc').count() > 5 && await pg.locator('.xth').first().isVisible(), 'explorateur : les parfums de la marque s\'affichent (avec vignettes)');
 await pg.locator('.xc:not([disabled])').first().click(); ok(/1 choisi/.test(await pg.textContent('.exp-foot')), 'un parfum cliqué est sélectionné');
@@ -153,7 +156,10 @@ await p3.waitForSelector('#acct #aem', { timeout: 9000 }); await p3.click('[data
 ok(/incorrect/.test(await p3.textContent('#amsg')), 'connexion : mauvais mot de passe refusé');
 await p3.fill('#apw', 'motdepasse1'); await p3.click('#ago'); await p3.waitForTimeout(900);
 ok(/, Léa\./.test(await p3.textContent('.hero h1')) && await p3.locator('.vit button').count() >= 4 && await p3.locator('#prof').count() === 0, 'connexion sur un autre appareil : « Léa », sa collection, sans refaire les questions');
-await p3.click('#profileBtn'); await p3.waitForSelector('#alogout'); ok(/lea@exemple.fr/.test(await p3.textContent('.panel')), 'profil : compte connecté affiché'); await p3.click('#adel'); await p3.click('#adel'); await p3.waitForTimeout(500);
+await p3.click('#profileBtn'); await p3.waitForSelector('#alogout'); ok(/lea@exemple.fr/.test(await p3.textContent('.panel')), 'profil : compte connecté affiché'); ok(!/Mode public/i.test(await p3.textContent('.panel')), 'profil : plus de « mode public »');
+  await p3.click('#alogout'); await p3.waitForSelector('#acct #aem', { timeout: 5000 }); ok(await p3.locator('#askip').count() === 0, 'déconnexion : retour obligatoire à l\'écran de compte, données de l\'appareil effacées');
+  await p3.click('[data-m=login]'); await p3.fill('#aem', 'lea@exemple.fr'); await p3.fill('#apw', 'motdepasse1'); await p3.click('#ago'); await p3.waitForTimeout(900); await p3.click('#profileBtn'); await p3.waitForSelector('#adel');
+  await p3.click('#adel'); await p3.click('#adel'); await p3.waitForSelector('#acct #aem', { timeout: 5000 }); await p3.waitForTimeout(300);
 ok(![...store.keys()].some((k) => k.startsWith('data:')) && ![...store.keys()].some((k) => k.startsWith('acct:')), 'suppression du compte : tout est effacé côté serveur'); await ctx2.close();
 // 6. nouveau visiteur : 2 essais neufs; même IP : plafond
 ok(errs.length === 0, 'aucune erreur JavaScript ' + JSON.stringify(errs));

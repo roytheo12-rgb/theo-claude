@@ -175,3 +175,15 @@ await t('identify : un parfum déjà identifié sort du cache, sans appel au mod
   const q = await (await wc.fetch(req('/api/quota', { vid: V(61), ip: '61.0.0.1' }), envI)).json(); assert.equal(q.identLeft, 3);
 });
 console.log(ok, 'tests réussis');
+
+// ---------- Genre : un parfum très féminin n'est pas proposé à un homme, ni l'inverse ; les mixtes passent
+createRequire(import.meta.url)('../../desc.js');
+await t('genre : pas de parfum très féminin pour un homme (ni l\'inverse), les mixtes passent', async () => {
+  assert.equal(globalThis.genderOf('Sauvage', 'Dior'), 'm'); assert.equal(globalThis.genderOf('Black Opium', 'Yves Saint Laurent'), 'f'); assert.equal(globalThis.genderOf('Santal 33', 'Le Labo'), 'u');
+  const mk = (name, house) => ({ name, house, family: 'boisé', notes: ['cèdre', 'vétiver'], projection: 3, longevity: 3, weight: 3, price: 100 });
+  const cat = [mk('Black Opium', 'Yves Saint Laurent'), mk('Sauvage', 'Dior'), mk('Santal 33', 'Le Labo')];
+  const names = (g) => E.recommend(cat, [], [], { gender: g, budget: 500 }).map((r) => r.c.name).sort();
+  assert.deepEqual(names('m'), ['Santal 33', 'Sauvage']); assert.deepEqual(names('f'), ['Black Opium', 'Santal 33']);
+  assert.equal(names('').length, 3);
+});
+console.log(ok, 'tests réussis');
