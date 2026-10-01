@@ -78,7 +78,7 @@
 77|Memo Paris|Irish Leather|
 78|Memo Paris|Ithaque|
 79|Memo Paris|Cap Camarat|
-80|Xerjoff|Erba Pura|
+80|Sospiro|Erba Pura|
 81|Chanel|Chance Eau Tendre|
 82|Burberry|Her|
 83|Parfums de Marly|Delina|
@@ -197,7 +197,7 @@
 365|NEZ|Jacques Polge|
 366|NEZ|Jacques Cavallier-Belletrud|
 367|NEZ|Christine Nagel|
-# 368 : légende « Christine Nagel » mais la photo est celle d'un homme -> NON utilisée, à confirmer avec Théo
+368|NEZ|Thierry Wasser|
 369|NEZ|Maurice Roucel|
 370|NEZ|Quentin Bisch|
 371|NEZ|Bertrand Duchaufour|

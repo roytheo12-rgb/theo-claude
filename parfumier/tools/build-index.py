@@ -18,7 +18,7 @@ HOUSE = {
  'dolce gabbana velvet collection': 'Dolce & Gabbana', 'gucci the alchemist s garden': 'Gucci', 'tom ford private blend': 'Tom Ford',
  'cartier les heures de parfum': 'Cartier', 'cartier collection': 'Cartier', 'prada olfactories': 'Prada', 'fendi private': 'Fendi',
  'givenchy la collection particuliere': 'Givenchy', 'givenchy l atelier de givenchy': 'Givenchy', 'mfk': 'Maison Francis Kurkdjian',
- 'emporio armani': 'Armani', 'sospiro': 'Xerjoff', 'sospiro perfumes': 'Xerjoff', 'd orsay': "D'Orsay", 'dorsay': "D'Orsay", 'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
+ 'emporio armani': 'Armani', 'sospiro perfumes': 'Sospiro', 'd orsay': "D'Orsay", 'dorsay': "D'Orsay", 'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
  'giorgio armani': 'Armani', 'thierry mugler': 'Mugler', 'christian dior': 'Dior', 'annick goutal': 'Maison Goutal', 'mdci parfums': 'MDCI', 'frederic malle': 'Frédéric Malle', 'jo malone london': 'Jo Malone', 'ella k parfums': 'Ella K', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
  'maison martin margiela': 'Maison Margiela', 'margiela': 'Maison Margiela', 'bulgari': 'Bvlgari', 'diptyque paris': 'Diptyque', 'byredo parfums': 'Byredo', 'le labo fragrances': 'Le Labo', 'bdk': 'BDK Parfums', 'bdk parfums': 'BDK Parfums',
  'les bains guerbois': 'Les Bains Guerbois', 'memo': 'Memo Paris', 'memo paris': 'Memo Paris', 'maison crivelli': 'Maison Crivelli', 'loewe paula s ibiza': 'Loewe', 'loewe botanical rainbow': 'Loewe',
@@ -47,6 +47,11 @@ def canon_house(h):
         if n == nb: return b
         if n.startswith(nb + ' ') and nb not in ('maison', 'les', 'la', 'le'): return b
     return h.strip()
+SOSPIRO = {'erba pura', 'vibrato', 'il padrino', 'dolce melodia'}      # Sospiro est une maison à part entière (pas une ligne Xerjoff)
+_canon = canon_house
+def canon_house_n(h, name=''):
+    c = _canon(h)
+    return 'Sospiro' if norm(c) in ('xerjoff', 'sospiro') and norm(name) in SOSPIRO else c
 existing = {(norm(canon_house(h)), norm(PREFIX.sub('', n))) for h, n in cat}
 existing |= {(norm(canon_house(h)), re.sub(r' (edp|edt)$', '', norm(n))) for h, n in cat}
 
@@ -64,7 +69,7 @@ for line in raw:
     name = re.sub(r"^the alchemist.s garden\s+", '', name, flags=re.I)
     if conc is None: skipped_other += 1; continue          # brumes pour cheveux : pas des parfums
     cp = any(k in norm(house) for k in CP_KEYS) or bool(re.search(r"alchemist.s garden", line, re.I))
-    house = canon_house(house)
+    house = canon_house_n(house, name)
     name = re.sub(r'\?$', '', name).strip()
     name = PREFIX.sub('', name)
     name = SUFFIX.sub('', name).strip() or name
@@ -92,10 +97,11 @@ for line in (root / 'data/noses.txt').read_text(encoding='utf-8').splitlines():
     line = line.strip()
     if not line or line.startswith('#'): continue
     nose, h_raw, names = [x.strip() for x in line.split('|', 2)]
-    house = canon_house(h_raw)
     for nm in [x.strip() for x in names.split(';') if x.strip()]:
+        house = canon_house(h_raw)
         name = NAME_ALIAS.get((norm(house), norm(clean_name(nm))), clean_name(nm))
         if not name: continue
+        house = canon_house_n(h_raw, name)
         key = (norm(house), norm(name)); k2 = key[0] + ' ' + key[1]
         if key not in existing and key not in seen:
             seen[key] = {'house': house, 'name': name, 'conc': ['EDP'], 'p': False}; order.append(key)
@@ -121,7 +127,7 @@ for line in (root / 'data/imgmap2.txt').read_text(encoding='utf-8').splitlines()
 groups = collections.defaultdict(set)
 for r in rows:
     if r['raw_house'] == 'NEZ': continue
-    r['house'] = canon_house(r['raw_house']); r['base'] = NAME_ALIAS.get((norm(r['house']), norm(r['raw_name'])), r['raw_name'])
+    r['house'] = canon_house_n(r['raw_house'], r['raw_name']); r['base'] = NAME_ALIAS.get((norm(r['house']), norm(r['raw_name'])), r['raw_name'])
     groups[(norm(r['house']), norm(r['base']))].add(norm(r['conc']))
 def find(house, name):
     k = (norm(house), norm(name))
@@ -187,7 +193,7 @@ for line in (root / 'data/noses-choix.txt').read_text(encoding='utf-8').splitlin
     line = line.strip()
     if not line or line.startswith('#'): continue
     h_raw, nm, nose = [x.strip() for x in line.split('|', 2)]
-    house = canon_house(h_raw); name = NAME_ALIAS.get((norm(house), norm(clean_name(nm))), clean_name(nm))
+    house = canon_house_n(h_raw, nm); name = NAME_ALIAS.get((norm(house), norm(clean_name(nm))), clean_name(nm))
     choix[norm(house) + ' ' + norm(name)] = nose
 for k2, n in choix.items(): nose_by[k2] = [n]      # un choix explicite vaut aussi pour un parfum encore sans nez
 per_house = collections.Counter()
