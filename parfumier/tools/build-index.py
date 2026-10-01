@@ -227,7 +227,7 @@ print(f'lignes lues : {len(raw)} | parfums uniques ajoutés : {total} | maisons 
 import json as _j
 out_rows = []
 for r in rows:
-    if r['raw_house'] == 'NEZ': out_rows.append({'n': r['n'], 'nose': r['raw_name']}); continue
+    if r['raw_house'] == 'NEZ': out_rows.append({'n': r['n'], 'nose': r['raw_name'], 'crop': r['conc']}); continue
     out_rows.append({'n': r['n'], 'house': canon_house(r['final'][0]), 'name': r['final'][1]})
 (root / 'data/imgmap2.resolved.json').write_text(_j.dumps(out_rows, ensure_ascii=False, indent=0), encoding='utf-8')
 print('photos : %d lignes, %d fiches créées' % (len(rows), len(created)))

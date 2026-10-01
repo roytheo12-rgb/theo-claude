@@ -111,6 +111,7 @@ for r in rows:
     sub = a[rows_on[0]:y1 + 1]; cols = np.where(sub.any(axis=0))[0]
     bg = Image.new('RGB', im.size, (255, 255, 255)); bg.paste(im, mask=im.split()[3])
     ph = bg.crop((cols[0], rows_on[0], cols[-1] + 1, y1 + 1))
+    if r.get('crop'): ph = bg.crop(tuple(int(v) for v in r['crop'].split(',')))      # recadrage manuel autour du visage (x0,y0,x1,y1)
     fn = f'img/nose/{slug(r["nose"])}.webp'
     save(ph, root / 'v2' / fn, 420); noses[r['nose']] = fn
 for d, keep in (('p', set(imgnew.values())), ('nose', set(noses.values()))):

@@ -946,59 +946,73 @@
 },
 {
 "n": 360,
-"nose": "Francis Kurkdjian"
+"nose": "Francis Kurkdjian",
+"crop": ""
 },
 {
 "n": 361,
-"nose": "Alberto Morillas"
+"nose": "Alberto Morillas",
+"crop": ""
 },
 {
 "n": 362,
-"nose": "Jean-Claude Ellena"
+"nose": "Jean-Claude Ellena",
+"crop": ""
 },
 {
 "n": 363,
-"nose": "Dominique Ropion"
+"nose": "Dominique Ropion",
+"crop": ""
 },
 {
 "n": 364,
-"nose": "Olivier Polge"
+"nose": "Olivier Polge",
+"crop": ""
 },
 {
 "n": 365,
-"nose": "Jacques Polge"
+"nose": "Jacques Polge",
+"crop": ""
 },
 {
 "n": 366,
-"nose": "Jacques Cavallier-Belletrud"
+"nose": "Jacques Cavallier-Belletrud",
+"crop": ""
 },
 {
 "n": 367,
-"nose": "Christine Nagel"
+"nose": "Christine Nagel",
+"crop": ""
 },
 {
 "n": 368,
-"nose": "Thierry Wasser"
+"nose": "Thierry Wasser",
+"crop": ""
 },
 {
 "n": 369,
-"nose": "Maurice Roucel"
+"nose": "Maurice Roucel",
+"crop": ""
 },
 {
 "n": 370,
-"nose": "Quentin Bisch"
+"nose": "Quentin Bisch",
+"crop": ""
 },
 {
 "n": 371,
-"nose": "Bertrand Duchaufour"
+"nose": "Bertrand Duchaufour",
+"crop": ""
 },
 {
 "n": 372,
-"nose": "Calice Becker"
+"nose": "Calice Becker",
+"crop": ""
 },
 {
 "n": 373,
-"nose": "Olivier Cresp"
+"nose": "Olivier Cresp",
+"crop": ""
 },
 {
 "n": 374,
@@ -1307,6 +1321,32 @@
 },
 {
 "n": 435,
-"nose": "François Demachy"
+"nose": "François Demachy",
+"crop": ""
+},
+{
+"n": 436,
+"nose": "Marie Salamagne",
+"crop": ""
+},
+{
+"n": 437,
+"nose": "Fabrice Pellegrin",
+"crop": "110,0,530,499"
+},
+{
+"n": 438,
+"nose": "Jérôme Epinette",
+"crop": "90,0,620,686"
+},
+{
+"n": 439,
+"nose": "Bruno Jovanovic",
+"crop": ""
+},
+{
+"n": 440,
+"nose": "Annick Menardo",
+"crop": "560,0,1500,1280"
 }
 ]

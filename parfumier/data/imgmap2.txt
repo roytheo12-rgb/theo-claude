@@ -265,3 +265,8 @@
 433|Kilian|Angels' Share Paradis|
 434|Nuance|Vanille Ébène|
 435|NEZ|François Demachy|
+436|NEZ|Marie Salamagne|
+437|NEZ|Fabrice Pellegrin|110,0,530,499
+438|NEZ|Jérôme Epinette|90,0,620,686
+439|NEZ|Bruno Jovanovic|
+440|NEZ|Annick Menardo|560,0,1500,1280

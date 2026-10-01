@@ -154,6 +154,7 @@
 
   // Les nez les plus connus : rôle et petite présentation (faits sûrs uniquement)
   const NOSE_BIO = {
+    'Bruno Jovanovic': ['Parfumeur', 'Dior Homme Sport, Tom Ford Noir, Burberry Hero, Jil Sander Strictly Fresh et plusieurs parfums de Dries Van Noten : des masculins frais et boisés, nets et faciles à porter.'],
     'Edmond Roudnitska': ['Parfumeur du XXe siècle', 'Eau Sauvage (Dior, 1966) et Diorissimo : la fraîcheur citronnée et le muguet comme référence. Un des grands théoriciens du parfum.'],
     'Jacques Guerlain': ['Parfumeur de la maison Guerlain', 'Shalimar, Mitsouko, L\'Heure Bleue : les grands classiques ambrés de Guerlain, créés au début du XXe siècle.'],
     'Francis Kurkdjian': ['Parfumeur et fondateur de sa maison', 'Révélé à 25 ans avec Le Mâle de Jean Paul Gaultier (1995), il fonde sa maison en 2009 : Baccarat Rouge 540, Aqua Universalis, 724. Il dirige aussi la création des parfums Dior depuis 2021. Son style : lumineux, aérien, très reconnaissable.'],
@@ -186,7 +187,7 @@
     'Antoine Lie': ['Parfumeur', 'Etat Libre d\'Orange (Rien, Jasmin et Cigarette), Interlude Man (Amouage), Nasomatto : des parfums audacieux.'],
     'Mark Buxton': ['Parfumeur indépendant', 'La collection Comme des Garçons (Black, 2), mais aussi Jovoy et Nasomatto : un style graphique, très affirmé.'],
     'Nathalie Lorson': ['Parfumeuse', 'Libre et Black Opium (Yves Saint Laurent), Encre Noire (Lalique), L\'Interdit (Givenchy).'],
-    'Fabrice Pellegrin': ['Parfumeur', 'Essential Parfums, BDK Parfums, Matière Première : une signature musquée et boisée très actuelle.'],
+    'Fabrice Pellegrin': ['Parfumeur de BDK et d\'Essential Parfums', 'Gris Charnel, Tabac Rose, Velvet Tonka (BDK), Patchouli Mania, Fig Infusion (Essential Parfums), Habanita (Molinard) : une signature musquée, boisée et très actuelle.'],
     'Aurélien Guichard': ['Parfumeur', 'Matière Première, Parfums de Marly, Azzaro The Most Wanted.'],
     'Louise Turner': ['Parfumeuse', 'BDK Parfums (Gris Charnel), Jo Malone, Diptyque.'],
     'Daphné Bugey': ['Parfumeuse', 'Le Labo (Rose 31, Thé Noir 29), Byredo, Serge Lutens.'],
@@ -197,7 +198,7 @@
     'Sophie Labbé': ['Parfumeuse', 'Bvlgari (Omnia, Rose Goldea), Dior, Valentino.'],
     'Annick Menardo': ['Parfumeuse', 'A*Men (Mugler), Bvlgari Black, Hypnotic Poison (Dior).'],
   };
-  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'François Demachy', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Pierre Bourdon', 'Jérôme Epinette', 'Alessandro Gualtieri', 'Frank Voelkl', 'Daniela Andrier', 'Anne Flipo', 'Mathilde Laurent', 'Marie Salamagne'];
+  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'François Demachy', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Jérôme Epinette', 'Marie Salamagne', 'Fabrice Pellegrin', 'Bruno Jovanovic', 'Annick Menardo'];
   root.NOSE_BIO = NOSE_BIO; root.NOSE_TOP = NOSE_TOP;
 
   // ---------- Genre : pour lui / pour elle / mixte (repère de commercialisation, pour ne pas recommander un parfum nettement « girly » à un homme, ni l'inverse) ----------
