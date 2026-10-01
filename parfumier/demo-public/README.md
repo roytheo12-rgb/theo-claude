@@ -111,3 +111,10 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Côté Worker : `/api/account/signup|login|data|logout|delete`. Mot de passe haché avec PBKDF2-SHA256 (100 000 itérations, le maximum de Cloudflare Workers) et sel propre à chaque compte, jamais stocké en clair ; session par jeton aléatoire valable 180 jours ; profil limité à 900 Ko ; limites d'essais par adresse IP.
 - **Pas de « mot de passe oublié »** pour l'instant (l'email est stocké, on pourra l'ajouter). Le compte n'existe que dans la version publique (Worker) : l'artifact claude.ai garde son propre enregistrement.
 - Dis aux utilisateurs que l'email ne sert qu'à se reconnecter : c'est ce que dit l'écran. Si tu veux t'en servir pour autre chose (offre sur mesure), il faut un consentement séparé.
+
+## 12. Les nez (parfumeurs) et les photos
+
+- `data/noses.txt` : la liste « Parfumeur | Maison | Parfums » (≈ 920 parfums, 60 nez). `tools/build-index.py` rattache chaque parfum à son nez (clé « maison nom »), ajoute à l'index les parfums qui manquent, et écrit `window.NOSE_BY` dans `index.js`.
+- Dans l'appli : onglet **Recherche** → bandeau « Les nez » (les plus connus) ; fiche d'un nez avec sa présentation (`desc.js`, `NOSE_BIO`) et tous ses parfums ; filtre « Parfumeur » ; fiche d'un parfum → « Créé par » cliquable ; explorateur → onglet Parfumeurs.
+- **Attention aux contradictions** : dans la liste, plusieurs nez sont parfois cités pour un même parfum (≈ 260 parfums avec au moins 2 nez, ≈ 100 avec 3 ou plus : Gris Charnel, Tabac Rose, Narciso Rodriguez For Her, Wood Sage & Sea Salt…). L'appli les affiche tous et signale « les sources divergent » à partir de 3. Corrige `data/noses.txt` puis relance `python3 tools/build-index.py`.
+- **Photos** : toutes celles de `incoming/` sont associées d'après `data/imgmap.txt` (fichier | maison | nom) ; `python3 tools/build-imgdb.py` (≈ 10 min) détoure et écrit `v2/img/db/` + `imgdb.js`. Les détourages ratés (fond gris, ombres) sont listés dans `data/imgskip.txt` : le flacon dessiné les remplace.

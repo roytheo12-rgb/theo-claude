@@ -151,5 +151,46 @@
     return [...t];
   }
   root.TAGS = TAGS; root.tagsOf = tagsOf;
+
+  // Les nez les plus connus : rôle et petite présentation (faits sûrs uniquement)
+  const NOSE_BIO = {
+    'Francis Kurkdjian': ['Parfumeur et fondateur de sa maison', 'Révélé à 25 ans avec Le Mâle de Jean Paul Gaultier (1995), il fonde sa maison en 2009 : Baccarat Rouge 540, Aqua Universalis, 724. Il dirige aussi la création des parfums Dior depuis 2021. Son style : lumineux, aérien, très reconnaissable.'],
+    'Alberto Morillas': ['Parfumeur, l\'un des plus prolifiques au monde', 'Né à Séville, installé en Suisse. Il a signé CK One (avec Harry Fremont), Acqua di Giò, Daisy et Bright Crystal. Son style : propre, lumineux, facile à aimer, souvent aquatique ou frais.'],
+    'Dominique Ropion': ['Parfumeur, maître des fleurs blanches', 'Il a composé Portrait of a Lady, Carnal Flower et Vetiver Extraordinaire pour Frédéric Malle, Alien (avec Laurent Bruyère) et Amarige. Ses parfums sont amples, riches, très présents.'],
+    'Jean-Claude Ellena': ['Ancien nez exclusif d\'Hermès', 'Nez d\'Hermès de 2004 à 2016 : Terre d\'Hermès et la série des Jardins. Son style : épuré, minimaliste, quelques notes seulement, jamais lourd. Il a aussi écrit plusieurs livres sur le parfum.'],
+    'Olivier Polge': ['Nez de Chanel', 'Nez de la maison depuis 2015, fils de Jacques Polge. Gabrielle, Bleu de Chanel Eau de Parfum, N°5 L\'Eau ; il a aussi signé Flowerbomb (avec Carlos Benaïm et Domitille Bertier) et Dior Homme.'],
+    'Jacques Polge': ['Ancien nez de Chanel', 'Nez de Chanel de 1978 à 2015 : Coco, Coco Mademoiselle, Chance, Allure et Bleu de Chanel. Une élégance classique, très française.'],
+    'Jacques Cavallier-Belletrud': ['Parfumeur maison de Louis Vuitton', 'Formé à Grasse, nez de Louis Vuitton depuis 2012 : Ombre Nomade, Imagination, Étoile Filante. Auteur aussi de L\'Eau d\'Issey. Il aime les matières nobles et les grands espaces.'],
+    'Christine Nagel': ['Nez d\'Hermès', 'Nez d\'Hermès depuis 2014 : Twilly d\'Hermès, H24, Galop d\'Hermès, Eau de Citron Noir. Son style : sensuel, texturé, souvent plus chaud que celui de son prédécesseur.'],
+    'Thierry Wasser': ['Nez de Guerlain', 'Parfumeur maison de Guerlain depuis 2008 : L\'Homme Idéal, La Petite Robe Noire, et la collection L\'Art & la Matière. Il veille sur l\'héritage de la maison tout en le modernisant.'],
+    'Maurice Roucel': ['Parfumeur, l\'audace du musc', 'Il a signé Musc Ravageur et Dans Tes Bras (Frédéric Malle) ainsi qu\'Insolence (Guerlain). Son style : sensuel, animal, sans peur du caractère.'],
+    'Quentin Bisch': ['Parfumeur de la nouvelle génération', 'Delina (Parfums de Marly), Ganymede (Marc-Antoine Barrois), Fleur Narcotique (Ex Nihilo), des Gaultier récents : des parfums modernes, très commentés.'],
+    'Bertrand Duchaufour': ['Parfumeur indépendant et voyageur', 'Timbuktu et Dzongkha (L\'Artisan Parfumeur), Amaranthine (Penhaligon\'s), Avignon (Comme des Garçons). Son style : encens, bois fumés, matières inattendues.'],
+    'Calice Becker': ['Parfumeuse', 'Elle a composé J\'adore (Dior) et plusieurs parfums de Kilian (Good Girl Gone Bad, Straight to Heaven). Son style : floral lumineux, soyeux.'],
+    'Olivier Cresp': ['Parfumeur', 'Angel (1992, avec Yves de Chirin) a lancé la famille des gourmands. Il a aussi signé Light Blue (Dolce & Gabbana) et des parfums Montblanc.'],
+    'Pierre Bourdon': ['Parfumeur de classiques', 'À l\'origine de Cool Water (Davidoff), Kouros (YSL) et Green Irish Tweed (Creed) : des parfums masculins qui ont fait date.'],
+    'Jérôme Epinette': ['Parfumeur de Byredo', 'Collaborateur de longue date de Byredo : Gypsy Water, Bal d\'Afrique, Mojave Ghost, Blanche. Un style doux, poudré, très contemporain.'],
+    'Alessandro Gualtieri': ['Fondateur et parfumeur de Nasomatto', 'Il compose seul, avec des concentrations très élevées : Black Afgano, Baraonda, Pardon, Narcotic Venus. Des parfums radicaux, sombres, hypnotiques.'],
+    'Frank Voelkl': ['Parfumeur de Le Labo', 'Il a signé les grands classiques du Labo : Santal 33, Another 13, Thé Noir 29. Il a aussi travaillé pour Kilian.'],
+    'Daniela Andrier': ['Parfumeuse de Prada', 'Infusion d\'Iris, L\'Homme Prada, Luna Rossa : l\'élégance sobre et poudrée de la maison.'],
+    'Anne Flipo': ['Parfumeuse', 'Libre (Yves Saint Laurent), Lady Million, des Jo Malone : des parfums grand public à forte personnalité.'],
+    'Mathilde Laurent': ['Nez de Cartier', 'Baiser Volé, La Panthère, Déclaration d\'un soir : des parfums raffinés, souvent floraux et sensuels.'],
+    'Marie Salamagne': ['Parfumeuse de Maison Margiela Replica', 'Jazz Club, By the Fireplace : l\'art de raconter un souvenir en parfum.'],
+    'Antoine Lie': ['Parfumeur', 'Etat Libre d\'Orange (Rien, Jasmin et Cigarette), Interlude Man (Amouage), Nasomatto : des parfums audacieux.'],
+    'Mark Buxton': ['Parfumeur indépendant', 'La collection Comme des Garçons (Black, 2), mais aussi Jovoy et Nasomatto : un style graphique, très affirmé.'],
+    'Nathalie Lorson': ['Parfumeuse', 'Libre et Black Opium (Yves Saint Laurent), Encre Noire (Lalique), L\'Interdit (Givenchy).'],
+    'Fabrice Pellegrin': ['Parfumeur', 'Essential Parfums, BDK Parfums, Matière Première : une signature musquée et boisée très actuelle.'],
+    'Aurélien Guichard': ['Parfumeur', 'Matière Première, Parfums de Marly, Azzaro The Most Wanted.'],
+    'Louise Turner': ['Parfumeuse', 'BDK Parfums (Gris Charnel), Jo Malone, Diptyque.'],
+    'Daphné Bugey': ['Parfumeuse', 'Le Labo (Rose 31, Thé Noir 29), Byredo, Serge Lutens.'],
+    'Julien Rasquinet': ['Parfumeur', 'Layton et Carlisle (Parfums de Marly), Side Effect (Initio).'],
+    'Sidonie Lancesseur': ['Parfumeuse', 'Delina (Parfums de Marly), Kilian, Initio.'],
+    'Carlos Benaïm': ['Parfumeur', 'Tom Ford (Oud Wood, Neroli Portofino), Estée Lauder, Calvin Klein.'],
+    'Olivier Pescheux': ['Parfumeur', 'Dior Sauvage, Montblanc Explorer, Diptyque Philosykos.'],
+    'Sophie Labbé': ['Parfumeuse', 'Bvlgari (Omnia, Rose Goldea), Dior, Valentino.'],
+    'Annick Menardo': ['Parfumeuse', 'A*Men (Mugler), Bvlgari Black, Hypnotic Poison (Dior).'],
+  };
+  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Pierre Bourdon', 'Jérôme Epinette', 'Alessandro Gualtieri', 'Frank Voelkl', 'Daniela Andrier', 'Anne Flipo', 'Mathilde Laurent', 'Marie Salamagne'];
+  root.NOSE_BIO = NOSE_BIO; root.NOSE_TOP = NOSE_TOP;
   root.DESC = DESC; root.NOSE = NOSE; root.NOSE_HOUSE = NOSE_HOUSE; root.LEX = LEX;
 })(typeof window !== 'undefined' ? window : globalThis);

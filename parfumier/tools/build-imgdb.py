@@ -1,6 +1,6 @@
 """Détoure les photos de incoming/ et les rattache aux parfums de la base.
 Entrée : data/imgmap.txt (via resolve-img.js). Sortie : v2/img/db/*.webp et imgdb.js (window.IMGDB : "maison|nom" normalisés -> fichier)."""
-import json, re, subprocess, pathlib, unicodedata
+import json, re, subprocess, pathlib, unicodedata, sys, os
 import numpy as np
 from scipy import ndimage
 from PIL import Image, ImageFilter
@@ -10,14 +10,15 @@ def norm(s): return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9 ]', ' ', ''.join(c for
 app = (root/'v2/app.js').read_text()
 have = {norm(k) for k in re.findall(r"'((?:[^'\\]|\\.)+)':\s*\{\s*s:\s*'img/", app)}  # déjà détourées à la main
 out_dir = root/'v2/img/db'; out_dir.mkdir(parents=True, exist_ok=True)
-for f in out_dir.glob('*.webp'): f.unlink()
+for f in out_dir.glob('*.webp'): f.unlink()  # reconstruction complète
 skip = {l.strip() for l in (root/'data/imgskip.txt').read_text().splitlines() if l.strip() and not l.startswith('#')}
 db, done, skipped = {}, set(), []
+TOL = int(os.environ.get('TOL', 38))
 def cut(src):
     im = Image.open(src).convert('RGB'); im.thumbnail((900, 900)); a = np.asarray(im).astype(np.int16); h, w, _ = a.shape
     corners = np.array([a[2, 2], a[2, w-3], a[h-3, 2], a[h-3, w-3]]); bg = np.median(corners, axis=0)
     if corners.max(axis=0).sum() - corners.min(axis=0).sum() > 40: return None, 'fond non uni'
-    near = (np.abs(a - bg).sum(axis=2) < 38)
+    near = (np.abs(a - bg).sum(axis=2) < TOL)
     # on ne retire que le fond relié aux bords (l'intérieur d'un flacon clair reste)
     lab, n = ndimage.label(near); edge = set(lab[0]) | set(lab[-1]) | set(lab[:, 0]) | set(lab[:, -1]); edge.discard(0)
     seen = np.isin(lab, list(edge))

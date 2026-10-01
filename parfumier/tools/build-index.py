@@ -19,7 +19,7 @@ HOUSE = {
  'cartier les heures de parfum': 'Cartier', 'cartier collection': 'Cartier', 'prada olfactories': 'Prada', 'fendi private': 'Fendi',
  'givenchy la collection particuliere': 'Givenchy', 'givenchy l atelier de givenchy': 'Givenchy', 'mfk': 'Maison Francis Kurkdjian',
  'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
- 'jo malone london': 'Jo Malone', 'ella k parfums': 'Ella K', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
+ 'giorgio armani': 'Armani', 'thierry mugler': 'Mugler', 'christian dior': 'Dior', 'annick goutal': 'Maison Goutal', 'mdci parfums': 'MDCI', 'frederic malle': 'Frédéric Malle', 'jo malone london': 'Jo Malone', 'ella k parfums': 'Ella K', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
  'maison martin margiela': 'Maison Margiela', 'margiela': 'Maison Margiela', 'bulgari': 'Bvlgari', 'diptyque paris': 'Diptyque', 'byredo parfums': 'Byredo', 'le labo fragrances': 'Le Labo', 'bdk': 'BDK Parfums', 'bdk parfums': 'BDK Parfums',
  'les bains guerbois': 'Les Bains Guerbois', 'memo': 'Memo Paris', 'memo paris': 'Memo Paris', 'maison crivelli': 'Maison Crivelli', 'loewe paula s ibiza': 'Loewe', 'loewe botanical rainbow': 'Loewe',
 }
@@ -31,7 +31,7 @@ CONC = {'eau de parfum': 'EDP', 'eau de toilette': 'EDT', 'extrait': 'EXT', 'ext
         'cologne absolue': 'COL', 'eau de parfum extreme': 'EXT', 'eau de parfum intense': 'EDP', 'elixir precieux': 'EXT', 'collection': 'EDP', 'eau triple': 'COL', 'hair mist': None}
 SUFFIX = re.compile(r'(?<!\bde)(?<!\ble)\s+(extrait de parfum|extrait|parfum|eau de parfum|eau de toilette|eau de cologne)$', re.I)
 
-NAME_ALIAS = {('jean paul gaultier', 'santal paname'): 'Santal de Paname', ('frederic malle', 'un fleur de cassie'): 'Une Fleur de Cassie'}  # coquilles de la liste
+NAME_ALIAS = {('maison francis kurkdjian', 'le beau'): 'Le Beau Parfum', ('', 'le beau parfum'): 'Le Beau Parfum', ('jean paul gaultier', 'santal paname'): 'Santal de Paname', ('frederic malle', 'un fleur de cassie'): 'Une Fleur de Cassie'}  # coquilles de la liste
 raw = []
 for f in sorted((root / 'data/raw').glob('*.txt')):
     raw += [l.strip() for l in f.read_text(encoding='utf-8').splitlines() if l.strip()]
@@ -48,6 +48,7 @@ def canon_house(h):
         if n.startswith(nb + ' ') and nb not in ('maison', 'les', 'la', 'le'): return b
     return h.strip()
 existing = {(norm(canon_house(h)), norm(PREFIX.sub('', n))) for h, n in cat}
+existing |= {(norm(canon_house(h)), re.sub(r' (edp|edt)$', '', norm(n))) for h, n in cat}
 
 seen = {}; dup = skipped_cat = skipped_other = 0
 order = []
@@ -78,12 +79,37 @@ for line in raw:
     if conc not in seen[key]['conc']: seen[key]['conc'].append(conc)
     if cp: seen[key]['p'] = True
 
+
+def clean_name(name):
+    name = re.sub(r'\?$', '', name).strip()
+    name = PREFIX.sub('', name)
+    name = SUFFIX.sub('', name).strip() or name
+    return NAME_ALIAS.get(('', norm(name)), name)
+
+# ---- Nez : « Parfumeur|Maison|Parfum;Parfum… » -> chaque parfum est rattaché à son nez (et ajouté à l'index s'il manque)
+nose_by = collections.OrderedDict(); nose_names = collections.OrderedDict()
+for line in (root / 'data/noses.txt').read_text(encoding='utf-8').splitlines():
+    line = line.strip()
+    if not line or line.startswith('#'): continue
+    nose, h_raw, names = [x.strip() for x in line.split('|', 2)]
+    house = canon_house(h_raw)
+    for nm in [x.strip() for x in names.split(';') if x.strip()]:
+        name = NAME_ALIAS.get((norm(house), norm(clean_name(nm))), clean_name(nm))
+        if not name: continue
+        key = (norm(house), norm(name)); k2 = key[0] + ' ' + key[1]
+        if key not in existing and key not in seen:
+            seen[key] = {'house': house, 'name': name, 'conc': ['EDP'], 'p': False}; order.append(key)
+        lst = nose_by.setdefault(k2, [])
+        if nose not in lst: lst.append(nose)
+        nose_names[nose] = nose_names.get(nose, 0) + 1
+
 by = collections.OrderedDict()
 for k in order:
     e = seen[k]; by.setdefault(e['house'], []).append([e['name'], ','.join(sorted(e['conc'], key=['EDP', 'EDT', 'EXT', 'PAR', 'COL'].index))] + (['P'] if e['p'] else []))
 idx = sorted(by.items(), key=lambda kv: norm(kv[0]))
 for h, arr in idx: arr.sort(key=lambda r: norm(r[0]))
-out = '// Généré par tools/build-index.py : index des parfums (maison, [[nom, concentrations]]). Les fiches (notes, famille) sont complétées à l\'ajout.\nwindow.INDEX = ' + json.dumps(idx, ensure_ascii=False, separators=(',', ':')) + ';\n// Variantes d\'écriture des maisons (Jo Malone London -> Jo Malone) : appliquées aux collections existantes.\nwindow.HOUSE_ALIAS = ' + json.dumps(HOUSE, ensure_ascii=False, separators=(',', ':')) + ';\n'
+out = '// Généré par tools/build-index.py : index des parfums (maison, [[nom, concentrations]]). Les fiches (notes, famille) sont complétées à l\'ajout.\nwindow.INDEX = ' + json.dumps(idx, ensure_ascii=False, separators=(',', ':')) + ';\n// Variantes d\'écriture des maisons (Jo Malone London -> Jo Malone) : appliquées aux collections existantes.\nwindow.HOUSE_ALIAS = ' + json.dumps(HOUSE, ensure_ascii=False, separators=(',', ':')) + ';\n// Parfumeurs : clé « maison nom » (normalisée) -> liste de nez, d\'après data/noses.txt.\nwindow.NOSE_BY = ' + json.dumps(nose_by, ensure_ascii=False, separators=(',', ':')) + ';\n'
 (root / 'index.js').write_text(out, encoding='utf-8')
 total = sum(len(a) for _, a in idx)
+print(f'nez : {len(nose_names)}, parfums rattachés : {len(nose_by)} | ', end='')
 print(f'lignes lues : {len(raw)} | parfums uniques ajoutés : {total} | maisons : {len(idx)} | doublons retirés : {dup} | déjà au catalogue : {skipped_cat} | ignorées : {skipped_other} | taille : {len(out)//1024} Ko')

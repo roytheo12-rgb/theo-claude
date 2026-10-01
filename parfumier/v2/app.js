@@ -486,7 +486,7 @@
     const pn = openSheet(`
       <div class="big-bottle"><i class="aura" style="background:${tint(p)}"></i>${fxCanvas(`data-p="${p.id}"`, 1)}${bt(p, { spray: true })}</div>
       <div><h2>${esc(p.name)}</h2><p class="mono" style="margin-top:6px">${esc(p.house)} · ${esc(famLabel(p.family))}</p></div>
-      ${(() => { const d = window.DESC && window.DESC[p.name], n = (window.NOSE && window.NOSE[p.name]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[p.house]); return d || n ? `<p class="rd">${d ? esc(d[1]) : ''}${n ? ` <span class="mono" style="text-transform:none;letter-spacing:0">Créé par ${esc(n)}.</span>` : ''}</p>` : ''; })()}
+      ${(() => { const d = window.DESC && window.DESC[p.name], n = noseOf(p.name, p.house).slice(0, 3).join(', '); return d || n ? `<p class="rd">${d ? esc(d[1]) : ''}${n ? ` <span class="mono" style="text-transform:none;letter-spacing:0">Créé par ${esc(n)}.</span>` : ''}</p>` : ''; })()}
       <div class="chips">${(p.notes || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>
       <div class="card" style="display:grid;gap:8px"><div class="meter"><span>Projection</span>${dots(p.projection)}</div><div class="meter"><span>Tenue</span>${dots(p.longevity)}</div><div class="meter"><span>Poids</span>${dots(p.weight)}</div></div>
       <div><p class="mono">ma note</p><div class="stars" id="stars">${[1, 2, 3, 4, 5].map((i) => `<button data-r="${i}" aria-label="${i} sur 5">${i <= p.rating ? '★' : '☆'}</button>`).join('')}</div></div>
@@ -584,12 +584,22 @@
     const notes = []; toks.forEach((t) => { const k = KW_NOTE[t] || (t.length >= 5 ? KW_NOTE[Object.keys(KW_NOTE).find((x) => x.length >= 5 && t.startsWith(x))] : null); if (k && !notes.includes(k)) notes.push(k); });
     return { family: fam, weight: w, notes: notes.slice(0, 4) };
   }
+  // Nez d'un parfum : d'après la liste de Théo (data/noses.txt), sinon la courte liste de repères
+  function noseOf(n, h) {
+    const NB = window.NOSE_BY || {}, k = E.norm(h + ' ' + n), l = NB[k] || NB[k.replace(/ (edp|edt)$/, '')];
+    if (l) return l;
+    const c = (window.NOSE && window.NOSE[n]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[h]); return c ? c.split(/ et |, /) : [];
+  }
+  const initials = (n) => n.split(/[\s-]+/).filter(Boolean).slice(0, 2).map((x) => x[0]).join('').toUpperCase();
+  const noseCount = (n) => dbList().filter((e) => (e.noses || []).includes(n)).length;
+  const noseCard = (n) => { const b = (window.NOSE_BIO || {})[n]; return `<div class="card nosec"><div class="nh"><span class="av">${esc(initials(n))}</span><div><b>${esc(n)}</b><small>${esc(b ? b[0] : 'Parfumeur')} · ${noseCount(n)} parfum${noseCount(n) > 1 ? 's' : ''} dans la base</small></div></div>${b ? `<p>${esc(b[1])}</p>` : ''}</div>`; };
+  const noseRow = (attr, list) => `<div class="xpop noserow">${list.map((n) => `<button type="button" class="xp nz" ${attr}="${esc(n)}"><span class="av">${esc(initials(n))}</span><b>${esc(n)}</b><small>${noseCount(n)} parfums</small></button>`).join('')}</div>`;
   let DBL = null;
   function dbList() {
     if (DBL && DBL.n === CAT.length) return DBL.l;
-    const out = [], seen = new Set(), HA = window.HOUSE_ALIAS || {}, ch = (h) => (h && HA[E.norm(h)]) || h, tg = window.tagsOf || (() => []), nose = (n, h) => (window.NOSE && window.NOSE[n]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[h]) || '';
-    CAT.forEach((c) => { if (!c.name || !c.house) return; const h = ch(c.house); seen.add(E.norm(h + ' ' + c.name)); out.push({ name: c.name, house: h, conc: '', cat: c, family: c.family, notes: c.notes || [], price: c.price || 0, nose: nose(c.name, h), guess: false, tags: tg(c.name, h, c.price || 0, '') }); });
-    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc, fl]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const g = guessInfo(n); out.push({ name: n, house: h, conc, cat: null, family: g.family, notes: g.notes, weight: g.weight, price: 0, nose: nose(n, h), guess: true, tags: tg(n, h, 0, fl) }); }));
+    const out = [], seen = new Set(), HA = window.HOUSE_ALIAS || {}, ch = (h) => (h && HA[E.norm(h)]) || h, tg = window.tagsOf || (() => []), noses = noseOf;
+    CAT.forEach((c) => { if (!c.name || !c.house) return; const h = ch(c.house); seen.add(E.norm(h + ' ' + c.name)); out.push({ name: c.name, house: h, conc: '', cat: c, family: c.family, notes: c.notes || [], price: c.price || 0, noses: noses(c.name, h), guess: false, tags: tg(c.name, h, c.price || 0, '') }); });
+    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc, fl]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const g = guessInfo(n); out.push({ name: n, house: h, conc, cat: null, family: g.family, notes: g.notes, weight: g.weight, price: 0, noses: noses(n, h), guess: true, tags: tg(n, h, 0, fl) }); }));
     DBL = { n: CAT.length, l: out }; return out;
   }
   const PRICE_TIERS = [['p1', 'Moins de 100 €', (p) => p > 0 && p < 100], ['p2', '100 à 200 €', (p) => p >= 100 && p < 200], ['p3', '200 à 300 €', (p) => p >= 200 && p < 300], ['p4', '300 € et plus', (p) => p >= 300]];
@@ -600,7 +610,7 @@
     else if (facet === 'note') db.forEach((e) => { const nn = (e.notes || []).map(E.norm); FACET_NOTES.forEach((f) => { const nf = E.norm(f); if (nn.some((x) => x.includes(nf))) put(nf, f, e); }); });
     else if (facet === 'price') db.forEach((e) => { const t = PRICE_TIERS.find((x) => x[2](e.price)); if (t) put(t[0], t[1], e); });
     else if (facet === 'tag') db.forEach((e) => (e.tags || []).forEach((t) => put(t, (window.TAGS || {})[t] || t, e)));
-    else if (facet === 'nose') db.forEach((e) => { if (e.nose) e.nose.split(/ et |, /).forEach((n) => put(E.norm(n), n.trim(), e)); });
+    else if (facet === 'nose') db.forEach((e) => (e.noses || []).forEach((n) => put(E.norm(n), n, e)));
     let g = [...m.values()];
     g = facet === 'brand' || facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'tag' ? g.sort((a, b) => Object.keys(window.TAGS || {}).indexOf(a.key) - Object.keys(window.TAGS || {}).indexOf(b.key)) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
     return g;
@@ -634,11 +644,11 @@
           else if (facet === 'style' || facet === 'note') inner += `<p class="mono" style="text-transform:none;letter-spacing:0">${facet === 'style' ? 'Pour les parfums sans fiche détaillée, le style est déduit du nom (≈).' : 'Notes des fiches détaillées, ou lues dans le nom du parfum.'}</p>`;
           else if (facet === 'tag') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Abordable, niche, designer, luxe, collection privée… pour trier d\'un coup d\'œil.</p>';
           else if (facet === 'price') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Prix indicatifs d\'un flacon standard, pour les parfums avec fiche détaillée.</p>';
-          else inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Les parfumeurs connus et sûrs : la liste grandit avec la base.</p>';
+          else inner += `<p class="mono">Les nez les plus connus</p>${noseRow('data-xn', (window.NOSE_TOP || []).filter((n) => gs.some((g) => g.label === n)))}<p class="mono">Tous les parfumeurs · ${gs.length}</p>`;
           inner += `<div class="chips xg">${gs.map((g) => `<button type="button" class="chip" data-xg="${esc(g.key)}">${esc(g.label)} <small style="color:var(--muted)">${g.items.length}</small></button>`).join('') || '<span class="mono">Rien ici pour l\'instant</span>'}</div>`;
         } else {
           const g = gs.find((x) => x.key === group); const items = g ? g.items.slice().sort((a, b) => (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || a.name.localeCompare(b.name, 'fr')) : [];
-          inner += `<div class="row xback"><button type="button" class="ghost" id="xback">← ${tabs.find((t) => t[0] === facet)[1]}</button><b>${esc(g ? g.label : '')}</b><span class="mono">${items.length}</span></div><div class="xgrid">${items.slice(0, limit).map(card).join('')}</div>${items.length > limit ? '<button type="button" class="ghost" id="xmore">Voir plus</button>' : ''}`;
+          inner += `<div class="row xback"><button type="button" class="ghost" id="xback">← ${tabs.find((t) => t[0] === facet)[1]}</button><b>${esc(g ? g.label : '')}</b><span class="mono">${items.length}</span></div>${facet === 'nose' && g ? noseCard(g.label) : ''}<div class="xgrid">${items.slice(0, limit).map(card).join('')}</div>${items.length > limit ? '<button type="button" class="ghost" id="xmore">Voir plus</button>' : ''}`;
         }
       }
       host.innerHTML = `<div class="exp"><div><h2>${esc(o.title)}</h2><p style="color:var(--muted);margin-top:6px">${esc(o.sub)}</p></div><input type="search" id="xq" placeholder="Rechercher un parfum ou une maison" value="${esc(q)}" autocomplete="off" aria-label="Rechercher"><div id="xbody">${inner}</div>${o.free ? `<button type="button" class="linkbtn" id="xfree">${esc(o.free)}</button>` : ''}${o.skip ? `<button type="button" class="ghost" id="xskip">${esc(o.skip)}</button>` : ''}${foot()}</div>`;
@@ -647,6 +657,7 @@
     function bind() {
       const qi = $('#xq', host); qi.oninput = () => { q = qi.value; const pos = q.length; body(); const n = $('#xq', host); n.focus(); n.setSelectionRange(pos, pos); };
       $$('[data-xf]', host).forEach((b) => (b.onclick = () => { facet = b.dataset.xf; group = null; limit = 60; body(); }));
+      $$('[data-xn]', host).forEach((b) => (b.onclick = () => { group = E.norm(b.dataset.xn); limit = 60; body(); }));
       $$('[data-xg]', host).forEach((b) => (b.onclick = () => { group = b.dataset.xg; limit = 60; body(); }));
       if ($('#xback', host)) $('#xback', host).onclick = () => { group = null; body(); };
       if ($('#xmore', host)) $('#xmore', host).onclick = () => { limit += 60; body(); };
@@ -669,7 +680,7 @@
       if (tier && !tier[2](e.price)) return false;
       if (SRCH.house && e.house !== SRCH.house) return false;
       if (nn && !(e.notes || []).some((x) => E.norm(x).includes(nn))) return false;
-      if (SRCH.nose && !(e.nose || '').includes(SRCH.nose)) return false;
+      if (SRCH.nose && !(e.noses || []).includes(SRCH.nose)) return false;
       if (SRCH.conc && !(e.conc || '').split(',').includes(SRCH.conc)) return false;
       if (SRCH.photo && !imgOf(e)) return false;
       if (nq) { const nh = E.norm(e.house + ' ' + e.name); if (!nq.split(' ').every((w) => nh.includes(w))) return false; }
@@ -691,12 +702,13 @@
     if ($('#smore', box)) $('#smore', box).onclick = () => { SRCH.limit += 40; drawSearchResults(); };
   }
   function viewSearch() {
-    const db = dbList(), houses = [...new Set(db.map((e) => e.house))].sort((a, b) => a.localeCompare(b, 'fr')), noses = [...new Set(db.flatMap((e) => (e.nose ? e.nose.split(/ et |, /) : [])))].sort((a, b) => a.localeCompare(b, 'fr'));
+    const db = dbList(), houses = [...new Set(db.map((e) => e.house))].sort((a, b) => a.localeCompare(b, 'fr')), noses = [...new Set(db.flatMap((e) => e.noses || []))].sort((a, b) => a.localeCompare(b, 'fr'));
     const sel = (id, label, opts, val) => `<label class="sel"><span class="mono">${label}</span><select id="${id}"><option value="">Tous</option>${opts.map((o) => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></label>`;
     const nF = SRCH.tags.length + (SRCH.style ? 1 : 0) + (SRCH.price ? 1 : 0) + (SRCH.house ? 1 : 0) + (SRCH.note ? 1 : 0) + (SRCH.nose ? 1 : 0) + (SRCH.conc ? 1 : 0) + (SRCH.photo ? 1 : 0);
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
         <input type="search" id="sq" placeholder="Un parfum, une maison…" value="${esc(SRCH.q)}" autocomplete="off" aria-label="Rechercher un parfum">
+        ${SRCH.nose ? noseCard(SRCH.nose) : `<p class="mono">Les nez</p>${noseRow('data-sn', (window.NOSE_TOP || []).slice(0, 14))}`}
         <div class="chips actf">${[...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note : ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean).map(([k, l]) => `<button class="chip on" data-xa="${esc(k)}">${esc(l)} ✕</button>`).join('')}</div>
         <details class="filters" ${SRCH.open ? 'open' : ''}><summary class="mono">Filtres${nF ? ' · ' + nF : ''}</summary>
           <p class="mono">Tags</p><div class="chips">${Object.entries(window.TAGS || {}).map(([k, v]) => `<button class="chip ${SRCH.tags.includes(k) ? 'on' : ''}" data-st="${k}">${esc(v)}</button>`).join('')}</div>
@@ -708,6 +720,7 @@
         </details>
         <div id="sres"></div></section>`;
     const re = () => { SRCH.limit = 40; viewSearch(); };
+    $$('[data-sn]').forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.sn; re(); }));
     $('.filters').addEventListener('toggle', (e) => { SRCH.open = e.target.open; });
     $$('[data-xa]').forEach((b) => (b.onclick = () => { const k = b.dataset.xa; if (k.startsWith('t:')) SRCH.tags = SRCH.tags.filter((x) => x !== k.slice(2)); else if (k === 'photo') SRCH.photo = false; else SRCH[k] = ''; re(); }));
     $('#sq').addEventListener('input', (e) => { SRCH.q = e.target.value; SRCH.limit = 40; drawSearchResults(); });
@@ -729,10 +742,12 @@
       ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
       ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
       ${(e.notes || []).length ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
-      <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.nose ? 'Créé par ' + e.nose : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>
+      <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>
+      ${(e.noses || []).length ? `<div><p class="mono">Créé par</p><div class="chips" style="margin-top:8px">${e.noses.slice(0, 4).map((n) => `<button class="chip" data-nz="${esc(n)}">${esc(n)}</button>`).join('')}</div>${e.noses.length >= 3 ? '<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:8px">Plusieurs nez sont cités pour ce parfum : les sources divergent.</p>' : ''}</div>` : ''}
       <div class="row">${inCol ? '<span class="mono">Dans ta collection ✓</span>' : '<button class="cta" id="eown"><span>Je l\'ai</span></button>'}${inW ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="ghost" id="ewish">À sentir</button>'}<button class="ghost" id="ex">Fermer</button></div>
       ${buyLinks(e.name, e.house)}`);
     $('#ex', pn).onclick = closeSheet;
+    $$('[data-nz]', pn).forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.nz; closeSheet(); tab = 'search'; render(); }));
     if ($('#eown', pn)) $('#eown', pn).onclick = () => { addEntriesToCollection([e]); closeSheet(); render(true); };
     if ($('#ewish', pn)) $('#ewish', pn).onclick = () => { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); save(); closeSheet(); render(true); };
   }

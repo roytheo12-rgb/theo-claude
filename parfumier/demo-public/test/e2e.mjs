@@ -115,7 +115,8 @@ await pg.locator('.xc:not([disabled])').first().click(); ok(/1 choisi/.test(awai
 await pg.click('#xback'); await pg.click('[data-xf=style]'); await pg.click('[data-xg=ambré]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'par style : les parfums ambrés');
 await pg.click('#xback'); await pg.click('[data-xf=note]'); await pg.click('[data-xg=vanille]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'par note : la vanille');
 await pg.click('#xback'); await pg.click('[data-xf=price]'); await pg.click('[data-xg=p3]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 3, 'par prix : 200 à 300 €');
-await pg.click('#xback'); await pg.click('[data-xf=nose]'); ok(/Francis Kurkdjian/.test(await pg.textContent('.xg')), 'par parfumeur : Francis Kurkdjian listé');
+await pg.click('#xback'); await pg.click('[data-xf=nose]'); ok(/Francis Kurkdjian/.test(await pg.textContent('.xg')) && await pg.locator('[data-xn]').count() >= 10, 'par parfumeur : les nez les plus connus en tête, puis tous les autres');
+await pg.click('[data-xn="Francis Kurkdjian"]'); await pg.waitForSelector('.nosec'); ok(/Baccarat Rouge 540/.test(await pg.textContent('.nosec')) && await pg.locator('.xc').count() > 10, 'fiche d\'un nez : présentation + ses parfums');
 const nb = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length); await pg.click('#xgo'); await pg.waitForTimeout(600);
 ok(await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length) === nb + 1, 'ajout depuis l\'explorateur : le parfum choisi rejoint la collection');
 // 5b4. wishlist : à sentir / senti, exploration, verdict
@@ -136,6 +137,9 @@ ok(n1 === 0 || /Gourmand/.test(await pg.textContent('#sres')), 'recherche : filt
 await pg.click('[data-st=abordable]'); await pg.click('[data-st=niche]'); await pg.waitForTimeout(200);
 ok(await pg.locator('#sres .xc').count() > 0, 'recherche : un filtre se retire d\'un clic');
 await pg.locator('#sres .xc').first().click(); await pg.waitForSelector('#eown'); ok(await pg.locator('#ewish').count() === 1, 'fiche d\'un parfum : « Je l\'ai » et « À sentir »'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
+await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); if (await pg.locator('#sreset').count()) await pg.click('#sreset'); await pg.waitForSelector('[data-sn]'); await pg.click('[data-sn=\"Alberto Morillas\"]'); await pg.waitForSelector('.nosec'); await pg.waitForTimeout(300);
+ok(/Alberto Morillas/.test(await pg.textContent('.nosec')) && /Acqua di Giò/.test(await pg.textContent('#sres')), 'recherche par nez : Alberto Morillas, sa présentation et ses parfums (Acqua di Giò…)');
+await pg.click('[data-xa=nose]'); await pg.waitForTimeout(200);
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);

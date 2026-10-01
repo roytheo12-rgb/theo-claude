@@ -13,7 +13,7 @@ const out = [];
 for (const line of fs.readFileSync(path.join(root, 'data/imgmap.txt'), 'utf8').split('\n').filter(Boolean)) {
   let [f, house, name] = line.split('|'); const file = f.startsWith('f:') ? f.slice(2) : f + '.jpg';
   const nn = norm(name);
-  let c = all.filter((x) => norm(x.name) === nn);
+  let c = all.filter((x) => [nn, nn + ' edp', nn + ' edt'].includes(norm(x.name)));
   let hit = c.find((x) => same(x.house, house)) || (c.length === 1 ? c[0] : null);
   out.push(hit ? { file, status: 'ok', house: hit.house, name: hit.name, cat: !!hit.cat } : { file, status: 'absent', house, name });
 }
