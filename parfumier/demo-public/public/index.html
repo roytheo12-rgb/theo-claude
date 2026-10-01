@@ -422,6 +422,8 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .emptycard h2 { font: 300 24px/1.15 var(--sf); margin: 0; }
 .emptycard p:not(.mono) { color: var(--muted); font-size: 15px; margin: 0; }
 
+#brw{display:grid;gap:10px}#brw .brands,#brw .plist{display:flex;flex-wrap:wrap;gap:8px;max-height:46vh;overflow:auto}#brw .row{align-items:center;gap:10px}
+
 </style>
 </head><body>
 <div id="app">
@@ -1788,13 +1790,15 @@ ${mist}
   }
   let PRE = [], SHELF_FILES = [];
   function openAdd() {
-    PRE = []; SHELF_FILES = [];
+    PRE = []; SHELF_FILES = []; BRW_SEL = [];
     const pn = openSheet(`<div><h2>Ajoute sans taper</h2><p style="color:var(--muted);margin-top:6px">Colle tes parfums en vrac, ou prends ton étagère en photo. L'IA retrouve la maison, les notes et la puissance.</p></div>
       <textarea id="addtxt" rows="4" placeholder="br540, santal 33 le labo, un diptyque au figuier, ombre leather…"></textarea>
       ${window.SillageDemo ? '<input type="text" id="addurl" inputmode="url" autocomplete="off" placeholder="Ou colle l\'adresse d\'une image trouvée sur internet (https://…)" aria-label="Adresse d\'une image de parfum">' : ''}
       <div class="row"><button class="chip photo-btn" id="addph" ${CAN_IMG ? '' : 'hidden'}>${IC.cam}<span id="addphl">${window.SillageDemo ? 'Photo ou image du flacon' : 'Photo(s) de l\'étagère'}</span></button><input type="file" id="addin" accept="image/*" ${window.SillageDemo ? '' : 'multiple'} hidden></div>
       ${window.SillageDemo ? `<p class="mono" style="text-transform:none;letter-spacing:0">Reconnaissance par une IA légère, quasi gratuite : ${window.SillageDemo.identLeft()} analyse${window.SillageDemo.identLeft() > 1 ? 's' : ''} restante${window.SillageDemo.identLeft() > 1 ? 's' : ''} dans la démo. Les parfums déjà connus ne comptent pas.</p>` : ''}
+      <button class="chip" id="addbrw" type="button">Parcourir par marque</button><div id="brw" hidden></div>
       <button class="cta full" id="addgo">${IC.spark}<span>Analyser</span></button><div id="addres" style="display:grid;gap:10px"></div>`);
+    $('#addbrw', pn).onclick = () => { const b = $('#brw', pn); b.hidden = !b.hidden; if (!b.hidden) browseBrands(pn); };
     // Suggestions pendant la frappe : un parfum connu s'ajoute sans erreur, les fiches inconnues sont complétées par l'IA légère (et gardées en cache pour tous).
     const sug = document.createElement('div'); sug.className = 'chips'; sug.id = 'addsug'; $('#addtxt', pn).after(sug);
     $('#addtxt', pn).addEventListener('input', (e) => {
@@ -1807,6 +1811,32 @@ ${mist}
     $('#addph', pn).onclick = () => $('#addin', pn).click();
     $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, window.SillageDemo ? 1 : 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
     $('#addgo', pn).onclick = () => analyzeAdd(pn);
+  }
+  // Parcours de la base : marques (avec nombre de parfums) puis parfums de la marque, cliquables et ajoutables.
+  function brandMap() {
+    const m = new Map(), add = (h, name, conc, cat) => { if (!h) return; const k = E.norm(h); if (!m.has(k)) m.set(k, { house: h, items: [], seen: new Set() }); const b = m.get(k), n = E.norm(name); if (b.seen.has(n)) return; b.seen.add(n); b.items.push({ name, house: h, conc, cat }); };
+    CAT.forEach((c) => add(c.house, c.name, '', true));
+    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, c]) => add(h, n, c, false)));
+    return [...m.values()].sort((a, b) => a.house.localeCompare(b.house, 'fr'));
+  }
+  let BRW_SEL = [];
+  function browseBrands(pn, q) {
+    const box = $('#brw', pn), all = brandMap(), nq = E.norm(q || ''), list = nq ? all.filter((b) => E.norm(b.house).includes(nq)) : all;
+    box.innerHTML = `<input type="text" id="brwq" placeholder="Chercher une marque" value="${esc(q || '')}" aria-label="Chercher une marque"><div class="brands">${list.map((b) => `<button type="button" class="chip" data-brand="${esc(b.house)}">${esc(b.house)} <small style="color:var(--muted)">${b.items.length}</small></button>`).join('') || '<div class="empty">Aucune marque</div>'}</div>`;
+    const inp = $('#brwq', box); inp.oninput = () => { const pos = inp.value; browseBrands(pn, pos); const n = $('#brwq', box); n.focus(); n.setSelectionRange(pos.length, pos.length); };
+    $$('[data-brand]', box).forEach((b) => (b.onclick = () => browsePerfumes(pn, b.dataset.brand)));
+  }
+  function browsePerfumes(pn, house) {
+    const box = $('#brw', pn), b = brandMap().find((x) => x.house === house); if (!b) return browseBrands(pn);
+    const have = new Set(S.collection.map((p) => E.norm(p.name))), sel = new Set(BRW_SEL.map((x) => E.norm(x.name)));
+    const items = b.items.slice().sort((x, y) => x.name.localeCompare(y.name, 'fr'));
+    box.innerHTML = `<div class="row"><button type="button" class="ghost" id="brwback">← Marques</button><b>${esc(house)}</b></div><div class="plist">${items.map((it, i) => { const own = have.has(E.norm(it.name)), on = sel.has(E.norm(it.name)); return `<button type="button" class="chip ${on ? 'on' : ''}" data-it="${i}" ${own ? 'disabled' : ''}>${esc(it.name)}${it.conc && it.conc !== 'EDP' ? ' <small style="color:var(--muted)">' + esc(it.conc.split(',').map((x) => CONC_L[x] || x).join('/')) + '</small>' : ''}${own ? ' ✓' : on ? ' ✓' : ' +'}</button>`; }).join('')}</div><button type="button" class="cta full" id="brwadd" ${BRW_SEL.length ? '' : 'disabled'}><span>Ajouter ${BRW_SEL.length || ''} parfum${BRW_SEL.length > 1 ? 's' : ''}</span></button>`;
+    $('#brwback', box).onclick = () => browseBrands(pn);
+    $$('[data-it]', box).forEach((bt2) => (bt2.onclick = () => { const it = items[+bt2.dataset.it], k = E.norm(it.name), j = BRW_SEL.findIndex((x) => E.norm(x.name) === k); if (j >= 0) BRW_SEL.splice(j, 1); else BRW_SEL.push(it); browsePerfumes(pn, house); }));
+    $('#brwadd', box).onclick = () => {
+      const ta = $('#addtxt', pn), lines = BRW_SEL.map((it) => (it.cat ? it.name : it.house + ' — ' + it.name)); BRW_SEL = [];
+      ta.value = (ta.value.trim() ? ta.value.trim().replace(/,\s*/g, '\n') + '\n' : '') + lines.join('\n'); box.hidden = true; analyzeAdd(pn);
+    };
   }
   async function analyzeAdd(pn) {
     const txt0 = $('#addtxt', pn).value.trim(), out = $('#addres', pn), demo = window.SillageDemo, imgUrl = $('#addurl', pn) ? $('#addurl', pn).value.trim() : '';

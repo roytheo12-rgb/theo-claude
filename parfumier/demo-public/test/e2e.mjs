@@ -97,6 +97,13 @@ await pg.click('[data-sug]'); ok((await pg.inputValue('#addtxt')).startsWith('Ki
 const nIdent = identCalls.length; await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
 ok(identCalls.length === nIdent + 1 && /Kilian — Moonlight in Heaven/.test(identCalls.at(-1).messages[0].content.at(-1).text), 'la fiche inconnue est complétée par Haiku (Maison — Nom envoyé)');
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
+// 5b3. parcourir la base : marque puis parfum, cliquable et ajoutable
+await pg.click('#addBtn'); await pg.waitForSelector('#addbrw'); await pg.click('#addbrw'); await pg.waitForSelector('[data-brand]');
+ok((await pg.$$('[data-brand]')).length > 100, 'parcours : plus de 100 marques listées');
+await pg.fill('#brwq', 'kilian'); await pg.waitForTimeout(200); await pg.click('[data-brand="Kilian"]'); await pg.waitForSelector('[data-it]');
+ok((await pg.$$('[data-it]')).length > 5, 'parcours : les parfums de la marque s\'affichent');
+await pg.click('[data-it]'); ok(/Ajouter 1 parfum/.test(await pg.textContent('#brwadd')), 'parcours : un parfum cliqué est sélectionné');
+await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);
 const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });
