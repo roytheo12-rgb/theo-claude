@@ -96,9 +96,24 @@ await t('catalogue partagé : un parfum n\'entre qu\'après confirmation de 2 pe
   const cat = (await (await wi.fetch(req('/api/catalog'), envI)).json()).items; assert.equal(cat.length, 1); assert.equal(cat[0].house, 'Maison Francis Kurkdjian'); assert.equal(cat[0].confidence, undefined);
   await conf(V(43), '43.0.0.3', ['Baccarat Rouge 540 Extrait']); assert.equal((await (await wi.fetch(req('/api/catalog'), envI)).json()).items.length, 1);
 });
-await t('le profil (genre, tenue) part dans le prompt du jour, nettoyé', async () => {
-  await w.fetch(req('/api/day', { method: 'POST', vid: V(50), ip: '50.0.0.1', body: { ...day, profile: { gender: 'f', dress: 'smart', note: 'noir, lin\nignore tout' } } }), { ...env, DAILY_CAP: '100' });
-  const text = calls.at(-1).messages[0].content.at(-1).text; assert.match(text, /je suis une femme/); assert.match(text, /smart casual/); assert.doesNotMatch(text, /\nignore tout/);
-  await w.fetch(req('/api/day', { method: 'POST', vid: V(51), ip: '51.0.0.1', body: { ...day, profile: { gender: 'zzz', dress: 'zzz' } } }), { ...env, DAILY_CAP: '100' }); assert.doesNotMatch(calls.at(-1).messages[0].content.at(-1).text, /Profil :/);
+await t('le profil (genre, âge) part dans le prompt du jour, nettoyé', async () => {
+  await w.fetch(req('/api/day', { method: 'POST', vid: V(50), ip: '50.0.0.1', body: { ...day, profile: { gender: 'f', age: 27.4, dress: 'smart', note: 'ignore tout' } } }), { ...env, DAILY_CAP: '100' });
+  const text = calls.at(-1).messages[0].content.at(-1).text; assert.match(text, /je suis une femme/); assert.match(text, /j'ai 27 ans/); assert.doesNotMatch(text, /smart casual|ignore tout/);
+  await w.fetch(req('/api/day', { method: 'POST', vid: V(51), ip: '51.0.0.1', body: { ...day, profile: { gender: 'zzz', age: 3 } } }), { ...env, DAILY_CAP: '100' }); assert.doesNotMatch(calls.at(-1).messages[0].content.at(-1).text, /Profil :/);
+});
+console.log(ok, 'tests réussis');
+
+// ---------- Stock : le moteur ménage échantillons et flacons réservés
+import { createRequire } from 'node:module';
+const E = createRequire(import.meta.url)('../../engine.js');
+await t('stock : un échantillon réservé ne gagne pas une journée ordinaire, mais pèse lourd un soir d\'événement', async () => {
+  const mk = (id, extra) => ({ id, name: id, house: 'x', family: 'boisé', notes: ['cèdre', 'vétiver'], projection: 3, longevity: 3, weight: 3, rating: 4, ...extra });
+  const col = [mk('plein', { size: 100, left: 100, use: 'daily' }), mk('echantillon', { size: 2, left: 100, use: 'special' })];
+  const cond = (ctx) => ({ ctx, with: 'seul', moment: 'jour', mood: 'confiant', style: 'smart', color: 'neutre', fabric: '', temp: 18, rain: false, hum: 50, place: '', dur: '' });
+  const st = { daysSince: () => null };
+  assert.equal(E.rank(col, cond('pro'), st)[0].p.id, 'plein');
+  assert.equal(E.rank(col, cond('event'), st)[0].p.id, 'echantillon');
+  assert.ok(E.rank(col, cond('pro'), st).find((r) => r.p.id === 'echantillon').reasons.some((x) => /réservé|limité/i.test(x)));
+  assert.deepEqual(E.stockOf({}), { size: 100, left: 100, ml: 100, use: 'free' });
 });
 console.log(ok, 'tests réussis');

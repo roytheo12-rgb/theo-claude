@@ -393,3 +393,16 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .tile b { font: 500 15px var(--sf); }
 .tile small { color: var(--muted); font-size: 12px; line-height: 1.3; }
 .tile.on { border-color: var(--wine); background: rgba(180, 57, 74, .16); }
+
+/* ---------- Tenue, stock ---------- */
+.agein { font-size: 28px; font-weight: 200; text-align: center; letter-spacing: .04em; }
+.dresses { display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 8px; scrollbar-width: none; scroll-snap-type: x proximity; }
+.dresses::-webkit-scrollbar { display: none; }
+.dchip { flex: 0 0 auto; display: grid; justify-items: center; gap: 6px; width: 88px; padding: 12px 6px 10px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: var(--muted); scroll-snap-align: start; transition: border-color .25s, background .25s, color .25s; }
+.dchip span { font: 500 11px/1.2 var(--sf); text-align: center; }
+.dchip.on { border-color: var(--wine); background: rgba(180, 57, 74, .16); color: var(--accent-deep); }
+.prew { display: grid; gap: 10px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.stk-ed { display: grid; gap: 8px; }
+.stk-ed .chip { padding: 8px 11px; font-size: 12.5px; }
+.stk-b { position: absolute; top: 10px; right: 10px; z-index: 2; font: 600 8.5px var(--sf); letter-spacing: .14em; text-transform: uppercase; font-style: normal; padding: 3px 6px; border: 1px solid rgba(180, 57, 74, .6); color: var(--accent-deep); border-radius: 2px; background: rgba(8, 8, 10, .55); }
+.stk-b.low { border-color: rgba(214, 186, 140, .5); }

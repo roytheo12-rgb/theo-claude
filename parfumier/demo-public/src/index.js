@@ -16,7 +16,7 @@ async function sha(text) {
 }
 
 const FAMILIES = ['agrumes', 'aquatique', 'aromatique', 'vert', 'floral', 'fruité', 'gourmand', 'ambré', 'boisé', 'épicé', 'cuir', 'musqué', 'oud'];
-const GENDERS = ['m', 'f', 'x'], DRESSES = ['casual', 'smart', 'costume', 'street', 'sport', 'soiree'];
+const GENDERS = ['m', 'f', 'x'];
 const clean = (v, n) => String(v ?? '').replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
 const normName = (v) => clean(v, 90).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().slice(0, 80);
 const rate5 = (v) => Math.min(5, Math.max(1, Math.round(Number(v)) || 3));
@@ -79,7 +79,7 @@ export function makeWorker(deps = {}) {
           explicit: String(body.explicit || '').slice(0, 500),
           wx: body.wx && typeof body.wx === 'object' ? { l: String(body.wx.l || '').slice(0, 30), t: Number(body.wx.t) || 0, rain: !!body.wx.rain } : null,
           date: String(body.date || '').slice(0, 60),
-          profile: body.profile && typeof body.profile === 'object' ? { gender: GENDERS.includes(body.profile.gender) ? body.profile.gender : '', dress: DRESSES.includes(body.profile.dress) ? body.profile.dress : '', note: clean(body.profile.note, 160) } : null,
+          profile: body.profile && typeof body.profile === 'object' ? { gender: GENDERS.includes(body.profile.gender) ? body.profile.gender : '', age: Math.round(Number(body.profile.age)) >= 10 && Math.round(Number(body.profile.age)) <= 99 ? Math.round(Number(body.profile.age)) : null } : null,
           hasPhoto: false,
         };
         const content = [];

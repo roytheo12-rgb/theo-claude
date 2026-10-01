@@ -145,15 +145,15 @@
   const OWNED = [
     ['Buongiorno Dolce Far Niente', 4, ['perso', 'amis']], ['Néroli Amara', 4, ['pro', 'famille']],
     ['Gris Charnel Extrait', 5, ['date', 'pro']], ['Imagination', 5, ['pro', 'amis', 'date']], ['Sauvage EDT', 4, ['amis', 'event']],
-    ['Lazy Sunday Morning', 3, ['famille', 'perso']], ['De Los Santos', 4, ['perso', 'pro']], ['Bleu de Chanel EDT', 4, ['pro', 'amis']],
-    ['Bois Impérial', 5, ['pro', 'perso']], ['Vétiver Extraordinaire', 5, ['pro']], ['Terre d\'Hermès', 4, ['pro', 'amis', 'perso']],
+    ['Lazy Sunday Morning', 3, ['famille', 'perso']], ['De Los Santos', 4, ['perso', 'pro']], ['Bleu de Chanel EDT', 4, ['pro', 'amis'], { size: 100, left: 50, use: 'daily' }],
+    ['Bois Impérial', 5, ['pro', 'perso']], ['Vétiver Extraordinaire', 5, ['pro']], ['Terre d\'Hermès', 4, ['pro', 'amis', 'perso'], { size: 100, left: 100, use: 'daily' }],
     ['The Musc', 3, ['perso', 'famille']], ['Mojave Ghost Absolu', 4, ['pro', 'date']], ['Dior Homme Intense', 4, ['pro', 'date']],
     ['Jazz Club', 5, ['date', 'amis']], ['Naxos', 5, ['date', 'event']], ['Musc Ravageur', 4, ['date']],
-    ['Bianco Latte', 4, ['famille', 'date', 'perso']], ['Straight to Heaven', 5, ['date', 'event']], ['Myrrh & Tonka', 4, ['date', 'perso']],
-    ['Baccarat Rouge 540', 5, ['event', 'date']], ['Black Afgano', 3, ['event']], ['Tuxedo', 4, ['event', 'pro']],
-    ['Guidance 46', 4, ['event']], ['Fleur Narcotique', 4, ['event', 'date']],
-    ['Tobacco Vanille', 5, ['date', 'event', 'perso']], ['Ambre Papier', 4, ['perso', 'date']], ['Thé Noir 29', 5, ['pro', 'perso']], ['Orphéon', 4, ['perso', 'amis']],
-    ['Fève Nectar', 4, ['date', 'perso']], ['724', 4, ['pro', 'perso']], ['Radical Rose', 4, ['date', 'event']], ['Néroli Hasbaya', 4, ['perso', 'famille']],
+    ['Bianco Latte', 4, ['famille', 'date', 'perso']], ['Straight to Heaven', 5, ['date', 'event'], { size: 50, left: 75, use: 'special' }], ['Myrrh & Tonka', 4, ['date', 'perso']],
+    ['Baccarat Rouge 540', 5, ['event', 'date'], { size: 100, left: 50, use: 'special' }], ['Black Afgano', 3, ['event'], { size: 10, left: 50, use: 'special' }], ['Tuxedo', 4, ['event', 'pro'], { size: 100, left: 75, use: 'special' }],
+    ['Guidance 46', 4, ['event'], { size: 50, left: 25, use: 'special' }], ['Fleur Narcotique', 4, ['event', 'date'], { size: 50, left: 25, use: 'special' }],
+    ['Tobacco Vanille', 5, ['date', 'event', 'perso']], ['Ambre Papier', 4, ['perso', 'date']], ['Thé Noir 29', 5, ['pro', 'perso'], { size: 100, left: 75, use: 'daily' }], ['Orphéon', 4, ['perso', 'amis']],
+    ['Fève Nectar', 4, ['date', 'perso'], { size: 10, left: 100, use: 'special' }], ['724', 4, ['pro', 'perso']], ['Radical Rose', 4, ['date', 'event']], ['Néroli Hasbaya', 4, ['perso', 'famille']],
     ['Nasaj', 4, ['event', 'famille']], ['Acne Studios', 4, ['pro', 'date']], ['Le Male', 4, ['amis', 'event']],
   ];
   const WISH = ['Tam Dao Eau de Parfum', 'Ambert Sunset', 'Ombre Nomade', 'Stellar Times', 'Rouge Trafalgar', 'Ganymede', 'Purpose', 'Portrait of a Lady', 'Jasmin Rouge', 'Étoile Filante', 'Paradoxe Intense', 'Miss Dior Essence', 'La Vie est Belle', 'Scandal By Night', 'Aqua Allegoria Rosa Verde', 'Shalimar', 'J\'adore', 'Stronger With You Intensely', 'Power of You', 'L\'Interdit Rouge', 'Pour un Homme de Caron', 'Boss Bottled', 'Ambre Russe', 'Ella K', 'Pure Musc Blanc', 'Sydney', 'Libre Le Parfum', 'L\'Eau Pâle'];

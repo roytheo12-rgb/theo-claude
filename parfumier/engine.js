@@ -149,6 +149,22 @@
     return -1.2 * d;
   }
 
+  // Stock : taille du flacon, ce qu'il en reste, et l'usage voulu (au quotidien, grandes occasions, peu importe).
+  const STOCK_USES = { daily: 'Au quotidien', special: 'Grandes occasions', free: 'Peu importe' };
+  const STOCK_LEFT = { 100: 'Plein', 75: 'Beaucoup', 50: 'La moitié', 25: 'Il en reste peu', 10: 'Presque fini' };
+  function stockOf(p) {
+    const size = +p.size > 0 ? +p.size : 100, left = p.left == null ? 100 : Math.max(0, Math.min(100, +p.left));
+    return { size, left, ml: Math.round(size * left) / 100, use: STOCK_USES[p.use] ? p.use : 'free' };
+  }
+  const isBig = (cond) => cond.ctx === 'event' || cond.ctx === 'date';
+  // Un échantillon ou un flacon presque fini ne part pas en usage quotidien ; un parfum « grandes occasions » attend son moment.
+  function stockEffect(p, cond) {
+    const k = stockOf(p), big = isBig(cond); let v = 0;
+    if (k.use === 'special') v += big ? 1 : -3.5;
+    if (k.ml <= 4) v += big ? (k.use === 'special' ? 0 : -0.5) : -3; else if (k.ml <= 10) v += big ? 0 : -1.5;
+    if (k.use === 'daily' && k.ml >= 30) v += 0.5;
+    return v;
+  }
   function score(p, cond, st) {
     st = st || {};
     const tags = perfumeTags(p);
@@ -168,6 +184,7 @@
     parts.perso = ((p.rating || 3) - 3) * 0.8;
     const days = st.daysSince ? st.daysSince(p.id) : null;
     if (days != null) parts.perso += days === 0 ? -3 : days === 1 ? -1.5 : days === 2 ? -0.7 : days >= 14 ? 0.5 : 0;
+    if (st.daysSince) parts.stock = stockEffect(p, cond); // pas dans le calcul des manques de collection
     const total = Object.values(parts).reduce((a, b) => a + b, 0);
     return { total, parts };
   }
@@ -183,6 +200,8 @@
     if ((p.rating || 3) >= 4) r.push('Un de tes chouchous');
     if (parts.perso >= 0.4 && (p.rating || 3) < 4) r.push('Pas porté depuis un moment');
     if (parts.perso <= -1.4) r.push('⚠ Déjà porté très récemment');
+    if (parts.stock >= 1) r.push('Gardé pour les grandes occasions : c\'est le moment');
+    if (parts.stock <= -1.4) r.push(stockOf(p).use === 'special' && stockOf(p).ml > 10 ? '⚠ Réservé aux grandes occasions' : '⚠ Stock limité : à ménager');
     return r;
   }
 
@@ -330,7 +349,7 @@
     return out;
   }
 
-  const api = { norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

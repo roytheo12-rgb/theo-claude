@@ -39,7 +39,7 @@
     'Libre Le Parfum': { s: 'img/libre.webp', nz: 3 }, 'Le Male': { s: 'img/lemale.webp', nz: 3 }, 'L\'Interdit Rouge': { s: 'img/interdit.webp', nz: 5 }, 'Power of You': { s: 'img/powerofyou.webp', nz: 6 },
   };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
-  const seedOwned = () => window.OWNED.map(([n, r, occ]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }));
+  const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }, stk || {}));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   const seedWish = () => window.WISH.map(wishFromName);
   const DEMO_V = 17;
@@ -62,13 +62,15 @@
     if ((S.seedV || 1) < DEMO_V) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; S.seedV = DEMO_V; }
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
+    // Stock : les flacons de démo déjà présents reçoivent leur taille et leur usage, sans toucher à ceux que la personne a réglés.
+    S.collection.forEach((p) => { if (p.size == null && p.use == null) { const o = window.OWNED.find((x) => x[0] === p.name); if (o && o[3]) Object.assign(p, o[3]); } });
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
   S.settings = Object.assign(DEF().settings, S.settings);
   let dbDoc = null, saveT;
   function save() {
-    try { S.settings.last = { cat: CHOICE.cat }; } catch (e) { /* CHOICE pas encore prêt */ }
+    try { S.settings.last = { cat: CHOICE.cat, dress: CHOICE.dress }; } catch (e) { /* CHOICE pas encore prêt */ }
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ }
     clearTimeout(saveT);
     saveT = setTimeout(() => { if (dbDoc) dbDoc.set(JSON.parse(JSON.stringify(S))).catch(() => {}); }, 700);
@@ -131,7 +133,7 @@
   const wears = (id) => S.log.filter((l) => l.id === id).length;
   const words = (t, base) => String(t || '').split(/\s+/).filter(Boolean).map((w, i) => `<span class="w" style="--i:${i};--d:${base || 0}">${esc(w)}</span>`).join(' ');
   const dots = (n) => '<span class="dots">' + [1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'f' : ''}"></i>`).join('') + '</span>';
-  const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))}`).join('\n');
+  const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))} | stock : ${E.stockOf(p).ml} ml sur ${E.stockOf(p).size} ml, usage ${E.STOCK_USES[E.stockOf(p).use].toLowerCase()}`).join('\n');
 
   // ---------- IA (sample) ----------
   let CAN_IMG = false, HAS_ASSETS = false, IMG_MAX = 4;
@@ -153,8 +155,9 @@
   const PRESENT = /[?&]present=1/.test(location.search); // mode présentation : sans bandeau de démo ni carte de vente
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
-  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false };
-  if (S.settings.last && S.settings.last.cat && S.settings.last.cat !== 'x') CHOICE.cat = S.settings.last.cat;
+  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false, dress: null };
+  if (S.settings.last && S.settings.last.cat) CHOICE.cat = S.settings.last.cat;
+  if (S.settings.last && S.settings.last.dress) CHOICE.dress = S.settings.last.dress;
   const CATS = { travail: 'Travail', amour: 'Amour', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
   // [clé, libellé, réglages]
   const SCEN = {
@@ -206,6 +209,7 @@
   const explicitPreset = () => {
     const sc = CHOICE.sc && scenByKey(CHOICE.sc), o = Object.assign({}, sc ? sc[2] : {});
     if (CHOICE.mood) o.mood = CHOICE.mood;
+    if (CHOICE.dress) o.style = CHOICE.dress;
     if (CHOICE.place) o.place = CHOICE.place;
     if (CHOICE.dur) o.dur = CHOICE.dur;
     if (WX && WX.hum > 75) o.hum = WX.hum;
@@ -243,6 +247,8 @@
           <div class="chips">${SCEN[CHOICE.cat].map(([k, l]) => `<button class="chip ${CHOICE.sc === k ? 'on' : ''}" data-sc="${k}">${esc(l)}</button>`).join('')}</div>
           <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Ou écris-la avec tes mots</label>
           <textarea id="say" rows="2" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
+          <p class="mono">Ta tenue</p>
+          <div class="dresses" id="dresses">${DRESS.map(([k, l]) => `<button class="dchip ${CHOICE.dress === k ? 'on' : ''}" data-dress="${k}" aria-pressed="${CHOICE.dress === k}">${dressIcon(k, 26)}<span>${l}</span></button>`).join('')}</div>
           <button class="more" data-refine aria-expanded="${refine}"><span>Affiner : mood, météo, lieu</span><i>${refine ? '−' : '+'}</i></button>
           ${refine ? `<div class="refine">
           <p class="mono">Ton mood</p>
@@ -285,6 +291,7 @@
     if ($('#wxCity')) $('#wxCity').onclick = () => { keepText0(); openCity(); };
     const keepText = () => { const t = $('#say'); if (t) SAY = t.value; };
     $$('[data-refine]').forEach((b) => (b.onclick = () => { keepText(); REFINE = !refine; if (!REFINE) { CHOICE.mood = null; WX = null; CHOICE.place = null; CHOICE.dur = null; CHOICE.hum = false; PHOTO = null; } viewToday(); }));
+    $$('[data-dress]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.dress = CHOICE.dress === b.dataset.dress ? null : b.dataset.dress; save(); viewToday(); }));
     $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; save(); viewToday(); }));
     $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
     $$('[data-mood]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.mood = CHOICE.mood === b.dataset.mood ? null : b.dataset.mood; viewToday(); }));
@@ -309,7 +316,7 @@
       ${P.length ? shelfStats(P) : ''}
       <section class="sec"><div class="row"><button class="ghost" id="labBtn">Labo d'accords</button>${HAS_ASSETS ? `<button class="ghost" id="photosBtn">Ajouter mes photos (IA)</button>` : ''}</div></section>
       <section class="sec"><div class="shelf">
-        ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
+        ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${stockBadge(p)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
         <button class="add-tile" id="addBtn"><b>+</b><span>Ajouter avec l'IA</span><small class="mono">texte ou photo</small></button>
       </div></section>`;
     $$('[data-open]').forEach((b) => (b.onclick = () => openDetail(b.dataset.open)));
@@ -420,6 +427,7 @@
       <div class="row" style="gap:14px">${buyLinks(p.name, p.house)}${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
       ${(() => { const notes = S.log.filter((l) => l.id === p.id && (l.note || l.compl || l.dur)).slice(-3).reverse(); return notes.length ? `<div><p class="mono">Journal</p>${notes.map((l) => `<p style="font-size:14px;color:var(--muted);margin-top:6px">${esc(new Date(l.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }))} · ${esc([l.compl ? l.compl + ' compliment(s)' : '', l.dur || '', l.note || ''].filter(Boolean).join(' · '))}</p>`).join('')}</div>` : ''; })()}
       ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">Je ne connais que la marque. Donne-moi le nom exact et l'IA remplit les notes.</p><input type="text" id="fixin" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
+      <div class="card" style="display:grid;gap:10px"><b>Mon flacon</b>${stockHtml(p, 0)}<p class="mono" id="stkmsg" style="text-transform:none;letter-spacing:0">Je tiens compte de ton stock : un échantillon ou un flacon presque fini ne part pas en usage quotidien.</p></div>
       <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
     mountFx(pn);
@@ -438,6 +446,7 @@
       $('#phIn', pn).onchange = async (e) => { const f = e.target.files[0]; if (!f) return; $('#phMsg', pn).textContent = 'Envoi de la photo…'; try { p.img = await putPhoto(f); save(); openDetail(id); render(true); } catch (er) { $('#phMsg', pn).textContent = 'Photo impossible à enregistrer ici.'; } };
       if ($('#phDel', pn)) $('#phDel', pn).onclick = () => { delete p.img; save(); openDetail(id); render(true); };
     }
+    bindStock(pn, () => p, () => { save(); const m = $('#stkmsg', pn); if (m) m.textContent = 'Enregistré ✓'; });
     $('#sx', pn).onclick = closeSheet;
     $$('#stars button', pn).forEach((b) => (b.onclick = () => { p.rating = +b.dataset.r; save(); $$('#stars button', pn).forEach((x) => { x.textContent = +x.dataset.r <= p.rating ? '★' : '☆'; }); }));
     $('#sdel', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer'; return; } S.collection = S.collection.filter((x) => x.id !== id); save(); closeSheet(); render(true); };
@@ -482,10 +491,12 @@
       if (e && e.code !== 'local_only') out.insertAdjacentHTML('beforebegin', e.code === 'rate_limited' ? '<p class="mono" style="text-transform:none">Les analyses de démo sont épuisées : seuls les parfums du catalogue sont reconnus. <button class="linkbtn" data-sell>Version complète</button></p>' : '<p class="mono" style="text-transform:none">L\'IA n\'est pas disponible pour l\'instant : seuls les parfums du catalogue sont reconnus.</p>');
     }
     items = items.filter((it) => !S.collection.some((p) => E.norm(p.name) === E.norm(it.name)));
+    items.forEach((it) => { if (it.size == null) { it.size = 100; it.left = 100; it.use = 'free'; } });
     PRE = items;
-    out.innerHTML = items.length ? items.map((it, i) => `<div class="pre" style="--i:${i}">${bt(it, { still: true })}<div><b>${esc(it.name)}</b><small>${esc(it.house)} · ${esc(famLabel(it.family))}${it.conf < 0.4 ? ' · à vérifier' : ''}</small></div><button class="ghost" data-rm="${i}" aria-label="Retirer">✕</button></div>`).join('') + `<button class="cta full" id="addok"><span>Ajouter ${items.length} parfum${items.length > 1 ? 's' : ''}</span></button>` : '<div class="empty">Rien de nouveau reconnu. Essaie avec le nom et la maison.</div>';
-    $$('[data-rm]', out).forEach((b) => (b.onclick = () => { PRE[+b.dataset.rm] = null; b.closest('.pre').remove(); }));
-    if ($('#addok', out)) $('#addok', out).onclick = () => { const added = PRE.filter(Boolean); if (demo && demo.confirm) demo.confirm(added.filter((it) => it.ai).map((it) => it.name)); added.forEach((it) => { delete it.conf; delete it.ai; S.collection.push(it); }); save(); closeSheet(); tab = 'shelf'; render(); };
+    out.innerHTML = items.length ? items.map((it, i) => `<div class="prew"><div class="pre" style="--i:${i}">${bt(it, { still: true })}<div><b>${esc(it.name)}</b><small>${esc(it.house)} · ${esc(famLabel(it.family))}${it.conf < 0.4 ? ' · à vérifier' : ''}</small></div><button class="ghost" data-rm="${i}" aria-label="Retirer">✕</button></div>${stockHtml(it, i)}</div>`).join('') + `<button class="cta full" id="addok"><span>Ajouter ${items.length} parfum${items.length > 1 ? 's' : ''}</span></button>` : '<div class="empty">Rien de nouveau reconnu. Essaie avec le nom et la maison.</div>';
+    $$('[data-rm]', out).forEach((b) => (b.onclick = () => { PRE[+b.dataset.rm] = null; b.closest('.prew').remove(); }));
+    bindStock(out, (i) => PRE[i], () => {});
+    if ($('#addok', out)) $('#addok', out).onclick = () => { const added = PRE.filter(Boolean); if (demo && demo.confirm) demo.confirm(added.filter((it) => it.ai).map((it) => it.name)); added.forEach((it) => { delete it.conf; delete it.ai; delete it.useSet; S.collection.push(it); }); save(); closeSheet(); tab = 'shelf'; render(); };
     $('#addgo', pn).disabled = false;
   }
 
@@ -513,19 +524,17 @@
 
   function openProfile() {
     const s = S.settings;
-    const pf = hasProfile() ? S.profile : { gender: '', dress: '', note: '' };
+    const pf = hasProfile() ? S.profile : { gender: '', age: null };
     const pn = openSheet(`<div><h2>Profil</h2></div>
       <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
-        <b style="margin-top:6px">Comment je m'habille</b><div class="chips" id="pdress">${DRESS.map(([k, l]) => `<button class="chip ${pf.dress === k ? 'on' : ''}" data-pd="${k}">${l}</button>`).join('')}</div>
-        <input type="text" id="pnote" value="${esc(pf.note || '')}" placeholder="Tes couleurs, tes matières : noir, lin, cuir…"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour.</p></div>
+        <input type="text" id="page" inputmode="numeric" maxlength="2" value="${pf.age || ''}" placeholder="Mon âge" aria-label="Mon âge"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour. Ta tenue, je te la demande quand tu cherches ton parfum.</p></div>
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
       <div class="row"><button class="ghost" id="niche">Recharger la collection de démo</button><button class="ghost danger" id="reset">Tout vider</button></div>`);
     const pmsg = () => { $('#pmsg', pn).textContent = 'Enregistré ✓'; };
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
-    $$('[data-pd]', pn).forEach((b) => (b.onclick = () => { setProfile({ dress: b.dataset.pd }); $$('[data-pd]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
-    $('#pnote', pn).onchange = () => { setProfile({ note: $('#pnote', pn).value.trim().slice(0, 160) }); pmsg(); };
+    $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
     $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
@@ -686,7 +695,7 @@
   const pickKey = (v, obj, d) => (typeof v === 'string' && v in obj ? v : d);
   function normCond(c, wx) {
     c = c || {};
-    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, (S.profile && S.profile.dress) || 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), dur: pickKey(c.dur, E.DURS, '') };
+    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), dur: pickKey(c.dur, E.DURS, '') };
   }
   function keywordCond(text, wx) {
     const t = E.norm(text), c = { temp: wx ? wx.t : 18 };
@@ -715,6 +724,7 @@
   const explicitLine = () => {
     const o = explicitPreset(), bits = [];
     if (o.mood) bits.push('mood : ' + E.MOODS[o.mood]);
+    if (CHOICE.dress) { const dr = DRESS.find((x) => x[0] === CHOICE.dress); if (dr) bits.push('tenue : ' + dr[1].toLowerCase() + ' (' + dr[2] + ')'); }
     if (o.place) bits.push('lieu : ' + E.PLACES[o.place]);
     if (o.dur) bits.push('durée : ' + E.DURS[o.dur]);
     if (CHOICE.hum) bits.push('air très humide');
@@ -722,7 +732,7 @@
     return bits.length ? '\nChoix explicites de l\'utilisateur, à respecter : ' + bits.join(' ; ') + '.' : '';
   };
   async function aiDay(text, wx) {
-    const args = { collection: colLines(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), profile: S.profile && !S.profile.skipped ? { gender: S.profile.gender, dress: S.profile.dress, note: S.profile.note } : null, date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
+    const args = { collection: colLines(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), profile: S.profile && !S.profile.skipped ? { gender: S.profile.gender, age: S.profile.age } : null, date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
     const j = window.SillageDemo ? await window.SillageDemo.day(args, PHOTO && CAN_IMG ? PHOTO : null) : await aiJson(window.SillagePrompts.day(args), { modelTier: 'default', images: PHOTO && CAN_IMG ? [PHOTO] : undefined });
     const p = find(j.pick); if (!p) throw { code: 'bad_pick' };
     const cond = normCond(Object.assign({}, j.cond, explicitPreset()), wx);
@@ -998,12 +1008,13 @@
     sport: '<path d="M5 31c0-4 4-4 8-6l4-8 6 6c4 0 10 2 14 6 2 1 4 3 4 6H5z"/><path d="M5 38h38"/>',
     soiree: '<path d="M7 17l15 7-15 7z"/><path d="M41 17l-15 7 15 7z"/><rect x="21" y="19" width="6" height="10" rx="1"/>',
   };
-  const dressIcon = (k) => `<svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${DRESS_SVG[k] || ''}</svg>`;
+  const dressIcon = (k, px) => `<svg viewBox="0 0 48 48" width="${px || 40}" height="${px || 40}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${DRESS_SVG[k] || ''}</svg>`;
   const hasProfile = () => !!(S.profile && !S.profile.skipped);
-  const setProfile = (patch) => { S.profile = Object.assign({ gender: '', dress: '', note: '' }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; save(); };
+  const cleanAge = (v) => { const n = Math.round(+v); return n >= 10 && n <= 99 ? n : null; };
+  const setProfile = (patch) => { S.profile = Object.assign({ gender: '', age: null }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; delete S.profile.dress; delete S.profile.note; save(); };
   function maybeProfile() { if (!S.profile && !PRESENT && !$('#onb') && !$('#prof')) showProfile(); }
   function showProfile() {
-    const d = Object.assign({ gender: '', dress: '', note: '' }, hasProfile() ? S.profile : {});
+    const d = Object.assign({ gender: '', age: null }, hasProfile() ? S.profile : {});
     const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Ton profil');
     let step = 1;
     const draw = () => {
@@ -1011,20 +1022,36 @@
         ? `<div class="prof-in"><p class="mono">Ton profil · 1 / 2</p><h2>Tu es…</h2><p class="soft">Pour choisir un parfum qui te va, pas pour t'enfermer dans une case.</p>
           <div class="gen">${GEN.map(([k, l]) => `<button class="chip ${d.gender === k ? 'on' : ''}" data-g="${k}">${l}</button>`).join('')}</div>
           <button class="cta full" id="pNext"><span>Continuer</span></button><button class="ghost" id="pSkip">Plus tard</button></div>`
-        : `<div class="prof-in"><p class="mono">Ton profil · 2 / 2</p><h2>Comment tu t'habilles ?</h2><p class="soft">Choisis ce qui te ressemble le plus. Je m'en sers chaque jour pour accorder le parfum à ta tenue.</p>
-          <div class="dress">${DRESS.map(([k, l, h]) => `<button class="tile ${d.dress === k ? 'on' : ''}" data-d="${k}">${dressIcon(k)}<b>${l}</b><small>${h}</small></button>`).join('')}</div>
-          <input type="text" id="pNote" value="${esc(d.note)}" placeholder="Couleurs, matières : noir, lin, cuir…" aria-label="Tes couleurs et matières">
+        : `<div class="prof-in"><p class="mono">Ton profil · 2 / 2</p><h2>Quel âge as-tu ?</h2><p class="soft">Les goûts et les occasions changent avec l'âge. Ça reste sur ton appareil.</p>
+          <input type="text" id="pAge" inputmode="numeric" maxlength="2" value="${d.age || ''}" placeholder="Ton âge" aria-label="Ton âge" class="agein">
           <button class="cta full" id="pDone"><span>C'est parti</span></button><button class="ghost" id="pBack">Retour</button></div>`;
       $$('[data-g]', el).forEach((b) => (b.onclick = () => { d.gender = b.dataset.g; $$('[data-g]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
-      $$('[data-d]', el).forEach((b) => (b.onclick = () => { d.dress = b.dataset.d; $$('[data-d]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
       if ($('#pNext', el)) $('#pNext', el).onclick = () => { step = 2; draw(); };
-      if ($('#pBack', el)) $('#pBack', el).onclick = () => { d.note = $('#pNote', el).value; step = 1; draw(); };
+      if ($('#pBack', el)) $('#pBack', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); step = 1; draw(); };
       if ($('#pSkip', el)) $('#pSkip', el).onclick = () => end(true);
-      if ($('#pDone', el)) $('#pDone', el).onclick = () => { d.note = $('#pNote', el).value.trim().slice(0, 160); end(false); };
+      if ($('#pDone', el)) $('#pDone', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); end(false); };
     };
     const end = (skip) => { if (skip) { S.profile = { skipped: true, ts: Date.now() }; save(); } else setProfile(d); el.remove(); document.body.style.overflow = ''; render(true); };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
   }
+
+  // ---------- Stock : taille, ce qu'il reste, usage (échantillon = pas au quotidien) ----------
+  const SIZES = [[2, '2 ml · échantillon'], [5, '5 ml'], [10, '10 ml'], [30, '30 ml'], [50, '50 ml'], [75, '75 ml'], [100, '100 ml']];
+  const LEFTS = [[100, 'Plein'], [75, 'Beaucoup'], [50, 'La moitié'], [25, 'Il en reste peu'], [10, 'Presque fini']];
+  const USES = [['daily', 'Au quotidien'], ['special', 'Grandes occasions'], ['free', 'Peu importe']];
+  const stockHtml = (it, i) => { const k = E.stockOf(it);
+    return `<div class="stk-ed" data-i="${i}"><p class="mono">Taille du flacon</p><div class="chips">${SIZES.map(([v, l]) => `<button class="chip ${k.size === v ? 'on' : ''}" data-sz="${v}">${l}</button>`).join('')}</div>
+      <p class="mono">Ce qu'il en reste</p><div class="chips">${LEFTS.map(([v, l]) => `<button class="chip ${k.left === v ? 'on' : ''}" data-lf="${v}">${l}</button>`).join('')}</div>
+      <p class="mono">Je le porte</p><div class="chips">${USES.map(([v, l]) => `<button class="chip ${k.use === v ? 'on' : ''}" data-us="${v}">${l}</button>`).join('')}</div></div>`; };
+  function bindStock(root, get, onChange) {
+    $$('.stk-ed', root).forEach((ed) => {
+      const it = () => get(+ed.dataset.i), mark = (attr, v) => $$('[' + attr + ']', ed).forEach((x) => x.classList.toggle('on', +x.getAttribute(attr) === +v || x.getAttribute(attr) === String(v)));
+      $$('[data-sz]', ed).forEach((b) => (b.onclick = () => { const o = it(); if (!o) return; o.size = +b.dataset.sz; mark('data-sz', o.size); if (o.size <= 10 && !o.useSet && o.use !== 'special') { o.use = 'special'; mark('data-us', 'special'); } onChange(o); }));
+      $$('[data-lf]', ed).forEach((b) => (b.onclick = () => { const o = it(); if (!o) return; o.left = +b.dataset.lf; mark('data-lf', o.left); onChange(o); }));
+      $$('[data-us]', ed).forEach((b) => (b.onclick = () => { const o = it(); if (!o) return; o.use = b.dataset.us; o.useSet = true; mark('data-us', o.use); onChange(o); }));
+    });
+  }
+  const stockBadge = (p) => { const k = E.stockOf(p); return k.use === 'special' ? '<i class="stk-b">Occasions</i>' : k.ml <= 10 ? '<i class="stk-b low">Peu</i>' : ''; };
 
   // ---------- Onboarding : 10 secondes pour donner envie ----------
   function showOnboarding() {
