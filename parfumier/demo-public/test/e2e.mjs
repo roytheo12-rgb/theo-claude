@@ -112,6 +112,10 @@ ok(await pg.locator('[data-xf]').count() === 6, 'explorateur : 6 façons de parc
 ok(await pg.locator('[data-xg]').count() > 100, 'explorateur : plus de 100 marques listées');
 { const hs = await pg.$$eval('.xg [data-xg]', (b) => b.map((x) => x.dataset.xg)); const at = (h) => hs.indexOf(h);
   ok(at('chanel') === 0 && at('dior') === 1 && at('kilian') > at('dior') && at('kilian') < hs.length / 2 && hs.length > 100, 'toutes les maisons : classées des plus connues (Chanel, Dior…) aux moins connues, toutes cliquables'); }
+await pg.fill('#xq', 'alien'); await pg.waitForTimeout(400); { const all = await pg.textContent('#xbody'); ok(/Alien Man/.test(all) && /Hypersense/.test(all), 'ajoute tes parfums : « alien » trouve les versions féminines et masculines'); }
+await pg.click('[data-xgen=m]'); await pg.waitForTimeout(300); { const m = await pg.textContent('#xbody'); ok(/Alien Man/.test(m) && !/Hypersense/.test(m), 'filtre masculin : les parfums féminins disparaissent'); }
+await pg.click('[data-xgen=f]'); await pg.waitForTimeout(300); { const f = await pg.textContent('#xbody'); ok(/Hypersense/.test(f) && !/Alien Man/.test(f), 'filtre féminin : les parfums masculins disparaissent'); }
+await pg.click('[data-xgen=""]'); await pg.fill('#xq', ''); await pg.waitForTimeout(300);
 await pg.click('[data-xg="kilian"]'); await pg.waitForSelector('.xc');
 ok(await pg.locator('.xc').count() > 5 && await pg.locator('.xth').first().isVisible(), 'explorateur : les parfums de la marque s\'affichent (avec vignettes)');
 await pg.locator('.xc:not([disabled])').first().click(); ok(/1 choisi/.test(await pg.textContent('.exp-foot')), 'un parfum cliqué est sélectionné');

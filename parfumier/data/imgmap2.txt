@@ -270,3 +270,4 @@
 438|NEZ|Jérôme Epinette|90,0,620,686
 439|NEZ|Bruno Jovanovic|
 440|NEZ|Annick Menardo|560,0,1500,1280
+441|NEZ|Julien Rasquinet|

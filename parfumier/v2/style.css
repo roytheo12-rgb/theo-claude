@@ -418,7 +418,7 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .exp > * { min-width: 0; }
 .exp input[type=search] { width: 100%; }
 .xtabs { gap: 6px; }
-.xtabs .chip { padding: 8px 12px; font-size: 13px; }
+.xtabs .chip, .xgen .chip { padding: 8px 12px; font-size: 13px; }
 .xg { max-height: 52vh; overflow: auto; }
 .xgrid { display: grid; grid-template-columns: 1fr; gap: 8px; }
 .xc { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; text-align: left; padding: 8px 12px 8px 8px; border: 1px solid var(--line); border-radius: 4px; background: transparent; transition: border-color .25s, background .25s; }

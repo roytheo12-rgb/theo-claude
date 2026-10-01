@@ -198,7 +198,7 @@
     'Sophie Labbé': ['Parfumeuse', 'Bvlgari (Omnia, Rose Goldea), Dior, Valentino.'],
     'Annick Menardo': ['Parfumeuse', 'A*Men (Mugler), Bvlgari Black, Hypnotic Poison (Dior).'],
   };
-  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'François Demachy', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Jérôme Epinette', 'Marie Salamagne', 'Fabrice Pellegrin', 'Bruno Jovanovic', 'Annick Menardo'];
+  const NOSE_TOP = ['Francis Kurkdjian', 'Alberto Morillas', 'Dominique Ropion', 'Jean-Claude Ellena', 'Olivier Polge', 'Jacques Polge', 'François Demachy', 'Jacques Cavallier-Belletrud', 'Christine Nagel', 'Thierry Wasser', 'Maurice Roucel', 'Quentin Bisch', 'Bertrand Duchaufour', 'Calice Becker', 'Olivier Cresp', 'Jérôme Epinette', 'Marie Salamagne', 'Fabrice Pellegrin', 'Bruno Jovanovic', 'Annick Menardo', 'Julien Rasquinet'];
   root.NOSE_BIO = NOSE_BIO; root.NOSE_TOP = NOSE_TOP;
 
   // ---------- Genre : pour lui / pour elle / mixte (repère de commercialisation, pour ne pas recommander un parfum nettement « girly » à un homme, ni l'inverse) ----------
@@ -206,11 +206,35 @@
   const GF = ['Light Blue', 'Black Opium', 'Libre', 'Libre Le Parfum', 'Good Girl', 'La Vie est Belle', 'Coco Mademoiselle', 'N°5 EDP', 'Chance Eau Tendre', 'Miss Dior EDP', 'Miss Dior Essence', 'J\'adore', 'Angel', 'Alien', 'Flowerbomb', 'Daisy', 'Si', 'Burberry Her', 'Pure Musc Blanc', 'L\'Interdit Rouge', 'Power of You', 'Scandal', 'Scandal By Night', 'Paradoxe Intense', 'Shalimar', 'Aqua Allegoria Rosa Verde', 'Delina', 'Yara', 'Jasmin Rouge', 'Acne Studios', 'Stellar Times', 'Radical Rose', 'Étoile Filante', 'Contre Moi', 'Coeur Battant'];
   const GSET = {}; GM.forEach((n) => { GSET[n] = 'm'; }); GF.forEach((n) => { GSET[n] = 'f'; });
   const WM = /\b(homme|men|man|uomo|male|mâle|lui|him|boy|gentleman|sport|sir|pour monsieur|monsieur|hero|wanted)\b/, WF = /\b(femme|woman|women|donna|her|girl|lady|belle|fille|she|bloom|blossom|princess|miss|mademoiselle|dame|elle|queen|rose goldea|omnia)\b/;
+  // Règles par maison : (maison, nom) -> 'm' / 'f'. Ce qui n'est pas reconnu reste mixte.
+  const GR = [
+    [/marc jacobs/, /daisy|perfect|lola/, 'f'], [/mugler/, /^(alien|angel|aura|womanity)(?!.*\bman\b)/, 'f'], [/mugler/, /a\*men|alien man/, 'm'],
+    [/carolina herrera/, /^(212(?!.*\bmen\b)(?!.*\bsexy men)|good girl|very good girl|la bomba|chic|ch priv|me first)/, 'f'], [/carolina herrera/, /bad boy|212 (men|sexy men|nyc men)|heroes/, 'm'],
+    [/gaultier/, /la belle|classique|ma dame|fragile|gaultier divine|gaultier 2/, 'f'], [/gaultier/, /le beau|le male|ultra male|scandal pour homme|monsieur|fleur du m/, 'm'],
+    [/burberry/, /my burberry|\bher\b|blush|brit rhythm for her|goddess/, 'f'], [/burberry/, /mr\.? burberry|hero|the beat for men|brit rhythm for him/, 'm'],
+    [/rabanne|paco/, /lady million|olymp|fame|pure xs for her|black xs for her/, 'f'], [/rabanne|paco/, /1 million|one million|invictus|phantom|pure xs(?! for her)|black xs(?! for her)/, 'm'],
+    [/lanc[oô]me/, /la vie est belle|id[oô]le|miracle(?! homme)|tr[eé]sor|po[eê]me|hypn[oô]se(?! homme)|la nuit tr/, 'f'],
+    [/guerlain/, /petite robe noire|idylle|mon guerlain|aqua allegoria|shalimar|insolence|mitsouko|l'heure|champs|samsara|rose barbare|elixir charnel/, 'f'], [/guerlain/, /habit rouge|l'homme id|guerlain homme|l'instant pour homme|vetiver|v[eé]tiver/, 'm'],
+    [/chanel/, /chance|coco|gabrielle|n[°o] ?5|n[°o] ?1|no\.? ?5|misia|cristalle|boy/, 'f'], [/chanel/, /bleu|allure homme|[eé]go[iï]ste|platinum|pour monsieur/, 'm'],
+    [/saint laurent|ysl/, /libre|black opium|mon paris|parisienne|cinema|elle\b|manifesto|opium(?! pour homme)|belle d'opium|lady/, 'f'], [/saint laurent|ysl/, /^y\b|l'homme|nuit de l'homme|opium pour homme|kouros|rive gauche pour homme|jazz/, 'm'],
+    [/herm[eè]s/, /twilly|jour d'herm|kelly|24 faubourg|merveilles|rose amazone|galop|bar[eé]nia|narcisse|cythère|cythere/, 'f'], [/herm[eè]s/, /terre d'herm|h24|bel ami|[eé]quipage|paddock|brin de r|voyage/, 'm'],
+    [/dior/, /miss dior|j'adore|addict|poison|dune(?! pour homme)|diorissimo|diorella|dioressence|dolce vita|forever and ever|jasmin des anges|lucky|rose star|diorling|joy|bonne [eé]toile|j'adior/, 'f'], [/dior/, /sauvage|homme|fahrenheit|dune pour homme|jules|higher/, 'm'],
+    [/armani/, /^s[iì]\b|^s[iì] |code (for )?women|my way|la femme|rose|figuier|ambre soie|armani mania|diamonds/, 'f'], [/armani/, /acqua di gi[oò](?! (pour )?femme)|armani code(?! (for )?women)|stronger with you|emporio.*(him|lui)|code profumo|attitude/, 'm'],
+    [/dolce/, /light blue(?! (pour|eau intense pour))|the one(?! (for )?men)|devotion(?! pour homme)|dolce shine|q by|dolce\b/, 'f'], [/dolce/, /pour homme|for men|k by|masculine|by man/, 'm'],
+    [/montblanc/, /legend|explorer|emblem|individuel(?! femme)/, 'm'], [/hugo boss|boss/, /bottled|the scent|orange man|man|hugo/, 'm'], [/hugo boss|boss/, /alive|ma vie|nuit|femme|woman/, 'f'],
+    [/davidoff/, /cool water(?! woman)|horizon|zino/, 'm'], [/issey miyake/, /l'eau d'issey(?! pour homme)|lumi[eè]re d'issey|a drop d'issey/, 'f'], [/kenzo/, /flower|kenzo world|eau de fleur|l'eau kenzo pour femme/, 'f'],
+    [/narciso/, /./, 'f'], [/versace/, /bright crystal|crystal noir|yellow diamond|dylan purple|pour femme|woman|versense/, 'f'], [/versace/, /eros|dylan blue(?! pour femme)|pour homme|man eau/, 'm'],
+    [/jimmy choo/, /^jimmy choo(?! man)/, 'f'], [/nina ricci/, /./, 'f'], [/stella mccartney/, /./, 'f'], [/cacharel/, /./, 'f'], [/chlo[eé]/, /^(?!.*homme)/, 'f'], [/tommy hilfiger/, /^tommy( 10)?$/, 'm'],
+    [/balmain/, /monsieur|carbone|destin/, 'm'], [/calvin klein/, /euphoria|truth|obsession|eternity(?! (for )?men)/, 'f'], [/calvin klein/, /eternity (parfum )?for men|obsession for men/, 'm'],
+    [/lalique/, /encre noire/, 'm'], [/jean paul/, /^(?!.*(le male|le beau|ultra|scandal pour|monsieur))/, 'u'],
+  ];
   function genderOf(name, house) {
     if (GSET[name]) return GSET[name];
+    const hn = String(house || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''), nn = String(name || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     const base = String(name || '').replace(/\s+(EDP|EDT|EDC|Elixir|Intense|Parfum|Extrait)$/i, '');
     if (GSET[base]) return GSET[base];
     for (const c of ['EDT', 'EDP']) if (GSET[base + ' ' + c]) return GSET[base + ' ' + c];
+    for (const [hr, nr, g] of GR) if (hr.test(hn) && nr.test(nn)) return g;
     const t = String(name || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     if (WM.test(t)) return 'm';
     if (WF.test(t)) return 'f';

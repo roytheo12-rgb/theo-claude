@@ -112,3 +112,11 @@ Essential Parfums|Rose Magnetic|Sophie Labbé
 Essential Parfums|Divine Vanille|Olivier Pescheux
 Essential Parfums|The Musc|Calice Becker
 Essential Parfums|Velvet Iris|Dominique Ropion
+# --- Choix après l'ajout des listes complètes (plusieurs nez cités : un seul retenu)
+Dior|Addict|Thierry Wasser
+Dior|Miss Dior Chérie|Christine Nagel
+Dior|Bois d'Argent|Annick Menardo
+Dior|Dior Homme Parfum|Francis Kurkdjian
+Armani|Si|Christine Nagel
+Lancôme|La Vie Est Belle|Olivier Polge
+Mugler|Alien|Dominique Ropion

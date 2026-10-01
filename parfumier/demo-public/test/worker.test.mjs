@@ -202,6 +202,9 @@ await t('base : chaque photo existe, vise une fiche de la base, et aucune maison
   // variantes : la version de base et sa version extrait / absolu ont chacune leur fiche et leur photo
   for (const k of ['maison francis kurkdjian|baccarat rouge 540', 'maison francis kurkdjian|baccarat rouge 540 extrait', 'diptyque|do son', 'diptyque|do son edt']) assert.ok(globalThis.IMGNEW[k], 'photo manquante : ' + k);
   for (const n of Object.values(globalThis.NOSE_IMG)) assert.ok(fs.existsSync(root + n));
-  assert.ok(globalThis.NOSE_IMG['Alberto Morillas'] && globalThis.NOSE_IMG['Francis Kurkdjian']);
+  assert.ok(globalThis.NOSE_IMG['Alberto Morillas'] && globalThis.NOSE_IMG['Francis Kurkdjian'] && globalThis.NOSE_IMG['Julien Rasquinet']);
+  // rééditions repérées (jamais mises en avant) ; les parfums de base ne le sont pas
+  const ed = new Set(globalThis.EDITIONS); assert.ok(ed.has('jean paul gaultier|le male collector edition 2022') && !ed.has('jean paul gaultier|le male'));
+  assert.ok(globalThis.INDEX.reduce((n, [, l]) => n + l.length, 0) > 4000);
 });
 console.log(ok, 'tests réussis');

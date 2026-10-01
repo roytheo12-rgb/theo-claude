@@ -18,7 +18,7 @@ HOUSE = {
  'dolce gabbana velvet collection': 'Dolce & Gabbana', 'gucci the alchemist s garden': 'Gucci', 'tom ford private blend': 'Tom Ford',
  'cartier les heures de parfum': 'Cartier', 'cartier collection': 'Cartier', 'prada olfactories': 'Prada', 'fendi private': 'Fendi',
  'givenchy la collection particuliere': 'Givenchy', 'givenchy l atelier de givenchy': 'Givenchy', 'mfk': 'Maison Francis Kurkdjian',
- 'emporio armani': 'Armani', 'sospiro perfumes': 'Sospiro', 'd orsay': "D'Orsay", 'dorsay': "D'Orsay", 'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
+ 'emporio armani': 'Armani', 'sospiro perfumes': 'Sospiro', 'd orsay': "D'Orsay", 'dorsay': "D'Orsay", 'frederic malle editions de parfums': 'Frédéric Malle', 'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
  'giorgio armani': 'Armani', 'thierry mugler': 'Mugler', 'christian dior': 'Dior', 'annick goutal': 'Maison Goutal', 'mdci parfums': 'MDCI', 'frederic malle': 'Frédéric Malle', 'jo malone london': 'Jo Malone', 'ella k parfums': 'Ella K', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
  'maison martin margiela': 'Maison Margiela', 'margiela': 'Maison Margiela', 'bulgari': 'Bvlgari', 'diptyque paris': 'Diptyque', 'byredo parfums': 'Byredo', 'le labo fragrances': 'Le Labo', 'bdk': 'BDK Parfums', 'bdk parfums': 'BDK Parfums',
  'les bains guerbois': 'Les Bains Guerbois', 'memo': 'Memo Paris', 'memo paris': 'Memo Paris', 'maison crivelli': 'Maison Crivelli', 'loewe paula s ibiza': 'Loewe', 'loewe botanical rainbow': 'Loewe',
@@ -52,6 +52,7 @@ _canon = canon_house
 def canon_house_n(h, name=''):
     c = _canon(h)
     return 'Sospiro' if norm(c) in ('xerjoff', 'sospiro') and norm(name) in SOSPIRO else c
+cat_exact_pre = {(norm(canon_house(h)), norm(PREFIX.sub('', n))) for h, n in cat}
 existing = {(norm(canon_house(h)), norm(PREFIX.sub('', n))) for h, n in cat}
 existing |= {(norm(canon_house(h)), re.sub(r' (edp|edt)$', '', norm(n))) for h, n in cat}
 
@@ -108,6 +109,31 @@ for line in (root / 'data/noses.txt').read_text(encoding='utf-8').splitlines():
         lst = nose_by.setdefault(k2, [])
         if nose not in lst: lst.append(nose)
         nose_names[nose] = nose_names.get(nose, 0) + 1
+
+# ---- Listes complètes des nez en vedette (data/noses-full.txt : Parfumeur|Maison|Parfum|Concentration)
+# Tout est ajouté à la base et rattaché au nez ; les rééditions (collector, limited, millésime, année…) sont repérées (EDITIONS) :
+# elles restent dans la fiche du nez mais ne sont jamais mises en avant (recommandations, listes sans recherche).
+EDIT_RE = re.compile(r"collector|limited|[ée]dition|anniversar|x-?mas|christmas|snow globe|pills|airlines|\b20 ans\b|mill[ée]sime|re-?edition|harrods|crystal|artist|\b20[0-3]\d\b|pride|shaker|pirate|love actually|summer cocktail|body mist", re.I)
+SKIP_RE = re.compile(r"hair (&|and)? ?(body )?mist|body spray|perfume oil|solid perfume|roller|hair & body", re.I)
+editions = set()
+for line in (root / 'data/noses-full.txt').read_text(encoding='utf-8').splitlines():
+    line = line.strip().replace('’', "'")
+    if not line or line.startswith('#'): continue
+    nose, h_raw, nm_raw, conc_raw = [x.strip() for x in (line.split('|') + [''])[:4]]
+    if SKIP_RE.search(nm_raw) or SKIP_RE.search(conc_raw): continue
+    if not nm_raw or not h_raw: continue
+    house = canon_house_n(h_raw, nm_raw)
+    raw_nm = NAME_ALIAS.get((norm(house), norm(nm_raw)), nm_raw)
+    if (norm(house), norm(raw_nm)) in seen or (norm(house), norm(raw_nm)) in cat_exact_pre: name = raw_nm
+    else: name = NAME_ALIAS.get((norm(house), norm(clean_name(raw_nm))), clean_name(raw_nm))
+    if not name: continue
+    key = (norm(house), norm(name)); k2 = key[0] + ' ' + key[1]
+    if key not in existing and key not in seen:
+        code = CONC.get(norm(conc_raw), 'EDP') or 'EDP'
+        seen[key] = {'house': house, 'name': name, 'conc': [code], 'p': False}; order.append(key)
+        if EDIT_RE.search(name): editions.add(key)
+    lst = nose_by.setdefault(k2, [])
+    if nose not in lst: lst.append(nose)
 
 # ---- Photos (data/imgmap2.txt : N|Maison|Parfum|Concentration) : chaque photo est rattachée à UN parfum.
 # Variantes (Extrait, Absolu, Esprit de Parfum, Parfum, Intense, Elixir, EDT quand l'EDP a aussi sa photo) : une fiche à part
@@ -218,6 +244,7 @@ for k in order:
 idx = sorted(by.items(), key=lambda kv: norm(kv[0]))
 for h, arr in idx: arr.sort(key=lambda r: norm(r[0]))
 out = '// Généré par tools/build-index.py : index des parfums (maison, [[nom, concentrations]]). Les fiches (notes, famille) sont complétées à l\'ajout.\nwindow.INDEX = ' + json.dumps(idx, ensure_ascii=False, separators=(',', ':')) + ';\n// Variantes d\'écriture des maisons (Jo Malone London -> Jo Malone) : appliquées aux collections existantes.\nwindow.HOUSE_ALIAS = ' + json.dumps(HOUSE, ensure_ascii=False, separators=(',', ':')) + ';\n// Parfumeurs : clé « maison nom » (normalisée) -> liste de nez, d\'après data/noses.txt.\nwindow.NOSE_BY = ' + json.dumps(nose_by, ensure_ascii=False, separators=(',', ':')) + ';\n'
+out += 'window.EDITIONS = ' + json.dumps(sorted(' '.join(k) .replace(' ', '|', 1) if False else k[0] + '|' + k[1] for k in editions if k in seen), ensure_ascii=False, separators=(',', ':')) + ';\n'
 (root / 'index.js').write_text(out, encoding='utf-8')
 total = sum(len(a) for _, a in idx)
 print(f'nez : {len(nose_names)}, parfums rattachés : {len(nose_by)} | ', end='')

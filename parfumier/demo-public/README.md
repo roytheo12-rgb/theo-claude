@@ -129,3 +129,10 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - `python3 tools/build-png.py` (≈ 10 min la première fois, ensuite quelques secondes : seules les photos modifiées sont refaites ; `FORCE=1` pour tout refaire) écrit `v2/img/p/*.webp`, `v2/img/nose/*.webp` et `imgnew.js`.
 - Quand un parfum a plusieurs photos, la plus récente (numéro le plus élevé) gagne ; ces photos passent avant les anciennes. Photos écartées : voir `incoming/PHOTOS-A-REFAIRE.md`.
 - Pour ajouter une photo : l'ajouter dans `incoming/`, ajouter sa ligne dans `data/imgmap2.txt`, puis `python3 tools/build-index.py && python3 tools/build-png.py`.
+
+## Listes complètes des nez en vedette, rééditions, filtre féminin / masculin / mixte
+
+- `data/noses-full.txt` (`Parfumeur|Maison|Parfum|Concentration`, ≈ 2 000 lignes) : tous les parfums des nez en vedette, ajoutés à la base (≈ 4 500 parfums, ≈ 390 maisons) et rattachés à leur nez. Le nombre affiché pour un nez est « N+ » : c'est ce que contient la base aujourd'hui.
+- Les rééditions (collector, limited, millésime, année, anniversaire…) sont repérées dans `index.js` (`window.EDITIONS`). Elles restent dans la fiche d'un nez et dans une recherche, mais disparaissent des listes par défaut. Les brumes cheveux / corps et huiles sont ignorées.
+- Recommandations, conseils et achats : une seule version par famille de parfum (maison + premier mot du nom), pas de flankers ni de concentrations multiples.
+- « Ajouter mes parfums » et Recherche ont un filtre Féminin / Masculin / Mixte (`genderOf` dans `desc.js` : listes de parfums, règles par maison et mots du nom ; ce qui n'est pas reconnu est « Mixte »).
