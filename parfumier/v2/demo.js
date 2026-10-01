@@ -49,6 +49,29 @@
   const confirm = (names) => { if (names && names.length) fetch('/api/catalog/confirm', { method: 'POST', headers: headers(), body: JSON.stringify({ names }) }).catch(() => {}); };
   const catalog = async () => { try { const r = await fetch('/api/catalog'); const j = await r.json(); return j.items || []; } catch (e) { return []; } };
 
+
+  // ---- Compte : email + mot de passe, profil complet sauvegardé côté serveur
+  let token = null, acctEmail = '';
+  try { token = localStorage.getItem('sillage.tok') || null; acctEmail = localStorage.getItem('sillage.email') || ''; } catch (e) { /* ok */ }
+  const setSession = (t, email) => { token = t; acctEmail = email || ''; try { if (t) { localStorage.setItem('sillage.tok', t); localStorage.setItem('sillage.email', acctEmail); localStorage.setItem('sillage.acct', 'done'); } else { localStorage.removeItem('sillage.tok'); localStorage.removeItem('sillage.email'); } } catch (e) { /* ok */ } };
+  async function call(sub, method, body) {
+    let r; try { r = await fetch('/api/account/' + sub, { method, headers: Object.assign({ 'content-type': 'application/json' }, token ? { authorization: 'Bearer ' + token } : {}), body: body ? JSON.stringify(body) : undefined }); } catch (e) { throw { code: 'network' }; }
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { if (r.status === 401 && token && sub !== 'login') setSession(null); throw { code: j.code || 'server', status: r.status }; }
+    return j;
+  }
+  // On n'envoie pas les grosses images intégrées (la limite est de 900 Ko) : les photos de la base, elles, sont rechargées par leur nom.
+  const lite = (S) => JSON.parse(JSON.stringify(S, (k, v) => (typeof v === 'string' && v.startsWith('data:') && v.length > 40000 ? undefined : v)));
+  const account = {
+    loggedIn: () => !!token, email: () => acctEmail,
+    signup: async (email, password) => { const j = await call('signup', 'POST', { email, password }); setSession(j.token, email.trim().toLowerCase()); return j; },
+    login: async (email, password) => { const j = await call('login', 'POST', { email, password }); setSession(j.token, email.trim().toLowerCase()); return j; },
+    push: (S) => call('data', 'PUT', { data: lite(S) }),
+    pull: () => call('data', 'GET'),
+    logout: async () => { try { await call('logout', 'POST', {}); } catch (e) { /* session déjà expirée */ } setSession(null); },
+    remove: async () => { await call('delete', 'POST', {}); setSession(null); },
+  };
+
   const TEXT = {
     quota: ['Tes 2 essais sont utilisés', 'Tu as vu ce que fait Sillage. Laisse ton email : je t\'envoie l\'accès complet, et je peux préparer une version sur mesure pour ta collection ou ton activité.'],
     locked: ['Réservé à la version complète', 'Cette fonction (ajout par IA, labo d\'accords, semaine, voyage…) est dans la version complète. Laisse ton email pour l\'obtenir.'],
@@ -88,6 +111,6 @@
     limits: async () => ({ maxPromptBytes: 100000, images: { maxCount: 1, maxInputBytes: 8000000, mediaTypes: ['image/jpeg', 'image/png', 'image/webp'] } }),
   });
   window.claude = { use: async (name) => (name === 'sample' ? locked : null) };
-  window.SillageDemo = { day, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
+  window.SillageDemo = { account, day, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
   refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
 })();

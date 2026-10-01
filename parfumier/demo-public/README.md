@@ -104,3 +104,10 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - **Onglets** : accueil, étagère, **recherche** (texte + filtres : tags, style, prix, concentration, marque, note, parfumeur, avec photo), **conseils** (ce qui manque pour compléter ta collection, ce qui t'irait, par envie niche / luxe / abordable, astuces), balade, wishlist.
 - **Balade olfactive** : conservée. La fausse balade d'exemple (« Rue Saint-Honoré ») qui s'affichait chez tout le monde est retirée de tous les comptes au chargement.
 - `incoming/PHOTOS-MANQUANTES.md` liste les parfums du catalogue qui n'ont pas encore de photo.
+
+## 11. Comptes
+
+- **Créer un compte** (email + mot de passe) est proposé juste après l'intro ; il enregistre tout le profil (prénom, genre, âge, goûts, collection, wishlist, journal) côté serveur, automatiquement après chaque modification. Ensuite viennent les questions d'inscription. **Se connecter** sur un autre appareil rapporte le profil complet, sans refaire les questions. **Continuer sans compte** reste possible ; on peut créer un compte plus tard dans Profil. Profil permet aussi de se déconnecter et de **supprimer** le compte (tout est effacé).
+- Côté Worker : `/api/account/signup|login|data|logout|delete`. Mot de passe haché avec PBKDF2-SHA256 (100 000 itérations, le maximum de Cloudflare Workers) et sel propre à chaque compte, jamais stocké en clair ; session par jeton aléatoire valable 180 jours ; profil limité à 900 Ko ; limites d'essais par adresse IP.
+- **Pas de « mot de passe oublié »** pour l'instant (l'email est stocké, on pourra l'ajouter). Le compte n'existe que dans la version publique (Worker) : l'artifact claude.ai garde son propre enregistrement.
+- Dis aux utilisateurs que l'email ne sert qu'à se reconnecter : c'est ce que dit l'écran. Si tu veux t'en servir pour autre chose (offre sur mesure), il faut un consentement séparé.

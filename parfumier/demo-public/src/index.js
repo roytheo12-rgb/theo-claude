@@ -15,6 +15,19 @@ async function sha(text) {
   return [...new Uint8Array(buf)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+
+// ---- Comptes : email + mot de passe (PBKDF2), session par jeton, profil complet sauvegardé côté serveur
+const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+const fullSha = async (text) => hex(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)));
+async function pbkdf2(password, saltHex) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']);
+  const salt = new Uint8Array(saltHex.match(/../g).map((h) => parseInt(h, 16)));
+  return hex(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt, iterations: 100000 }, key, 256)); // 100 000 : le maximum accepté par Cloudflare Workers
+}
+const randHex = (n) => hex(crypto.getRandomValues(new Uint8Array(n)));
+const same = (a, b) => { if (a.length !== b.length) return false; let d = 0; for (let i = 0; i < a.length; i++) d |= a.charCodeAt(i) ^ b.charCodeAt(i); return d === 0; };
+const SESSION_TTL = 60 * 60 * 24 * 180, DATA_MAX = 900000;
+
 const FAMILIES = ['agrumes', 'aquatique', 'aromatique', 'vert', 'floral', 'fruité', 'gourmand', 'ambré', 'boisé', 'épicé', 'cuir', 'musqué', 'oud'];
 const GENDERS = ['m', 'f', 'x'];
 const clean = (v, n) => String(v ?? '').replace(/[\u0000-\u001f<>]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n);
@@ -173,6 +186,43 @@ export function makeWorker(deps = {}) {
           await kv.put(`cand:${key}`, JSON.stringify(c));
         }
         return reply({ ok: true, promoted });
+      }
+
+      // ---- Comptes
+      if (url.pathname.startsWith('/api/account/')) {
+        const salt = env.SALT || 'sillage';
+        const auth = async () => { const t = (request.headers.get('authorization') || '').replace(/^Bearer\s+/i, ''); if (!/^[a-f0-9]{64}$/.test(t)) return null; const id = await kv.get(`sess:${await fullSha(t)}`); return id ? { id, token: t } : null; };
+        const session = async (id) => { const t = randHex(32); await kv.put(`sess:${await fullSha(t)}`, id, { expirationTtl: SESSION_TTL }); return t; };
+        const sub = url.pathname.slice('/api/account/'.length);
+        let b = {}; if (request.method === 'POST' || request.method === 'PUT') { try { b = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); } }
+        if ((sub === 'signup' || sub === 'login') && request.method === 'POST') {
+          const email = String(b.email || '').trim().toLowerCase(), password = String(b.password || '');
+          if (!EMAIL_RE.test(email)) return reply({ code: 'email' }, 400);
+          if (sub === 'signup' && (password.length < 8 || password.length > 100)) return reply({ code: 'password' }, 400);
+          const id = await fullSha(email + salt), rlKey = `ac:${sub}:${await sha(ip + 'ac')}:${new Date().toISOString().slice(0, 13)}`, n = int(await kv.get(rlKey), 0);
+          if (n >= (sub === 'signup' ? 10 : 20)) return reply({ code: 'rate' }, 429);
+          await kv.put(rlKey, String(n + 1), { expirationTtl: 7200 });
+          const rec = JSON.parse((await kv.get(`acct:${id}`)) || 'null');
+          if (sub === 'signup') {
+            if (rec) return reply({ code: 'exists' }, 409);
+            const sl = randHex(16);
+            await kv.put(`acct:${id}`, JSON.stringify({ email, salt: sl, hash: await pbkdf2(password, sl), created: new Date().toISOString() }));
+            return reply({ ok: true, token: await session(id) });
+          }
+          if (!rec || !same(rec.hash, await pbkdf2(password, rec.salt))) return reply({ code: 'credentials' }, 401);
+          const d = JSON.parse((await kv.get(`data:${id}`)) || 'null');
+          return reply({ ok: true, token: await session(id), data: d ? d.data : null, ts: d ? d.ts : 0 });
+        }
+        const a = await auth(); if (!a) return reply({ code: 'auth' }, 401);
+        if (sub === 'data' && request.method === 'GET') { const d = JSON.parse((await kv.get(`data:${a.id}`)) || 'null'); return reply({ data: d ? d.data : null, ts: d ? d.ts : 0 }); }
+        if (sub === 'data' && request.method === 'PUT') {
+          if (!b.data || typeof b.data !== 'object') return reply({ code: 'data' }, 400);
+          const text = JSON.stringify(b.data); if (text.length > DATA_MAX) return reply({ code: 'too_big' }, 413);
+          const ts = Date.now(); await kv.put(`data:${a.id}`, JSON.stringify({ ts, data: b.data })); return reply({ ok: true, ts });
+        }
+        if (sub === 'logout' && request.method === 'POST') { await kv.delete(`sess:${await fullSha(a.token)}`); return reply({ ok: true }); }
+        if (sub === 'delete' && request.method === 'POST') { await kv.delete(`acct:${a.id}`); await kv.delete(`data:${a.id}`); await kv.delete(`sess:${await fullSha(a.token)}`); return reply({ ok: true }); }
+        return reply({ code: 'not_found' }, 404);
       }
 
       // ---- Inscription

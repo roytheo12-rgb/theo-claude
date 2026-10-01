@@ -49,9 +49,9 @@ h1, h2, h3, p { margin: 0; }
 .cta[disabled] { opacity: .5; }
 .ghost { border: 1px solid var(--line2); background: transparent; border-radius: 3px; padding: 10px 16px; font: 500 11.5px var(--sf); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 .ghost.danger { color: #d8897a; border-color: rgba(216, 137, 122, .4); }
-textarea, input[type=text] { width: 100%; font: 16px/1.45 var(--sf); color: var(--ink); background: #1e1c22; border: 1px solid var(--line2); border-radius: 4px; padding: 14px 16px; resize: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); transition: border-color .25s, box-shadow .25s; }
+textarea, input[type=text], input[type=search], input[type=email], input[type=password], select { width: 100%; font: 16px/1.45 var(--sf); color: var(--ink); background: #1e1c22; border: 1px solid var(--line2); border-radius: 4px; padding: 14px 16px; resize: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); transition: border-color .25s, box-shadow .25s; }
 textarea::placeholder, input::placeholder { color: #b9b4ad; opacity: 1; }
-textarea:focus, input[type=text]:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(180, 57, 74, .22); }
+textarea:focus, input[type=text]:focus, input[type=search]:focus, input[type=email]:focus, input[type=password]:focus, select:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(180, 57, 74, .22); }
 .fieldlab { display: flex; align-items: center; gap: 8px; font: 600 11px var(--sf); letter-spacing: .16em; text-transform: uppercase; color: var(--accent-deep); }
 input[type=range] { width: 100%; accent-color: var(--accent); }
 .dots { display: inline-flex; gap: 4px; }
@@ -477,3 +477,52 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .tiplist { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 8px; font-size: 14.5px; color: var(--muted); }
 .actf { margin: 0 0 6px; } .actf:empty { display: none; }
 .actf .chip { padding: 6px 10px; font-size: 12.5px; }
+
+/* ---------- Compte ---------- */
+#acct { position: fixed; inset: 0; z-index: 76; background: radial-gradient(110% 60% at 50% 0%, hsl(356 60% 20% / .9), transparent 70%), #08080a; color: var(--ink); overflow-y: auto; animation: fade .5s both; }
+.acf { display: grid; gap: 12px; }
+.acct-tabs { gap: 10px; }
+.prof-in .small { font-size: 13px; }
+
+/* ---------- Plus d'air : espaces, respiration, lisibilité ---------- */
+#app { padding-inline: 24px; }
+.vit { margin-inline: -24px; padding-inline: 24px; }
+.sec { margin-top: 64px; gap: 24px; }
+.hero { margin-top: 44px; }
+.card { padding: 24px; }
+.chips { gap: 12px; }
+.chip { padding: 11px 16px; }
+#sheet .panel { display: grid; gap: 26px; padding-inline: 24px; }
+#sheet h2 { line-height: 1.15; }
+.soft { color: var(--muted); margin-top: 8px; }
+.hub { display: grid; gap: 18px; }
+.hub .soft { font-size: 15px; }
+.opt { display: grid; gap: 8px; text-align: left; padding: 22px 22px 24px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); transition: border-color .25s, background .25s; }
+.opt:hover { border-color: var(--line2); background: var(--surface2); }
+.opt b { font: 400 19px/1.2 var(--sf); letter-spacing: -.01em; }
+.opt span { color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.exp { gap: 30px; }
+.exp h2 { margin-bottom: 4px; }
+.exp input[type=search] { padding: 16px 18px; }
+#xbody { display: grid; gap: 24px; }
+.xtabs { gap: 10px; }
+.xg { gap: 12px; padding: 2px 2px 6px; }
+.xgrid { gap: 14px; }
+.xc { grid-template-columns: 56px 1fr auto; gap: 16px; padding: 16px 18px 16px 12px; border-radius: 6px; }
+.xth { width: 56px; height: 76px; }
+.xt { gap: 6px; }
+.xt b { font-size: 16px; }
+.xt em { margin-top: 2px; line-height: 1.45; }
+.xpop { gap: 14px; padding-bottom: 10px; }
+.xp { flex-basis: 118px; padding: 16px 10px; gap: 8px; border-radius: 6px; }
+.xp .xth { height: 88px; }
+.xback { margin-bottom: 4px; }
+.exp-foot { padding: 20px 0 6px; margin-top: 12px; }
+.filters .mono { margin-top: 24px; margin-bottom: 4px; }
+.filters .chips { margin-top: 8px; }
+.selrow { gap: 18px; margin-top: 22px; }
+.tipc { margin-top: 20px; gap: 18px; }
+.tiph { gap: 18px; }
+.wl { margin-bottom: 4px; }
+#sq { padding: 16px 18px; margin-bottom: 14px; }
+.wtabs { margin-bottom: 18px; }

@@ -53,9 +53,9 @@ h1, h2, h3, p { margin: 0; }
 .cta[disabled] { opacity: .5; }
 .ghost { border: 1px solid var(--line2); background: transparent; border-radius: 3px; padding: 10px 16px; font: 500 11.5px var(--sf); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 .ghost.danger { color: #d8897a; border-color: rgba(216, 137, 122, .4); }
-textarea, input[type=text] { width: 100%; font: 16px/1.45 var(--sf); color: var(--ink); background: #1e1c22; border: 1px solid var(--line2); border-radius: 4px; padding: 14px 16px; resize: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); transition: border-color .25s, box-shadow .25s; }
+textarea, input[type=text], input[type=search], input[type=email], input[type=password], select { width: 100%; font: 16px/1.45 var(--sf); color: var(--ink); background: #1e1c22; border: 1px solid var(--line2); border-radius: 4px; padding: 14px 16px; resize: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04); transition: border-color .25s, box-shadow .25s; }
 textarea::placeholder, input::placeholder { color: #b9b4ad; opacity: 1; }
-textarea:focus, input[type=text]:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(180, 57, 74, .22); }
+textarea:focus, input[type=text]:focus, input[type=search]:focus, input[type=email]:focus, input[type=password]:focus, select:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px rgba(180, 57, 74, .22); }
 .fieldlab { display: flex; align-items: center; gap: 8px; font: 600 11px var(--sf); letter-spacing: .16em; text-transform: uppercase; color: var(--accent-deep); }
 input[type=range] { width: 100%; accent-color: var(--accent); }
 .dots { display: inline-flex; gap: 4px; }
@@ -481,6 +481,55 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .tiplist { margin: 8px 0 0; padding-left: 18px; display: grid; gap: 8px; font-size: 14.5px; color: var(--muted); }
 .actf { margin: 0 0 6px; } .actf:empty { display: none; }
 .actf .chip { padding: 6px 10px; font-size: 12.5px; }
+
+/* ---------- Compte ---------- */
+#acct { position: fixed; inset: 0; z-index: 76; background: radial-gradient(110% 60% at 50% 0%, hsl(356 60% 20% / .9), transparent 70%), #08080a; color: var(--ink); overflow-y: auto; animation: fade .5s both; }
+.acf { display: grid; gap: 12px; }
+.acct-tabs { gap: 10px; }
+.prof-in .small { font-size: 13px; }
+
+/* ---------- Plus d'air : espaces, respiration, lisibilité ---------- */
+#app { padding-inline: 24px; }
+.vit { margin-inline: -24px; padding-inline: 24px; }
+.sec { margin-top: 64px; gap: 24px; }
+.hero { margin-top: 44px; }
+.card { padding: 24px; }
+.chips { gap: 12px; }
+.chip { padding: 11px 16px; }
+#sheet .panel { display: grid; gap: 26px; padding-inline: 24px; }
+#sheet h2 { line-height: 1.15; }
+.soft { color: var(--muted); margin-top: 8px; }
+.hub { display: grid; gap: 18px; }
+.hub .soft { font-size: 15px; }
+.opt { display: grid; gap: 8px; text-align: left; padding: 22px 22px 24px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); transition: border-color .25s, background .25s; }
+.opt:hover { border-color: var(--line2); background: var(--surface2); }
+.opt b { font: 400 19px/1.2 var(--sf); letter-spacing: -.01em; }
+.opt span { color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+.exp { gap: 30px; }
+.exp h2 { margin-bottom: 4px; }
+.exp input[type=search] { padding: 16px 18px; }
+#xbody { display: grid; gap: 24px; }
+.xtabs { gap: 10px; }
+.xg { gap: 12px; padding: 2px 2px 6px; }
+.xgrid { gap: 14px; }
+.xc { grid-template-columns: 56px 1fr auto; gap: 16px; padding: 16px 18px 16px 12px; border-radius: 6px; }
+.xth { width: 56px; height: 76px; }
+.xt { gap: 6px; }
+.xt b { font-size: 16px; }
+.xt em { margin-top: 2px; line-height: 1.45; }
+.xpop { gap: 14px; padding-bottom: 10px; }
+.xp { flex-basis: 118px; padding: 16px 10px; gap: 8px; border-radius: 6px; }
+.xp .xth { height: 88px; }
+.xback { margin-bottom: 4px; }
+.exp-foot { padding: 20px 0 6px; margin-top: 12px; }
+.filters .mono { margin-top: 24px; margin-bottom: 4px; }
+.filters .chips { margin-top: 8px; }
+.selrow { gap: 18px; margin-top: 22px; }
+.tipc { margin-top: 20px; gap: 18px; }
+.tiph { gap: 18px; }
+.wl { margin-bottom: 4px; }
+#sq { padding: 16px 18px; margin-bottom: 14px; }
+.wtabs { margin-bottom: 18px; }
 
 </style>
 <div id="app">
@@ -1589,7 +1638,10 @@ window.SillagePrompts = { day: dayPrompt };
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ }
     clearTimeout(saveT);
     saveT = setTimeout(() => { if (dbDoc) dbDoc.set(JSON.parse(JSON.stringify(S))).catch(() => {}); }, 700);
+    const A = window.SillageDemo && window.SillageDemo.account;
+    if (A && A.loggedIn() && !PULLING) { clearTimeout(pushT); pushT = setTimeout(() => { A.push(S).then(() => { SYNC = 'ok'; }).catch(() => { SYNC = 'err'; }); }, 1200); }
   }
+  let PULLING = false, pushT, SYNC = '';
   async function initStore() {
     try {
       const c = window.claude; if (!c || !c.use) return;
@@ -1676,7 +1728,7 @@ window.SillagePrompts = { day: dayPrompt };
   const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false, dress: null, when: clockMoment(), venue: null };
   if (S.settings.last && S.settings.last.cat) CHOICE.cat = S.settings.last.cat;
   if (S.settings.last && S.settings.last.dress) CHOICE.dress = S.settings.last.dress;
-  const CATS = { travail: 'Travail', amour: 'Amour', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
+  const CATS = { travail: 'Travail', amour: 'Romantique', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
   // [clé, libellé, réglages]
   const SCEN = {
     travail: [
@@ -1761,7 +1813,7 @@ window.SillagePrompts = { day: dayPrompt };
         ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
-        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Choisis tes parfums dans la base (par marque, style, notes…), écris-les, ou prends-les en photo.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
+        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Choisis tes parfums dans la base (par maison, style, notes…), écris-les, ou prends-les en photo.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
         <div class="say-wrap">
           <p class="mono">Ta journée</p>
           <div class="cats" id="cats">${Object.entries(CATS).map(([k, v]) => `<button class="${CHOICE.cat === k ? 'on' : ''}" data-cat="${k}">${v}</button>`).join('')}</div>
@@ -1845,7 +1897,7 @@ window.SillagePrompts = { day: dayPrompt };
       <section class="sec"><div class="row"><button class="ghost" id="labBtn">Labo d'accords</button>${HAS_ASSETS ? `<button class="ghost" id="photosBtn">Ajouter mes photos (IA)</button>` : ''}</div></section>
       <section class="sec"><div class="shelf">
         ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${stockBadge(p)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
-        <button class="add-tile" id="addBtn"><b>+</b><span>Ajouter avec l'IA</span><small class="mono">texte ou photo</small></button>
+        <button class="add-tile" id="addBtn"><b>+</b><span>Ajouter mes parfums</span><small class="mono">base, texte ou photo</small></button>
       </div></section>`;
     $$('[data-open]').forEach((b) => (b.onclick = () => openDetail(b.dataset.open)));
     $('#addBtn').onclick = openAdd;
@@ -1998,7 +2050,7 @@ window.SillagePrompts = { day: dayPrompt };
       <p class="mono" style="text-transform:none;letter-spacing:0">${IC.spark} Ambiance : ${esc(FX.motifsOf(p).label)}${FX.motifsOf(p).notes.length ? ' · inspirée de ' + esc(FX.motifsOf(p).notes.join(', ')) : ''}</p>
       <div class="row" style="gap:14px">${buyLinks(p.name, p.house)}${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
       ${(() => { const notes = S.log.filter((l) => l.id === p.id && (l.note || l.compl || l.dur)).slice(-3).reverse(); return notes.length ? `<div><p class="mono">Journal</p>${notes.map((l) => `<p style="font-size:14px;color:var(--muted);margin-top:6px">${esc(new Date(l.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }))} · ${esc([l.compl ? l.compl + ' compliment(s)' : '', l.dur || '', l.note || ''].filter(Boolean).join(' · '))}</p>`).join('')}</div>` : ''; })()}
-      ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">${p.guessed ? 'Cette fiche est estimée d\'après le nom du parfum. L\'IA peut la compléter avec les vraies notes.' : 'Je ne connais que la marque. Donne-moi le nom exact et l\'IA remplit les notes.'}</p><input type="text" id="fixin" value="${esc(p.guessed ? p.name : '')}" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
+      ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">${p.guessed ? 'Cette fiche est estimée d\'après le nom du parfum. L\'IA peut la compléter avec les vraies notes.' : 'Je ne connais que la maison. Donne-moi le nom exact et l\'IA remplit les notes.'}</p><input type="text" id="fixin" value="${esc(p.guessed ? p.name : '')}" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
       <div class="card" style="display:grid;gap:10px"><b>Mon flacon</b>${stockHtml(p, 0)}<p class="mono" id="stkmsg" style="text-transform:none;letter-spacing:0">Je tiens compte de ton stock : un échantillon ou un flacon presque fini ne part pas en usage quotidien.</p></div>
       <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
@@ -2034,7 +2086,16 @@ window.SillagePrompts = { day: dayPrompt };
     return out.sort((a, b) => a.rank - b.rank).slice(0, 7);
   }
   let PRE = [], SHELF_FILES = [];
-  function openAdd() { openExplore('collection'); }
+  // Ajouter mes parfums : trois façons, clairement séparées
+  function openAdd() {
+    const pn = openSheet(`<div class="hub"><div><h2>Ajouter mes parfums</h2><p class="soft">Choisis la façon la plus simple pour toi.</p></div>
+      <button class="opt" data-add="base"><b>Choisir dans la base</b><span>Plus de 2 800 parfums, par maison, style, notes ou prix. Avec photos.</span></button>
+      <button class="opt" data-add="text"><b>Écrire ou coller ma liste</b><span>Je retrouve les noms, même mal écrits, et je complète les fiches.</span></button>
+      <button class="opt" data-add="photo"><b>Prendre une photo</b><span>Un flacon ou toute ton étagère : je reconnais les parfums.</span></button>
+      <button class="ghost" id="hubx">Fermer</button></div>`);
+    $('#hubx', pn).onclick = closeSheet;
+    $$('[data-add]', pn).forEach((b) => (b.onclick = () => { const k = b.dataset.add; if (k === 'base') openExplore('collection'); else { openAddFree(); if (k === 'photo' && $('#addph') && !$('#addph').hidden) $('#addph').click(); } }));
+  }
   function openAddFree() {
     PRE = []; SHELF_FILES = [];
     const pn = openSheet(`<div><h2>Pas dans la base ?</h2><p style="color:var(--muted);margin-top:6px">Écris tes parfums en vrac, ou prends ton étagère en photo. L'IA retrouve la maison, les notes et la puissance.</p></div>
@@ -2056,7 +2117,7 @@ window.SillagePrompts = { day: dayPrompt };
     $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, window.SillageDemo ? 1 : 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
     $('#addgo', pn).onclick = () => analyzeAdd(pn);
   }
-  // ---------- Explorer la base : marques, styles, notes, prix, parfumeurs ----------
+  // ---------- Explorer la base : maisons, styles, notes, prix, parfumeurs ----------
   // Les ~2 800 parfums de la base n'ont pas tous une fiche détaillée : pour les autres, style et notes sont déduits du nom (marqués « ≈ »).
   const GUESS = [
     ['oud', 5, ['oud', 'agar']], ['cuir', 4, ['cuir', 'leather', 'suede', 'daim']],
@@ -2118,14 +2179,14 @@ window.SillagePrompts = { day: dayPrompt };
     const search = (qq) => { const nq = E.norm(qq), L = dbList(); return L.map((e) => { const n = E.norm(e.name), h = E.norm(e.house), nh = h + ' ' + n; const r = n === nq ? 0 : n.startsWith(nq) ? 1 : nh.startsWith(nq) ? 2 : n.includes(nq) ? 3 : nh.includes(nq) ? 4 : nq.split(' ').every((w) => nh.includes(w)) ? 5 : 9; return { e, r }; }).filter((x) => x.r < 9).sort((a, b) => a.r - b.r || (b.e.cat ? 1 : 0) - (a.e.cat ? 1 : 0)).slice(0, 80).map((x) => x.e); };
     const foot = () => { const n = sel.size; return `<div class="exp-foot"><span class="mono">${n ? n + ' choisi' + (n > 1 ? 's' : '') : 'Touche un parfum pour le choisir'}</span><button class="cta" id="xgo" ${n ? '' : 'disabled'}><span>${esc(o.cta(n))}</span></button></div>`; };
     function body() {
-      const db = dbList(), tabs = [['brand', 'Marques'], ['tag', 'Tags'], ['style', 'Styles'], ['note', 'Notes'], ['price', 'Prix'], ['nose', 'Parfumeurs']];
+      const db = dbList(), tabs = [['brand', 'Maisons'], ['tag', 'Tags'], ['style', 'Styles'], ['note', 'Notes'], ['price', 'Prix'], ['nose', 'Parfumeurs']];
       let inner = '';
-      if (q.trim().length >= 2) { const r = search(q); inner = r.length ? `<div class="xgrid">${r.map(card).join('')}</div>` : '<div class="empty">Rien trouvé. Essaie la marque, ou écris-le toi-même plus bas.</div>'; }
+      if (q.trim().length >= 2) { const r = search(q); inner = r.length ? `<div class="xgrid">${r.map(card).join('')}</div>` : '<div class="empty">Rien trouvé. Essaie la maison, ou écris-le toi-même plus bas.</div>'; }
       else {
         const gs = groupsOf(db, facet);
         inner = `<div class="chips xtabs" role="tablist">${tabs.map(([k, l]) => `<button type="button" class="chip ${facet === k ? 'on' : ''}" data-xf="${k}">${l}</button>`).join('')}</div>`;
         if (!group) {
-          if (facet === 'brand') inner += `<p class="mono">Les incontournables</p><div class="xpop">${popular().map((e) => { const k = entryKey(e), on = sel.has(k); return `<button type="button" class="xp ${on ? 'on' : ''}" data-xk="${esc(k)}" ${haveIt(e) ? 'disabled' : ''}>${xThumb(e)}<b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`; }).join('')}</div><p class="mono">Toutes les marques · ${gs.length}</p>`;
+          if (facet === 'brand') inner += `<p class="mono">Les incontournables</p><div class="xpop">${popular().map((e) => { const k = entryKey(e), on = sel.has(k); return `<button type="button" class="xp ${on ? 'on' : ''}" data-xk="${esc(k)}" ${haveIt(e) ? 'disabled' : ''}>${xThumb(e)}<b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`; }).join('')}</div><p class="mono">Toutes les maisons · ${gs.length}</p>`;
           else if (facet === 'style' || facet === 'note') inner += `<p class="mono" style="text-transform:none;letter-spacing:0">${facet === 'style' ? 'Pour les parfums sans fiche détaillée, le style est déduit du nom (≈).' : 'Notes des fiches détaillées, ou lues dans le nom du parfum.'}</p>`;
           else if (facet === 'tag') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Abordable, niche, designer, luxe, collection privée… pour trier d\'un coup d\'œil.</p>';
           else if (facet === 'price') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Prix indicatifs d\'un flacon standard, pour les parfums avec fiche détaillée.</p>';
@@ -2136,7 +2197,7 @@ window.SillagePrompts = { day: dayPrompt };
           inner += `<div class="row xback"><button type="button" class="ghost" id="xback">← ${tabs.find((t) => t[0] === facet)[1]}</button><b>${esc(g ? g.label : '')}</b><span class="mono">${items.length}</span></div><div class="xgrid">${items.slice(0, limit).map(card).join('')}</div>${items.length > limit ? '<button type="button" class="ghost" id="xmore">Voir plus</button>' : ''}`;
         }
       }
-      host.innerHTML = `<div class="exp"><div><h2>${esc(o.title)}</h2><p style="color:var(--muted);margin-top:6px">${esc(o.sub)}</p></div><input type="search" id="xq" placeholder="Rechercher un parfum ou une marque" value="${esc(q)}" autocomplete="off" aria-label="Rechercher"><div id="xbody">${inner}</div>${o.free ? `<button type="button" class="linkbtn" id="xfree">${esc(o.free)}</button>` : ''}${o.skip ? `<button type="button" class="ghost" id="xskip">${esc(o.skip)}</button>` : ''}${foot()}</div>`;
+      host.innerHTML = `<div class="exp"><div><h2>${esc(o.title)}</h2><p style="color:var(--muted);margin-top:6px">${esc(o.sub)}</p></div><input type="search" id="xq" placeholder="Rechercher un parfum ou une maison" value="${esc(q)}" autocomplete="off" aria-label="Rechercher"><div id="xbody">${inner}</div>${o.free ? `<button type="button" class="linkbtn" id="xfree">${esc(o.free)}</button>` : ''}${o.skip ? `<button type="button" class="ghost" id="xskip">${esc(o.skip)}</button>` : ''}${foot()}</div>`;
       bind();
     }
     function bind() {
@@ -2191,14 +2252,14 @@ window.SillagePrompts = { day: dayPrompt };
     const nF = SRCH.tags.length + (SRCH.style ? 1 : 0) + (SRCH.price ? 1 : 0) + (SRCH.house ? 1 : 0) + (SRCH.note ? 1 : 0) + (SRCH.nose ? 1 : 0) + (SRCH.conc ? 1 : 0) + (SRCH.photo ? 1 : 0);
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
-        <input type="search" id="sq" placeholder="Un parfum, une marque…" value="${esc(SRCH.q)}" autocomplete="off" aria-label="Rechercher un parfum">
+        <input type="search" id="sq" placeholder="Un parfum, une maison…" value="${esc(SRCH.q)}" autocomplete="off" aria-label="Rechercher un parfum">
         <div class="chips actf">${[...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note : ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean).map(([k, l]) => `<button class="chip on" data-xa="${esc(k)}">${esc(l)} ✕</button>`).join('')}</div>
         <details class="filters" ${SRCH.open ? 'open' : ''}><summary class="mono">Filtres${nF ? ' · ' + nF : ''}</summary>
           <p class="mono">Tags</p><div class="chips">${Object.entries(window.TAGS || {}).map(([k, v]) => `<button class="chip ${SRCH.tags.includes(k) ? 'on' : ''}" data-st="${k}">${esc(v)}</button>`).join('')}</div>
           <p class="mono">Style</p><div class="chips">${Object.keys(E.FAMILIES).map((k) => `<button class="chip ${SRCH.style === k ? 'on' : ''}" data-ss="${k}">${esc(famLabel(k))}</button>`).join('')}</div>
           <p class="mono">Prix</p><div class="chips">${PRICE_TIERS.map(([k, l]) => `<button class="chip ${SRCH.price === k ? 'on' : ''}" data-sp="${k}">${l}</button>`).join('')}</div>
           <p class="mono">Concentration</p><div class="chips">${[['EDT', 'Eau de toilette'], ['EDP', 'Eau de parfum'], ['EXT', 'Extrait'], ['PAR', 'Parfum'], ['COL', 'Cologne']].map(([k, l]) => `<button class="chip ${SRCH.conc === k ? 'on' : ''}" data-sc2="${k}">${l}</button>`).join('')}<button class="chip ${SRCH.photo ? 'on' : ''}" data-sph="1">Avec photo</button></div>
-          <div class="selrow">${sel('sh', 'Marque', houses, SRCH.house)}${sel('sn', 'Note', FACET_NOTES.slice().sort((a, b) => a.localeCompare(b, 'fr')), SRCH.note)}${sel('sno', 'Parfumeur', noses, SRCH.nose)}</div>
+          <div class="selrow">${sel('sh', 'Maison', houses, SRCH.house)}${sel('sn', 'Note', FACET_NOTES.slice().sort((a, b) => a.localeCompare(b, 'fr')), SRCH.note)}${sel('sno', 'Parfumeur', noses, SRCH.nose)}</div>
           ${nF ? '<button class="ghost" id="sreset">Tout effacer</button>' : ''}
         </details>
         <div id="sres"></div></section>`;
@@ -2235,8 +2296,8 @@ window.SillagePrompts = { day: dayPrompt };
   function openExplore(mode) {
     const pn = openSheet('<div id="exh"></div>');
     mountExplorer($('#exh', pn), mode === 'wish'
-      ? { mode: 'wish', title: 'Explorer la base', sub: 'Par marque, style, notes, prix ou parfumeur. Chaque parfum se met en wishlist d\'un toucher.', cta: (n) => 'Mettre ' + n + ' en wishlist', onSubmit: (list) => { list.forEach((e) => addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' })); save(); closeSheet(); tab = 'wish'; render(); } }
-      : { mode: 'collection', title: 'Ajoute tes parfums', sub: 'Choisis-les dans la base : par marque, style, notes, prix ou parfumeur.', cta: (n) => 'Ajouter ' + n + ' à ma collection', free: 'Il n\'est pas dans la base ? Écris-le ou prends-le en photo', onFree: () => openAddFree(), onSubmit: (list) => { addEntriesToCollection(list); closeSheet(); tab = 'shelf'; render(); } });
+      ? { mode: 'wish', title: 'Explorer la base', sub: 'Par maison, style, notes, prix ou parfumeur. Chaque parfum se met en wishlist d\'un toucher.', cta: (n) => 'Mettre ' + n + ' en wishlist', onSubmit: (list) => { list.forEach((e) => addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' })); save(); closeSheet(); tab = 'wish'; render(); } }
+      : { mode: 'collection', title: 'Ajoute tes parfums', sub: 'Choisis-les dans la base : par maison, style, notes, prix ou parfumeur.', cta: (n) => 'Ajouter ' + n + ' à ma collection', free: 'Il n\'est pas dans la base ? Écris-le ou prends-le en photo', onFree: () => openAddFree(), onSubmit: (list) => { addEntriesToCollection(list); closeSheet(); tab = 'shelf'; render(); } });
   }
 
   async function analyzeAdd(pn) {
@@ -2303,6 +2364,7 @@ window.SillagePrompts = { day: dayPrompt };
       <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
         <input type="text" id="pname" maxlength="24" value="${esc(pf.name || '')}" placeholder="Mon prénom" aria-label="Mon prénom">
         <input type="text" id="page" inputmode="numeric" maxlength="2" value="${pf.age || ''}" placeholder="Mon âge" aria-label="Mon âge"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour. Ta tenue, je te la demande quand tu cherches ton parfum.</p></div>
+      ${window.SillageDemo ? (window.SillageDemo.account.loggedIn() ? `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Connecté : ${esc(window.SillageDemo.account.email())}. Ton profil est sauvegardé automatiquement.</p><div class="row"><button class="ghost" id="alogout">Me déconnecter</button><button class="ghost danger" id="adel">Supprimer mon compte</button></div></div>` : `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Crée un compte pour garder ton profil, ta collection et ta wishlist sur tous tes appareils.</p><button class="cta" id="acreate"><span>Créer un compte ou me connecter</span></button></div>`) : ''}
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
@@ -2311,6 +2373,9 @@ window.SillagePrompts = { day: dayPrompt };
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
     $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
     $('#pname', pn).onchange = () => { setProfile({ name: $('#pname', pn).value.trim().slice(0, 24) }); pmsg(); };
+    if ($('#acreate', pn)) $('#acreate', pn).onclick = () => { closeSheet(); showAccount('profile'); };
+    if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); closeSheet(); render(true); };
+    if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } closeSheet(); render(true); };
     $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
@@ -2818,7 +2883,47 @@ window.SillagePrompts = { day: dayPrompt };
     S.profile = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; delete S.profile.dress; delete S.profile.note; save();
     const me = PROFILES.list.find((x) => x.id === PROFILES.active); if (me && me.name !== (S.profile.name || '')) { me.name = S.profile.name || ''; saveProfiles(); }
   };
-  function maybeProfile() { if (!S.profile && !PRESENT && !$('#onb') && !$('#prof')) showProfile(); }
+  function maybeProfile() {
+    if (S.profile || PRESENT || $('#onb') || $('#prof') || $('#acct')) return;
+    const A = window.SillageDemo && window.SillageDemo.account; let seen = false; try { seen = !!localStorage.getItem('sillage.acct'); } catch (e) { /* ok */ }
+    if (A && !A.loggedIn() && !seen) showAccount(); else showProfile();
+  }
+  // Compte : créer (puis les questions d'inscription) ou se connecter (le profil complet revient), ou continuer sans compte.
+  function showAccount(from) {
+    const A = window.SillageDemo.account;
+    const el = document.createElement('div'); el.id = 'acct'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Compte');
+    let mode = 'signup';
+    const MSG = { email: 'Cet email semble incomplet.', password: 'Choisis un mot de passe de 8 caractères minimum.', exists: 'Un compte existe déjà avec cet email : connecte-toi.', credentials: 'Email ou mot de passe incorrect.', rate: 'Trop d\'essais pour l\'instant. Réessaie un peu plus tard.', network: 'Pas de connexion. Réessaie dans un instant.', server: 'Un souci de notre côté. Réessaie dans un instant.' };
+    const draw = () => {
+      el.innerHTML = `<div class="prof-in"><p class="mono">Ton compte</p><h2>${mode === 'signup' ? 'Garde ton profil' : 'Content de te revoir'}</h2>
+        <p class="soft">${mode === 'signup' ? 'Un compte sauvegarde tout : tes parfums, ta wishlist, tes goûts. Tu les retrouves sur tous tes appareils.' : 'Connecte-toi pour retrouver ton profil, ta collection et ta wishlist.'}</p>
+        <div class="chips acct-tabs"><button class="chip ${mode === 'signup' ? 'on' : ''}" data-m="signup">Créer un compte</button><button class="chip ${mode === 'login' ? 'on' : ''}" data-m="login">J'ai déjà un compte</button></div>
+        <form id="acf" class="acf" novalidate><input type="email" id="aem" autocomplete="email" inputmode="email" placeholder="Ton email" aria-label="Ton email"><input type="password" id="apw" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}" placeholder="${mode === 'signup' ? 'Mot de passe (8 caractères minimum)' : 'Mot de passe'}" aria-label="Mot de passe">
+          <p class="mono" id="amsg" role="alert" style="text-transform:none;letter-spacing:0;min-height:18px"></p>
+          <button class="cta full" id="ago"><span>${mode === 'signup' ? 'Créer mon compte' : 'Me connecter'}</span></button></form>
+        <p class="soft small">Ton email sert uniquement à te reconnecter. Tu peux supprimer ton compte à tout moment dans Profil.</p>
+        <button class="ghost" id="askip">${from === 'profile' ? 'Fermer' : 'Continuer sans compte'}</button></div>`;
+      $$('[data-m]', el).forEach((b) => (b.onclick = () => { mode = b.dataset.m; draw(); }));
+      $('#askip', el).onclick = () => { if (from !== 'profile') { try { localStorage.setItem('sillage.acct', 'skip'); } catch (e) { /* ok */ } } close(); if (from !== 'profile') showProfile(); };
+      $('#acf', el).onsubmit = async (ev) => {
+        ev.preventDefault(); const em = $('#aem', el).value.trim(), pw = $('#apw', el).value, msg = $('#amsg', el);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { msg.textContent = MSG.email; return; }
+        if (mode === 'signup' && pw.length < 8) { msg.textContent = MSG.password; return; }
+        $('#ago', el).disabled = true; msg.textContent = '…';
+        try {
+          if (mode === 'signup') { await A.signup(em, pw); close(); if (hasProfile() || from === 'profile') { save(); if (from === 'profile') render(true); } else showProfile(); }
+          else {
+            const j = await A.login(em, pw); PULLING = true;
+            if (j.data) { S = Object.assign(DEF(), j.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } }
+            PULLING = false; close();
+            if (!hasProfile()) showProfile(); else { tab = 'today'; render(); }
+          }
+        } catch (e) { PULLING = false; msg.textContent = MSG[e.code] || MSG.server; $('#ago', el).disabled = false; }
+      };
+    };
+    const close = () => { el.remove(); document.body.style.overflow = ''; };
+    document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
+  }
   const TASTES = [['Frais, citronné', ['bergamote', 'citron', 'néroli']], ['Floral', ['rose', 'jasmin', 'iris']], ['Boisé', ['cèdre', 'santal', 'vétiver']], ['Vanillé, gourmand', ['vanille', 'tonka', 'caramel']], ['Épicé, ambré', ['poivre', 'cannelle', 'ambre']], ['Cuir, fumé', ['cuir', 'encens', 'tabac']], ['Musc, peau propre', ['musc']]];
   // Inscription en 5 temps : prénom, genre, âge, goûts, puis la collection choisie dans la base.
   function showProfile() {
@@ -2830,7 +2935,7 @@ window.SillagePrompts = { day: dayPrompt };
       const head = `<p class="mono">Faisons connaissance · ${step} / ${N}</p>`, back = step > 1 ? '<button class="ghost" id="pBack">Retour</button>' : '';
       if (step === 5) {
         el.innerHTML = '<div class="prof-in wide"><div id="pExp"></div></div>';
-        mountExplorer($('#pExp', el), { mode: 'collection', title: d.name ? 'Tes parfums, ' + d.name : 'Tes parfums', sub: 'Choisis ceux que tu as déjà : par marque, style, notes… Tu pourras en ajouter d\'autres à tout moment.', cta: (n) => 'Ajouter ' + n + ' et commencer', skip: 'Je n\'en ai pas encore', onSkip: () => end(false), onSubmit: (list) => { addEntriesToCollection(list); end(false); } });
+        mountExplorer($('#pExp', el), { mode: 'collection', title: d.name ? 'Tes parfums, ' + d.name : 'Tes parfums', sub: 'Choisis ceux que tu as déjà : par maison, style, notes… Tu pourras en ajouter d\'autres à tout moment.', cta: (n) => 'Ajouter ' + n + ' et commencer', skip: 'Je n\'en ai pas encore', onSkip: () => end(false), onSubmit: (list) => { addEntriesToCollection(list); end(false); } });
         return;
       }
       el.innerHTML = step === 1

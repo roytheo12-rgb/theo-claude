@@ -8,7 +8,7 @@ const { chromium } = createRequire(npmRoot + '/')('playwright');
 const OUT = process.env.OUT || '/tmp';
 const types = { '.html': 'text/html; charset=utf-8', '.webp': 'image/webp', '.js': 'text/javascript', '.jpg': 'image/jpeg', '.txt': 'text/plain', '.gif': 'image/gif', '.svg': 'image/svg+xml' };
 const store = new Map();
-const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async list({ prefix }) { return { keys: [...store.keys()].filter((k) => k.startsWith(prefix)).map((name) => ({ name })), list_complete: true }; } };
+const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); }, async list({ prefix }) { return { keys: [...store.keys()].filter((k) => k.startsWith(prefix)).map((name) => ({ name })), list_complete: true }; } };
 let aiCalls = 0, lastPrompt = '', identCalls = [];
 const idOf = (p, n) => (p.match(new RegExp('^(\\S+) \\| ' + n.replace(/[()]/g, '\\$&') + ' \\|', 'm')) || [])[1];
 const client = { messages: { async create(req) {
@@ -37,7 +37,12 @@ await pg.waitForSelector('#onb', { timeout: 8000 }); await pg.waitForTimeout(600
 await pg.waitForTimeout(3000); await pg.screenshot({ path: OUT + '/e2_onb2.png' });
 await pg.waitForTimeout(2800); await pg.screenshot({ path: OUT + '/e3_onb3.png' });
 await pg.waitForTimeout(3000); ok(await pg.isVisible('#onbGo'), 'onboarding : bouton final visible en moins de 12 s');
-await pg.click('#onbGo'); await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok(true, 'inscription : la première question (prénom) s\'affiche après l\'intro');
+await pg.click('#onbGo'); await pg.waitForSelector('#acct #aem', { timeout: 5000 }); ok(true, 'compte : l\'écran « Garde ton profil » s\'affiche après l\'intro');
+await pg.screenshot({ path: OUT + '/e3a_compte.png' });
+await pg.fill('#aem', 'lea@exemple.fr'); await pg.fill('#apw', 'court'); await pg.click('#ago'); ok(/8 caractères/.test(await pg.textContent('#amsg')), 'compte : mot de passe trop court refusé');
+await pg.fill('#apw', 'motdepasse1'); await pg.click('#ago'); await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok([...store.keys()].some((k) => k.startsWith('acct:')), 'compte créé : les questions d\'inscription suivent');
+// (suite)
+await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok(true, 'inscription : la première question (prénom) s\'affiche après l\'intro');
 await pg.screenshot({ path: OUT + '/e3b_profil1.png' });
 await pg.fill('#pName', 'Léa'); await pg.click('#pNext'); await pg.waitForSelector('#prof .gen'); await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#pAge');
 await pg.fill('#pAge', '27'); await pg.click('#pNext'); await pg.waitForSelector('[data-t]'); await pg.click('[data-t="3"]'); await pg.click('[data-t="2"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
@@ -78,7 +83,7 @@ ok(store.has('email:test@exemple.fr'), 'email enregistré');
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
 await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); await pg.fill('#askq', 'un frais'); await pg.click('#askgo'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
 // 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
-await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.waitForSelector('#xfree'); await pg.click('#xfree'); await pg.waitForSelector('#addtxt');
+await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.click('[data-add=text]'); await pg.waitForSelector('#addtxt');
 await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
 ok(identCalls.length === 0, 'un lien http (non sécurisé) est refusé sans appel IA');
 await pg.fill('#addurl', 'https://exemple.test/flacon.jpg'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
@@ -94,14 +99,14 @@ const st33 = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3
 ok(st33.size === 2 && st33.left === 25 && st33.use === 'special', 'stock sauvegardé : 2 ml, il en reste peu, grandes occasions');
 ok(store.has('cand:santal 33') && JSON.parse(store.get('cand:santal 33')).v.length === 1, 'catalogue partagé : le parfum attend la 2e confirmation');
 // 5b2. le grand index : un parfum qui n'est pas au catalogue détaillé est proposé, puis complété par l'IA légère
-await pg.click('#addBtn'); await pg.waitForSelector('#xfree'); await pg.click('#xfree'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'moonlight in'); await pg.waitForSelector('[data-sug]');
+await pg.click('#addBtn'); await pg.click('[data-add=text]'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'moonlight in'); await pg.waitForSelector('[data-sug]');
 ok(/Moonlight in Heaven/.test(await pg.textContent('#addsug')) && /Kilian/.test(await pg.textContent('#addsug')), 'grand index : « Moonlight in Heaven · Kilian » proposé pendant la frappe');
 await pg.click('[data-sug]'); ok((await pg.inputValue('#addtxt')).startsWith('Kilian — Moonlight in Heaven'), 'le parfum de l\'index s\'insère avec sa maison');
 const nIdent = identCalls.length; await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
 ok(identCalls.length === nIdent + 1 && /Kilian — Moonlight in Heaven/.test(identCalls.at(-1).messages[0].content.at(-1).text), 'la fiche inconnue est complétée par Haiku (Maison — Nom envoyé)');
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5b3. explorer la base : marques, styles, notes, prix, parfumeurs ; chaque parfum cliquable et ajoutable
-await pg.click('#addBtn'); await pg.waitForSelector('[data-xf]');
+await pg.click('#addBtn'); await pg.click('[data-add=base]'); await pg.waitForSelector('[data-xf]');
 ok(await pg.locator('[data-xf]').count() === 6, 'explorateur : 6 façons de parcourir (marques, tags, styles, notes, prix, parfumeurs)');
 ok(await pg.locator('[data-xg]').count() > 100, 'explorateur : plus de 100 marques listées');
 await pg.click('[data-xg="kilian"]'); await pg.waitForSelector('.xc');
@@ -120,7 +125,7 @@ await pg.click('[data-wsm]'); await pg.waitForSelector('[data-wv=love]'); await 
 ok(await pg.locator('.card.lex h3').count() === 1, 'un mot, une astuce ou un peu d\'histoire de parfum');
 await pg.click('#profileBtn'); await pg.waitForSelector('#pname'); ok(await pg.locator('[data-sw], #newprof').count() === 0, 'profil : aucun accès aux autres profils'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5b5. tags, onglet recherche avec filtres, conseils
-await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(300); await pg.click('#addBtn'); await pg.waitForSelector('[data-xf=tag]'); await pg.click('[data-xf=tag]');
+await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(300); await pg.click('#addBtn'); await pg.click('[data-add=base]'); await pg.waitForSelector('[data-xf=tag]'); await pg.click('[data-xf=tag]');
 ok(/Niche/.test(await pg.textContent('.xg')) && /Abordable/.test(await pg.textContent('.xg')) && /Collection privée/.test(await pg.textContent('.xg')) && /Luxe/.test(await pg.textContent('.xg')), 'tags : niche, abordable, luxe, collection privée…');
 await pg.click('[data-xg=prive]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'tag « collection privée » : parfums des lignes privées'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); ok(/\d{4}\s+parfums/.test((await pg.textContent('#scount')).replace(/\s/g, ' ')) || /\d+ parfums/.test(await pg.textContent('#scount')), 'recherche : le nombre de parfums s\'affiche');
@@ -136,6 +141,16 @@ await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(awai
 await pg.reload(); await pg.waitForTimeout(3600);
 const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });
 ok(after.prof.age === 27 && after.has && !after.ov, 'après rechargement : profil et collection sont là, aucun écran d\'accueil revient');
+// 5e. le compte sauvegarde tout : un autre appareil retrouve le profil complet
+await pg.waitForTimeout(2200);
+const rec = [...store.entries()].find(([k]) => k.startsWith('data:')); ok(rec && JSON.parse(rec[1]).data.profile.name === 'Léa' && JSON.parse(rec[1]).data.collection.length >= 4, 'compte : profil, goûts et collection sauvegardés côté serveur');
+const ctx2 = await browser.newContext({ viewport: { width: 400, height: 860 } }); const p3 = await ctx2.newPage(); await p3.goto('http://localhost:' + PORT + '/'); await p3.evaluate(() => localStorage.setItem('sillage.onb', '1')); await p3.reload();
+await p3.waitForSelector('#acct #aem', { timeout: 9000 }); await p3.click('[data-m=login]'); await p3.fill('#aem', 'lea@exemple.fr'); await p3.fill('#apw', 'faux-mot-de-passe'); await p3.click('#ago'); await p3.waitForTimeout(600);
+ok(/incorrect/.test(await p3.textContent('#amsg')), 'connexion : mauvais mot de passe refusé');
+await p3.fill('#apw', 'motdepasse1'); await p3.click('#ago'); await p3.waitForTimeout(900);
+ok(/, Léa\./.test(await p3.textContent('.hero h1')) && await p3.locator('.vit button').count() >= 4 && await p3.locator('#prof').count() === 0, 'connexion sur un autre appareil : « Léa », sa collection, sans refaire les questions');
+await p3.click('#profileBtn'); await p3.waitForSelector('#alogout'); ok(/lea@exemple.fr/.test(await p3.textContent('.panel')), 'profil : compte connecté affiché'); await p3.click('#adel'); await p3.click('#adel'); await p3.waitForTimeout(500);
+ok(![...store.keys()].some((k) => k.startsWith('data:')) && ![...store.keys()].some((k) => k.startsWith('acct:')), 'suppression du compte : tout est effacé côté serveur'); await ctx2.close();
 // 6. nouveau visiteur : 2 essais neufs; même IP : plafond
 ok(errs.length === 0, 'aucune erreur JavaScript ' + JSON.stringify(errs));
 // 7. page d'inscription

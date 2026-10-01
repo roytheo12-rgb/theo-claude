@@ -2,14 +2,14 @@ import assert from 'node:assert/strict';
 import { makeWorker } from '../src/index.js';
 
 const kvStore = new Map();
-const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix)).map((name) => ({ name })), list_complete: true }; } };
+const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); }, async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix)).map((name) => ({ name })), list_complete: true }; } };
 const calls = [];
 let fail = false;
 const client = { messages: { async create(req) { calls.push(req); if (fail) throw new Error('down'); return { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Voici : {"pick":"p1","story":"ok","alts":[],"layers":[]} fin' }] }; } } };
 const w = makeWorker({ client });
 const env = { SILLAGE: kv, ASSETS: { fetch: async () => new Response('asset') }, ADMIN_KEY: 'secret', MAX_TRIES: '2', IP_MAX_PER_DAY: '6', DAILY_CAP: '10' };
 const V = (n) => 'visitor-' + String(n).padStart(12, '0');
-const req = (path, { method = 'GET', body, vid, ip = '1.1.1.1', origin } = {}) => new Request('https://demo.test' + path, { method, body: body ? JSON.stringify(body) : undefined, headers: { 'content-type': 'application/json', 'cf-connecting-ip': ip, ...(vid ? { 'x-visitor': vid } : {}), ...(origin ? { origin } : {}) } });
+const req = (path, { method = 'GET', body, vid, ip = '1.1.1.1', origin, headers: xh } = {}) => new Request('https://demo.test' + path, { method, body: body ? JSON.stringify(body) : undefined, headers: { 'content-type': 'application/json', 'cf-connecting-ip': ip, ...(vid ? { 'x-visitor': vid } : {}), ...(origin ? { origin } : {}), ...(xh || {}) } });
 const day = { collection: 'p1 | Tobacco Vanille | Tom Ford | gourmand | tabac, vanille', text: 'Dîner à deux', explicit: '', wx: { l: 'Froid', t: 3, rain: false }, date: 'mercredi' };
 let ok = 0; const t = async (name, fn) => { await fn(); ok++; console.log('ok', name); };
 
@@ -102,6 +102,30 @@ await t('le profil (genre, âge) part dans le prompt du jour, nettoyé', async (
   await w.fetch(req('/api/day', { method: 'POST', vid: V(51), ip: '51.0.0.1', body: { ...day, profile: { gender: 'zzz', age: 3 } } }), { ...env, DAILY_CAP: '100' }); assert.doesNotMatch(calls.at(-1).messages[0].content.at(-1).text, /Profil :/);
 });
 console.log(ok, 'tests réussis');
+
+
+// ---------- Comptes : création, connexion, profil sauvegardé, suppression
+await t('compte : création, connexion, sauvegarde et rechargement du profil complet', async () => {
+  const post = (path, body, extra = {}) => w.fetch(req(path, { method: 'POST', body, ip: '70.0.0.1', ...extra }), env);
+  let r = await post('/api/account/signup', { email: 'lea@exemple.fr', password: 'court' }); assert.equal(r.status, 400); assert.equal((await r.json()).code, 'password');
+  r = await post('/api/account/signup', { email: 'pas-un-email', password: 'motdepasse1' }); assert.equal(r.status, 400);
+  r = await post('/api/account/signup', { email: 'Lea@Exemple.fr', password: 'motdepasse1' }); const su = await r.json(); assert.equal(r.status, 200); assert.match(su.token, /^[a-f0-9]{64}$/);
+  assert.ok(![...kvStore.values()].some((v) => String(v).includes('motdepasse1')), 'le mot de passe n\'est jamais stocké en clair');
+  r = await post('/api/account/signup', { email: 'lea@exemple.fr', password: 'autre-mot-de-passe' }); assert.equal(r.status, 409);
+  const profil = { v: 3, profile: { name: 'Léa', gender: 'f', age: 27 }, collection: [{ id: 'a', name: 'Santal 33' }], wishlist: [], settings: { liked: ['vanille'] } };
+  r = await w.fetch(req('/api/account/data', { method: 'PUT', body: { data: profil }, ip: '70.0.0.1', headers: { authorization: 'Bearer ' + su.token } }), env); assert.equal(r.status, 200);
+  r = await post('/api/account/login', { email: 'lea@exemple.fr', password: 'mauvais-mot-de-passe' }); assert.equal(r.status, 401);
+  r = await post('/api/account/login', { email: 'LEA@exemple.fr', password: 'motdepasse1' }); const lg = await r.json(); assert.equal(r.status, 200); assert.equal(lg.data.profile.name, 'Léa'); assert.equal(lg.data.collection[0].name, 'Santal 33');
+  r = await w.fetch(req('/api/account/data', { ip: '70.0.0.1', headers: { authorization: 'Bearer ' + lg.token } }), env); assert.equal((await r.json()).data.settings.liked[0], 'vanille');
+  r = await w.fetch(req('/api/account/data', { ip: '70.0.0.1' }), env); assert.equal(r.status, 401);
+  r = await w.fetch(req('/api/account/data', { ip: '70.0.0.1', headers: { authorization: 'Bearer ' + 'a'.repeat(64) } }), env); assert.equal(r.status, 401);
+  r = await w.fetch(req('/api/account/data', { method: 'PUT', body: { data: { x: 'y'.repeat(950000) } }, ip: '70.0.0.1', headers: { authorization: 'Bearer ' + lg.token } }), env); assert.equal(r.status, 413);
+  r = await w.fetch(req('/api/account/logout', { method: 'POST', body: {}, ip: '70.0.0.1', headers: { authorization: 'Bearer ' + lg.token } }), env); assert.equal(r.status, 200);
+  r = await w.fetch(req('/api/account/data', { ip: '70.0.0.1', headers: { authorization: 'Bearer ' + lg.token } }), env); assert.equal(r.status, 401);
+  r = await post('/api/account/login', { email: 'lea@exemple.fr', password: 'motdepasse1' }); const lg2 = await r.json();
+  r = await w.fetch(req('/api/account/delete', { method: 'POST', body: {}, ip: '70.0.0.1', headers: { authorization: 'Bearer ' + lg2.token } }), env); assert.equal(r.status, 200);
+  r = await post('/api/account/login', { email: 'lea@exemple.fr', password: 'motdepasse1' }); assert.equal(r.status, 401);
+});
 
 // ---------- Stock : le moteur ménage échantillons et flacons réservés
 import { createRequire } from 'node:module';
