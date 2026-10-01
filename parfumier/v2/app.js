@@ -44,7 +44,9 @@
     'Libre Le Parfum': { s: 'img/libre.webp', nz: 3 }, 'Le Male': { s: 'img/lemale.webp', nz: 3 }, 'L\'Interdit Rouge': { s: 'img/interdit.webp', nz: 5 }, 'Power of You': { s: 'img/powerofyou.webp', nz: 6 },
   };
   // Photos de la base (images/db, rattachées par maison + nom) : utilisées quand le parfum n'a pas de photo détourée à la main.
-  const imgOf = (p) => { if (IMG[p.name]) return IMG[p.name]; const D = window.IMGDB || {}, f = D[E.norm(p.house || '') + '|' + E.norm(p.name)]; return f ? { s: f, nz: 6 } : null; };
+  // Les photos du lot « PNG » (IMGNEW) sont les plus récentes : elles passent avant les anciennes photos.
+  const imgNew = (p) => { const N = window.IMGNEW || {}, HA = window.HOUSE_ALIAS || {}, h = E.norm(p.house || ''), f = N[h + '|' + E.norm(p.name)] || (HA[h] && N[E.norm(HA[h]) + '|' + E.norm(p.name)]); return f ? { s: f, nz: 6 } : null; };
+  const imgOf = (p) => { const nw = imgNew(p); if (nw) return nw; if (IMG[p.name]) return IMG[p.name]; const D = window.IMGDB || {}, f = D[E.norm(p.house || '') + '|' + E.norm(p.name)]; return f ? { s: f, nz: 6 } : null; };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }, stk || {}));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
@@ -118,7 +120,7 @@
   const bt = (p, o) => {
     o = o || {};
     const st = (o.h || o.style) ? `style="${o.h ? 'height:' + o.h + 'px;' : ''}${o.style || ''}"` : '', cx = o.cls ? ' ' + o.cls : '';
-    const im = (p.src ? { s: p.src, nz: p.nz || 6 } : imgOf(p));
+    const im = imgNew(p) || (p.src ? { s: p.src, nz: p.nz || 6 } : imgOf(p));
     if (im && !p.img) {
       let mp = '';
       if (o.spray) { for (let k = 0; k < 10; k++) mp += `<i style="width:${3 + (k % 3)}px;height:${3 + (k % 3)}px;--dx:${8 + (k * 7) % 42}px;--dy:${-16 - (k * 9) % 36}px;animation-delay:${(k * 0.22).toFixed(2)}s"></i>`; mp = `<span class="mp" style="top:${im.nz}%">${mp}</span>`; }
@@ -593,8 +595,9 @@
   }
   const initials = (n) => n.split(/[\s-]+/).filter(Boolean).slice(0, 2).map((x) => x[0]).join('').toUpperCase();
   const noseCount = (n) => dbList().filter((e) => (e.noses || []).includes(n)).length;
-  const noseCard = (n) => { const b = (window.NOSE_BIO || {})[n]; return `<div class="card nosec"><div class="nh"><span class="av">${esc(initials(n))}</span><div><b>${esc(n)}</b><small>${esc(b ? b[0] : 'Parfumeur')} · ${noseCount(n)} parfum${noseCount(n) > 1 ? 's' : ''} dans la base</small></div></div>${b ? `<p>${esc(b[1])}</p>` : ''}</div>`; };
-  const noseRow = (attr, list) => `<div class="xpop noserow">${list.map((n) => `<button type="button" class="xp nz" ${attr}="${esc(n)}"><span class="av">${esc(initials(n))}</span><b>${esc(n)}</b><small>${noseCount(n)} parfums</small></button>`).join('')}</div>`;
+  const noseAv = (n) => { const f = (window.NOSE_IMG || {})[n]; return f ? `<img class="av ph" alt="${esc(n)}" loading="lazy" src="${esc(f)}">` : `<span class="av">${esc(initials(n))}</span>`; };
+  const noseCard = (n) => { const b = (window.NOSE_BIO || {})[n]; return `<div class="card nosec"><div class="nh">${noseAv(n)}<div><b>${esc(n)}</b><small>${esc(b ? b[0] : 'Parfumeur')} · ${noseCount(n)} parfum${noseCount(n) > 1 ? 's' : ''} dans la base</small></div></div>${b ? `<p>${esc(b[1])}</p>` : ''}</div>`; };
+  const noseRow = (attr, list) => `<div class="xpop noserow">${list.map((n) => `<button type="button" class="xp nz" ${attr}="${esc(n)}">${noseAv(n)}<b>${esc(n)}</b><small>${noseCount(n)} parfums</small></button>`).join('')}</div>`;
   let DBL = null;
   function dbList() {
     if (DBL && DBL.n === CAT.length) return DBL.l;

@@ -120,3 +120,12 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - **Genre** : `desc.js` (`genderOf`) repère les parfums clairement féminins ou masculins ; le moteur et le prompt IA n'en proposent pas à l'autre genre (les mixtes, et tout ce qui est inconnu, passent).
 - **Maisons** : « Toutes les maisons » suit l'ordre de `HOUSE_FAME` dans `desc.js` (les plus connues d'abord), puis le nombre de parfums.
 - **Photos** : toutes celles de `incoming/` sont associées d'après `data/imgmap.txt` (fichier | maison | nom) ; `python3 tools/build-imgdb.py` (≈ 10 min) détoure et écrit `v2/img/db/` + `imgdb.js`. Les détourages ratés (fond gris, ombres) sont listés dans `data/imgskip.txt` : le flacon dessiné les remplace.
+
+## Photos « PNG » (incoming/*.png), variantes et portraits de nez
+
+- `incoming/N.png` : photos déjà détourées, avec la légende écrite sous le flacon (« maison - parfum », parfois EDP / EDT / extrait…). La légende ne s'affiche pas : `tools/build-png.py` ne garde que le flacon.
+- `data/imgmap2.txt` (`N|Maison|Parfum|Concentration`) : la lecture de chaque légende. Les lignes `NEZ` sont des portraits (360 et suivants), affichés dans la fiche d'un nez.
+- `tools/build-index.py` rattache chaque photo à UNE fiche : il retrouve la fiche existante (pas de doublon), ou la crée dans la bonne maison. Un extrait, un absolu, un esprit de parfum, un parfum ou un EDT a sa propre fiche (« Baccarat Rouge 540 Extrait », « Do Son EDT ») seulement quand la version de base existe aussi ; sinon la photo va sur la fiche existante. Il écrit `data/imgmap2.resolved.json`.
+- `python3 tools/build-png.py` (≈ 10 min la première fois, ensuite quelques secondes : seules les photos modifiées sont refaites ; `FORCE=1` pour tout refaire) écrit `v2/img/p/*.webp`, `v2/img/nose/*.webp` et `imgnew.js`.
+- Quand un parfum a plusieurs photos, la plus récente (numéro le plus élevé) gagne ; ces photos passent avant les anciennes. Photos écartées : voir `incoming/PHOTOS-A-REFAIRE.md`.
+- Pour ajouter une photo : l'ajouter dans `incoming/`, ajouter sa ligne dans `data/imgmap2.txt`, puis `python3 tools/build-index.py && python3 tools/build-png.py`.

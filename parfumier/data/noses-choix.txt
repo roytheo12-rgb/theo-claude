@@ -62,3 +62,53 @@ Jo Malone|Wood Sage & Sea Salt|Christine Nagel
 Jo Malone|Myrrh & Tonka|Christine Nagel
 Jo Malone|English Pear & Freesia|Christine Nagel
 Hermès|Terre d'Hermès|Jean-Claude Ellena
+# --- Photos ajoutées : nez connus avec certitude (les autres restent sans nez plutôt que d'en inventer un)
+Hermès|Voyage d'Hermès|Jean-Claude Ellena
+Hermès|Twilly d'Hermès|Christine Nagel
+Hermès|H24|Christine Nagel
+Hermès|Galop d'Hermès|Christine Nagel
+Hermès|Terre d'Hermès Eau Givrée|Jean-Claude Ellena
+Hermès|Eau de Citron Noir|Jean-Claude Ellena
+Hermès|Le Jardin de Monsieur Li|Jean-Claude Ellena
+Hermès|Un Jardin sur le Toit|Jean-Claude Ellena
+Hermès|Un Jardin sur le Nil|Jean-Claude Ellena
+Hermès|Un Jardin sur la Lagune|Jean-Claude Ellena
+Dior|J'adore|Calice Becker
+Dior|Eau Sauvage|Edmond Roudnitska
+Dior|Dior Homme|Olivier Polge
+Dior|Dior Homme Intense|Francis Kurkdjian
+Dior|Oud Ispahan|François Demachy
+Chanel|Coco Mademoiselle|Jacques Polge
+Chanel|Chance Eau Tendre|Jacques Polge
+Chanel|Allure Homme Sport|Jacques Polge
+Guerlain|Shalimar|Jacques Guerlain
+Guerlain|Habit Rouge|Jean-Paul Guerlain
+Guerlain|Vétiver|Jean-Paul Guerlain
+Dolce & Gabbana|Light Blue|Olivier Cresp
+Creed|Green Irish Tweed|Pierre Bourdon
+Le Labo|Rose 31|Daphné Bugey
+Byredo|Gypsy Water|Jérôme Epinette
+Byredo|Blanche|Jérôme Epinette
+Byredo|Mojave Ghost|Jérôme Epinette
+Byredo|Bal d'Afrique|Jérôme Epinette
+Nasomatto|Black Afgano|Alessandro Gualtieri
+Maison Francis Kurkdjian|Baccarat Rouge 540|Francis Kurkdjian
+Maison Francis Kurkdjian|À la Rose|Francis Kurkdjian
+Maison Francis Kurkdjian|L'Eau À la Rose|Francis Kurkdjian
+Maison Francis Kurkdjian|Amyris Femme|Francis Kurkdjian
+Maison Francis Kurkdjian|Féminin Pluriel|Francis Kurkdjian
+Maison Francis Kurkdjian|Aqua Universalis|Francis Kurkdjian
+Maison Francis Kurkdjian|Gentle Fluidity Silver|Francis Kurkdjian
+Maison Francis Kurkdjian|Gentle Fluidity Gold|Francis Kurkdjian
+Maison Francis Kurkdjian|Oud Satin Mood|Francis Kurkdjian
+Maison Francis Kurkdjian|Oud Velvet Mood|Francis Kurkdjian
+Montblanc|Legend|Pierre Bourdon
+Montblanc|Explorer|Jacques Cavallier-Belletrud
+Prada|L'Homme|Daniela Andrier
+Burberry|Her|Francis Kurkdjian
+Essential Parfums|Bois Impérial|Quentin Bisch
+Essential Parfums|Ambre Latte|Jordi Fernandez
+Essential Parfums|Rose Magnetic|Sophie Labbé
+Essential Parfums|Divine Vanille|Olivier Pescheux
+Essential Parfums|The Musc|Calice Becker
+Essential Parfums|Velvet Iris|Dominique Ropion

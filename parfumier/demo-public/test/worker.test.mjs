@@ -187,3 +187,21 @@ await t('genre : pas de parfum très féminin pour un homme (ni l\'inverse), les
   assert.equal(names('').length, 3);
 });
 console.log(ok, 'tests réussis');
+
+// ---------- Base de parfums : photos, variantes et doublons
+import fs from 'node:fs';
+globalThis.window = globalThis; createRequire(import.meta.url)('../../index.js'); createRequire(import.meta.url)('../../imgnew.js');
+await t('base : chaque photo existe, vise une fiche de la base, et aucune maison n\'a deux fiches pour le même parfum', async () => {
+  const D = createRequire(import.meta.url)('../../data.js'), norm = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const HA = globalThis.HOUSE_ALIAS || {}, all = []; D.CATALOG.forEach((c) => all.push([HA[norm(c.house)] || c.house, c.name])); globalThis.INDEX.forEach(([h, l]) => l.forEach((x) => all.push([h, x[0]])));
+  const keys = new Set(all.map(([h, n]) => norm(h) + '|' + norm(n)));
+  const seen = new Map(); for (const [h, n] of all) { const k = norm(h) + '|' + norm(n).replace(/ /g, ''); assert.ok(!seen.has(k) || /pot ?pourri/i.test(n), 'doublon : ' + h + ' ' + n + ' / ' + seen.get(k)); seen.set(k, n); }
+  const root = new URL('../../v2/', import.meta.url).pathname;
+  for (const [k, f] of Object.entries(globalThis.IMGNEW)) { assert.ok(keys.has(k), 'photo sans fiche : ' + k); assert.ok(fs.existsSync(root + f), 'fichier absent : ' + f); }
+  assert.ok(Object.keys(globalThis.IMGNEW).length > 200);
+  // variantes : la version de base et sa version extrait / absolu ont chacune leur fiche et leur photo
+  for (const k of ['maison francis kurkdjian|baccarat rouge 540', 'maison francis kurkdjian|baccarat rouge 540 extrait', 'diptyque|do son', 'diptyque|do son edt']) assert.ok(globalThis.IMGNEW[k], 'photo manquante : ' + k);
+  for (const n of Object.values(globalThis.NOSE_IMG)) assert.ok(fs.existsSync(root + n));
+  assert.ok(globalThis.NOSE_IMG['Alberto Morillas'] && globalThis.NOSE_IMG['Francis Kurkdjian']);
+});
+console.log(ok, 'tests réussis');

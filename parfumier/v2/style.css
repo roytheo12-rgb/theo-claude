@@ -531,6 +531,8 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .av { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line2); background: var(--accent-soft); font: 300 16px var(--sf); letter-spacing: .04em; color: var(--accent-deep); flex: 0 0 auto; }
 .xp.nz { flex-basis: 128px; }
 .xp.nz .av { width: 52px; height: 52px; }
+img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background: #1a181c; }
+.nosec .nh .av { width: 64px; height: 64px; }
 .nosec { display: grid; gap: 14px; }
 .nosec .nh { display: flex; gap: 16px; align-items: center; }
 .nosec .nh b { font: 400 20px var(--sf); display: block; }

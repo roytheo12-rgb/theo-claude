@@ -154,6 +154,8 @@
 
   // Les nez les plus connus : rôle et petite présentation (faits sûrs uniquement)
   const NOSE_BIO = {
+    'Edmond Roudnitska': ['Parfumeur du XXe siècle', 'Eau Sauvage (Dior, 1966) et Diorissimo : la fraîcheur citronnée et le muguet comme référence. Un des grands théoriciens du parfum.'],
+    'Jacques Guerlain': ['Parfumeur de la maison Guerlain', 'Shalimar, Mitsouko, L\'Heure Bleue : les grands classiques ambrés de Guerlain, créés au début du XXe siècle.'],
     'Francis Kurkdjian': ['Parfumeur et fondateur de sa maison', 'Révélé à 25 ans avec Le Mâle de Jean Paul Gaultier (1995), il fonde sa maison en 2009 : Baccarat Rouge 540, Aqua Universalis, 724. Il dirige aussi la création des parfums Dior depuis 2021. Son style : lumineux, aérien, très reconnaissable.'],
     'Alberto Morillas': ['Parfumeur, l\'un des plus prolifiques au monde', 'Né à Séville, installé en Suisse. Il a signé CK One (avec Harry Fremont), Acqua di Giò, Daisy et Bright Crystal. Son style : propre, lumineux, facile à aimer, souvent aquatique ou frais.'],
     'Dominique Ropion': ['Parfumeur, maître des fleurs blanches', 'Il a composé Portrait of a Lady, Carnal Flower et Vetiver Extraordinaire pour Frédéric Malle, Alien (avec Laurent Bruyère) et Amarige. Ses parfums sont amples, riches, très présents.'],

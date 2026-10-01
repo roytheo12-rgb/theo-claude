@@ -1,0 +1,266 @@
+# N.png|Maison|Parfum|Concentration (EDP, EDT, Extrait, Absolu, Esprit, Parfum…) — légendes lues sur les photos de incoming/*.png
+1|Maison Francis Kurkdjian|Baccarat Rouge 540|EDP
+2|Maison Francis Kurkdjian|Baccarat Rouge 540|Extrait
+3|Essential Parfums|Bois Impérial|
+4|Nasomatto|Black Afgano|
+5|Dior|Bois d'Argent|Esprit de Parfum
+6|Dior|Bois d'Argent|
+7|Acqua di Parma|Buongiorno Dolce Far Niente|
+8|Chanel|Coco Mademoiselle|
+9|Acqua di Parma|Colonia|
+10|Acqua di Parma|Colonia C.L.U.B.|
+11|Diptyque|Do Son|EDT
+12|Diptyque|Do Son|EDP
+13|Dior|Eau Sauvage|
+14|Byredo|Gypsy Water|
+15|Guerlain|Habit Rouge|
+16|Hermès|Terre d'Hermès Eau Givrée|
+17|Hermès|Concentré d'Orange Verte|
+18|Hermès|Galop d'Hermès|Parfum
+19|Hermès|Bel Ami|
+20|Hermès|Eau de Citron Noir|
+21|Hermès|H24|
+22|Hermès|Un Jardin sur la Lagune|
+23|Hermès|Voyage d'Hermès|EDT
+24|Hermès|Voyage d'Hermès|Parfum
+25|Hermès|Le Jardin de Monsieur Li|
+26|Hermès|Un Jardin sur le Toit|
+27|Hermès|Un Jardin sur le Nil|
+28|Hermès|Un Jardin sous la Mer|
+29|Hermès|Twilly d'Hermès|
+30|Hermès|Barénia|Intense
+31|Hermès|Barénia|
+32|Rabanne|Invictus|
+33|Dior|Dior Homme|Parfum
+34|Dior|Dior Homme|Intense
+35|Cartier|Pasha de Cartier|
+36|Dior|J'adore|
+37|Yves Saint Laurent|Libre|
+38|Dior|Miss Dior|EDP
+39|Dolce & Gabbana|Light Blue|
+40|Byredo|Mojave Ghost|EDP
+41|Byredo|Mojave Ghost|Absolu
+42|Chanel|N°5|
+43|Oman Luxury|Nasaj|
+44|Diptyque|Orphéon|EDT
+45|Diptyque|Orphéon|EDP
+46|Le Labo|Rose 31|
+47|Le Labo|Santal 33|
+48|Dior|Sauvage|Elixir
+49|Jean Paul Gaultier|Ultra Male|
+50|Diptyque|Tam Dao|EDP
+51|Diptyque|Tam Dao|EDT
+52|Diptyque|Philosykos|EDT
+53|Diptyque|Philosykos|EDP
+54|Serge Lutens|Ambre Sultan|
+55|Serge Lutens|Un Bois Vanille|
+56|Serge Lutens|Fleurs d'Oranger|
+57|Serge Lutens|Five O'Clock au Gingembre|
+58|Serge Lutens|Santal Majuscule|
+59|Serge Lutens|Féminité du Bois|
+60|Serge Lutens|Écrin de Fumée|
+61|Serge Lutens|La Fille de Berlin|
+62|Serge Lutens|L'Orpheline|
+63|Serge Lutens|Le Perce-Vent|
+64|Penhaligon's|The Baroness|
+65|Penhaligon's|The Blazing Mister Sam|
+66|Penhaligon's|Halfeti|
+67|Penhaligon's|The Cut|
+68|Penhaligon's|Highgrove Bouquet|
+69|Penhaligon's|Elisabethan Rose|
+70|Penhaligon's|The Tragedy of Lord George|
+71|Penhaligon's|Cairo|
+72|Memo Paris|Odéon|
+73|Memo Paris|Madurai|
+74|Memo Paris|Palais Bourbon|
+75|Memo Paris|Marfa|
+76|Memo Paris|African Leather|
+77|Memo Paris|Irish Leather|
+78|Memo Paris|Ithaque|
+79|Memo Paris|Cap Camarat|
+80|Xerjoff|Erba Pura|
+81|Chanel|Chance Eau Tendre|
+82|Burberry|Her|
+83|Parfums de Marly|Delina|
+84|Lalique|Encre Noire|
+85|Montblanc|Explorer|
+86|Creed|Green Irish Tweed|
+87|Amouage|Interlude Man|
+88|Prada|L'Homme|
+89|Byredo|Alto Astral|
+90|Maison Francis Kurkdjian|À la Rose|
+91|Horace|& Horace|EDP
+92|Montblanc|Legend|
+93|Escentric Molecules|Molecule 01|
+94|Jo Malone|Lime Basil & Mandarin|
+95|Jo Malone|English Pear & Freesia|
+96|Jo Malone|Red Hibiscus|
+97|Dior|Oud Ispahan|
+98|Dior|Oud Ispahan|Esprit de Parfum
+99|Viktor&Rolf|Spicebomb Extreme|
+100|Emporio Armani|Sì|
+101|Emporio Armani|Stronger With You Intensely|
+102|Guerlain|Vétiver|EDT
+103|Chanel|Allure Homme Sport|
+104|Nautica|Voyage|
+105|Lattafa|Yara|
+106|Jo Malone|Wood Sage & Sea Salt|
+107|Maison Francis Kurkdjian|Amyris Femme|
+108|Byredo|Animalique|
+109|Acqua di Parma|Arancia di Capri|
+110|Byredo|Blanche|
+111|Acqua di Parma|Buongiorno Amore Mio|
+112|Acqua di Parma|Buongiorno al Bacio|
+113|Acqua di Parma|Buongiorno Gioco del Destino|
+114|Acqua di Parma|Buongiorno Buonanotte|
+115|Oman Luxury|Caden|
+116|Byredo|Cuir Sellier|Extrait de Parfum
+117|Acqua di Parma|Fico di Amalfi|
+118|Maison Francis Kurkdjian|Féminin Pluriel|
+119|Diptyque|Fleur de Peau|EDT
+120|Diptyque|Fleur de Peau|EDP
+121|Oman Luxury|Hommage 1744|
+122|Horace|Ibiza '87|
+123|Oman Luxury|Khanjar|
+124|Maison Crivelli|Neroli Nasimba|
+125|Maison Francis Kurkdjian|L'Eau À la Rose|
+126|Byredo|La Tulipe|
+127|Acqua di Parma|Magnolia Infinita|
+128|Horace|Mezcal Musc|EDP
+129|Maison Crivelli|Oud Maracujá|Extrait de Parfum
+130|Maison Francis Kurkdjian|Oud Velvet Mood|Extrait
+131|Acqua di Parma|Quercia|
+132|Santa Maria Novella|Quercia|
+133|Byredo|Rose of No Man's Land|Absolu
+134|Byredo|Rose of No Man's Land|EDP
+135|Oman Luxury|Royal Incense|
+136|Maison Margiela|Under the Lemon Trees|
+137|Une Nuit Nomade|Spicy Road|
+138|Une Nuit Nomade|Sun Bleached|
+139|Byredo|Vanille Antique|Extrait de Parfum
+140|Matière Première|Vanilla Powder|Extrait
+141|Matière Première|Falcon Leather|Extrait
+142|Matière Première|Radical Rose|Extrait
+143|Matière Première|Crystal Saffron|Extrait
+144|Matière Première|Santal Austral|Extrait
+145|Matière Première|Encens Suave|Extrait
+146|Matière Première|Metal Lavender|EDP
+147|Matière Première|Vanilla Powder|EDP
+148|Matière Première|Oud Seven|EDP
+149|Matière Première|Crystal Saffron|EDP
+150|Matière Première|Radical Rose|EDP
+151|Matière Première|Falcon Leather|EDP
+152|Matière Première|Parisian Musc|EDP
+153|Matière Première|Neroli Oranger|EDP
+154|Matière Première|Encens Suave|EDP
+155|Matière Première|French Flower|EDP
+156|Parfums de Marly|Valaya|
+157|Kilian|Woman in Gold|
+158|Dior|Gris Dior|
+159|Juliette Has a Gun|Musc Invisible|
+160|Dior|Gris Dior|Esprit de Parfum
+161|Dior|Cuir Saddle|
+162|Dior|Vanilla Diorama|
+163|Dries Van Noten|Fleur du Mal|
+164|Initio|Side Effect|
+165|Rasasi|Hawas|
+166|Essential Parfums|Velvet Iris|
+167|Serge Lutens|Fille en Aiguilles|
+168|Ex Nihilo|Fleur Narcotique|Extrait
+169|Ex Nihilo|Fleur Narcotique|EDP
+170|Bottega Veneta|Déjà Minuit|
+171|Bottega Veneta|Good Morning Midnight|
+172|Sospiro|Vibrato|
+173|Oman Luxury|Paramour|
+174|Les Indémodables|Vanille Havane|
+175|Une Nuit Nomade|Jardins de Misfah|
+176|Une Nuit Nomade|Sugar Leather|
+177|Une Nuit Nomade|Chemin d'Amande|Extrait
+178|Essential Parfums|Bois Impérial|Extrait
+179|Essential Parfums|Ambre Latte|
+180|Parfum d'Empire|Azemour les Orangers|
+181|Essential Parfums|Rose Magnetic|
+182|Sospiro|Il Padrino|
+183|Les Indémodables|Ambre Suprême|
+184|Parfum d'Empire|Cuir Ottoman|
+185|Une Nuit Nomade|Spicy Road|
+186|Sospiro|Dolce Melodia|
+187|Essential Parfums|Divine Vanille|
+188|Essential Parfums|The Musc|
+189|Rosendo Mateu|N°5|
+# --- portraits de nez (360+) : NEZ|Nom
+360|NEZ|Francis Kurkdjian|
+361|NEZ|Alberto Morillas|
+362|NEZ|Jean-Claude Ellena|
+363|NEZ|Dominique Ropion|
+364|NEZ|Olivier Polge|
+365|NEZ|Jacques Polge|
+366|NEZ|Jacques Cavallier-Belletrud|
+367|NEZ|Christine Nagel|
+# 368 : légende « Christine Nagel » mais la photo est celle d'un homme -> NON utilisée, à confirmer avec Théo
+369|NEZ|Maurice Roucel|
+370|NEZ|Quentin Bisch|
+371|NEZ|Bertrand Duchaufour|
+372|NEZ|Calice Becker|
+373|NEZ|Olivier Cresp|
+374|Marc-Antoine Barrois|Tilia|
+375|Frédéric Malle|Acne Studios|
+376|Guerlain|Shalimar|
+377|Hugo Boss|Boss Bottled|
+378|Initio|Musk Therapy|
+379|Lattafa|Khamrah|
+380|Zara|Spell Caramel|
+381|Ella K|Musk K|
+382|Maison Francis Kurkdjian|Gentle Fluidity Silver|
+383|Maison Francis Kurkdjian|Oud Satin Mood|Extrait
+384|Horace|Vintage Vanilla|Extrait
+385|Horace|& Horace|Extrait
+386|Parfum d'Empire|Un Bel Amour d'Été|
+387|Acqua di Parma|Zafferano|
+388|Acqua di Parma|Buongiorno|
+389|Acqua di Parma|Colonia Il Profumo Millesimato|
+390|Acqua di Parma|Colonia Il Profumo|
+391|Dolce & Gabbana|Light Blue Capri in Love|
+392|Tom Ford|Tobacco Chocolat|
+393|Byredo|Future Memories|
+394|Byredo|Bal d'Afrique|Absolu de Parfum
+395|Goldfield & Banks|Ingenious Ginger|
+396|Maison Margiela|Ch6 Fit of Folly|
+397|Maison Margiela|Ch2 Silent Fury|
+398|Maison Margiela|Ch1 Blaze of Stillness|
+399|Maison Margiela|Ch4 Tender Defiance|
+400|Place de la Rêverie|Santal de Paris|
+401|Place de la Rêverie|Fève Nectar|
+402|Cartier|Oud Vanillé|
+403|D'Orsay|Te Dire Oui|
+404|D'Orsay|Tonka Hysteria|Extrait
+405|D'Orsay|Sur Tes Lèvres|
+406|Les Eaux Primordiales|Couleur Primaire|
+407|Les Eaux Primordiales|Ambre Supermassive|
+408|Les Eaux Primordiales|Vanille Supermassive|
+409|Les Eaux Primordiales|Ambre Superfluide|
+410|Les Eaux Primordiales|Iris Palladium|
+411|Jean Paul Gaultier|Santal de Paname|
+412|Parfum d'Empire|Madagascar Le Baume Vanille|
+413|Dior|Gris Dior|
+414|Yves Saint Laurent|Muse|
+415|Yves Saint Laurent|Babycat|
+416|Yves Saint Laurent|37 Rue de Bellechasse|
+417|Yves Saint Laurent|24 Rue de l'Université|
+418|Guerlain|Iris Pallida|Extrait
+419|Guerlain|Tonka Sarrapia|Extrait
+420|Guerlain|Vanille Planifolia|Extrait
+421|Guerlain|Rose Centifolia|Extrait
+422|Guerlain|Cuir Béluga|
+423|Maison Francis Kurkdjian|Gentle Fluidity Gold|
+424|Xerjoff|Torino 21|
+425|Horace|Oud Rose|
+426|Place de la Rêverie|Passion Riviera|
+427|Maison Francis Kurkdjian|Aqua Universalis|
+428|Guerlain|Spiritueuse Double Vanille|
+429|Guerlain|Fève Gourmande|
+430|Maison Francis Kurkdjian|Oud Satin Mood|
+431|Celine|Réptile|
+432|Emporio Armani|Stronger With You Spices|
+433|Kilian|Angels' Share Paradis|
+434|Nuance|Vanille Ébène|
