@@ -379,3 +379,17 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 #story canvas.fx { opacity: .2; }
 .big-bottle canvas.fx { opacity: .2; }
 #onb canvas.fx { opacity: .18; }
+
+/* ---------- Profil : genre et tenue ---------- */
+#prof { position: fixed; inset: 0; z-index: 75; background: radial-gradient(110% 60% at 50% 0%, hsl(356 60% 20% / .9), transparent 70%), #08080a; color: var(--ink); overflow-y: auto; animation: fade .5s both; }
+.prof-in { max-width: 440px; margin: 0 auto; min-height: 100%; padding: 72px 22px 40px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+.prof-in h2 { font: 200 36px/1.1 var(--sf); letter-spacing: -.03em; margin: 0; }
+.prof-in .soft { color: var(--muted); margin: 0; font-size: 15px; }
+.gen { display: grid; gap: 10px; }
+.gen .chip { padding: 17px 18px; font-size: 16px; }
+.dress { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tile { display: grid; gap: 4px; justify-items: start; text-align: left; padding: 16px 14px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: var(--ink); transition: border-color .25s, background .25s; }
+.tile svg { color: var(--accent-deep); margin-bottom: 6px; }
+.tile b { font: 500 15px var(--sf); }
+.tile small { color: var(--muted); font-size: 12px; line-height: 1.3; }
+.tile.on { border-color: var(--wine); background: rgba(180, 57, 74, .16); }

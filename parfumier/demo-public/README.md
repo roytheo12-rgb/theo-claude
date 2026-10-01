@@ -77,3 +77,9 @@ npx wrangler dev  # site local sur http://localhost:8787 (IA réelle si tu mets 
 ```
 
 Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare réel, rendu sur téléphone.
+
+## 8. Profil, identification légère et catalogue partagé
+
+- **Profil** : à la première ouverture, l'app demande « Tu es… » (garçon, fille, ou ne pas préciser), puis comment la personne s'habille (6 styles avec icônes dessinées, plus un champ couleurs/matières). Tout est sauvegardé dans le navigateur (et dans la base de claude.ai pour l'artifact), modifiable dans Profil, et envoyé à l'IA chaque jour.
+- **Ajouter un parfum depuis une image** : photo, ou adresse d'une image trouvée sur internet (https). Les parfums déjà connus sont reconnus sans IA ; les autres passent par Claude Haiku 4.5 (`HAIKU_MODEL`), limité par `IDENT_MAX` (6 par visiteur), `IDENT_IP_MAX_PER_DAY` (20) et `IDENT_DAILY_CAP` (400 par jour). Coût non mesuré : de l'ordre d'un centime ou moins par analyse.
+- **Catalogue partagé** : un parfum identifié par l'IA n'entre dans le catalogue de tous qu'après confirmation par 2 personnes d'adresses IP différentes. Les images ne sont jamais stockées côté serveur.

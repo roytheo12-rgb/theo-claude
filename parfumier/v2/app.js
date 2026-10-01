@@ -54,7 +54,7 @@
   const wkRows = (rows) => rows.map((r, i) => `<div class="wk" style="--i:${i}">${bt(r.p, { still: true })}<div><span class="d">${esc(r.d)}</span><br><b>${esc(r.p.name)}</b><p>${esc(r.why || '')}</p></div></div>`).join('');
   const WEEK_SAMPLE = [['Lundi', 'Thé Noir 29', 'Bureau : sec, discret, sérieux.'], ['Mardi', 'Vétiver Extraordinaire', 'Réunions : propre et net, sans envahir.'], ['Mercredi', '724', 'Télétravail : musc doux, on l\'oublie.'], ['Jeudi', 'Tobacco Vanille', 'Dîner à deux : chaud et enveloppant.'], ['Vendredi', 'Jazz Club', 'Afterwork : rhum et tabac, convivial.'], ['Samedi', 'Baccarat Rouge 540', 'Soirée : le sillage qui se remarque.'], ['Dimanche', 'Lazy Sunday Morning', 'En famille : tendre et léger.']];
   const TRAVEL_SAMPLE = { picks: [['Thé Noir 29', 'Le jour, en réunion', 'Sec et fumé, il tient dans le froid humide sans remplir une salle.'], ['Tobacco Vanille', 'Les dîners du soir', 'Chaud, épicé, il répond au froid de novembre.'], ['Terre d\'Hermès', 'Marches sous la bruine', 'Minéral et poivré, il aime l\'air frais et la pluie.']], tip: 'Prends des atomiseurs de 10 ml : ils passent en cabine et protègent le jus de la chaleur des valises.' };
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: seedOwned(), wishlist: seedWish(), walks: [seedWalk()], log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: seedOwned(), wishlist: seedWish(), walks: [seedWalk()], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
   function migrate() {
     S.walks = S.walks || [];
     if (!S.walks.some((w) => w.seed)) S.walks.unshift(seedWalk());
@@ -68,6 +68,7 @@
   S.settings = Object.assign(DEF().settings, S.settings);
   let dbDoc = null, saveT;
   function save() {
+    try { S.settings.last = { cat: CHOICE.cat }; } catch (e) { /* CHOICE pas encore prêt */ }
     try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* stockage indisponible */ }
     clearTimeout(saveT);
     saveT = setTimeout(() => { if (dbDoc) dbDoc.set(JSON.parse(JSON.stringify(S))).catch(() => {}); }, 700);
@@ -153,6 +154,7 @@
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
   const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false };
+  if (S.settings.last && S.settings.last.cat && S.settings.last.cat !== 'x') CHOICE.cat = S.settings.last.cat;
   const CATS = { travail: 'Travail', amour: 'Amour', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
   // [clé, libellé, réglages]
   const SCEN = {
@@ -283,7 +285,7 @@
     if ($('#wxCity')) $('#wxCity').onclick = () => { keepText0(); openCity(); };
     const keepText = () => { const t = $('#say'); if (t) SAY = t.value; };
     $$('[data-refine]').forEach((b) => (b.onclick = () => { keepText(); REFINE = !refine; if (!REFINE) { CHOICE.mood = null; WX = null; CHOICE.place = null; CHOICE.dur = null; CHOICE.hum = false; PHOTO = null; } viewToday(); }));
-    $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; viewToday(); }));
+    $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; save(); viewToday(); }));
     $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
     $$('[data-mood]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.mood = CHOICE.mood === b.dataset.mood ? null : b.dataset.mood; viewToday(); }));
     $$('[data-place]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.place = CHOICE.place === b.dataset.place ? null : b.dataset.place; viewToday(); }));
@@ -446,44 +448,84 @@
     PRE = []; SHELF_FILES = [];
     const pn = openSheet(`<div><h2>Ajoute sans taper</h2><p style="color:var(--muted);margin-top:6px">Colle tes parfums en vrac, ou prends ton étagère en photo. L'IA retrouve la maison, les notes et la puissance.</p></div>
       <textarea id="addtxt" rows="4" placeholder="br540, santal 33 le labo, un diptyque au figuier, ombre leather…"></textarea>
-      <div class="row"><button class="chip photo-btn" id="addph" ${CAN_IMG ? '' : 'hidden'}>${IC.cam}<span id="addphl">Photo(s) de l'étagère</span></button><input type="file" id="addin" accept="image/*" multiple hidden></div>
+      ${window.SillageDemo ? '<input type="text" id="addurl" inputmode="url" autocomplete="off" placeholder="Ou colle l\'adresse d\'une image trouvée sur internet (https://…)" aria-label="Adresse d\'une image de parfum">' : ''}
+      <div class="row"><button class="chip photo-btn" id="addph" ${CAN_IMG ? '' : 'hidden'}>${IC.cam}<span id="addphl">${window.SillageDemo ? 'Photo ou image du flacon' : 'Photo(s) de l\'étagère'}</span></button><input type="file" id="addin" accept="image/*" ${window.SillageDemo ? '' : 'multiple'} hidden></div>
+      ${window.SillageDemo ? `<p class="mono" style="text-transform:none;letter-spacing:0">Reconnaissance par une IA légère, quasi gratuite : ${window.SillageDemo.identLeft()} analyse${window.SillageDemo.identLeft() > 1 ? 's' : ''} restante${window.SillageDemo.identLeft() > 1 ? 's' : ''} dans la démo. Les parfums déjà connus ne comptent pas.</p>` : ''}
       <button class="cta full" id="addgo">${IC.spark}<span>Analyser</span></button><div id="addres" style="display:grid;gap:10px"></div>`);
     $('#addph', pn).onclick = () => $('#addin', pn).click();
-    $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
+    $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, window.SillageDemo ? 1 : 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
     $('#addgo', pn).onclick = () => analyzeAdd(pn);
   }
   async function analyzeAdd(pn) {
-    const txt = $('#addtxt', pn).value.trim(), out = $('#addres', pn);
-    if (!txt && !SHELF_FILES.length) { $('#addtxt', pn).focus(); return; }
+    const txt0 = $('#addtxt', pn).value.trim(), out = $('#addres', pn), demo = window.SillageDemo, imgUrl = $('#addurl', pn) ? $('#addurl', pn).value.trim() : '';
+    if (!txt0 && !SHELF_FILES.length && !imgUrl) { $('#addtxt', pn).focus(); return; }
+    if (imgUrl && !/^https:\/\/\S{4,}$/i.test(imgUrl)) { out.innerHTML = '<div class="empty">L\'adresse de l\'image doit commencer par https://</div>'; return; }
+    // Les parfums déjà connus (catalogue de l'app, enrichi par les ajouts confirmés) n'ont pas besoin d'IA : zéro coût, zéro erreur.
+    const localHits = [], restLines = [];
+    txt0.split(/\n|,/).map((x) => x.trim()).filter(Boolean).forEach((l) => { const c = CAT.find((x) => E.norm(x.name) === E.norm(l)); if (c) localHits.push(Object.assign(fromCat(c, 4), { conf: 0.95 })); else restLines.push(l); });
+    const txt = restLines.join(', ');
     out.innerHTML = '<div class="shim"></div><div class="shim" style="width:80%"></div><div class="shim" style="width:60%"></div>'; $('#addgo', pn).disabled = true;
     let items = null;
     try {
+      if (!txt && !SHELF_FILES.length && !imgUrl) throw { code: 'local_only' };
       const prompt = `Tu es un expert en parfumerie (niche et designer). L'utilisateur ajoute des parfums à sa collection, en vrac${SHELF_FILES.length ? ' et via photo(s) de flacons ou d\'étagère' : ''}. Texte saisi : """${txt || '(aucun)'}"""\nIdentifie chaque parfum (corrige les fautes, complète la maison). Réponds UNIQUEMENT par un JSON : {"items":[{"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["5 notes en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5 (1 frais et léger, 5 chaud et dense),"price":nombre en euros indicatif,"confidence":0 à 1}]}. Si tu ne reconnais pas un parfum, mets confidence sous 0.4 et ta meilleure estimation.`;
-      const j = await aiJson(prompt, { modelTier: 'default', images: SHELF_FILES.length && CAN_IMG ? SHELF_FILES : undefined });
-      items = (j.items || []).map((it) => ({ id: uid(), name: String(it.name || '').trim(), house: String(it.house || '').trim(), family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: (it.notes || []).map(String).slice(0, 6), projection: clamp(Math.round(+it.projection || 3), 1, 5), longevity: clamp(Math.round(+it.longevity || 3), 1, 5), weight: clamp(Math.round(+it.weight || 3), 1, 5), price: Math.round(+it.price) || 0, rating: 4, occ: [], conf: +it.confidence || 0.7 })).filter((it) => it.name);
+      const j = demo ? await demo.identify({ text: txt, url: imgUrl, file: SHELF_FILES[0] }) : await aiJson(prompt, { modelTier: 'quick', images: SHELF_FILES.length && CAN_IMG ? SHELF_FILES : undefined });
+      items = (j.items || []).map((it) => ({ ai: true, id: uid(), name: String(it.name || '').trim(), house: String(it.house || '').trim(), family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: (it.notes || []).map(String).slice(0, 6), projection: clamp(Math.round(+it.projection || 3), 1, 5), longevity: clamp(Math.round(+it.longevity || 3), 1, 5), weight: clamp(Math.round(+it.weight || 3), 1, 5), price: Math.round(+it.price) || 0, rating: 4, occ: [], conf: +it.confidence || 0.7 })).filter((it) => it.name);
+      items = localHits.concat(items);
+      if (items.length && items.filter((it) => it.ai).length === 1 && (SHELF_FILES[0] || imgUrl)) { try { const th = await cutout(SHELF_FILES[0] || imgUrl); if (th) items.find((it) => it.ai).src = th; } catch (er) { /* image protégée : flacon dessiné */ } }
     } catch (e) {
-      const lines = txt.split(/\n|,/).map((s) => s.trim()).filter(Boolean);
-      items = lines.map((l) => {
-        const n = E.norm(l); const c = CAT.find((x) => E.norm(x.name) === n) || CAT.find((x) => n.length >= 4 && (E.norm(x.name).includes(n) || n.includes(E.norm(x.name))));
+      items = restLines.map((l) => {
+        const n = E.norm(l); const c = CAT.find((x) => n.length >= 4 && (E.norm(x.name).includes(n) || n.includes(E.norm(x.name))));
         return c ? Object.assign(fromCat(c, 4), { conf: 0.9 }) : null;
       }).filter(Boolean);
-      out.insertAdjacentHTML('beforebegin', '<p class="mono" style="text-transform:none">L\'IA n\'est pas disponible ici : seuls les parfums du catalogue sont reconnus.</p>');
+      items = localHits.concat(items);
+      if (e && e.code !== 'local_only') out.insertAdjacentHTML('beforebegin', e.code === 'rate_limited' ? '<p class="mono" style="text-transform:none">Les analyses de démo sont épuisées : seuls les parfums du catalogue sont reconnus. <button class="linkbtn" data-sell>Version complète</button></p>' : '<p class="mono" style="text-transform:none">L\'IA n\'est pas disponible pour l\'instant : seuls les parfums du catalogue sont reconnus.</p>');
     }
     items = items.filter((it) => !S.collection.some((p) => E.norm(p.name) === E.norm(it.name)));
     PRE = items;
     out.innerHTML = items.length ? items.map((it, i) => `<div class="pre" style="--i:${i}">${bt(it, { still: true })}<div><b>${esc(it.name)}</b><small>${esc(it.house)} · ${esc(famLabel(it.family))}${it.conf < 0.4 ? ' · à vérifier' : ''}</small></div><button class="ghost" data-rm="${i}" aria-label="Retirer">✕</button></div>`).join('') + `<button class="cta full" id="addok"><span>Ajouter ${items.length} parfum${items.length > 1 ? 's' : ''}</span></button>` : '<div class="empty">Rien de nouveau reconnu. Essaie avec le nom et la maison.</div>';
     $$('[data-rm]', out).forEach((b) => (b.onclick = () => { PRE[+b.dataset.rm] = null; b.closest('.pre').remove(); }));
-    if ($('#addok', out)) $('#addok', out).onclick = () => { PRE.filter(Boolean).forEach((it) => { delete it.conf; S.collection.push(it); }); save(); closeSheet(); tab = 'shelf'; render(); };
+    if ($('#addok', out)) $('#addok', out).onclick = () => { const added = PRE.filter(Boolean); if (demo && demo.confirm) demo.confirm(added.filter((it) => it.ai).map((it) => it.name)); added.forEach((it) => { delete it.conf; delete it.ai; S.collection.push(it); }); save(); closeSheet(); tab = 'shelf'; render(); };
     $('#addgo', pn).disabled = false;
+  }
+
+  // Détourage léger d'une photo de flacon (fond uni → transparent), tout dans le navigateur. Échoue proprement si l'image est protégée.
+  async function cutout(src) {
+    const img = await new Promise((res, rej) => { const i = new Image(); i.crossOrigin = 'anonymous'; i.onload = () => res(i); i.onerror = rej; i.src = typeof src === 'string' ? src : URL.createObjectURL(src); });
+    const k = Math.min(1, 360 / Math.max(img.naturalWidth, img.naturalHeight)), w = Math.round(img.naturalWidth * k), h = Math.round(img.naturalHeight * k);
+    const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(img, 0, 0, w, h);
+    const im = g.getImageData(0, 0, w, h), d = im.data, px = (x, y) => (y * w + x) * 4;
+    let r = 0, gg = 0, b = 0, n = 0; for (const [cx, cy] of [[1, 1], [w - 2, 1], [1, h - 2], [w - 2, h - 2]]) { const o = px(cx, cy); r += d[o]; gg += d[o + 1]; b += d[o + 2]; n++; } r /= n; gg /= n; b /= n;
+    const seen = new Uint8Array(w * h), stack = [], near = (o) => Math.abs(d[o] - r) + Math.abs(d[o + 1] - gg) + Math.abs(d[o + 2] - b) < 70;
+    const push = (x, y) => { const i = y * w + x; if (!seen[i] && near(i * 4)) { seen[i] = 1; stack.push(i); } };
+    for (let x = 0; x < w; x++) { push(x, 0); push(x, h - 1); } for (let y = 0; y < h; y++) { push(0, y); push(w - 1, y); }
+    while (stack.length) { const i = stack.pop(), x = i % w, y = (i - x) / w; if (x > 0) push(x - 1, y); if (x < w - 1) push(x + 1, y); if (y > 0) push(x, y - 1); if (y < h - 1) push(x, y + 1); }
+    let x0 = w, y0 = h, x1 = 0, y1 = 0, kept = 0; for (let i = 0; i < w * h; i++) { if (seen[i]) d[i * 4 + 3] = 0; else { kept++; const x = i % w, y = (i - x) / w; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+    if (kept < w * h * 0.06 || kept > w * h * 0.9) return null; // fond non uni : on garde le flacon dessiné
+    g.putImageData(im, 0, 0); const m = 4, o2 = document.createElement('canvas'); o2.width = x1 - x0 + 1 + 2 * m; o2.height = y1 - y0 + 1 + 2 * m;
+    o2.getContext('2d').drawImage(c, x0, y0, x1 - x0 + 1, y1 - y0 + 1, m, m, x1 - x0 + 1, y1 - y0 + 1); return o2.toDataURL('image/webp', 0.82);
+  }
+  // Catalogue partagé : les parfums confirmés par d'autres personnes rejoignent le catalogue (reconnus sans IA, sans erreur).
+  function mergeCommunity() {
+    const D = window.SillageDemo; if (!D || !D.catalog) return;
+    D.catalog().then((items) => { let n = 0; (items || []).forEach((it) => { if (it && it.name && !CAT.some((c) => E.norm(c.name) === E.norm(it.name))) { CAT.push({ name: it.name, house: it.house || '', family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: it.notes || [], projection: it.projection || 3, longevity: it.longevity || 3, weight: it.weight || 3, price: it.price || 0 }); n++; } }); }).catch(() => {});
   }
 
   function openProfile() {
     const s = S.settings;
+    const pf = hasProfile() ? S.profile : { gender: '', dress: '', note: '' };
     const pn = openSheet(`<div><h2>Profil</h2></div>
+      <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
+        <b style="margin-top:6px">Comment je m'habille</b><div class="chips" id="pdress">${DRESS.map(([k, l]) => `<button class="chip ${pf.dress === k ? 'on' : ''}" data-pd="${k}">${l}</button>`).join('')}</div>
+        <input type="text" id="pnote" value="${esc(pf.note || '')}" placeholder="Tes couleurs, tes matières : noir, lin, cuir…"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour.</p></div>
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
       <div class="row"><button class="ghost" id="niche">Recharger la collection de démo</button><button class="ghost danger" id="reset">Tout vider</button></div>`);
+    const pmsg = () => { $('#pmsg', pn).textContent = 'Enregistré ✓'; };
+    $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
+    $$('[data-pd]', pn).forEach((b) => (b.onclick = () => { setProfile({ dress: b.dataset.pd }); $$('[data-pd]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
+    $('#pnote', pn).onchange = () => { setProfile({ note: $('#pnote', pn).value.trim().slice(0, 160) }); pmsg(); };
     $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
@@ -644,7 +686,7 @@
   const pickKey = (v, obj, d) => (typeof v === 'string' && v in obj ? v : d);
   function normCond(c, wx) {
     c = c || {};
-    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), dur: pickKey(c.dur, E.DURS, '') };
+    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, (S.profile && S.profile.dress) || 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), dur: pickKey(c.dur, E.DURS, '') };
   }
   function keywordCond(text, wx) {
     const t = E.norm(text), c = { temp: wx ? wx.t : 18 };
@@ -680,7 +722,7 @@
     return bits.length ? '\nChoix explicites de l\'utilisateur, à respecter : ' + bits.join(' ; ') + '.' : '';
   };
   async function aiDay(text, wx) {
-    const args = { collection: colLines(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
+    const args = { collection: colLines(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), profile: S.profile && !S.profile.skipped ? { gender: S.profile.gender, dress: S.profile.dress, note: S.profile.note } : null, date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
     const j = window.SillageDemo ? await window.SillageDemo.day(args, PHOTO && CAN_IMG ? PHOTO : null) : await aiJson(window.SillagePrompts.day(args), { modelTier: 'default', images: PHOTO && CAN_IMG ? [PHOTO] : undefined });
     const p = find(j.pick); if (!p) throw { code: 'bad_pick' };
     const cond = normCond(Object.assign({}, j.cond, explicitPreset()), wx);
@@ -945,10 +987,49 @@
   }
 
 
+  // ---------- Profil : genre et façon de s'habiller (sauvegardé, réutilisé chaque jour) ----------
+  const GEN = [['m', 'Un garçon'], ['f', 'Une fille'], ['x', 'Je préfère ne pas dire']];
+  const DRESS = [['casual', 'Décontracté', 'jean, t-shirt, baskets'], ['smart', 'Smart casual', 'chemise, chino, blazer'], ['costume', 'Élégant', 'costume, tailleur'], ['street', 'Streetwear', 'hoodie, sneakers'], ['sport', 'Sportswear', 'tenue de sport'], ['soiree', 'Chic de soirée', 'robe, veste habillée']];
+  const DRESS_SVG = {
+    casual: '<path d="M16 10l-9 6 4 7 5-3v21h16V20l5 3 4-7-9-6c-1 3-4 5-8 5s-7-2-8-5z"/>',
+    smart: '<path d="M17 8l7 9 7-9 10 6-3 10-5-3v19H15V21l-5 3-3-10z"/><path d="M24 17v25"/>',
+    costume: '<path d="M14 8l10 9 10-9"/><path d="M21 17h6l-1.5 5 3.5 16-5 4-5-4 3.5-16z"/>',
+    street: '<path d="M14 12c3-3 7-4 10-4s7 1 10 4l8 8-5 5-3-3v20H14V22l-3 3-5-5z"/><path d="M18 12c1 5 4 8 6 8s5-3 6-8"/>',
+    sport: '<path d="M5 31c0-4 4-4 8-6l4-8 6 6c4 0 10 2 14 6 2 1 4 3 4 6H5z"/><path d="M5 38h38"/>',
+    soiree: '<path d="M7 17l15 7-15 7z"/><path d="M41 17l-15 7 15 7z"/><rect x="21" y="19" width="6" height="10" rx="1"/>',
+  };
+  const dressIcon = (k) => `<svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${DRESS_SVG[k] || ''}</svg>`;
+  const hasProfile = () => !!(S.profile && !S.profile.skipped);
+  const setProfile = (patch) => { S.profile = Object.assign({ gender: '', dress: '', note: '' }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; save(); };
+  function maybeProfile() { if (!S.profile && !PRESENT && !$('#onb') && !$('#prof')) showProfile(); }
+  function showProfile() {
+    const d = Object.assign({ gender: '', dress: '', note: '' }, hasProfile() ? S.profile : {});
+    const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Ton profil');
+    let step = 1;
+    const draw = () => {
+      el.innerHTML = step === 1
+        ? `<div class="prof-in"><p class="mono">Ton profil · 1 / 2</p><h2>Tu es…</h2><p class="soft">Pour choisir un parfum qui te va, pas pour t'enfermer dans une case.</p>
+          <div class="gen">${GEN.map(([k, l]) => `<button class="chip ${d.gender === k ? 'on' : ''}" data-g="${k}">${l}</button>`).join('')}</div>
+          <button class="cta full" id="pNext"><span>Continuer</span></button><button class="ghost" id="pSkip">Plus tard</button></div>`
+        : `<div class="prof-in"><p class="mono">Ton profil · 2 / 2</p><h2>Comment tu t'habilles ?</h2><p class="soft">Choisis ce qui te ressemble le plus. Je m'en sers chaque jour pour accorder le parfum à ta tenue.</p>
+          <div class="dress">${DRESS.map(([k, l, h]) => `<button class="tile ${d.dress === k ? 'on' : ''}" data-d="${k}">${dressIcon(k)}<b>${l}</b><small>${h}</small></button>`).join('')}</div>
+          <input type="text" id="pNote" value="${esc(d.note)}" placeholder="Couleurs, matières : noir, lin, cuir…" aria-label="Tes couleurs et matières">
+          <button class="cta full" id="pDone"><span>C'est parti</span></button><button class="ghost" id="pBack">Retour</button></div>`;
+      $$('[data-g]', el).forEach((b) => (b.onclick = () => { d.gender = b.dataset.g; $$('[data-g]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
+      $$('[data-d]', el).forEach((b) => (b.onclick = () => { d.dress = b.dataset.d; $$('[data-d]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
+      if ($('#pNext', el)) $('#pNext', el).onclick = () => { step = 2; draw(); };
+      if ($('#pBack', el)) $('#pBack', el).onclick = () => { d.note = $('#pNote', el).value; step = 1; draw(); };
+      if ($('#pSkip', el)) $('#pSkip', el).onclick = () => end(true);
+      if ($('#pDone', el)) $('#pDone', el).onclick = () => { d.note = $('#pNote', el).value.trim().slice(0, 160); end(false); };
+    };
+    const end = (skip) => { if (skip) { S.profile = { skipped: true, ts: Date.now() }; save(); } else setProfile(d); el.remove(); document.body.style.overflow = ''; render(true); };
+    document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
+  }
+
   // ---------- Onboarding : 10 secondes pour donner envie ----------
   function showOnboarding() {
-    try { if (localStorage.getItem('sillage.onb')) return; } catch (e) { /* on affiche quand même */ }
-    if (S.log.length) return;
+    try { if (localStorage.getItem('sillage.onb')) { maybeProfile(); return; } } catch (e) { /* on affiche quand même */ }
+    if (S.log.length) { maybeProfile(); return; }
     const pick = (n) => S.collection.find((p) => p.name === n) || S.collection[0];
     const A = pick('Jazz Club'), B = pick('Fève Nectar'), C = pick('Baccarat Rouge 540'), D = pick('Le Male');
     if (!A) return;
@@ -968,7 +1049,7 @@
     const finish = (go) => {
       if (done) return; done = true; timers.forEach(clearTimeout);
       try { localStorage.setItem('sillage.onb', '1'); } catch (e) { /* ok */ }
-      FX.clear(fx); el.remove(); document.body.style.overflow = '';
+      FX.clear(fx); el.remove(); document.body.style.overflow = ''; setTimeout(maybeProfile, 250);
       if (go) { CHOICE.cat = 'sorties'; CHOICE.sc = 'apero'; SAY = scenByKey('apero')[1]; tab = 'today'; render(); const g = $('#go'); if (g) g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
     };
     $('#onbSkip').onclick = () => finish(false); $('#onbGo').onclick = () => finish(true);
@@ -990,6 +1071,7 @@
   initStore();
   initAI();
   if (S.settings.weatherOn) autoWeather(false);
+  mergeCommunity();
   setTimeout(showOnboarding, $('#splash') ? 2700 : 200);
   const sp = $('#splash');
   if (sp) { const kill = () => sp.remove(); sp.addEventListener('click', kill); setTimeout(kill, REDUCED ? 500 : 3000); }

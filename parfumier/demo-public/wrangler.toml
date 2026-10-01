@@ -16,6 +16,10 @@ id = "COLLE_ICI_L_ID_DU_KV"
 [vars]
 MODEL = "claude-sonnet-5-5"   # pour plus de qualité (2× plus cher) : "claude-opus-5-5"
 EFFORT = "low"
+HAIKU_MODEL = "claude-haiku-4-5-20251001"  # identification des parfums (quasi gratuit)
+IDENT_MAX = "6"             # analyses de parfum par visiteur
+IDENT_IP_MAX_PER_DAY = "20" # analyses par adresse IP et par jour
+IDENT_DAILY_CAP = "400"     # analyses au total par jour
 MAX_TRIES = "2"             # essais par visiteur
 IP_MAX_PER_DAY = "6"        # essais par adresse IP et par jour (contourne les visiteurs qui changent de navigateur)
 DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confondus : ton plafond de dépense

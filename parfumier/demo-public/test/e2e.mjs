@@ -9,9 +9,10 @@ const OUT = process.env.OUT || '/tmp';
 const types = { '.html': 'text/html; charset=utf-8', '.webp': 'image/webp', '.js': 'text/javascript', '.jpg': 'image/jpeg', '.txt': 'text/plain', '.gif': 'image/gif', '.svg': 'image/svg+xml' };
 const store = new Map();
 const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async list({ prefix }) { return { keys: [...store.keys()].filter((k) => k.startsWith(prefix)).map((name) => ({ name })), list_complete: true }; } };
-let aiCalls = 0, lastPrompt = '';
+let aiCalls = 0, lastPrompt = '', identCalls = [];
 const idOf = (p, n) => (p.match(new RegExp('^(\\S+) \\| ' + n.replace(/[()]/g, '\\$&') + ' \\|', 'm')) || [])[1];
 const client = { messages: { async create(req) {
+  if (req.model.includes('haiku')) { identCalls.push(req); return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify({ items: [{ name: 'Santal 33', house: 'Le Labo', family: 'boisé', notes: ['cardamome', 'iris', 'santal', 'cuir'], projection: 4, longevity: 4, weight: 3, price: 220, confidence: 0.9 }] }) }] }; }
   aiCalls++; const p = req.messages[0].content.at(-1).text; lastPrompt = p; await new Promise((r) => setTimeout(r, 500));
   const j = { cond: { temp: 3, ctx: 'date', with: 'partenaire', moment: 'soir', mood: 'romantique', style: 'soiree', color: 'sombre', fabric: 'cuir', place: '', dur: '' }, read: 'Dîner à deux ce soir, perfecto noir, il fait froid', pick: idOf(p, 'Tobacco Vanille'), vibe: ['enveloppant', 'fumé', 'magnétique'], story: 'Il fait 3° et ton perfecto sent déjà la nuit : Tobacco Vanille s’y accroche comme une écharpe de fumée douce.', alts: [{ id: idOf(p, 'Baccarat Rouge 540'), line: 'Plus lumineux, très sillage' }], layers: [{ id: idOf(p, 'Thé Noir 29'), effect: 'Le thé noir assèche la douceur et allonge la tenue.', how: '2 sprays de Tobacco Vanille sur la nuque, puis 1 spray de Thé Noir 29 sur les poignets. Évite le cuir du perfecto.', score: 5 }], avoid: '' };
   return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify(j) }] };
@@ -36,7 +37,13 @@ await pg.waitForSelector('#onb', { timeout: 8000 }); await pg.waitForTimeout(600
 await pg.waitForTimeout(3000); await pg.screenshot({ path: OUT + '/e2_onb2.png' });
 await pg.waitForTimeout(2800); await pg.screenshot({ path: OUT + '/e3_onb3.png' });
 await pg.waitForTimeout(3000); ok(await pg.isVisible('#onbGo'), 'onboarding : bouton final visible en moins de 12 s');
-await pg.click('#onbGo'); await pg.waitForTimeout(700);
+await pg.click('#onbGo'); await pg.waitForSelector('#prof .gen', { timeout: 5000 }); ok(true, 'profil : l\'écran « Tu es… » s\'affiche après l\'intro');
+await pg.screenshot({ path: OUT + '/e3b_profil1.png' });
+await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#prof .dress'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' });
+ok(await pg.locator('#prof .tile').count() === 6, 'profil : 6 façons de s\'habiller proposées');
+await pg.click('[data-d=smart]'); await pg.fill('#pNote', 'noir, lin'); await pg.click('#pDone'); await pg.waitForTimeout(600);
+const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).profile);
+ok(prof.gender === 'f' && prof.dress === 'smart' && prof.note === 'noir, lin', 'profil sauvegardé : fille, smart casual, couleurs');
 ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
 ok(/Démo · 2 essais/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
 // 2. météo automatique
@@ -50,6 +57,7 @@ for (let i = 1; i <= 2; i++) {
   await pg.click('#stx'); await pg.waitForTimeout(500);
 }
 ok(aiCalls === 2, 'IA appelée 2 fois'); ok(/humide|humidité|3/.test(lastPrompt) && /pluie/.test(lastPrompt), 'la météo (3°, pluie) part dans le prompt côté serveur');
+ok(/je suis une femme/.test(lastPrompt) && /smart casual/.test(lastPrompt) && /noir, lin/.test(lastPrompt), 'le profil (fille, smart casual, noir, lin) part dans le prompt du jour');
 ok(/0 essai/.test(await pg.textContent('.demo-pill')), 'bandeau : 0 essai restant');
 // 4. 3e essai bloqué -> inscription
 await pg.click('#go'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, '3e essai : aucun appel IA');
@@ -59,6 +67,21 @@ ok(store.has('email:test@exemple.fr'), 'email enregistré');
 // 5. fonction verrouillée
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
 await pg.click('[data-tab=discover]'); await pg.waitForTimeout(400); await pg.fill('#askq', 'un frais'); await pg.click('#askgo'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
+// 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
+await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.waitForSelector('#addtxt');
+await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
+ok(identCalls.length === 0, 'un lien http (non sécurisé) est refusé sans appel IA');
+await pg.fill('#addurl', 'https://exemple.test/flacon.jpg'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
+ok(identCalls.length === 1, 'identification : un seul appel au modèle léger');
+const ic = identCalls[0]; ok(/haiku/.test(ic.model) && ic.messages[0].content[0].source.type === 'url' && /Parfum Inconnu 77/.test(ic.messages[0].content.at(-1).text) && !/Tam Dao/.test(ic.messages[0].content.at(-1).text), 'Haiku reçoit le lien et seulement le parfum inconnu (Tam Dao reconnu sans IA)');
+await pg.screenshot({ path: OUT + '/e6b_ajout.png' }); await pg.click('#addok'); await pg.waitForTimeout(700);
+const names = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.map((p) => p.name));
+ok(names.includes('Santal 33') && names.includes('Tam Dao Eau de Parfum'), 'les deux parfums sont dans la collection');
+ok(store.has('cand:santal 33') && JSON.parse(store.get('cand:santal 33')).v.length === 1, 'catalogue partagé : le parfum attend la 2e confirmation');
+// 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
+await pg.reload(); await pg.waitForTimeout(3600);
+const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });
+ok(after.prof.dress === 'smart' && after.has && !after.ov, 'après rechargement : profil et collection sont là, aucun écran d\'accueil revient');
 // 6. nouveau visiteur : 2 essais neufs; même IP : plafond
 ok(errs.length === 0, 'aucune erreur JavaScript ' + JSON.stringify(errs));
 // 7. page d'inscription

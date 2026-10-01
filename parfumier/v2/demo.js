@@ -2,12 +2,12 @@
 (function () {
   'use strict';
   const MAX = 2;
-  let left = MAX, vid;
+  let left = MAX, identLeft = 6, vid;
   try { vid = localStorage.getItem('sillage.vid'); if (!vid) { vid = (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(16).slice(2) + Date.now().toString(16) + 'abcdef0123'); localStorage.setItem('sillage.vid', vid); } } catch (e) { vid = 'anon-' + Math.random().toString(16).slice(2) + Date.now().toString(16) + '0000'; }
   const headers = () => ({ 'content-type': 'application/json', 'x-visitor': vid });
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  async function refresh() { try { const r = await fetch('/api/quota', { headers: headers() }); const j = await r.json(); if (typeof j.left === 'number') left = j.left; } catch (e) { /* hors ligne : on garde la valeur */ } }
+  async function refresh() { try { const r = await fetch('/api/quota', { headers: headers() }); const j = await r.json(); if (typeof j.left === 'number') left = j.left; if (typeof j.identLeft === 'number') identLeft = j.identLeft; } catch (e) { /* hors ligne : on garde la valeur */ } }
 
   function toBase64(file) {
     return new Promise((resolve, reject) => {
@@ -33,6 +33,21 @@
     if (typeof j.left === 'number') left = j.left;
     return j.data;
   }
+
+  // Identification d'un parfum (nom, image ou lien) par une IA légère : quota à part, quasi gratuit.
+  async function identify({ text, url, file }) {
+    const body = { text: text || '' };
+    if (url) body.url = url;
+    if (file) { try { body.image = await toBase64(file); } catch (e) { /* sans image */ } }
+    let r; try { r = await fetch('/api/identify', { method: 'POST', headers: headers(), body: JSON.stringify(body) }); } catch (e) { throw { code: 'network' }; }
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 429) { identLeft = 0; throw { code: 'rate_limited' }; }
+    if (!r.ok) throw { code: 'server' };
+    if (typeof j.identLeft === 'number') identLeft = j.identLeft;
+    return j.data;
+  }
+  const confirm = (names) => { if (names && names.length) fetch('/api/catalog/confirm', { method: 'POST', headers: headers(), body: JSON.stringify({ names }) }).catch(() => {}); };
+  const catalog = async () => { try { const r = await fetch('/api/catalog'); const j = await r.json(); return j.items || []; } catch (e) { return []; } };
 
   const TEXT = {
     quota: ['Tes 2 essais sont utilisés', 'Tu as vu ce que fait Sillage. Laisse ton email : je t\'envoie l\'accès complet, et je peux préparer une version sur mesure pour ta collection ou ton activité.'],
@@ -73,6 +88,6 @@
     limits: async () => ({ maxPromptBytes: 100000, images: { maxCount: 1, maxInputBytes: 8000000, mediaTypes: ['image/jpeg', 'image/png', 'image/webp'] } }),
   });
   window.claude = { use: async (name) => (name === 'sample' ? locked : null) };
-  window.SillageDemo = { day, left: () => left, refresh, upsell };
+  window.SillageDemo = { day, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
   refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
 })();
