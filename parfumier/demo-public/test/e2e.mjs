@@ -102,6 +102,7 @@ await pg.click('#addBtn'); await pg.waitForSelector('#addbrw'); await pg.click('
 ok((await pg.$$('[data-brand]')).length > 100, 'parcours : plus de 100 marques listées');
 await pg.fill('#brwq', 'kilian'); await pg.waitForTimeout(200); await pg.click('[data-brand="Kilian"]'); await pg.waitForSelector('[data-it]');
 ok((await pg.$$('[data-it]')).length > 5, 'parcours : les parfums de la marque s\'affichent');
+ok((await pg.$$('#brw img.mini')).length > 0, 'parcours : les photos de la base s\'affichent à côté des parfums');
 await pg.click('[data-it]'); ok(/Ajouter 1 parfum/.test(await pg.textContent('#brwadd')), 'parcours : un parfum cliqué est sélectionné');
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page

@@ -43,6 +43,8 @@
     'Shalimar': { s: 'img/shalimar.webp', nz: 4 }, 'J\'adore': { s: 'img/jadore.webp', nz: 3 }, 'Dior Homme Intense': { s: 'img/dhi.webp', nz: 6 }, 'Stronger With You Intensely': { s: 'img/swyi.webp', nz: 4 }, 'Pure Musc Blanc': { s: 'img/muscblanc.webp', nz: 5 },
     'Libre Le Parfum': { s: 'img/libre.webp', nz: 3 }, 'Le Male': { s: 'img/lemale.webp', nz: 3 }, 'L\'Interdit Rouge': { s: 'img/interdit.webp', nz: 5 }, 'Power of You': { s: 'img/powerofyou.webp', nz: 6 },
   };
+  // Photos de la base (images/db, rattachées par maison + nom) : utilisées quand le parfum n'a pas de photo détourée à la main.
+  const imgOf = (p) => { if (IMG[p.name]) return IMG[p.name]; const D = window.IMGDB || {}, f = D[E.norm(p.house || '') + '|' + E.norm(p.name)]; return f ? { s: f, nz: 6 } : null; };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }, stk || {}));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
@@ -118,7 +120,7 @@
     o = o || {};
     const st = (o.h || o.style) ? `style="${o.h ? 'height:' + o.h + 'px;' : ''}${o.style || ''}"` : '', cx = o.cls ? ' ' + o.cls : '';
     const pub = S.settings && S.settings.publicMode;
-    const im = pub ? null : (p.src ? { s: p.src, nz: p.nz || 6 } : IMG[p.name]);
+    const im = pub ? null : (p.src ? { s: p.src, nz: p.nz || 6 } : imgOf(p));
     if (im && !p.img) {
       let mp = '';
       if (o.spray) { for (let k = 0; k < 10; k++) mp += `<i style="width:${3 + (k % 3)}px;height:${3 + (k % 3)}px;--dx:${8 + (k * 7) % 42}px;--dy:${-16 - (k * 9) % 36}px;animation-delay:${(k * 0.22).toFixed(2)}s"></i>`; mp = `<span class="mp" style="top:${im.nz}%">${mp}</span>`; }
@@ -517,7 +519,7 @@
     const box = $('#brw', pn), b = brandMap().find((x) => x.house === house); if (!b) return browseBrands(pn);
     const have = new Set(S.collection.map((p) => E.norm(p.name))), sel = new Set(BRW_SEL.map((x) => E.norm(x.name)));
     const items = b.items.slice().sort((x, y) => x.name.localeCompare(y.name, 'fr'));
-    box.innerHTML = `<div class="row"><button type="button" class="ghost" id="brwback">← Marques</button><b>${esc(house)}</b></div><div class="plist">${items.map((it, i) => { const own = have.has(E.norm(it.name)), on = sel.has(E.norm(it.name)); return `<button type="button" class="chip ${on ? 'on' : ''}" data-it="${i}" ${own ? 'disabled' : ''}>${esc(it.name)}${it.conc && it.conc !== 'EDP' ? ' <small style="color:var(--muted)">' + esc(it.conc.split(',').map((x) => CONC_L[x] || x).join('/')) + '</small>' : ''}${own ? ' ✓' : on ? ' ✓' : ' +'}</button>`; }).join('')}</div><button type="button" class="cta full" id="brwadd" ${BRW_SEL.length ? '' : 'disabled'}><span>Ajouter ${BRW_SEL.length || ''} parfum${BRW_SEL.length > 1 ? 's' : ''}</span></button>`;
+    box.innerHTML = `<div class="row"><button type="button" class="ghost" id="brwback">← Marques</button><b>${esc(house)}</b></div><div class="plist">${items.map((it, i) => { const own = have.has(E.norm(it.name)), on = sel.has(E.norm(it.name)); const ph = imgOf(it); return `<button type="button" class="chip ${on ? 'on' : ''}" data-it="${i}" ${own ? 'disabled' : ''}>${ph ? `<img class="mini" alt="" src="${esc(ph.s)}">` : ''}${esc(it.name)}${it.conc && it.conc !== 'EDP' ? ' <small style="color:var(--muted)">' + esc(it.conc.split(',').map((x) => CONC_L[x] || x).join('/')) + '</small>' : ''}${own ? ' ✓' : on ? ' ✓' : ' +'}</button>`; }).join('')}</div><button type="button" class="cta full" id="brwadd" ${BRW_SEL.length ? '' : 'disabled'}><span>Ajouter ${BRW_SEL.length || ''} parfum${BRW_SEL.length > 1 ? 's' : ''}</span></button>`;
     $('#brwback', box).onclick = () => browseBrands(pn);
     $$('[data-it]', box).forEach((bt2) => (bt2.onclick = () => { const it = items[+bt2.dataset.it], k = E.norm(it.name), j = BRW_SEL.findIndex((x) => E.norm(x.name) === k); if (j >= 0) BRW_SEL.splice(j, 1); else BRW_SEL.push(it); browsePerfumes(pn, house); }));
     $('#brwadd', box).onclick = () => {

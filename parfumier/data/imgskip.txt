@@ -1,0 +1,9 @@
+# Photos dont le détourage automatique est raté (fond non uni, ombres) : à refaire à la main ou à remplacer. Un slug par ligne.
+byredo-mojave-ghost
+dior-gris-dior
+guerlain-cuir-beluga
+juliette-has-a-gun-musc-invisible
+kilian-woman-in-gold
+matiere-premiere-cologne-cedrat
+matiere-premiere-neroli-oranger
+parfums-de-marly-valaya

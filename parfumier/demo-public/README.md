@@ -90,3 +90,9 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 
 - **Profils distincts** : chaque personne a son profil (collection, wishlist, journal, tenue, stock). Sur un même appareil, Profil → « Nouveau profil » en crée un autre, et on bascule de l'un à l'autre sans rien mélanger. Les données restent dans le navigateur de chaque personne : la démo n'enregistre aucun profil côté serveur.
 - **Grand index** (`parfumier/index.js`, ≈ 2 500 parfums, 150 maisons) : généré par `python3 tools/build-index.py` depuis `data/raw/*.txt` (ta liste, sans doublons). Il sert aux suggestions pendant la frappe. Les fiches (famille, notes, puissance) des parfums de l'index sont complétées par Haiku quand quelqu'un les ajoute, puis gardées en cache pour tous (coût zéro les fois suivantes).
+
+## 10. Parcourir la base et photos associées
+
+- **Parcourir par marque** : dans « Ajoute sans taper », la liste des ~160 marques (avec le nombre de parfums), puis les parfums de la marque. Chaque parfum se sélectionne d'un clic et s'ajoute avec son stock. Les fiches inconnues sont complétées par l'IA légère, comme avant.
+- **Photos de la base** : `python3 tools/build-imgdb.py` détoure les photos de `incoming/`, les rattache aux parfums d'après `data/imgmap.txt` (fichier | maison | nom) et écrit `v2/img/db/*.webp` + `imgdb.js`. Les photos au détourage raté sont listées dans `data/imgskip.txt` (flacon dessiné à la place).
+- Ajouter de nouvelles photos : dépose-les dans `incoming/`, ajoute une ligne dans `data/imgmap.txt`, relance le script puis `v2/build.py`.
