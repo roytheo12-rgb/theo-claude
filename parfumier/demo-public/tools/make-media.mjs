@@ -14,10 +14,10 @@ if (!AMARA) {
 
 // ---------- 2. Enregistrement de la story (frames réelles, avec leur horodatage)
 const ctx = await browser.newContext({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 1 });
-await ctx.addInitScript(() => { try { localStorage.setItem('sillage.onb', '1'); } catch (e) { /* ok */ } });
+await ctx.addInitScript(() => { try { localStorage.setItem('sillage.onb', '1'); localStorage.setItem('sillage.v3', JSON.stringify({ profile: { skipped: true } })); } catch (e) { /* ok */ } });
 const pg = await ctx.newPage(); const cdp = await ctx.newCDPSession(pg); const frames = [];
 cdp.on('Page.screencastFrame', async (f) => { frames.push({ t: f.metadata.timestamp, data: f.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch (e) { /* fin */ } });
-await pg.goto(`http://localhost:${PORT}/`); await pg.waitForTimeout(3300);
+await pg.goto(`http://localhost:${PORT}/?seed=demo`); await pg.waitForTimeout(3300);
 await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 82, everyNthFrame: 1 });
 const t0 = Date.now(); const wait = (ms) => pg.waitForTimeout(ms);
 await wait(500);

@@ -418,6 +418,10 @@ canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .stk-b { position: absolute; top: 10px; right: 10px; z-index: 2; font: 600 8.5px var(--sf); letter-spacing: .14em; text-transform: uppercase; font-style: normal; padding: 3px 6px; border: 1px solid rgba(180, 57, 74, .6); color: var(--accent-deep); border-radius: 2px; background: rgba(8, 8, 10, .55); }
 .stk-b.low { border-color: rgba(214, 186, 140, .5); }
 
+.emptycard { display: grid; gap: 14px; margin-bottom: 8px; border-color: rgba(180, 57, 74, .5); }
+.emptycard h2 { font: 300 24px/1.15 var(--sf); margin: 0; }
+.emptycard p:not(.mono) { color: var(--muted); font-size: 15px; margin: 0; }
+
 </style>
 </head><body>
 <div id="app">
@@ -1344,7 +1348,8 @@ ${mist}
   const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }, stk || {}));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   const seedWish = () => window.WISH.map(wishFromName);
-  const DEMO_V = 17;
+  const DEMO = /[?&]seed=demo/.test(location.search); // outillage (vidéos, tests) : charge une collection d'exemple
+  const DEMO_V = 18;
   // Balade olfactive fictive (rue Saint-Honoré) et exemples de semaine / voyage : la démo ne demande rien à l'IA pour les montrer.
   const seedWalk = () => {
     const d = new Date(); d.setDate(d.getDate() - 3); const date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -1352,20 +1357,25 @@ ${mist}
     return { id: 'w-honore', seed: true, date, place: 'Rue Saint-Honoré, Paris', entries: T.map(([n, r, note], i) => { const c = CAT.find((x) => x.name === n); return { id: 'we' + i, sym: i, name: n, house: c.house, family: c.family, notes: [...c.notes], note, rating: r, date }; }) };
   };
   const SEED_SUM = { taste: 'Tu vas vers les bois crémeux, les résines et les fleurs un peu étranges, jamais vers le sucré franc. Tes coups de cœur ont tous du relief et de la matière.', keep: [{ name: 'Ombre Nomade', why: 'complète tes ambrés sans les doubler' }, { name: 'Tam Dao Eau de Parfum', why: 'le bois calme qui manque à ta collection' }, { name: 'Ganymede', why: 'ta touche minérale, à tester sur peau' }], skip: 'Jasmin Rouge : trop sucré pour toi, inutile d\'y revenir.' };
-  const byName = (n) => S.collection.find((p) => p.name === n);
-  const wkRows = (rows) => rows.map((r, i) => `<div class="wk" style="--i:${i}">${bt(r.p, { still: true })}<div><span class="d">${esc(r.d)}</span><br><b>${esc(r.p.name)}</b><p>${esc(r.why || '')}</p></div></div>`).join('');
-  const WEEK_SAMPLE = [['Lundi', 'Thé Noir 29', 'Bureau : sec, discret, sérieux.'], ['Mardi', 'Vétiver Extraordinaire', 'Réunions : propre et net, sans envahir.'], ['Mercredi', '724', 'Télétravail : musc doux, on l\'oublie.'], ['Jeudi', 'Tobacco Vanille', 'Dîner à deux : chaud et enveloppant.'], ['Vendredi', 'Jazz Club', 'Afterwork : rhum et tabac, convivial.'], ['Samedi', 'Baccarat Rouge 540', 'Soirée : le sillage qui se remarque.'], ['Dimanche', 'Lazy Sunday Morning', 'En famille : tendre et léger.']];
-  const TRAVEL_SAMPLE = { picks: [['Thé Noir 29', 'Le jour, en réunion', 'Sec et fumé, il tient dans le froid humide sans remplir une salle.'], ['Tobacco Vanille', 'Les dîners du soir', 'Chaud, épicé, il répond au froid de novembre.'], ['Terre d\'Hermès', 'Marches sous la bruine', 'Minéral et poivré, il aime l\'air frais et la pluie.']], tip: 'Prends des atomiseurs de 10 ml : ils passent en cabine et protègent le jus de la chaleur des valises.' };
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: seedOwned(), wishlist: seedWish(), walks: [seedWalk()], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: DEMO ? [seedWalk()] : [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
   function migrate() {
     S.walks = S.walks || [];
-    if (!S.walks.some((w) => w.seed)) S.walks.unshift(seedWalk());
-    // Nouvelle collection de démonstration cohérente : remplace l'ancienne, une seule fois.
-    if ((S.seedV || 1) < DEMO_V) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; S.seedV = DEMO_V; }
+    if (DEMO && !S.walks.some((w) => w.seed)) S.walks.unshift(seedWalk());
+    if ((S.seedV || 1) < DEMO_V) {
+      if (DEMO) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; }
+      else {
+        // Ménage unique : l'ancienne collection d'exemple (jamais touchée) disparaît. Une collection réelle n'est jamais effacée.
+        const oldOwned = new Set(window.OWNED.map((o) => o[0])), oldWish = new Set(window.WISH);
+        if (S.collection.length >= 30 && S.collection.every((p) => oldOwned.has(p.name))) { S.collection = []; S.log = []; S.today = null; }
+        if ((S.wishlist || []).length >= 20 && S.wishlist.every((w) => oldWish.has(typeof w === 'string' ? w : w.name))) S.wishlist = [];
+        S.walks = S.walks.filter((w) => !w.seed);
+      }
+      S.seedV = DEMO_V;
+    }
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
     // Stock : les flacons de démo déjà présents reçoivent leur taille et leur usage, sans toucher à ceux que la personne a réglés.
-    S.collection.forEach((p) => { if (p.size == null && p.use == null) { const o = window.OWNED.find((x) => x[0] === p.name); if (o && o[3]) Object.assign(p, o[3]); } });
+    S.collection.forEach((p) => { if (DEMO && p.size == null && p.use == null) { const o = window.OWNED.find((x) => x[0] === p.name); if (o && o[3]) Object.assign(p, o[3]); } });
   }
   let S;
   try { S = Object.assign(DEF(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = DEF(); }
@@ -1393,7 +1403,7 @@ ${mist}
     } catch (e) { /* on reste en local */ }
   }
 
-  migrate();
+  migrate(); save();
 
   // ---------- Utilitaires métier ----------
   const find = (id) => S.collection.find((p) => p.id === id);
@@ -1543,6 +1553,7 @@ ${mist}
         ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
+        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Tape leurs noms, prends-les en photo, ou choisis-les dans le catalogue.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
         <div class="say-wrap">
           <p class="mono">Ta journée</p>
           <div class="cats" id="cats">${Object.entries(CATS).map(([k, v]) => `<button class="${CHOICE.cat === k ? 'on' : ''}" data-cat="${k}">${v}</button>`).join('')}</div>
@@ -1593,6 +1604,7 @@ ${mist}
     if ($('#wxCity')) $('#wxCity').onclick = () => { keepText0(); openCity(); };
     const keepText = () => { const t = $('#say'); if (t) SAY = t.value; };
     $$('[data-refine]').forEach((b) => (b.onclick = () => { keepText(); REFINE = !refine; if (!REFINE) { CHOICE.mood = null; WX = null; CHOICE.place = null; CHOICE.dur = null; CHOICE.hum = false; PHOTO = null; } viewToday(); }));
+    if ($('#emptyAdd')) $('#emptyAdd').onclick = openAdd;
     $$('[data-dress]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.dress = CHOICE.dress === b.dataset.dress ? null : b.dataset.dress; save(); viewToday(); }));
     $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; save(); viewToday(); }));
     $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
@@ -1615,7 +1627,7 @@ ${mist}
         ${P.length ? `<div class="card" style="display:grid;gap:12px"><div class="ribbon">${top.map(([f, n]) => `<i title="${esc(famLabel(f))}" style="flex:${n};background:${Art.famColor(f)}"></i>`).join('')}</div>
           <p style="font-size:15px">${fav.length ? `Ton nez penche vers le <b>${esc(fav.join(' et le '))}</b>.` : ''} ${top.slice(0, 4).map(([f, n]) => `<span class="tag">${esc(famLabel(f))} ${n}</span>`).join(' ')}</p></div>` : ''}
       </section>
-      ${P.length ? shelfStats(P) : ''}
+      ${P.length ? shelfStats(P) : '<section class="sec"><div class="card emptycard"><p style="color:var(--muted)">Ton étagère est vide. Ajoute les parfums que tu possèdes : en vrac, par leur nom, ou en photo.</p></div></section>'}
       <section class="sec"><div class="row"><button class="ghost" id="labBtn">Labo d'accords</button>${HAS_ASSETS ? `<button class="ghost" id="photosBtn">Ajouter mes photos (IA)</button>` : ''}</div></section>
       <section class="sec"><div class="shelf">
         ${P.map((p, i) => `<button class="pcard" data-open="${p.id}" style="--tint:${tint(p)};--i:${i}">${fxCanvas(`data-p="${p.id}"`, .5)}${stockBadge(p)}${bt(p, { level: 0.45 + ((Art.hash(p.name) % 40) / 100) })}<b>${esc(p.name)}</b><span>${esc(p.house)}</span></button>`).join('')}
@@ -1763,6 +1775,15 @@ ${mist}
       <div class="row"><button class="chip photo-btn" id="addph" ${CAN_IMG ? '' : 'hidden'}>${IC.cam}<span id="addphl">${window.SillageDemo ? 'Photo ou image du flacon' : 'Photo(s) de l\'étagère'}</span></button><input type="file" id="addin" accept="image/*" ${window.SillageDemo ? '' : 'multiple'} hidden></div>
       ${window.SillageDemo ? `<p class="mono" style="text-transform:none;letter-spacing:0">Reconnaissance par une IA légère, quasi gratuite : ${window.SillageDemo.identLeft()} analyse${window.SillageDemo.identLeft() > 1 ? 's' : ''} restante${window.SillageDemo.identLeft() > 1 ? 's' : ''} dans la démo. Les parfums déjà connus ne comptent pas.</p>` : ''}
       <button class="cta full" id="addgo">${IC.spark}<span>Analyser</span></button><div id="addres" style="display:grid;gap:10px"></div>`);
+    // Suggestions du catalogue pendant la frappe : un parfum connu s'ajoute sans IA.
+    const sug = document.createElement('div'); sug.className = 'chips'; sug.id = 'addsug'; $('#addtxt', pn).after(sug);
+    $('#addtxt', pn).addEventListener('input', (e) => {
+      const ta = e.target, parts = ta.value.split(/[\n,]/), last = E.norm(parts[parts.length - 1].trim());
+      const have = new Set(S.collection.map((p) => E.norm(p.name)));
+      const hits = last.length < 2 ? [] : CAT.filter((c) => !have.has(E.norm(c.name)) && (E.norm(c.name).includes(last) || E.norm(c.house + ' ' + c.name).includes(last))).sort((a, b) => (E.norm(a.name).startsWith(last) ? 0 : 1) - (E.norm(b.name).startsWith(last) ? 0 : 1)).slice(0, 6);
+      sug.innerHTML = hits.map((c) => `<button type="button" class="chip" data-sug="${esc(c.name)}">${esc(c.name)} <small style="color:var(--muted)">${esc(c.house)}</small></button>`).join('');
+      $$('[data-sug]', sug).forEach((b) => (b.onclick = () => { parts[parts.length - 1] = ' ' + b.dataset.sug; ta.value = parts.map((x) => x.trim()).filter(Boolean).join(', ') + ', '; sug.innerHTML = ''; ta.focus(); }));
+    });
     $('#addph', pn).onclick = () => $('#addin', pn).click();
     $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, window.SillageDemo ? 1 : 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
     $('#addgo', pn).onclick = () => analyzeAdd(pn);
@@ -1833,7 +1854,7 @@ ${mist}
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
-      <div class="row"><button class="ghost" id="niche">Recharger la collection de démo</button><button class="ghost danger" id="reset">Tout vider</button></div>`);
+      <div class="row"><button class="ghost danger" id="reset">Tout vider</button></div>`);
     const pmsg = () => { $('#pmsg', pn).textContent = 'Enregistré ✓'; };
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
     $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
@@ -1841,7 +1862,6 @@ ${mist}
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
-    $('#niche', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : remplacer'; return; } { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; } S.log = []; S.today = null; save(); closeSheet(); render(); };
     $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; S.wishlist = []; save(); closeSheet(); render(); };
   }
 
@@ -1916,8 +1936,7 @@ ${mist}
   function openTravel() {
     const pn = openSheet(`<div><h2>Mode voyage</h2><p style="color:var(--muted);margin-top:6px">Dis-moi où tu vas et ce que tu y fais. Je choisis les 2 ou 3 flacons à emporter.</p></div>
       <textarea id="ttxt" rows="3" placeholder="5 jours à Londres en novembre, réunions le jour, dîners le soir…"></textarea>
-      <button class="cta full" id="tgo"><span>Faire ma valise</span></button><div id="tres" style="display:grid;gap:12px"><p class="mono">Exemple : 5 jours à Londres en novembre</p>${wkRows(TRAVEL_SAMPLE.picks.map(([n, d, why]) => ({ d, p: byName(n), why })).filter((r) => r.p))}<p class="mono" style="text-transform:none;letter-spacing:0;font-size:13px">${esc(TRAVEL_SAMPLE.tip)}</p></div>`);
-    $('#ttxt', pn).value = '5 jours à Londres en novembre, réunions le jour, dîners le soir, un peu de marche sous la pluie';
+      <button class="cta full" id="tgo"><span>Faire ma valise</span></button><div id="tres" style="display:grid;gap:12px"></div>`);
     $('#tgo', pn).onclick = async () => {
       const out = $('#tres', pn), txt = $('#ttxt', pn).value.trim(); if (!txt) { $('#ttxt', pn).focus(); return; }
       out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#tgo', pn).disabled = true;
@@ -1976,8 +1995,7 @@ ${mist}
   function openWeek() {
     const pn = openSheet(`<div><h2>Ta semaine, parfumée</h2><p style="color:var(--muted);margin-top:6px">Décris ta semaine en vrac. Je répartis les parfums pour ne jamais répéter et toujours coller au jour.</p></div>
       <textarea id="wtxt" rows="4" placeholder="Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, samedi mariage…"></textarea>
-      <button class="cta full" id="wgo"><span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"><p class="mono">Exemple de semaine</p>${wkRows(WEEK_SAMPLE.map(([d, n, why]) => ({ d, p: byName(n), why })).filter((r) => r.p))}</div>`);
-    $('#wtxt', pn).value = 'Lundi et mardi bureau, mercredi télétravail, jeudi dîner à deux, vendredi afterwork, samedi soirée, dimanche en famille';
+      <button class="cta full" id="wgo"><span>Planifier</span></button><div id="wres" style="display:grid;gap:10px"></div>`);
     $('#wgo', pn).onclick = async () => {
       const out = $('#wres', pn), txt = $('#wtxt', pn).value.trim();
       const days = [...Array(7)].map((_, i) => { const d = new Date(); d.setDate(d.getDate() + i); return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); });
@@ -2048,7 +2066,7 @@ ${mist}
   let LAST = null;
   async function runDay(replayFor) {
     if (window.SillageDemo && window.SillageDemo.left() <= 0) { window.SillageDemo.upsell('quota'); return; }
-    if (!S.collection.length) { tab = 'shelf'; render(); return; }
+    if (!S.collection.length) { openAdd(); return; }
     openStory(); showLoading();
     let R = null;
     const t0 = Date.now();
@@ -2359,16 +2377,16 @@ ${mist}
   function showOnboarding() {
     try { if (localStorage.getItem('sillage.onb')) { maybeProfile(); return; } } catch (e) { /* on affiche quand même */ }
     if (S.log.length) { maybeProfile(); return; }
-    const pick = (n) => S.collection.find((p) => p.name === n) || S.collection[0];
-    const A = pick('Jazz Club'), B = pick('Fève Nectar'), C = pick('Baccarat Rouge 540'), D = pick('Le Male');
-    if (!A) return;
+    const pick = (n) => { const c = CAT.find((x) => x.name === n); return c ? fromCat(c, 4) : null; };
+    const A = pick('Baccarat Rouge 540'), B = pick('Fève Nectar'), C = pick('Naxos'), D = pick('Tobacco Vanille');
+    if (!A || !B || !C || !D) return;
     const TXT = 'Sortie entre amis en ville, 18°, chemise noire';
     const el = document.createElement('div'); el.id = 'onb'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Bienvenue');
     el.innerHTML = `<i class="sb sb1"></i><i class="sb sb2"></i><canvas class="fx" id="onbfx" aria-hidden="true"></canvas>
       <button class="onb-skip" id="onbSkip">Passer</button>
       <section class="onb-s on" id="os1"><div class="onb-row">${bt(D, { h: 150, still: false })}${bt(A, { h: 200, spray: true })}${bt(C, { h: 150, still: false })}</div><h2 class="rise" style="--d:300">Sillage</h2><p class="lead rise" style="--d:700">Le bon parfum pour ta journée, choisi dans ta propre collection.</p></section>
       <section class="onb-s" id="os2"><p class="mono rise">1 · dis ta journée</p><div class="onb-type"><span id="onbT"></span><i class="caret"></i></div><div class="chips onb-chips"><span class="chip on pop" style="--d:1700">Sorties</span><span class="chip pop" style="--d:1900">Joyeux</span><span class="chip pop" style="--d:2100">Ville</span></div></section>
-      <section class="onb-s" id="os3"><p class="mono rise">2 · ton parfum du jour</p><div class="onb-hero">${bt(A, { h: 230, spray: true })}</div><h2 class="rise" style="--d:300">${esc(A.name)}</h2><p class="soft rise" style="--d:600">${esc(A.house)}</p>
+      <section class="onb-s" id="os3"><p class="mono rise">exemple · ton parfum du jour</p><div class="onb-hero">${bt(A, { h: 230, spray: true })}</div><h2 class="rise" style="--d:300">${esc(A.name)}</h2><p class="soft rise" style="--d:600">${esc(A.house)}</p>
         <div class="onb-lay rise" style="--d:1300">${bt(B, { still: true, h: 54 })}<span><b>+ ${esc(B.name)}</b><small>l'accord qui allonge la tenue</small></span></div></section>
       <section class="onb-s" id="os4"><p class="lead rise">Sans te ruiner, sans y réfléchir : 10 secondes.</p><button class="st-btn rise" style="--d:300" id="onbGo">Trouver mon parfum</button></section>`;
     document.body.appendChild(el); document.body.style.overflow = 'hidden';

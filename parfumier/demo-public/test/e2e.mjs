@@ -44,6 +44,13 @@ await pg.fill('#pAge', '27'); await pg.click('#pDone'); await pg.waitForTimeout(
 const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).profile);
 ok(prof.gender === 'f' && prof.age === 27 && prof.dress === undefined, 'profil sauvegardé : fille, 27 ans (la tenue se demande plus tard)');
 ok(await pg.locator('#dresses .dchip').count() === 6, 'au moment de choisir le parfum : 6 tenues proposées avec icônes'); await pg.click('[data-dress=smart]'); await pg.waitForTimeout(300);
+// La collection est vide au départ (rien de fictif) : on ajoute ses parfums via le catalogue, sans IA
+ok(await pg.locator('#emptyAdd').count() === 1 && await pg.locator('.vit button').count() === 0, 'collection vide : invitation à ajouter ses parfums, aucun parfum fictif');
+await pg.click('#emptyAdd'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'tobacco'); await pg.waitForSelector('[data-sug]');
+ok(/Tobacco Vanille/.test(await pg.textContent('#addsug')), 'suggestion du catalogue pendant la frappe');
+await pg.click('[data-sug]'); await pg.type('#addtxt', 'Baccarat Rouge 540, Thé Noir 29'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 8000 });
+ok(identCalls.length === 0, 'parfums du catalogue : aucun appel à l\'IA'); await pg.click('#addok'); await pg.waitForTimeout(600);
+ok(await pg.locator('.pcard').count() === 3, 'trois parfums ajoutés à la collection'); await pg.click('[data-tab=today]'); await pg.waitForTimeout(500);
 ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
 ok(/Démo · 2 essais/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
 // 2. météo automatique
