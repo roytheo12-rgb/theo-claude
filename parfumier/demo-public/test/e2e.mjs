@@ -48,7 +48,8 @@ ok(/3 choisis/.test(await pg.textContent('.exp-foot')), 'trois parfums choisis d
 const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')));
 ok(prof.profile.gender === 'f' && prof.profile.age === 27 && prof.profile.name === 'Léa' && prof.settings.liked.includes('vanille') && prof.settings.liked.includes('cèdre'), 'profil sauvegardé : Léa, fille, 27 ans, goûts (vanille, cèdre…)');
 ok(/(Bonjour|Bon après-midi|Bonsoir), Léa\./.test(await pg.textContent('.hero h1')), 'accueil : « Bonjour, Léa. » selon l\'heure');
-ok(await pg.locator('[data-tab=walk]').count() === 0 && await pg.locator('#dock button').count() === 4, 'la balade olfactive n\'existe plus : 4 onglets');
+ok(await pg.locator('#dock button').count() === 6 && await pg.locator('[data-tab=walk]').count() === 1 && await pg.locator('[data-tab=search]').count() === 1, 'onglets : accueil, étagère, recherche, conseils, balade, wishlist');
+await pg.click('[data-tab=walk]'); await pg.waitForTimeout(400); ok(await pg.locator('.wcard').count() === 0, 'balade : aucune balade d\'exemple (la fausse « Rue Saint-Honoré » ne s\'affiche chez personne)'); await pg.click('[data-tab=today]'); await pg.waitForTimeout(300);
 ok(await pg.locator('#dresses .dchip').count() === 6, 'au moment de choisir le parfum : 6 tenues proposées avec icônes'); await pg.click('[data-dress=smart]'); await pg.waitForTimeout(300);
 ok(await pg.locator('#whens .chip').count() === 3 && await pg.locator('#venues .chip').count() === 9, 'conditions : quand (jour, soir, nuit) et où (9 types d\'endroits)');
 await pg.click('[data-venue=resto]'); await pg.click('[data-when=nuit]');
@@ -75,7 +76,7 @@ await pg.fill('#su-mail', 'test@exemple.fr'); await pg.click('#su-ok'); await pg
 ok(store.has('email:test@exemple.fr'), 'email enregistré');
 // 5. fonction verrouillée
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
-await pg.click('[data-tab=discover]'); await pg.waitForTimeout(400); await pg.fill('#askq', 'un frais'); await pg.click('#askgo'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
+await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); await pg.fill('#askq', 'un frais'); await pg.click('#askgo'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
 // 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.waitForSelector('#xfree'); await pg.click('#xfree'); await pg.waitForSelector('#addtxt');
 await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
@@ -101,7 +102,7 @@ ok(identCalls.length === nIdent + 1 && /Kilian — Moonlight in Heaven/.test(ide
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5b3. explorer la base : marques, styles, notes, prix, parfumeurs ; chaque parfum cliquable et ajoutable
 await pg.click('#addBtn'); await pg.waitForSelector('[data-xf]');
-ok(await pg.locator('[data-xf]').count() === 5, 'explorateur : 5 façons de parcourir (marques, styles, notes, prix, parfumeurs)');
+ok(await pg.locator('[data-xf]').count() === 6, 'explorateur : 6 façons de parcourir (marques, tags, styles, notes, prix, parfumeurs)');
 ok(await pg.locator('[data-xg]').count() > 100, 'explorateur : plus de 100 marques listées');
 await pg.click('[data-xg="kilian"]'); await pg.waitForSelector('.xc');
 ok(await pg.locator('.xc').count() > 5 && await pg.locator('.xth').first().isVisible(), 'explorateur : les parfums de la marque s\'affichent (avec vignettes)');
@@ -118,6 +119,19 @@ ok(/À sentir · 1/.test(await pg.textContent('.wtabs')), 'wishlist : le parfum 
 await pg.click('[data-wsm]'); await pg.waitForSelector('[data-wv=love]'); await pg.click('[data-wv=love]'); ok(/Senti · 1/.test(await pg.textContent('.wtabs')) && await pg.locator('[data-wv=love].on').count() === 1, 'wishlist : « senti » avec un verdict (J\'adore)');
 ok(await pg.locator('.card.lex h3').count() === 1, 'un mot, une astuce ou un peu d\'histoire de parfum');
 await pg.click('#profileBtn'); await pg.waitForSelector('#pname'); ok(await pg.locator('[data-sw], #newprof').count() === 0, 'profil : aucun accès aux autres profils'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
+// 5b5. tags, onglet recherche avec filtres, conseils
+await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(300); await pg.click('#addBtn'); await pg.waitForSelector('[data-xf=tag]'); await pg.click('[data-xf=tag]');
+ok(/Niche/.test(await pg.textContent('.xg')) && /Abordable/.test(await pg.textContent('.xg')) && /Collection privée/.test(await pg.textContent('.xg')) && /Luxe/.test(await pg.textContent('.xg')), 'tags : niche, abordable, luxe, collection privée…');
+await pg.click('[data-xg=prive]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'tag « collection privée » : parfums des lignes privées'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
+await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); ok(/\d{4}\s+parfums/.test((await pg.textContent('#scount')).replace(/\s/g, ' ')) || /\d+ parfums/.test(await pg.textContent('#scount')), 'recherche : le nombre de parfums s\'affiche');
+await pg.fill('#sq', 'baccarat'); await pg.waitForSelector('.xc'); ok(/Baccarat Rouge 540/.test(await pg.textContent('#sres')), 'recherche : « baccarat » trouve Baccarat Rouge 540');
+await pg.fill('#sq', ''); await pg.locator('.filters summary').click(); await pg.click('[data-st=niche]'); await pg.click('[data-st=abordable]'); await pg.waitForSelector('#sres');
+await pg.click('[data-ss=gourmand]'); await pg.waitForTimeout(300); const n1 = await pg.locator('#sres .xc').count();
+ok(n1 === 0 || /Gourmand/.test(await pg.textContent('#sres')), 'recherche : filtres tags + style combinés');
+await pg.click('[data-st=abordable]'); await pg.click('[data-st=niche]'); await pg.waitForTimeout(200);
+ok(await pg.locator('#sres .xc').count() > 0, 'recherche : un filtre se retire d\'un clic');
+await pg.locator('#sres .xc').first().click(); await pg.waitForSelector('#eown'); ok(await pg.locator('#ewish').count() === 1, 'fiche d\'un parfum : « Je l\'ai » et « À sentir »'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
+await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);
 const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });

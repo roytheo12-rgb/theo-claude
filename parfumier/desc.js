@@ -127,5 +127,29 @@
     ['Histoire', 'Diptyque', 'Née en 1961 d\'une boutique du 34 boulevard Saint-Germain, à Paris, la maison est restée liée à cette adresse.'],
     ['Histoire', 'Grasse', 'La ville de Grasse est devenue la capitale du parfum après avoir été celle du cuir : on y parfumait les gants.'],
   ];
+
+  // ---------- Tags pour trier : abordable, niche, designer, luxe, collection privée, arabe, maison historique, iconique ----------
+  const TAGS = { abordable: 'Abordable', designer: 'Designer', niche: 'Niche', luxe: 'Luxe', prive: 'Collection privée', arabe: 'Arabe / oriental', historique: 'Maison historique', iconique: 'Iconique' };
+  const H = {};
+  const put = (tag, list) => list.forEach((h) => { (H[h] = H[h] || new Set()).add(tag); });
+  put('niche', ['19-69', 'Aedes de Venustas', 'Aesop', 'Akro', 'Amouage', 'Andrea Maack', 'Andy Tauer', 'Areej le Doré', 'Atelier Cologne', 'Atelier des Ors', 'Atelier Materi', 'BDK Parfums', 'Bogue Profumo', 'Bon Parfumeur', 'Bontemps Paris', 'Bortnikoff', 'Brume Orpin', 'Byredo', 'Carner Barcelona', 'Clive Christian', 'Contes de Parfums', 'Creed', 'D.S. & Durga', 'Diptyque', 'Dries Van Noten', 'Ella K', 'Escentric Molecules', 'Essential Parfums', 'Etat Libre d\'Orange', 'Ex Nihilo', 'Filippo Sorcinelli', 'Floraïku', 'Floris', 'Fragrance du Bois', 'Francesca Bianchi', 'Frédéric Malle', 'Fueguia 1833', 'Giardini di Toscana', 'Goldfield & Banks', 'Grossmith', 'Hiram Green', 'Histoires de Parfums', 'Horace', 'Initio', 'Isabey', 'Jeroboam', 'Jo Malone', 'Jorum Studio', 'Jovoy', 'Juliette Has a Gun', 'Kilian', 'L\'Artisan Parfumeur', 'L\'Entropiste', 'Laboratorio Olfattivo', 'Le Labo', 'Les Bains Guerbois', 'Les Indémodables', 'Librery', 'Liquides Imaginaires', 'Lubin', 'Maison Crivelli', 'Maison Francis Kurkdjian', 'Maison Goutal', 'Maison Louis Marie', 'Maison Matahá', 'Maison Matine', 'Maison Rebatchi', 'Maison Tahité', 'Maison Violet', 'Mancera', 'Marc-Antoine Barrois', 'Masque Milano', 'Matière Première', 'MDCI', 'Memo Paris', 'Mendittorosa', 'Miglot', 'Miller Harris', 'Montale', 'Naomi Goodsir', 'Nasomatto', 'Nicolaï', 'Nishane', 'Nissaba', 'Nobile 1942', 'Nomenclature', 'Obvious', 'Officine Universelle Buly', 'Oman Luxury', 'Ormonde Jayne', 'Orto Parisi', 'Papillon Artisan Perfumes', 'Parfum d\'Empire', 'Parfums de Marly', 'Parle Moi de Parfum', 'Penhaligon\'s', 'Perfumer H', 'Perris Monte Carlo', 'Phaedon Paris', 'Pierre Guillaume Paris', 'Place de la Rêverie', 'Poécile', 'Profumum Roma', 'Ramon Monegal', 'Rania J', 'Réservation Parfums', 'Roja Parfums', 'Room 1015', 'Santa Maria Novella', 'Serge Lutens', 'Teo Cabanel', 'The Different Company', 'Thomas de Monaco', 'Tiziana Terenzi', 'Une Nuit Nomade', 'Vilhelm Parfumerie', 'Widian', 'Xerjoff']);
+  put('designer', ['Armani', 'Azzaro', 'Boucheron', 'Burberry', 'Bvlgari', 'Calvin Klein', 'Carolina Herrera', 'Cartier', 'Chanel', 'Courrèges', 'Dior', 'Dolce & Gabbana', 'Emporio Armani', 'Fendi', 'Givenchy', 'Gucci', 'Guerlain', 'Hermès', 'Hugo Boss', 'Issey Miyake', 'Jean Paul Gaultier', 'Kenzo', 'Lalique', 'Lancôme', 'Loewe', 'Louis Vuitton', 'Maison Margiela', 'Marc Jacobs', 'Montblanc', 'Mugler', 'Narciso Rodriguez', 'Nautica', 'Nina Ricci', 'Prada', 'Rabanne', 'Rochas', 'Tom Ford', 'Valentino', 'Van Cleef & Arpels', 'Versace', 'Viktor&Rolf', 'Yves Saint Laurent', 'Zara', 'Acqua di Parma']);
+  put('abordable', ['Afnan', 'Armaf', 'French Avenue', 'Lattafa', 'Rasasi', 'Zara', 'Nautica', 'Calvin Klein', 'Azzaro', 'Hugo Boss', 'Montblanc', 'Versace', 'Burberry', 'Kenzo', 'Issey Miyake', 'Rochas', 'Nina Ricci', 'Carolina Herrera', 'Marc Jacobs', 'Fragonard', 'Bon Parfumeur']);
+  put('luxe', ['Louis Vuitton', 'Hermès', 'Roja Parfums', 'Clive Christian', 'Creed', 'Amouage', 'Xerjoff', 'MDCI', 'Cartier', 'Van Cleef & Arpels', 'Tiziana Terenzi', 'Ormonde Jayne', 'Floris']);
+  put('arabe', ['Afnan', 'Armaf', 'French Avenue', 'Lattafa', 'Rasasi', 'Oman Luxury', 'Amouage', 'Widian', 'Areej le Doré']);
+  put('historique', ['Guerlain', 'Houbigant', 'Caron', 'Floris', 'Penhaligon\'s', 'Lubin', 'Santa Maria Novella', 'Grossmith', 'Acqua di Parma', 'Creed']);
+  // Parfums du catalogue détaillé qui sortent d'une collection privée (les autres sont repérés par la ligne d'origine dans l'index)
+  const PRIVATE = new Set(['Oud Ispahan', 'Rouge Trafalgar', 'Tobacco Vanille', 'Oud Wood', 'Tuscan Leather', 'Ombré Leather', 'Neroli Portofino', 'Lost Cherry', 'Jasmin Rouge', 'Tuxedo', 'Babycat', 'Néroli Amara']);
+  function tagsOf(name, house, price, flags) {
+    const t = new Set(H[house] || []);
+    if (price > 0 && price <= 100) t.add('abordable');
+    if (price >= 250) t.add('luxe');
+    if ((flags && String(flags).includes('P')) || PRIVATE.has(name)) { t.add('prive'); t.add('luxe'); }
+    if (DESC[name]) t.add('iconique');
+    if (t.has('luxe')) t.delete('abordable');
+    if (t.has('niche') && t.has('designer')) t.delete('designer');
+    return [...t];
+  }
+  root.TAGS = TAGS; root.tagsOf = tagsOf;
   root.DESC = DESC; root.NOSE = NOSE; root.NOSE_HOUSE = NOSE_HOUSE; root.LEX = LEX;
 })(typeof window !== 'undefined' ? window : globalThis);

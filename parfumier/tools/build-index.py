@@ -19,10 +19,12 @@ HOUSE = {
  'cartier les heures de parfum': 'Cartier', 'cartier collection': 'Cartier', 'prada olfactories': 'Prada', 'fendi private': 'Fendi',
  'givenchy la collection particuliere': 'Givenchy', 'givenchy l atelier de givenchy': 'Givenchy', 'mfk': 'Maison Francis Kurkdjian',
  'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
- 'jo malone london': 'Jo Malone', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
+ 'jo malone london': 'Jo Malone', 'ella k parfums': 'Ella K', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
  'maison martin margiela': 'Maison Margiela', 'margiela': 'Maison Margiela', 'bulgari': 'Bvlgari', 'diptyque paris': 'Diptyque', 'byredo parfums': 'Byredo', 'le labo fragrances': 'Le Labo', 'bdk': 'BDK Parfums', 'bdk parfums': 'BDK Parfums',
  'les bains guerbois': 'Les Bains Guerbois', 'memo': 'Memo Paris', 'memo paris': 'Memo Paris', 'maison crivelli': 'Maison Crivelli', 'loewe paula s ibiza': 'Loewe', 'loewe botanical rainbow': 'Loewe',
 }
+# Lignes « collection privée » des grandes maisons (repérées dans l'écriture brute de la maison) : étiquette P
+CP_KEYS = ('armani prive', 'collection privee', 'les exclusifs', 'l art la matiere', 'le gemme', 'hermessence', 'le vestiaire', 'collection extraordinaire', 'velvet collection', 'private blend', 'olfactories', 'l atelier de givenchy', 'cartier collection', 'les heures')
 PREFIX = re.compile(r'^(replica|les exclusifs|le gemme|olfactories|collection extraordinaire|eau triple)\s+', re.I)
 CONC = {'eau de parfum': 'EDP', 'eau de toilette': 'EDT', 'extrait': 'EXT', 'extrait de parfum': 'EXT', 'extreme': 'EXT', 'esprit de parfum': 'EXT',
         'parfum': 'PAR', 'parfum cologne': 'COL', 'eau de cologne': 'COL', 'eau de cologne forte': 'COL', 'cologne': 'COL', 'cologne intense': 'COL',
@@ -60,6 +62,7 @@ for line in raw:
         else: name = ' — '.join(parts[1:]).replace(' — ', ' '); conc = 'EDP'   # le dernier morceau est un nom (ex. Gucci — The Alchemist's Garden — A Gloaming Night)
     name = re.sub(r"^the alchemist.s garden\s+", '', name, flags=re.I)
     if conc is None: skipped_other += 1; continue          # brumes pour cheveux : pas des parfums
+    cp = any(k in norm(house) for k in CP_KEYS) or bool(re.search(r"alchemist.s garden", line, re.I))
     house = canon_house(house)
     name = re.sub(r'\?$', '', name).strip()
     name = PREFIX.sub('', name)
@@ -69,14 +72,15 @@ for line in raw:
     key = (norm(house), norm(name))
     if key in existing: skipped_cat += 1; continue
     if key not in seen:
-        seen[key] = {'house': house, 'name': name, 'conc': []}; order.append(key)
+        seen[key] = {'house': house, 'name': name, 'conc': [], 'p': False}; order.append(key)
     else:
         dup += 1
     if conc not in seen[key]['conc']: seen[key]['conc'].append(conc)
+    if cp: seen[key]['p'] = True
 
 by = collections.OrderedDict()
 for k in order:
-    e = seen[k]; by.setdefault(e['house'], []).append([e['name'], ','.join(sorted(e['conc'], key=['EDP', 'EDT', 'EXT', 'PAR', 'COL'].index))])
+    e = seen[k]; by.setdefault(e['house'], []).append([e['name'], ','.join(sorted(e['conc'], key=['EDP', 'EDT', 'EXT', 'PAR', 'COL'].index))] + (['P'] if e['p'] else []))
 idx = sorted(by.items(), key=lambda kv: norm(kv[0]))
 for h, arr in idx: arr.sort(key=lambda r: norm(r[0]))
 out = '// Généré par tools/build-index.py : index des parfums (maison, [[nom, concentrations]]). Les fiches (notes, famille) sont complétées à l\'ajout.\nwindow.INDEX = ' + json.dumps(idx, ensure_ascii=False, separators=(',', ':')) + ';\n// Variantes d\'écriture des maisons (Jo Malone London -> Jo Malone) : appliquées aux collections existantes.\nwindow.HOUSE_ALIAS = ' + json.dumps(HOUSE, ensure_ascii=False, separators=(',', ':')) + ';\n'

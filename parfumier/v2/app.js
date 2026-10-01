@@ -51,9 +51,10 @@
   const seedWish = () => window.WISH.map(wishFromName);
   const DEMO = /[?&]seed=demo/.test(location.search); // outillage (vidéos, tests) : charge une collection d'exemple
   const DEMO_V = 18;
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
   function migrate() {
-    delete S.walks;
+    // La balade d'exemple (« Rue Saint-Honoré ») s'affichait chez tout le monde : elle est retirée de tous les comptes.
+    S.walks = (S.walks || []).filter((x) => !x.seed && x.id !== 'w-honore');
     if ((S.seedV || 1) < DEMO_V) {
       if (DEMO) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; }
       else {
@@ -233,8 +234,8 @@
   // ---------- Vues ----------
   function render(keepScroll) {
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
-    $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'discover', 'wish'].indexOf(tab) * 100}%)`;
-    ({ today: viewToday, shelf: viewShelf, discover: viewDiscover, wish: viewWish })[tab]();
+    $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'walk', 'wish'].indexOf(tab) * 100}%)`;
+    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, walk: viewWalk, wish: viewWish })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
   }
 
@@ -357,11 +358,55 @@
       ${idle.length ? `<header style="margin-top:6px"><h2 style="font-size:19px">À ressortir</h2><span class="mono">pas portés depuis 3 sem.</span></header><div class="strip">${idle.map((p) => `<button class="mini" data-open="${p.id}" style="border:0;background:none;padding:0">${bt(p, { still: true })}<b>${esc(p.name)}</b></button>`).join('')}</div>` : ''}</section>`;
   }
 
-  function viewDiscover() {
-    const s = S.settings;
-    RECS = E.recommend(CAT.filter((c) => c.notes.length), S.collection, S.wishlist.map((w) => w.name), s).filter((r) => !s.budget || r.c.price <= s.budget).sort((a, b) => b.total - a.total).slice(0, 8);
+  // ---------- Conseils : compléter ta collection, ce qui t'irait, par envie ----------
+  function tipsData() {
+    const P = S.collection, st = S.settings, cat = CAT.filter((c) => c.notes.length), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
+    const ok = (c) => !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!st.budget || !c.price || c.price <= st.budget);
+    const out = { gaps: [], recs: [], tags: [], tips: [] };
+    if (P.length) {
+      const cov = E.coverage(P).sort((x, y) => x.best - y.best), used = new Set();
+      for (const { sc, best, bestP } of cov) {
+        if (out.gaps.length >= 3) break;
+        const cand = cat.filter((c) => ok(c) && !used.has(c.name)).map((c) => ({ c, v: E.score(c, sc.c).total })).sort((x, y) => y.v - x.v)[0];
+        if (!cand || cand.v - best < 1) continue;
+        used.add(cand.c.name); out.gaps.push({ sc, bestP, c: cand.c });
+      }
+    }
+    const all = E.recommend(cat, P, S.wishlist.map((w) => w.name), st).sort((x, y) => y.total - x.total);
+    out.recs = all.filter((r) => !st.budget || r.c.price <= st.budget).slice(0, 8);
+    const tg = window.tagsOf || (() => []);
+    [['niche', 'Un niche pour toi'], ['abordable', 'Un abordable qui te va'], ['luxe', 'Un coup de luxe'], ['prive', 'Une collection privée']].forEach(([t, label]) => { const r = all.find((x) => tg(x.c.name, x.c.house, x.c.price, '').includes(t)); if (r) out.tags.push({ label, r }); });
+    if (P.length >= 3) {
+      const fam = {}; P.forEach((p) => { fam[p.family] = (fam[p.family] || 0) + 1; });
+      const top = Object.entries(fam).sort((x, y) => y[1] - x[1])[0];
+      if (P.length >= 5 && top[1] / P.length >= 0.4) out.tips.push(`Tu as surtout du ${famLabel(top[0]).toLowerCase()} (${top[1]} sur ${P.length}). Un parfum d'une autre famille te donnerait plus de choix.`);
+      if (!P.some((p) => ['agrumes', 'aquatique', 'aromatique', 'vert'].includes(p.family))) out.tips.push('Rien de vraiment frais dans ta collection : un agrume ou un aquatique sauverait les grosses chaleurs.');
+      if (P.every((p) => (p.weight || 3) <= 3)) out.tips.push('Rien d\'enveloppant pour l\'hiver : un ambré, un gourmand ou un oud ferait du bien.');
+      if (P.every((p) => (p.projection || 3) >= 4)) out.tips.push('Que des parfums puissants : prends-en un discret pour le bureau et les ascenseurs.');
+      const old = P.map((p) => ({ p, d: daysSince(p.id) })).filter((x) => x.d != null && x.d >= 30).sort((x, y) => y.d - x.d)[0];
+      if (old) out.tips.push(`${old.p.name} dort depuis ${old.d} jours : ressors-le avant d'en racheter un autre.`);
+      if (P.filter((p) => E.stockOf(p).ml <= 10).length >= 2) out.tips.push('Tu as plusieurs échantillons : si l\'un d\'eux te plaît vraiment, pense au flacon complet.');
+    }
+    out.tips = out.tips.slice(0, 4); out.tips.push('Avant d\'acheter à l\'aveugle, teste sur ta peau 20 à 30 minutes : un parfum change beaucoup entre la mouillette et la peau.');
+    return out;
+  }
+  function tipCard(c, lead, body, extra) {
+    return `<article class="card tipc"><div class="tiph">${bt(c, { still: true, h: 72 })}<div><p class="mono">${esc(lead)}</p><b>${esc(c.name)}</b><small>${esc(c.house)}${c.family ? ' · ' + esc(famLabel(c.family)) : ''}${c.price ? ' · ≈ ' + c.price + ' €' : ''}</small></div></div><p class="rd">${body}</p>${extra || ''}<div class="row"><button class="ghost" data-rw="${esc(c.name)}">${hasWish(c.name) ? 'Dans ma wishlist' : 'À sentir'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div></article>`;
+  }
+  function viewTips() {
+    const s = S.settings, T = tipsData(); RECS = T.recs;
+    const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
     $('#view').innerHTML = `
-      <section class="sec"><header><h2>Découvrir</h2></header>
+      <section class="sec"><header><h2>Conseils</h2><span class="mono">pour toi</span></header>
+        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Mes conseils partent de ce que tu as déjà : ce qui te manque, ce qui te plaît.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
+        ${T.gaps.length ? `<p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}` : ''}
+        ${T.tips.length && S.collection.length ? `<div class="card"><p class="mono">Ta collection en bref</p><ul class="tiplist">${T.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+      </section>
+      <section class="sec"><header><h2>On pense que ça t'irait</h2><span class="mono">tes goûts</span></header>
+        ${T.recs.length ? `<div class="snap">${T.recs.slice(0, 6).map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
+      </section>
+      ${T.tags.length ? `<section class="sec"><header><h2>Par envie</h2><span class="mono">niche, luxe, abordable…</span></header>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</section>` : ''}
+      <section class="sec">
         <div class="card" style="display:grid;gap:8px"><div class="row" style="justify-content:space-between"><b>Budget par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
           <input type="range" id="budget" min="0" max="500" step="10" value="${s.budget || 0}" aria-label="Budget par flacon"><p class="mono">prix indicatifs · à vérifier chez le vendeur</p></div>
         <div class="card ask-card"><p class="mono">${IC.spark} demande à l'IA</p>
@@ -369,19 +414,16 @@
           <div class="chips" id="askchips">${['un frais niche pour le bureau', 'quelque chose de très enveloppant pour l\'hiver', 'un layering pour Baccarat Rouge'].map((t) => `<button class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>
           <button class="cta" id="askgo">${IC.spark}<span>Me conseiller</span></button><div id="askres" class="aires"></div></div>
       </section>
-      <section class="sec"><header><h2>Choisis pour toi</h2><span class="mono">goûts × manques × budget</span></header>
-        ${RECS.length ? `<div class="snap">${RECS.map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
-      </section>
-      ${lexCard()}
-      `;
+      ${lexCard()}`;
     bindLex();
+    if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
-    bud.addEventListener('change', () => { save(); viewDiscover(); });
+    bud.addEventListener('change', () => { save(); viewTips(); });
     $$('[data-q]').forEach((b) => (b.onclick = () => { $('#askq').value = b.dataset.q; }));
     $('#askgo').onclick = runAsk;
-    $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); viewDiscover(); }));
-    $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c, 4)); rmWish(c.name); save(); viewDiscover(); } }));
+    $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); viewTips(); }));
+    $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c, 4)); rmWish(c.name); save(); viewTips(); } }));
     $$('[data-why]').forEach((b) => (b.onclick = () => explain(b)));
     mountFx($('#view'));
   }
@@ -533,9 +575,9 @@
   let DBL = null;
   function dbList() {
     if (DBL && DBL.n === CAT.length) return DBL.l;
-    const out = [], seen = new Set(), nose = (n, h) => (window.NOSE && window.NOSE[n]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[h]) || '';
-    CAT.forEach((c) => { if (!c.name || !c.house) return; seen.add(E.norm(c.house + ' ' + c.name)); out.push({ name: c.name, house: c.house, conc: '', cat: c, family: c.family, notes: c.notes || [], price: c.price || 0, nose: nose(c.name, c.house), guess: false }); });
-    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const g = guessInfo(n); out.push({ name: n, house: h, conc, cat: null, family: g.family, notes: g.notes, weight: g.weight, price: 0, nose: nose(n, h), guess: true }); }));
+    const out = [], seen = new Set(), HA = window.HOUSE_ALIAS || {}, ch = (h) => (h && HA[E.norm(h)]) || h, tg = window.tagsOf || (() => []), nose = (n, h) => (window.NOSE && window.NOSE[n]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[h]) || '';
+    CAT.forEach((c) => { if (!c.name || !c.house) return; const h = ch(c.house); seen.add(E.norm(h + ' ' + c.name)); out.push({ name: c.name, house: h, conc: '', cat: c, family: c.family, notes: c.notes || [], price: c.price || 0, nose: nose(c.name, h), guess: false, tags: tg(c.name, h, c.price || 0, '') }); });
+    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc, fl]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const g = guessInfo(n); out.push({ name: n, house: h, conc, cat: null, family: g.family, notes: g.notes, weight: g.weight, price: 0, nose: nose(n, h), guess: true, tags: tg(n, h, 0, fl) }); }));
     DBL = { n: CAT.length, l: out }; return out;
   }
   const PRICE_TIERS = [['p1', 'Moins de 100 €', (p) => p > 0 && p < 100], ['p2', '100 à 200 €', (p) => p >= 100 && p < 200], ['p3', '200 à 300 €', (p) => p >= 200 && p < 300], ['p4', '300 € et plus', (p) => p >= 300]];
@@ -545,9 +587,10 @@
     else if (facet === 'style') db.forEach((e) => { if (e.family) put(e.family, famLabel(e.family), e); });
     else if (facet === 'note') db.forEach((e) => { const nn = (e.notes || []).map(E.norm); FACET_NOTES.forEach((f) => { const nf = E.norm(f); if (nn.some((x) => x.includes(nf))) put(nf, f, e); }); });
     else if (facet === 'price') db.forEach((e) => { const t = PRICE_TIERS.find((x) => x[2](e.price)); if (t) put(t[0], t[1], e); });
+    else if (facet === 'tag') db.forEach((e) => (e.tags || []).forEach((t) => put(t, (window.TAGS || {})[t] || t, e)));
     else if (facet === 'nose') db.forEach((e) => { if (e.nose) e.nose.split(/ et |, /).forEach((n) => put(E.norm(n), n.trim(), e)); });
     let g = [...m.values()];
-    g = facet === 'brand' || facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
+    g = facet === 'brand' || facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'tag' ? g.sort((a, b) => Object.keys(window.TAGS || {}).indexOf(a.key) - Object.keys(window.TAGS || {}).indexOf(b.key)) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
     return g;
   }
   const entryKey = (e) => E.norm(e.house + ' ' + e.name);
@@ -555,6 +598,7 @@
     if (e.cat) return Object.assign(fromCat(e.cat, 4), { size: 100, left: 100, use: 'free' });
     return { id: uid(), name: e.name, house: e.house, family: e.family || 'boisé', notes: (e.notes || []).slice(), projection: 3, longevity: 3, weight: e.weight || 3, price: 0, rating: 4, occ: [], incomplete: true, guessed: true, size: 100, left: 100, use: 'free' };
   }
+  const tagPills = (e) => (e.tags && e.tags.length ? `<span class="xtg">${e.tags.slice(0, 3).map((t) => `<i>${esc((window.TAGS || {})[t] || t)}</i>`).join('')}</span>` : '');
   const xThumb = (e) => { const ph = imgOf(e); return ph && !S.settings.publicMode ? `<img class="xth" alt="" loading="lazy" src="${esc(ph.s)}">` : `<span class="xth">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'x' + E.norm(e.house + e.name).length }, { still: true, h: 64 })}</span>`; };
   // mountExplorer : le même explorateur sert à l'ajout en collection, à la wishlist et à l'inscription.
   function mountExplorer(host, o) {
@@ -562,12 +606,12 @@
     const haveIt = (e) => (o.mode === 'wish' ? S.wishlist : S.collection).some((p) => E.norm(p.name) === E.norm(e.name));
     const sub = (e) => [e.house, e.family ? (e.guess ? '≈ ' : '') + famLabel(e.family) : '', e.conc && e.conc !== 'EDP' ? e.conc.split(',').map((x) => CONC_L[x] || x).join('/') : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · ');
     const card = (e, i) => { const k = entryKey(e), have = haveIt(e), on = sel.has(k), d = window.DESC && window.DESC[e.name];
-      return `<button type="button" class="xc ${on ? 'on' : ''}" data-xk="${esc(k)}" ${have ? 'disabled' : ''}>${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc(sub(e))}</small>${d && e.cat ? `<em>${esc(d[1])}</em>` : ''}</span><i class="xm">${have ? '✓ ' + (o.mode === 'wish' ? 'dans ta wishlist' : 'chez toi') : on ? '✓' : '+'}</i></button>`; };
+      return `<button type="button" class="xc ${on ? 'on' : ''}" data-xk="${esc(k)}" ${have ? 'disabled' : ''}>${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc(sub(e))}</small>${d && e.cat ? `<em>${esc(d[1])}</em>` : ''}${tagPills(e)}</span><i class="xm">${have ? '✓ ' + (o.mode === 'wish' ? 'dans ta wishlist' : 'chez toi') : on ? '✓' : '+'}</i></button>`; };
     const popular = () => { const names = Object.keys(window.DESC || {}), L = dbList(), by = new Map(L.filter((e) => e.cat).map((e) => [e.name, e])); return names.map((n) => by.get(n)).filter(Boolean).sort((a, b) => (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0)).slice(0, 24); };
     const search = (qq) => { const nq = E.norm(qq), L = dbList(); return L.map((e) => { const n = E.norm(e.name), h = E.norm(e.house), nh = h + ' ' + n; const r = n === nq ? 0 : n.startsWith(nq) ? 1 : nh.startsWith(nq) ? 2 : n.includes(nq) ? 3 : nh.includes(nq) ? 4 : nq.split(' ').every((w) => nh.includes(w)) ? 5 : 9; return { e, r }; }).filter((x) => x.r < 9).sort((a, b) => a.r - b.r || (b.e.cat ? 1 : 0) - (a.e.cat ? 1 : 0)).slice(0, 80).map((x) => x.e); };
     const foot = () => { const n = sel.size; return `<div class="exp-foot"><span class="mono">${n ? n + ' choisi' + (n > 1 ? 's' : '') : 'Touche un parfum pour le choisir'}</span><button class="cta" id="xgo" ${n ? '' : 'disabled'}><span>${esc(o.cta(n))}</span></button></div>`; };
     function body() {
-      const db = dbList(), tabs = [['brand', 'Marques'], ['style', 'Styles'], ['note', 'Notes'], ['price', 'Prix'], ['nose', 'Parfumeurs']];
+      const db = dbList(), tabs = [['brand', 'Marques'], ['tag', 'Tags'], ['style', 'Styles'], ['note', 'Notes'], ['price', 'Prix'], ['nose', 'Parfumeurs']];
       let inner = '';
       if (q.trim().length >= 2) { const r = search(q); inner = r.length ? `<div class="xgrid">${r.map(card).join('')}</div>` : '<div class="empty">Rien trouvé. Essaie la marque, ou écris-le toi-même plus bas.</div>'; }
       else {
@@ -576,6 +620,7 @@
         if (!group) {
           if (facet === 'brand') inner += `<p class="mono">Les incontournables</p><div class="xpop">${popular().map((e) => { const k = entryKey(e), on = sel.has(k); return `<button type="button" class="xp ${on ? 'on' : ''}" data-xk="${esc(k)}" ${haveIt(e) ? 'disabled' : ''}>${xThumb(e)}<b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`; }).join('')}</div><p class="mono">Toutes les marques · ${gs.length}</p>`;
           else if (facet === 'style' || facet === 'note') inner += `<p class="mono" style="text-transform:none;letter-spacing:0">${facet === 'style' ? 'Pour les parfums sans fiche détaillée, le style est déduit du nom (≈).' : 'Notes des fiches détaillées, ou lues dans le nom du parfum.'}</p>`;
+          else if (facet === 'tag') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Abordable, niche, designer, luxe, collection privée… pour trier d\'un coup d\'œil.</p>';
           else if (facet === 'price') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Prix indicatifs d\'un flacon standard, pour les parfums avec fiche détaillée.</p>';
           else inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Les parfumeurs connus et sûrs : la liste grandit avec la base.</p>';
           inner += `<div class="chips xg">${gs.map((g) => `<button type="button" class="chip" data-xg="${esc(g.key)}">${esc(g.label)} <small style="color:var(--muted)">${g.items.length}</small></button>`).join('') || '<span class="mono">Rien ici pour l\'instant</span>'}</div>`;
@@ -601,6 +646,83 @@
     }
     function bindGo() { const g = $('#xgo', host); if (g) g.onclick = () => o.onSubmit([...sel.values()]); }
     body();
+  }
+  // ---------- Recherche : un parfum en particulier, avec filtres ----------
+  const SRCH = { open: false, q: '', tags: [], style: '', price: '', house: '', note: '', nose: '', conc: '', photo: false, limit: 40 };
+  function filterDb() {
+    const db = dbList(), nq = E.norm(SRCH.q), tier = PRICE_TIERS.find((x) => x[0] === SRCH.price), nn = SRCH.note ? E.norm(SRCH.note) : '';
+    const r = db.filter((e) => {
+      if (SRCH.tags.length && !SRCH.tags.every((t) => (e.tags || []).includes(t))) return false;
+      if (SRCH.style && e.family !== SRCH.style) return false;
+      if (tier && !tier[2](e.price)) return false;
+      if (SRCH.house && e.house !== SRCH.house) return false;
+      if (nn && !(e.notes || []).some((x) => E.norm(x).includes(nn))) return false;
+      if (SRCH.nose && !(e.nose || '').includes(SRCH.nose)) return false;
+      if (SRCH.conc && !(e.conc || '').split(',').includes(SRCH.conc)) return false;
+      if (SRCH.photo && !imgOf(e)) return false;
+      if (nq) { const nh = E.norm(e.house + ' ' + e.name); if (!nq.split(' ').every((w) => nh.includes(w))) return false; }
+      return true;
+    });
+    const rank = (e) => { if (!nq) return 5; const n = E.norm(e.name); return n === nq ? 0 : n.startsWith(nq) ? 1 : E.norm(e.house + ' ' + e.name).startsWith(nq) ? 2 : n.includes(nq) ? 3 : 4; };
+    return r.sort((a, b) => rank(a) - rank(b) || (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0) || a.name.localeCompare(b.name, 'fr'));
+  }
+  function rowCard(e) {
+    const d = window.DESC && window.DESC[e.name], inCol = S.collection.some((p) => E.norm(p.name) === E.norm(e.name)), inW = hasWish(e.name);
+    return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? (e.guess ? '≈ ' : '') + famLabel(e.family) : '', e.conc && e.conc !== 'EDP' ? e.conc.split(',').map((x) => CONC_L[x] || x).join('/') : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small>${d && e.cat ? `<em>${esc(d[1])}</em>` : ''}${tagPills(e)}</span><i class="xm">${inCol ? '✓ chez toi' : inW ? '♡ wishlist' : '›'}</i></button>`;
+  }
+  function drawSearchResults() {
+    const r = filterDb(), box = $('#sres'); if (!box) return;
+    $('#scount').textContent = r.length + ' parfum' + (r.length > 1 ? 's' : '');
+    box.innerHTML = r.length ? `<div class="xgrid">${r.slice(0, SRCH.limit).map(rowCard).join('')}</div>${r.length > SRCH.limit ? '<button type="button" class="ghost" id="smore">Voir plus</button>' : ''}` : '<div class="empty">Aucun parfum ne correspond. Enlève un filtre ou change les mots.</div>';
+    const look = {}; dbList().forEach((e) => { look[entryKey(e)] = e; });
+    $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = look[b.dataset.ent]; if (e) openEntry(e); }));
+    if ($('#smore', box)) $('#smore', box).onclick = () => { SRCH.limit += 40; drawSearchResults(); };
+  }
+  function viewSearch() {
+    const db = dbList(), houses = [...new Set(db.map((e) => e.house))].sort((a, b) => a.localeCompare(b, 'fr')), noses = [...new Set(db.flatMap((e) => (e.nose ? e.nose.split(/ et |, /) : [])))].sort((a, b) => a.localeCompare(b, 'fr'));
+    const sel = (id, label, opts, val) => `<label class="sel"><span class="mono">${label}</span><select id="${id}"><option value="">Tous</option>${opts.map((o) => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></label>`;
+    const nF = SRCH.tags.length + (SRCH.style ? 1 : 0) + (SRCH.price ? 1 : 0) + (SRCH.house ? 1 : 0) + (SRCH.note ? 1 : 0) + (SRCH.nose ? 1 : 0) + (SRCH.conc ? 1 : 0) + (SRCH.photo ? 1 : 0);
+    $('#view').innerHTML = `
+      <section class="sec"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
+        <input type="search" id="sq" placeholder="Un parfum, une marque…" value="${esc(SRCH.q)}" autocomplete="off" aria-label="Rechercher un parfum">
+        <div class="chips actf">${[...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note : ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean).map(([k, l]) => `<button class="chip on" data-xa="${esc(k)}">${esc(l)} ✕</button>`).join('')}</div>
+        <details class="filters" ${SRCH.open ? 'open' : ''}><summary class="mono">Filtres${nF ? ' · ' + nF : ''}</summary>
+          <p class="mono">Tags</p><div class="chips">${Object.entries(window.TAGS || {}).map(([k, v]) => `<button class="chip ${SRCH.tags.includes(k) ? 'on' : ''}" data-st="${k}">${esc(v)}</button>`).join('')}</div>
+          <p class="mono">Style</p><div class="chips">${Object.keys(E.FAMILIES).map((k) => `<button class="chip ${SRCH.style === k ? 'on' : ''}" data-ss="${k}">${esc(famLabel(k))}</button>`).join('')}</div>
+          <p class="mono">Prix</p><div class="chips">${PRICE_TIERS.map(([k, l]) => `<button class="chip ${SRCH.price === k ? 'on' : ''}" data-sp="${k}">${l}</button>`).join('')}</div>
+          <p class="mono">Concentration</p><div class="chips">${[['EDT', 'Eau de toilette'], ['EDP', 'Eau de parfum'], ['EXT', 'Extrait'], ['PAR', 'Parfum'], ['COL', 'Cologne']].map(([k, l]) => `<button class="chip ${SRCH.conc === k ? 'on' : ''}" data-sc2="${k}">${l}</button>`).join('')}<button class="chip ${SRCH.photo ? 'on' : ''}" data-sph="1">Avec photo</button></div>
+          <div class="selrow">${sel('sh', 'Marque', houses, SRCH.house)}${sel('sn', 'Note', FACET_NOTES.slice().sort((a, b) => a.localeCompare(b, 'fr')), SRCH.note)}${sel('sno', 'Parfumeur', noses, SRCH.nose)}</div>
+          ${nF ? '<button class="ghost" id="sreset">Tout effacer</button>' : ''}
+        </details>
+        <div id="sres"></div></section>`;
+    const re = () => { SRCH.limit = 40; viewSearch(); };
+    $('.filters').addEventListener('toggle', (e) => { SRCH.open = e.target.open; });
+    $$('[data-xa]').forEach((b) => (b.onclick = () => { const k = b.dataset.xa; if (k.startsWith('t:')) SRCH.tags = SRCH.tags.filter((x) => x !== k.slice(2)); else if (k === 'photo') SRCH.photo = false; else SRCH[k] = ''; re(); }));
+    $('#sq').addEventListener('input', (e) => { SRCH.q = e.target.value; SRCH.limit = 40; drawSearchResults(); });
+    $$('[data-st]').forEach((b) => (b.onclick = () => { const k = b.dataset.st, i = SRCH.tags.indexOf(k); if (i >= 0) SRCH.tags.splice(i, 1); else SRCH.tags.push(k); re(); }));
+    $$('[data-ss]').forEach((b) => (b.onclick = () => { SRCH.style = SRCH.style === b.dataset.ss ? '' : b.dataset.ss; re(); }));
+    $$('[data-sp]').forEach((b) => (b.onclick = () => { SRCH.price = SRCH.price === b.dataset.sp ? '' : b.dataset.sp; re(); }));
+    $$('[data-sc2]').forEach((b) => (b.onclick = () => { SRCH.conc = SRCH.conc === b.dataset.sc2 ? '' : b.dataset.sc2; re(); }));
+    if ($('[data-sph]')) $('[data-sph]').onclick = () => { SRCH.photo = !SRCH.photo; re(); };
+    $('#sh').onchange = (e) => { SRCH.house = e.target.value; re(); }; $('#sn').onchange = (e) => { SRCH.note = e.target.value; re(); }; $('#sno').onchange = (e) => { SRCH.nose = e.target.value; re(); };
+    if ($('#sreset')) $('#sreset').onclick = () => { Object.assign(SRCH, { tags: [], style: '', price: '', house: '', note: '', nose: '', conc: '', photo: false, limit: 40 }); viewSearch(); };
+    drawSearchResults();
+  }
+  // Fiche d'un parfum de la base : description, tags, notes, et les actions (collection, wishlist)
+  function openEntry(e) {
+    const inCol = S.collection.some((p) => E.norm(p.name) === E.norm(e.name)), inW = hasWish(e.name), d = window.DESC && window.DESC[e.name];
+    const pn = openSheet(`
+      <div class="big-bottle">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'e' + E.norm(e.name).length }, { spray: true })}</div>
+      <div><h2>${esc(e.name)}</h2><p class="mono" style="margin-top:6px">${esc(e.house)}${e.family ? ' · ' + (e.guess ? '≈ ' : '') + esc(famLabel(e.family)) : ''}${e.conc ? ' · ' + esc(e.conc.split(',').map((x) => CONC_L[x] || x).join(' / ')) : ''}</p></div>
+      ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
+      ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
+      ${(e.notes || []).length ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
+      <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.nose ? 'Créé par ' + e.nose : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>
+      <div class="row">${inCol ? '<span class="mono">Dans ta collection ✓</span>' : '<button class="cta" id="eown"><span>Je l\'ai</span></button>'}${inW ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="ghost" id="ewish">À sentir</button>'}<button class="ghost" id="ex">Fermer</button></div>
+      ${buyLinks(e.name, e.house)}`);
+    $('#ex', pn).onclick = closeSheet;
+    if ($('#eown', pn)) $('#eown', pn).onclick = () => { addEntriesToCollection([e]); closeSheet(); render(true); };
+    if ($('#ewish', pn)) $('#ewish', pn).onclick = () => { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); save(); closeSheet(); render(true); };
   }
   function addEntriesToCollection(list) { list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); }
   function openExplore(mode) {
@@ -1049,8 +1171,129 @@
     const [k, t, x] = L[LEXI % L.length];
     return `<section class="sec"><div class="card lex"><p class="mono">${k === 'Mot' ? 'Un mot de parfumeur' : k === 'Astuce' ? 'Une astuce' : 'Un peu d\'histoire'}</p><h3>${esc(t)}</h3><p>${esc(x)}</p><button class="linkbtn" data-lex>Un autre</button></div></section>`;
   }
-  function bindLex() { $$('[data-lex]').forEach((b) => (b.onclick = () => { LEXI = (LEXI + 1) % (window.LEX || [1]).length; if (tab === 'wish') viewWish(); else viewDiscover(); })); }
+  function bindLex() { $$('[data-lex]').forEach((b) => (b.onclick = () => { LEXI = (LEXI + 1) % (window.LEX || [1]).length; if (tab === 'wish') viewWish(); else viewTips(); })); }
 
+  // ---------- Balade olfactive ----------
+  const SYMS = [
+    ['un rond', '<circle cx="24" cy="24" r="13"/>'],
+    ['une croix', '<path d="M13 13L35 35M35 13L13 35"/>'],
+    ['un plus', '<path d="M24 9v30M9 24h30"/>'],
+    ['un triangle', '<path d="M24 9L39 37H9z"/>'],
+    ['un carré', '<rect x="11" y="11" width="26" height="26"/>'],
+    ['un losange', '<path d="M24 7L41 24L24 41L7 24z"/>'],
+    ['une vague', '<path d="M6 24q6.5-12 12.5 0t12.5 0t12 0"/>'],
+    ['deux traits', '<path d="M10 17h28M10 31h28"/>'],
+    ['un point', '<circle cx="24" cy="24" r="4" fill="currentColor"/>'],
+    ['une étoile', '<path d="M24 8l4.7 10.6 11.5 1-8.7 7.6 2.6 11.3L24 32.6 13.9 38.5l2.6-11.3L7.8 19.6l11.5-1z"/>'],
+    ['une flèche', '<path d="M8 24h30M28 13l11 11-11 11"/>'],
+    ['un zigzag', '<path d="M7 31l8.5-14 8.5 14 8.5-14 8.5 14"/>'],
+    ['trois points', '<circle cx="12" cy="24" r="3" fill="currentColor"/><circle cx="24" cy="24" r="3" fill="currentColor"/><circle cx="36" cy="24" r="3" fill="currentColor"/>'],
+    ['un demi-cercle', '<path d="M9 31a15 15 0 0 1 30 0z"/>'],
+    ['un rond barré', '<circle cx="24" cy="24" r="13"/><path d="M15 33L33 15"/>'],
+    ['un L', '<path d="M15 9v30h20"/>'],
+  ];
+  const symSvg = (i, px, cls) => `<svg class="sym ${cls || ''}" width="${px}" height="${px}" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="${esc(SYMS[i][0])}">${SYMS[i][1]}</svg>`;
+  const RATE = { love: 'J\'adore', ok: 'Bien', no: 'Bof' };
+  let WALK = null, WSEG = 'list', WPEND = null, WRATE = 'ok', WFIND = null;
+  const walkDate = (w) => new Date(w.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+  const nextSym = (w) => { const used = new Set(w.entries.map((e) => e.sym)); for (let i = 0; i < SYMS.length; i++) if (!used.has(i)) return i; return w.entries.length % SYMS.length; };
+
+  function viewWalk() {
+    const w = S.walks.find((x) => x.id === WALK);
+    if (!w) {
+      $('#view').innerHTML = `
+        <section class="sec"><header><h2>Balade olfactive</h2></header>
+          <p style="color:var(--muted)">Tu testes des parfums en boutique ? Photographie ou note chaque touche : je te donne un symbole à dessiner dessus pour savoir, plus tard, quelle touche est quel parfum.</p>
+          <button class="cta full" id="wNew"><span>Commencer une balade</span></button></section>
+        ${S.walks.length ? `<section class="sec"><header><h2 style="font-size:20px">Tes balades</h2></header>${[...S.walks].reverse().map((x) => `<button class="wcard" data-w="${x.id}"><span><b>${esc(x.place || 'Balade')}</b><small>${esc(walkDate(x))} · ${x.entries.length} touche${x.entries.length > 1 ? 's' : ''}</small></span><span class="symrow">${x.entries.slice(0, 7).map((e) => symSvg(e.sym, 22)).join('')}</span></button>`).join('')}</section>` : ''}`;
+      $('#wNew').onclick = () => {
+        const pn = openSheet(`<div><h2>Nouvelle balade</h2><p style="color:var(--muted);margin-top:6px">Où testes-tu aujourd'hui ?</p></div><input type="text" id="wplace" placeholder="Rue Saint-Honoré, Marais… (facultatif)"><button class="cta full" id="wgo2"><span>C'est parti</span></button>`);
+        $('#wgo2', pn).onclick = () => { const w2 = { id: uid(), date: today(), place: $('#wplace', pn).value.trim(), entries: [] }; S.walks.push(w2); save(); WALK = w2.id; WSEG = 'list'; closeSheet(); viewWalk(); };
+      };
+      $$('[data-w]').forEach((b) => (b.onclick = () => { WALK = b.dataset.w; WSEG = 'list'; WPEND = null; viewWalk(); }));
+      return;
+    }
+    const n = w.entries.length, sym = nextSym(w);
+    $('#view').innerHTML = `
+      <section class="sec" style="margin-top:18px"><button class="ghost" id="wBack" style="justify-self:start">← Balades</button>
+        <header><h2>${esc(w.place || 'Balade olfactive')}</h2><span class="mono">${esc(walkDate(w))} · ${n} touche${n > 1 ? 's' : ''}</span></header></section>
+      <section class="sec" style="margin-top:14px"><div class="card wadd">
+        <div class="symhint">${symSvg(sym, 64, 'big')}<div><p class="mono">Touche n° ${n + 1}</p><p style="font-size:17px;margin-top:4px">Dessine <b>${esc(SYMS[sym][0])}</b> au dos de la touche.</p></div></div>
+        <input type="text" id="wname" placeholder="Nom du parfum, ou prends-le en photo">
+        <textarea id="wnote" rows="2" placeholder="Ce que tu sens : ouverture, cœur, ce que ça évoque…"></textarea>
+        <div class="chips" id="wrate">${Object.entries(RATE).map(([k, v]) => `<button class="chip ${WRATE === k ? 'on' : ''}" data-r="${k}">${v}</button>`).join('')}</div>
+        <div class="row"><button class="chip photo-btn" id="wph">${WPEND && WPEND.file ? `<img alt="" src="${URL.createObjectURL(WPEND.file)}">` : IC.cam}<span>${WPEND && WPEND.file ? 'Photo ajoutée' : 'Photographier le flacon'}</span></button><input type="file" id="wphin" accept="image/*" capture="environment" hidden></div>
+        <p class="mono" id="wai" style="text-transform:none;letter-spacing:0"></p>
+        <button class="cta full" id="wAdd"><span>Enregistrer la touche</span></button></div></section>
+      ${n ? `<div class="seg" id="wseg"><button data-s="list" class="${WSEG === 'list' ? 'on' : ''}">Mes touches</button><button data-s="find" class="${WSEG === 'find' ? 'on' : ''}">Retrouver une touche</button></div>` : ''}
+      <section class="sec" style="margin-top:14px" id="wbody">${WSEG === 'find' && n ? walkFind(w) : [...w.entries].reverse().map((e) => walkEntry(e)).join('')}</section>
+      ${n ? `<section class="sec"><button class="ghost" id="wSum" style="justify-self:start">Faire le bilan de la balade</button><div id="wsumres" style="display:grid;gap:12px"></div></section>` : ''}`;
+    $('#wBack').onclick = () => { WALK = null; WPEND = null; viewWalk(); };
+    $$('#wrate .chip').forEach((c) => (c.onclick = () => { WRATE = c.dataset.r; $$('#wrate .chip').forEach((x) => x.classList.toggle('on', x === c)); }));
+    $('#wph').onclick = () => $('#wphin').click();
+    $('#wphin').onchange = async (e) => {
+      const f = e.target.files[0]; if (!f) return; WPEND = { file: f };
+      const keepName = $('#wname').value, keepNote = $('#wnote').value; viewWalk(); $('#wname').value = keepName; $('#wnote').value = keepNote;
+      if (!CAN_IMG) return;
+      const st = $('#wai'); st.textContent = 'Je lis le flacon…';
+      try {
+        const j = await aiJson(`Cette photo montre un flacon de parfum (ou son étiquette) que je viens de sentir en boutique. Identifie-le. Réponds UNIQUEMENT par un JSON : {"name":"nom officiel, vide si illisible","house":"maison","family":"${FAMS}","notes":["jusqu'à 8 notes en français"],"confidence":0 à 1}`, { modelTier: 'default', images: [f] });
+        WPEND.info = j;
+        if (j.name) { if (!$('#wname').value) $('#wname').value = j.name; st.textContent = 'Reconnu : ' + j.name + (j.house ? ' · ' + j.house : ''); } else st.textContent = 'Flacon non reconnu : note le nom.';
+      } catch (er) { st.textContent = 'Reconnaissance indisponible : note le nom à la main.'; }
+    };
+    $('#wAdd').onclick = async () => {
+      const name = $('#wname').value.trim(), note = $('#wnote').value.trim(), info = (WPEND && WPEND.info) || {};
+      if (!name && !note && !(WPEND && WPEND.file)) { $('#wname').focus(); return; }
+      const nm = name || info.name || 'Sans nom', c = CAT.find((x) => E.norm(x.name) === E.norm(nm));
+      const e = { id: uid(), sym: nextSym(w), name: nm, house: (c && c.house) || info.house || '', family: (c && c.family) || info.family || '', notes: (c && [...c.notes]) || (info.notes || []).map(String), note, rating: WRATE, date: today() };
+      $('#wAdd').disabled = true;
+      if (WPEND && WPEND.file && HAS_ASSETS) { try { e.photo = await putPhoto(WPEND.file); } catch (er) { /* sans photo */ } }
+      w.entries.push(e); save(); WPEND = null; WRATE = 'ok'; WSEG = 'list'; viewWalk();
+    };
+    if ($('#wseg')) $$('#wseg button').forEach((b) => (b.onclick = () => { WSEG = b.dataset.s; WFIND = null; viewWalk(); }));
+    if ($('#wSum')) $('#wSum').onclick = () => walkSummary(w);
+    walkBind(w);
+  }
+  function walkEntry(e) {
+    return `<article class="wentry"><div class="wsym">${symSvg(e.sym, 40)}</div><div class="wbody"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(e.name)}</b><span class="tag">${esc(RATE[e.rating] || '')}</span></div>${e.house ? `<small>${esc(e.house)}${e.family ? ' · ' + esc(famLabel(e.family)) : ''}</small>` : ''}${e.notes && e.notes.length ? `<small>${esc(e.notes.slice(0, 6).join(' · '))}</small>` : ''}${e.note ? `<p>${esc(e.note)}</p>` : ''}
+      <div class="row" style="margin-top:8px"><button class="ghost" data-wl="${e.id}">${hasWish(e.name) ? 'Dans la wishlist' : 'Wishlist'}</button><button class="ghost" data-we="${e.id}">Modifier</button></div></div>${e.photo ? `<img class="wthumb" alt="" src="/_blob/${esc(e.photo)}">` : ''}</article>`;
+  }
+  function walkFind(w) {
+    const sel = w.entries.find((e) => e.id === WFIND);
+    return `<p class="mono">Touche à la main ? Choisis le symbole que tu as dessiné.</p><div class="symgrid">${w.entries.map((e) => `<button class="symtile ${WFIND === e.id ? 'on' : ''}" data-f="${e.id}">${symSvg(e.sym, 44)}<small>${esc(SYMS[e.sym][0])}</small></button>`).join('')}</div>${sel ? walkEntry(sel) : ''}`;
+  }
+  function walkBind(w) {
+    $$('[data-f]').forEach((b) => (b.onclick = () => { WFIND = b.dataset.f; viewWalk(); }));
+    $$('[data-wl]').forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.wl); if (!e) return; if (hasWish(e.name)) rmWish(e.name); else addWish(CAT.find((c) => E.norm(c.name) === E.norm(e.name)) ? wishFromName(CAT.find((c) => E.norm(c.name) === E.norm(e.name)).name) : e); viewWalk(); }));
+    $$('[data-we]').forEach((b) => (b.onclick = () => walkEdit(w, w.entries.find((x) => x.id === b.dataset.we))));
+  }
+  function walkEdit(w, e) {
+    let rate = e.rating;
+    const pn = openSheet(`<div><h2>Modifier la touche</h2><p class="mono" style="margin-top:6px">${symSvg(e.sym, 22)} ${esc(SYMS[e.sym][0])}</p></div><input type="text" id="en" value="${esc(e.name)}"><textarea id="eno" rows="3">${esc(e.note || '')}</textarea>
+      <div class="chips" id="er">${Object.entries(RATE).map(([k, v]) => `<button class="chip ${rate === k ? 'on' : ''}" data-r="${k}">${v}</button>`).join('')}</div>
+      <div class="row" style="justify-content:space-between"><button class="ghost danger" id="edel">Supprimer</button><button class="cta" id="esave"><span>Enregistrer</span></button></div>`);
+    $$('#er .chip', pn).forEach((c) => (c.onclick = () => { rate = c.dataset.r; $$('#er .chip', pn).forEach((x) => x.classList.toggle('on', x === c)); }));
+    $('#esave', pn).onclick = () => { e.name = $('#en', pn).value.trim() || e.name; e.note = $('#eno', pn).value.trim(); e.rating = rate; save(); closeSheet(); viewWalk(); };
+    $('#edel', pn).onclick = (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer'; return; } w.entries = w.entries.filter((x) => x.id !== e.id); save(); closeSheet(); viewWalk(); };
+  }
+  async function walkSummary(w) {
+    const out = $('#wsumres'); out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#wSum').disabled = true;
+    const lines = w.entries.map((e) => `${e.name} | ${e.house} | ${e.notes.join(', ')} | ${RATE[e.rating]} | ${e.note || ''}`).join('\n');
+    try {
+      const j = await aiJson(`Tu es un nez de parfumerie. Voici les parfums que j'ai sentis pendant une balade en boutique (nom | maison | notes | mon avis | ma remarque) :\n${lines}\n\nMa collection actuelle :\n${colLines()}\n\nRéponds UNIQUEMENT par un JSON : {"taste":"ce que mes avis révèlent de mes goûts, 2 phrases, tutoiement","keep":[{"name":"nom exact d'une touche à retenir","why":"pourquoi, 10 mots max"}],"skip":"ce que je peux oublier, 1 phrase"}`, { modelTier: 'default' });
+      const keep = (j.keep || []).map((k) => ({ k, e: w.entries.find((e) => E.norm(e.name) === E.norm(k.name)) })).filter((x) => x.e);
+      out.innerHTML = `<p style="font-size:17px;font-weight:300">${esc(j.taste || '')}</p>${keep.map((x) => `<div class="wentry"><div class="wsym">${symSvg(x.e.sym, 32)}</div><div class="wbody"><b>${esc(x.e.name)}</b><small>${esc(x.k.why || '')}</small><div class="row" style="margin-top:8px"><button class="ghost" data-kw="${x.e.id}">${hasWish(x.e.name) ? 'Dans la wishlist' : 'Wishlist'}</button></div></div></div>`).join('')}${j.skip ? `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(j.skip)}</p>` : ''}`;
+      $$('[data-kw]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.kw); addWish(CAT.find((c) => E.norm(c.name) === E.norm(e.name)) ? wishFromName(CAT.find((c) => E.norm(c.name) === E.norm(e.name)).name) : e); b.textContent = 'Dans la wishlist'; }));
+    } catch (er) {
+      const loved = w.entries.filter((e) => e.rating === 'love');
+      out.innerHTML = `<p style="color:var(--muted)">${loved.length ? 'Tes coups de cœur : ' + esc(loved.map((e) => e.name).join(', ')) + '.' : 'Aucun coup de cœur noté pour l\'instant.'}</p>`;
+    }
+    $('#wSum').disabled = false;
+  }
+
+
+  // ---------- Profil : genre et façon de s'habiller (sauvegardé, réutilisé chaque jour) ----------
   const GEN = [['m', 'Un garçon'], ['f', 'Une fille'], ['x', 'Je préfère ne pas dire']];
   const DRESS = [['casual', 'Décontracté', 'jean, t-shirt, baskets'], ['smart', 'Smart casual', 'chemise, chino, blazer'], ['costume', 'Élégant', 'costume, tailleur'], ['street', 'Streetwear', 'hoodie, sneakers'], ['sport', 'Sportswear', 'tenue de sport'], ['soiree', 'Chic de soirée', 'robe, veste habillée']];
   const DRESS_SVG = {
