@@ -116,6 +116,27 @@ await t('stock : un échantillon réservé ne gagne pas une journée ordinaire, 
   assert.ok(E.rank(col, cond('pro'), st).find((r) => r.p.id === 'echantillon').reasons.some((x) => /réservé|limité/i.test(x)));
   assert.deepEqual(E.stockOf({}), { size: 100, left: 100, ml: 100, use: 'free' });
 });
+
+// ---------- Moteur : lieu, moment de la journée, notes aimées ou fuies
+await t('moteur : le lieu (théâtre / boîte), le moment (jour / nuit) et les notes fuies changent le choix', async () => {
+  const mk = (id, extra) => ({ id, name: id, house: 'x', family: 'boisé', notes: ['cèdre'], projection: 3, longevity: 3, weight: 3, rating: 4, ...extra });
+  const base = { ctx: 'amis', with: 'amis', moment: 'soir', mood: 'joyeux', style: 'smart', color: 'neutre', fabric: '', temp: 18, rain: false, hum: 50, place: '', dur: '', venue: '' };
+  const discret = mk('discret', { projection: 2, weight: 2, family: 'musqué', notes: ['musc'] }), fort = mk('fort', { projection: 5, weight: 5, family: 'ambré', notes: ['ambre', 'vanille'] });
+  const st = { daysSince: () => null };
+  assert.equal(E.rank([discret, fort], { ...base, venue: 'theatre' }, st)[0].p.id, 'discret');
+  assert.equal(E.rank([discret, fort], { ...base, venue: 'boite', moment: 'nuit' }, st)[0].p.id, 'fort');
+  assert.ok(E.rank([discret, fort], { ...base, venue: 'theatre' }, st)[0].reasons.some((x) => /théâtre/i.test(x)));
+  assert.ok(E.rank([fort, discret], { ...base, moment: 'jour', temp: 28 }, st)[0].p.id === 'discret');
+  const A = mk('A', { notes: ['patchouli', 'rose'] }), B = mk('B', { notes: ['vanille'] });
+  assert.equal(E.rank([A, B], base, { ...st, avoid: ['patchouli'] })[0].p.id, 'B');
+  assert.equal(E.rank([A, B], base, { ...st, liked: ['rose', 'patchouli'] })[0].p.id, 'A');
+  // le moment idéal d'un best-seller connu pèse (Aqua di Giò : jour ; Tobacco Vanille : nuit)
+  const gio = mk('g', { name: 'Acqua di Giò' }), tob = mk('t', { name: 'Tobacco Vanille' });
+  globalThis.DESC = { 'Acqua di Giò': ['jour', ''], 'Tobacco Vanille': ['nuit', ''] };
+  assert.equal(E.rank([tob, gio], { ...base, moment: 'jour' }, st)[0].p.id, 'g');
+  assert.equal(E.rank([gio, tob], { ...base, moment: 'nuit' }, st)[0].p.id, 't');
+  delete globalThis.DESC;
+});
 console.log(ok, 'tests réussis');
 
 // ---------- Cache d'identification : un parfum déjà connu ne coûte rien

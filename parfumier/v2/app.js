@@ -51,17 +51,9 @@
   const seedWish = () => window.WISH.map(wishFromName);
   const DEMO = /[?&]seed=demo/.test(location.search); // outillage (vidéos, tests) : charge une collection d'exemple
   const DEMO_V = 18;
-  // Balade olfactive fictive (rue Saint-Honoré) et exemples de semaine / voyage : la démo ne demande rien à l'IA pour les montrer.
-  const seedWalk = () => {
-    const d = new Date(); d.setDate(d.getDate() - 3); const date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    const T = [['Ganymede', 'love', 'Métallique, minéral, une fleur qui ne ressemble à rien. Je le sens encore une heure après.'], ['Ombre Nomade', 'love', 'Oud fumé et résine, il occupe la pièce. Une signature pour l\'hiver.'], ['Portrait of a Lady', 'ok', 'Rose et patchouli, très dense. Superbe, mais pas pour un jour de chaleur.'], ['Tam Dao Eau de Parfum', 'love', 'Bois crémeux, presque du santal chaud. Calme, propre, facile à porter.'], ['Stellar Times', 'ok', 'Ouverture claire et poivrée, puis il s\'aplatit sur ma peau.'], ['Rouge Trafalgar', 'ok', 'Cuir et fruits rouges. Bien fait, mais j\'ai déjà l\'équivalent.'], ['Jasmin Rouge', 'no', 'Trop sucré sur moi, le jasmin étouffe le reste.'], ['Purpose', 'ok', 'Frais et vert au départ, sage ensuite.']];
-    return { id: 'w-honore', seed: true, date, place: 'Rue Saint-Honoré, Paris', entries: T.map(([n, r, note], i) => { const c = CAT.find((x) => x.name === n); return { id: 'we' + i, sym: i, name: n, house: c.house, family: c.family, notes: [...c.notes], note, rating: r, date }; }) };
-  };
-  const SEED_SUM = { taste: 'Tu vas vers les bois crémeux, les résines et les fleurs un peu étranges, jamais vers le sucré franc. Tes coups de cœur ont tous du relief et de la matière.', keep: [{ name: 'Ombre Nomade', why: 'complète tes ambrés sans les doubler' }, { name: 'Tam Dao Eau de Parfum', why: 'le bois calme qui manque à ta collection' }, { name: 'Ganymede', why: 'ta touche minérale, à tester sur peau' }], skip: 'Jasmin Rouge : trop sucré pour toi, inutile d\'y revenir.' };
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: DEMO ? [seedWalk()] : [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [], publicMode: false }, today: null });
   function migrate() {
-    S.walks = S.walks || [];
-    if (DEMO && !S.walks.some((w) => w.seed)) S.walks.unshift(seedWalk());
+    delete S.walks;
     if ((S.seedV || 1) < DEMO_V) {
       if (DEMO) { const d = DEF(); S.collection = d.collection; S.wishlist = d.wishlist; S.log = []; S.today = null; }
       else {
@@ -69,11 +61,13 @@
         const oldOwned = new Set(window.OWNED.map((o) => o[0])), oldWish = new Set(window.WISH);
         if (S.collection.length >= 30 && S.collection.every((p) => oldOwned.has(p.name))) { S.collection = []; S.log = []; S.today = null; }
         if ((S.wishlist || []).length >= 20 && S.wishlist.every((w) => oldWish.has(typeof w === 'string' ? w : w.name))) S.wishlist = [];
-        S.walks = S.walks.filter((w) => !w.seed);
       }
       S.seedV = DEMO_V;
     }
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
+    // Une seule écriture par maison (« Jo Malone London » et « Jo Malone » ne font qu'une)
+    const HA = window.HOUSE_ALIAS || {}, canonHouse = (h) => (h && HA[E.norm(h)]) || h;
+    S.collection.forEach((p) => { p.house = canonHouse(p.house); }); S.wishlist.forEach((w) => { w.house = canonHouse(w.house); });
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
     // Stock : les flacons de démo déjà présents reçoivent leur taille et leur usage, sans toucher à ceux que la personne a réglés.
     S.collection.forEach((p) => { if (DEMO && p.size == null && p.use == null) { const o = window.OWNED.find((x) => x[0] === p.name); if (o && o[3]) Object.assign(p, o[3]); } });
@@ -108,6 +102,7 @@
   migrate(); save();
 
   // ---------- Utilitaires métier ----------
+  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [] });
   const find = (id) => S.collection.find((p) => p.id === id);
   const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
   const daysSince = (id) => {
@@ -140,7 +135,7 @@
   const todayEntry = (id) => { let e = [...S.log].reverse().find((l) => l.id === id && l.date === today()); if (!e) { e = { id, date: today() }; S.log.push(e); } return e; };
   let AUTOW = '';
   const hasWish = (name) => S.wishlist.some((w) => E.norm(w.name) === E.norm(name));
-  const addWish = (o) => { if (!hasWish(o.name)) { S.wishlist.push({ name: o.name, house: o.house || '', family: o.family || '', notes: o.notes || [], price: o.price || 0 }); save(); } };
+  const addWish = (o) => { if (!hasWish(o.name)) { S.wishlist.push({ st: o.st || 'smell',  name: o.name, house: o.house || '', family: o.family || '', notes: o.notes || [], price: o.price || 0 }); save(); } };
   const rmWish = (name) => { S.wishlist = S.wishlist.filter((w) => E.norm(w.name) !== E.norm(name)); save(); };
   const wishToOwned = (w) => { const c = CAT.find((x) => E.norm(x.name) === E.norm(w.name)); if (c) return fromCat(c, 4); return { id: uid(), name: w.name, house: w.house, family: w.family || 'boisé', notes: [...(w.notes || [])], projection: 3, longevity: 3, weight: 3, price: w.price || 0, rating: 4, occ: [] }; };
   const buyLinks = (name, house) => { const q = encodeURIComponent(name + ' ' + house); return `<div class="buy"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}+parfum+acheter">Où l'acheter</a><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}+site%3Afragrantica.com">Fragrantica</a></div>`; };
@@ -169,7 +164,8 @@
   const PRESENT = /[?&]present=1/.test(location.search); // mode présentation : sans bandeau de démo ni carte de vente
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
-  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false, dress: null };
+  const clockMoment = () => { const h = new Date().getHours(); return h >= 6 && h < 18 ? 'jour' : h >= 18 && h < 22 ? 'soir' : 'nuit'; };
+  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false, dress: null, when: clockMoment(), venue: null };
   if (S.settings.last && S.settings.last.cat) CHOICE.cat = S.settings.last.cat;
   if (S.settings.last && S.settings.last.dress) CHOICE.dress = S.settings.last.dress;
   const CATS = { travail: 'Travail', amour: 'Amour', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
@@ -224,6 +220,8 @@
     const sc = CHOICE.sc && scenByKey(CHOICE.sc), o = Object.assign({}, sc ? sc[2] : {});
     if (CHOICE.mood) o.mood = CHOICE.mood;
     if (CHOICE.dress) o.style = CHOICE.dress;
+    if (CHOICE.when) o.moment = CHOICE.when;
+    if (CHOICE.venue) o.venue = CHOICE.venue;
     if (CHOICE.place) o.place = CHOICE.place;
     if (CHOICE.dur) o.dur = CHOICE.dur;
     if (WX && WX.hum > 75) o.hum = WX.hum;
@@ -235,8 +233,8 @@
   // ---------- Vues ----------
   function render(keepScroll) {
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
-    $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'discover', 'walk', 'wish'].indexOf(tab) * 100}%)`;
-    ({ today: viewToday, shelf: viewShelf, discover: viewDiscover, walk: viewWalk, wish: viewWish })[tab]();
+    $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'discover', 'wish'].indexOf(tab) * 100}%)`;
+    ({ today: viewToday, shelf: viewShelf, discover: viewDiscover, wish: viewWish })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
   }
 
@@ -246,7 +244,7 @@
     const seen = [], recent = [];
     for (const l of [...S.log].reverse()) { if (!seen.includes(l.id) && find(l.id)) { seen.push(l.id); recent.push(find(l.id)); } if (recent.length >= 8) break; }
     const dt = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
-    const hr = new Date().getHours(), hello = hr >= 5 && hr < 12 ? 'Bonjour.' : hr >= 12 && hr < 18 ? 'Bon après-midi.' : 'Bonsoir.';
+    const hr = new Date().getHours(), hello = (hr >= 5 && hr < 12 ? 'Bonjour' : hr >= 12 && hr < 18 ? 'Bon après-midi' : 'Bonsoir') + (hasProfile() && S.profile.name ? ', ' + esc(S.profile.name) : '') + '.';
     const je = worn ? todayEntry(worn.id) : null;
     const refine = REFINE || !!(CHOICE.mood || WX || CHOICE.place || CHOICE.dur || CHOICE.hum || PHOTO);
     $('#view').innerHTML = `
@@ -255,11 +253,15 @@
         ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
         <h1>${hello}</h1>
         <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
-        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Tape leurs noms, prends-les en photo, ou choisis-les dans le catalogue.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
+        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Choisis tes parfums dans la base (par marque, style, notes…), écris-les, ou prends-les en photo.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
         <div class="say-wrap">
           <p class="mono">Ta journée</p>
           <div class="cats" id="cats">${Object.entries(CATS).map(([k, v]) => `<button class="${CHOICE.cat === k ? 'on' : ''}" data-cat="${k}">${v}</button>`).join('')}</div>
           <div class="chips">${SCEN[CHOICE.cat].map(([k, l]) => `<button class="chip ${CHOICE.sc === k ? 'on' : ''}" data-sc="${k}">${esc(l)}</button>`).join('')}</div>
+          <p class="mono">Quand</p>
+          <div class="chips" id="whens">${Object.entries(E.MOMENTS).map(([k, v]) => `<button class="chip ${CHOICE.when === k ? 'on' : ''}" data-when="${k}">${esc(v)}</button>`).join('')}</div>
+          <p class="mono">Où</p>
+          <div class="chips" id="venues">${Object.entries(E.VENUES).map(([k, v]) => `<button class="chip ${CHOICE.venue === k ? 'on' : ''}" data-venue="${k}">${esc(v)}</button>`).join('')}</div>
           <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Ou écris-la avec tes mots</label>
           <textarea id="say" rows="2" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
           <p class="mono">Ta tenue</p>
@@ -309,7 +311,9 @@
     if ($('#emptyAdd')) $('#emptyAdd').onclick = openAdd;
     $$('[data-dress]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.dress = CHOICE.dress === b.dataset.dress ? null : b.dataset.dress; save(); viewToday(); }));
     $$('[data-cat]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.cat = b.dataset.cat; save(); viewToday(); }));
-    $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; viewToday(); }));
+    $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; if (CHOICE.sc && scenByKey(k)[2].moment) CHOICE.when = scenByKey(k)[2].moment; viewToday(); }));
+    $$('[data-when]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.when = b.dataset.when; viewToday(); }));
+    $$('[data-venue]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.venue = CHOICE.venue === b.dataset.venue ? null : b.dataset.venue; viewToday(); }));
     $$('[data-mood]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.mood = CHOICE.mood === b.dataset.mood ? null : b.dataset.mood; viewToday(); }));
     $$('[data-place]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.place = CHOICE.place === b.dataset.place ? null : b.dataset.place; viewToday(); }));
     $$('[data-dur]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.dur = CHOICE.dur === b.dataset.dur ? null : b.dataset.dur; viewToday(); }));
@@ -368,7 +372,9 @@
       <section class="sec"><header><h2>Choisis pour toi</h2><span class="mono">goûts × manques × budget</span></header>
         ${RECS.length ? `<div class="snap">${RECS.map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
       </section>
+      ${lexCard()}
       `;
+    bindLex();
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
     bud.addEventListener('change', () => { save(); viewDiscover(); });
@@ -385,7 +391,7 @@
     if (r.gapLabel) reasons.push('Comble : ' + r.gapLabel);
     if (r.mates.length) reasons.push('Se marie avec ' + r.mates.map((m) => m.name).join(', '));
     return `<article class="rec" style="--tint:${tint(c)}">${fxCanvas(`data-r="${i}"`, .6)}<span class="pct">${r.pct}%</span>${bt(c, { still: false })}
-      <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p></div>
+      <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p>${window.DESC && window.DESC[c.name] ? `<p class="rd">${esc(window.DESC[c.name][1])}</p>` : ''}</div>
       <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.slice(0, 2).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
       <p class="why" id="why${i}"></p>
       <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? 'Dans ma wishlist' : 'Wishlist'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div>${buyLinks(c.name, c.house)}</article>`;
@@ -435,6 +441,7 @@
     const pn = openSheet(`
       <div class="big-bottle"><i class="aura" style="background:${tint(p)}"></i>${fxCanvas(`data-p="${p.id}"`, 1)}${bt(p, { spray: true })}</div>
       <div><h2>${esc(p.name)}</h2><p class="mono" style="margin-top:6px">${esc(p.house)} · ${esc(famLabel(p.family))}</p></div>
+      ${(() => { const d = window.DESC && window.DESC[p.name], n = (window.NOSE && window.NOSE[p.name]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[p.house]); return d || n ? `<p class="rd">${d ? esc(d[1]) : ''}${n ? ` <span class="mono" style="text-transform:none;letter-spacing:0">Créé par ${esc(n)}.</span>` : ''}</p>` : ''; })()}
       <div class="chips">${(p.notes || []).map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>
       <div class="card" style="display:grid;gap:8px"><div class="meter"><span>Projection</span>${dots(p.projection)}</div><div class="meter"><span>Tenue</span>${dots(p.longevity)}</div><div class="meter"><span>Poids</span>${dots(p.weight)}</div></div>
       <div><p class="mono">ma note</p><div class="stars" id="stars">${[1, 2, 3, 4, 5].map((i) => `<button data-r="${i}" aria-label="${i} sur 5">${i <= p.rating ? '★' : '☆'}</button>`).join('')}</div></div>
@@ -442,7 +449,7 @@
       <p class="mono" style="text-transform:none;letter-spacing:0">${IC.spark} Ambiance : ${esc(FX.motifsOf(p).label)}${FX.motifsOf(p).notes.length ? ' · inspirée de ' + esc(FX.motifsOf(p).notes.join(', ')) : ''}</p>
       <div class="row" style="gap:14px">${buyLinks(p.name, p.house)}${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
       ${(() => { const notes = S.log.filter((l) => l.id === p.id && (l.note || l.compl || l.dur)).slice(-3).reverse(); return notes.length ? `<div><p class="mono">Journal</p>${notes.map((l) => `<p style="font-size:14px;color:var(--muted);margin-top:6px">${esc(new Date(l.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }))} · ${esc([l.compl ? l.compl + ' compliment(s)' : '', l.dur || '', l.note || ''].filter(Boolean).join(' · '))}</p>`).join('')}</div>` : ''; })()}
-      ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">Je ne connais que la marque. Donne-moi le nom exact et l'IA remplit les notes.</p><input type="text" id="fixin" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
+      ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">${p.guessed ? 'Cette fiche est estimée d\'après le nom du parfum. L\'IA peut la compléter avec les vraies notes.' : 'Je ne connais que la marque. Donne-moi le nom exact et l\'IA remplit les notes.'}</p><input type="text" id="fixin" value="${esc(p.guessed ? p.name : '')}" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
       <div class="card" style="display:grid;gap:10px"><b>Mon flacon</b>${stockHtml(p, 0)}<p class="mono" id="stkmsg" style="text-transform:none;letter-spacing:0">Je tiens compte de ton stock : un échantillon ou un flacon presque fini ne part pas en usage quotidien.</p></div>
       <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
@@ -453,7 +460,7 @@
       try {
         const j = await aiJson(`Identifie ce parfum${p.house ? ' de la maison "' + p.house + '"' : ''} : "${nm}". Réponds UNIQUEMENT par un JSON : {"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["6 à 10 notes en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5,"price":nombre en euros indicatif}`, { modelTier: 'default' });
         p.name = String(j.name || nm); p.house = String(j.house || p.house); p.family = E.FAMILIES[j.family] ? j.family : p.family; p.notes = (j.notes || []).map(String).slice(0, 10);
-        p.projection = clamp(Math.round(+j.projection || 3), 1, 5); p.longevity = clamp(Math.round(+j.longevity || 3), 1, 5); p.weight = clamp(Math.round(+j.weight || 3), 1, 5); p.price = Math.round(+j.price) || 0; delete p.incomplete; delete p._tags;
+        p.projection = clamp(Math.round(+j.projection || 3), 1, 5); p.longevity = clamp(Math.round(+j.longevity || 3), 1, 5); p.weight = clamp(Math.round(+j.weight || 3), 1, 5); p.price = Math.round(+j.price) || 0; delete p.incomplete; delete p.guessed; delete p._tags;
         save(); openDetail(id); render(true);
       } catch (e) { $('#fixmsg', pn).textContent = 'L\'IA n\'est pas disponible ici. Réessaie plus tard.'; $('#fixgo', pn).disabled = false; }
     };
@@ -478,16 +485,15 @@
     return out.sort((a, b) => a.rank - b.rank).slice(0, 7);
   }
   let PRE = [], SHELF_FILES = [];
-  function openAdd() {
-    PRE = []; SHELF_FILES = []; BRW_SEL = [];
-    const pn = openSheet(`<div><h2>Ajoute sans taper</h2><p style="color:var(--muted);margin-top:6px">Colle tes parfums en vrac, ou prends ton étagère en photo. L'IA retrouve la maison, les notes et la puissance.</p></div>
+  function openAdd() { openExplore('collection'); }
+  function openAddFree() {
+    PRE = []; SHELF_FILES = [];
+    const pn = openSheet(`<div><h2>Pas dans la base ?</h2><p style="color:var(--muted);margin-top:6px">Écris tes parfums en vrac, ou prends ton étagère en photo. L'IA retrouve la maison, les notes et la puissance.</p></div>
       <textarea id="addtxt" rows="4" placeholder="br540, santal 33 le labo, un diptyque au figuier, ombre leather…"></textarea>
       ${window.SillageDemo ? '<input type="text" id="addurl" inputmode="url" autocomplete="off" placeholder="Ou colle l\'adresse d\'une image trouvée sur internet (https://…)" aria-label="Adresse d\'une image de parfum">' : ''}
       <div class="row"><button class="chip photo-btn" id="addph" ${CAN_IMG ? '' : 'hidden'}>${IC.cam}<span id="addphl">${window.SillageDemo ? 'Photo ou image du flacon' : 'Photo(s) de l\'étagère'}</span></button><input type="file" id="addin" accept="image/*" ${window.SillageDemo ? '' : 'multiple'} hidden></div>
       ${window.SillageDemo ? `<p class="mono" style="text-transform:none;letter-spacing:0">Reconnaissance par une IA légère, quasi gratuite : ${window.SillageDemo.identLeft()} analyse${window.SillageDemo.identLeft() > 1 ? 's' : ''} restante${window.SillageDemo.identLeft() > 1 ? 's' : ''} dans la démo. Les parfums déjà connus ne comptent pas.</p>` : ''}
-      <button class="chip" id="addbrw" type="button">Parcourir par marque</button><div id="brw" hidden></div>
       <button class="cta full" id="addgo">${IC.spark}<span>Analyser</span></button><div id="addres" style="display:grid;gap:10px"></div>`);
-    $('#addbrw', pn).onclick = () => { const b = $('#brw', pn); b.hidden = !b.hidden; if (!b.hidden) browseBrands(pn); };
     // Suggestions pendant la frappe : un parfum connu s'ajoute sans erreur, les fiches inconnues sont complétées par l'IA légère (et gardées en cache pour tous).
     const sug = document.createElement('div'); sug.className = 'chips'; sug.id = 'addsug'; $('#addtxt', pn).after(sug);
     $('#addtxt', pn).addEventListener('input', (e) => {
@@ -501,32 +507,109 @@
     $('#addin', pn).onchange = (e) => { SHELF_FILES = [...e.target.files].slice(0, window.SillageDemo ? 1 : 4); $('#addphl', pn).textContent = SHELF_FILES.length + ' photo(s) ✓'; };
     $('#addgo', pn).onclick = () => analyzeAdd(pn);
   }
-  // Parcours de la base : marques (avec nombre de parfums) puis parfums de la marque, cliquables et ajoutables.
-  function brandMap() {
-    const m = new Map(), add = (h, name, conc, cat) => { if (!h) return; const k = E.norm(h); if (!m.has(k)) m.set(k, { house: h, items: [], seen: new Set() }); const b = m.get(k), n = E.norm(name); if (b.seen.has(n)) return; b.seen.add(n); b.items.push({ name, house: h, conc, cat }); };
-    CAT.forEach((c) => add(c.house, c.name, '', true));
-    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, c]) => add(h, n, c, false)));
-    return [...m.values()].sort((a, b) => a.house.localeCompare(b.house, 'fr'));
+  // ---------- Explorer la base : marques, styles, notes, prix, parfumeurs ----------
+  // Les ~2 800 parfums de la base n'ont pas tous une fiche détaillée : pour les autres, style et notes sont déduits du nom (marqués « ≈ »).
+  const GUESS = [
+    ['oud', 5, ['oud', 'agar']], ['cuir', 4, ['cuir', 'leather', 'suede', 'daim']],
+    ['gourmand', 4, ['vanille', 'vanilla', 'tonka', 'feve', 'caramel', 'cacao', 'chocolat', 'cafe', 'coffee', 'latte', 'miel', 'honey', 'praline', 'sucre', 'candy']],
+    ['ambré', 4, ['ambre', 'amber', 'ambra', 'encens', 'incenso', 'incense', 'myrrhe', 'oliban', 'benjoin', 'labdanum']],
+    ['épicé', 4, ['epice', 'spice', 'poivre', 'pepper', 'cannelle', 'cinnamon', 'safran', 'saffron', 'gingembre', 'ginger', 'cardamome', 'tabac', 'tobacco', 'tabacco']],
+    ['boisé', 3, ['bois', 'wood', 'santal', 'sandal', 'sandalo', 'cedre', 'cedro', 'cedar', 'vetiver', 'patchouli', 'sycomore', 'cypres', 'quercia', 'gaiac', 'papyrus', 'oak', 'chene']],
+    ['musqué', 2, ['musc', 'musk', 'muschio']],
+    ['floral', 3, ['rose', 'iris', 'jasmin', 'jasmine', 'gelsomino', 'tubereuse', 'fleur', 'flower', 'magnolia', 'pivoine', 'lys', 'lily', 'gardenia', 'orchid', 'violet', 'mimosa', 'muguet', 'osmanthus', 'narcisse', 'freesia', 'fresia', 'petale', 'bloom', 'fiore', 'cassie']],
+    ['agrumes', 1, ['citron', 'lemon', 'bergamot', 'bergamotto', 'cedrat', 'pamplemousse', 'orange', 'arancia', 'mandarin', 'yuzu', 'neroli', 'limette', 'lime', 'agrume', 'cologne', 'bigarade', 'chinotto', 'citrus', 'pomelo']],
+    ['vert', 2, ['vert', 'green', 'herbe', 'fougere', 'fern', 'menthe', 'mint', 'figuier', 'fico', 'fig', 'philosykos', 'tilleul', 'basilic']],
+    ['fruité', 2, ['fruit', 'cerise', 'cherry', 'peche', 'peach', 'pomme', 'apple', 'poire', 'pear', 'framboise', 'berry', 'mure', 'litchi', 'mangue', 'ananas', 'coco']],
+    ['aromatique', 2, ['lavande', 'lavender', 'sauge', 'sage', 'romarin', 'armoise', 'absinth', 'genievre']],
+  ];
+  const KW_NOTE = { vanille: 'vanille', vanilla: 'vanille', tonka: 'tonka', feve: 'fève tonka', rose: 'rose', santal: 'santal', sandal: 'santal', sandalo: 'santal', cuir: 'cuir', leather: 'cuir', musc: 'musc', musk: 'musc', muschio: 'musc', oud: 'oud', iris: 'iris', jasmin: 'jasmin', jasmine: 'jasmin', gelsomino: 'jasmin', tubereuse: 'tubéreuse', ambre: 'ambre', amber: 'ambre', ambra: 'ambre', encens: 'encens', incenso: 'encens', incense: 'encens', vetiver: 'vétiver', patchouli: 'patchouli', bergamot: 'bergamote', bergamotto: 'bergamote', citron: 'citron', lemon: 'citron', orange: 'orange', arancia: 'orange', neroli: 'néroli', tabac: 'tabac', tobacco: 'tabac', tabacco: 'tabac', cannelle: 'cannelle', safran: 'safran', saffron: 'safran', poivre: 'poivre', pepper: 'poivre', cafe: 'café', coffee: 'café', miel: 'miel', honey: 'miel', figuier: 'figue', fig: 'figue', fico: 'figue', menthe: 'menthe', mint: 'menthe', lavande: 'lavande', lavender: 'lavande', cedre: 'cèdre', cedro: 'cèdre', cedar: 'cèdre', pivoine: 'pivoine', magnolia: 'magnolia', gardenia: 'gardénia', violet: 'violette', mimosa: 'mimosa', muguet: 'muguet', osmanthus: 'osmanthe', cacao: 'cacao', chocolat: 'chocolat', caramel: 'caramel', praline: 'praliné', coco: 'coco', cerise: 'cerise', cherry: 'cerise', pomme: 'pomme', poire: 'poire', gingembre: 'gingembre', cardamome: 'cardamome', sauge: 'sauge', myrrhe: 'myrrhe', benjoin: 'benjoin', papyrus: 'papyrus', cypres: 'cyprès', pamplemousse: 'pamplemousse', yuzu: 'yuzu', mandarin: 'mandarine', lys: 'lys', lily: 'lys', bois: 'bois', wood: 'bois' };
+  const FACET_NOTES = ['vanille', 'rose', 'santal', 'cuir', 'musc', 'oud', 'iris', 'jasmin', 'tubéreuse', 'ambre', 'encens', 'vétiver', 'patchouli', 'bergamote', 'citron', 'orange', 'néroli', 'tabac', 'cannelle', 'safran', 'poivre', 'café', 'miel', 'figue', 'menthe', 'lavande', 'cèdre', 'fleur d\'oranger', 'pivoine', 'cacao', 'praliné', 'coco', 'cerise', 'pomme', 'poire', 'gingembre', 'cardamome', 'myrrhe', 'benjoin', 'pamplemousse', 'violette', 'magnolia'];
+  function guessInfo(name) {
+    const toks = E.norm(name).split(' ').filter(Boolean), has = (k) => toks.some((t) => t === k || (k.length >= 5 && t.startsWith(k)));
+    let fam = null, w = 3; for (const [f, wt, kws] of GUESS) { if (kws.some(has)) { fam = f; w = wt; break; } }
+    const notes = []; toks.forEach((t) => { const k = KW_NOTE[t] || (t.length >= 5 ? KW_NOTE[Object.keys(KW_NOTE).find((x) => x.length >= 5 && t.startsWith(x))] : null); if (k && !notes.includes(k)) notes.push(k); });
+    return { family: fam, weight: w, notes: notes.slice(0, 4) };
   }
-  let BRW_SEL = [];
-  function browseBrands(pn, q) {
-    const box = $('#brw', pn), all = brandMap(), nq = E.norm(q || ''), list = nq ? all.filter((b) => E.norm(b.house).includes(nq)) : all;
-    box.innerHTML = `<input type="text" id="brwq" placeholder="Chercher une marque" value="${esc(q || '')}" aria-label="Chercher une marque"><div class="brands">${list.map((b) => `<button type="button" class="chip" data-brand="${esc(b.house)}">${esc(b.house)} <small style="color:var(--muted)">${b.items.length}</small></button>`).join('') || '<div class="empty">Aucune marque</div>'}</div>`;
-    const inp = $('#brwq', box); inp.oninput = () => { const pos = inp.value; browseBrands(pn, pos); const n = $('#brwq', box); n.focus(); n.setSelectionRange(pos.length, pos.length); };
-    $$('[data-brand]', box).forEach((b) => (b.onclick = () => browsePerfumes(pn, b.dataset.brand)));
+  let DBL = null;
+  function dbList() {
+    if (DBL && DBL.n === CAT.length) return DBL.l;
+    const out = [], seen = new Set(), nose = (n, h) => (window.NOSE && window.NOSE[n]) || (window.NOSE_HOUSE && window.NOSE_HOUSE[h]) || '';
+    CAT.forEach((c) => { if (!c.name || !c.house) return; seen.add(E.norm(c.house + ' ' + c.name)); out.push({ name: c.name, house: c.house, conc: '', cat: c, family: c.family, notes: c.notes || [], price: c.price || 0, nose: nose(c.name, c.house), guess: false }); });
+    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const g = guessInfo(n); out.push({ name: n, house: h, conc, cat: null, family: g.family, notes: g.notes, weight: g.weight, price: 0, nose: nose(n, h), guess: true }); }));
+    DBL = { n: CAT.length, l: out }; return out;
   }
-  function browsePerfumes(pn, house) {
-    const box = $('#brw', pn), b = brandMap().find((x) => x.house === house); if (!b) return browseBrands(pn);
-    const have = new Set(S.collection.map((p) => E.norm(p.name))), sel = new Set(BRW_SEL.map((x) => E.norm(x.name)));
-    const items = b.items.slice().sort((x, y) => x.name.localeCompare(y.name, 'fr'));
-    box.innerHTML = `<div class="row"><button type="button" class="ghost" id="brwback">← Marques</button><b>${esc(house)}</b></div><div class="plist">${items.map((it, i) => { const own = have.has(E.norm(it.name)), on = sel.has(E.norm(it.name)); const ph = imgOf(it); return `<button type="button" class="chip ${on ? 'on' : ''}" data-it="${i}" ${own ? 'disabled' : ''}>${ph ? `<img class="mini" alt="" src="${esc(ph.s)}">` : ''}${esc(it.name)}${it.conc && it.conc !== 'EDP' ? ' <small style="color:var(--muted)">' + esc(it.conc.split(',').map((x) => CONC_L[x] || x).join('/')) + '</small>' : ''}${own ? ' ✓' : on ? ' ✓' : ' +'}</button>`; }).join('')}</div><button type="button" class="cta full" id="brwadd" ${BRW_SEL.length ? '' : 'disabled'}><span>Ajouter ${BRW_SEL.length || ''} parfum${BRW_SEL.length > 1 ? 's' : ''}</span></button>`;
-    $('#brwback', box).onclick = () => browseBrands(pn);
-    $$('[data-it]', box).forEach((bt2) => (bt2.onclick = () => { const it = items[+bt2.dataset.it], k = E.norm(it.name), j = BRW_SEL.findIndex((x) => E.norm(x.name) === k); if (j >= 0) BRW_SEL.splice(j, 1); else BRW_SEL.push(it); browsePerfumes(pn, house); }));
-    $('#brwadd', box).onclick = () => {
-      const ta = $('#addtxt', pn), lines = BRW_SEL.map((it) => (it.cat ? it.name : it.house + ' — ' + it.name)); BRW_SEL = [];
-      ta.value = (ta.value.trim() ? ta.value.trim().replace(/,\s*/g, '\n') + '\n' : '') + lines.join('\n'); box.hidden = true; analyzeAdd(pn);
-    };
+  const PRICE_TIERS = [['p1', 'Moins de 100 €', (p) => p > 0 && p < 100], ['p2', '100 à 200 €', (p) => p >= 100 && p < 200], ['p3', '200 à 300 €', (p) => p >= 200 && p < 300], ['p4', '300 € et plus', (p) => p >= 300]];
+  function groupsOf(db, facet) {
+    const m = new Map(), put = (k, label, e) => { if (!m.has(k)) m.set(k, { key: k, label, items: [] }); m.get(k).items.push(e); };
+    if (facet === 'brand') db.forEach((e) => put(E.norm(e.house), e.house, e));
+    else if (facet === 'style') db.forEach((e) => { if (e.family) put(e.family, famLabel(e.family), e); });
+    else if (facet === 'note') db.forEach((e) => { const nn = (e.notes || []).map(E.norm); FACET_NOTES.forEach((f) => { const nf = E.norm(f); if (nn.some((x) => x.includes(nf))) put(nf, f, e); }); });
+    else if (facet === 'price') db.forEach((e) => { const t = PRICE_TIERS.find((x) => x[2](e.price)); if (t) put(t[0], t[1], e); });
+    else if (facet === 'nose') db.forEach((e) => { if (e.nose) e.nose.split(/ et |, /).forEach((n) => put(E.norm(n), n.trim(), e)); });
+    let g = [...m.values()];
+    g = facet === 'brand' || facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
+    return g;
   }
+  const entryKey = (e) => E.norm(e.house + ' ' + e.name);
+  function entryToOwned(e) {
+    if (e.cat) return Object.assign(fromCat(e.cat, 4), { size: 100, left: 100, use: 'free' });
+    return { id: uid(), name: e.name, house: e.house, family: e.family || 'boisé', notes: (e.notes || []).slice(), projection: 3, longevity: 3, weight: e.weight || 3, price: 0, rating: 4, occ: [], incomplete: true, guessed: true, size: 100, left: 100, use: 'free' };
+  }
+  const xThumb = (e) => { const ph = imgOf(e); return ph && !S.settings.publicMode ? `<img class="xth" alt="" loading="lazy" src="${esc(ph.s)}">` : `<span class="xth">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'x' + E.norm(e.house + e.name).length }, { still: true, h: 64 })}</span>`; };
+  // mountExplorer : le même explorateur sert à l'ajout en collection, à la wishlist et à l'inscription.
+  function mountExplorer(host, o) {
+    const sel = new Map(); let facet = 'brand', group = null, q = '', limit = 60;
+    const haveIt = (e) => (o.mode === 'wish' ? S.wishlist : S.collection).some((p) => E.norm(p.name) === E.norm(e.name));
+    const sub = (e) => [e.house, e.family ? (e.guess ? '≈ ' : '') + famLabel(e.family) : '', e.conc && e.conc !== 'EDP' ? e.conc.split(',').map((x) => CONC_L[x] || x).join('/') : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · ');
+    const card = (e, i) => { const k = entryKey(e), have = haveIt(e), on = sel.has(k), d = window.DESC && window.DESC[e.name];
+      return `<button type="button" class="xc ${on ? 'on' : ''}" data-xk="${esc(k)}" ${have ? 'disabled' : ''}>${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc(sub(e))}</small>${d && e.cat ? `<em>${esc(d[1])}</em>` : ''}</span><i class="xm">${have ? '✓ ' + (o.mode === 'wish' ? 'dans ta wishlist' : 'chez toi') : on ? '✓' : '+'}</i></button>`; };
+    const popular = () => { const names = Object.keys(window.DESC || {}), L = dbList(), by = new Map(L.filter((e) => e.cat).map((e) => [e.name, e])); return names.map((n) => by.get(n)).filter(Boolean).sort((a, b) => (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0)).slice(0, 24); };
+    const search = (qq) => { const nq = E.norm(qq), L = dbList(); return L.map((e) => { const n = E.norm(e.name), h = E.norm(e.house), nh = h + ' ' + n; const r = n === nq ? 0 : n.startsWith(nq) ? 1 : nh.startsWith(nq) ? 2 : n.includes(nq) ? 3 : nh.includes(nq) ? 4 : nq.split(' ').every((w) => nh.includes(w)) ? 5 : 9; return { e, r }; }).filter((x) => x.r < 9).sort((a, b) => a.r - b.r || (b.e.cat ? 1 : 0) - (a.e.cat ? 1 : 0)).slice(0, 80).map((x) => x.e); };
+    const foot = () => { const n = sel.size; return `<div class="exp-foot"><span class="mono">${n ? n + ' choisi' + (n > 1 ? 's' : '') : 'Touche un parfum pour le choisir'}</span><button class="cta" id="xgo" ${n ? '' : 'disabled'}><span>${esc(o.cta(n))}</span></button></div>`; };
+    function body() {
+      const db = dbList(), tabs = [['brand', 'Marques'], ['style', 'Styles'], ['note', 'Notes'], ['price', 'Prix'], ['nose', 'Parfumeurs']];
+      let inner = '';
+      if (q.trim().length >= 2) { const r = search(q); inner = r.length ? `<div class="xgrid">${r.map(card).join('')}</div>` : '<div class="empty">Rien trouvé. Essaie la marque, ou écris-le toi-même plus bas.</div>'; }
+      else {
+        const gs = groupsOf(db, facet);
+        inner = `<div class="chips xtabs" role="tablist">${tabs.map(([k, l]) => `<button type="button" class="chip ${facet === k ? 'on' : ''}" data-xf="${k}">${l}</button>`).join('')}</div>`;
+        if (!group) {
+          if (facet === 'brand') inner += `<p class="mono">Les incontournables</p><div class="xpop">${popular().map((e) => { const k = entryKey(e), on = sel.has(k); return `<button type="button" class="xp ${on ? 'on' : ''}" data-xk="${esc(k)}" ${haveIt(e) ? 'disabled' : ''}>${xThumb(e)}<b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`; }).join('')}</div><p class="mono">Toutes les marques · ${gs.length}</p>`;
+          else if (facet === 'style' || facet === 'note') inner += `<p class="mono" style="text-transform:none;letter-spacing:0">${facet === 'style' ? 'Pour les parfums sans fiche détaillée, le style est déduit du nom (≈).' : 'Notes des fiches détaillées, ou lues dans le nom du parfum.'}</p>`;
+          else if (facet === 'price') inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Prix indicatifs d\'un flacon standard, pour les parfums avec fiche détaillée.</p>';
+          else inner += '<p class="mono" style="text-transform:none;letter-spacing:0">Les parfumeurs connus et sûrs : la liste grandit avec la base.</p>';
+          inner += `<div class="chips xg">${gs.map((g) => `<button type="button" class="chip" data-xg="${esc(g.key)}">${esc(g.label)} <small style="color:var(--muted)">${g.items.length}</small></button>`).join('') || '<span class="mono">Rien ici pour l\'instant</span>'}</div>`;
+        } else {
+          const g = gs.find((x) => x.key === group); const items = g ? g.items.slice().sort((a, b) => (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || a.name.localeCompare(b.name, 'fr')) : [];
+          inner += `<div class="row xback"><button type="button" class="ghost" id="xback">← ${tabs.find((t) => t[0] === facet)[1]}</button><b>${esc(g ? g.label : '')}</b><span class="mono">${items.length}</span></div><div class="xgrid">${items.slice(0, limit).map(card).join('')}</div>${items.length > limit ? '<button type="button" class="ghost" id="xmore">Voir plus</button>' : ''}`;
+        }
+      }
+      host.innerHTML = `<div class="exp"><div><h2>${esc(o.title)}</h2><p style="color:var(--muted);margin-top:6px">${esc(o.sub)}</p></div><input type="search" id="xq" placeholder="Rechercher un parfum ou une marque" value="${esc(q)}" autocomplete="off" aria-label="Rechercher"><div id="xbody">${inner}</div>${o.free ? `<button type="button" class="linkbtn" id="xfree">${esc(o.free)}</button>` : ''}${o.skip ? `<button type="button" class="ghost" id="xskip">${esc(o.skip)}</button>` : ''}${foot()}</div>`;
+      bind();
+    }
+    function bind() {
+      const qi = $('#xq', host); qi.oninput = () => { q = qi.value; const pos = q.length; body(); const n = $('#xq', host); n.focus(); n.setSelectionRange(pos, pos); };
+      $$('[data-xf]', host).forEach((b) => (b.onclick = () => { facet = b.dataset.xf; group = null; limit = 60; body(); }));
+      $$('[data-xg]', host).forEach((b) => (b.onclick = () => { group = b.dataset.xg; limit = 60; body(); }));
+      if ($('#xback', host)) $('#xback', host).onclick = () => { group = null; body(); };
+      if ($('#xmore', host)) $('#xmore', host).onclick = () => { limit += 60; body(); };
+      const lookup = {}; dbList().forEach((e) => { lookup[entryKey(e)] = e; });
+      $$('[data-xk]', host).forEach((b) => (b.onclick = () => { const k = b.dataset.xk, e = lookup[k]; if (!e) return; if (sel.has(k)) sel.delete(k); else sel.set(k, e); b.classList.toggle('on', sel.has(k)); const m = $('.xm', b); if (m) m.textContent = sel.has(k) ? '✓' : '+'; const f = $('.exp-foot', host); f.outerHTML = foot(); bindGo(); }));
+      bindGo();
+      if ($('#xfree', host)) $('#xfree', host).onclick = o.onFree;
+      if ($('#xskip', host)) $('#xskip', host).onclick = o.onSkip;
+    }
+    function bindGo() { const g = $('#xgo', host); if (g) g.onclick = () => o.onSubmit([...sel.values()]); }
+    body();
+  }
+  function addEntriesToCollection(list) { list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); }
+  function openExplore(mode) {
+    const pn = openSheet('<div id="exh"></div>');
+    mountExplorer($('#exh', pn), mode === 'wish'
+      ? { mode: 'wish', title: 'Explorer la base', sub: 'Par marque, style, notes, prix ou parfumeur. Chaque parfum se met en wishlist d\'un toucher.', cta: (n) => 'Mettre ' + n + ' en wishlist', onSubmit: (list) => { list.forEach((e) => addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' })); save(); closeSheet(); tab = 'wish'; render(); } }
+      : { mode: 'collection', title: 'Ajoute tes parfums', sub: 'Choisis-les dans la base : par marque, style, notes, prix ou parfumeur.', cta: (n) => 'Ajouter ' + n + ' à ma collection', free: 'Il n\'est pas dans la base ? Écris-le ou prends-le en photo', onFree: () => openAddFree(), onSubmit: (list) => { addEntriesToCollection(list); closeSheet(); tab = 'shelf'; render(); } });
+  }
+
   async function analyzeAdd(pn) {
     const txt0 = $('#addtxt', pn).value.trim(), out = $('#addres', pn), demo = window.SillageDemo, imgUrl = $('#addurl', pn) ? $('#addurl', pn).value.trim() : '';
     if (!txt0 && !SHELF_FILES.length && !imgUrl) { $('#addtxt', pn).focus(); return; }
@@ -591,9 +674,6 @@
       <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
         <input type="text" id="pname" maxlength="24" value="${esc(pf.name || '')}" placeholder="Mon prénom" aria-label="Mon prénom">
         <input type="text" id="page" inputmode="numeric" maxlength="2" value="${pf.age || ''}" placeholder="Mon âge" aria-label="Mon âge"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour. Ta tenue, je te la demande quand tu cherches ton parfum.</p></div>
-      <div class="card" style="display:grid;gap:10px"><b>Profils sur cet appareil</b><p class="mono" style="text-transform:none;letter-spacing:0">Chaque profil a sa propre collection, sa wishlist et son journal. Rien n'est mélangé.</p>
-        <div class="chips">${PROFILES.list.map((x, i) => `<button class="chip ${x.id === PROFILES.active ? 'on' : ''}" data-sw="${x.id}">${esc(profLabel(x, i))}</button>`).join('')}<button class="chip" id="newprof">+ Nouveau profil</button></div>
-        ${PROFILES.list.length > 1 ? '<button class="ghost danger" id="delprof" style="justify-self:start">Supprimer ce profil</button>' : ''}</div>
       <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="card" style="display:grid;gap:8px"><b>Mode public</b><p class="mono" style="text-transform:none;letter-spacing:0">Remplace les photos de marques par des flacons dessinés. Pratique pour une démo ou une capture d'écran publique.</p><button class="ghost" id="pubmode" style="justify-self:start">${S.settings.publicMode ? 'Désactiver' : 'Activer'} le mode public</button></div>
@@ -602,9 +682,6 @@
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
     $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
     $('#pname', pn).onchange = () => { setProfile({ name: $('#pname', pn).value.trim().slice(0, 24) }); pmsg(); };
-    $$('[data-sw]', pn).forEach((b) => (b.onclick = () => switchProfile(b.dataset.sw)));
-    $('#newprof', pn).onclick = newProfile;
-    if ($('#delprof', pn)) $('#delprof', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : supprimer ce profil'; return; } deleteProfile(PROFILES.active); };
     $('#pubmode', pn).onclick = () => { S.settings.publicMode = !S.settings.publicMode; save(); closeSheet(); render(true); };
     $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
@@ -762,7 +839,7 @@
   const pickKey = (v, obj, d) => (typeof v === 'string' && v in obj ? v : d);
   function normCond(c, wx) {
     c = c || {};
-    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), dur: pickKey(c.dur, E.DURS, '') };
+    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), venue: pickKey(c.venue, E.VENUES, ''), dur: pickKey(c.dur, E.DURS, '') };
   }
   function keywordCond(text, wx) {
     const t = E.norm(text), c = { temp: wx ? wx.t : 18 };
@@ -775,15 +852,16 @@
     if (/soir|diner|vernissage|nuit/.test(t)) c.moment = 'soir';
     if (/costume|blazer/.test(t)) c.style = 'costume'; else if (/sport|running|salle/.test(t)) c.style = 'sport'; else if (/jean|t shirt|tee/.test(t)) c.style = 'casual';
     if (/cuir|perfecto/.test(t)) c.fabric = 'cuir'; else if (/lin/.test(t)) c.fabric = 'lin'; else if (/pull|maille|laine/.test(t)) c.fabric = 'laine';
+    if (/resto|restaurant|diner|brasserie/.test(t)) c.venue = 'resto'; else if (/bar |apero|cocktail|terrasse/.test(t + ' ')) c.venue = 'bar'; else if (/boite|club|discotheque/.test(t)) c.venue = 'boite'; else if (/musee|expo|vernissage|galerie/.test(t)) c.venue = 'musee'; else if (/concert|festival/.test(t)) c.venue = 'concert'; else if (/theatre|cinema|opera/.test(t)) c.venue = 'theatre'; else if (/bureau|reunion|client|entretien/.test(t)) c.venue = 'bureau'; else if (/chez moi|maison|canape|teletravail/.test(t)) c.venue = 'maison';
     if (/pluie|pleut/.test(t)) c.rain = true;
     if (/froid/.test(t) && !m) c.temp = 4; if (/chaud|canicule/.test(t) && !m) c.temp = 29;
     Object.assign(c, explicitPreset());
     return normCond(c, wx);
   }
-  const layerObjs = (p, cond, n) => E.layering(p, S.collection, cond, { daysSince }, n || 2).map((l) => ({ p: l.b, effect: l.what, how: [l.how, l.tip].filter(Boolean).join(' '), score: clamp(Math.round(l.total + 1.5), 2, 5) }));
+  const layerObjs = (p, cond, n) => E.layering(p, S.collection, cond, stx(), n || 2).map((l) => ({ p: l.b, effect: l.what, how: [l.how, l.tip].filter(Boolean).join(' '), score: clamp(Math.round(l.total + 1.5), 2, 5) }));
   function localDay(text, wx) {
     const cond = keywordCond(text, wx);
-    const rk = E.rank(S.collection, cond, { daysSince });
+    const rk = E.rank(S.collection, cond, stx());
     const top = rk[0];
     return { cond, read: text ? text : 'Journée ' + E.CONTEXTS[cond.ctx].toLowerCase() + ', ' + Math.round(cond.temp) + '°', pick: top.p, vibe: [famLabel(top.p.family), E.MOODS[cond.mood], (E.MOMENTS[cond.moment] || '').toLowerCase()].filter(Boolean).slice(0, 3),
       story: (top.reasons.slice(0, 3).join('. ') || 'Le meilleur compromis de ton étagère aujourd\'hui') + '.', alts: rk.slice(1, 4).map((r) => ({ p: r.p, line: r.reasons[0] || 'Une belle alternative' })), layers: layerObjs(top.p, cond, 2), avoid: '', ai: false };
@@ -792,6 +870,8 @@
     const o = explicitPreset(), bits = [];
     if (o.mood) bits.push('mood : ' + E.MOODS[o.mood]);
     if (CHOICE.dress) { const dr = DRESS.find((x) => x[0] === CHOICE.dress); if (dr) bits.push('tenue : ' + dr[1].toLowerCase() + ' (' + dr[2] + ')'); }
+    if (CHOICE.when) bits.push('moment : ' + E.MOMENTS[CHOICE.when].toLowerCase());
+    if (o.venue) bits.push('endroit : ' + E.VENUES[o.venue].toLowerCase());
     if (o.place) bits.push('lieu : ' + E.PLACES[o.place]);
     if (o.dur) bits.push('durée : ' + E.DURS[o.dur]);
     if (CHOICE.hum) bits.push('air très humide');
@@ -806,7 +886,7 @@
     let layers = (j.layers || []).map((l) => ({ p: find(l.id), effect: String(l.effect || ''), how: String(l.how || ''), score: clamp(Math.round(+l.score || 4), 1, 5) })).filter((l) => l.p && l.p.id !== p.id).slice(0, 2);
     if (!layers.length) layers = layerObjs(p, cond, 2);
     let alts = (j.alts || []).map((a) => ({ p: find(a.id), line: String(a.line || '') })).filter((a) => a.p && a.p.id !== p.id).slice(0, 3);
-    if (!alts.length) alts = E.rank(S.collection, cond, { daysSince }).filter((r) => r.p.id !== p.id).slice(0, 3).map((r) => ({ p: r.p, line: r.reasons[0] || '' }));
+    if (!alts.length) alts = E.rank(S.collection, cond, stx()).filter((r) => r.p.id !== p.id).slice(0, 3).map((r) => ({ p: r.p, line: r.reasons[0] || '' }));
     return { cond, read: String(j.read || text || 'Ta journée'), pick: p, vibe: (j.vibe || []).map(String).slice(0, 3), story: String(j.story || ''), alts, layers, avoid: String(j.avoid || ''), ai: true };
   }
 
@@ -843,7 +923,7 @@
       <div class="msgs center">${['Je lis ta journée…', 'Je sens ton étagère…', 'Je compose l\'accord…'].map((m, i) => `<span style="animation-delay:${i * 2.1}s">${m}</span>`).join('')}</div>`;
     $('#prog').innerHTML = '';
   }
-  const condChips = (c) => [E.CONTEXTS[c.ctx], E.WITHS[c.with], E.MOMENTS[c.moment], Math.round(c.temp) + '°' + (c.rain ? ' pluie' : ''), E.MOODS[c.mood], c.place ? E.PLACES[c.place] : null, c.dur ? E.DURS[c.dur] : null, c.hum > 75 ? 'humide' : null, E.STYLES[c.style] + (c.fabric ? ' · ' + E.FABRICS[c.fabric].toLowerCase() : '')].filter(Boolean);
+  const condChips = (c) => [E.CONTEXTS[c.ctx], E.WITHS[c.with], E.MOMENTS[c.moment], Math.round(c.temp) + '°' + (c.rain ? ' pluie' : ''), E.MOODS[c.mood], c.venue ? E.VENUES[c.venue] : (c.place ? E.PLACES[c.place] : null), c.dur ? E.DURS[c.dur] : null, c.hum > 75 ? 'humide' : null, E.STYLES[c.style] + (c.fabric ? ' · ' + E.FABRICS[c.fabric].toLowerCase() : '')].filter(Boolean);
   function buildScenes(R) {
     const p = R.pick, sc = [];
     const nW = (t) => String(t || '').split(/\s+/).filter(Boolean).length;
@@ -923,19 +1003,37 @@
 
 
   // ---------- Wishlist ----------
+  let WTAB = 'smell';
+  const VERDICT = { love: 'J\'adore', ok: 'Bien', no: 'Bof' };
   function viewWish() {
-    const W = S.wishlist, total = W.reduce((a, w) => a + (w.price || 0), 0);
+    S.wishlist.forEach((w) => { if (!w.st) w.st = 'smell'; });
+    const all = S.wishlist, L = all.filter((w) => w.st === WTAB), nS = all.filter((w) => w.st === 'smell').length, nD = all.length - nS, total = all.filter((w) => w.st === 'smell').reduce((a, w) => a + (w.price || 0), 0);
+    const line = (w) => { const d = window.DESC && window.DESC[w.name]; return d ? `<em class="wd">${esc(d[1])}</em>` : ''; };
     $('#view').innerHTML = `
-      <section class="sec"><header><h2>Wishlist</h2><span class="mono">${W.length} parfum${W.length > 1 ? 's' : ''}${total ? ' · ≈ ' + total + ' €' : ''}</span></header>
-        <div class="card ask-card"><p class="mono">Ajouter à la wishlist</p><input type="text" id="wlin" placeholder="Nom du parfum, l'IA complète la fiche"><button class="cta" id="wlgo"><span>Ajouter</span></button><p class="mono" id="wlmsg" style="text-transform:none"></p></div></section>
-      <section class="sec">${W.length ? W.map((w, i) => `<article class="wl" style="--i:${i}">${bt(w, { still: true })}<div class="wlb"><b>${esc(w.name)}</b><small>${esc(w.house)}${w.family ? ' · ' + esc(famLabel(w.family)) : ''}${w.price ? ' · ≈ ' + w.price + ' €' : ''}</small><div class="row" style="margin-top:10px"><button class="ghost" data-wown="${esc(w.name)}">Je l'ai</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${buyLinks(w.name, w.house)}</div></article>`).join('') : '<div class="empty">Ta wishlist est vide. Ajoute un parfum ici, depuis Découvrir ou depuis une balade olfactive.</div>'}</section>`;
+      <section class="sec"><header><h2>Wishlist</h2><span class="mono">${all.length} parfum${all.length > 1 ? 's' : ''}${total ? ' · ≈ ' + total + ' €' : ''}</span></header>
+        <div class="chips wtabs"><button class="chip ${WTAB === 'smell' ? 'on' : ''}" data-wt="smell">À sentir · ${nS}</button><button class="chip ${WTAB === 'smelled' ? 'on' : ''}" data-wt="smelled">Senti · ${nD}</button></div>
+        <button class="cta full" id="wexp"><span>Explorer la base</span></button>
+        <details class="wname"><summary class="mono">Ou ajouter par son nom</summary><div class="card ask-card"><input type="text" id="wlin" placeholder="Nom du parfum, l'IA complète la fiche"><button class="cta" id="wlgo"><span>Ajouter</span></button><p class="mono" id="wlmsg" style="text-transform:none"></p></div></details></section>
+      <section class="sec">${L.length ? L.map((w, i) => `<article class="wl" style="--i:${i}">${bt(w, { still: true })}<div class="wlb"><b>${esc(w.name)}</b><small>${esc(w.house)}${w.family ? ' · ' + esc(famLabel(w.family)) : ''}${w.price ? ' · ≈ ' + w.price + ' €' : ''}</small>${line(w)}
+        ${WTAB === 'smell' ? `<div class="row" style="margin-top:10px"><button class="ghost" data-wsm="${esc(w.name)}">Je l'ai senti</button><button class="ghost" data-wown="${esc(w.name)}">Je l'ai</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${buyLinks(w.name, w.house)}`
+          : `<div class="chips" style="margin-top:10px">${Object.entries(VERDICT).map(([k, v]) => `<button class="chip ${w.verdict === k ? 'on' : ''}" data-wv="${k}" data-n="${esc(w.name)}">${v}</button>`).join('')}</div><div class="row" style="margin-top:10px"><button class="ghost" data-wown="${esc(w.name)}">Je l'ai pris</button><button class="ghost" data-wre="${esc(w.name)}">À re-sentir</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${w.verdict === 'love' ? buyLinks(w.name, w.house) : ''}`}</div></article>`).join('') : `<div class="empty">${WTAB === 'smell' ? 'Rien à sentir pour l\'instant. Explore la base, ou ajoute un parfum que tu veux essayer.' : 'Tu n\'as encore rien senti. Quand tu passes devant un parfum, note ce que tu en as pensé ici.'}</div>`}</section>
+      ${lexCard()}`;
+    const byName = (n) => S.wishlist.find((x) => x.name === n);
+    $$('[data-wt]').forEach((b) => (b.onclick = () => { WTAB = b.dataset.wt; viewWish(); }));
+    $('#wexp').onclick = () => openExplore('wish');
     $$('[data-wrm]').forEach((b) => (b.onclick = () => { rmWish(b.dataset.wrm); viewWish(); }));
-    $$('[data-wown]').forEach((b) => (b.onclick = () => { const w = S.wishlist.find((x) => x.name === b.dataset.wown); if (w) { S.collection.push(wishToOwned(w)); rmWish(w.name); viewWish(); } }));
+    $$('[data-wsm]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.wsm); if (w) { w.st = 'smelled'; save(); WTAB = 'smelled'; viewWish(); } }));
+    $$('[data-wre]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.wre); if (w) { w.st = 'smell'; delete w.verdict; save(); WTAB = 'smell'; viewWish(); } }));
+    $$('[data-wv]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.n); if (w) { w.verdict = w.verdict === b.dataset.wv ? '' : b.dataset.wv; save(); viewWish(); } }));
+    $$('[data-wown]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.wown); if (w) { S.collection.push(wishToOwned(w)); rmWish(w.name); viewWish(); } }));
+    bindLex();
     $('#wlgo').onclick = async () => {
       const v = $('#wlin').value.trim(), msg = $('#wlmsg'); if (!v) { $('#wlin').focus(); return; }
       msg.textContent = 'Je complète la fiche…'; $('#wlgo').disabled = true;
       const c = CAT.find((x) => E.norm(x.name) === E.norm(v));
       if (c) { addWish(wishFromName(c.name)); return viewWish(); }
+      const hit = dbList().find((e) => E.norm(e.name) === E.norm(v));
+      if (hit) { addWish({ name: hit.name, house: hit.house, family: hit.family || '', notes: hit.notes || [], price: hit.price || 0 }); return viewWish(); }
       try {
         const j = await aiJson(`Identifie ce parfum : "${v}". Réponds UNIQUEMENT par un JSON : {"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["6 à 10 notes en français"],"price":nombre en euros indicatif}`, { modelTier: 'quick' });
         addWish({ name: String(j.name || v), house: String(j.house || ''), family: E.FAMILIES[j.family] ? j.family : '', notes: (j.notes || []).map(String).slice(0, 10), price: Math.round(+j.price) || 0 });
@@ -943,128 +1041,16 @@
       viewWish();
     };
   }
+  // Un mot, une astuce ou un peu d'histoire : une carte par jour, sans en faire trop.
+  let LEXI = null;
+  function lexCard() {
+    const L = window.LEX || []; if (!L.length) return '';
+    if (LEXI == null) LEXI = Math.floor(Date.now() / 864e5) % L.length;
+    const [k, t, x] = L[LEXI % L.length];
+    return `<section class="sec"><div class="card lex"><p class="mono">${k === 'Mot' ? 'Un mot de parfumeur' : k === 'Astuce' ? 'Une astuce' : 'Un peu d\'histoire'}</p><h3>${esc(t)}</h3><p>${esc(x)}</p><button class="linkbtn" data-lex>Un autre</button></div></section>`;
+  }
+  function bindLex() { $$('[data-lex]').forEach((b) => (b.onclick = () => { LEXI = (LEXI + 1) % (window.LEX || [1]).length; if (tab === 'wish') viewWish(); else viewDiscover(); })); }
 
-  // ---------- Balade olfactive ----------
-  const SYMS = [
-    ['un rond', '<circle cx="24" cy="24" r="13"/>'],
-    ['une croix', '<path d="M13 13L35 35M35 13L13 35"/>'],
-    ['un plus', '<path d="M24 9v30M9 24h30"/>'],
-    ['un triangle', '<path d="M24 9L39 37H9z"/>'],
-    ['un carré', '<rect x="11" y="11" width="26" height="26"/>'],
-    ['un losange', '<path d="M24 7L41 24L24 41L7 24z"/>'],
-    ['une vague', '<path d="M6 24q6.5-12 12.5 0t12.5 0t12 0"/>'],
-    ['deux traits', '<path d="M10 17h28M10 31h28"/>'],
-    ['un point', '<circle cx="24" cy="24" r="4" fill="currentColor"/>'],
-    ['une étoile', '<path d="M24 8l4.7 10.6 11.5 1-8.7 7.6 2.6 11.3L24 32.6 13.9 38.5l2.6-11.3L7.8 19.6l11.5-1z"/>'],
-    ['une flèche', '<path d="M8 24h30M28 13l11 11-11 11"/>'],
-    ['un zigzag', '<path d="M7 31l8.5-14 8.5 14 8.5-14 8.5 14"/>'],
-    ['trois points', '<circle cx="12" cy="24" r="3" fill="currentColor"/><circle cx="24" cy="24" r="3" fill="currentColor"/><circle cx="36" cy="24" r="3" fill="currentColor"/>'],
-    ['un demi-cercle', '<path d="M9 31a15 15 0 0 1 30 0z"/>'],
-    ['un rond barré', '<circle cx="24" cy="24" r="13"/><path d="M15 33L33 15"/>'],
-    ['un L', '<path d="M15 9v30h20"/>'],
-  ];
-  const symSvg = (i, px, cls) => `<svg class="sym ${cls || ''}" width="${px}" height="${px}" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="${esc(SYMS[i][0])}">${SYMS[i][1]}</svg>`;
-  const RATE = { love: 'J\'adore', ok: 'Bien', no: 'Bof' };
-  let WALK = null, WSEG = 'list', WPEND = null, WRATE = 'ok', WFIND = null;
-  const walkDate = (w) => new Date(w.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
-  const nextSym = (w) => { const used = new Set(w.entries.map((e) => e.sym)); for (let i = 0; i < SYMS.length; i++) if (!used.has(i)) return i; return w.entries.length % SYMS.length; };
-
-  function viewWalk() {
-    const w = S.walks.find((x) => x.id === WALK);
-    if (!w) {
-      $('#view').innerHTML = `
-        <section class="sec"><header><h2>Balade olfactive</h2></header>
-          <p style="color:var(--muted)">Tu testes des parfums en boutique ? Photographie ou note chaque touche : je te donne un symbole à dessiner dessus pour savoir, plus tard, quelle touche est quel parfum.</p>
-          <button class="cta full" id="wNew"><span>Commencer une balade</span></button></section>
-        ${S.walks.length ? `<section class="sec"><header><h2 style="font-size:20px">Tes balades</h2></header>${[...S.walks].reverse().map((x) => `<button class="wcard" data-w="${x.id}"><span><b>${esc(x.place || 'Balade')}</b><small>${esc(walkDate(x))} · ${x.entries.length} touche${x.entries.length > 1 ? 's' : ''}</small></span><span class="symrow">${x.entries.slice(0, 7).map((e) => symSvg(e.sym, 22)).join('')}</span></button>`).join('')}</section>` : ''}`;
-      $('#wNew').onclick = () => {
-        const pn = openSheet(`<div><h2>Nouvelle balade</h2><p style="color:var(--muted);margin-top:6px">Où testes-tu aujourd'hui ?</p></div><input type="text" id="wplace" placeholder="Rue Saint-Honoré, Marais… (facultatif)"><button class="cta full" id="wgo2"><span>C'est parti</span></button>`);
-        $('#wgo2', pn).onclick = () => { const w2 = { id: uid(), date: today(), place: $('#wplace', pn).value.trim(), entries: [] }; S.walks.push(w2); save(); WALK = w2.id; WSEG = 'list'; closeSheet(); viewWalk(); };
-      };
-      $$('[data-w]').forEach((b) => (b.onclick = () => { WALK = b.dataset.w; WSEG = 'list'; WPEND = null; viewWalk(); }));
-      return;
-    }
-    const n = w.entries.length, sym = nextSym(w);
-    $('#view').innerHTML = `
-      <section class="sec" style="margin-top:18px"><button class="ghost" id="wBack" style="justify-self:start">← Balades</button>
-        <header><h2>${esc(w.place || 'Balade olfactive')}</h2><span class="mono">${esc(walkDate(w))} · ${n} touche${n > 1 ? 's' : ''}</span></header></section>
-      <section class="sec" style="margin-top:14px"><div class="card wadd">
-        <div class="symhint">${symSvg(sym, 64, 'big')}<div><p class="mono">Touche n° ${n + 1}</p><p style="font-size:17px;margin-top:4px">Dessine <b>${esc(SYMS[sym][0])}</b> au dos de la touche.</p></div></div>
-        <input type="text" id="wname" placeholder="Nom du parfum, ou prends-le en photo">
-        <textarea id="wnote" rows="2" placeholder="Ce que tu sens : ouverture, cœur, ce que ça évoque…"></textarea>
-        <div class="chips" id="wrate">${Object.entries(RATE).map(([k, v]) => `<button class="chip ${WRATE === k ? 'on' : ''}" data-r="${k}">${v}</button>`).join('')}</div>
-        <div class="row"><button class="chip photo-btn" id="wph">${WPEND && WPEND.file ? `<img alt="" src="${URL.createObjectURL(WPEND.file)}">` : IC.cam}<span>${WPEND && WPEND.file ? 'Photo ajoutée' : 'Photographier le flacon'}</span></button><input type="file" id="wphin" accept="image/*" capture="environment" hidden></div>
-        <p class="mono" id="wai" style="text-transform:none;letter-spacing:0"></p>
-        <button class="cta full" id="wAdd"><span>Enregistrer la touche</span></button></div></section>
-      ${n ? `<div class="seg" id="wseg"><button data-s="list" class="${WSEG === 'list' ? 'on' : ''}">Mes touches</button><button data-s="find" class="${WSEG === 'find' ? 'on' : ''}">Retrouver une touche</button></div>` : ''}
-      <section class="sec" style="margin-top:14px" id="wbody">${WSEG === 'find' && n ? walkFind(w) : [...w.entries].reverse().map((e) => walkEntry(e)).join('')}</section>
-      ${n ? `<section class="sec"><button class="ghost" id="wSum" style="justify-self:start">Faire le bilan de la balade</button><div id="wsumres" style="display:grid;gap:12px"></div></section>` : ''}`;
-    $('#wBack').onclick = () => { WALK = null; WPEND = null; viewWalk(); };
-    $$('#wrate .chip').forEach((c) => (c.onclick = () => { WRATE = c.dataset.r; $$('#wrate .chip').forEach((x) => x.classList.toggle('on', x === c)); }));
-    $('#wph').onclick = () => $('#wphin').click();
-    $('#wphin').onchange = async (e) => {
-      const f = e.target.files[0]; if (!f) return; WPEND = { file: f };
-      const keepName = $('#wname').value, keepNote = $('#wnote').value; viewWalk(); $('#wname').value = keepName; $('#wnote').value = keepNote;
-      if (!CAN_IMG) return;
-      const st = $('#wai'); st.textContent = 'Je lis le flacon…';
-      try {
-        const j = await aiJson(`Cette photo montre un flacon de parfum (ou son étiquette) que je viens de sentir en boutique. Identifie-le. Réponds UNIQUEMENT par un JSON : {"name":"nom officiel, vide si illisible","house":"maison","family":"${FAMS}","notes":["jusqu'à 8 notes en français"],"confidence":0 à 1}`, { modelTier: 'default', images: [f] });
-        WPEND.info = j;
-        if (j.name) { if (!$('#wname').value) $('#wname').value = j.name; st.textContent = 'Reconnu : ' + j.name + (j.house ? ' · ' + j.house : ''); } else st.textContent = 'Flacon non reconnu : note le nom.';
-      } catch (er) { st.textContent = 'Reconnaissance indisponible : note le nom à la main.'; }
-    };
-    $('#wAdd').onclick = async () => {
-      const name = $('#wname').value.trim(), note = $('#wnote').value.trim(), info = (WPEND && WPEND.info) || {};
-      if (!name && !note && !(WPEND && WPEND.file)) { $('#wname').focus(); return; }
-      const nm = name || info.name || 'Sans nom', c = CAT.find((x) => E.norm(x.name) === E.norm(nm));
-      const e = { id: uid(), sym: nextSym(w), name: nm, house: (c && c.house) || info.house || '', family: (c && c.family) || info.family || '', notes: (c && [...c.notes]) || (info.notes || []).map(String), note, rating: WRATE, date: today() };
-      $('#wAdd').disabled = true;
-      if (WPEND && WPEND.file && HAS_ASSETS) { try { e.photo = await putPhoto(WPEND.file); } catch (er) { /* sans photo */ } }
-      w.entries.push(e); save(); WPEND = null; WRATE = 'ok'; WSEG = 'list'; viewWalk();
-    };
-    if ($('#wseg')) $$('#wseg button').forEach((b) => (b.onclick = () => { WSEG = b.dataset.s; WFIND = null; viewWalk(); }));
-    if ($('#wSum')) $('#wSum').onclick = () => walkSummary(w);
-    walkBind(w);
-  }
-  function walkEntry(e) {
-    return `<article class="wentry"><div class="wsym">${symSvg(e.sym, 40)}</div><div class="wbody"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(e.name)}</b><span class="tag">${esc(RATE[e.rating] || '')}</span></div>${e.house ? `<small>${esc(e.house)}${e.family ? ' · ' + esc(famLabel(e.family)) : ''}</small>` : ''}${e.notes && e.notes.length ? `<small>${esc(e.notes.slice(0, 6).join(' · '))}</small>` : ''}${e.note ? `<p>${esc(e.note)}</p>` : ''}
-      <div class="row" style="margin-top:8px"><button class="ghost" data-wl="${e.id}">${hasWish(e.name) ? 'Dans la wishlist' : 'Wishlist'}</button><button class="ghost" data-we="${e.id}">Modifier</button></div></div>${e.photo ? `<img class="wthumb" alt="" src="/_blob/${esc(e.photo)}">` : ''}</article>`;
-  }
-  function walkFind(w) {
-    const sel = w.entries.find((e) => e.id === WFIND);
-    return `<p class="mono">Touche à la main ? Choisis le symbole que tu as dessiné.</p><div class="symgrid">${w.entries.map((e) => `<button class="symtile ${WFIND === e.id ? 'on' : ''}" data-f="${e.id}">${symSvg(e.sym, 44)}<small>${esc(SYMS[e.sym][0])}</small></button>`).join('')}</div>${sel ? walkEntry(sel) : ''}`;
-  }
-  function walkBind(w) {
-    $$('[data-f]').forEach((b) => (b.onclick = () => { WFIND = b.dataset.f; viewWalk(); }));
-    $$('[data-wl]').forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.wl); if (!e) return; if (hasWish(e.name)) rmWish(e.name); else addWish(CAT.find((c) => E.norm(c.name) === E.norm(e.name)) ? wishFromName(CAT.find((c) => E.norm(c.name) === E.norm(e.name)).name) : e); viewWalk(); }));
-    $$('[data-we]').forEach((b) => (b.onclick = () => walkEdit(w, w.entries.find((x) => x.id === b.dataset.we))));
-  }
-  function walkEdit(w, e) {
-    let rate = e.rating;
-    const pn = openSheet(`<div><h2>Modifier la touche</h2><p class="mono" style="margin-top:6px">${symSvg(e.sym, 22)} ${esc(SYMS[e.sym][0])}</p></div><input type="text" id="en" value="${esc(e.name)}"><textarea id="eno" rows="3">${esc(e.note || '')}</textarea>
-      <div class="chips" id="er">${Object.entries(RATE).map(([k, v]) => `<button class="chip ${rate === k ? 'on' : ''}" data-r="${k}">${v}</button>`).join('')}</div>
-      <div class="row" style="justify-content:space-between"><button class="ghost danger" id="edel">Supprimer</button><button class="cta" id="esave"><span>Enregistrer</span></button></div>`);
-    $$('#er .chip', pn).forEach((c) => (c.onclick = () => { rate = c.dataset.r; $$('#er .chip', pn).forEach((x) => x.classList.toggle('on', x === c)); }));
-    $('#esave', pn).onclick = () => { e.name = $('#en', pn).value.trim() || e.name; e.note = $('#eno', pn).value.trim(); e.rating = rate; save(); closeSheet(); viewWalk(); };
-    $('#edel', pn).onclick = (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer'; return; } w.entries = w.entries.filter((x) => x.id !== e.id); save(); closeSheet(); viewWalk(); };
-  }
-  async function walkSummary(w) {
-    const out = $('#wsumres'); out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#wSum').disabled = true;
-    const lines = w.entries.map((e) => `${e.name} | ${e.house} | ${e.notes.join(', ')} | ${RATE[e.rating]} | ${e.note || ''}`).join('\n');
-    try {
-      const j = w.seed ? SEED_SUM : await aiJson(`Tu es un nez de parfumerie. Voici les parfums que j'ai sentis pendant une balade en boutique (nom | maison | notes | mon avis | ma remarque) :\n${lines}\n\nMa collection actuelle :\n${colLines()}\n\nRéponds UNIQUEMENT par un JSON : {"taste":"ce que mes avis révèlent de mes goûts, 2 phrases, tutoiement","keep":[{"name":"nom exact d'une touche à retenir","why":"pourquoi, 10 mots max"}],"skip":"ce que je peux oublier, 1 phrase"}`, { modelTier: 'default' });
-      const keep = (j.keep || []).map((k) => ({ k, e: w.entries.find((e) => E.norm(e.name) === E.norm(k.name)) })).filter((x) => x.e);
-      out.innerHTML = `<p style="font-size:17px;font-weight:300">${esc(j.taste || '')}</p>${keep.map((x) => `<div class="wentry"><div class="wsym">${symSvg(x.e.sym, 32)}</div><div class="wbody"><b>${esc(x.e.name)}</b><small>${esc(x.k.why || '')}</small><div class="row" style="margin-top:8px"><button class="ghost" data-kw="${x.e.id}">${hasWish(x.e.name) ? 'Dans la wishlist' : 'Wishlist'}</button></div></div></div>`).join('')}${j.skip ? `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(j.skip)}</p>` : ''}`;
-      $$('[data-kw]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.kw); addWish(CAT.find((c) => E.norm(c.name) === E.norm(e.name)) ? wishFromName(CAT.find((c) => E.norm(c.name) === E.norm(e.name)).name) : e); b.textContent = 'Dans la wishlist'; }));
-    } catch (er) {
-      const loved = w.entries.filter((e) => e.rating === 'love');
-      out.innerHTML = `<p style="color:var(--muted)">${loved.length ? 'Tes coups de cœur : ' + esc(loved.map((e) => e.name).join(', ')) + '.' : 'Aucun coup de cœur noté pour l\'instant.'}</p>`;
-    }
-    $('#wSum').disabled = false;
-  }
-
-
-  // ---------- Profil : genre et façon de s'habiller (sauvegardé, réutilisé chaque jour) ----------
   const GEN = [['m', 'Un garçon'], ['f', 'Une fille'], ['x', 'Je préfère ne pas dire']];
   const DRESS = [['casual', 'Décontracté', 'jean, t-shirt, baskets'], ['smart', 'Smart casual', 'chemise, chino, blazer'], ['costume', 'Élégant', 'costume, tailleur'], ['street', 'Streetwear', 'hoodie, sneakers'], ['sport', 'Sportswear', 'tenue de sport'], ['soiree', 'Chic de soirée', 'robe, veste habillée']];
   const DRESS_SVG = {
@@ -1082,31 +1068,49 @@
     S.profile = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}, patch, { ts: Date.now() }); delete S.profile.skipped; delete S.profile.dress; delete S.profile.note; save();
     const me = PROFILES.list.find((x) => x.id === PROFILES.active); if (me && me.name !== (S.profile.name || '')) { me.name = S.profile.name || ''; saveProfiles(); }
   };
-  const profLabel = (p, i) => p.name || (p.id === 'main' ? 'Moi' : 'Profil ' + (i + 1));
-  const switchProfile = (id) => { PROFILES.active = id; saveProfiles(); location.reload(); };
-  const newProfile = () => { const id = 'u' + Math.random().toString(36).slice(2, 8); PROFILES.list.push({ id, name: '' }); switchProfile(id); };
-  const deleteProfile = (id) => { try { localStorage.removeItem(id === 'main' ? 'sillage.v3' : 'sillage.v3.' + id); } catch (e) { /* ok */ } PROFILES.list = PROFILES.list.filter((x) => x.id !== id); if (!PROFILES.list.length) PROFILES.list = [{ id: 'main', name: '' }]; switchProfile(PROFILES.active === id ? PROFILES.list[0].id : PROFILES.active); };
   function maybeProfile() { if (!S.profile && !PRESENT && !$('#onb') && !$('#prof')) showProfile(); }
+  const TASTES = [['Frais, citronné', ['bergamote', 'citron', 'néroli']], ['Floral', ['rose', 'jasmin', 'iris']], ['Boisé', ['cèdre', 'santal', 'vétiver']], ['Vanillé, gourmand', ['vanille', 'tonka', 'caramel']], ['Épicé, ambré', ['poivre', 'cannelle', 'ambre']], ['Cuir, fumé', ['cuir', 'encens', 'tabac']], ['Musc, peau propre', ['musc']]];
+  // Inscription en 5 temps : prénom, genre, âge, goûts, puis la collection choisie dans la base.
   function showProfile() {
-    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {});
-    const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Ton profil');
+    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), taste = new Set(), N = 5;
+    const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Faisons connaissance');
     let step = 1;
+    const read = () => { if ($('#pName', el)) d.name = $('#pName', el).value.trim().slice(0, 24); if ($('#pAge', el)) d.age = cleanAge($('#pAge', el).value); };
     const draw = () => {
+      const head = `<p class="mono">Faisons connaissance · ${step} / ${N}</p>`, back = step > 1 ? '<button class="ghost" id="pBack">Retour</button>' : '';
+      if (step === 5) {
+        el.innerHTML = '<div class="prof-in wide"><div id="pExp"></div></div>';
+        mountExplorer($('#pExp', el), { mode: 'collection', title: d.name ? 'Tes parfums, ' + d.name : 'Tes parfums', sub: 'Choisis ceux que tu as déjà : par marque, style, notes… Tu pourras en ajouter d\'autres à tout moment.', cta: (n) => 'Ajouter ' + n + ' et commencer', skip: 'Je n\'en ai pas encore', onSkip: () => end(false), onSubmit: (list) => { addEntriesToCollection(list); end(false); } });
+        return;
+      }
       el.innerHTML = step === 1
-        ? `<div class="prof-in"><p class="mono">Ton profil · 1 / 2</p><h2>Tu es…</h2><p class="soft">Pour choisir un parfum qui te va, pas pour t'enfermer dans une case.</p>
-          <div class="gen">${GEN.map(([k, l]) => `<button class="chip ${d.gender === k ? 'on' : ''}" data-g="${k}">${l}</button>`).join('')}</div>
+        ? `<div class="prof-in">${head}<h2>Enchanté. Comment tu t'appelles&nbsp;?</h2><p class="soft">Juste ton prénom : je m'en sers pour te dire bonjour. Ça reste sur ton appareil.</p>
+          <input type="text" id="pName" maxlength="24" value="${esc(d.name || '')}" placeholder="Ton prénom" aria-label="Ton prénom" autocomplete="given-name" class="agein">
           <button class="cta full" id="pNext"><span>Continuer</span></button><button class="ghost" id="pSkip">Plus tard</button></div>`
-        : `<div class="prof-in"><p class="mono">Ton profil · 2 / 2</p><h2>Quel âge as-tu ?</h2><p class="soft">Les goûts et les occasions changent avec l'âge. Ça reste sur ton appareil.</p>
-          <input type="text" id="pAge" inputmode="numeric" maxlength="2" value="${d.age || ''}" placeholder="Ton âge" aria-label="Ton âge" class="agein">
-          <input type="text" id="pName" maxlength="24" value="${esc(d.name || '')}" placeholder="Ton prénom (facultatif)" aria-label="Ton prénom" autocomplete="given-name">
-          <button class="cta full" id="pDone"><span>C'est parti</span></button><button class="ghost" id="pBack">Retour</button></div>`;
+        : step === 2
+          ? `<div class="prof-in">${head}<h2>Tu es…</h2><p class="soft">Pour choisir un parfum qui te va, pas pour t'enfermer dans une case.</p>
+            <div class="gen">${GEN.map(([k, l]) => `<button class="chip ${d.gender === k ? 'on' : ''}" data-g="${k}">${l}</button>`).join('')}</div>
+            <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
+          : step === 3
+            ? `<div class="prof-in">${head}<h2>Quel âge as-tu&nbsp;?</h2><p class="soft">Les goûts et les occasions changent avec l'âge.</p>
+              <input type="text" id="pAge" inputmode="numeric" maxlength="2" value="${d.age || ''}" placeholder="Ton âge" aria-label="Ton âge" class="agein">
+              <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
+            : `<div class="prof-in">${head}<h2>Qu'est-ce qui te plaît&nbsp;?</h2><p class="soft">Choisis ce que tu aimes sentir, autant que tu veux. Je m'en servirai pour choisir.</p>
+              <div class="chips">${TASTES.map(([l], i) => `<button class="chip ${taste.has(i) ? 'on' : ''}" data-t="${i}">${esc(l)}</button>`).join('')}</div>
+              <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`;
       $$('[data-g]', el).forEach((b) => (b.onclick = () => { d.gender = b.dataset.g; $$('[data-g]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
-      if ($('#pNext', el)) $('#pNext', el).onclick = () => { step = 2; draw(); };
-      if ($('#pBack', el)) $('#pBack', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); d.name = $('#pName', el).value.trim(); step = 1; draw(); };
+      $$('[data-t]', el).forEach((b) => (b.onclick = () => { const i = +b.dataset.t; if (taste.has(i)) taste.delete(i); else taste.add(i); b.classList.toggle('on', taste.has(i)); }));
+      if ($('#pNext', el)) $('#pNext', el).onclick = () => { read(); step++; draw(); };
+      if ($('#pBack', el)) $('#pBack', el).onclick = () => { read(); step--; draw(); };
       if ($('#pSkip', el)) $('#pSkip', el).onclick = () => end(true);
-      if ($('#pDone', el)) $('#pDone', el).onclick = () => { d.age = cleanAge($('#pAge', el).value); d.name = $('#pName', el).value.trim().slice(0, 24); end(false); };
+      if ($('#pName', el)) $('#pName', el).addEventListener('keydown', (e) => { if (e.key === 'Enter') $('#pNext', el).click(); });
     };
-    const end = (skip) => { if (skip) { S.profile = { skipped: true, ts: Date.now() }; save(); } else setProfile(d); el.remove(); document.body.style.overflow = ''; render(true); };
+    const end = (skip) => {
+      read();
+      if (skip) { S.profile = { skipped: true, ts: Date.now() }; save(); }
+      else { setProfile(d); if (taste.size) { const add = [...taste].flatMap((i) => TASTES[i][1]); S.settings.liked = [...new Set([...(S.settings.liked || []), ...add])]; save(); } }
+      el.remove(); document.body.style.overflow = ''; tab = 'today'; render();
+    };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
   }
 
@@ -1162,7 +1166,7 @@
     at(8600, () => show('os4'));
   }
 
-  const sellCard = () => (window.SillageDemo && !PRESENT ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine, le voyage et les balades.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
+  const sellCard = () => (window.SillageDemo && !PRESENT ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine et le voyage.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
   document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('[data-sell]') && window.SillageDemo) window.SillageDemo.upsell('cta'); });
   window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
 

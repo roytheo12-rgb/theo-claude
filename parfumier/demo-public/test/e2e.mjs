@@ -37,20 +37,22 @@ await pg.waitForSelector('#onb', { timeout: 8000 }); await pg.waitForTimeout(600
 await pg.waitForTimeout(3000); await pg.screenshot({ path: OUT + '/e2_onb2.png' });
 await pg.waitForTimeout(2800); await pg.screenshot({ path: OUT + '/e3_onb3.png' });
 await pg.waitForTimeout(3000); ok(await pg.isVisible('#onbGo'), 'onboarding : bouton final visible en moins de 12 s');
-await pg.click('#onbGo'); await pg.waitForSelector('#prof .gen', { timeout: 5000 }); ok(true, 'profil : l\'écran « Tu es… » s\'affiche après l\'intro');
+await pg.click('#onbGo'); await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok(true, 'inscription : la première question (prénom) s\'affiche après l\'intro');
 await pg.screenshot({ path: OUT + '/e3b_profil1.png' });
-await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#pAge'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' });
-await pg.fill('#pAge', '27'); await pg.click('#pDone'); await pg.waitForTimeout(600);
-const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).profile);
-ok(prof.gender === 'f' && prof.age === 27 && prof.dress === undefined, 'profil sauvegardé : fille, 27 ans (la tenue se demande plus tard)');
+await pg.fill('#pName', 'Léa'); await pg.click('#pNext'); await pg.waitForSelector('#prof .gen'); await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#pAge');
+await pg.fill('#pAge', '27'); await pg.click('#pNext'); await pg.waitForSelector('[data-t]'); await pg.click('[data-t="3"]'); await pg.click('[data-t="2"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
+await pg.waitForSelector('#xq'); await pg.screenshot({ path: OUT + '/e3d_explorer.png' });
+ok(await pg.locator('.xp').count() >= 10, 'sélection des parfums : une rangée d\'incontournables avec photos');
+for (const q of ['tobacco vanille', 'baccarat rouge', 'thé noir 29']) { await pg.fill('#xq', q); await pg.waitForSelector('.xc'); await pg.locator('.xc').first().click(); }
+ok(/3 choisis/.test(await pg.textContent('.exp-foot')), 'trois parfums choisis dans la base'); await pg.click('#xgo'); await pg.waitForTimeout(700);
+const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')));
+ok(prof.profile.gender === 'f' && prof.profile.age === 27 && prof.profile.name === 'Léa' && prof.settings.liked.includes('vanille') && prof.settings.liked.includes('cèdre'), 'profil sauvegardé : Léa, fille, 27 ans, goûts (vanille, cèdre…)');
+ok(/(Bonjour|Bon après-midi|Bonsoir), Léa\./.test(await pg.textContent('.hero h1')), 'accueil : « Bonjour, Léa. » selon l\'heure');
+ok(await pg.locator('[data-tab=walk]').count() === 0 && await pg.locator('#dock button').count() === 4, 'la balade olfactive n\'existe plus : 4 onglets');
 ok(await pg.locator('#dresses .dchip').count() === 6, 'au moment de choisir le parfum : 6 tenues proposées avec icônes'); await pg.click('[data-dress=smart]'); await pg.waitForTimeout(300);
-// La collection est vide au départ (rien de fictif) : on ajoute ses parfums via le catalogue, sans IA
-ok(await pg.locator('#emptyAdd').count() === 1 && await pg.locator('.vit button').count() === 0, 'collection vide : invitation à ajouter ses parfums, aucun parfum fictif');
-await pg.click('#emptyAdd'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'tobacco'); await pg.waitForSelector('[data-sug]');
-ok(/Tobacco Vanille/.test(await pg.textContent('#addsug')), 'suggestion du catalogue pendant la frappe');
-await pg.click('[data-sug]'); await pg.type('#addtxt', 'Baccarat Rouge 540\nThé Noir 29'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 8000 });
-ok(identCalls.length === 0, 'parfums du catalogue : aucun appel à l\'IA'); await pg.click('#addok'); await pg.waitForTimeout(600);
-ok(await pg.locator('.pcard').count() === 3, 'trois parfums ajoutés à la collection'); await pg.click('[data-tab=today]'); await pg.waitForTimeout(500);
+ok(await pg.locator('#whens .chip').count() === 3 && await pg.locator('#venues .chip').count() === 9, 'conditions : quand (jour, soir, nuit) et où (9 types d\'endroits)');
+await pg.click('[data-venue=resto]'); await pg.click('[data-when=nuit]');
+ok(await pg.locator('.vit button').count() === 3, 'trois parfums ajoutés à la collection');
 ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
 ok(/Démo · 2 essais/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
 // 2. météo automatique
@@ -64,7 +66,7 @@ for (let i = 1; i <= 2; i++) {
   await pg.click('#stx'); await pg.waitForTimeout(500);
 }
 ok(aiCalls === 2, 'IA appelée 2 fois'); ok(/humide|humidité|3/.test(lastPrompt) && /pluie/.test(lastPrompt), 'la météo (3°, pluie) part dans le prompt côté serveur');
-ok(/je suis une femme/.test(lastPrompt) && /j'ai 27 ans/.test(lastPrompt) && /tenue : smart casual/.test(lastPrompt) && /stock : /.test(lastPrompt), 'profil (fille, 27 ans), tenue choisie et stock des flacons partent dans le prompt du jour');
+ok(/je suis une femme/.test(lastPrompt) && /j'ai 27 ans/.test(lastPrompt) && /tenue : smart casual/.test(lastPrompt) && /stock : /.test(lastPrompt) && /endroit : restaurant/.test(lastPrompt) && /moment : nuit/.test(lastPrompt), 'profil (fille, 27 ans), tenue choisie et stock des flacons partent dans le prompt du jour');
 ok(/0 essai/.test(await pg.textContent('.demo-pill')), 'bandeau : 0 essai restant');
 // 4. 3e essai bloqué -> inscription
 await pg.click('#go'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, '3e essai : aucun appel IA');
@@ -75,7 +77,7 @@ ok(store.has('email:test@exemple.fr'), 'email enregistré');
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
 await pg.click('[data-tab=discover]'); await pg.waitForTimeout(400); await pg.fill('#askq', 'un frais'); await pg.click('#askgo'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
 // 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
-await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.waitForSelector('#addtxt');
+await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.waitForSelector('#xfree'); await pg.click('#xfree'); await pg.waitForSelector('#addtxt');
 await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
 ok(identCalls.length === 0, 'un lien http (non sécurisé) est refusé sans appel IA');
 await pg.fill('#addurl', 'https://exemple.test/flacon.jpg'); await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
@@ -91,33 +93,35 @@ const st33 = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3
 ok(st33.size === 2 && st33.left === 25 && st33.use === 'special', 'stock sauvegardé : 2 ml, il en reste peu, grandes occasions');
 ok(store.has('cand:santal 33') && JSON.parse(store.get('cand:santal 33')).v.length === 1, 'catalogue partagé : le parfum attend la 2e confirmation');
 // 5b2. le grand index : un parfum qui n'est pas au catalogue détaillé est proposé, puis complété par l'IA légère
-await pg.click('#addBtn'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'moonlight in'); await pg.waitForSelector('[data-sug]');
+await pg.click('#addBtn'); await pg.waitForSelector('#xfree'); await pg.click('#xfree'); await pg.waitForSelector('#addtxt'); await pg.type('#addtxt', 'moonlight in'); await pg.waitForSelector('[data-sug]');
 ok(/Moonlight in Heaven/.test(await pg.textContent('#addsug')) && /Kilian/.test(await pg.textContent('#addsug')), 'grand index : « Moonlight in Heaven · Kilian » proposé pendant la frappe');
 await pg.click('[data-sug]'); ok((await pg.inputValue('#addtxt')).startsWith('Kilian — Moonlight in Heaven'), 'le parfum de l\'index s\'insère avec sa maison');
 const nIdent = identCalls.length; await pg.click('#addgo'); await pg.waitForSelector('#addok', { timeout: 15000 });
 ok(identCalls.length === nIdent + 1 && /Kilian — Moonlight in Heaven/.test(identCalls.at(-1).messages[0].content.at(-1).text), 'la fiche inconnue est complétée par Haiku (Maison — Nom envoyé)');
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
-// 5b3. parcourir la base : marque puis parfum, cliquable et ajoutable
-await pg.click('#addBtn'); await pg.waitForSelector('#addbrw'); await pg.click('#addbrw'); await pg.waitForSelector('[data-brand]');
-ok((await pg.$$('[data-brand]')).length > 100, 'parcours : plus de 100 marques listées');
-await pg.fill('#brwq', 'kilian'); await pg.waitForTimeout(200); await pg.click('[data-brand="Kilian"]'); await pg.waitForSelector('[data-it]');
-ok((await pg.$$('[data-it]')).length > 5, 'parcours : les parfums de la marque s\'affichent');
-ok((await pg.$$('#brw img.mini')).length > 0, 'parcours : les photos de la base s\'affichent à côté des parfums');
-await pg.click('[data-it]'); ok(/Ajouter 1 parfum/.test(await pg.textContent('#brwadd')), 'parcours : un parfum cliqué est sélectionné');
-await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
+// 5b3. explorer la base : marques, styles, notes, prix, parfumeurs ; chaque parfum cliquable et ajoutable
+await pg.click('#addBtn'); await pg.waitForSelector('[data-xf]');
+ok(await pg.locator('[data-xf]').count() === 5, 'explorateur : 5 façons de parcourir (marques, styles, notes, prix, parfumeurs)');
+ok(await pg.locator('[data-xg]').count() > 100, 'explorateur : plus de 100 marques listées');
+await pg.click('[data-xg="kilian"]'); await pg.waitForSelector('.xc');
+ok(await pg.locator('.xc').count() > 5 && await pg.locator('.xth').first().isVisible(), 'explorateur : les parfums de la marque s\'affichent (avec vignettes)');
+await pg.locator('.xc:not([disabled])').first().click(); ok(/1 choisi/.test(await pg.textContent('.exp-foot')), 'un parfum cliqué est sélectionné');
+await pg.click('#xback'); await pg.click('[data-xf=style]'); await pg.click('[data-xg=ambré]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'par style : les parfums ambrés');
+await pg.click('#xback'); await pg.click('[data-xf=note]'); await pg.click('[data-xg=vanille]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'par note : la vanille');
+await pg.click('#xback'); await pg.click('[data-xf=price]'); await pg.click('[data-xg=p3]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 3, 'par prix : 200 à 300 €');
+await pg.click('#xback'); await pg.click('[data-xf=nose]'); ok(/Francis Kurkdjian/.test(await pg.textContent('.xg')), 'par parfumeur : Francis Kurkdjian listé');
+const nb = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length); await pg.click('#xgo'); await pg.waitForTimeout(600);
+ok(await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length) === nb + 1, 'ajout depuis l\'explorateur : le parfum choisi rejoint la collection');
+// 5b4. wishlist : à sentir / senti, exploration, verdict
+await pg.click('[data-tab=wish]'); await pg.waitForSelector('#wexp'); await pg.click('#wexp'); await pg.waitForSelector('#xq'); await pg.fill('#xq', 'jazz club'); await pg.waitForSelector('.xc'); await pg.locator('.xc').first().click(); await pg.click('#xgo'); await pg.waitForTimeout(500);
+ok(/À sentir · 1/.test(await pg.textContent('.wtabs')), 'wishlist : le parfum est « à sentir »');
+await pg.click('[data-wsm]'); await pg.waitForSelector('[data-wv=love]'); await pg.click('[data-wv=love]'); ok(/Senti · 1/.test(await pg.textContent('.wtabs')) && await pg.locator('[data-wv=love].on').count() === 1, 'wishlist : « senti » avec un verdict (J\'adore)');
+ok(await pg.locator('.card.lex h3').count() === 1, 'un mot, une astuce ou un peu d\'histoire de parfum');
+await pg.click('#profileBtn'); await pg.waitForSelector('#pname'); ok(await pg.locator('[data-sw], #newprof').count() === 0, 'profil : aucun accès aux autres profils'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);
 const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });
 ok(after.prof.age === 27 && after.has && !after.ov, 'après rechargement : profil et collection sont là, aucun écran d\'accueil revient');
-// 5d. chaque personne a son profil : un nouveau profil démarre vide, l'ancien reste intact
-await pg.click('#profileBtn'); await pg.waitForSelector('#newprof'); await pg.click('#newprof'); await pg.waitForSelector('#prof .gen', { timeout: 8000 });
-const act = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.profiles')));
-ok(act.list.length === 2 && act.active !== 'main', 'nouveau profil créé et actif');
-await pg.click('#pSkip'); await pg.waitForTimeout(500);
-ok(await pg.locator('#emptyAdd').count() === 1, 'le nouveau profil démarre avec une collection vide');
-ok(await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length) >= 3, 'le profil précédent est intact (sa collection est toujours là)');
-await pg.click('#profileBtn'); await pg.waitForSelector('[data-sw=main]'); await pg.click('[data-sw=main]'); await pg.waitForTimeout(3600);
-ok(await pg.evaluate(() => document.querySelectorAll('.vit button').length) >= 3, 'retour au profil principal : sa collection s\'affiche');
 // 6. nouveau visiteur : 2 essais neufs; même IP : plafond
 ok(errs.length === 0, 'aucune erreur JavaScript ' + JSON.stringify(errs));
 // 7. page d'inscription

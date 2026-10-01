@@ -51,7 +51,7 @@
 
   const TEXT = {
     quota: ['Tes 2 essais sont utilisés', 'Tu as vu ce que fait Sillage. Laisse ton email : je t\'envoie l\'accès complet, et je peux préparer une version sur mesure pour ta collection ou ton activité.'],
-    locked: ['Réservé à la version complète', 'Cette fonction (ajout par IA, labo d\'accords, semaine, voyage, balade…) est dans la version complète. Laisse ton email pour l\'obtenir.'],
+    locked: ['Réservé à la version complète', 'Cette fonction (ajout par IA, labo d\'accords, semaine, voyage…) est dans la version complète. Laisse ton email pour l\'obtenir.'],
     cta: ['Ton Sillage, sur mesure', 'Laisse ton email : je te recontacte pour construire la version qui contient ta vraie collection, tes habitudes et l\'IA sans limite d\'essais.'],
     busy: ['La démo fait une pause', 'Elle est très demandée aujourd\'hui et reprend demain. Laisse ton email, je te préviens.'],
   };

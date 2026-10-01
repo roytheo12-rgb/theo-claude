@@ -29,6 +29,19 @@
   const FABRICS = { coton: 'Coton', lin: 'Lin', laine: 'Laine / maille', cuir: 'Cuir', denim: 'Denim', soie: 'Soie / satin', technique: 'Technique' };
 
   const PLACES = { interieur: 'Bureau / intérieur', exterieur: 'Extérieur', transport: 'Transports', foule: 'Lieu bondé' };
+  const VENUES = { resto: 'Restaurant', bar: 'Bar', boite: 'Boîte de nuit', musee: 'Musée / expo', concert: 'Concert', theatre: 'Théâtre / cinéma', bureau: 'Bureau', maison: 'Chez moi', dehors: 'Dehors' };
+  // Le lieu change ce qui passe : à table ou au théâtre on reste discret, en boîte on s'affirme.
+  const VENUE = {
+    resto: { w: { discret: .6, propre: .6, élégant: .8, dense: -.6, statement: -.4 }, proj: [2, 4] },
+    bar: { w: { sensuel: .8, nocturne: .8, chaud: .5, audacieux: .4 }, proj: [3, 4] },
+    boite: { w: { statement: 1.5, nocturne: 1, énergique: .6, audacieux: .8, discret: -1 }, proj: [4, 5] },
+    musee: { w: { discret: 1, propre: .8, élégant: 1, naturel: .5, dense: -1, statement: -.8 }, proj: [1, 3] },
+    concert: { w: { frais: .6, énergique: .6, statement: .4, dense: -.5 }, proj: [2, 4] },
+    theatre: { w: { discret: 1.5, propre: 1, élégant: .6, dense: -1.5, statement: -1.5, gourmand: -.5 }, proj: [1, 2] },
+    bureau: { w: { discret: 1.5, propre: 1.2, élégant: .8, statement: -1, dense: -1 }, proj: [1, 3] },
+    maison: { w: { confortable: 1.5, doux: 1, naturel: .5, statement: -.3 }, proj: [1, 4] },
+    dehors: { w: { naturel: .6, frais: .3, énergique: .3 }, proj: [3, 5] },
+  };
   const DURS = { courte: 'Quelques heures', longue: 'Journée entière' };
   const PLACE = {
     interieur: { w: { discret: 1, propre: .8, dense: -1, statement: -.5 }, proj: [1, 3] },
@@ -179,6 +192,19 @@
     parts.mood = 1.5 * sum(MOOD[cond.mood] || {});
     const pl = PLACE[cond.place];
     if (pl) parts.ctx += sum(pl.w) + 0.8 * projPenalty(pl.proj, proj);
+    const vn = VENUE[cond.venue];
+    if (vn) parts.ctx += sum(vn.w) + 0.8 * projPenalty(vn.proj, proj);
+    // Moment idéal connu (jour / soir / nuit) pour les parfums du catalogue
+    const mo = p.m || (root.DESC && root.DESC[p.name] && root.DESC[p.name][0]);
+    if (mo && mo !== 'tous' && cond.moment) {
+      const M = { jour: { jour: 1.2, soir: -.4, nuit: -1.6 }, soir: { jour: -.8, soir: 1.2, nuit: .8 }, nuit: { jour: -1.8, soir: .6, nuit: 1.4 } };
+      parts.ctx += (M[mo] || {})[cond.moment] || 0;
+    }
+    // Notes que la personne adore ou fuit
+    const nt = (p.notes || []).map(norm);
+    parts.liked = 0;
+    if (st.liked && st.liked.length) parts.liked += Math.min(2, st.liked.filter((l) => l && nt.some((n) => n.includes(norm(l)))).length) * 0.9;
+    if (st.avoid && st.avoid.length) parts.liked -= Math.min(3, st.avoid.filter((a) => a && nt.some((n) => n.includes(norm(a)))).length * 1.5);
     if (cond.dur === 'longue') parts.ctx += 0.8 * ((p.longevity || 3) - 3) + ((p.weight || 3) === 3 ? .3 : 0);
     parts.outfit = 0.8 * (sum(STYLE[cond.style] || {}) + sum(COLOR[cond.color] || {}) + sum(FABRIC[cond.fabric] || {}));
     parts.perso = ((p.rating || 3) - 3) * 0.8;
@@ -195,6 +221,11 @@
     if (parts.ctx >= 1.5) r.push(`Colle à ta journée (${CONTEXTS[cond.ctx].toLowerCase()} · ${WITHS[cond.with].toLowerCase()})`);
     if (parts.mood >= 1) r.push(`Épouse ton mood (${MOODS[cond.mood].toLowerCase()})`);
     if (cond.place && parts.ctx >= 1) r.push(`Adapté au lieu (${PLACES[cond.place].toLowerCase()})`);
+    if (cond.venue && VENUES[cond.venue] && parts.ctx >= 1) r.push(`Fait pour ${VENUES[cond.venue].toLowerCase()}`);
+    const mo = p.m || (root.DESC && root.DESC[p.name] && root.DESC[p.name][0]);
+    if (mo && mo !== 'tous' && mo === cond.moment) r.push(cond.moment === 'jour' ? 'Un parfum de journée' : cond.moment === 'soir' ? 'Un parfum de soirée' : 'Un parfum de nuit');
+    if (parts.liked >= 0.9) r.push('Des notes que tu adores');
+    if (parts.liked <= -1.4) r.push('⚠ Contient une note que tu fuis');
     if (cond.dur === 'longue' && (p.longevity || 3) >= 4) r.push('Tient toute la journée');
     if (parts.outfit >= 1) r.push(`Va avec ta tenue (${STYLES[cond.style].toLowerCase()}${cond.fabric ? ', ' + FABRICS[cond.fabric].toLowerCase() : ''})`);
     if ((p.rating || 3) >= 4) r.push('Un de tes chouchous');
@@ -349,7 +380,7 @@
     return out;
   }
 
-  const api = { STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

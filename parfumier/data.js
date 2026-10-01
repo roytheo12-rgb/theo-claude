@@ -133,6 +133,19 @@
     ['Le Male', 'Jean Paul Gaultier', 'aromatique', ['menthe', 'armoise', 'cardamome', 'bergamote', 'lavande', 'fleur d\'oranger', 'cannelle', 'cumin', 'santal', 'vanille', 'cèdre', 'fève tonka', 'ambre'], 4, 4, 3, 95],
     ['L\'Interdit Rouge', 'Givenchy', 'floral', ['orange sanguine', 'accord rouge épicé', 'fleur d\'oranger', 'jasmin sambac', 'patchouli', 'santal'], 4, 4, 3, 95],
     ['Power of You', 'Emporio Armani', 'gourmand', ['fruit de la passion', 'accord frangipanier', 'vanille'], 3, 4, 3, 90],
+    ['Eros', 'Versace', 'aromatique', ['menthe', 'pomme verte', 'citron', 'fève tonka', 'géranium', 'ambre', 'vanille', 'cèdre', 'mousse de chêne'], 4, 4, 3, 85],
+    ['Black Orchid', 'Tom Ford', 'ambré', ['truffe', 'ylang-ylang', 'bergamote', 'gardénia', 'orchidée noire', 'patchouli', 'vanille', 'encens', 'santal'], 4, 5, 5, 115],
+    ['Lost Cherry', 'Tom Ford', 'gourmand', ['cerise noire', 'amande amère', 'rose turque', 'jasmin sambac', 'fève tonka', 'vanille', 'baume du Pérou', 'santal', 'cèdre'], 4, 5, 5, 340],
+    ['Habit Rouge', 'Guerlain', 'ambré', ['bergamote', 'orange', 'mandarine', 'cèdre', 'cuir', 'vanille', 'encens', 'benjoin'], 3, 4, 4, 95],
+    ['Colonia', 'Acqua di Parma', 'agrumes', ['citron', 'orange', 'bergamote', 'lavande', 'romarin', 'verveine', 'rose', 'vétiver', 'patchouli', 'santal'], 3, 3, 2, 120],
+    ['Gentleman Réserve Privée', 'Givenchy', 'gourmand', ['rhum', 'iris', 'vanille', 'fève tonka', 'bois'], 4, 4, 4, 95],
+    ['Le Beau', 'Jean Paul Gaultier', 'fruité', ['bergamote', 'noix de coco', 'fève tonka', 'vétiver', 'cèdre'], 3, 4, 3, 90],
+    ['Scandal', 'Jean Paul Gaultier', 'gourmand', ['orange sanguine', 'mandarine', 'miel', 'gardénia', 'patchouli', 'caramel'], 4, 4, 4, 100],
+    ['Herod', 'Parfums de Marly', 'gourmand', ['cannelle', 'poivre', 'tabac', 'vanille', 'bois', 'iris'], 4, 5, 4, 260],
+    ['Khamrah Qahwa', 'Lattafa', 'gourmand', ['cannelle', 'cardamome', 'gingembre', 'café', 'praliné', 'vanille', 'fève tonka', 'benjoin'], 4, 5, 5, 35],
+    ['Ultra Male', 'Jean Paul Gaultier', 'gourmand', ['poire', 'lavande', 'menthe', 'vanille', 'ambre'], 4, 4, 4, 90],
+    ['Phantom', 'Rabanne', 'aromatique', ['citron', 'lavande', 'vanille', 'patchouli', 'bois'], 4, 4, 3, 95],
+    ['Sauvage EDP', 'Dior', 'aromatique', ['bergamote de Calabre', 'poivre du Sichuan', 'lavande', 'vanille', 'fève tonka', 'patchouli', 'cèdre'], 4, 5, 3, 120],
   ];
 
   const CATALOG = rows.map(([name, house, family, notes, projection, longevity, weight, price]) => ({

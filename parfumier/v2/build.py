@@ -26,7 +26,6 @@ def page(scripts, head_extra=""):
   <button data-tab="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/></svg>accueil</button>
   <button data-tab="shelf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="7" y="10" width="10" height="11" rx="2"/><path d="M10 10V7.5h4V10M9.5 3.5h5v4h-5z"/></svg>étagère</button>
   <button data-tab="discover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2 5.6-5.6 2 2-5.6z"/></svg>découvrir</button>
-  <button data-tab="walk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>balade</button>
   <button data-tab="wish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M7 4h10v17l-5-3.6L7 21z"/></svg>wishlist</button>
 </nav>
 <div id="splash" role="presentation"><div><div class="lg">{"".join(f'<span style="--i:{i}">{c}</span>' for i,c in enumerate("sillage"))}</div><svg viewBox="0 0 200 14" fill="none" stroke="#b4394a" stroke-width="2.2" stroke-linecap="round"><path d="M0 7Q12 0 25 7T50 7T75 7T100 7T125 7T150 7T175 7T200 7"/></svg><div class="tg">Cabinet de parfumerie</div></div></div>
@@ -36,7 +35,7 @@ def page(scripts, head_extra=""):
 
 mode = sys.argv[1] if len(sys.argv) > 1 else "artifact"
 if mode == "artifact":
-    scripts = js(up/'data.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
     out = d/'sillage.html'
     out.write_text(page(scripts))
     print(out, out.stat().st_size)
@@ -44,7 +43,7 @@ if mode == "artifact":
 if mode == "public":
     import os, shutil
     site = os.environ.get("SITE_URL", "https://sillage-demo.example.workers.dev").rstrip("/")
-    scripts = js(up/'data.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
     html = page(scripts)
     cut = html.index('<div id="app">')
     head_inner, body_inner = html[:cut], html[cut:]
