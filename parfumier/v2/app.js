@@ -46,7 +46,7 @@
   // Photos de la base (images/db, rattachées par maison + nom) : utilisées quand le parfum n'a pas de photo détourée à la main.
   // Les photos du lot « PNG » (IMGNEW) sont les plus récentes : elles passent avant les anciennes photos.
   const imgNew = (p) => { const N = window.IMGNEW || {}, HA = window.HOUSE_ALIAS || {}, h = E.norm(p.house || ''), f = N[h + '|' + E.norm(p.name)] || (HA[h] && N[E.norm(HA[h]) + '|' + E.norm(p.name)]); return f ? { s: f, nz: 6 } : null; };
-  const imgOf = (p) => { const nw = imgNew(p); if (nw) return nw; if (IMG[p.name]) return IMG[p.name]; const D = window.IMGDB || {}, f = D[E.norm(p.house || '') + '|' + E.norm(p.name)]; return f ? { s: f, nz: 6 } : null; };
+  const imgOf = (p) => { const nw = imgNew(p); if (nw) return nw; if (IMG[p.name]) return IMG[p.name]; const D = window.IMGDB || {}, W = window.IMGWEB || {}, k = E.norm(p.house || '') + '|' + E.norm(p.name), f = D[k] || W[k]; return f ? { s: f, nz: 6 } : null; };
   const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
   const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }, stk || {}));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
@@ -752,6 +752,8 @@
     drawSearchResults();
   }
   // Fiche d'un parfum de la base : description, tags, notes, et les actions (collection, wishlist)
+  // Pyramide olfactive (tête, cœur, fond) quand la fiche est détaillée.
+  const pyramidOf = (e) => { const y = (window.PYRAMID || {})[E.norm(e.house) + '|' + E.norm(e.name)]; if (!y) return ''; const col = (l, a) => (a && a.length ? `<div><p class="mono">${l}</p><p class="pyn">${a.map(esc).join(' · ')}</p></div>` : ''); return `<div class="pyr3">${col('Tête', y.t)}${col('Cœur', y.h)}${col('Fond', y.b)}</div>`; };
   function openEntry(e) {
     const inCol = S.collection.some((p) => E.norm(p.name) === E.norm(e.name)), inW = hasWish(e.name), d = window.DESC && window.DESC[e.name];
     const pn = openSheet(`
@@ -759,7 +761,8 @@
       <div><h2>${esc(e.name)}</h2><p class="mono" style="margin-top:6px">${esc(e.house)}${e.family ? ' · ' + (e.guess ? '≈ ' : '') + esc(famLabel(e.family)) : ''}${e.conc ? ' · ' + esc(e.conc.split(',').map((x) => CONC_L[x] || x).join(' / ')) : ''}</p></div>
       ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
       ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
-      ${(e.notes || []).length ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
+      ${pyramidOf(e)}
+      ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
       <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>
       ${(e.noses || []).length ? `<div><p class="mono">Créé par</p><div class="chips" style="margin-top:8px">${e.noses.slice(0, 4).map((n) => `<button class="chip" data-nz="${esc(n)}">${esc(n)}</button>`).join('')}</div>${e.noses.length >= 3 ? '<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:8px">Plusieurs nez sont cités pour ce parfum : les sources divergent.</p>' : ''}</div>` : ''}
       <div class="row">${inCol ? '<span class="mono">Dans ta collection ✓</span>' : '<button class="cta" id="eown"><span>Je l\'ai</span></button>'}${inW ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="ghost" id="ewish">À sentir</button>'}<button class="ghost" id="ex">Fermer</button></div>

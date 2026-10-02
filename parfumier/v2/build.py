@@ -6,6 +6,14 @@ import sys, re
 def js(path):
     return f"<script>\n{path.read_text()}\n</script>\n"
 
+def imgweb_artifact():
+    # L'artifact ne peut héberger qu'un nombre limité de fichiers : on n'y déclare que les photos publiées (liste dans data/artifact-imgweb.json).
+    import json
+    src = (up/'imgweb.js').read_text(); m = re.search(r'IMGWEB = (\{.*\});', src, re.S)
+    allowed = set(json.loads((up/'data/artifact-imgweb.json').read_text())) if (up/'data/artifact-imgweb.json').exists() else set()
+    d0 = json.loads(m.group(1)) if m else {}
+    return "<script>\nwindow.IMGWEB = " + json.dumps({k: v for k, v in d0.items() if k in allowed}, ensure_ascii=False, separators=(',', ':')) + ";\n</script>\n"
+
 def prompt_script():
     src = (d / 'prompt.mjs').read_text().replace('export function', 'function')
     return f"<script>\n{src}\nwindow.SillagePrompts = {{ day: dayPrompt }};\n</script>\n"
@@ -37,7 +45,7 @@ def page(scripts, head_extra=""):
 
 mode = sys.argv[1] if len(sys.argv) > 1 else "artifact"
 if mode == "artifact":
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'facts.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + imgweb_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
     out = d/'sillage.html'
     out.write_text(page(scripts))
     print(out, out.stat().st_size)
@@ -45,7 +53,7 @@ if mode == "artifact":
 if mode == "public":
     import os, shutil
     site = os.environ.get("SITE_URL", "https://sillage-demo.example.workers.dev").rstrip("/")
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'facts.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + js(up/'facts.js') + js(up/'fiches.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
     html = page(scripts)
     cut = html.index('<div id="app">')
     head_inner, body_inner = html[:cut], html[cut:]

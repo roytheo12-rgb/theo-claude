@@ -205,6 +205,11 @@ await t('base : chaque photo existe, vise une fiche de la base, et aucune maison
   assert.ok(globalThis.NOSE_IMG['Alberto Morillas'] && globalThis.NOSE_IMG['Francis Kurkdjian'] && globalThis.NOSE_IMG['Julien Rasquinet']);
   // rééditions repérées (jamais mises en avant) ; les parfums de base ne le sont pas
   const ed = new Set(globalThis.EDITIONS); assert.ok(ed.has('jean paul gaultier|le male collector edition 2022') && !ed.has('jean paul gaultier|le male'));
-  assert.ok(globalThis.INDEX.reduce((n, [, l]) => n + l.length, 0) > 4000);
+  assert.ok(globalThis.INDEX.reduce((n, [, l]) => n + l.length, 0) > 6000);
+  createRequire(import.meta.url)('../../imgweb.js'); for (const f of Object.values(globalThis.IMGWEB || {})) assert.ok(fs.existsSync(root + f), 'photo web absente : ' + f);
+  // fiches détaillées : pyramide complète pour les incontournables
+  createRequire(import.meta.url)('../../facts.js'); createRequire(import.meta.url)('../../fiches.js');
+  const py = globalThis.PYRAMID['frederic malle|portrait of a lady']; assert.ok(py && py.t.length && py.h.length && py.b.length);
+  assert.ok(Object.keys(globalThis.PYRAMID).length > 300 && globalThis.FACTS['frederic malle|portrait of a lady'].g === 'f');
 });
 console.log(ok, 'tests réussis');

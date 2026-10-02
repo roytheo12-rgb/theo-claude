@@ -1,0 +1,125 @@
+Creed|Aventus|boisé|m|ananas;bergamote;pomme;cassis|bouleau;jasmin;rose|musc;mousse de chêne;ambre gris;vanille|5|5|3|380
+Creed|Green Irish Tweed|vert|m|citron;verveine|iris;violette|santal;ambre gris|3|4|2|330
+Creed|Silver Mountain Water|aromatique|u|bergamote;mandarine;thé vert|cassis;santal|musc;ambre gris|3|3|2|330
+Creed|Millésime Imperial|agrumes|u|citron;bergamote;fruits|iris;violette|musc;ambre gris;santal|3|3|2|330
+Creed|Original Santal|boisé|u|mandarine;violette|santal;iris|musc;ambre|3|4|3|330
+Creed|Viking|épicé|m|bergamote;menthe;poivre|rose;lavande|cèdre;patchouli|4|4|3|330
+Creed|Love in White|floral|f|orange;magnolia|fleur de riz;rose|ambre;vanille;musc|3|3|2|330
+Tom Ford|Tobacco Vanille|gourmand|u|feuille de tabac;épices|vanille;cacao;fleur de tabac|fruits secs;bois;tonka|4|5|5|260
+Tom Ford|Oud Wood|oud|u|oud;bois de rose;cardamome|oud;santal;cèdre|vanille;ambre;vétiver|4|5|4|260
+Tom Ford|Black Orchid|floral|u|truffe;gardénia;bergamote|orchidée;épices|patchouli;encens;vanille;chocolat|4|5|5|165
+Tom Ford|Tuscan Leather|cuir|u|framboise;safran;thym|cuir;jasmin|ambre;bois|4|5|4|260
+Tom Ford|Ombré Leather|cuir|u|cardamome|cuir;jasmin|patchouli;mousse|4|4|3|135
+Tom Ford|Neroli Portofino|agrumes|u|bergamote;mandarine;citron|néroli;jasmin;lavande|ambre;musc|3|3|2|260
+Tom Ford|Lost Cherry|gourmand|u|cerise noire;amande amère|rose;jasmin;prune|tonka;santal;vanille|4|5|4|0
+Tom Ford|Soleil Blanc|floral|u|bergamote;cardamome|tubéreuse;ylang;jasmin|ambre;noix de coco|4|4|3|260
+Tom Ford|Noir de Noir|floral|u|truffe;safran|rose noire;vanille|patchouli;oud|4|5|5|260
+Tom Ford|Café Rose|floral|u|café;cardamome|rose;jasmin|oud;vanille|4|4|4|260
+Tom Ford|Fucking Fabulous|cuir|u|cuir;amande|jasmin;lavande|vanille;cuir;tonka|4|5|4|0
+Tom Ford|Grey Vetiver|boisé|m|pamplemousse;sauge|poivre;violette|vétiver;bois|3|4|2|110
+Tom Ford|Vanilla Sex|gourmand|u|vanille;cannelle|ambre;fève tonka|musc;bois|4|5|4|0
+Parfums de Marly|Layton|ambré|m|pomme;lavande;bergamote;mandarine|géranium;violette;jasmin|vanille;cardamome;santal;patchouli|4|5|4|250
+Parfums de Marly|Delina|floral|f|litchi;rhubarbe;bergamote|rose de Damas;pivoine;muguet|cachemire;musc;vanille;santal|4|5|3|250
+Parfums de Marly|Herod|gourmand|m|cannelle;poivre|tabac;encens;fève tonka|vanille;bois|4|5|4|250
+Parfums de Marly|Pegasus|gourmand|m|bergamote;héliotrope|amande;lavande|vanille;ambre;santal|3|5|4|250
+Parfums de Marly|Percival|aromatique|m|bergamote;lavande|mousse;iris|cèdre;ambre|3|4|2|250
+Parfums de Marly|Althair|gourmand|m|bergamote;cardamome|vanille;cannelle|ambre;santal;musc|4|5|4|250
+Parfums de Marly|Carlisle|gourmand|u|cannelle;noix de muscade|amande;rose|vanille;tonka;encens|4|5|5|250
+Parfums de Marly|Valaya|musqué|f|poire;mandarine|bergamote;jasmin|musc;ambre|3|4|3|250
+Parfums de Marly|Haltane|ambré|m|bergamote;poivre|encens;cèdre|ambre;vanille|4|5|4|250
+Parfums de Marly|Oajan|ambré|u|bergamote;poivre|ambre;rose|oud;ambre|4|5|4|250
+Amouage|Interlude Man|épicé|m|bergamote;origan;piment rose|encens;ambre;cuir|oud;patchouli;oakmoss|5|5|5|300
+Amouage|Reflection Man|floral|m|romarin;pamplemousse|jasmin;iris|bois de santal;vétiver;ambre|3|4|3|260
+Amouage|Jubilation XXV|ambré|m|cardamome;poivre|ambre;rose|bois;encens|4|5|4|320
+Amouage|Guidance|ambré|u|bergamote;encens|ambre;santal|vanille;bois|4|5|4|320
+Amouage|Epic Man|épicé|m|encens;poivre;safran|rose;ambre|oud;santal|4|5|5|320
+Amouage|Honour Man|floral|m|poivre;cardamome|ylang;jasmin|ambre;vétiver|4|5|4|300
+Xerjoff|Naxos|gourmand|u|citron;bergamote;lavande|miel;tabac;cannelle|vanille;fève tonka;cèdre|4|5|4|240
+Xerjoff|Erba Pura|fruité|u|orange;citron;fruits|fruits;miel|musc;ambre;vanille|5|5|4|0
+Xerjoff|Torino21|aromatique|u|menthe;citron|lavande;basilic|musc;thym|3|3|2|0
+Xerjoff|Alexandria II|boisé|m|lavande;pomme;cannelle|rose;muguet|oud;cèdre;santal;ambre|4|5|4|0
+Initio|Side Effect|ambré|u|rhum;cannelle|vanille;tabac|bois;ambre|4|5|4|0
+Initio|Oud for Greatness|oud|u|safran;muscade;lavande|oud;patchouli|musc|5|5|5|0
+Initio|Atomic Rose|floral|u|rose;litchi|rose;musc|ambre|4|4|3|0
+Initio|Musk Therapy|musqué|u|poivre rose;lavande|musc;cèdre|musc;ambre|3|4|2|0
+Nishane|Hacivat|fruité|u|ananas;bergamote;pamplemousse|jasmin;cèdre|mousse de chêne;patchouli;ambre|5|5|3|0
+Nishane|Ani|ambré|u|bergamote;gingembre|vanille;ambre|bois;vanille|4|5|4|0
+Nishane|Fan Your Flames|gourmand|u|cassis;noisette|cannelle;vanille|tabac;bois|4|5|4|0
+Nishane|Ege|aromatique|u|bergamote;citron|lavande;romarin|vétiver;ambre|3|4|2|0
+Kilian|Angels' Share|gourmand|u|cognac;cannelle|tonka;chêne|praliné;vanille;santal|4|5|5|285
+Kilian|Good Girl Gone Bad|floral|f|bergamote;rose|tubéreuse;jasmin|musc;ambre|4|4|4|285
+Kilian|Love, Don't Be Shy|gourmand|f|néroli;fleur d'oranger|rose;iris|vanille;caramel;musc|4|4|4|285
+Kilian|Black Phantom|gourmand|u|rhum;café|caramel;sucre brun|bois;santal|4|5|5|285
+Kilian|Straight to Heaven|ambré|m|rhum;bergamote|cèdre;fèves|ambre;vanille;santal|4|5|4|285
+Kilian|Rolling in Love|gourmand|f|amande;fleur d'oranger|rose;fève tonka|ambre;vanille|4|4|4|285
+Memo Paris|African Leather|cuir|u|cardamome;safran;cuir|cuir;géranium|musc;santal;vanille|4|5|4|260
+Memo Paris|Irish Leather|cuir|u|cuir;bergamote|iris;géranium|santal;musc|4|5|3|260
+Memo Paris|Marfa|floral|u|tubéreuse;rose|ambre;musc|santal;bois|3|4|3|250
+Memo Paris|Cap Camarat|aquatique|u|bergamote;citron|lavande;néroli|musc;cèdre|3|3|2|260
+Memo Paris|Odéon|floral|u|bergamote;rose|iris;musc|bois;vanille|3|4|3|260
+Maison Margiela|By the Fireplace|boisé|u|clou de girofle;châtaigne|noix de macadamia;fumée|vanille;santal;bois de cachemire|3|4|3|135
+Maison Margiela|Jazz Club|ambré|u|rhum;citron rose|tabac;feuille de tabac|vanille;styrax;bois|3|4|3|135
+Maison Margiela|Lazy Sunday Morning|floral|u|poire;aldéhydes|lavande;iris;rose|musc blanc;patchouli|2|3|2|135
+Maison Margiela|Beach Walk|aquatique|u|citron;pamplemousse;bergamote|noix de coco;ylang|musc;santal|2|3|2|135
+Maison Margiela|Under the Lemon Trees|agrumes|u|citron;bergamote|basilic;néroli|cèdre;musc|2|3|1|135
+Maison Margiela|When the Rain Stops|floral|u|citron|fleur d'oranger;herbe|musc|2|3|1|135
+Penhaligon's|Halfeti|oud|u|bergamote;safran|rose;ambre|oud;cuir;patchouli|4|5|4|240
+Penhaligon's|Lord George|ambré|m|bergamote;lavande|cèdre;santal|vanille;tonka|4|5|4|240
+Penhaligon's|Blenheim Bouquet|aromatique|m|citron;lavande;pin|poivre;musc|musc|3|3|2|110
+Penhaligon's|Sartorial|aromatique|m|lavande;bergamote|cire d'abeille;violette|tabac;vétiver|3|4|3|200
+Acqua di Parma|Colonia|agrumes|u|citron;orange;bergamote|lavande;romarin;verveine|vétiver;patchouli;musc|2|3|1|100
+Acqua di Parma|Colonia Intensa|aromatique|m|bergamote;citron|lavande;poivre|vétiver;ambre;musc|3|4|2|140
+Acqua di Parma|Blu Mediterraneo Mandorlo di Sicilia|floral|u|amande;bergamote|amande;jasmin|musc;santal|2|3|1|120
+Acqua di Parma|Magnolia Nobile|floral|f|magnolia;citron|rose;jasmin|musc;santal|3|3|2|110
+Jo Malone|English Pear & Freesia|fruité|f|poire;melon|freesia;rose|patchouli;ambre;musc|2|3|1|120
+Jo Malone|Wood Sage & Sea Salt|aromatique|u|ambrette;sel marin|sauge;algues|musc|3|3|1|120
+Jo Malone|Lime Basil & Mandarin|agrumes|u|citron vert;basilic;mandarine|poivre;thym|vétiver;musc|2|2|1|120
+Jo Malone|Peony & Blush Suede|floral|f|rouge à lèvres;pomme|pivoine;rose|daim;musc|3|3|2|120
+Jo Malone|Oud & Bergamot|oud|u|bergamote;encens|oud;rose|bois;vétiver|3|4|3|0
+Atelier Cologne|Orange Sanguine|agrumes|u|orange sanguine;bergamote|jasmin;poivre|musc;ambre|2|3|1|130
+Atelier Cologne|Cédrat Enivrant|agrumes|u|cédrat;orange|menthe;poivre|cèdre;vétiver|2|3|1|130
+Atelier Cologne|Pomelo Paradis|agrumes|u|pomelo;citron|vétiver;orange|musc|2|3|1|130
+Atelier Cologne|Oud Saphir|oud|u|bergamote;oud|oud;rose|patchouli;ambre|3|4|3|130
+Nasomatto|Black Afgano|oud|u|cannabis;café|résine;oud|bois;encens|4|5|5|0
+Montale|Arabians Tonka|gourmand|u|rose;safran|tonka;oud|vanille;musc|4|5|4|0
+Montale|Intense Cafe|gourmand|u|café;rose|café;vanille|ambre|4|5|4|0
+Mancera|Cedrat Boise|boisé|u|cédrat;cassis;citron|poivre;fruits|cèdre;vanille;musc|4|5|3|0
+Mancera|Roses Vanille|gourmand|f|fruits;rose|rose;vanille|musc;patchouli|4|5|4|0
+Lattafa|Khamrah|gourmand|u|cannelle;noix de muscade|dattes;praliné|vanille;tonka;ambre|4|5|5|35
+Lattafa|Yara|gourmand|f|orchidée;héliotrope|vanille;musc|santal;vanille|3|4|3|30
+Lattafa|Asad|ambré|m|poivre;tabac|café;iris|vanille;ambre;patchouli|4|5|4|30
+Armaf|Club de Nuit Intense Man|boisé|m|citron;ananas;bergamote|bouleau;jasmin;rose|musc;ambre gris;vanille|4|5|3|35
+Rasasi|Hawas|aquatique|m|pomme;bergamote;citron|cannelle;fleur d'oranger|ambre;musc|4|4|3|45
+Matière Première|Radical Rose|floral|u|poivre rose;rose|rose;santal|musc|3|4|3|0
+Matière Première|Vanilla Powder|gourmand|u|poivre rose|vanille;iris|musc|3|4|3|0
+Matière Première|Falcon Leather|cuir|u|cuir;safran|cuir;vétiver|bois;ambre|3|4|3|0
+BDK Parfums|Gris Charnel|boisé|u|bergamote;cardamome|iris;vétiver|musc;ambre;tonka|4|5|4|0
+BDK Parfums|Tabac Rose|floral|u|rose;tabac|rose;patchouli|musc|4|5|4|0
+BDK Parfums|Velvet Tonka|gourmand|u|cardamome;tonka|iris;tonka|musc;vanille|4|5|4|0
+Maison Crivelli|Tobacco Carnaval|gourmand|u|tabac;rhum|vanille;tonka|ambre;bois|4|5|4|0
+Maison Crivelli|Neroli Nasimba|agrumes|u|néroli;bergamote|jasmin;fleur d'oranger|musc|3|3|2|0
+Maison Crivelli|Hibiscus Mahajád|floral|u|hibiscus;poivre|rose;poivre|bois|3|4|3|0
+Essential Parfums|Bois Impérial|boisé|u|gingembre;poivre rose|bois;vétiver|cèdre;bois de santal|4|5|3|0
+Essential Parfums|The Musc|musqué|u|bergamote|musc;rose|musc;ambre|3|4|2|0
+Essential Parfums|Fig Infusion|vert|u|figue;feuille de figuier|fleur de figuier|musc;bois|3|3|2|0
+Escentric Molecules|Molecule 01|musqué|u|ambroxan|ambroxan|ambroxan|3|5|1|100
+Ex Nihilo|Fleur Narcotique|floral|u|litchi;bergamote|pivoine;jasmin|musc;ambre|4|4|3|0
+Ex Nihilo|Lust in Paradise|floral|u|mandarine|jasmin;tubéreuse|ambre;vanille|4|4|3|0
+Roja Parfums|Elysium|agrumes|m|citron;bergamote|jasmin;lavande|musc;ambre gris|4|4|2|0
+Etat Libre d'Orange|Jasmin et Cigarette|floral|u|tabac;jasmin|jasmin;cigarette|musc;bois|4|4|3|0
+Juliette Has a Gun|Not a Perfume|musqué|u|ambroxan|ambroxan|ambroxan|3|5|1|90
+Juliette Has a Gun|Musc Invisible|musqué|u|musc blanc|musc;ambre|musc|2|3|1|90
+Maison Goutal|Eau d'Hadrien|agrumes|u|citron;cédrat;mandarine|cyprès;pivoine|ciste;musc|2|3|1|110
+Maison Goutal|Néroli|floral|u|néroli;mandarine|fleur d'oranger;jasmin|musc|2|3|1|110
+Marc-Antoine Barrois|Ganymede|boisé|u|mandarine;violette|bois;cèdre|cèdre;musc;encens|4|5|4|0
+Marc-Antoine Barrois|B683|boisé|u|bergamote;poivre|cèdre;cuir|musc;vétiver|3|4|3|0
+Goldfield & Banks|Pacific Rock Moss|aromatique|u|citron;sauge;genièvre|mousse de chêne|musc;bois|3|4|2|0
+Goldfield & Banks|Velvet Splendour|floral|u|jasmin;rose|oud;ambre|musc|3|4|3|0
+Floris|No 89|aromatique|m|citron;lavande|géranium;sauge|bois de santal;musc|3|4|2|0
+Houbigant|Quelques Fleurs L'Original|floral|f|aldéhydes;bergamote|jasmin;rose;muguet|musc;ambre|3|4|3|0
+Caron|Pour un Homme|aromatique|m|lavande;bergamote|lavande;ambre|vanille;musc|3|4|3|0
+Nina Ricci|L'Air du Temps|floral|f|bergamote;aldéhydes|œillet;gardénia;rose|bois;musc|3|4|3|0
+Lalique|Encre Noire|boisé|m|cyprès|vétiver|musc;cèdre|3|4|2|45
+Nautica|Voyage|aquatique|m|pomme;notes marines|lotus|mousse;musc|3|3|1|35
+Bottega Veneta|Illusione|floral|f|poire;poivre rose|jasmin;rose|musc;bois|3|3|2|0
+Zara|Spell Caramel|gourmand|u|caramel;poire|fleur d'oranger|vanille;ambre|3|3|3|25

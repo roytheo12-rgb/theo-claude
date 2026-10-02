@@ -538,3 +538,8 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .nosec .nh b { font: 400 20px var(--sf); display: block; }
 .nosec .nh small { color: var(--muted); font-size: 12.5px; }
 .nosec p { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+
+/* Pyramide olfactive */
+.pyr3 { display: grid; gap: 14px; padding: 4px 0; }
+.pyr3 > div { display: grid; gap: 4px; border-left: 1px solid var(--line2); padding-left: 14px; }
+.pyr3 .pyn { color: var(--ink); font-size: 14.5px; line-height: 1.45; }

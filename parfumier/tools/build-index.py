@@ -18,7 +18,7 @@ HOUSE = {
  'dolce gabbana velvet collection': 'Dolce & Gabbana', 'gucci the alchemist s garden': 'Gucci', 'tom ford private blend': 'Tom Ford',
  'cartier les heures de parfum': 'Cartier', 'cartier collection': 'Cartier', 'prada olfactories': 'Prada', 'fendi private': 'Fendi',
  'givenchy la collection particuliere': 'Givenchy', 'givenchy l atelier de givenchy': 'Givenchy', 'mfk': 'Maison Francis Kurkdjian',
- 'emporio armani': 'Armani', 'sospiro perfumes': 'Sospiro', 'd orsay': "D'Orsay", 'dorsay': "D'Orsay", 'frederic malle editions de parfums': 'Frédéric Malle', 'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
+ 'emporio armani': 'Armani', 'sospiro perfumes': 'Sospiro', 'paco rabanne': 'Rabanne', 'd orsay': "D'Orsay", 'dorsay': "D'Orsay", 'frederic malle editions de parfums': 'Frédéric Malle', 'omanluxury': 'Oman Luxury', 'oman luxury': 'Oman Luxury', 'ysl': 'Yves Saint Laurent', 'yves saint laurent beaute': 'Yves Saint Laurent',
  'giorgio armani': 'Armani', 'thierry mugler': 'Mugler', 'christian dior': 'Dior', 'annick goutal': 'Maison Goutal', 'mdci parfums': 'MDCI', 'frederic malle': 'Frédéric Malle', 'jo malone london': 'Jo Malone', 'ella k parfums': 'Ella K', 'jo malone': 'Jo Malone', 'gucci': 'Gucci', 'jovoy paris': 'Jovoy', 'jovoy': 'Jovoy', 'rabanne': 'Rabanne', 'paco rabanne': 'Rabanne',
  'maison martin margiela': 'Maison Margiela', 'margiela': 'Maison Margiela', 'bulgari': 'Bvlgari', 'diptyque paris': 'Diptyque', 'byredo parfums': 'Byredo', 'le labo fragrances': 'Le Labo', 'bdk': 'BDK Parfums', 'bdk parfums': 'BDK Parfums',
  'les bains guerbois': 'Les Bains Guerbois', 'memo': 'Memo Paris', 'memo paris': 'Memo Paris', 'maison crivelli': 'Maison Crivelli', 'loewe paula s ibiza': 'Loewe', 'loewe botanical rainbow': 'Loewe',
@@ -146,6 +146,29 @@ for line in (root / 'data/maisons-liste.txt').read_text(encoding='utf-8').splitl
     key = (norm(house), norm(name))
     if key in existing or key in seen: continue
     seen[key] = {'house': house, 'name': name, 'conc': [CONC.get(norm(conc_raw), 'EDP') or 'EDP'], 'p': False}; order.append(key)
+
+# ---- Fiches lues sur Luckyscent (data/web-raw/luckyscent.jsonl, produit par tools/crawl-luckyscent.py) : on ajoute ce qui manque ; les notes et l'image servent plus loin.
+web_rows = []
+WEB_SKIP_HOUSE = re.compile(r'luckyscent|body care|sample|gift', re.I)
+_wp = root / 'data/web-raw/luckyscent.jsonl'
+if _wp.exists():
+    for line in _wp.read_text(encoding='utf-8').splitlines():
+        try: r = json.loads(line)
+        except Exception: continue
+        if not r.get('name') or not r.get('house') or WEB_SKIP_HOUSE.search(r['house']) or SKIP_RE.search(r['name']): continue
+        if r.get('size') and 'ml' not in str(r['size']).lower(): continue      # bougies, livres, bâtonnets : vendus en oz ou en grammes, pas en ml
+        if norm(r['house']) in ('nez', 'astier de villatte', 'caswell massey', 'molton brown', 'flamingo estate'): continue
+        nm_raw = r['name'].strip().replace('\u2019', "'"); h_raw = r['house'].strip()
+        house = canon_house_n(h_raw, nm_raw)
+        raw_nm = NAME_ALIAS.get((norm(house), norm(nm_raw)), nm_raw)
+        name = raw_nm if (norm(house), norm(raw_nm)) in seen or (norm(house), norm(raw_nm)) in cat_exact_pre else NAME_ALIAS.get((norm(house), norm(clean_name(raw_nm))), clean_name(raw_nm))
+        if not name: continue
+        key = (norm(house), norm(name))
+        if key not in existing and key not in seen:
+            seen[key] = {'house': house, 'name': name, 'conc': ['EDP'], 'p': False}; order.append(key)
+            if EDIT_RE.search(name): editions.add(key)
+        web_rows.append({'house': house, 'name': name, 'notes': r.get('notes') or [], 'style': r.get('style') or [], 'image': r.get('image'), 'url': r['url']})
+(root / 'data/web-resolved.json').write_text(json.dumps(web_rows, ensure_ascii=False), encoding='utf-8')
 
 # ---- Photos (data/imgmap2.txt : N|Maison|Parfum|Concentration) : chaque photo est rattachée à UN parfum.
 # Variantes (Extrait, Absolu, Esprit de Parfum, Parfum, Intense, Elixir, EDT quand l'EDP a aussi sa photo) : une fiche à part

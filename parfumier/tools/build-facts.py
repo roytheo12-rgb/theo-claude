@@ -54,6 +54,15 @@ for brand, hkey in HOUSES.items():
         if g: e['g'] = g
         if nt and 'n' not in e: e['n'] = nt[:10]
         src[k] = brand
+# notes lues sur Luckyscent (data/web-resolved.json) : traduites avec la table ci-dessus ; une note inconnue est ignorée plutôt que devinée
+wp = root / 'data/web-resolved.json'
+if wp.exists():
+    for r in json.loads(wp.read_text(encoding='utf-8')):
+        nt = notes_from_tags(r.get('notes') or [])
+        if len(nt) < 3: continue
+        k = norm(r['house']) + '|' + norm(r['name']); e = facts.setdefault(k, {})
+        if 'n' not in e: e['n'] = nt[:10]
+        src.setdefault(k, 'luckyscent')
 for (hkey, n), v in votes.items():
     if len(v) != 1: continue
     h = by_house[hkey][n]; k = norm(h[0]) + '|' + norm(h[1]); e = facts.setdefault(k, {})

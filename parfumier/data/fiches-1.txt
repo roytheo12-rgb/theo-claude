@@ -1,0 +1,72 @@
+# Maison|Parfum|famille|genre (m/f/u)|notes de tête|notes de cœur|notes de fond|projection 1-5|tenue 1-5|poids 1-5|prix ≈ € (100 ml, 0 = inconnu)
+# Fiches écrites à partir de sources publiques et de la connaissance courante des pyramides olfactives ; les prix sont indicatifs.
+Frédéric Malle|Portrait of a Lady|floral|f|cassis;framboise;clou de girofle;cannelle|rose de Turquie;patchouli;encens|santal;musc;benjoin;ambre|4|5|4|210
+Frédéric Malle|Musc Ravageur|ambré|u|bergamote;mandarine;lavande|cannelle;clou de girofle;fleur d'oranger|musc;ambre;vanille;santal;cèdre|4|5|4|210
+Frédéric Malle|Carnal Flower|floral|f|melon;eucalyptus;notes vertes|tubéreuse;jasmin;ylang-ylang;noix de coco|musc;santal|4|4|3|210
+Frédéric Malle|Vetiver Extraordinaire|boisé|m|pamplemousse;muscade|vétiver d'Haïti;poivre|musc;cèdre;boisé|3|5|3|210
+Frédéric Malle|En Passant|floral|u|concombre;blé;mandarine|lilas;fleur de cognassier|musc blanc;cèdre|2|3|1|210
+Frédéric Malle|Lys Méditerranée|floral|u|citron;bergamote|lys;fleur d'oranger;jasmin|musc;ambre;vanille|3|4|3|210
+Frédéric Malle|Bigarade Concentrée|agrumes|u|orange amère;bergamote;mandarine|néroli;fleur d'oranger|ambre;musc;vétiver|3|3|2|210
+Frédéric Malle|Une Rose|floral|f|rose;patchouli|rose de Mai;rose de Turquie|patchouli;musc|3|4|3|210
+Frédéric Malle|Iris Poudre|floral|f|iris;bergamote|iris;héliotrope|vanille;santal;musc;cèdre|3|4|3|210
+Frédéric Malle|French Lover|boisé|m|poivre;cardamome|encens;vétiver;poivre|bois;cèdre|3|4|3|210
+Frédéric Malle|Angéliques Sous La Pluie|vert|u|angélique;bergamote|angélique;iris|musc;bois|2|3|1|210
+Frédéric Malle|Dans Tes Bras|musqué|u|abricot;poire|violette;rose;ambrette|musc;cèdre;santal|3|4|2|210
+Frédéric Malle|Superstitious|floral|f|aldéhydes;rose;oud|rose;jasmin|santal;musc;mousse de chêne|3|4|3|210
+Frédéric Malle|Cologne Indélébile|musqué|u|bergamote;citron;néroli|fleur d'oranger;musc|musc;ambre|3|3|2|210
+Frédéric Malle|Monsieur.|boisé|m|mousse de chêne;bois|patchouli;vétiver|cuir;bois|3|4|3|210
+Frédéric Malle|Rose & Cuir|cuir|u|rose;cuir|rose;patchouli|cuir;musc|3|4|3|210
+Frédéric Malle|Heaven Can Wait|floral|u|poire;fruit de la passion|iris;violette|musc;bois blond|3|3|2|210
+Frédéric Malle|Synthetic Jungle|vert|u|notes vertes;galbanum|rose;jasmin|mousse;patchouli|3|4|3|210
+Frédéric Malle|L'Eau d'Hiver|floral|u|bergamote;héliotrope|iris;miel|musc;santal|2|3|2|210
+Frédéric Malle|Geranium Pour Monsieur|aromatique|m|géranium;citron|menthe;noix de muscade|musc;mousse de chêne|3|3|2|210
+Maison Francis Kurkdjian|Baccarat Rouge 540|ambré|u|safran;jasmin|bois d'ambre;ambre gris|sapin;cèdre|5|5|4|260
+Maison Francis Kurkdjian|À la Rose|floral|f|rose;litchi|rose;pivoine|musc;cèdre|3|3|2|220
+Maison Francis Kurkdjian|Aqua Universalis|agrumes|u|bergamote;citron;fleur d'oranger|muguet;rose|musc blanc;ambrette|2|3|1|150
+Maison Francis Kurkdjian|Grand Soir|ambré|u|bergamote;cannelle|ambre;benjoin|vanille;tonka;labdanum|4|5|4|210
+Maison Francis Kurkdjian|Oud Satin Mood|oud|u|rose;violette|oud;rose de Damas|vanille;benjoin;musc|4|5|5|260
+Maison Francis Kurkdjian|Amyris Femme|floral|f|bergamote;rose;citron|amyris;iris|musc;bois|3|4|3|210
+Maison Francis Kurkdjian|Gentle Fluidity Gold|ambré|u|genévrier;muscade;coriandre|musc|vanille;ambre;bois|3|4|3|210
+Maison Francis Kurkdjian|Gentle Fluidity Silver|boisé|u|genévrier;muscade;bergamote|musc|ambre;bois blancs|3|4|2|210
+Maison Francis Kurkdjian|Le Beau Parfum|floral|m|bergamote;lime|monoï;ylang-ylang|noix de coco;santal;musc|3|4|3|0
+Maison Francis Kurkdjian|Petit Matin|agrumes|u|bergamote;pamplemousse|jasmin;fleur d'oranger|musc|2|3|1|150
+Maison Francis Kurkdjian|Féminin Pluriel|floral|f|bergamote;pêche|rose;jasmin|musc;santal|3|4|3|210
+Le Labo|Santal 33|boisé|u|cardamome;violette;iris|santal d'Australie;cèdre|cuir;ambre;musc|4|5|4|235
+Le Labo|Rose 31|floral|u|cumin;poivre|rose;cèdre|vétiver;ambre;musc;gaïac|4|4|4|235
+Le Labo|Another 13|musqué|u|ambroxan;jasmin|musc;mousse de chêne|ambre;musc|4|5|3|235
+Le Labo|Bergamote 22|agrumes|u|bergamote;pamplemousse|vétiver;néroli|musc;ambre|3|3|2|235
+Le Labo|Thé Noir 29|aromatique|u|bergamote;figue|thé noir;tabac|vétiver;cèdre;musc|3|4|3|235
+Le Labo|Lys 41|floral|u|lys;fleur d'oranger|lys;musc|vanille;bois|3|4|3|235
+Le Labo|Vanille 44|gourmand|u|vanille;santal|vanille;musc|ambre;benjoin|3|4|4|235
+Le Labo|Tubéreuse 40|floral|u|tubéreuse;musc|jasmin;ylang|santal;ambre|4|4|4|235
+Le Labo|Fleur d'Oranger 27|floral|u|fleur d'oranger;néroli|jasmin;musc|musc;ambre|3|4|3|235
+Le Labo|Gaiac 10|boisé|u|bois de gaïac|encens;vétiver|bois;cuir|3|4|3|235
+Le Labo|Patchouli 24|boisé|u|bouleau;encens|patchouli;cuir|vanille;ambre|4|5|4|235
+Byredo|Gypsy Water|boisé|u|bergamote;citron;poivre;genévrier|encens;pin;iris|ambre;vanille;santal|3|4|3|215
+Byredo|Blanche|floral|f|aldéhydes;pivoine;rose|muguet;violette|musc;bois blond|3|3|2|215
+Byredo|Mojave Ghost|floral|u|ambrette;violette;pomme de sablier|sapote;magnolia;violette|bois de santal;musc;ambre;cèdre|3|3|2|215
+Byredo|Bal d'Afrique|floral|u|bergamote;citron;néroli|violette;jasmin;cyclamen|vétiver;ambre;musc;cèdre|3|4|3|215
+Byredo|Rose of No Man's Land|floral|u|framboise;poivre rose|rose de Turquie;papyrus|musc;ambre;encens|3|4|3|215
+Byredo|Super Cedar|boisé|u|bergamote;poivre rose|cèdre;violette|musc;bois|3|4|3|215
+Byredo|Black Saffron|épicé|u|safran;baies de genièvre|cuir;violette|bois;patchouli|3|4|3|215
+Byredo|Sundazed|agrumes|u|citron;mandarine;pamplemousse|noix de coco;poire|musc;vanille|3|3|2|215
+Byredo|Eleventh Hour|boisé|u|poire;bergamote|pin;bois de cèdre|vétiver;musc;patchouli|3|4|3|215
+Byredo|La Tulipe|floral|f|freesia;rhubarbe|tulipe;violette|musc;bois|2|3|1|215
+Diptyque|Philosykos|vert|u|figue;feuilles de figuier|noix de coco;bois de figuier|cèdre;musc|3|3|2|110
+Diptyque|Do Son|floral|f|tubéreuse;jasmin|fleur d'oranger;ylang|musc;iris|3|3|2|110
+Diptyque|Tam Dao|boisé|u|cyprès;gingembre;poivre|santal;cèdre;ambre|musc;bois blond|3|4|3|110
+Diptyque|Fleur de Peau|musqué|u|bergamote;poivre rose|iris;rose|musc;ambrette|3|3|2|120
+Diptyque|Orphéon|floral|u|jasmin;genévrier|cèdre;bois|tonka;musc|3|4|3|110
+Diptyque|L'Ombre dans l'Eau|floral|f|cassis;feuilles de cassis|rose;feuilles vertes|musc|3|3|2|110
+Diptyque|Eau Rose|floral|f|framboise;poivre rose|rose;aubépine|musc|2|3|1|110
+Diptyque|Eau Duelle|ambré|u|vanille;encens|cardamome;cannelle|bois;ambre|3|4|3|110
+Serge Lutens|Ambre Sultan|ambré|u|myrte;coriandre;laurier|ambre;benjoin|vanille;patchouli;labdanum|4|5|5|130
+Serge Lutens|Féminité du Bois|boisé|f|prune;pêche;épices|cèdre;rose;violette|santal;vanille;musc|4|5|4|130
+Serge Lutens|La Fille de Berlin|floral|f|rose;poivre|rose;géranium|musc;patchouli|4|4|4|130
+Serge Lutens|Un Bois Vanille|gourmand|u|coco;cacao|vanille;bois|tonka;santal|3|4|4|130
+Serge Lutens|Chergui|ambré|u|tabac;miel|iris;foin|ambre;musc|4|5|4|130
+Serge Lutens|Fleurs d'Oranger|floral|f|fleur d'oranger;jasmin|tubéreuse;cumin|musc;vanille|4|4|4|130
+Serge Lutens|Santal Majuscule|ambré|u|rose;santal|santal;baies|cèdre;vanille|4|5|4|130
+Serge Lutens|Five O'Clock au Gingembre|épicé|u|bergamote;gingembre|thé;miel|ambre;musc|3|4|3|130
+Serge Lutens|Vitriol d'Œillet|épicé|u|œillet;poivre|clou de girofle;rose|bois;musc|3|4|3|130
+Serge Lutens|Muscs Koublaï Khän|musqué|u|musc;épices|castoréum;vanille|ambre;musc|4|5|4|130

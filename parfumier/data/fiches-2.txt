@@ -1,0 +1,141 @@
+Chanel|N°5 EDP|floral|f|aldéhydes;néroli;ylang-ylang;bergamote|rose;jasmin;iris;muguet|vanille;santal;vétiver;ambre;musc|4|5|4|150
+Chanel|Coco Mademoiselle|floral|f|orange;bergamote;pamplemousse|rose;jasmin;litchi|patchouli;vétiver;vanille;musc blanc|4|4|3|135
+Chanel|Chance Eau Tendre|fruité|f|coing;pamplemousse|jasmin;rose;iris|musc;cèdre;ambre|3|3|2|130
+Chanel|Gabrielle|floral|f|mandarine;pamplemousse;cassis|jasmin;ylang-ylang;fleur d'oranger;tubéreuse|santal;musc|3|4|3|135
+Chanel|Allure Homme Sport|aromatique|m|orange;mandarine;aldéhydes|poivre;néroli;cèdre|vanille;tonka;musc;vétiver|3|3|2|110
+Chanel|Bleu de Chanel EDT|boisé|m|pamplemousse;citron;menthe;rose|gingembre;noix de muscade;jasmin|encens;cèdre;santal;patchouli|3|4|3|110
+Chanel|Égoïste|boisé|m|bergamote;coriandre;bois de rose|santal;vétiver|ambre;vanille|4|4|4|120
+Chanel|Coco|ambré|f|orange;mandarine|jasmin;rose;néroli|ambre;vanille;santal|4|5|5|140
+Chanel|Chance|floral|f|ylang-ylang;citron;iris|jasmin;rose|patchouli;vétiver;vanille;musc|3|4|3|130
+Chanel|Platinum Égoïste|aromatique|m|lavande;romarin;citron|sauge;géranium|ambre;cèdre|3|3|2|110
+Chanel|Coromandel|ambré|u|bergamote;pamplemousse|patchouli;encens;iris|ambre;vanille;benjoin|4|5|4|200
+Dior|Sauvage EDP|aromatique|m|bergamote;poivre|lavande;géranium;ambroxan|vanille;labdanum;cèdre|4|5|3|120
+Dior|J'adore|floral|f|poire;melon;bergamote;mandarine|jasmin;rose;muguet;ylang-ylang|musc;vanille;mûre;cèdre|3|4|3|130
+Dior|Miss Dior EDP|floral|f|mandarine;rose|rose de Grasse;pivoine|patchouli;musc|3|4|3|130
+Dior|Dior Homme|boisé|m|lavande;sauge;bergamote|iris;ambre gris|cuir;vétiver;patchouli;cacao|3|4|3|110
+Dior|Dior Homme Intense|boisé|m|lavande;poire|iris;ambrette;cacao|vétiver;bois de cèdre;cuir|3|5|3|115
+Dior|Fahrenheit|boisé|m|lavande;mandarine;bergamote;citron|muguet;noix de muscade;cèdre|cuir;vétiver;musc|4|5|4|105
+Dior|Eau Sauvage|agrumes|m|citron;bergamote;basilic|jasmin;romarin;œillet|vétiver;mousse de chêne;santal|3|3|2|100
+Dior|Addict|ambré|f|mandarine;bergamote|jasmin;tubéreuse|vanille;tonka;santal|4|4|4|115
+Dior|Poison|ambré|f|prune;coriandre|tubéreuse;tubéreuse;œillet|vanille;héliotrope;musc|5|5|5|110
+Dior|Hypnotic Poison|gourmand|f|amande;noix de coco;prune|jasmin;tubéreuse|vanille;musc;santal|4|5|5|110
+Dior|Gris Dior|floral|f|bergamote;mandarine|rose;pivoine|patchouli;musc|3|4|3|260
+Dior|Bois d'Argent|ambré|u|bergamote;iris|cyprès;encens|ambre;vanille;musc|3|4|3|260
+Dior|Oud Ispahan|oud|u|rose|oud;patchouli|ambre;musc|4|5|5|260
+Dior|Ambre Nuit|ambré|f|bergamote;rose|rose de Damas;patchouli|ambre;musc;benjoin|3|5|4|260
+Dior|Dune|ambré|f|lys;mandarine|rose;jasmin|santal;patchouli;vanille|3|4|4|110
+Yves Saint Laurent|Libre|floral|f|lavande;mandarine;bergamote|jasmin;fleur d'oranger|vanille;ambre gris;cèdre|4|4|3|115
+Yves Saint Laurent|Black Opium|gourmand|f|poire;poivre rose;orange|café;jasmin;fleur d'oranger|vanille;patchouli;cèdre|4|5|4|110
+Yves Saint Laurent|Mon Paris|fruité|f|poire;framboise;fraise|pivoine;jasmin;fleur d'oranger|patchouli;musc;vanille|3|4|3|105
+Yves Saint Laurent|Y EDP|aromatique|m|pomme;gingembre;bergamote|sauge;baies;géranium|tonka;vétiver;cèdre|4|4|3|110
+Yves Saint Laurent|La Nuit de L'Homme|épicé|m|cardamome;bergamote|lavande;cèdre|vétiver;coumarine|3|4|3|105
+Yves Saint Laurent|L'Homme|boisé|m|gingembre;citron;bergamote|basilic;violette|bois de cèdre;vétiver|3|3|3|95
+Yves Saint Laurent|Opium|ambré|f|mandarine;jasmin;myrrhe|œillet;rose|encens;vanille;patchouli;santal|5|5|5|110
+Yves Saint Laurent|Kouros|cuir|m|coriandre;citron;armoise|jasmin;cumin;œillet|cuir;musc;mousse de chêne|4|5|4|95
+Yves Saint Laurent|Black Opium Intense|gourmand|f|poire;poivre rose|café;jasmin|vanille;patchouli|4|5|4|115
+Guerlain|Shalimar|ambré|f|bergamote;citron;mandarine|iris;jasmin;rose|vanille;ambre;tonka;encens|4|5|5|110
+Guerlain|Habit Rouge|ambré|m|bergamote;orange;citron|cèdre;rose;jasmin|vanille;cuir;benjoin;patchouli|4|5|5|90
+Guerlain|L'Homme Idéal|gourmand|m|amande;bergamote|romarin;cuir|vanille;tonka;patchouli|3|4|3|95
+Guerlain|La Petite Robe Noire|floral|f|cerise;bergamote|rose;iris;réglisse|patchouli;vanille;fève tonka|3|4|3|95
+Guerlain|Mon Guerlain|aromatique|f|lavande;bergamote|jasmin;iris|vanille;tonka;santal|3|4|3|100
+Guerlain|Mitsouko|ambré|f|bergamote;pêche|rose;jasmin;œillet|mousse de chêne;ambre;vétiver|3|5|4|120
+Guerlain|L'Heure Bleue|floral|f|anis;bergamote|iris;œillet|vanille;héliotrope;benjoin|3|4|4|120
+Guerlain|Vétiver|boisé|m|citron;bergamote;mandarine|tabac;noix de muscade|vétiver;poivre;tonka|3|4|2|90
+Guerlain|Terracotta Le Parfum|floral|f|ananas;mandarine|fleur d'oranger;ylang|musc;vanille|3|3|3|90
+Guerlain|Aqua Allegoria Herba Fresca|vert|u|menthe;citron|herbes;rose|musc;ambre|2|2|1|80
+Hermès|Terre d'Hermès|boisé|m|orange;pamplemousse|poivre;silex;géranium|vétiver;cèdre;benjoin|3|4|3|95
+Hermès|H24|aromatique|m|sauge sclarée;citron|narcisse;romarin|musc;bois|3|3|2|100
+Hermès|Twilly d'Hermès|floral|f|gingembre|tubéreuse|santal;musc|3|3|2|105
+Hermès|Un Jardin sur le Nil|vert|u|mangue;lotus;pamplemousse|lotus;poivre|encens;sycomore|2|3|1|90
+Hermès|Eau d'Orange Verte|agrumes|u|orange;citron;bergamote|menthe;jasmin;oakmoss|musc;cèdre|2|2|1|85
+Hermès|Terre d'Hermès Eau Givrée|agrumes|m|citron;genévrier;cassis|menthe;poivre|vétiver;ambre|2|3|1|105
+Hermès|Voyage d'Hermès|boisé|u|gingembre;cardamome|cèdre;poivre;fleur de lys|mousse de chêne;musc;ambre|3|4|3|105
+Hermès|Eau des Merveilles|ambré|f|orange;citron|ambre;sel|bois;ambre|3|4|3|95
+Hermès|Jour d'Hermès|floral|f|pamplemousse;citron|gardénia;jasmin;rose|musc;bois|3|4|2|115
+Hermès|Barénia|cuir|f|rose;cuir|rose;musc|santal;patchouli|3|4|3|130
+Hermès|Eau de Citron Noir|agrumes|u|citron noir;bergamote|menthe;fleur de safran|musc;mousse de chêne|2|2|1|85
+Giorgio Armani|Acqua di Giò|aquatique|m|bergamote;néroli;mandarine;notes marines|jasmin;romarin;calone|patchouli;cèdre;musc|3|3|2|85
+Giorgio Armani|Acqua di Giò Profondo|aquatique|m|mandarine;notes marines|lavande;romarin|patchouli;musc;ambre|3|4|2|100
+Giorgio Armani|Si|floral|f|cassis;mandarine|rose;fleur de freesia|patchouli;vanille;musc;bois ambré|3|4|3|100
+Giorgio Armani|Armani Code|ambré|m|bergamote;citron|fleur d'oranger;étoile d'anis|tonka;cuir;tabac;bois|3|4|3|90
+Giorgio Armani|Stronger With You|gourmand|m|cardamome;poivre rose;violette|sauge;cannelle|châtaigne;vanille;amber|3|4|3|90
+Giorgio Armani|Stronger With You Intensely|gourmand|m|poivre rose;genièvre;violette|cannelle;lavande|châtaigne;vanille;tonka|4|4|3|100
+Giorgio Armani|My Way|floral|f|bergamote;fleur d'oranger|tubéreuse;jasmin|vanille;cèdre;musc|3|4|3|100
+Giorgio Armani|Armani Prive Rouge Malachite|floral|f|fruits rouges;rose|jasmin;iris|musc;bois|3|4|3|0
+Givenchy|L'Interdit|floral|f|poire;bergamote|tubéreuse;jasmin;fleur d'oranger|vétiver;patchouli;ambre|3|4|3|100
+Givenchy|Gentleman EDP|boisé|m|poivre;iris;lavande|iris;vanille|vanille;patchouli;bois|3|4|3|90
+Givenchy|Irresistible|floral|f|poire;rose|rose;iris|bois;musc|3|3|2|100
+Givenchy|Gentleman Réserve Privée|ambré|m|whisky;iris;vanille|iris;cannelle|vanille;bois|3|4|3|0
+Prada|L'Homme|boisé|m|néroli;poivre;bergamote|iris;ambre|patchouli;cèdre;vétiver|3|3|3|95
+Prada|Paradoxe|floral|f|néroli;poire;bergamote|jasmin;fleur d'oranger|ambre;musc;vanille|4|4|3|110
+Prada|Candy|gourmand|f|caramel|musc;benjoin|vanille|3|4|4|90
+Prada|Luna Rossa Carbon|aromatique|m|bergamote;lavande|menthe;poivre|musc;ambre|3|3|2|90
+Prada|Infusion d'Iris|floral|f|néroli;mandarine|iris;galbanum|encens;vétiver|3|3|2|100
+Gucci|Bloom|floral|f|jasmin;tubéreuse|jasmin;tubéreuse;rangoon|musc;bois|4|4|3|105
+Gucci|Guilty Pour Homme|boisé|m|citron;lavande|orange;cèdre;patchouli|ambre;bois|3|3|2|85
+Gucci|Flora Gorgeous Gardenia|floral|f|poire;fleur de grenade|gardénia;frangipanier|musc;patchouli;sucre brun|3|4|3|105
+Gucci|Rush|floral|f|freesia;coriandre|gardénia;jasmin|vanille;patchouli|4|4|4|90
+Dolce & Gabbana|Light Blue|agrumes|f|citron;pomme;cèdre|jasmin;bambou;rose blanche|cèdre;ambre;musc|3|3|2|90
+Dolce & Gabbana|Light Blue Pour Homme|aquatique|m|citron;pamplemousse;bergamote|romarin;poivre|musc;bois;encens|3|3|2|85
+Dolce & Gabbana|The One for Men|ambré|m|pamplemousse;coriandre;basilic|gingembre;cardamome|ambre;tabac;bois|3|4|3|90
+Dolce & Gabbana|K by Dolce & Gabbana|boisé|m|citron;orange;genièvre|lavande;poivre|patchouli;vétiver;cèdre|3|3|3|85
+Versace|Eros|aromatique|m|menthe;pomme verte;citron|fève tonka;géranium;ambroxan|vanille;vétiver;mousse de chêne|4|4|3|85
+Versace|Dylan Blue Pour Homme|aromatique|m|bergamote;pamplemousse;figue|violette;patchouli;poivre|musc;tonka;encens|3|4|3|85
+Versace|Bright Crystal|floral|f|yuzu;grenade;fruits|pivoine;magnolia|musc;ambre|3|3|2|85
+Versace|Crystal Noir|ambré|f|gingembre;poivre|gardénia;pivoine|ambre;musc;santal|3|4|3|85
+Jean Paul Gaultier|Le Male|ambré|m|menthe;lavande;bergamote|cannelle;fleur d'oranger;carvi|vanille;fève tonka;ambre;santal|4|4|4|90
+Jean Paul Gaultier|Ultra Male|gourmand|m|poire;lavande;menthe|cannelle;cumin|vanille noire;ambre;patchouli|4|5|4|100
+Jean Paul Gaultier|Scandal Pour Homme|ambré|m|mandarine;pamplemousse|cardamome;caramel|bois;tonka|4|4|4|100
+Jean Paul Gaultier|La Belle|fruité|f|poire;vanille|fleur de vanille;jasmin|vanille;santal;musc|4|4|4|100
+Jean Paul Gaultier|Classique|ambré|f|rose;fleur d'oranger;mandarine|gingembre;ylang|vanille;ambre gris|4|4|4|90
+Jean Paul Gaultier|Scandal|gourmand|f|miel;orange sanguine|gardénia;fleur d'oranger|patchouli;caramel|4|4|4|95
+Jean Paul Gaultier|Le Beau|gourmand|m|bergamote;ananas|noix de coco;tonka|bois;vanille|4|4|3|95
+Rabanne|1 Million|ambré|m|pamplemousse;menthe;mandarine sanguine|cannelle;rose;épices|cuir;ambre;bois;patchouli|4|4|4|90
+Rabanne|Invictus|aquatique|m|pamplemousse;notes marines;mandarine|laurier;jasmin|bois de gaïac;patchouli;ambre|4|3|3|90
+Rabanne|Lady Million|floral|f|framboise;néroli;citron|jasmin;fleur d'oranger|ambre;patchouli;miel|4|4|4|90
+Rabanne|Phantom|aromatique|m|citron;lavande|vanille;ambre|bois;patchouli|4|4|3|95
+Rabanne|Olympéa|gourmand|f|vanille;gingembre|jasmin;fleur de sel|ambre gris;santal;vanille|4|4|4|95
+Mugler|Alien|floral|f|jasmin;bergamote|bois de cashmere;jasmin|ambre;vanille;santal;boisé|5|5|4|95
+Mugler|Angel|gourmand|f|bergamote;mandarine;fruits|caramel;miel;tubéreuse|patchouli;vanille;chocolat|5|5|5|90
+Mugler|A*Men|gourmand|m|lavande;menthe;bergamote|goudron;cannelle|patchouli;vanille;café|5|5|5|90
+Mugler|Alien Man|boisé|m|gingembre;pamplemousse|cèdre;épices|ambre;bois de gaïac|4|4|3|95
+Lancôme|La Vie est Belle|gourmand|f|poire;cassis|iris;jasmin;fleur d'oranger|praliné;vanille;patchouli;fève tonka|4|5|4|105
+Lancôme|Idôle|floral|f|poire;bergamote|rose;jasmin|vanille;musc;cèdre|3|3|3|100
+Lancôme|Trésor|ambré|f|abricot;rose|iris;héliotrope|santal;ambre;vanille|3|4|4|90
+Lancôme|Hypnôse Homme|aromatique|m|lavande;cardamome|romarin;fleur d'oranger|bois;vétiver|3|3|3|80
+Burberry|Her|fruité|f|fruits rouges;mûre;framboise|jasmin;violette|musc;vanille;cèdre|4|4|3|95
+Burberry|Hero|boisé|m|bergamote;poivre;genièvre|cèdre;ambre|cèdre;ambre;musc|3|4|3|90
+Burberry|Brit for Him|gourmand|m|citron;poivre|noix de muscade;cèdre|tonka;musc|3|3|2|85
+Calvin Klein|CK One|agrumes|u|bergamote;ananas;mandarine|jasmin;muguet;rose|musc;ambre;cèdre|2|3|1|60
+Calvin Klein|Eternity|floral|f|mandarine;freesia|lys;rose;muguet|santal;ambre;musc|3|3|2|70
+Calvin Klein|Obsession|ambré|f|mandarine;bergamote|jasmin;œillet|vanille;musc;ambre|4|4|4|70
+Montblanc|Legend|aromatique|m|ananas;bergamote;lavande|géranium;rose;boisé|mousse de chêne;tonka;patchouli|3|3|3|65
+Montblanc|Explorer|boisé|m|bergamote;pamplemousse;épices|vétiver;patchouli|ambre;cuir;cèdre|4|4|3|80
+Bvlgari|Man in Black|ambré|m|rhum;épices|iris;cuir|tonka;benjoin|4|4|4|95
+Bvlgari|Omnia Crystalline|floral|f|poire;bambou|lotus;rose|bois;musc|2|3|1|70
+Bvlgari|Eau Parfumée au Thé Vert|vert|u|thé vert;bergamote|jasmin;coriandre|musc;thé vert|2|2|1|90
+Cartier|Pasha de Cartier|aromatique|m|bergamote;lavande;menthe|cèdre;lavande|musc;cèdre|3|3|2|100
+Cartier|Declaration|boisé|m|bergamote;orange|cuir;cumin|cèdre;vétiver|3|4|3|95
+Valentino|Uomo Born in Roma|aromatique|m|menthe;gingembre;sauge|vanille;fève tonka|bois;fève|3|4|3|95
+Valentino|Donna Born in Roma|floral|f|jasmin;fruits rouges|vanille;bourbon|bois;musc|3|4|3|100
+Carolina Herrera|Good Girl|floral|f|amande;café;bergamote|tubéreuse;jasmin|cacao;tonka;vanille|4|5|4|105
+Carolina Herrera|212 Men|ambré|m|bergamote;gingembre;pamplemousse|poivre rose;cèdre|musc;bois de cèdre|3|3|2|90
+Carolina Herrera|Bad Boy|boisé|m|poivre noir;bergamote|sauge;cèdre|tonka;cacao|4|5|4|95
+Viktor&Rolf|Flowerbomb|floral|f|thé;bergamote;orchidée|jasmin;rose;fleur de freesia|patchouli;musc|4|4|4|115
+Viktor&Rolf|Spicebomb|épicé|m|poivre rose;piment;bergamote|cannelle;safran|tabac;vanille;cuir|4|4|4|95
+Narciso Rodriguez|For Her|musqué|f|musc;rose|musc;amber|bois de santal;patchouli|3|4|3|95
+Narciso Rodriguez|Narciso|floral|f|musc;rose;osmanthus|fleur d'oranger;musc|ambre;bois|3|4|3|100
+Issey Miyake|L'Eau d'Issey|aquatique|f|lotus;pivoine|cyclamen;rose|musc;ambre;santal|2|3|1|70
+Issey Miyake|L'Eau d'Issey Pour Homme|aquatique|m|yuzu;citron;coriandre|bleu;cannelle|vétiver;bois|3|3|2|70
+Kenzo|Flower by Kenzo|floral|f|coquelicot;violette|rose;vanille|musc;encens|3|3|3|80
+Hugo Boss|Boss Bottled|boisé|m|pomme;orange;bergamote|géranium;cannelle;œillet|santal;vétiver;vanille|3|4|3|75
+Azzaro|Wanted|épicé|m|gingembre;citron;cardamome|cannelle;lavande|vétiver;tonka;ambre|4|4|4|80
+Azzaro|The Most Wanted|ambré|m|cardamome;gingembre|cannelle;fève tonka|vanille;ambre|4|4|4|90
+Azzaro|Pour Homme|aromatique|m|citron;basilic;lavande|romarin;fougère|vétiver;mousse de chêne;ambre|3|4|3|70
+Chloé|Chloé Eau de Parfum|floral|f|pivoine;litchi;freesia|rose;muguet|ambre;cèdre;musc|3|3|2|90
+Chloé|Nomade|floral|f|mirabelle;freesia|mousse de chêne;rose|musc;bois|3|4|3|90
+Armani|Acqua di Gioia|aquatique|f|menthe;citron;gingembre|jasmin;pivoine|cèdre;musc|2|3|1|75
+Chopard|Wish|floral|f|bergamote;mandarine|jasmin;rose|ambre;musc|3|3|2|55
+Paco Rabanne|Black XS|boisé|m|cassis;citron|vétiver;caramel|ambre;vanille|3|3|3|70
+Davidoff|Cool Water|aquatique|m|menthe;lavande;corail|jasmin;géranium;néroli|musc;cèdre;ambre|3|3|2|55
+Lacoste|L.12.12 Blanc|aromatique|m|pamplemousse;cardamome;romarin|gingembre;cyprès|vétiver;cèdre;musc|3|3|2|65
