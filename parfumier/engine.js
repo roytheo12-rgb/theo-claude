@@ -302,6 +302,23 @@
     return bits.join(' · ');
   };
 
+  function profStrength(pf, d, t) {
+    const g = (a) => pf.p[AXN.indexOf(a)] / 5, pr = d.projection || 3;
+    switch (t) {
+      case 'frais': return clamp(g('fraicheur') * 1.1 - g('densite') * .3, 0, 1);
+      case 'léger': return clamp(1 - g('densite') * 1.1, 0, 1);
+      case 'discret': return clamp((5 - pr) / 3.2, 0, 1);
+      case 'statement': return clamp((pr - 2) / 3, 0, 1);
+      case 'gourmand': case 'doux': return g('douceur');
+      case 'propre': return clamp(g('musque') + g('fraicheur') * .5 - g('fume') - g('douceur') * .4, 0, 1);
+      case 'polyvalent': return clamp(1 - g('clivage') * .6 - g('originalite') * .3 - Math.abs(g('densite') - .5) * .5, 0, 1);
+      case 'mystérieux': case 'nocturne': return clamp((g('fume') + g('resine') + g('densite')) / 2.2 + (pf.m[1] - pf.m[0]) / 20, 0, 1);
+      case 'confortable': return clamp(g('cremeux') * .6 + g('douceur') * .5 + g('musque') * .4, 0, 1);
+      case 'sensuel': return g('sensualite');
+      case 'élégant': return clamp(g('formalite') * .7 + (1 - g('douceur')) * .2, 0, 1);
+      default: return null;
+    }
+  }
   function tagStrength(d, o, tags, t) {
     const w = d.weight || 3, pr = d.projection || 3;
     switch (t) {
@@ -337,7 +354,7 @@
     if (st.gender && root.genderOf) { const g = root.genderOf(c.name, c.house); if ((st.gender === 'm' && g === 'f') || (st.gender === 'f' && g === 'm')) return null; }
     if (need.maxPrice && c.price && c.price > need.maxPrice) return null;
     if (need.minPrice && c.price && c.price < need.minPrice) return null;
-    const d = derive(c), o = olfactive(d), tags = perfumeTags(d), L = nt.length;
+    const d = derive(c), o = olfactive(d), tags = perfumeTags(d), L = nt.length, pf = profOf(c);
     let s = 0, max = 0; const why = [];
     // 1) notes demandées : poids fort ; une note du fond/cœur compte plus qu'une note de tête passagère
     for (const k of need.like) {
@@ -349,7 +366,7 @@
     // 2) famille(s) demandée(s)
     for (const f of need.fams) { max += 4; const share = (o.acc[f] || 0) / o.tot; if (d.family === f) { s += 3.4; why.push(FAMILIES[f].label.toLowerCase()); } else if (share >= .22) { s += 1.8 * Math.min(1, share / .35); why.push('touche de ' + FAMILIES[f].label.toLowerCase()); } else s -= 1.5; }
     // 3) caractère demandé : intensité continue (un parfum très frais vaut mieux qu'un parfum à peine frais)
-    for (const t of need.tags) { max += 2; const v = tagStrength(d, o, tags, t); s += 2 * v - (v < .2 ? .5 : 0); }
+    for (const t of need.tags) { max += 2; const ps = pf ? profStrength(pf, d, t) : null, v = ps != null ? ps : tagStrength(d, o, tags, t); s += 2 * v - (v < .2 ? .5 : 0); }
     if (need.tags.includes('frais') && o.fresh >= .3) why.push('frais');
     // 4) flags
     if (need.flags.nosweet) { if (nt.some((n) => SWEET_NOTE.some((k) => hasKw(n, k))) || o.sweet > .2) return null; max += 1; s += 1; }
@@ -370,6 +387,18 @@
       if (need.cond.ctx && cs.ctx >= 1.5) why.push('colle au contexte ' + CONTEXTS[need.cond.ctx].toLowerCase());
       if (need.cond.temp != null && cs.weather >= 1) why.push(need.cond.temp >= 24 ? 'tient bien la chaleur' : need.cond.temp <= 8 ? 'chaud pour le froid' : 'de saison');
     }
+    // 6b) fiche détaillée : saisons, moments, usages, mots-clés, ressemblances
+    if (pf) {
+      const C = need.cond;
+      if (C.temp != null) { max += 1.5; const sv = C.temp >= 24 ? pf.s[1] : C.temp <= 8 ? pf.s[3] : (pf.s[0] + pf.s[2]) / 2; s += 1.5 * (sv / 5) - (sv <= 1 ? 1 : 0); if (sv >= 4) why.push(C.temp >= 24 ? 'idéal en été' : C.temp <= 8 ? 'idéal en hiver' : 'idéal en mi-saison'); }
+      if (C.moment) { max += 1; const mv = pf.m[C.moment === 'jour' ? 0 : 1]; s += mv / 5 - (mv <= 1 ? .8 : 0); }
+      const U = { pro: 'bureau', date: 'rdv', event: 'soiree', famille: 'quotidien', amis: 'quotidien' }[C.ctx];
+      if (U) { max += 1.5; if (pf.u.includes(U) || (C.ctx === 'event' && pf.u.includes('ceremonie'))) { s += 1.5; why.push('fait pour ' + ({ bureau: 'le bureau', rdv: 'un rendez-vous', soiree: 'une soirée', quotidien: 'le quotidien' }[U])); } else s -= .6; }
+      if (C.style === 'sport') { max += 1; if (pf.u.includes('sport')) s += 1; }
+      const words = norm(need.text).split(' ').filter((w) => w.length >= 4), blob = norm([pf.pitch, pf.dom, pf.diff, ...pf.kw].join(' '));
+      const hit = words.filter((w) => blob.includes(w)).length; if (words.length) { max += 1; s += Math.min(1, hit / Math.max(2, words.length * .6)); }
+      if (pf.c <= 1) s -= .4;
+    }
     // 7) goûts de la personne (sans jamais écraser le besoin exprimé)
     if (st.liked && st.liked.length) { const h = st.liked.filter((l) => l && nt.some((n) => n.includes(norm(l)))).length; s += Math.min(1.2, h * .6); if (h) why.push('une note que tu aimes'); }
     if (st.avoid && st.avoid.length && st.avoid.some((a) => a && nt.some((n) => n.includes(norm(a))))) return null;
@@ -379,7 +408,7 @@
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
     if (asked.size) { max += 2; const sh = [...asked].reduce((a, f) => a + (o.acc[f] || 0), 0) / o.tot; s += 2 * clamp(sh / Math.min(.7, .35 * asked.size + .15), 0, 1); }
     const ratio = clamp(s / max, 0, 1);
-    return { s, max, pct: clamp(Math.round(100 * Math.pow(ratio, 1.15) * .97), 1, 99), why: why.slice(0, 4), d };
+    return { s, max, pct: clamp(Math.round(100 * Math.pow(ratio, 1.15) * .97), 1, 99), why: why.slice(0, 4), d, pitch: pf ? pf.pitch : '', diff: pf ? pf.diff : '' };
   }
 
   // Recherche par besoin sur toute la base ; une seule fiche par famille de parfum (pas 15 flankers).
@@ -391,6 +420,53 @@
     const fk = (c) => { const w = norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'un', 'une', 'eau', 'de', 'du', 'd'].includes(x)); return norm(c.house) + '|' + (w[0] || norm(c.name)); };
     for (const r of res) { const k = fk(r.c); if (seen.has(k)) continue; seen.add(k); out.push(r); if (out.length >= (n || 12)) break; }
     return out;
+  }
+
+
+  // ---------- Profils comparables (18 axes, fiches data/fiches-ia) ----------
+  const AXN = ['fraicheur', 'douceur', 'floral', 'boise', 'epice', 'resine', 'fume', 'poudre', 'vert', 'fruite', 'musque', 'cremeux', 'densite', 'originalite', 'clivage', 'formalite', 'sensualite', 'evolution'];
+  const AXL = { fraicheur: 'frais', douceur: 'sucré', floral: 'floral', boise: 'boisé', epice: 'épicé', resine: 'résineux', fume: 'fumé', poudre: 'poudré', vert: 'vert', fruite: 'fruité', musque: 'musqué', cremeux: 'crémeux', densite: 'dense', originalite: 'original', clivage: 'clivant', formalite: 'habillé', sensualite: 'sensuel', evolution: 'évolutif' };
+  const profOf = (p) => {
+    const P = root.PROFILS; if (!P || !p || !p.name) return null;
+    if (p._pf !== undefined) return p._pf;
+    const HA = root.HOUSE_ALIAS || {}, h = HA[norm(p.house)] || p.house;
+    const q = P[norm(h) + '|' + norm(p.name)] || null;
+    Object.defineProperty(p, '_pf', { value: q, enumerable: false, configurable: true });
+    return q;
+  };
+  const axv = (q, a) => q.p[AXN.indexOf(a)];
+  // Ce que la personne aime : moyenne des profils de ses parfums pondérée par la note (>3 attire, <3 repousse). Retourne null s'il y a moins de 2 profils connus.
+  function axisPref(collection) {
+    const v = new Array(18).fill(0); let sw = 0, n = 0;
+    for (const p of collection) {
+      const q = profOf(p); if (!q) continue;
+      const w = (p.rating || 3) - 3; if (!w) continue;
+      n++; sw += Math.abs(w);
+      q.p.forEach((x, i) => { v[i] += w * (x - 2.5); });
+    }
+    if (n < 2 || !sw) return null;
+    return v.map((x) => x / sw);
+  }
+  // Adéquation d'un parfum au vecteur de goûts : -1 à 1 (cosinus). Les axes de personnalité (originalité, clivage, formalité) pèsent moins.
+  const AXW = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.1, 1, .6, .6, .5, .8, .4];
+  function axisFit(c, pref) {
+    const q = profOf(c); if (!q || !pref) return null;
+    let dot = 0, na = 0, nb = 0;
+    q.p.forEach((x, i) => { const a = pref[i] * AXW[i], b = (x - 2.5) * AXW[i]; dot += a * b; na += a * a; nb += b * b; });
+    return na && nb ? dot / Math.sqrt(na * nb) : 0;
+  }
+  // Pourquoi ce parfum colle (ou pas) aux goûts : les axes qui comptent le plus.
+  function axisWhy(c, pref) {
+    const q = profOf(c); if (!q || !pref) return [];
+    return q.p.map((x, i) => ({ a: AXN[i], v: pref[i] * (x - 2.5) })).filter((o) => o.v > 1.1).sort((a, b) => b.v - a.v).slice(0, 2).map((o) => AXL[o.a]);
+  }
+  // Compare des parfums du même accord entre eux pour une personne : classement + ce qui les départage.
+  function rankByFit(list, pref) {
+    const rows = list.map((c) => ({ c, fit: axisFit(c, pref), q: profOf(c) })).filter((r) => r.q && r.fit != null).sort((a, b) => b.fit - a.fit);
+    return rows.map((r, i) => {
+      const next = rows[i + 1], diffs = next ? r.q.p.map((x, k) => ({ a: AXN[k], d: x - next.q.p[k] })).filter((o) => Math.abs(o.d) >= 2 && !['originalite', 'clivage', 'formalite', 'evolution'].includes(o.a)).sort((a, b) => Math.abs(b.d) - Math.abs(a.d)).slice(0, 2).map((o) => (o.d > 0 ? 'plus ' : 'moins ') + AXL[o.a]) : [];
+      return { c: r.c, fit: r.fit, pct: clamp(Math.round(50 + r.fit * 50), 1, 99), vsNext: diffs, diff: r.q.diff || '', pitch: r.q.pitch || '' };
+    });
   }
 
   // ---------- Météo ----------
@@ -617,7 +693,7 @@
   }
 
   function recommend(catalog, collection, wishlist, settings) {
-    const prof = tasteProfile(collection, settings);
+    const prof = tasteProfile(collection, settings), pref = axisPref(collection);
     const cov = coverage(collection);
     const owned = new Set(collection.map((p) => norm(p.name)));
     const avoid = (settings.avoid || []).map(norm);
@@ -636,17 +712,18 @@
         if (d > gapMax) { gapMax = d; gapLabel = sc.label; }
       }
       const mates = collection.filter((p) => pairScore(c, p, false).s >= 2.5);
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 1.4 * fameOf(c);
+      const af = axisFit(c, pref), why = af != null ? axisWhy(c, pref) : [];
+      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 1.4 * fameOf(c) + (af != null ? 4.5 * af : 0);
       out.push({
         c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
-        total, pct: clamp(Math.round(50 + t.s * 7), 5, 99), overBudget: budget > 0 && c.price > budget,
+        total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: clamp(Math.round(af != null ? 50 + t.s * 4 + af * 30 : 50 + t.s * 7), 5, 99), overBudget: budget > 0 && c.price > budget,
         wished: wishlist.some((w) => norm(w) === norm(c.name)),
       });
     }
     return out;
   }
 
-  const api = { olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

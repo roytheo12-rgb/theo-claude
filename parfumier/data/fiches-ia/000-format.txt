@@ -1,0 +1,4 @@
+# Format (une ligne par parfum, champs séparés par | ; listes séparées par ;) — écrit à partir de la connaissance du modèle, non vérifié en ligne (confiance max 2)
+# Maison|Parfum|conc|genre m/f/u|famille|tête|cœur|fond|proj 1-5|tenue 1-5|poids 1-5|prix €|profil18|saisons(pr;ét;au;hi)|moment(jour;soir)|usages|dominante|différence|pitch|ressemble à|alternatives abordables|pour qui|pas pour qui|mots-clés|public|confiance 1-2
+# profil18 = 18 chiffres 0-5 dans l'ordre : fraîcheur douceur floral boisé épicé résine fumé poudré vert fruité musqué crémeux densité originalité clivage formalité sensualité évolution
+# conc : EDT EDP EXT PAR COL ; usages : bureau quotidien rdv soiree ceremonie sport voyage cadeau detente

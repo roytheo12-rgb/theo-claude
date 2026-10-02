@@ -43,5 +43,15 @@ assert.ok(E.searchNeed(P, E.parseNeed('boisé'), { gender: 'm' }, 30).every((r) 
 // Le profil olfactif vient des notes : un agrume est frais et léger, un oud lourd
 { const a = E.derive({ name: 'a', house: 'h', notes: ['citron', 'bergamote', 'néroli', 'cèdre', 'musc'] }), b = E.derive({ name: 'b', house: 'h', notes: ['safran', 'oud', 'rose', 'ambre', 'patchouli', 'vanille'] });
   assert.ok(a.weight <= 2, 'agrume léger ' + a.weight); assert.ok(b.weight >= 4, 'oud lourd ' + b.weight); assert.equal(b.family, 'oud'); }
+// Comparaison par profils : quelqu'un qui adore Shalimar et Samsara et fuit Sauvage / Acqua di Giò doit voir les ambrés/vanillés avant les frais
+{
+  const own = [['Guerlain', 'Shalimar', 5], ['Guerlain', 'Samsara', 5], ['Dior', 'Sauvage', 1], ['Armani', 'Acqua di Giò', 2]].map(([house, name, rating]) => ({ house, name, rating, notes: [] }));
+  const pref = E.axisPref(own), cands = ctx.CATALOG.filter((c) => E.profOf(c) && !own.some((o) => o.name === c.name)), r = E.rankByFit(cands, pref);
+  assert.ok(pref && r.length >= 20);
+  const top = r.slice(0, 10).map((x) => x.c.name), bottom = r.slice(-10).map((x) => x.c.name);
+  assert.ok(r.slice(0, 10).every((x) => x.c.family !== 'aquatique' && x.c.family !== 'agrumes'), 'pas de frais en tête : ' + top);
+  assert.ok(bottom.some((n) => /Light Blue|Invictus|Cool Water|Eternity|CK One/.test(n)), 'les frais en bas : ' + bottom);
+  console.log('ok comparaison par profils (goûts → classement)', top.slice(0, 3).join(', '));
+}
 console.log(`\n${ok}/${ok + fail} besoins au niveau, pool ${P.length}`);
 assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');

@@ -2,7 +2,7 @@
 const fs = require('fs'), vm = require('vm'), path = require('path');
 const root = path.join(__dirname, '..');
 const ctx = { console }; ctx.window = ctx; ctx.globalThis = ctx; vm.createContext(ctx);
-for (const f of ['data.js', 'desc.js', 'index.js', 'facts.js', 'fiches.js', 'engine.js']) { try { vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f }); } catch (e) { console.error(f, e.message); } }
+for (const f of ['data.js', 'desc.js', 'index.js', 'facts.js', 'fiches.js', 'profils.js', 'engine.js']) { try { vm.runInContext(fs.readFileSync(path.join(root, f), 'utf8'), ctx, { filename: f }); } catch (e) { console.error(f, e.message); } }
 const E = ctx.Engine || ctx.window.Engine;
 // Pool = catalogue détaillé + toutes les entrées de la base dont les notes sont réelles (FACTS).
 function pool() {

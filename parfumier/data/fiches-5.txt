@@ -1,0 +1,28 @@
+# Généré par tools/import-fiches-ia.py depuis data/fiches-ia/ (fiches écrites par le modèle, non vérifiées en ligne)
+Chanel|Bleu de Chanel|boisé|m|pamplemousse;citron;menthe;poivre rose|gingembre;muscade;jasmin|encens;vétiver;cèdre;santal;patchouli;labdanum|4|4|3|110
+Chanel|N°5|floral|f|aldéhydes;néroli;ylang;bergamote|rose;jasmin;iris;muguet|vétiver;santal;vanille;ambre;musc|3|5|3|150
+Chanel|Pour Monsieur|aromatique|m|citron;néroli;romarin|cèdre;mousse de chêne;jasmin|vétiver;ambre;musc;santal|3|4|3|130
+Chanel|Sycomore|boisé|u|vétiver;cèdre|rose;poivre|santal;fumée;tabac|3|4|3|190
+Dior|Sauvage|aromatique|m|bergamote;poivre|lavande;poivre de Sichuan;patchouli;géranium;vétiver|vanille;ambroxan;cèdre;labdanum|5|5|4|105
+Dior|Sauvage Elixir|épicé|m|cannelle;muscade;cardamome;pamplemousse|lavande;réglisse|santal;ambre;patchouli;vétiver;benjoin|5|5|5|150
+Dior|Miss Dior|floral|f|rose de Grasse;pivoine;bergamote|rose;muguet;jasmin|patchouli;musc;santal|3|4|3|120
+Dior|Féve Délicieuse|gourmand|u|fève tonka;caramel|vanille;amande|musc;santal|3|4|4|250
+Yves Saint Laurent|Y|aromatique|m|pomme;gingembre;bergamote|sauge;baie de genévrier;géranium|vétiver;tonka;ambre;bois de cèdre|4|4|3|105
+Guerlain|Jicky|aromatique|u|bergamote;lavande;citron|romarin;jasmin;rose|vanille;tonka;civette;patchouli;vétiver;opoponax|3|4|3|120
+Guerlain|Samsara|boisé|f|jasmin;ylang;bergamote|iris;rose;jasmin|santal;vanille;tonka;musc|4|5|4|110
+Guerlain|Idylle|floral|f|rose;pivoine;litchi;poire|lilas;muguet;rose|patchouli;musc blanc|3|3|3|110
+Guerlain|Spiritueuse Double Vanille|gourmand|u|rhum;épices|vanille;cannelle|vanille;benjoin;santal|4|5|5|220
+Guerlain|Insolence|floral|f|violette;mandarine;framboise|iris;violette;rose|bois;musc;vanille|4|4|4|100
+Guerlain|Angelique Noire|ambré|u|angélique;poivre rose|vanille;jasmin|benjoin;santal|3|4|3|210
+Tom Ford|Santal Blush|boisé|f|ylang;cannelle;cardamome|santal;jasmin;tubéreuse|santal;vanille;ambre|3|4|3|260
+Armani|Acqua di Giò|aquatique|m|bergamote;citron;néroli;mandarine|jasmin;romarin;calone|santal;cèdre;patchouli;musc|3|3|2|90
+Armani|Stronger With You|gourmand|m|cardamome;poivre rose;violette|sauge;cannelle|marron;vanille;ambre;bois|3|3|3|90
+Armani|Si|ambré|f|cassis;mandarine|rose;freesia|vanille;patchouli;musc|3|4|3|100
+Armani|Code|ambré|m|bergamote;citron|olive;anis|cuir;tabac;fève tonka|3|4|3|90
+Dolce & Gabbana|The One|ambré|m|pamplemousse;coriandre;basilic|gingembre;cardamome;orange|tabac;ambre;bois|3|4|4|90
+Carolina Herrera|212 VIP Men|gourmand|m|citron vert;passion;rhum|gingembre;menthe|tonka;ambre;vanille;bois|4|3|3|90
+Kenzo|Flower|floral|f|coriandre;mandarine;rose bulgare|rose;violette;cassis|vanille;musc;encens;iris|3|4|3|75
+Kenzo|L'Eau par Kenzo|aquatique|m|menthe;yuzu;mandarine|eau;rose;bambou|musc;cèdre;santal|3|2|2|65
+Hugo Boss|The Scent|ambré|m|gingembre;mandarine|maninka;fève tonka|cuir;bois|3|3|3|75
+Nina Ricci|Nina|fruité|f|citron;pomme caramel|vanille;musc|bois;vanille|3|3|3|75
+Marc Jacobs|Daisy|floral|f|fraise;violette;feuilles de violette|jasmin;gardénia;fleur de pommier|musc;vanille;bois|3|3|3|85
