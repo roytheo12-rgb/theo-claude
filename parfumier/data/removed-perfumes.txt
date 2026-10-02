@@ -1,0 +1,16 @@
+# Parfums retirés de l'appli. Une ligne = « Maison|Nom » (comparaison sans accents ni majuscules) ou « ~regex » appliquée au nom de n'importe quelle maison.
+# Doublons : on garde la version « Extrait » (Byredo) ou la plus complète.
+Byredo|Cuir Sellier
+Byredo|Vanille Antique
+Kilian|Love, don't be shy EDP
+Elie Saab|Le Parfum Eau de Parfum Intense
+Guerlain|Mon Guerlain Eau de Parfum Intense
+Mancera|Intense Cedrat Boise
+Santa Maria Novella|Delicate Pet Shampoo
+# Coffrets, sélections, mini-coffrets, travel set / format voyage : ce ne sont pas des parfums
+~^(la |les )?selections?\b
+~mini fragrance wardrobe
+~\btravel (set|size|atomizer|spray|kit|refill)s?\b
+~\b(travel set|traveler|traveller)\b
+~^la decouverte (extraits|parisienne)$
+~\bpet shampoo\b

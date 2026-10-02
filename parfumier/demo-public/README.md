@@ -193,3 +193,7 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Malle et LV sont détourés ; Hermès reste en vignette 4:5 sur fond de studio (le verre pâle ne se détoure pas proprement).
 - 20 parfums vus sur les captures n'étaient pas dans la base : ajoutés dans `data/raw/99-incoming.txt`.
 - **Artifact** : `v2/build.py` remplit les ~510 fichiers autorisés avec les photos fournies d'abord (img/*.webp, `img/p`, `img/nose`), puis les photos web des maisons les mieux classées. La liste exacte est écrite dans `v2/artifact-files.json`.
+
+## Nettoyage de la base (v53)
+- `data/removed-houses.txt` (≈ 480 maisons, dont Bon Parfumeur, Histoires de Parfums, Sospiro) et `data/removed-perfumes.txt` (doublons, coffrets et sélections, mini-coffrets, travel sets, shampooing) : `tools/prune.py` retire tout de l'index, du catalogue, des fiches, des faits, des profils et des photos (fichiers compris). `v2/build.py` le lance en premier : rien ne revient après une régénération.
+- Doublons gardés : Byredo Cuir Sellier Extrait et Vanille Antique Extrait. Doublons de graphie retirés : Kilian « Love, don't be shy EDP », Elie Saab « Le Parfum Eau de Parfum Intense », Mon Guerlain « Eau de Parfum Intense », Mancera « Intense Cedrat Boise ».

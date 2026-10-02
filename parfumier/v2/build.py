@@ -1,7 +1,8 @@
 import pathlib
 d = pathlib.Path(__file__).parent
 up = d.parent
-import sys, re
+import sys, re, subprocess
+subprocess.run([sys.executable, str(up/'tools/prune.py')], check=True)      # retire les maisons et parfums écartés (data/removed-*.txt) avant tout assemblage
 
 def js(path):
     return f"<script>\n{path.read_text()}\n</script>\n"

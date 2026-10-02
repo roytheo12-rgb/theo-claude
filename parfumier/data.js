@@ -62,8 +62,6 @@
     ['Club de Nuit Intense Man', 'Armaf', 'boisé', ['citron', 'ananas', 'bouleau', 'musc', 'ambre gris'], 4, 4, 3, 35],
     ['Khamrah', 'Lattafa', 'gourmand', ['cannelle', 'datte', 'praliné', 'vanille', 'fève tonka'], 4, 5, 5, 40],
     ['Yara', 'Lattafa', 'gourmand', ['orchidée', 'héliotrope', 'vanille', 'musc', 'fève tonka'], 3, 4, 3, 30],
-    ['Hawas', 'Rasasi', 'aquatique', ['pomme', 'cannelle', 'bergamote', 'ambre gris', 'muscade'], 4, 4, 2, 40],
-    ['Voyage', 'Nautica', 'aquatique', ['pomme', 'feuille de lotus', 'notes marines', 'mousse', 'bois'], 2, 2, 1, 30],
     ['Mojave Ghost', 'Byredo', 'floral', ['ambrette', 'magnolia', 'santal', 'cèdre', 'musc'], 3, 3, 2, 195],
     ['Philosykos', 'Diptyque', 'vert', ['feuille de figuier', 'figue', 'noix de coco', 'cèdre'], 2, 3, 2, 150],
     ['Tam Dao', 'Diptyque', 'boisé', ['santal', 'cèdre', 'cyprès', 'ambre', 'poivre'], 2, 3, 3, 150],
@@ -112,7 +110,6 @@
     ['Ombre Nomade', 'Louis Vuitton', 'oud', ['oud', 'benjoin', 'oliban', 'framboise'], 5, 5, 5, 0],
     ['Acne Studios', 'Frédéric Malle', 'floral', ['aldéhydes', 'rose', 'violette', 'fleur d\'oranger', 'pêche', 'vanille', 'santal', 'encens', 'musc'], 4, 5, 3, 300],
     ['Purpose', 'Amouage', 'boisé', ['piment de la Jamaïque', 'bergamote', 'oliban', 'poivre rose', 'papyrus', 'rose', 'santal', 'vétiver', 'Akigalawood', 'safran', 'daim'], 4, 5, 4, 365],
-    ['Ambert Sunset', 'Librery', 'ambré', ['abricot', 'safran', 'osmanthus', 'rose', 'iris pallida', 'jasmin', 'cuir', 'ambre', 'santal'], 4, 5, 4, 170],
     ['Ambre Papier', 'Atelier Materi', 'ambré', ['poivre noir', 'piment de la Jamaïque', 'mandarine rouge', 'jasmin', 'myrrhe', 'maté', 'safran', 'benjoin de Siam', 'vétiver d\'Haïti', 'fève tonka'], 3, 5, 4, 254],
     ['Ganymede', 'Marc-Antoine Barrois', 'cuir', ['mandarine d\'Italie', 'safran', 'violette', 'osmanthus', 'Akigalawood', 'immortelle', 'accord daim'], 4, 5, 3, 200],
     ['De Los Santos', 'Byredo', 'boisé', ['sauge sclarée', 'mirabelle', 'iris', 'ciste', 'musc', 'ambroxan', 'palo santo'], 3, 4, 2, 165],
@@ -169,7 +166,7 @@
     ['Fève Nectar', 4, ['date', 'perso'], { size: 10, left: 100, use: 'special' }], ['724', 4, ['pro', 'perso']], ['Radical Rose', 4, ['date', 'event']], ['Néroli Hasbaya', 4, ['perso', 'famille']],
     ['Nasaj', 4, ['event', 'famille']], ['Acne Studios', 4, ['pro', 'date']], ['Le Male', 4, ['amis', 'event']],
   ];
-  const WISH = ['Tam Dao Eau de Parfum', 'Ambert Sunset', 'Ombre Nomade', 'Stellar Times', 'Rouge Trafalgar', 'Ganymede', 'Purpose', 'Portrait of a Lady', 'Jasmin Rouge', 'Étoile Filante', 'Paradoxe Intense', 'Miss Dior Essence', 'La Vie est Belle', 'Scandal By Night', 'Aqua Allegoria Rosa Verde', 'Shalimar', 'J\'adore', 'Stronger With You Intensely', 'Power of You', 'L\'Interdit Rouge', 'Pour un Homme de Caron', 'Boss Bottled', 'Ambre Russe', 'Ella K', 'Pure Musc Blanc', 'Sydney', 'Libre Le Parfum', 'L\'Eau Pâle'];
+  const WISH = ['Tam Dao Eau de Parfum', 'Ombre Nomade', 'Stellar Times', 'Rouge Trafalgar', 'Ganymede', 'Purpose', 'Portrait of a Lady', 'Jasmin Rouge', 'Étoile Filante', 'Paradoxe Intense', 'Miss Dior Essence', 'La Vie est Belle', 'Scandal By Night', 'Aqua Allegoria Rosa Verde', 'Shalimar', 'J\'adore', 'Stronger With You Intensely', 'Power of You', 'L\'Interdit Rouge', 'Pour un Homme de Caron', 'Boss Bottled', 'Ambre Russe', 'Ella K', 'Pure Musc Blanc', 'Sydney', 'Libre Le Parfum', 'L\'Eau Pâle'];
   if (typeof module !== 'undefined') module.exports = { CATALOG, OWNED, WISH };
   else { root.CATALOG = CATALOG; root.OWNED = OWNED; root.WISH = WISH; }
 })(typeof window !== 'undefined' ? window : globalThis);
