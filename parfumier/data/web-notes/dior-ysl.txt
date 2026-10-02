@@ -1,0 +1,13 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages Dior, YSL et revendeurs, via recherche web ; notes clés quand la pyramide n'est pas publiée)
+Dior|Cuir Cannage|u||cuir;iris;jasmin;fleur d'oranger;rose|
+Dior|Ambre Nuit|u||rose;ambre;|
+Dior|Bois d'Argent|u||iris;encens;bois|
+Dior|Jasmin des Anges|f||jasmin;abricot;miel|
+Dior|Dioriviera|u||figue;rose;|
+Dior|Oud Ispahan|u||oud;rose de Damas;|
+Yves Saint Laurent|Blouse|u|rose de Damas;galbanum;poivre rose|graines d'angélique|musc blanc
+Yves Saint Laurent|Manifesto|f|bergamote;cassis;notes vertes|jasmin sambac;muguet|cèdre;santal;fève tonka;vanille
+Yves Saint Laurent|Opium|f||ylang-ylang;œillet;cannelle|patchouli;vanille
+Yves Saint Laurent|Paris|f||rose;violette;épices|santal
+Yves Saint Laurent|Mon Paris|f|framboise;datura|poire;fleur d'oranger;jasmin sambac|
+Yves Saint Laurent|Rive Gauche|f|bergamote;aldéhydes;ylang-ylang;freesia|rose;jasmin|vétiver;musc;mousse de chêne

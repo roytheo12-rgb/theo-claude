@@ -1,0 +1,11 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages Sephora, Net-a-Porter et revendeurs, via recherche web)
+Gucci|The Voice of the Snake|u|safran|oud;patchouli|bois chauds;résines
+Gucci|A Chant for the Nymph|f|frangipanier|ylang-ylang|vanille planifolia
+Gucci|The Eyes of the Tiger|u|mandarine|benjoin;oliban|vanille planifolia;ciste
+Gucci|Tears from the Moon|f|pivoine blanche|rose de Damas;muguet|musc
+Gucci|The Virgin Violet|f|violette|iris|musc;vanille
+Gucci|A Song for the Rose|f|rose de Damas|rose de Damas|cèdre;ambroxan;musc
+Gucci|Winter's Spring|f|mimosa;poivre|musc|cèdre;ambre;musc
+Gucci|Fading Autumn|u||cèdre;cypriol;patchouli;santal|
+Gucci|Where My Heart Beats|f|poivre rose|pivoine blanche;feuille de violette|musc blanc
+Gucci|Love at Your Darkest|u|poivre noir|encens|cèdre

@@ -1,0 +1,29 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages officielles Louis Vuitton et revendeurs, via recherche web)
+Louis Vuitton|Orage|m|bergamote;ambrette|patchouli|iris;vétiver
+Louis Vuitton|Afternoon Swim|u|mandarine;orange de Sicile;bergamote|notes aquatiques|ambre gris;gingembre
+Louis Vuitton|Ambre Levant|u|cannelle;mandarine|encens;poivre blanc|ambre;ambre gris;oud;labdanum
+Louis Vuitton|Apogée|f|orange;mandarine|rose;muguet;jasmin;magnolia|santal;gaïac;musc
+Louis Vuitton|Attrape-Rêves|f|bergamote;gingembre;litchi|pivoine;rose de Turquie;cacao|patchouli
+Louis Vuitton|California Dream|u|mandarine;poire|poire;jasmin|ambrette;benjoin;musc;ambroxan
+Louis Vuitton|City of Stars|u|citron vert;orange sanguine;mandarine sanguine;citron|fleur de tiaré|musc;santal;notes poudrées
+Louis Vuitton|Cœur Battant|f|poire|jasmin sambac;ylang-ylang;narcisse|patchouli;ambrette
+Louis Vuitton|Contre Moi|f|vert;bergamote;citron|rose;magnolia;fleur d'oranger;poire|cacao;vanille
+Louis Vuitton|Dans la Peau|f|abricot;notes aquatiques|narcisse;magnolia;jasmin|cuir;musc
+Louis Vuitton|Fleur du Désert|u|miel;cannelle|jasmin;fleur d'oranger;rose|oud;ambrette;ambroxan
+Louis Vuitton|Heures d'Absence|f||mimosa;jasmin;rose;baume du Pérou;santal;musc|
+Louis Vuitton|L'Immensité|m|pamplemousse;gingembre;bergamote|notes aquatiques;romarin;sauge;géranium|ambroxan;ambre;labdanum
+Louis Vuitton|Le Jour Se Lève|f|cassis;bergamote;pamplemousse;orange|osmanthus;rose;muguet;jasmin|vanilline;musc;vanille
+Louis Vuitton|Les Sables Roses|u||rose centifolia;rose de Bulgarie;poivre noir;safran;oud;ambre gris|
+Louis Vuitton|Matière Noire|f|sirop de cassis;notes aquatiques|cyclamen;jasmin sambac;narcisse;rose|oud;benjoin;encens;patchouli
+Louis Vuitton|Mille Feux|f|framboise;bergamote|rose;safran;osmanthus;iris;jasmin|cuir;racine d'iris;santal;mousse;patchouli
+Louis Vuitton|Meteore|m|citron;bergamote|orange sanguine;orange;néroli;poivre|vétiver;cardamome;ambre
+Louis Vuitton|Nouveau Monde|m|oud;safran;cassis|cuir;cacao;rose;encens|patchouli;vanille;caramel;bois d'ambre;fève tonka
+Louis Vuitton|Nuit de Feu|u|encens;oliban|cuir|oud;musc
+Louis Vuitton|On the Beach|u||yuzu;néroli;cyprès;thym;romarin;poivre rose;clou de girofle|
+Louis Vuitton|Pacific Chill|u|citron;orange;menthe;cassis;coriandre|abricot;basilic;rose de mai;graines de carotte|figue;datte;ambrette
+Louis Vuitton|Rhapsody|f|agrumes;poivre rose;fleurs fraîches|jasmin;rose;iris;épices;bois|bois crémeux;musc;ambre
+Louis Vuitton|Rose des Vents|f|pêche;notes vertes;cassis|rose de mai;rose;rose de Turquie;iris|musc blanc;cèdre;poivre;racine d'iris;feuille de violette
+Louis Vuitton|Spell on You|f|iris;violette;notes vertes|rose;jasmin|pêche;musc;acacia
+Louis Vuitton|Sun Song|u|citron;petitgrain|fleur d'oranger;néroli|musc
+Louis Vuitton|Sur la Route|m|agrumes;bergamote de Calabre;citron;poivre rose|herbe;muscade;hédione;cardamome|cuir;cèdre;patchouli;iso e super;baume du Pérou
+Louis Vuitton|Symphony|u|bergamote;pamplemousse;orange|gingembre|musc

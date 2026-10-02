@@ -354,7 +354,8 @@
     if (st.gender && root.genderOf) { const g = root.genderOf(c.name, c.house); if ((st.gender === 'm' && g === 'f') || (st.gender === 'f' && g === 'm')) return null; }
     if (need.maxPrice && c.price && c.price > need.maxPrice) return null;
     if (need.minPrice && c.price && c.price < need.minPrice) return null;
-    const d = derive(c), o = olfactive(d), tags = perfumeTags(d), L = nt.length, pf = profOf(c);
+    if (!c._dv) Object.defineProperty(c, '_dv', { value: derive(c), enumerable: false, configurable: true });
+    const d = c._dv, o = olfactive(d), tags = perfumeTags(d), L = nt.length, pf = profOf(c);
     let s = 0, max = 0; const why = [];
     // 1) notes demandées : poids fort ; une note du fond/cœur compte plus qu'une note de tête passagère
     for (const k of need.like) {
@@ -392,12 +393,12 @@
       const C = need.cond;
       if (C.temp != null) { max += 1.5; const sv = C.temp >= 24 ? pf.s[1] : C.temp <= 8 ? pf.s[3] : (pf.s[0] + pf.s[2]) / 2; s += 1.5 * (sv / 5) - (sv <= 1 ? 1 : 0); if (sv >= 4) why.push(C.temp >= 24 ? 'idéal en été' : C.temp <= 8 ? 'idéal en hiver' : 'idéal en mi-saison'); }
       if (C.moment) { max += 1; const mv = pf.m[C.moment === 'jour' ? 0 : 1]; s += mv / 5 - (mv <= 1 ? .8 : 0); }
-      const U = { pro: 'bureau', date: 'rdv', event: 'soiree', famille: 'quotidien', amis: 'quotidien' }[C.ctx];
+      const U = pf.derived ? null : { pro: 'bureau', date: 'rdv', event: 'soiree', famille: 'quotidien', amis: 'quotidien' }[C.ctx];
       if (U) { max += 1.5; if (pf.u.includes(U) || (C.ctx === 'event' && pf.u.includes('ceremonie'))) { s += 1.5; why.push('fait pour ' + ({ bureau: 'le bureau', rdv: 'un rendez-vous', soiree: 'une soirée', quotidien: 'le quotidien' }[U])); } else s -= .6; }
       if (C.style === 'sport') { max += 1; if (pf.u.includes('sport')) s += 1; }
-      const words = norm(need.text).split(' ').filter((w) => w.length >= 4), blob = norm([pf.pitch, pf.dom, pf.diff, ...pf.kw].join(' '));
+      const words = pf.derived ? [] : norm(need.text).split(' ').filter((w) => w.length >= 4), blob = norm([pf.pitch, pf.dom, pf.diff, ...pf.kw].join(' '));
       const hit = words.filter((w) => blob.includes(w)).length; if (words.length) { max += 1; s += Math.min(1, hit / Math.max(2, words.length * .6)); }
-      if (pf.c <= 1) s -= .4;
+      if (!pf.derived && pf.c <= 1) s -= .4;
     }
     // 7) goûts de la personne (sans jamais écraser le besoin exprimé)
     if (st.liked && st.liked.length) { const h = st.liked.filter((l) => l && nt.some((n) => n.includes(norm(l)))).length; s += Math.min(1.2, h * .6); if (h) why.push('une note que tu aimes'); }
@@ -426,11 +427,21 @@
   // ---------- Profils comparables (18 axes, fiches data/fiches-ia) ----------
   const AXN = ['fraicheur', 'douceur', 'floral', 'boise', 'epice', 'resine', 'fume', 'poudre', 'vert', 'fruite', 'musque', 'cremeux', 'densite', 'originalite', 'clivage', 'formalite', 'sensualite', 'evolution'];
   const AXL = { fraicheur: 'frais', douceur: 'sucré', floral: 'floral', boise: 'boisé', epice: 'épicé', resine: 'résineux', fume: 'fumé', poudre: 'poudré', vert: 'vert', fruite: 'fruité', musque: 'musqué', cremeux: 'crémeux', densite: 'dense', originalite: 'original', clivage: 'clivant', formalite: 'habillé', sensualite: 'sensuel', evolution: 'évolutif' };
+  // Profil calculé à partir des VRAIES notes quand il n'y a pas de fiche détaillée : mêmes 18 axes, personnalité neutre, marqué derived.
+  function deriveProfile(p) {
+    if (!p || (p.notes || []).length < 3) return null;
+    const o = olfactive(p), w = p.weight || o.weight, sh = (a) => (o.acc[a] || 0) / o.tot, sc = (x, k) => clamp(Math.round(x * k), 0, 5);
+    const nt = (p.notes || []).map(norm), cre = nt.some((n) => /santal|lait|creme|coco|amande|riz|tonka|vanille|iris|benjoin/.test(n)) ? 1.5 : 0;
+    const fra = clamp(sc(o.fresh, 6.5) - (w >= 4 ? 1 : 0), 0, 5), dou = sc(o.sweet, 6), res = sc(sh('ambré'), 10), sen = clamp(Math.round(sh('ambré') * 4 + sh('gourmand') * 3 + sh('musqué') * 2 + sh('oud') * 3 + (w >= 4 ? 1 : 0)), 0, 5);
+    const pr = [fra, dou, sc(sh('floral'), 9), sc(sh('boisé'), 9), sc(sh('épicé'), 10), res, sc(o.smoke, 6), sc(o.powder, 7), sc(sh('vert') + sh('aromatique') * .6, 9), sc(sh('fruité'), 9), sc(sh('musqué'), 9), clamp(Math.round(o.sweet * 3 + sh('musqué') * 3 + cre), 0, 5), w, 2, clamp(Math.round(o.smoke * 4 + sh('oud') * 6 + 1), 0, 5), 2, sen, 2];
+    const summer = clamp(Math.round(5.5 - w + fra * .4), 0, 5), winter = clamp(Math.round(w - .5 + res * .2 + dou * .1), 0, 5);
+    return { p: pr, s: [clamp(Math.round((summer + 3) / 2), 0, 5), summer, clamp(Math.round((winter + 3) / 2), 0, 5), winter], m: [clamp(5 - (w >= 4 ? 2 : 0) - (w === 5 ? 1 : 0), 1, 5), clamp(2 + (w >= 4 ? 3 : w === 3 ? 1 : 0), 1, 5)], u: [], dom: '', diff: '', pitch: '', sim: [], alt: [], pour: '', pas: '', kw: [], pub: [], c: 0, derived: true };
+  }
   const profOf = (p) => {
-    const P = root.PROFILS; if (!P || !p || !p.name) return null;
+    if (!p || !p.name) return null;
     if (p._pf !== undefined) return p._pf;
-    const HA = root.HOUSE_ALIAS || {}, h = HA[norm(p.house)] || p.house;
-    const q = P[norm(h) + '|' + norm(p.name)] || null;
+    const P = root.PROFILS || {}, HA = root.HOUSE_ALIAS || {}, h = HA[norm(p.house)] || p.house;
+    const q = P[norm(h) + '|' + norm(p.name)] || deriveProfile(p);
     Object.defineProperty(p, '_pf', { value: q, enumerable: false, configurable: true });
     return q;
   };
@@ -723,7 +734,7 @@
     return out;
   }
 
-  const api = { axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

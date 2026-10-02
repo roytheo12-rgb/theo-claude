@@ -1,0 +1,22 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages Tom Ford et revendeurs, via recherche web)
+Tom Ford|Oud Wood|u|poivre de Chine;bois de rose|oud;santal|fève tonka;vanille
+Tom Ford|Tobacco Vanille|u|feuille de tabac;épices|vanille;fève tonka;cacao;fleur de tabac|sève de bois;fruits secs
+Tom Ford|Tuscan Leather|u|framboise;safran;thym|cuir|
+Tom Ford|Neroli Portofino|u|néroli de Tunisie;bergamote d'Italie;citron de Sicile;mandarine|fleur d'oranger;lavande|
+Tom Ford|Soleil Blanc|f|bergamote;cardamome;pistache|ylang-ylang;noix de coco|benjoin
+Tom Ford|Costa Azzurra|u|algues;bois flotté;oud;ambrette;graines de céleri;cardamome|genévrier;myrte;lavande;citron;mandarine;armoise|mastic;oliban;encens;vanille;vétiver;chêne
+Tom Ford|Lost Cherry|u|amande amère;cerise noire;liqueur de cerise|jasmin sambac;prune;cerise acide;rose de Turquie|benjoin;cèdre;cannelle;girofle;patchouli;baume du Pérou;santal;fève tonka;vanille;vétiver
+Tom Ford|Ombré Leather|u|cardamome|jasmin sambac;cuir|patchouli;ambre;mousse
+Tom Ford|Beau de Jour|m|lavande|basilic;géranium;menthe;mousse de chêne;romarin|ambre;patchouli
+Tom Ford|Jasmine Musk|f|jasmin;ylang-ylang|iris;patchouli|fleurs blanches
+Tom Ford|Velvet Orchid|f|bergamote;mandarine;rhum;miel|jasmin;rose de Turquie;orchidée;fleur d'oranger;rose;héliotrope;magnolia;jonquille;jacinthe|labdanum;santal;baume du Pérou;myrrhe;daim;vanille
+Tom Ford|Tobacco Chocolat|u|orange|cacao;tabac;miel|
+Tom Ford|Cherry Smoke|u|cerise noire;safran|osmanthus;abricot;olive;cuir|bois fumé
+Tom Ford|Ébène Fumé|u|poivre noir|palo santo;ciste|bois d'ébène;cuir
+Tom Ford|Oud Minerale|u|poivre rose|oud;sapin baumier|ambre gris;bois fumés;musc
+Tom Ford|Rose Prick|f||rose;patchouli;fève tonka torréfiée|caramel;vanille
+Tom Ford|Electric Cherry|u|cerise Morello;gingembre|jasmin sambac;poivre rose|ambrettolide
+Tom Ford|Bitter Peach|u|pêche de vigne;huile d'orange sanguine|huile de davana;rhum|patchouli
+Tom Ford|Myrrhe Mystère|u||myrrhe;vanille|
+Tom Ford|Bois Pacifique|u|cardamome|akigalawood;curcuma;oliban;beurre d'iris|santal;cèdre;chêne
+Tom Ford|White Suede|f||rose;ambre;musc|daim

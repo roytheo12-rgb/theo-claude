@@ -1,0 +1,10 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages Cartier et revendeurs, via recherche web)
+Cartier|La Treizième Heure|u|bergamote;maté;bouleau|narcisse;cuir|patchouli;vanille
+Cartier|L'Heure Folle|u|groseille;grenade;myrtille;cassis;mûre;poivre rose|violette;feuilles;lierre;buis;shiso;aldéhydes|
+Cartier|Baiser Volé|f|lys|héliotrope|fève tonka
+Cartier|Les Épures de Cartier Pur Muguet|f|bergamote|muguet;jasmin;rose|musc
+Cartier|Délices de Cartier|f|poivre rose;cerise Morello;bergamote de Sicile|jasmin rose;jasmin blanc;jasmin jaune;freesia;violette|fève tonka;ambre;santal
+Cartier|Déclaration d'un Soir|m|carvi;poivre;cardamome|rose;muscade|santal
+Cartier|Panthère|f|karo karounde;tagète;pêche;macis|œillet;jasmin;gardénia;rose;héliotrope;coriandre;ylang-ylang|cèdre;santal;patchouli;mousse de chêne;musc;ambre;vanille;tonka
+Cartier|La Panthère|f|rhubarbe;anis;bergamote|gardénia;rose;ylang-ylang|mousse de chêne;musc;patchouli
+Cartier|Pasha de Cartier|m|lavande;menthe;carvi;anis;mandarine|coriandre;bois de rose|mousse de chêne;santal;patchouli;labdanum

@@ -1,0 +1,64 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : revendeurs et pages marque, via recherche web)
+Frédéric Malle|Portrait of a Lady|f|rose|cassis;framboise;clou de girofle|patchouli;santal;encens
+Frédéric Malle|Carnal Flower|f|melon;notes végétales;tubéreuse fraîche|tubéreuse lactée|musc
+Frédéric Malle|Musc Ravageur|u|bergamote;mandarine;lavande|ambre;vanille;musc|santal;musc
+Frédéric Malle|Cologne Indélébile|u|citron;bergamote|fleur d'oranger;narcisse|musc blanc
+Frédéric Malle|Geranium pour Monsieur|m|menthe;géranium;anis étoilé|clou de girofle;cannelle|musc;santal;encens;styrax;benjoin
+Kilian|Angels' Share|u|cognac;cannelle|fève tonka;chêne|praliné;vanille;santal
+Kilian|Good Girl Gone Bad|f||tubéreuse;jasmin;fleur d'oranger;osmanthus|
+Kilian|Love, Don't Be Shy|f|néroli;fleur d'oranger|guimauve|vanille;musc
+Kilian|Black Phantom|u||rhum;chocolat noir;café|
+Serge Lutens|Ambre Sultan|u|origan;angélique|vanille|ambre gris;labdanum
+Serge Lutens|Chergui|u||miel;cuir;encens;feuille de tabac;foin;iris;rose|musc;ambre;santal
+Penhaligon's|Halfeti|u||rose;oud;safran|
+Penhaligon's|The Tragedy of Lord George|m|brandy|fève tonka|ambre
+Penhaligon's|Blenheim Bouquet|m|citron;lavande;pin||
+Penhaligon's|Luna|f|bergamote|rose|musc
+Acqua di Parma|Colonia Intensa|m|basilic;cardamome|santal|musc;vétiver
+Acqua di Parma|Arancia di Capri|u|orange douce italienne;mandarine italienne;citron italien|petitgrain;cardamome|caramel;musc
+Acqua di Parma|Fico di Amalfi|u|citron italien;bergamote italienne;pamplemousse|nectar de figue;poivre rose;pétales de jasmin|bois de figuier;cèdre;benjoin
+Acqua di Parma|Mirto di Panarea|u|myrte;basilic;citron italien;bergamote italienne|brise marine;jasmin;rose de Damas|lentisque;genévrier;cèdre de Virginie;ambre
+Jo Malone|English Pear & Freesia|f|poire King William|freesia|patchouli
+Jo Malone|Peony & Blush Suede|f|pomme rouge|pivoine|daim
+Jo Malone|Wood Sage & Sea Salt|u|graines d'ambrette|sel marin|sauge
+Jo Malone|Lime Basil & Mandarin|u|mandarine|basilic|bois d'ambre
+Maison Margiela|Replica Jazz Club|m|poivre rose;citron;néroli|rhum;sauge sclarée;vétiver|feuille de tabac;vanille;styrax
+Maison Margiela|Replica Lazy Sunday Morning|u||muguet;iris|musc blanc
+Maison Margiela|Replica Beach Walk|u|bergamote|héliotrope;lait de coco|
+Maison Margiela|Replica Sailing Day|u|accord aquatique;coriandre|algue rouge|
+Byredo|Blanche|f|aldéhydes;rose centifolia|pivoine;violette|musc;santal
+Byredo|Bal d'Afrique|u|souci africain;bergamote;buchu|cyclamen;violette|cèdre du Maroc;vétiver
+Byredo|Gypsy Water|u|bergamote;baies de genévrier;citron;poivre|encens;iris;aiguille de pin|ambre;santal;vanille
+Byredo|Mojave Ghost|u|ambrette;nesberry|magnolia;santal;violette|cèdre;musc;vétiver
+Byredo|Rose of No Man's Land|f|poivre rose;pétales de rose de Turquie|fleur de framboisier;rose de Turquie|papyrus;ambre
+Le Labo|Rose 31|u||rose;cumin;cèdre|ambre
+Le Labo|Bergamote 22|u|bergamote;pamplemousse|fleur d'oranger|ambre;musc;vétiver
+Le Labo|Lys 41|f||jasmin;tubéreuse;lys|vanille de Madagascar;musc
+Le Labo|Fleur d'Oranger 27|u|bergamote;petitgrain;citron|fleur d'oranger|musc
+Maison Francis Kurkdjian|À la Rose|f|pois de senteur;rose de Damas|violette;magnolia|rose centifolia;musc
+Maison Francis Kurkdjian|Gentle Fluidity Silver|u|baies de genévrier;muscade|graines de coriandre|musc;bois ambrés;vanille
+Maison Francis Kurkdjian|Amyris Homme|m|mandarine de Sicile;cannelle de Ceylan|safran;iris de Florence|amyris des Caraïbes;vanille;fève tonka du Brésil
+Diptyque|Orphéon|u|yuzu;mandarine verte;baie de genévrier;poivre rose;gingembre|rose;magnolia|cèdre;musc
+Diptyque|L'Ombre dans l'Eau|f|fleur d'oranger;racine d'angélique|patchouli;baie de genévrier|
+Parfums de Marly|Carlisle|u||noix de muscade;fève tonka;vanille|
+Parfums de Marly|Layton|u|pomme;mandarine;lavande;bergamote|violette;géranium;jasmin|santal;vanille;gaïac;cardamome;poivre;patchouli
+Parfums de Marly|Delina|f|litchi;rhubarbe;bergamote;pamplemousse|rose;pivoine;muguet|musc;bois de cachemire;vétiver;encens;vanille;muscade
+Parfums de Marly|Pegasus|m|bergamote;cumin;héliotrope|amande amère;jasmin;lavande|ambre;santal;vanille
+Parfums de Marly|Herod|m||cannelle;bois de poivrier;tabac|
+Parfums de Marly|Percival|m|bergamote;mandarine;lavande||
+Creed|Aventus|m|cassis;bergamote d'Italie;pomme;ananas|bouleau;jasmin;rose;patchouli|ambre;civette;mousse de chêne
+Creed|Silver Mountain Water|u|bergamote;mandarine;cassis|thé vert;néroli;galbanum|musc;ambre;santal
+Creed|Green Irish Tweed|m|bergamote;citron;menthe poivrée|lavande;géranium|mousse de chêne;bois
+Creed|Millésime Imperial|u|bergamote;violette||bois chauds
+Nishane|Hacivat|u|ananas;bergamote;citron|mousse de chêne|bois
+Nishane|Ani|u|bergamote;notes vertes;gingembre|cassis;cardamome;rose de Turquie|vanille;benjoin;santal;ambre gris;musc
+Nishane|Fan Your Flames|u|noix de coco;rhum|tabac;fève tonka|mousse de chêne;cèdre de Chine
+Nishane|Wulong Cha|u|bergamote;orange;mandarine;litsée citronnée|thé oolong;muscade|figue;musc
+Nishane|Ege|u|feuilles de violette;yuzu;anis|basilic;menthe;cardamome|réglisse;oliban
+Initio|Oud for Greatness|u|safran;muscade;lavande|oud|patchouli;musc
+Initio|Side Effect|u||écorce de cannelle;rhum;tabac;safran;santal;hédione|
+Initio|Atomic Rose|f|bergamote|rose de Bulgarie;rose de Turquie;jasmin|vanille
+Initio|Rehab|u|bergamote;lavande|cèdre;patchouli;santal;hédione|musc
+Montale|Intense Café|u||café;rose;ambre;vanille;musc blanc|
+Montale|Intense Roses Musk|f|citron|rose;jasmin|ambre;musc blanc
+Montale|Black Aoud|u|rose|oud;patchouli|musc

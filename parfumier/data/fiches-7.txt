@@ -1,0 +1,167 @@
+# Généré par tools/import-web-notes.cjs : pyramides lues sur des pages officielles et revendeurs (recherche web) ; famille, projection, tenue, poids calculés
+Bvlgari|Tygar|boisé|m|pamplemousse|gingembre;graines d'ambrette|ambroxan;musc;patchouli;vétiver|3|3|3|0
+Bvlgari|Orom|oud|u|vanille bourbon|benjoin de siam|oud|4|4|5|0
+Bvlgari|Ambero|épicé|m|gingembre;poivre rose;safran|labdanum;oliban||4|4|4|0
+Bvlgari|Onekh|oud|u||oud;labdanum fumé;épices||5|4|5|0
+Bvlgari|Man Wood Essence|boisé|m|coriandre;zeste d'agrume italien|cyprès;vétiver d'haïti|benjoin de siam;cèdre|3|3|3|0
+Bvlgari|Man Glacial Essence|boisé|m|baie de genévrier;gingembre|iris;santal|cèdre d'alaska;musc blanc|3|3|3|0
+Bvlgari|Man Rain Essence|boisé|m|thé vert;orange|lotus blanc;musc cristallin|ambre minéral;gaïac|3|3|3|0
+Bvlgari|Aqva Amara|boisé|m|mandarine de sicile|notes aquatiques;néroli|oliban;patchouli|3|3|3|0
+Bvlgari|Aqva Divina|floral|f|bergamote salée;gingembre rose|magnolia;coing|cire d'abeille;ambre|3|3|3|0
+Bvlgari|Aqva Pour Homme|aromatique|m|mandarine;petitgrain|posidonie;santoline|ambre minéral;sauge sclarée;notes boisées|3|3|3|0
+Bvlgari|Splendida Tubereuse Mystique|gourmand|f|davana;bourgeon de cassis|tubéreuse|vanille;myrrhe|4|4|4|0
+Bvlgari|Splendida Rose Rose|boisé|f|mandarine;mûre blanche|rose de damas|patchouli;santal;vétiver;musc|3|3|3|0
+Bvlgari|Splendida Jasmin Noir|boisé|f||jasmin;fève tonka;patchouli||4|4|5|0
+Bvlgari|Omnia Crystalline|floral|f|lotus|pivoine blanche|bois de balsa;musc cristallin|3|3|3|0
+Bvlgari|Omnia Amethyste|floral|f|pamplemousse rose|rose de damas|bois solaires|2|3|2|0
+Bvlgari|Omnia Coral|fruité|f|bergamote;baie de goji;grenade|hibiscus;nénuphar|cèdre|2|3|2|0
+Bvlgari|Omnia Pink Sapphire|floral|f|pomelo|frangipanier;tiaré||3|3|3|0
+Bvlgari|Eau Parfumée au Thé Rouge|agrumes|u|bergamote;orange;poivre rose;figue|rooibos;thé rouge du yunnan|noix;musc|2|3|2|0
+Bvlgari|Eau Parfumée au Thé Vert Extrême|floral|u|bergamote;cardamome;coriandre;poivre|fleur d'oranger;rose;jasmin;thé vert|mousse de chêne;fève tonka;cire d'abeille|3|3|2|0
+Cartier|La Treizième Heure|cuir|u|bergamote;maté;bouleau|narcisse;cuir|patchouli;vanille|3|4|4|0
+Cartier|L'Heure Folle|fruité|u|groseille;grenade;myrtille;cassis;mûre;poivre rose|violette;feuilles;lierre;buis;shiso;aldéhydes||3|3|3|0
+Cartier|Baiser Volé|floral|f|lys|héliotrope|fève tonka|4|4|4|0
+Cartier|Les Épures de Cartier Pur Muguet|floral|f|bergamote|muguet;jasmin;rose|musc|2|3|2|0
+Cartier|Délices de Cartier|floral|f|poivre rose;cerise morello;bergamote de sicile|jasmin rose;jasmin blanc;jasmin jaune;freesia;violette|fève tonka;ambre;santal|3|4|4|0
+Cartier|Déclaration d'Un Soir|épicé|m|carvi;poivre;cardamome|rose;muscade|santal|4|3|3|0
+Cartier|Panthère|floral|f|karo karounde;tagète;pêche;macis|œillet;jasmin;gardénia;rose;héliotrope;coriandre;ylang-ylang|cèdre;santal;patchouli;mousse de chêne;musc;ambre;vanille;tonka|4|4|5|0
+Cartier|La Panthère|floral|f|rhubarbe;anis;bergamote|gardénia;rose;ylang-ylang|mousse de chêne;musc;patchouli|3|3|3|0
+Cartier|Pasha de Cartier|boisé|m|lavande;menthe;carvi;anis;mandarine|coriandre;bois de rose|mousse de chêne;santal;patchouli;labdanum|3|3|3|0
+Dior|Cuir Cannage|floral|u||cuir;iris;jasmin;fleur d'oranger;rose||3|3|3|0
+Dior|Bois d'Argent|boisé|u||iris;encens;bois||4|4|4|0
+Dior|Jasmin des Anges|gourmand|f||jasmin;abricot;miel||4|4|4|0
+Yves Saint Laurent|Blouse|floral|u|rose de damas;galbanum;poivre rose|graines d'angélique|musc blanc|3|3|3|0
+Yves Saint Laurent|Manifesto|gourmand|f|bergamote;cassis;notes vertes|jasmin sambac;muguet|cèdre;santal;fève tonka;vanille|3|4|4|0
+Yves Saint Laurent|Opium|gourmand|f||ylang-ylang;œillet;cannelle|patchouli;vanille|4|4|5|0
+Yves Saint Laurent|Paris|floral|f||rose;violette;épices|santal|3|3|3|0
+Yves Saint Laurent|Mon Paris|floral|f|framboise;datura|poire;fleur d'oranger;jasmin sambac||3|3|3|0
+Yves Saint Laurent|Rive Gauche pour Homme|floral|f|bergamote;aldéhydes;ylang-ylang;freesia|rose;jasmin|vétiver;musc;mousse de chêne|2|3|2|0
+Gucci|The Voice of the Snake|oud|u|safran|oud;patchouli|bois chauds;résines|4|4|5|0
+Gucci|A Chant for the Nymph|floral|f|frangipanier|ylang-ylang|vanille planifolia|4|4|4|0
+Gucci|The Eyes of the Tiger|ambré|u|mandarine|benjoin;oliban|vanille planifolia;ciste|3|4|4|0
+Gucci|Tears from the Moon|floral|f|pivoine blanche|rose de damas;muguet|musc|3|3|3|0
+Gucci|The Virgin Violet|floral|f|violette|iris|musc;vanille|4|4|4|0
+Gucci|A Song for the Rose|floral|f|rose de damas|rose de damas|cèdre;ambroxan;musc|4|4|4|0
+Gucci|Winter's Spring|musqué|f|mimosa;poivre|musc|cèdre;ambre;musc|4|4|4|0
+Gucci|Fading Autumn|boisé|u||cèdre;cypriol;patchouli;santal||4|4|4|0
+Gucci|Where My Heart Beats|floral|f|poivre rose|pivoine blanche;feuille de violette|musc blanc|3|3|2|0
+Gucci|Love at Your Darkest|boisé|u|poivre noir|encens|cèdre|4|4|4|0
+Guerlain|Cuir Béluga|floral|u|aldéhydes;mandarine|patchouli;immortelle|vanille;ambre;héliotrope;daim blanc|3|4|4|0
+Guerlain|Rose Barbare|floral|f|aldéhydes;rose de bulgarie|fenugrec;rose de turquie|miel;patchouli;pêche|4|4|4|0
+Guerlain|Patchouli Ardent|boisé|u|poivre noir;figue;poivre rose|patchouli;rose de turquie;cèdre|cuir;musc blanc|4|4|4|0
+Guerlain|Tonka Impériale|gourmand|u|bergamote;amande;miel blanc;romarin|jasmin;fève tonka;tabac léger|encens;cèdre;pin|3|4|4|0
+Guerlain|Tobacco Honey|oud|u|miel;girofle;anis|tabac;vanille;tonka;sésame|oud;santal|5|4|5|0
+Guerlain|Vanille Planifolia|ambré|u||vanille;ambre;musc;opoponax;épices||4|4|5|0
+Guerlain|Musc Noble|floral|u|safran;aldéhydes;poivre rose|musc;rose;géranium|musc blanc;cuir;cèdre;ambre blanc;iris;labdanum|4|4|5|0
+Guerlain|Encens Mythique|ambré|u|encens;rose|ambre gris;aldéhydes||4|4|5|0
+Louis Vuitton|Orage|boisé|m|bergamote;ambrette|patchouli|iris;vétiver|3|3|3|0
+Louis Vuitton|Afternoon Swim|agrumes|u|mandarine;orange de sicile;bergamote|notes aquatiques|ambre gris;gingembre|1|2|1|0
+Louis Vuitton|Ambre Levant|oud|u|cannelle;mandarine|encens;poivre blanc|ambre;ambre gris;oud;labdanum|4|4|5|0
+Louis Vuitton|Apogée|floral|f|orange;mandarine|rose;muguet;jasmin;magnolia|santal;gaïac;musc|2|3|2|0
+Louis Vuitton|Attrape-Rêves|floral|f|bergamote;gingembre;litchi|pivoine;rose de turquie;cacao|patchouli|3|3|3|0
+Louis Vuitton|California Dream|ambré|u|mandarine;poire|poire;jasmin|ambrette;benjoin;musc;ambroxan|3|4|4|0
+Louis Vuitton|City of Stars|agrumes|u|citron vert;orange sanguine;mandarine sanguine;citron|fleur de tiaré|musc;santal;notes poudrées|1|2|1|0
+Louis Vuitton|Cœur Battant|floral|f|poire|jasmin sambac;ylang-ylang;narcisse|patchouli;ambrette|4|4|4|0
+Louis Vuitton|Contre Moi|floral|f|vert;bergamote;citron|rose;magnolia;fleur d'oranger;poire|cacao;vanille|3|3|3|0
+Louis Vuitton|Dans la Peau|floral|f|abricot;notes aquatiques|narcisse;magnolia;jasmin|cuir;musc|4|4|4|0
+Louis Vuitton|Fleur du Désert|oud|u|miel;cannelle|jasmin;fleur d'oranger;rose|oud;ambrette;ambroxan|4|4|5|0
+Louis Vuitton|Heures d'Absence|floral|f||mimosa;jasmin;rose;baume du pérou;santal;musc||4|4|4|0
+Louis Vuitton|L'Immensité|aromatique|m|pamplemousse;gingembre;bergamote|notes aquatiques;romarin;sauge;géranium|ambroxan;ambre;labdanum|3|3|3|0
+Louis Vuitton|Le Jour Se Lève|floral|f|cassis;bergamote;pamplemousse;orange|osmanthus;rose;muguet;jasmin|vanilline;musc;vanille|2|3|2|0
+Louis Vuitton|Les Sables Roses|oud|u||rose centifolia;rose de bulgarie;poivre noir;safran;oud;ambre gris||5|4|5|0
+Louis Vuitton|Matière Noire|oud|f|sirop de cassis;notes aquatiques|cyclamen;jasmin sambac;narcisse;rose|oud;benjoin;encens;patchouli|4|4|5|0
+Louis Vuitton|Mille Feux|floral|f|framboise;bergamote|rose;safran;osmanthus;iris;jasmin|cuir;racine d'iris;santal;mousse;patchouli|3|3|3|0
+Louis Vuitton|Meteore|agrumes|m|citron;bergamote|orange sanguine;orange;néroli;poivre|vétiver;cardamome;ambre|2|2|1|0
+Louis Vuitton|Nouveau Monde|oud|m|oud;safran;cassis|cuir;cacao;rose;encens|patchouli;vanille;caramel;bois d'ambre;fève tonka|4|4|5|0
+Louis Vuitton|Nuit de Feu|oud|u|encens;oliban|cuir|oud;musc|4|4|5|0
+Louis Vuitton|On the Beach|aromatique|u||yuzu;néroli;cyprès;thym;romarin;poivre rose;clou de girofle||3|3|2|0
+Louis Vuitton|Pacific Chill|fruité|u|citron;orange;menthe;cassis;coriandre|abricot;basilic;rose de mai;graines de carotte|figue;datte;ambrette|2|3|2|0
+Louis Vuitton|Rhapsody|floral|f|agrumes;poivre rose;fleurs fraîches|jasmin;rose;iris;épices;bois|bois crémeux;musc;ambre|4|4|4|0
+Louis Vuitton|Rose des Vents|floral|f|pêche;notes vertes;cassis|rose de mai;rose;rose de turquie;iris|musc blanc;cèdre;poivre;racine d'iris;feuille de violette|3|3|3|0
+Louis Vuitton|Spell on You|floral|f|iris;violette;notes vertes|rose;jasmin|pêche;musc;acacia|3|3|3|0
+Louis Vuitton|Sun Song|floral|u|citron;petitgrain|fleur d'oranger;néroli|musc|2|3|2|0
+Louis Vuitton|Sur la Route|boisé|m|agrumes;bergamote de calabre;citron;poivre rose|herbe;muscade;hédione;cardamome|cuir;cèdre;patchouli;iso e super;baume du pérou|2|3|2|0
+Louis Vuitton|Symphony|agrumes|u|bergamote;pamplemousse;orange|gingembre|musc|1|2|1|0
+Frédéric Malle|Portrait of a Lady|boisé|f|rose|cassis;framboise;clou de girofle|patchouli;santal;encens|4|4|4|0
+Frédéric Malle|Carnal Flower|floral|f|melon;notes végétales;tubéreuse fraîche|tubéreuse lactée|musc|3|3|3|0
+Frédéric Malle|Musc Ravageur|agrumes|u|bergamote;mandarine;lavande|ambre;vanille;musc|santal;musc|3|3|3|0
+Frédéric Malle|Cologne Indélébile|floral|u|citron;bergamote|fleur d'oranger;narcisse|musc blanc|1|2|1|0
+Frédéric Malle|Geranium Pour Monsieur|épicé|m|menthe;géranium;anis étoilé|clou de girofle;cannelle|musc;santal;encens;styrax;benjoin|4|4|4|0
+Kilian|Angels' Share|gourmand|u|cognac;cannelle|fève tonka;chêne|praliné;vanille;santal|4|4|5|0
+Kilian|Good Girl Gone Bad|floral|f||tubéreuse;jasmin;fleur d'oranger;osmanthus||3|3|3|0
+Kilian|Love, Don't Be Shy|gourmand|f|néroli;fleur d'oranger|guimauve|vanille;musc|4|4|4|0
+Kilian|Black Phantom|gourmand|u||rhum;chocolat noir;café||4|4|5|0
+Serge Lutens|Ambre Sultan|ambré|u|origan;angélique|vanille|ambre gris;labdanum|4|4|5|0
+Serge Lutens|Chergui|floral|u||miel;cuir;encens;feuille de tabac;foin;iris;rose|musc;ambre;santal|4|4|5|0
+Penhaligon's|Halfeti|oud|u||rose;oud;safran||4|4|4|0
+Penhaligon's|The Tragedy of Lord George|gourmand|m|brandy|fève tonka|ambre|4|4|5|0
+Penhaligon's|Blenheim Bouquet|boisé|m|citron;lavande;pin|||1|2|1|0
+Penhaligon's|Luna|floral|f|bergamote|rose|musc|2|3|2|0
+Acqua di Parma|Colonia Intensa|boisé|m|basilic;cardamome|santal|musc;vétiver|3|3|3|0
+Acqua di Parma|Arancia di Capri|agrumes|u|orange douce italienne;mandarine italienne;citron italien|petitgrain;cardamome|caramel;musc|2|3|2|0
+Acqua di Parma|Fico di Amalfi|agrumes|u|citron italien;bergamote italienne;pamplemousse|nectar de figue;poivre rose;pétales de jasmin|bois de figuier;cèdre;benjoin|2|3|2|0
+Acqua di Parma|Mirto di Panarea|boisé|u|myrte;basilic;citron italien;bergamote italienne|brise marine;jasmin;rose de damas|lentisque;genévrier;cèdre de virginie;ambre|2|3|2|0
+Jo Malone|English Pear & Freesia|boisé|f|poire king william|freesia|patchouli|3|3|3|0
+Jo Malone|Peony & Blush Suede|cuir|f|pomme rouge|pivoine|daim|3|3|3|0
+Jo Malone|Wood Sage & Sea Salt|aromatique|u|graines d'ambrette|sel marin|sauge|2|2|1|0
+Jo Malone|Lime Basil & Mandarin|aromatique|u|mandarine|basilic|bois d'ambre|2|3|2|0
+Maison Margiela|Jazz Club|gourmand|m|poivre rose;citron;néroli|rhum;sauge sclarée;vétiver|feuille de tabac;vanille;styrax|3|4|4|0
+Maison Margiela|Lazy Sunday Morning|floral|u||muguet;iris|musc blanc|3|3|3|0
+Maison Margiela|Beach Walk|floral|u|bergamote|héliotrope;lait de coco||2|3|2|0
+Maison Margiela|Sailing Day|aquatique|u|accord aquatique;coriandre|algue rouge||2|2|1|0
+Byredo|Blanche|floral|f|aldéhydes;rose centifolia|pivoine;violette|musc;santal|3|3|3|0
+Byredo|Bal d'Afrique|boisé|u|souci africain;bergamote;buchu|cyclamen;violette|cèdre du maroc;vétiver|2|3|2|0
+Byredo|Gypsy Water|boisé|u|bergamote;baies de genévrier;citron;poivre|encens;iris;aiguille de pin|ambre;santal;vanille|3|4|4|0
+Byredo|Mojave Ghost Absolu|boisé|u|ambrette;nesberry|magnolia;santal;violette|cèdre;musc;vétiver|4|4|4|0
+Byredo|Rose of No Man's Land|floral|f|poivre rose;pétales de rose de turquie|fleur de framboisier;rose de turquie|papyrus;ambre|4|4|4|0
+Le Labo|Rose 31|boisé|u||rose;cumin;cèdre|ambre|4|4|4|0
+Le Labo|Bergamote 22|agrumes|u|bergamote;pamplemousse|fleur d'oranger|ambre;musc;vétiver|2|3|2|0
+Le Labo|Lys 41|floral|f||jasmin;tubéreuse;lys|vanille de madagascar;musc|4|4|4|0
+Le Labo|Fleur d'Oranger 27|agrumes|u|bergamote;petitgrain;citron|fleur d'oranger|musc|2|3|2|0
+Maison Francis Kurkdjian|À la Rose|floral|f|pois de senteur;rose de damas|violette;magnolia|rose centifolia;musc|3|3|3|0
+Maison Francis Kurkdjian|Gentle Fluidity Silver|boisé|u|baies de genévrier;muscade|graines de coriandre|musc;bois ambrés;vanille|4|4|4|0
+Maison Francis Kurkdjian|Amyris Homme|gourmand|m|mandarine de sicile;cannelle de ceylan|safran;iris de florence|amyris des caraïbes;vanille;fève tonka du brésil|4|4|4|0
+Diptyque|Orphéon|floral|u|yuzu;mandarine verte;baie de genévrier;poivre rose;gingembre|rose;magnolia|cèdre;musc|2|3|2|0
+Diptyque|L'Ombre dans l'Eau|boisé|f|fleur d'oranger;racine d'angélique|patchouli;baie de genévrier||3|3|3|0
+Parfums de Marly|Carlisle|gourmand|u||noix de muscade;fève tonka;vanille||4|4|5|0
+Parfums de Marly|Layton|boisé|u|pomme;mandarine;lavande;bergamote|violette;géranium;jasmin|santal;vanille;gaïac;cardamome;poivre;patchouli|3|3|3|0
+Parfums de Marly|Delina|floral|f|litchi;rhubarbe;bergamote;pamplemousse|rose;pivoine;muguet|musc;bois de cachemire;vétiver;encens;vanille;muscade|3|3|3|0
+Parfums de Marly|Pegasus|gourmand|m|bergamote;cumin;héliotrope|amande amère;jasmin;lavande|ambre;santal;vanille|4|4|4|0
+Parfums de Marly|Herod|boisé|m||cannelle;bois de poivrier;tabac||4|4|4|0
+Parfums de Marly|Percival|agrumes|m|bergamote;mandarine;lavande|||1|2|1|0
+Creed|Aventus|fruité|m|cassis;bergamote d'italie;pomme;ananas|bouleau;jasmin;rose;patchouli|ambre;civette;mousse de chêne|3|3|3|0
+Creed|Silver Mountain Water|vert|u|bergamote;mandarine;cassis|thé vert;néroli;galbanum|musc;ambre;santal|2|3|2|0
+Creed|Green Irish Tweed|aromatique|m|bergamote;citron;menthe poivrée|lavande;géranium|mousse de chêne;bois|2|2|1|0
+Creed|Millésime Imperial|boisé|u|bergamote;violette||bois chauds|2|3|2|0
+Nishane|Hacivat|boisé|u|ananas;bergamote;citron|mousse de chêne|bois|1|2|1|0
+Nishane|Ani|épicé|u|bergamote;notes vertes;gingembre|cassis;cardamome;rose de turquie|vanille;benjoin;santal;ambre gris;musc|4|4|4|0
+Nishane|Fan Your Flames|boisé|u|noix de coco;rhum|tabac;fève tonka|mousse de chêne;cèdre de chine|4|4|4|0
+Nishane|Wulong Cha|agrumes|u|bergamote;orange;mandarine;litsée citronnée|thé oolong;muscade|figue;musc|2|2|1|0
+Nishane|Ege|épicé|u|feuilles de violette;yuzu;anis|basilic;menthe;cardamome|réglisse;oliban|2|2|1|0
+Initio|Oud for Greatness|oud|u|safran;muscade;lavande|oud|patchouli;musc|4|4|4|0
+Initio|Side Effect|boisé|u||écorce de cannelle;rhum;tabac;safran;santal;hédione||4|4|5|0
+Initio|Atomic Rose|floral|f|bergamote|rose de bulgarie;rose de turquie;jasmin|vanille|3|3|3|0
+Initio|Rehab|boisé|u|bergamote;lavande|cèdre;patchouli;santal;hédione|musc|3|3|3|0
+Montale|Intense Cafe|gourmand|u||café;rose;ambre;vanille;musc blanc||4|4|5|0
+Montale|Roses Musk|floral|f|citron|rose;jasmin|ambre;musc blanc|3|3|3|0
+Montale|Black Aoud|oud|u|rose|oud;patchouli|musc|4|4|5|0
+Tom Ford|Oud Wood|oud|u|poivre de chine;bois de rose|oud;santal|fève tonka;vanille|4|4|5|0
+Tom Ford|Tobacco Vanille|gourmand|u|feuille de tabac;épices|vanille;fève tonka;cacao;fleur de tabac|sève de bois;fruits secs|4|4|5|0
+Tom Ford|Tuscan Leather|cuir|u|framboise;safran;thym|cuir||4|4|4|0
+Tom Ford|Neroli Portofino|agrumes|u|néroli de tunisie;bergamote d'italie;citron de sicile;mandarine|fleur d'oranger;lavande||1|2|1|0
+Tom Ford|Soleil Blanc|gourmand|f|bergamote;cardamome;pistache|ylang-ylang;noix de coco|benjoin|3|3|3|0
+Tom Ford|Costa Azzurra|oud|u|algues;bois flotté;oud;ambrette;graines de céleri;cardamome|genévrier;myrte;lavande;citron;mandarine;armoise|mastic;oliban;encens;vanille;vétiver;chêne|3|3|3|0
+Tom Ford|Lost Cherry|gourmand|u|amande amère;cerise noire;liqueur de cerise|jasmin sambac;prune;cerise acide;rose de turquie|benjoin;cèdre;cannelle;girofle;patchouli;baume du pérou;santal;fève tonka;vanille;vétiver|4|4|5|0
+Tom Ford|Ombré Leather|vert|u|cardamome|jasmin sambac;cuir|patchouli;ambre;mousse|4|4|4|0
+Tom Ford|Beau de Jour|aromatique|m|lavande|basilic;géranium;menthe;mousse de chêne;romarin|ambre;patchouli|2|3|2|0
+Tom Ford|Jasmine Musk|floral|f|jasmin;ylang-ylang|iris;patchouli|fleurs blanches|4|4|4|0
+Tom Ford|Velvet Orchid|floral|f|bergamote;mandarine;rhum;miel|jasmin;rose de turquie;orchidée;fleur d'oranger;rose;héliotrope;magnolia;jonquille;jacinthe|labdanum;santal;baume du pérou;myrrhe;daim;vanille|3|4|4|0
+Tom Ford|Tobacco Chocolat|gourmand|u|orange|cacao;tabac;miel||3|4|4|0
+Tom Ford|Cherry Smoke|fruité|u|cerise noire;safran|osmanthus;abricot;olive;cuir|bois fumé|4|4|4|0
+Tom Ford|Ébène Fumé|boisé|u|poivre noir|palo santo;ciste|bois d'ébène;cuir|4|4|4|0
+Tom Ford|Oud Minerale|oud|u|poivre rose|oud;sapin baumier|ambre gris;bois fumés;musc|4|4|5|0
+Tom Ford|Rose Prick|gourmand|f||rose;patchouli;fève tonka torréfiée|caramel;vanille|4|4|5|0
+Tom Ford|Electric Cherry|floral|u|cerise morello;gingembre|jasmin sambac;poivre rose|ambrettolide|4|4|4|0
+Tom Ford|Bitter Peach|fruité|u|pêche de vigne;huile d'orange sanguine|huile de davana;rhum|patchouli|3|3|3|0
+Tom Ford|Bois Pacifique|boisé|u|cardamome|akigalawood;curcuma;oliban;beurre d'iris|santal;cèdre;chêne|3|3|3|0
+Tom Ford|White Suede|cuir|f||rose;ambre;musc|daim|4|4|4|0

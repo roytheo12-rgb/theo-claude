@@ -1,0 +1,9 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages Guerlain, Selfridges et revendeurs, via recherche web)
+Guerlain|Cuir Béluga|u|aldéhydes;mandarine|patchouli;immortelle|vanille;ambre;héliotrope;daim blanc
+Guerlain|Rose Barbare|f|aldéhydes;rose de Bulgarie|fenugrec;rose de Turquie|miel;patchouli;pêche
+Guerlain|Patchouli Ardent|u|poivre noir;figue;poivre rose|patchouli;rose de Turquie;cèdre|cuir;musc blanc
+Guerlain|Tonka Impériale|u|bergamote;amande;miel blanc;romarin|jasmin;fève tonka;tabac léger|encens;cèdre;pin
+Guerlain|Tobacco Honey|u|miel;girofle;anis|tabac;vanille;tonka;sésame|oud;santal
+Guerlain|Vanille Planifolia|u||vanille;ambre;musc;opoponax;épices|
+Guerlain|Musc Noble|u|safran;aldéhydes;poivre rose|musc;rose;géranium|musc blanc;cuir;cèdre;ambre blanc;iris;labdanum
+Guerlain|Encens Mythique|u|encens;rose|ambre gris;aldéhydes|

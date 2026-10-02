@@ -1,0 +1,227 @@
+# Généré par tools/import-jovoy.cjs : pyramides lues sur les fiches produit publiques de Jovoy (faits structurés uniquement)
+Amouage|Guidance|floral|u|encens;noisette;poire|rose;jasmin;osmanthus;safran|ambre gris;santal;akigalawood;ciste;vanille;bois|5|5|5|0
+Amouage|Flamenco Extrait|floral|u|safran;rose;framboise|iris;cèdre;fleur d'oranger;jasmin|oud;ambre;musc;cuir|5|5|5|0
+Amouage|Fire At Will|gourmand|u|vanille;mimosa|sucre brun;vanille|musc;ambre;vétiver|5|5|5|0
+Amouage|Impadia|floral|u|mandarine;gingembre;olibanum;bergamote;poire|rose;fleur d'oranger|vanille;akigalawood;musc;santal;baume du pérou;praliné|5|4|3|0
+Amouage|Search|aromatique|u|citron vert;mandarine;citron|encens;poivre noir;elemi|cade;gaïac;vétiver|3|3|2|0
+Amouage|Purpose|boisé|u|bergamote;encens;poivre rose;piment|santal;rose;vétiver;papyrus|safran;mystikal;akigalawood;encens;daim|5|5|4|0
+Amouage|Lineage|épicé|u|poivre noir;gingembre;safran|encens;myrrhe;fenugrec|myrrhe;encens;vétiver;labdanum;patchouli;benjoin|5|5|5|0
+Amouage|Meander|ambré|u|olibanum;carotte;poivre noir;poivre rose|rose;cypriol;iris|santal;vétiver;description;meander;afficher les ingrédients;oriental;faites vous livrer depuis;uk;qatar|3|3|3|0
+Amouage|Enclave|gourmand|u|cardamome;poivre rose;cannelle;menthe|patchouli;vétiver;cannelle;olibanum|labdanum;résines;description;enclave;afficher les ingrédients;hespéridé, gourmand;faites vous livrer depuis|4|4|4|0
+Amouage|Crimson Rocks|aromatique|u|poivre rose;cardamome;cannelle|miel;rose|vétiver;cèdre;bois;description;afficher les ingrédients;aromatique, marin;faites vous livrer depuis;uk|3|3|3|0
+Amouage|Opus Xv King Blue|boisé|u|mandarine;cassis;poivre noir|ambre;encens|oud;patchouli;bois;santal;cuir|3|4|5|0
+Amouage|Opus Xiii Silver Oud|ambré|u|cèdre;patchouli;cypriol|vanille;oud|bouleau;gaïac;castoreum;cuir|3|4|5|0
+Amouage|Opus XIV Royal Tobacco|oud|u|encens;cardamome;anis;bergamote;elemi;basilic|tabac;rose;lavande;réglisse;fleur d'oranger;osmanthus|tonka;vétiver;bouleau;oud;labdanum;myrrhe;vanille;baume du pérou;gaïac|3|4|5|0
+Amouage|Opus VII – Reckless Leather|ambré|u|cardamome;noix de muscade;galbanum;poivre rose|ambre gris;patchouli;cuir;ambroxan;oud|olibanum;musc;santal;cypriol|3|4|5|0
+Amouage|Opus V – Woods Symphony|boisé|u|rhum;iris|iris;jasmin;rose|oud;bois;civette|3|4|4|0
+Amouage|Overture Woman|boisé|f|bergamote;poivre noir;safran|cannelle;myrrhe;benjoin;géranium;rose|encens;labdanum;cuir|3|4|5|0
+Amouage|Epic Woman 56|épicé|f|cannelle;poivre rose;cumin|thé;jasmin;géranium;rose|ambre;vanille;gaïac;musc;santal;oud;encens;iris;patchouli|5|5|5|0
+Amouage|Interlude Man 53|boisé|m|piment;origan;bergamote|ambre;encens;ciste;opopanax|oud;patchouli;santal;cuir|5|5|5|0
+Amouage|Reflection Man 45|boisé|m|lavande;sauge;cardamome;poivre rose;benjoin;baie de génévrier|jasmin;iris;tonka;néroli;angélique;vanille|santal;myrrhe;patchouli;vétiver;encens;opopanax;cèdre|5|5|5|0
+Amouage|Interlude Black Iris|ambré|u|bergamote;violette;romarin|iris;ciste;myrrhe;ambre|cuir;oud;patchouli|3|4|5|0
+Amouage|Honour Man|épicé|m|poivre rose;poivre noir|géranium;elemi;noix de muscade|vétiver;cèdre;musc;tonka;encens;patchouli|3|4|4|0
+Amouage|Interlude Man|épicé|m|origan;piment;bergamote|encens;ciste;opopanax;ambre|cuir;santal;patchouli;oud|3|4|5|0
+Une Nuit Nomade|Sun Bleached|ambré|u|cardamome;ambrette|lin;tubéreuse|vanille;myrrhe|5|5|5|0
+Atelier des Ors|Rouge Sarây|gourmand|u|cannelle;prune;jasmin|datte;héliotrope;patchouli|vanille;gaïac;santal;baume du pérou|3|4|4|0
+Une Nuit Nomade|Shade Of Blue|aromatique|u|myrrhe;bergamote;encens|lavande|caramel;patchouli;vanille;tonka;vétiver|5|5|5|0
+Atelier des Ors|Musc Immortel|boisé|u|iris;sauge;pamplemousse|vétiver;patchouli;cypriol|immortelle;ambrette;musc|3|3|3|0
+Une Nuit Nomade|Spicy Road|épicé|u|poivre noir;clou de girofle|vanille;encens|akigalawood;cèdre;bois|5|5|4|0
+Atelier des Ors|Bois Sikar|boisé|m|noix de muscade;bois|styrax;cèdre;gaïac|tabac;cèdre|3|4|4|0
+Une Nuit Nomade|Chemin d'Amande|gourmand|u|amande;blé|vanille;cèdre|benjoin|5|5|5|0
+Atelier des Ors|Iris Fauve|boisé|u|iris;bergamote;cannelle|patchouli;vétiver;cypriol|musc;ciste;myrrhe|3|4|4|0
+Une Nuit Nomade|Estrella de la Mañana|gourmand|u|tagète;bergamote;carotte|vanille;rose;bouleau|cacao;ciste;benjoin|5|5|4|0
+Atelier des Ors|Aube Rubis|ambré|u|cassis;bergamote;pamplemousse|iris;violette;sauge|patchouli;praliné;vétiver|3|3|3|0
+Xerjoff|Coro|fruité|u|fruits exotiques|mangue;jasmin;iris;ananas|santal;ambre;musc;vanille|3|4|5|0
+Une Nuit Nomade|Silver Saffron|épicé|u|framboise;litchi;ciste;labdanum;mandarine|safran;iris;daim|papyrus;myrrhe;patchouli;vétiver|5|5|4|0
+Atelier des Ors|Cuir Sacré|cuir|u|cardamome;baie de génévrier;cyprès|safran;encens;cèdre|cuir;vétiver;cypriol;description;afficher les ingrédients;marie salamagne;cuir sacré|4|4|4|0
+Xerjoff|Ether|aromatique|u|bergamote;citron;mandarine;rose;cumin;orange|benjoin;sauge;baume;cypriol;pin;lavande|santal;oud;musc;vanille;caramel|3|3|3|0
+Une Nuit Nomade|Jardins de Misfah|gourmand|u|davana;cardamome;noix de muscade|datte;rose;miel|amande;safran;benjoin|5|5|5|0
+Atelier des Ors|Lune Féline|gourmand|u|cardamome;cannelle;poivre rose|styrax;ambre gris;cèdre;bois;notes vertes|vanille;musc;baume du pérou|5|5|5|0
+Xerjoff|Empiryan|aromatique|u|cypriol;tabac|patchouli;encens;cèdre|vanille;labdanum|3|4|5|0
+Une Nuit Nomade|Sugar Leather|cuir|u|cannelle;sucre;fruits secs|amyris;résines;cuir;tonka|caramel;labdanum|5|5|5|0
+Atelier des Ors|Larmes du Désert|ambré|u|encens;cyprès|gaïac;patchouli;cèdre|bois;agrumes;benjoin;ambre|3|4|5|0
+Xerjoff|Astaral|floral|u|anis;poivre rose|ambre;labdanum;violette;rose|cèdre;patchouli;ambre;mousse;oud|3|4|5|0
+Une Nuit Nomade|Love at first sight|floral|f|fruit de la passion;bergamote|lilas;acacia;ylang-ylang|cashmeran;ambroxan|5|4|3|0
+Atelier des Ors|Rose Omeyyade|floral|u|rose;framboise;poivre rose|sucre de canne;gaïac;patchouli|ambre;santal|3|4|4|0
+Xerjoff|Holysm|aromatique|u|sauge;thym;baume;genêt|tabac;cèdre;labdanum;cumin|oud;patchouli;santal|3|4|5|0
+Une Nuit Nomade|Click Song|ambré|u|bergamote;géranium|rose;héliotrope;notes fleuries|patchouli;cèdre;benjoin;ambre;ciste;vanille|5|5|4|0
+Atelier des Ors|Nuda Veritas|floral|f|fleur d'oranger;bergamote|jasmin;osmanthus|musc;mousse;patchouli;ambroxan|3|3|3|0
+Xerjoff|Tempest Parfum|boisé|u|bergamote;citron;orange;rose;lavande;petit-grain|jasmin;rose;cèdre;baume;ambre;cypriol|ambre;oud;patchouli;vétiver;musc;santal|3|4|4|0
+Une Nuit Nomade|Nothing but Sea and Sky|boisé|u|bergamote|santal|musc|3|3|2|0
+Atelier des Ors|Crepuscule Des Ames|ambré|u|mandarine;cardamome;sauge|encens;hysope;piment|patchouli|3|3|3|0
+Xerjoff|Aurum|ambré|u|rose;bergamote;orange;citron|fraise;ciste;chocolat;encens;labdanum|oud;mousse de chêne;vanille;héliotrope;patchouli|3|4|4|0
+Atelier des Ors|Choeur des Anges|gourmand|u|orange sanguine;cassis;poire|carotte;osmanthus;fleur d'oranger|miel;cèdre;ambre|3|4|4|0
+Xerjoff|Aqua Regia|boisé|u|bergamote;cuir;cassis|caramel;iris;violette;patchouli|vanille;musc;cèdre|3|4|4|0
+Une Nuit Nomade|Ambre Khandjar|ambré|u|prune;mandarine|labdanum;iris;vanille;ciste;ylang-ylang|patchouli;benjoin;santal|5|5|5|0
+Xerjoff|Elixir|ambré|u|rose;baume|cypriol;labdanum;genêt;baume;estragon|ambre;baume;oud|5|5|5|0
+Xerjoff|Jabir|ambré|u|freesia;poivre rose;violette|rose;muguet;pivoine|vanille;patchouli;vétiver;musc;oud|3|4|4|0
+Une Nuit Nomade|Suma Oriental|ambré|u|cacao;rhum;cyprès|patchouli|tonka;gaïac;santal;cashmeran;musc|5|5|5|0
+Atelier des Ors|Blue Madeleine|gourmand|u|cannelle;bergamote;poivre rose|thé;rose;lait|santal;cade;praliné;baume du pérou|3|3|3|0
+Xerjoff|Ilm|ambré|u|baume;santal;oud|ambre gris;cèdre;oud;mousse de chêne|oud;ambre|3|4|5|0
+Une Nuit Nomade|Memory Motel|ambré|u|bergamote|iris;encens;oeillet|tabac;mousse;patchouli;vanille|5|5|4|0
+Atelier des Ors|Villa Primerose|floral|u|poivre rose;cardamome;poire|rose;iris;ambrette|cuir;musc;ambre gris|3|4|5|0
+Xerjoff|Hayat|boisé|u|lavande;safran;orange amère|cardamome;cannelle;ambre|oud;cèdre;patchouli;cypriol|3|4|4|0
+Une Nuit Nomade|Mr. Vetiver|boisé|m|cardamome;basilic;citron vert;pamplemousse;estragon|géranium|vétiver;mousse;bois|5|3|1|0
+Atelier des Ors|Noir by Night|boisé|m|encens;coriandre|caviar;maté|gaïac;santal;cashmeran|3|4|4|0
+Xerjoff|Luna|boisé|u|citron;poivre rose;cassis;mandarine;pomme|cèdre;iris;rose;jasmin|ambre;caramel;musc|3|3|3|0
+Une Nuit Nomade|Fleur des Fleurs|floral|f|safran;pamplemousse;bergamote|jasmin;ylang-ylang;glycine;tubéreuse|benjoin;oud;santal;ambre;vanille|5|5|4|0
+Atelier des Ors|Pink Me Up|floral|f|bergamote;fleur d'oranger|champagne;rose;mûre|musc;iris;patchouli|3|3|3|0
+Xerjoff|Kemi|boisé|u|oud;cèdre|castoreum;baume;civette;caramel|vanille;bois;santal|3|4|5|0
+Une Nuit Nomade|Bohemian Soul|boisé|u|olibanum;absinthe|iris;gaïac;myrrhe|santal;musc|3|4|4|0
+BDK Parfums|Stellar Silk|boisé|u|cannelle;gingembre|tonka;benjoin;beurre d'iris;vanille|santal|5|5|5|0
+Atelier des Ors|Kawa Karda|boisé|u|café;cardamome|safran;cèdre;rose|vétiver|5|5|4|0
+Xerjoff|Layla|ambré|u|noix de muscade;clou de girofle|ylang-ylang;cèdre;patchouli|ambre;vanille;musc|3|4|5|0
+BDK Parfums|Silver Ceremony|boisé|u|bergamote;mandarine;citron|gingembre;baies roses|cèdre;ciste;patchouli;cypriol;oud|5|4|2|0
+Atelier des Ors|Cocoa Kimiya|ambré|u|cacao;cardamome|patchouli;noix|bois;vanille;musc|5|5|5|0
+Xerjoff|Golden Moka|ambré|u|orange sanguine;mandarine;citron|ambre;café;rose;encens;oud|notes vertes;encens;labdanum;rose|3|4|4|0
+Amouage|Interlude Woman|floral|f|bergamote;oeillet;gingembre;pamplemousse|rose;opopanax;fleur d'oranger;jasmin;encens;immortelle|ambre;vanille;musc;tonka;benjoin;mousse de chêne;santal|3|4|4|0
+BDK Parfums|Oud Paradisio|boisé|u|ananas;bergamote;safran;encens|rose|oud;cacao|5|5|4|0
+Xerjoff|Golden Green|ambré|u|cardamome;baie de génévrier;noix de muscade;poivre rose|vétiver;cèdre;labdanum;cuir;encens|café;cypriol;musc;ambre gris|3|4|5|0
+Amouage|Honour Woman|floral|f|rhubarbe;coriandre;poivre noir|gardénia;muguet;tubéreuse;jasmin;oeillet|opopanax;encens;vétiver;ambre|3|4|4|0
+BDK Parfums|312 Saint-Honore|boisé|u|baies roses;angélique|fleur d'oranger;tonka;iris|musc;ambroxan;oud;ananas|3|4|5|0
+Atelier des Ors|Blanc Polychrome|fruité|u|mandarine;citron;rhubarbe|jasmin;petit-grain;figue;lavande|ambroxan;mousse;musc|3|3|2|0
+Xerjoff|Golden Dallah|épicé|u|epices|ambre;rose;encens;oud;café|tonka;cacao|3|4|5|0
+Amouage|Reflection Man|boisé|m|romarin;orange amère;baies roses|jasmin;néroli;iris;ylang-ylang|santal;patchouli;vétiver;cèdre|3|3|3|0
+BDK Parfums|Pas Ce Soir|gourmand|u|cacao;poivre noir;gingembre;poire;mandarine|coing;fleur d'oranger;pêche;jasmin|patchouli;benjoin;cashmeran;vanille;ambroxan|5|5|4|0
+Atelier des Ors|Riviera Sunrise|aromatique|u|citron;orange;mandarine|fleur d'oranger;figuier;basilic|vétiver;musc;cèdre;description;afficher les ingrédients;marie salamagne;aromatique, hespéridé|1|2|1|0
+Xerjoff|Apollonia|floral|f|fleurs blanches|beurre d'iris|musc|3|3|3|0
+Amouage|Memoir Woman|cuir|f|mandarine;absinthe;cardamome;poivre rose|jasmin;poivre noir;bois;encens;clou de girofle;fleurs blanches|cuir;labdanum;musc;castoreum;mousse de chêne;styrax;description;memoir woman;afficher les ingrédients|4|4|4|0
+BDK Parfums|Gris Charnel|boisé|u|figue;cardamome;thé|vétiver;ciste;iris|santal;patchouli;tonka;cèdre;vanille|5|5|4|0
+Atelier des Ors|Riviera Lazuli|épicé|u|citron;bergamote;cyprès|sauge;gaïac;cèdre|résines;immortelle;encens|3|3|3|0
+Xerjoff|Allende|gourmand|u|vanille|cacao;vanille|vanille|3|4|5|0
+Amouage|Lyric Woman|floral|f|gingembre;bergamote;cardamome;canneberge|ylang-ylang;jasmin;angélique;iris;rose;géranium|tonka;santal;vanille;mousse de chêne;patchouli;vétiver;encens;musc;description|4|4|4|0
+BDK Parfums|Nuit de Sable|épicé|u|cardamome;noix de muscade;cumin|rose;sable|ambroxan;santal;musc;tonka|5|5|4|0
+Atelier des Ors|Riviera Drive|boisé|u|romarin;marjolaine;citron|cèdre;absinthe;patchouli|cashmeran;musc;cèdre|3|3|2|0
+Xerjoff|Cruz del Sur II|floral|u|mangue;goyave;pomme;ananas|notes fleuries;cassis;notes vertes|musc;fruits confits;vétiver;cèdre|3|3|3|0
+Amouage|Jubilation XXV Man|boisé|m|coriandre;labdanum;orange;ciste;encens;mûre;davana|miel;laurier;orchidée;céleri;gaïac;rose;cannelle;clou de girofle|opopanax;myrrhe;patchouli;ambre gris;immortelle;musc;oud;cèdre;mousse|4|4|5|0
+Atelier des Ors|Pomelo Riviera|agrumes|u|pamplemousse;bergamote;jasmin|fleur d'oranger;rose;sel|cèdre|3|2|1|0
+Xerjoff|Oesel|ambré|u|fleur d'oranger;citron;petit-grain|mimosa;fleurs blanches;acacia;jasmin;rose|fleur de tabac;patchouli;ambre;cèdre|3|4|4|0
+Amouage|Gold Man|boisé|m|rose;encens;muguet|jasmin;iris;myrrhe|civette;santal;ambre gris;mousse de chêne;patchouli;cèdre;musc|3|4|4|0
+BDK Parfums|Rouge Smoking|fruité|u|cerise;bergamote;baies roses|héliotrope;vanille|cashmeran;musc;ambroxan;labdanum;tonka|3|4|5|0
+Atelier des Ors|Novae Vanilla|ambré|u|notes minérales|mimosa;vanille|vanille;musc;bois ambrés|3|4|5|0
+Xerjoff|Lua|floral|u|melon;bergamote;orange|iris;poivre rose;muguet;rose|musc;cèdre;patchouli;vanille|3|3|3|0
+Amouage|Gold Woman|floral|f|rose;muguet;encens|jasmin;iris;myrrhe|musc;ambre gris;cèdre|3|4|4|0
+Xerjoff|Nio|boisé|u|bergamote;cardamome;poivre rose;noix de muscade;néroli|notes vertes;jasmin|vétiver;cèdre;patchouli;ambre;gaïac|3|3|3|0
+Amouage|Epic Man|boisé|m|encens;noix de muscade;safran;cardamome;myrte;baies roses;cumin|myrrhe;géranium|oud;patchouli;cèdre;musc;santal;castoreum;encens|3|4|5|0
+BDK Parfums|Bouquet de Hongrie|floral|u|poire;cassis;fraise|rose;jasmin;ambre gris|musc;cèdre;ambre|3|4|4|0
+Xerjoff|Uden|épicé|u|agrumes;pamplemousse;citron|rhum;rose;gaïac;santal|vanille;musc;café|3|3|3|0
+Amouage|Epic Woman|épicé|f|cumin;cannelle;baies roses|jasmin;thé;géranium;rose|vanille;gaïac;musc;santal;encens;iris;patchouli;ambre|3|4|4|0
+BDK Parfums|Vanille Caviar|gourmand|u|roseau;cassis;cardamome|vanille;osmanthus;tonka|labdanum;baume du pérou;vanille|5|5|5|0
+Xerjoff|La Capitale|gourmand|u|fraise;caramel;labdanum;pêche|rose;gingembre;safran;ambre;cuir|vanille;oud;benjoin|3|4|5|0
+Amouage|Dia Woman|floral|f|feuille de violette;bergamote;estragon;figue;cyclamen;sauge|pivoine;fleur d'oranger;pêche;rose;iris|héliotrope;santal;cèdre;gaïac;musc;vanille;encens|3|3|3|0
+BDK Parfums|Velvet Tonka|ambré|u|amande;fleur d'oranger|rose;tabac|tonka;bois;vanille;ambre|3|4|5|0
+Xerjoff|Starlight|gourmand|u|cardamome;bergamote|amande;cannelle|ambre;cèdre|3|4|4|0
+Amouage|Sequence|boisé|u|litchi;framboise;safran|rose;tonka;osmanthus|oud;cuir;bois ambrés|5|5|5|0
+Xerjoff|Symphonium|boisé|u|mandarine;orange|cardamome;chocolat|musc;oud;vanille;description;symphonium;symphonium;symphonium|3|4|4|0
+Amouage|Remain|boisé|u|poivre timut;bergamote;carotte|vanille;ylang-ylang|gaïac;castoreum;encens;santal|5|5|4|0
+BDK Parfums|Tubéreuse Impériale|floral|u|géranium;baies roses|tubéreuse;iris;jasmin;ylang-ylang|benjoin;patchouli;vanille;cashmeran;encens;santal;cyprès|3|4|5|0
+Xerjoff|Xj Homme|cuir|u|bergamote;citron;gingembre;orange;estragon;mandarine|clou de girofle;rose;lavande;ylang-ylang;iris|cuir;ambre;santal;vétiver;cèdre;vanille|3|3|3|0
+Amouage|Line 618|boisé|u|encens;prune;ananas;pêche|lait;pin;héliotrope|cuir;santal|5|5|4|0
+BDK Parfums|Oud Abramad|ambré|u|safran;gingembre|rose;cumin|gaïac;ambre gris;ciste;oud;castoreum;encens;patchouli|5|5|5|0
+Xerjoff|Xj Damarose|floral|u|fruits rouges;citron;bergamote;freesia|rose;iris;muguet;ylang-ylang|ambre;bois de rose;patchouli;vanille;musc;santal;vétiver|3|3|3|0
+Clive Christian|1872 For Woman|agrumes|f|bergamote;romarin;ananas;citron;myrtille;mandarine|muguet;osmanthus;violette;jasmin;orchidée;rose;freesia|mousse de chêne;patchouli;gaïac;musc;santal;cèdre|5|4|2|0
+Amouage|Outlands|boisé|u|citron;bergamote;encens;cardamome;elemi;poivre noir|patchouli;cumin;géranium;rose;coriandre;fleur d'oranger;safran;absinthe|ambre;benjoin;bouleau;encens;musc;vanille;anis;oud;caramel|5|5|5|0
+BDK Parfums|Vanille Leather|floral|u|baies roses;violette|jasmin;fleur d'oranger;tubéreuse|vanille;iris;cuir;bois;patchouli;benjoin|5|5|5|0
+Xerjoff|Alexandria II Anniversary|boisé|u|rose;cumin;cardamome;lavande|oud;sauge;civette;ambre;cypriol;menthe;armoise;iris|santal;musc;vanille|3|4|4|0
+Clive Christian|N°1 For Woman|ambré|f|ananas;mirabelle;prune;cardamome;epices;pêche;bergamote;citron|ylang-ylang;jasmin;orchidée;iris;oeillet;rose|santal;vanille;musc;tonka;benjoin;cèdre;description;afficher les ingrédients;vous pourriez aussi aimer|4|4|4|0
+Amouage|Reasons|boisé|u|noisette;cardamome;poivre rose;cannelle|davana;cashmeran;patchouli;ambre;cypriol;pin|palo santo;mousse de chêne;myrrhe;vétiver;benjoin;ciste;musc;santal;cèdre|5|5|5|0
+BDK Parfums|Tabac Rose|boisé|u|prune;citron;poivre rose|rose;chocolat;cannelle|tabac;patchouli;labdanum|5|5|4|0
+Xerjoff|Alexandria Orientale|ambré|u|pomme;cannelle;bois;lavande;rose|iris;cèdre;rose;coriandre;muguet|oud;ambre;santal;vanille;musc;tabac;description;alexandria orientale;afficher les ingrédients|4|4|5|0
+Clive Christian|X For Woman|floral|u|pêche;lierre;bergamote;mandarine;rhubarbe;ananas|jasmin;iris;muguet;rose|vanille;labdanum;patchouli;vétiver;cèdre;musc|3|3|3|0
+Amouage|Lustre|boisé|u|iris;cardamome|santal;cèdre;patchouli|vanille;styrax;cypriol;myrrhe;tonka;benjoin;ambre gris;labdanum|5|5|5|0
+BDK Parfums|Villa Neroli|aquatique|u|néroli;citron;petit-grain|fleur d'oranger;rose|patchouli;labdanum;vanille;vétiver|3|4|4|0
+Xerjoff|Luxor|ambré|u|cuir;cannelle;cardamome|encens;myrrhe;tabac;cèdre|oud;patchouli|3|4|5|0
+Clive Christian|1872 For Man|agrumes|m|citron vert;lavande;noix de muscade;pêche;bergamote;romarin;galbanum;mandarine;pamplemousse|sauge;freesia;cyclamen;jasmin|ciste;musc;patchouli;cèdre;labdanum;olibanum;ambre|5|4|2|0
+Amouage|Love Hibiscus|floral|f|fruit de la passion;bergamote;caramel|hibiscus;iris;encens|vanille;santal;cypriol|5|5|4|0
+BDK Parfums|Sel d'Argent|boisé|u|sel;bergamote;pamplemousse|ylang-ylang;galbanum;fleur d'oranger|musc;ambroxan;iso-e-super;cashmeran|3|3|2|0
+Xerjoff|Alexandria Iii|ambré|u|bois de rose;cannelle;lavande|rose;cèdre;muguet|oud;musc;vanille;ambre;santal|3|4|5|0
+Clive Christian|X For Man|ambré|m|rhubarbe;cardamome;poivre rose;cade;gingembre;bergamote|beurre d'iris;piment;jasmin|cannelle;cèdre;styrax;vétiver;mousse;vanille;ambre;description;afficher les ingrédients|4|4|4|0
+Amouage|Love Delight|floral|f|gingembre;rose;cannelle;mandarine|héliotrope;jasmin;rose|vanille;cacao;cypriol;rhum|5|5|4|0
+BDK Parfums|Citrus Riviera|agrumes|u|citron;mandarine;figue;néroli|jasmin;eucalyptus;fraise;fleur d'oranger;immortelle|patchouli;tonka;vétiver;musc|3|3|3|0
+Xerjoff|Alexandria II|ambré|u|lavande;bois de rose;cannelle;pomme|cèdre;muguet;rose|oud;ambre;santal;musc;vanille|3|4|5|0
+Clive Christian|N°1 For Man|ambré|m|cardamome;mandarine;piment;thym;bergamote;citron vert;noix de muscade;pomelo|ylang-ylang;héliotrope;jasmin;rose;iris;muguet|ambre;cèdre;santal;vanille;musc;tonka;vétiver;description;afficher les ingrédients|3|3|3|0
+Amouage|Love Tuberose|floral|f|tubéreuse;gardénia;jasmin|crème chantilly;vanille|santal;cèdre|5|5|4|0
+Xerjoff|Malesia|boisé|u|muguet|ambre;baume|oud;musc;vanille;baume;labdanum;tonka|3|4|5|0
+Clive Christian|Blonde Amber|cuir|u|orange amère;rhum;cardamome;olibanum;pamplemousse;bergamote;gingembre|tabac;safran;iris;osmanthus;santal;tubéreuse;fruits secs;jasmin|tonka;vétiver;cèdre;musc;patchouli;vanille;labdanum;myrrhe|5|5|4|0
+Amouage|Blossom Love|floral|f|fleur de cerisier;rose|ylang-ylang;vanille;amaretto|tonka;cashmeran;santal|5|5|4|0
+Xerjoff|Mamluk|ambré|u|caramel;bergamote;miel|jasmin;benjoin;osmanthus|ambre;vanille;oud|3|4|5|0
+Clive Christian|Amberwood|ambré|u|angélique|bois|sauge|5|4|3|0
+Amouage|Lilac Love|floral|f|héliotrope;pivoine;gardénia;lilas|cacao;iris;tonka|vanille;patchouli;santal|5|5|5|0
+Xerjoff|Gao|ambré|u|safran|baie de génévrier;cade;baume|oud;patchouli;ambre|3|4|5|0
+Clive Christian|Magnolia Woman|floral|f|cassis;pêche;carotte;mandarine;bergamote|muguet;héliotrope;tubéreuse;clou de girofle;jasmin;rose;cannelle|mousse de chêne;musc;santal;vanille;patchouli;tonka;cire d'abeilles;description;magnolia|4|4|4|0
+Amouage|Santal Sohar|boisé|u|basilic;rose|clou de girofle|santal|3|3|3|0
+Xerjoff|Al-Khatt|ambré|u|jasmin;bergamote|cashmeran|oud;benjoin;vanille|3|4|5|0
+Clive Christian|Immortelle Man|boisé|m|bergamote;citron;cardamome;elemi|immortelle;cyprès;baie de génévrier;géranium;poivre noir|papyrus;cèdre;santal;cuir;ambre;vétiver;description;afficher les ingrédients;vous pourriez aussi aimer|3|3|3|0
+Amouage|Amber Sogara|floral|u|aldéhydes|rose|ambrette|3|4|4|0
+Xerjoff|Alexandria Ii Attar|ambré|u|lavande;bois de rose;cannelle;pomme|cèdre;muguet;rose|oud;ambre;santal;musc;vanille|3|4|5|0
+Clive Christian|Cosmos Flower|gourmand|u|pomme;citron;orange;poivre rose;cerise;mandarine;poire|cosmos;violette;jasmin;néroli;muguet;osmanthus;rose;ylang-ylang;mimosa|caramel;cèdre;musc;santal;ambre;vétiver;cuir;encens;patchouli|3|3|3|0
+Amouage|Oud Ulya|boisé|u|oud|vanille|bouleau|3|4|5|0
+Xerjoff|Oud Luban|ambré|u|poivre noir;rose|fleur d'oranger|oud;cèdre;vétiver;encens|3|4|4|0
+Clive Christian|Rock Rose|épicé|u|orange;bergamote;poivre noir;cassis;néroli;elemi;menthe;pamplemousse;cardamome|rose;lavande;myrrhe;ambre;sauge;coriandre;lentisque;jasmin;noix de muscade|patchouli;ambre;cèdre;santal;benjoin;cacao;musc;safran;vanille|4|4|4|0
+Oman Luxury|Dejan|boisé|u|rose|labdanum;cypriol|oud;ambre;musc|5|5|5|0
+Amouage|Vanilla Barka|floral|u|vanille|tonka|encens|5|5|5|0
+Xerjoff|Java Blossom|ambré|u|bergamote|fleur d'oranger;encens;tubéreuse|oud;vétiver;santal|3|4|4|0
+Clive Christian|E Cashmere Musk|agrumes|u|baies roses;bergamote;gingembre;poivre noir;ambrette;orange sanguine|cashmeran;notes fleuries;magnolia;jasmin|gaïac;vétiver;bois;musc;ambroxan;cèdre;mousse|2|3|3|0
+Amouage|Rose Aqor|floral|u|rose|encens|santal|5|5|4|0
+Oman Luxury|Mariya|floral|u|fleur d'oranger;coriandre;mandarine;bergamote|rose;géranium;whisky|café;caramel;vanille;patchouli;description;afficher les ingrédients;fleuri, poudré;faites vous livrer depuis;uk|3|3|3|0
+Memoirs of a Perfume Collector|Tales From Zanzibar Golden Hour|ambré|u|citron vert;menthe;mandarine;poivre rose|noix de coco;goyave;vétiver;néroli|musc;mousse;ambre;fruits confits;ambre gris|3|3|3|0
+Xerjoff|Zefiro|ambré|u|elemi;bergamote;vin;davana|oeillet;cardamome;cannelle;iris|encens;oud;ambre;miel|3|4|5|0
+Clive Christian|V Amber Fougere Masculine|aromatique|u|elemi;pin baumier;bergamote|poivre noir;iris;cèdre;lavande;poivre rose|encens;ambre;vétiver;description;amber fougère –;afficher les ingrédients;fougère, ambré;faites vous livrer depuis|3|3|3|0
+Amouage|Opus XVI Timber|boisé|m|baie de génévrier;cacao;cyprès;cardamome;poivre rose|encens;sapin;lavande|palo santo;patchouli;vanille;cèdre;santal|3|4|4|0
+Memoirs of a Perfume Collector|California Love|fruité|u|fruit de la passion;citron;orange;bergamote|mojito;cassis|musc;ambroxan;mousse de chêne|5|4|2|0
+Xerjoff|Decas|fruité|u|mandarine;tubéreuse;tabac|iris;benjoin;opopanax|musc;vanille;baume|3|4|4|0
+Clive Christian|L Floral Chypre Feminine|floral|u|poivre rose;encens|iris;jasmin;rose|patchouli;musc;vanille;description;floral chypre;afficher les ingrédients;chypré, fleuri;faites vous livrer depuis;uk|4|4|4|0
+Amouage|Existence|floral|u|muguet;rose|encens;olibanum;labdanum;mystikal|benjoin;ambre gris;musc|5|5|5|0
+Memoirs of a Perfume Collector|Indian Vetiver|fruité|u|orange;mandarine;fleurs blanches|magnolia;chèvrefeuille;mimosa;néroli|noix de coco;musc;notes aquatiques;vétiver|2|3|2|0
+Xerjoff|Naxos|épicé|u|citron;bergamote;lavande|jasmin;cashmeran;miel;cannelle|tabac;tonka;vanille|5|5|4|0
+Clive Christian|I Woody Floral Feminine|boisé|u|mandarine;fruits rouges;poivre noir;cardamome;poivre rose|jasmin;iris;muguet;rose|patchouli;cèdre;vétiver;ambre;musc;vanille;oud;description;woody floral –|4|4|4|0
+Amouage|Decision|boisé|u|bergamote;poivre rose;cardamome|myrrhe;encens;baie de génévrier|cèdre;patchouli;vanille|5|5|4|0
+Memoirs of a Perfume Collector|Atlantic Fig|floral|u|bergamote;coriandre;cardamome|figue;sauge;lavande|ambre;cypriol;musc;santal;oud;cèdre;mousse;patchouli;vétiver|5|5|4|0
+Xerjoff|Renaissance|agrumes|u|citron;mandarine;petit-grain;bergamote|menthe;rose;muguet|cèdre;patchouli;ambre;musc|3|3|2|0
+Clive Christian|E Green Fougere Feminine|aromatique|u|ananas;pin baumier|immortelle;acacia;lavande;rose;cyprès;iris;narcisse|fougère;vétiver;mousse;description;green fougère -;afficher les ingrédients;fougère, verte;faites vous livrer depuis|3|3|3|0
+Amouage|Purpose 50|épicé|u|encens;bergamote;piment;poivre rose|santal;papyrus;rose;vétiver|vanille;akigalawood;safran;daim;mystikal|5|5|4|0
+Memoirs of a Perfume Collector|Pacific Grapefruit|agrumes|u|pamplemousse;mandarine;yuzu;bergamote|notes aquatiques;néroli;cactus;gingembre;oeillet;fleur d'oranger|palmier;musc;oud;cyprès;vétiver|5|4|2|0
+Xerjoff|P. 33|aromatique|u|pamplemousse;baies roses;pomme;bergamote|cyprès;cannelle;iris|musc;ambre;cèdre|3|3|3|0
+Clive Christian|C Woody Leather Masculine|boisé|u|mandarine|safran|tabac;description;woody leather;afficher les ingrédients;boisé, cuiré;faites vous livrer depuis;uk;qatar;vos try me remboursés|3|3|3|0
+Amouage|Guidance 46|floral|u|encens;rose;amande;noisette;poivre rose;poire|rose;osmanthus;safran;jasmin|ambre gris;patchouli;vanille;cèdre;cypriol;santal;akigalawood;ambrette;ciste|5|5|5|0
+Memoirs of a Perfume Collector|A Night in Marrakesh|ambré|u|vétiver;cardamome;bergamote;amande|café;cannelle;gingembre;rose;tabac;cèdre;olibanum;safran|ambre;castoreum;patchouli;oud;bois;miel;santal|5|5|5|0
+Clive Christian|C Green Floral Feminine|floral|u|camomille;poire;herbe;pomme|rose;iris;violette|mousse de chêne;description;green floral;afficher les ingrédients;fleuri, vert;faites vous livrer depuis;uk;qatar;vos try me remboursés|3|3|3|0
+Xerjoff|Torino 21|aromatique|u|menthe;citron;thym;basilic|jasmin;romarin;cassis;lavande|verveine;musc|5|3|1|0
+Amouage|Jubilation 40 Man|boisé|m|cassis;mûre;romarin;labdanum;orange;davana|encens;clou de girofle;genêt;cannelle;rose|gaïac;cèdre;musc;opopanax;ambre gris;oud;ciste;mousse;myrrhe|5|5|5|0
+Memoirs of a Perfume Collector|Bond Street Leather|cuir|u|bergamote;mandarine;guimauve;citron|géranium;gingembre;ylang-ylang;iris|cuir;musc;oud;cèdre;vétiver;ambre|5|4|3|0
+Clive Christian|Town & Country|épicé|u|sauge;citron;bergamote;baie de génévrier|cardamome;santal;olibanum;thé|patchouli;ambre gris;cèdre|2|3|3|0
+Amouage|Dia 40 Woman|floral|f|aldéhydes;cyclamen;musc;cassis;feuille de violette|ylang-ylang;ciste;fleur d'oranger;rose;estragon;oeillet|santal;iris;gaïac;notes fleuries|5|4|3|0
+Memoirs of a Perfume Collector|Trouble in Paradise|fruité|u|mangue;bergamote;cognac;cardamome|rhum;violette;cuir;caramel|mousse;oud;ambre;santal|3|4|5|0
+Clive Christian|Matsukita|boisé|u|noix de muscade;bergamote;poivre noir;sauge;encens;orange;poivre rose|jasmin;thé;gaïac;maté;styrax;cade;rose|musc;bois;cypriol;vétiver;ambre;cèdre;mousse de chêne;patchouli|3|3|3|0
+Amouage|Honour Woman 43|floral|f|coriandre;rhubarbe;poivre noir|muguet;gardénia;tubéreuse;jasmin;oeillet|santal;opopanax;vétiver;labdanum;cuir;encens|5|5|4|0
+Memoirs of a Perfume Collector|Musk Mantra|floral|u|musc|cannelle|notes fleuries;ambrette;iris|3|4|4|0
+Clive Christian|Crab Apple Blossom|agrumes|f|bergamote;bois;notes fleuries;mandarine;yuzu|mojito;abricot;rhubarbe;néroli;osmanthus;nénuphar|santal;cashmeran;musc;ambre;mousse;description;crab apple blossom;afficher les ingrédients|2|3|2|0
+Memoirs of a Perfume Collector|Meet Me Where The Sky Touches|boisé|u|sel;musc|mimosa;iris;héliotrope|cuir;ambre gris;cèdre;bois;vétiver|5|4|3|0
+Clive Christian|Strange Heavens Out Of The Blue|épicé|u|café;mandarine;baies roses;gingembre;anis|jasmin;fleur d'oranger;labdanum;magnolia;néroli|cacao;caramel;vanille;gaïac|5|5|4|0
+Memoirs of a Perfume Collector|Origins Of The Collector|ambré|u|olibanum|café;patchouli;caramel|vanille;ambrette;ambre;musc;baume du pérou|5|5|5|0
+Clive Christian|Jump And Kiss Me Hedonistic|ambré|u|thé;pamplemousse;cerise;bergamote;sauge;néroli|tabac;iris;papyrus;jasmin|labdanum;vanille;ambre;tonka;description;afficher les ingrédients;ambré, oriental;faites vous livrer depuis;uk|3|4|4|0
+Memoirs of a Perfume Collector|Beyond The Pashun Summit|boisé|u|hachisch;grenade;davana|labdanum;tabac;ciste;pavot|agave;cuir;musc;oud;santal|5|5|5|0
+Clive Christian|Jump And Kiss Me Ecstatic|floral|u|orange;fleur d'oranger;rose|tubéreuse;jasmin;ylang-ylang|santal;ambre;tonka;description;afficher les ingrédients;fleuri;faites vous livrer depuis;uk;qatar|3|4|4|0
+Memoirs of a Perfume Collector|Tales From Zanzibar|fruité|u|citron;menthe;mandarine;poivre rose|noix de coco;goyave;cassis|musc;ambre gris;mousse;oud;fruits confits|5|4|3|0
+Xerjoff|Tony Iommi Deified|épicé|u|safran;cannelle;pomme|cuir;rose|patchouli;mousse;papyrus;musc|3|4|4|0
+Clive Christian|Inox|boisé|u|cassis;bergamote;poivre noir;safran|notes métaliques;muguet;rose;notes ozoniques|oud;mousse de chêne;santal;cuir;musc|3|4|4|0
+Xerjoff|Tony Iommi Monkey Special|épicé|u|rhum;bergamote;géranium;fruit de la passion|patchouli;cannelle;cuir|labdanum;caramel;musc;vanille;santal|3|4|5|0
+Clive Christian|L Red Tea Vetiver|ambré|u|bergamote;rhum;baie de génévrier;vétiver|thé;cashmeran;musc;elemi|vétiver;cypriol;sauge;santal|5|4|3|0
+Xerjoff|Avanguardia|boisé|u|davana;cerise|patchouli;violette|tonka;styrax|5|5|5|0
+Xerjoff|Fierezza|ambré|u|poivre rose;poivre noir;davana;encens|ambrette;géranium;frangipanier;notes aquatiques|ambre;daim;myrrhe;description;fierezza;fierezza;fierezza|4|4|4|0
+Xerjoff|Perseveranza|boisé|u|gingembre;cédrat;piment|vétiver;elemi;clou de girofle|tonka;styrax;ciste|5|5|4|0
+Xerjoff|Elle Anniversary|fruité|u|litchi;bergamote;fruits rouges;pomme|jasmin;réglisse;cashmeran;pivoine|ambre;musc;santal;patchouli|3|4|4|0
+Xerjoff|Via Cavour 1|floral|u|coing;pêche|rose;chocolat;patchouli;fruits rouges|caramel;ambre;musc;oud;vanille|3|4|5|0
+Xerjoff|Pikovaya Dama|floral|u|néroli;bergamote;rose;citron|iris;cèdre;encens;noix de muscade;coriandre|patchouli;santal;vanille;musc|5|5|4|0
+Xerjoff|Amabile|agrumes|u|bergamote;citron;pomme|cardamome;jasmin;fleur d'oranger;poivre rose|cèdre;patchouli;musc;vanille|5|4|3|0
+Xerjoff|Erba Gold|fruité|u|bergamote;orange;gingembre;citron|cardamome;melon;pomme;cannelle;clou de girofle;poire|musc;ambre;bois;vanille|5|4|3|0
+Xerjoff|Tempest Oil|ambré|u|bergamote;orange;elemi;lavande;petit-grain;citron;gingembre|ambre;cypriol;orange;baume;cèdre;jasmin;rose|oud;patchouli;vétiver;musc;santal;ambre|5|4|3|0
+Xerjoff|Accento Overdose|fruité|u|fruits exotiques;notes vertes|pin;eucalyptus|muguet;rose;jasmin|3|3|3|0
+Xerjoff|Soprano|ambré|u|notes fruitées;litchi;freesia;bergamote|rose;jasmin;osmanthus;lait|patchouli;cuir;oud|3|4|4|0
+Xerjoff|Opera|ambré|u|notes fruitées;rose|ylang-ylang;ambre;noix de muscade;cuir|patchouli;cèdre;vétiver;musc;vanille|3|4|5|0
+Xerjoff|Muse|ambré|u|prune;fleurs blanches;cuir|jasmin;labdanum;davana|benjoin;ambre;patchouli;framboise|3|4|5|0
+Xerjoff|Ouverture|floral|u|orange;figuier;magnolia|ylang-ylang;jasmin;cannelle;rose|vanille;cashmeran;santal;ambre;encens|5|5|4|0
+Xerjoff|Erba Pura|fruité|u|orange;bergamote;citron|fruits exotiques|musc;ambre;vanille|5|4|3|0
+Xerjoff|Wardasina|ambré|u|notes vertes|patchouli;safran;cèdre;rose|tabac;musc;vanille|3|4|5|0
+Xerjoff|Laylati|boisé|u|notes vertes|patchouli;cèdre|musc;vanille;tabac|3|4|5|0
+Xerjoff|Accento|boisé|u|ananas;jacinthe|jasmin;iris;poivre rose|musc;ambre;patchouli;vétiver;vanille|5|5|5|0

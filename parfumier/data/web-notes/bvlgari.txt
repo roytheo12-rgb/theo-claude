@@ -1,0 +1,21 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages Bvlgari et revendeurs, via recherche web)
+Bvlgari|Tygar|m|pamplemousse|gingembre;graines d'ambrette|ambroxan;musc;patchouli;vétiver
+Bvlgari|Gyan|u||patchouli fumé;jasmin sambac;|
+Bvlgari|Orom|u|vanille Bourbon|benjoin de Siam|oud
+Bvlgari|Ambero|m|gingembre;poivre rose;safran|labdanum;oliban|
+Bvlgari|Onekh|u||oud;labdanum fumé;épices|
+Bvlgari|Man Wood Essence|m|coriandre;zeste d'agrume italien|cyprès;vétiver d'Haïti|benjoin de Siam;cèdre
+Bvlgari|Man Glacial Essence|m|baie de genévrier;gingembre|iris;santal|cèdre d'Alaska;musc blanc
+Bvlgari|Man Rain Essence|m|thé vert;orange|lotus blanc;musc cristallin|ambre minéral;gaïac
+Bvlgari|Aqva Amara|m|mandarine de Sicile|notes aquatiques;néroli|oliban;patchouli
+Bvlgari|Aqva Divina|f|bergamote salée;gingembre rose|magnolia;coing|cire d'abeille;ambre
+Bvlgari|Aqva Pour Homme|m|mandarine;petitgrain|posidonie;santoline|ambre minéral;sauge sclarée;notes boisées
+Bvlgari|Splendida Tubéreuse Mystique|f|davana;bourgeon de cassis|tubéreuse|vanille;myrrhe
+Bvlgari|Splendida Rose Rose|f|mandarine;mûre blanche|rose de Damas|patchouli;santal;vétiver;musc
+Bvlgari|Splendida Jasmin Noir|f||jasmin;fève tonka;patchouli|
+Bvlgari|Omnia Crystalline|f|lotus|pivoine blanche|bois de balsa;musc cristallin
+Bvlgari|Omnia Amethyste|f|pamplemousse rose|rose de Damas|bois solaires
+Bvlgari|Omnia Coral|f|bergamote;baie de goji;grenade|hibiscus;nénuphar|cèdre
+Bvlgari|Omnia Pink Sapphire|f|pomelo|frangipanier;tiaré|
+Bvlgari|Eau Parfumée au Thé Rouge|u|bergamote;orange;poivre rose;figue|rooibos;thé rouge du Yunnan|noix;musc
+Bvlgari|Eau Parfumée au Thé Vert Extrême|u|bergamote;cardamome;coriandre;poivre|fleur d'oranger;rose;jasmin;thé vert|mousse de chêne;fève tonka;cire d'abeille
