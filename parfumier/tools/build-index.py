@@ -135,6 +135,18 @@ for line in (root / 'data/noses-full.txt').read_text(encoding='utf-8').splitline
     lst = nose_by.setdefault(k2, [])
     if nose not in lst: lst.append(nose)
 
+# ---- Listes de parfums par maison (data/maisons-liste.txt : Maison|Parfum|Concentration) : on n'ajoute que ce qui manque, sans nez.
+for line in (root / 'data/maisons-liste.txt').read_text(encoding='utf-8').splitlines():
+    line = line.strip().replace('\u2019', "'")
+    if not line or line.startswith('#'): continue
+    h_raw, nm_raw, conc_raw = [x.strip() for x in (line.split('|') + [''])[:3]]
+    if not h_raw or not nm_raw or SKIP_RE.search(nm_raw): continue
+    house = canon_house_n(h_raw, nm_raw)
+    name = NAME_ALIAS.get((norm(house), norm(nm_raw)), nm_raw)
+    key = (norm(house), norm(name))
+    if key in existing or key in seen: continue
+    seen[key] = {'house': house, 'name': name, 'conc': [CONC.get(norm(conc_raw), 'EDP') or 'EDP'], 'p': False}; order.append(key)
+
 # ---- Photos (data/imgmap2.txt : N|Maison|Parfum|Concentration) : chaque photo est rattachée à UN parfum.
 # Variantes (Extrait, Absolu, Esprit de Parfum, Parfum, Intense, Elixir, EDT quand l'EDP a aussi sa photo) : une fiche à part
 # « Nom Variante » seulement si la version de base existe aussi ; sinon la photo va sur la fiche existante (pas de doublon).

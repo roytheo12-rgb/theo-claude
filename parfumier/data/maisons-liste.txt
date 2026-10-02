@@ -1,0 +1,528 @@
+# Maison|Parfum|Concentration — liste fournie par Théo (25 maisons). Les parfums déjà présents sont ignorés.
+Contes de Parfums|Agra|
+Contes de Parfums|Alexandria|
+Contes de Parfums|Angkor|
+Contes de Parfums|Atlantis|
+Contes de Parfums|Babylon|
+Contes de Parfums|Bilbao|
+Contes de Parfums|Dubai|
+Contes de Parfums|Hydra|
+Contes de Parfums|Marrakesh|
+Contes de Parfums|Pompeii|
+Contes de Parfums|Positano|
+Contes de Parfums|Reykjavik|
+Contes de Parfums|Salalah|
+Contes de Parfums|Salvador da Bahia|
+Contes de Parfums|Samarkand|
+Contes de Parfums|Sevilla|
+Contes de Parfums|Shanghai|
+Contes de Parfums|Sydney|
+Contes de Parfums|Tokyo|
+Zadig & Voltaire|This is Him!|
+Zadig & Voltaire|This is Her!|
+Zadig & Voltaire|Just Rock! Pour Lui|
+Zadig & Voltaire|Just Rock! Pour Elle|
+Zadig & Voltaire|Girls Can Do Anything|
+Zadig & Voltaire|Girls Can Say Anything|
+Zadig & Voltaire|Tome 1 La Pureté|
+Zadig & Voltaire|Tome 2 La Cité de la Envie|
+Zadig & Voltaire|This is Love! Pour Lui|
+Zadig & Voltaire|This is Love! Pour Elle|
+Zadig & Voltaire|This is Really Him!|
+Zadig & Voltaire|This is Really Her!|
+Zadig & Voltaire|Vibes of Freedom Pour Lui|
+Zadig & Voltaire|Vibes of Freedom Pour Elle|
+Lanvin|Arpège|
+Lanvin|My Sin|
+Lanvin|Rumeur|
+Lanvin|Scandal|
+Lanvin|Crescendo|
+Lanvin|Eau de Arpège|
+Lanvin|Prétexte|
+Lanvin|Scénario|
+Lanvin|Aïn|
+Lanvin|Mon Sin|
+Lanvin|Varens|
+Lanvin|For Men|
+Lanvin|L'Âme de Lanvin|
+Lanvin|Spanish Town|
+Lanvin|Epilogue|
+Lanvin|Monsignor|
+Lanvin|Précense|
+Lanvin|Via Marvis|
+Lanvin|Eau de Lanvin|
+Lanvin|Scandalous|
+Lanvin|Oxygène|
+Lanvin|Oxygène Homme|
+Lanvin|Éclat d'Arpège|
+Lanvin|Arpège Pour Homme|
+Lanvin|Jeanne Lanvin|
+Lanvin|Rumeur 2 Rose|
+Lanvin|Jeanne Lanvin La Plume|
+Lanvin|Jeanne Lanvin Couture|
+Lanvin|Avant Garde|
+Lanvin|Marry Me|
+Lanvin|Éclat d'Arpège Pour Homme|
+Lanvin|Éclat de Fleurs|
+Lanvin|Modern Princess|
+Lanvin|Modern Princess Eau Sensuelle|
+Lanvin|A Girl In Capri|
+Lanvin|Modern Princess Blooming|
+Les Eaux Primordiales|Supercritical Leather|
+Les Eaux Primordiales|Ambre Supercritical|
+Les Eaux Primordiales|Santal Supercritical|
+Les Eaux Primordiales|Champ d'Extase|
+Les Eaux Primordiales|Couleur Primaire|
+Les Eaux Primordiales|Mécanique Intuitive|
+Les Eaux Primordiales|Mousse Sanguine|
+Les Eaux Primordiales|Cactus Aromatic|
+Les Eaux Primordiales|Iris Palladium|
+Les Eaux Primordiales|Oud Supercritical|
+Les Eaux Primordiales|Vanille Supercritical|
+Les Eaux Primordiales|Blanc de Sienne|
+Les Eaux Primordiales|Envolée de Sienne|
+Les Eaux Primordiales|Resine Supercritical|
+Les Eaux Primordiales|Rose Supercritical|
+D'Orsay|T.B. (Tubéreuse)|
+D'Orsay|J.R. (Vétiver)|
+D'Orsay|A.R. (Oud)|
+D'Orsay|G.A. (Foin)|
+D'Orsay|S.P. (Encens)|
+D'Orsay|D.T. (Rose)|
+D'Orsay|E.Q. (Musc)|
+D'Orsay|C.G. (Cuir)|
+D'Orsay|Etiquette Noire|
+D'Orsay|Le Dandy|
+D'Orsay|Vouloir Être Ailleurs|
+D'Orsay|Ombre et Vermeil|
+D'Orsay|Chevalier d'Orsay|
+D'Orsay|Intoxication|
+D'Orsay|Divine Illusion|
+D'Orsay|Sur Le Balcon|
+D'Orsay|Tant de Nuits|
+Chopard|Casmir|
+Chopard|Wish|
+Chopard|Madness|
+Chopard|Chopard Pour Homme|
+Chopard|Noble Cedar|
+Chopard|Noble Vetiver|
+Chopard|Enchanted|
+Chopard|Enchanted Midnight Spell|
+Chopard|Brilliant Wish|
+Chopard|1000 Miglia|
+Chopard|1000 Miglia Extreme|
+Chopard|Happy Spirit|
+Chopard|Pink Wish|
+Chopard|Casmila|
+Chopard|Jasmin Magistral|
+Chopard|Rose Caroline|
+Chopard|Magnolia Au Vetiver du Haiti|
+Chopard|Neroli a la Cardamome du Guatemala|
+Chopard|Vetiver d'Haiti au The Vert|
+Chopard|Vanille de Riviere|
+Chopard|Miel de Marrakech|
+Chopard|Orange Mauresque|
+Bottega Veneta|Bottega Veneta|
+Bottega Veneta|Bottega Veneta Eau Légère|
+Bottega Veneta|Bottega Veneta Essence Aromatique|
+Bottega Veneta|Bottega Veneta Pour Homme|
+Bottega Veneta|Bottega Veneta Pour Homme Extreme|
+Bottega Veneta|Bottega Veneta Pour Homme Essence Aromatique|
+Bottega Veneta|Knot|
+Bottega Veneta|Knot Eau Florale|
+Bottega Veneta|Illusione|
+Bottega Veneta|Illusione Tonka Solare|
+Bottega Veneta|Illusione For Him|
+Bottega Veneta|Illusione For Him Noir|
+Bottega Veneta|Mithridate|
+Bottega Veneta|Colpo di Sole|
+Bottega Veneta|Calheta|
+Bottega Veneta|Arcane|
+Place de la Rêverie|Santal de Paris|
+Place de la Rêverie|Passion Riviera|
+Place de la Rêverie|Fève Nectar|
+Giardini di Toscana|Bianco Latte|
+Giardini di Toscana|Borabora|
+Giardini di Toscana|Stella Tiberina|
+Giardini di Toscana|Celeste|
+Giardini di Toscana|Rosso Pompeiano|
+Giardini di Toscana|Giardino Botanico|
+Giardini di Toscana|Cristallo di Rocca|
+Giardini di Toscana|Scintilla|
+Giardini di Toscana|Bravo Moro|
+Giardini di Toscana|Latatte|
+Giardini di Toscana|Amaro Giusto|
+Ella K|Pluie sur Ha Long|
+Ella K|Lettre de Pushkar|
+Ella K|Reflet sur l'Okavango|
+Ella K|Epilogue de Sylt|
+Ella K|Baiser de Florence|
+Ella K|Mémoire de Daisen In|
+Ella K|Crépuscule en Entebbe|
+Ella K|Camélia K|
+Ella K|Musk K|
+Ella K|Haiku K|
+Ella K|Khutulun|
+Ella K|Poème de Indawgyi|
+Ella K|Souffle de Mimosa au Cap|
+Dries Van Noten|Voodoo Chile|
+Dries Van Noten|Soie Malaquais|
+Dries Van Noten|Roaring Radcliff|
+Dries Van Noten|Fleur du Mal|
+Dries Van Noten|Rock the Myrrh|
+Dries Van Noten|Cannabis Patchouli|
+Dries Van Noten|Santal Greenery|
+Dries Van Noten|Jardin de l'Orangerie|
+Dries Van Noten|Neon Garden|
+Dries Van Noten|Raving Rose|
+Dries Van Noten|Supernatural|
+Dries Van Noten|Suri Plum|
+Dries Van Noten|Tangerine Coast|
+Dries Van Noten|Cacao In The Sun|
+Clive Christian|No. 1|
+Clive Christian|1872|
+Clive Christian|X|
+Clive Christian|C|
+Clive Christian|V|
+Clive Christian|L|
+Clive Christian|Blenheim Bouquet|
+Clive Christian|1872 For Men|
+Clive Christian|1872 For Women|
+Clive Christian|X For Men|
+Clive Christian|X For Women|
+Clive Christian|No. 1 Imperial Majesty|
+Clive Christian|Rock Rose|
+Clive Christian|Artemisia|
+Clive Christian|Blonde Amber|
+Clive Christian|Town & Country|
+Clive Christian|Crab Apple Blossom|
+Clive Christian|Matsukita|
+Bon Parfumeur|001|
+Bon Parfumeur|002|
+Bon Parfumeur|003|
+Bon Parfumeur|004|
+Bon Parfumeur|101|
+Bon Parfumeur|102|
+Bon Parfumeur|103|
+Bon Parfumeur|201|
+Bon Parfumeur|202|
+Bon Parfumeur|203|
+Bon Parfumeur|301|
+Bon Parfumeur|302|
+Bon Parfumeur|303|
+Bon Parfumeur|401|
+Bon Parfumeur|402|
+Bon Parfumeur|501|
+Bon Parfumeur|502|
+Bon Parfumeur|601|
+Bon Parfumeur|602|
+Bon Parfumeur|603|
+Bon Parfumeur|701|
+Bon Parfumeur|702|
+Bon Parfumeur|801|
+Bon Parfumeur|802|
+Bon Parfumeur|803|
+Bon Parfumeur|901|
+Bon Parfumeur|902|
+Bon Parfumeur|903|
+Nina Ricci|L'Air du Temps|
+Nina Ricci|Coeur Joie|
+Nina Ricci|Fille d'Eve|
+Nina Ricci|Capricci|
+Nina Ricci|Farouche|
+Nina Ricci|Nina|
+Nina Ricci|Premier Jour|
+Nina Ricci|Love in Paris|
+Nina Ricci|Ricci Ricci|
+Nina Ricci|Mademoiselle Ricci|
+Nina Ricci|L'Extase|
+Nina Ricci|L'Air|
+Nina Ricci|Luna|
+Nina Ricci|Bella|
+Nina Ricci|Mon Eau|
+Nina Ricci|Rose Extase|
+Nina Ricci|Extra Rouge|
+Nina Ricci|Les Belles de Ricci Amour Amour|
+Nina Ricci|Les Belles de Ricci Liberty Fizz|
+Nina Ricci|Les Belles de Ricci Delice d'Epices|
+Nina Ricci|Chant d'Extase|
+Nina Ricci|Vénus|
+Caron|Pour Un Homme de Caron|
+Caron|Tabac Blond|
+Caron|Nuit de Noël|
+Caron|Narcisse Noir|
+Caron|Farnesiana|
+Caron|Poivre|
+Caron|Bellodgia|
+Caron|Infini|
+Caron|Yatagan|
+Caron|Third Man|
+Caron|Rose de Été|
+Caron|Aimez-Moi|
+Caron|Delire de Roses|
+Caron|Pour Une Femme de Caron|
+Caron|Montaigne|
+Caron|Secret de Venus|
+Caron|Eau de Caron|
+Caron|Tabac Noir|
+Caron|Tubéreuse Merveilleuse|
+Caron|Musc Oublié|
+Caron|Santal Précieux|
+Caron|Vetiver Infini|
+Caron|Rose Itoh|
+Les Bains Guerbois|1978 Les Bains Douches|
+Les Bains Guerbois|2013 Résurgence|
+Les Bains Guerbois|1900 L'Heure de Proust|
+Les Bains Guerbois|1992 Purple Night|
+Les Bains Guerbois|2015 Le Muguet de Mademoiselle|
+Les Bains Guerbois|1968 Rhapsody In Paris|
+Les Bains Guerbois|1984 Extasy|
+Les Bains Guerbois|2018 Roxo Tonic|
+Les Bains Guerbois|1979 New Wave|
+Les Bains Guerbois|1885 Bains Sulfureux|
+Les Bains Guerbois|2020 Magnetic Odor|
+Les Bains Guerbois|2021 Oumma|
+Atelier des Ors|Lune Feline|
+Atelier des Ors|Rouge Sarây|
+Atelier des Ors|Cuir Nomade|
+Atelier des Ors|Rose Omeyyad|
+Atelier des Ors|Iris Fauve|
+Atelier des Ors|Musc Immortel|
+Atelier des Ors|White Land|
+Atelier des Ors|Ailleurs & Merveilles|
+Atelier des Ors|Pomona Vitalis|
+Atelier des Ors|Nectar de Suger|
+Atelier des Ors|Bois Sikar|
+Atelier des Ors|Blanc Encens|
+Atelier des Ors|Crepuscule Des Ames|
+Atelier des Ors|Pink Me Up|
+Atelier des Ors|Rouge Oud|
+Atelier des Ors|Chœur des Anges|
+Histoires de Parfums|1740 Marquis de Sade|
+Histoires de Parfums|1899 Hemingway|
+Histoires de Parfums|1969|
+Histoires de Parfums|1828 Jules Verne|
+Histoires de Parfums|1876 Mata Hari|
+Histoires de Parfums|1804 George Sand|
+Histoires de Parfums|1826 Isabella I of Castile|
+Histoires de Parfums|1725 Casanova|
+Histoires de Parfums|Noir Animal|
+Histoires de Parfums|Ambre 114|
+Histoires de Parfums|Tubéreuse 1 (Capricieuse)|
+Histoires de Parfums|Tubéreuse 2 (Virginale)|
+Histoires de Parfums|Tubéreuse 3 (Animale)|
+Histoires de Parfums|Petroleum|
+Histoires de Parfums|Rosam|
+Histoires de Parfums|Fidelis|
+Histoires de Parfums|Outrecuidant|
+Histoires de Parfums|This is Not a Blue Bottle 1.1|
+Histoires de Parfums|This is Not a Blue Bottle 1.2|
+Histoires de Parfums|This is Not a Blue Bottle 1.3|
+Histoires de Parfums|This is Not a Blue Bottle 1.4|
+Histoires de Parfums|This is Not a Blue Bottle 1.5|
+Histoires de Parfums|This is Not a Blue Bottle 2.1|
+Histoires de Parfums|This is Not a Blue Bottle 3.1|
+Histoires de Parfums|This is Not a Blue Bottle 4.1|
+Histoires de Parfums|This is Not a Blue Bottle 5.1|
+Histoires de Parfums|This is Not a Blue Bottle 7.1|
+Histoires de Parfums|Prolixe|
+Oman Luxury|Royal Incense|
+Oman Luxury|Paramour|
+Oman Luxury|Orexia|
+Oman Luxury|Jean-Louis|
+Oman Luxury|Kovana White|
+Oman Luxury|Sublime|
+Oman Luxury|Shamal|
+Oman Luxury|TFK|
+Oman Luxury|Zafar|
+Oman Luxury|Oud Aquilaria|
+Oman Luxury|Wanderlust|
+Oman Luxury|Sédatif|
+Oman Luxury|Piety|
+Oman Luxury|Belfour|
+Initio|Side Effect|
+Initio|Oud for Greatness|
+Initio|Narcotic Delight|
+Initio|Absolute Aphrodisiac|
+Initio|High Frequency|
+Initio|Blessed Baraka|
+Initio|Mystic Experience|
+Initio|Paragon|
+Initio|Rehab|
+Initio|Atomic Rose|
+Initio|Psychedelic Love|
+Initio|Musk Therapy|
+Initio|Addictive Vibration|
+Initio|Oud for Happiness|
+Initio|Initio 777|
+Initio|Paragon Extrait|
+Nishane|Hacivat|
+Nishane|Ani|
+Nishane|Wulong Cha|
+Nishane|Fan Your Flames|
+Nishane|Hundred Silent Ways|
+Nishane|Sultan Vetiver|
+Nishane|Pachuli Kozha|
+Nishane|Tuberoza|
+Nishane|Shem|
+Nishane|Nefs|
+Nishane|Mana|
+Nishane|Zenne|
+Nishane|Nanshe|
+Nishane|Afrika Olifant|
+Nishane|Ambra Calabria|
+Nishane|B-612|
+Nishane|Colognise|
+Nishane|Unutamam|
+Nishane|Ege|
+Nishane|Papilefiko|
+Nishane|Tempfluo|
+Nishane|Tero|
+Nishane|Kredo|
+Nishane|Subz|
+Parfums de Marly|Layton|
+Parfums de Marly|Pegasus|
+Parfums de Marly|Delina|
+Parfums de Marly|Herod|
+Parfums de Marly|Oajan|
+Parfums de Marly|Carlisle|
+Parfums de Marly|Percival|
+Parfums de Marly|Greenley|
+Parfums de Marly|Sedley|
+Parfums de Marly|Kalan|
+Parfums de Marly|Habdan|
+Parfums de Marly|Godolphin|
+Parfums de Marly|Darley|
+Parfums de Marly|Athalia|
+Parfums de Marly|Meliora|
+Parfums de Marly|Safanad|
+Parfums de Marly|Oriana|
+Parfums de Marly|Cassili|
+Parfums de Marly|Valaya|
+Parfums de Marly|Althair|
+Parfums de Marly|Perseus|
+Parfums de Marly|Haltane|
+Parfums de Marly|Galloway|
+Parfums de Marly|Nisean|
+Parfums de Marly|Shagya|
+Kilian|Angels' Share|
+Kilian|Good Girl Gone Bad|
+Kilian|Black Phantom|
+Kilian|Love, Don't Be Shy|
+Kilian|Back to Black|
+Kilian|Straight to Heaven|
+Kilian|Intoxicated|
+Kilian|Rolling in Love|
+Kilian|Voulez-Vous Coucher Avec Moi|
+Kilian|Flower of Immortality|
+Kilian|Moonlight in Heaven|
+Kilian|Woman in Gold|
+Kilian|Kissing Burns 68 Calories|
+Kilian|By Any Other Name|
+Kilian|Forbidden Games|
+Kilian|Amber Oud|
+Kilian|Apple Brandy on the Rocks|
+Kilian|Smoking Hot|
+Kilian|Born to be Unforgettable|
+Kilian|Blue Moon Ginger Dash|
+Kilian|Can't Stop Loving You|
+Kilian|Princess|
+Kilian|Liaisons Dangereuses|
+Kilian|Gold Knight|
+Kilian|Sacred Wood|
+Kilian|Extreme Without You|
+Kilian|Playing With The Devil|
+Kilian|Rose Oud|
+Kilian|Musk Oud|
+Kilian|Cruel Intentions|
+Kilian|A Taste of Heaven|
+Kilian|Bad Boys See You Later|
+Kilian|Beyond Love|
+Frédéric Malle|Portrait of a Lady|
+Frédéric Malle|Musc Ravageur|
+Frédéric Malle|Carnal Flower|
+Frédéric Malle|Vetiver Extraordinaire|
+Frédéric Malle|En Passant|
+Frédéric Malle|Lys Méditerranée|
+Frédéric Malle|Bigarade Concentrée|
+Frédéric Malle|Une Rose|
+Frédéric Malle|Iris Poudré|
+Frédéric Malle|French Lover|
+Frédéric Malle|Angéliques Sous La Pluie|
+Frédéric Malle|Dans Tes Bras|
+Frédéric Malle|Superstitious|
+Frédéric Malle|Cologne Indélébile|
+Frédéric Malle|The Moon|
+Frédéric Malle|The Night|
+Frédéric Malle|Promise|
+Frédéric Malle|Dawn|
+Frédéric Malle|Monsieur.|
+Frédéric Malle|Sale Gosse|
+Frédéric Malle|Rose & Cuir|
+Frédéric Malle|Heaven Can Wait|
+Frédéric Malle|Synthetic Jungle|
+Frédéric Malle|Acne Studios|
+Frédéric Malle|Eau de Magnolia|
+Frédéric Malle|L'Eau d'Hiver|
+Frédéric Malle|Outrageous!|
+Amouage|Interlude Man|
+Amouage|Interlude Woman|
+Amouage|Jubilation XXV Man|
+Amouage|Jubilation XXV Woman|
+Amouage|Guidance|
+Amouage|Reflection Man|
+Amouage|Reflection Woman|
+Amouage|Gold Man|
+Amouage|Gold Woman|
+Amouage|Epic Man|
+Amouage|Epic Woman|
+Amouage|Honor Man|
+Amouage|Honor Woman|
+Amouage|Memoir Man|
+Amouage|Memoir Woman|
+Amouage|Dia Man|
+Amouage|Dia Woman|
+Amouage|Lyric Man|
+Amouage|Lyric Woman|
+Amouage|Beach Hut Man|
+Amouage|Beach Hut Woman|
+Amouage|Bracken Man|
+Amouage|Bracken Woman|
+Amouage|Fate Man|
+Amouage|Fate Woman|
+Amouage|Journey Man|
+Amouage|Journey Woman|
+Amouage|Lilac Love|
+Amouage|Blossom Love|
+Amouage|Love Tuberose|
+Amouage|Imitation Man|
+Amouage|Imitation Woman|
+Amouage|Opus I|
+Amouage|Opus II|
+Amouage|Opus III|
+Amouage|Opus IV|
+Amouage|Opus V|
+Amouage|Opus VI|
+Amouage|Opus VII|
+Amouage|Opus VIII|
+Amouage|Opus IX|
+Amouage|Opus X|
+Amouage|Opus XI|
+Amouage|Opus XII|
+Amouage|Opus XIII|
+Amouage|Opus XIV|
+Amouage|Overture Man|
+Amouage|Overture Woman|
+Amouage|Material|
+Amouage|Boundless|
+Amouage|Crimson Rocks|
+Amouage|Ashore|
+Amouage|Meander|
+Amouage|Enclave|
+Amouage|Moonlight Cottage|
+Amouage|Purpose|
+Amouage|Lineage|
+Amouage|Search|
+Amouage|Opus XIV Royal Tobacco|
+Amouage|Interlude Black Iris|
+Amouage|Silver Man|
