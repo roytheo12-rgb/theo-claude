@@ -526,3 +526,68 @@ Amouage|Search|
 Amouage|Opus XIV Royal Tobacco|
 Amouage|Interlude Black Iris|
 Amouage|Silver Man|
+# --- Maisons ajoutées (parfums phares seulement, noms sûrs)
+Lacoste|L.12.12 Blanc|
+Lacoste|L.12.12 Noir|
+Lacoste|L.12.12 Rouge|
+Lacoste|Essential|
+Lacoste|Touch of Pink|
+Police|To Be|
+Police|Original|
+Jo Loves|Pomelo|
+Jo Loves|Mango Thai Lime|
+Trudon|Abd el Kader|
+Trudon|Ernesto|
+Trudon|Salamanca|
+Trudon|Olim|
+Trudon|Tuileries|
+Al Haramain|Amber Oud|
+Al Haramain|L'Aventure|
+Swiss Arabian|Shaghaf Oud|
+Swiss Arabian|Layali|
+Khadlaj|Shiyaaka|
+Orientica|Royal Amber|
+Maison Alhambra|Jean Lowe Immortal|
+Al Rehab|Choco Musk|
+Jaguar|Classic|
+Jaguar|Classic Black|
+Abercrombie & Fitch|Fierce|
+Abercrombie & Fitch|8|
+Abercrombie & Fitch|Authentic|
+Victoria's Secret|Bombshell|
+Victoria's Secret|Love Spell|
+Victoria's Secret|Very Sexy|
+Victoria's Secret|Tease|
+Ariana Grande|Cloud|
+Ariana Grande|Sweet Like Candy|
+Ariana Grande|Ari|
+Ariana Grande|God Is a Woman|
+Ariana Grande|Thank U, Next|
+Billie Eilish|Eilish|
+Britney Spears|Fantasy|
+Britney Spears|Curious|
+Britney Spears|Midnight Fantasy|
+Britney Spears|Believe|
+Rihanna|Reb'l Fleur|
+Rihanna|Rogue|
+Rihanna|Nude|
+Imaginary Authors|Memoirs of a Trespasser|
+Imaginary Authors|Cape Heartache|
+Phlur|Missing Person|
+Phlur|Vanilla Skin|
+Phlur|Mango Skin|
+Glossier|You|
+Zoologist|Bat|
+Zoologist|Hummingbird|
+Zoologist|Beaver|
+Papillon Artisan|Salome|
+Papillon Artisan|Anubis|
+Papillon Artisan|Angel's Trumpet|
+Anna Sui|Dolly Girl|
+Anna Sui|Secret Wish|
+Anna Sui|Fantasia|
+Trussardi|Uomo|
+Trussardi|Donna|
+Michael Kors|Sexy Amber|
+Michael Kors|Wonderlust|
+Michael Kors|Gold|
