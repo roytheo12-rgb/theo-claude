@@ -1,4 +1,37 @@
 # Généré par tools/import-web-notes.cjs : pyramides lues sur des pages officielles et revendeurs (recherche web) ; famille, projection, tenue, poids calculés
+Bon Parfumeur|403|ambré|u||poivre du timut;myrrhe;benjoin||4|4|5|0
+Bon Parfumeur|001|agrumes|u||fleur d'oranger;petitgrain;bergamote||2|3|2|0
+Bon Parfumeur|002|floral|u||néroli;jasmin;ambre blanc||4|4|4|0
+Bon Parfumeur|003|boisé|u||yuzu;feuilles de violette;vétiver||2|2|1|0
+Bon Parfumeur|004|agrumes|u||gin;mandarine;musc||2|3|2|0
+Bon Parfumeur|101|boisé|u||rose;pois de senteur;cèdre blanc||3|3|3|0
+Bon Parfumeur|102|floral|u||thé;cardamome;mimosa||3|3|2|0
+Bon Parfumeur|103|floral|u||fleur de tiaré;jasmin;hibiscus||3|3|3|0
+Bon Parfumeur|104|agrumes|u||orange verte;jacinthe;lierre||1|3|2|0
+Bon Parfumeur|105|boisé|u||mandarine;cannelle;santal||3|3|3|0
+Bon Parfumeur|106|gourmand|u||rose de damas;davana;vanille||4|4|4|0
+Bon Parfumeur|107|cuir|u||tubéreuse;safran;cuir suédé||4|4|4|0
+Bon Parfumeur|201|floral|u||pomme verte;muguet;coing||3|3|3|0
+Bon Parfumeur|202|floral|u||pastèque;groseille;jasmin||3|3|3|0
+Bon Parfumeur|203|fruité|u||framboise;vanille;mûre||4|4|4|0
+Bon Parfumeur|301|boisé|u||ambre;cardamome;santal||4|4|4|0
+Bon Parfumeur|303|épicé|u||piment;baies roses;benjoin||4|4|4|0
+Bon Parfumeur|304|boisé|u||cumin;fleur d'amandier;cèdre||3|3|3|0
+Bon Parfumeur|401|gourmand|u||cèdre;prune confite;vanille||4|4|4|0
+Bon Parfumeur|402|gourmand|u||vanille;caramel;santal||4|4|5|0
+Bon Parfumeur|501|gourmand|u||praliné;réglisse;patchouli||4|4|5|0
+Bon Parfumeur|502|gourmand|u||iris;cacao;papyrus||4|4|4|0
+Bon Parfumeur|601|boisé|u||vétiver;cèdre;bergamote||2|3|2|0
+Bon Parfumeur|602|boisé|u||poivre;cèdre;patchouli||4|4|4|0
+Bon Parfumeur|603|gourmand|u||cuir;encens;fève tonka||4|4|5|0
+Bon Parfumeur|701|boisé|u||eucalyptus;coriandre;cyprès||3|3|2|0
+Bon Parfumeur|702|boisé|u||encens;lavande;bois de cachemire||3|3|3|0
+Bon Parfumeur|801|agrumes|u||embruns;cèdre;pamplemousse||1|2|1|0
+Bon Parfumeur|802|floral|u||pivoine;lotus;bambou||2|3|2|0
+Bon Parfumeur|803|boisé|u||embruns;gingembre;patchouli||3|3|3|0
+Bon Parfumeur|903|oud|u||baies népalaises;safran;oud||5|4|4|0
+Bon Parfumeur|904|boisé|u||vodka;tabac blond;genévrier||4|4|4|0
+Bon Parfumeur|902|boisé|u||armagnac;tabac blond;cannelle||4|4|4|0
 Bvlgari|Tygar|boisé|m|pamplemousse|gingembre;graines d'ambrette|ambroxan;musc;patchouli;vétiver|3|3|3|0
 Bvlgari|Orom|oud|u|vanille bourbon|benjoin de siam|oud|4|4|5|0
 Bvlgari|Ambero|épicé|m|gingembre;poivre rose;safran|labdanum;oliban||4|4|4|0
@@ -82,6 +115,89 @@ Louis Vuitton|Spell on You|floral|f|iris;violette;notes vertes|rose;jasmin|pêch
 Louis Vuitton|Sun Song|floral|u|citron;petitgrain|fleur d'oranger;néroli|musc|2|3|2|0
 Louis Vuitton|Sur la Route|boisé|m|agrumes;bergamote de calabre;citron;poivre rose|herbe;muscade;hédione;cardamome|cuir;cèdre;patchouli;iso e super;baume du pérou|2|3|2|0
 Louis Vuitton|Symphony|agrumes|u|bergamote;pamplemousse;orange|gingembre|musc|1|2|1|0
+Zadig & Voltaire|This Is Her!|gourmand|f|albizia;jasmin;baies roses|marron;vanille;crème fouettée|santal;accord cachemire|4|4|4|0
+Zadig & Voltaire|Just Rock! Pour Elle|boisé|f|jasmin|vanille;encens|patchouli|4|4|5|0
+Zadig & Voltaire|Just Rock! Pour Lui|gourmand|m|patchouli noir;encens|vanille noire;fève tonka;épices||4|4|5|0
+Zadig & Voltaire|This is Love! Pour Lui|boisé|m|lavande;mandarine|cardamome;encens|cèdre;patchouli|3|3|3|0
+Zadig & Voltaire|Vibes of Freedom Pour Elle|floral|f|poire;pivoine|jasmin;rose||3|3|3|0
+Zadig & Voltaire|Girls Can Do Anything|gourmand|f|poire;mandarine;bergamote;fleur d'oranger|fève tonka;tubéreuse|vanille;fougère;musc;girofle;ambroxan;patchouli|3|4|4|0
+Contes de Parfums|Agra|floral|u|gingembre;cardamome;néroli|jasmin sambac;tubéreuse indienne;ylang-ylang|vanille;fève tonka|4|4|4|0
+Contes de Parfums|Alexandria|oud|u|bergamote;cardamome;encens|jasmin;praliné|santal;oud;patchouli;vanille|4|4|5|0
+Contes de Parfums|Atlantis|aquatique|u|algues;sel marin;safran|cypriol;mousse;jasmin auriculatum|ambroxan;musc;cèdre de virginie|3|3|3|0
+Contes de Parfums|Babylon|boisé|u|maté;bergamote|myrtille;figue;fraise|cuir;cèdre;patchouli;gaïac|3|3|3|0
+Contes de Parfums|Bilbao|oud|u|bergamote;poivre rose;lavande|café;copeaux de chêne;patchouli|ambrettolide;ambroxan;labdanum;oud du laos|4|4|5|0
+Contes de Parfums|Dubai|vert|u|datte;safran;mandarine|géranium;douceurs arabes;patchouli doré|mousse;ambre;vanille|4|4|4|0
+Contes de Parfums|Hydra|floral|u|feuilles de menthe;pastèque|pétales de jasmin;jacinthe|écume de mer;musc blanc|2|3|2|0
+Contes de Parfums|Positano|aromatique|u|huile d'orange;cassis;curcuma|foin;lavande;accord marin||2|2|1|0
+Contes de Parfums|Reykjavik|boisé|u|vapeur de fjord;cardamome;poivre rose|sauge;romarin;accord sauna|ambre;cèdre;vétiver|3|3|3|0
+Contes de Parfums|Salalah|oud|u|prune;rose|rose de turquie;patchouli|accord oud;baume de gurjum;labdanum|4|4|5|0
+Contes de Parfums|Sevilla|floral|u|thé blanc;linge frais;bergamote|néroli;jasmin;fleur d'oranger|musc;bois de cachemire;cèdre blanc|2|3|2|0
+Contes de Parfums|Shanghai|floral|u|citron;nashi;accord feuille de thé|pivoine de chine;eau de coco;jasmin|sinfonide;ambroxan;vétiver|2|3|2|0
+Contes de Parfums|Tokyo|floral|u|poire;pamplemousse;fruits rouges|rose;thé à la bergamote;fleur de cerisier|musc;cèdre blanc;coton|2|3|2|0
+D'Orsay|Le Dandy|épicé|m|tabac;whisky;rhum;ananas|gingembre;muscade;cannelle;girofle|bois;baume|4|4|4|0
+D'Orsay|A.R. (Oud)|boisé|u|iris;cardamome|vétiver;cèdre||3|3|3|0
+Dries Van Noten|Sur Ma Peau|gourmand|u|bergamote;mandarine|accord fleur d'oranger;vétiver|accord vanille;fève tonka;benjoin|3|4|4|0
+Dries Van Noten|Mystic Moss|aquatique|u|mandarine;cardamome;sel;algues|mousse||1|2|1|0
+Histoires de Parfums|1725 Casanova|gourmand|m|bergamote;agrumes;pamplemousse;réglisse|lavande;anis étoilé|vanille;amande;santal;cèdre;ambre|3|3|3|0
+Histoires de Parfums|1804 George Sand|floral|f|gardénia de tahiti;pêche de corse;ananas d'hawaï|girofle;muscade;jasmin indien;muguet;rose|santal;patchouli;benjoin;vanille;musc blanc|4|4|4|0
+Histoires de Parfums|1826 Eugénie de Montijo|gourmand|f|bergamote;mandarine;fleurs blanches|violette;gingembre;cannelle|patchouli;ambre;encens de jakarta;vanille|3|4|4|0
+Histoires de Parfums|1876 Mata Hari|floral|f|orange;bergamote;litchi|rose;iris;violette;cumin;cannelle;œillet|santal;vétiver;gaïac;musc blanc;vanille|3|3|3|0
+Histoires de Parfums|1889 Moulin Rouge|floral|f|mandarine;prune;cannelle|absinthe;rose de damas|iris;patchouli;musc;fourrure|3|3|3|0
+Histoires de Parfums|1969 Parfum de Révolte|gourmand|f|pêche|cardamome;girofle;rose;fleurs blanches|chocolat mexicain;patchouli;café;musc blanc|4|4|4|0
+Histoires de Parfums|Noir Patchouli|boisé|u|patchouli;cardamome|patchouli;fleurs;baies de genévrier|patchouli;cuir;musc;vanille|4|4|5|0
+Histoires de Parfums|Tubéreuse 1 Capricieuse|floral|f|safran;bergamote;mandarine|tubéreuse;iris;ylang-ylang|cacao;daim;musc blanc|3|3|3|0
+Histoires de Parfums|Tubéreuse 2 (Virginale)|floral|f|mandarine;cerise|tubéreuse;iris;tiaré;frangipanier|bois blonds;patchouli;vanille;musc blanc|3|4|4|0
+Histoires de Parfums|Tubéreuse 3 Animale|floral|f|kumquat;bergamote;néroli;prune;herbes|foin;jasmin;tubéreuse;tabac blond;immortelle|bois;labdanum|3|3|3|0
+Histoires de Parfums|Petroleum|oud|u|oud;bergamote;aldéhydes|rose|ambre;civette;cuir;patchouli;musc blanc|4|4|5|0
+Histoires de Parfums|Rosam|oud|u|rose;citron;safran|encens;ambre|santal;patchouli;oud|4|4|5|0
+Histoires de Parfums|Fidelis|oud|u|huile de cardamome;café du guatemala;safran;cumin|rose absolue;framboise|patchouli;ambre;oud du laos|5|4|5|0
+Giardini di Toscana|Bianco Latte|gourmand|u|caramel|miel;coumarine|vanille;musc blanc|4|4|5|0
+Giardini di Toscana|Rosso Radice|boisé|u|bergamote;poivre rose;sauge sclarée|vétiver;cashmeran|ambroxan;ambrette|3|3|3|0
+Santa Maria Novella|Acqua della Regina|aromatique|u|agrumes italiens;néroli;petitgrain|néroli;romarin;girofle;lavande|patchouli;musc|2|3|2|0
+Santa Maria Novella|Spanish Leather Cologne|floral|u|bergamote de calabre;jasmin;œillet|cèdre;néroli;feuilles de violette|civette;bouleau|2|3|2|0
+Santa Maria Novella|Rosa Novella Cologne|boisé|f|citron;petitgrain|rose centifolia;jasmin;gardénia|patchouli;santal;cèdre;musc|3|3|3|0
+Santa Maria Novella|Marescialla|boisé|u|agrumes;macis|cèdre;rose centifolia|santal;patchouli;mousse de chêne|3|3|3|0
+Santa Maria Novella|Russian Cologne|aromatique|u|bergamote de calabre;agrumes;néroli|petitgrain;romarin;lavande;girofle|benjoin de sumatra;civette|2|3|2|0
+Santa Maria Novella|Muschio Oro|floral|u|fleurs blanches|ylang-ylang;néroli;iris;muguet|vanille;cèdre;fève tonka;musc|4|4|4|0
+Santa Maria Novella|Quercia|boisé|u|lavande|vétiver;patchouli|bois de chêne|3|3|3|0
+Santa Maria Novella|Pot Pourri Cologne|aromatique|u|chypre;bergamote;girofle|girofle;lavande;feuille de baie;romarin;thym|mousse;patchouli;baume du pérou|3|3|2|0
+Horace|Ibiza '87|aromatique|m||champagne;thym;labdanum||4|4|4|0
+Horace|Mezcal Musc|boisé|m|poivre noir;davana|cyprès;gaïac|vétiver de java;bouleau;musc|3|3|3|0
+Houbigant|Quelques Fleurs Royale|floral|f|cassis;pamplemousse|jasmin;rose;tubéreuse;cire d'abeille;violette|santal;cèdre;vanille;musc|3|3|3|0
+Houbigant|Orangers en Fleurs|floral|f|fleur d'oranger;rose|tubéreuse;ylang des comores;muscade|cèdre;musc|3|3|3|0
+Houbigant|Iris des Champs|floral|f|bergamote;muguet;poivre rose|beurre d'iris;iris;rose;jasmin sambac;ylang-ylang|santal;ambre boisé;vanille;musc|4|4|4|0
+Houbigant|Ambre Rubis|ambré|u|orange sanguine;poivre rose;encens|cerise;rhum;jasmin|ambre;baume de sapin;cèdre|3|4|4|0
+Houbigant|Rose du Désert|floral|u|bergamote;fleur de citronnier;yuzu|iris;rose de bulgarie;rose de turquie;vanille;violette|ambre gris;cèdre;musc;patchouli|3|4|4|0
+Houbigant|Vanille Impériale|floral|u|bergamote;orange sanguine;néroli|jasmin;rose;tubéreuse;vanille|ambre gris;graines d'ambrette;musc;ambre boisé|3|4|4|0
+Houbigant|Pivoine Souveraine|floral|f|poivre rose;élémi blanc;clémentine|pivoine;rose;jasmin|santal;feuilles de thé;musc|3|3|3|0
+Van Cleef & Arpels|Gardenia Petale|floral|f|notes vertes;agrumes;jasmin|gardénia;muguet|fleurs sauvages|2|3|2|0
+Van Cleef & Arpels|Orchidée Vanille|gourmand|f|mandarine;litchi;amande amère;chocolat|orchidée;rose de bulgarie;violette|cèdre;fève tonka;musc blanc|3|4|4|0
+Van Cleef & Arpels|California Reverie|floral|f|mandarine;néroli|jasmin sambac;frangipanier;cire d'abeille|vanille|3|3|3|0
+Van Cleef & Arpels|Oud Blanc|oud|u|accord datte|accord oud;rose de turquie;encens|musc blanc;aldéhydes;vanille|4|4|5|0
+Van Cleef & Arpels|Ambre Impérial|gourmand|u|poivre rose;bergamote|ambre;fève tonka;vanille;benjoin|bois|4|4|5|0
+Van Cleef & Arpels|Néroli Amara|agrumes|u|citron d'italie;mandarine;bergamote|poivre rose;cyprès|fleur d'oranger|1|2|1|0
+Van Cleef & Arpels|Bois d'Iris|boisé|u||iris;bois;ambre gris||4|4|4|0
+Dior|Mitzah|gourmand|f|coriandre|rose de damas;cannelle|labdanum;ciste;vanille;miel;patchouli;encens|4|4|5|0
+Xerjoff|Accento Overdose|floral|u|notes fruitées;accord vert;aldéhydes|jasmin d'égypte;muguet;rose de bulgarie|eucalyptus;pin|2|3|2|0
+Dior|Eau Noire|gourmand|m|thym blanc;lavande|réglisse;immortelle;violette;sauge épicée|vanille bourbon;cèdre de virginie;café;cuir|4|4|4|0
+Dior|Purple Oud|oud|u|poivre rose;orange|oud;safran||3|3|3|0
+Dior|Patchouli Impérial|boisé|u||patchouli;coriandre;santal||4|4|4|0
+Guerlain|Cruel Gardénia|floral|f|rose;pêche;néroli|violette;ylang-ylang;musc léger|fève tonka;vanille;santal|4|4|4|0
+Guerlain|Néroli Outrenoir|agrumes|u|bergamote;pamplemousse;citron;petitgrain;mandarine|néroli;fleur d'oranger;fumée;thé|ambrette;benjoin;myrrhe;mousse de chêne;vanille|2|3|2|0
+Guerlain|Cherry Oud|oud|u||oud;cerise;cannelle;cardamome;rose de turquie;rose de bulgarie;cuir||4|4|4|0
+Guerlain|Oud Essentiel|oud|u|safran;géranium|oud;rose;cèdre de l'atlas|cuir;encens;gaïac|4|4|4|0
+Guerlain|Ambre Eternel|cuir|u||ambre gris;pêche;iris;cuir||4|4|4|0
+Guerlain|Aqua Allegoria Bergamote Calabria|épicé|u|zeste de bergamote;poivre rose;notes vertes|cardamome;gingembre;jus de bergamote|musc blanc;ambre;vanille|3|3|3|0
+Jean Paul Gaultier|Ambre Tatouage|ambré|u||ambre;figue confite;benjoin;patchouli||4|4|5|0
+Jean Paul Gaultier|Cuir 1976|cuir|u||fleur d'oranger;marron glacé;accord cuir||4|4|4|0
+Jean Paul Gaultier|French Oud|oud|u|orange amère|oud;cypriol||3|3|3|0
+Jean Paul Gaultier|Rose Palace|boisé|f|rose de damas|sésame noir;crème|vétiver|3|3|3|0
+Jean Paul Gaultier|Santal de Paname|boisé|u||mûre;feuille de violette|santal lacté|3|3|3|0
+Jean Paul Gaultier|Musc Terrible|gourmand|u|poivre rose;cannelle|ambre|musc;vanille|4|4|5|0
+Jean Paul Gaultier|Le Male|gourmand|m|menthe;armoise;cardamome;bergamote|lavande;fleur d'oranger;cannelle;cumin|santal;vanille;cèdre;fève tonka;ambre|3|3|3|0
+Jean Paul Gaultier|So Scandal!|floral|f|fleur d'oranger|tubéreuse;jasmin|accord lacté|3|3|3|0
+Jean Paul Gaultier|Le Male Ultra|aromatique|m|bergamote;poire;menthe|cumin;sauge sclarée;lavande|ambre;vanille noire;bois|3|3|3|0
+Jean Paul Gaultier|Divine|floral|f|calypsone;fruits rouges;bergamote|lys;ylang-ylang;jasmin|meringue;musc;patchouli|3|3|3|0
 Frédéric Malle|Portrait of a Lady|boisé|f|rose|cassis;framboise;clou de girofle|patchouli;santal;encens|4|4|4|0
 Frédéric Malle|Carnal Flower|floral|f|melon;notes végétales;tubéreuse fraîche|tubéreuse lactée|musc|3|3|3|0
 Frédéric Malle|Musc Ravageur|agrumes|u|bergamote;mandarine;lavande|ambre;vanille;musc|santal;musc|3|3|3|0

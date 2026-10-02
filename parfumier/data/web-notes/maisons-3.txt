@@ -1,0 +1,21 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : pages officielles, Parfumo, revendeurs, via recherche web)
+Xerjoff|Accento Overdose|u|notes fruitées;accord vert;aldéhydes|jasmin d'Égypte;muguet;rose de Bulgarie|eucalyptus;pin
+Dior|Eau Noire|m|thym blanc;lavande|réglisse;immortelle;violette;sauge épicée|vanille Bourbon;cèdre de Virginie;café;cuir
+Dior|Purple Oud|u|poivre rose;orange|oud;safran|
+Dior|Patchouli Impérial|u||patchouli;coriandre;santal|
+Guerlain|Cruel Gardénia|f|rose;pêche;néroli|violette;ylang-ylang;musc léger|fève tonka;vanille;santal
+Guerlain|Néroli Outrenoir|u|bergamote;pamplemousse;citron;petitgrain;mandarine|néroli;fleur d'oranger;fumée;thé|ambrette;benjoin;myrrhe;mousse de chêne;vanille
+Guerlain|Cherry Oud|u||oud;cerise;cannelle;cardamome;rose de Turquie;rose de Bulgarie;cuir|
+Guerlain|Oud Essentiel|u|safran;géranium|oud;rose;cèdre de l'Atlas|cuir;encens;gaïac
+Guerlain|Ambre Eternel|u||ambre gris;pêche;iris;cuir|
+Guerlain|Aqua Allegoria Bergamote Calabria|u|zeste de bergamote;poivre rose;notes vertes|cardamome;gingembre;jus de bergamote|musc blanc;ambre;vanille
+Jean Paul Gaultier|Ambre Tatouage|u||ambre;figue confite;benjoin;patchouli|
+Jean Paul Gaultier|Cuir 1976|u||fleur d'oranger;marron glacé;accord cuir|
+Jean Paul Gaultier|French Oud|u|orange amère|oud;cypriol|
+Jean Paul Gaultier|Rose Palace|f|rose de Damas|sésame noir;crème|vétiver
+Jean Paul Gaultier|Santal de Paname|u||mûre;feuille de violette|santal lacté
+Jean Paul Gaultier|Musc Terrible|u|poivre rose;cannelle|ambre|musc;vanille
+Jean Paul Gaultier|Le Male|m|menthe;armoise;cardamome;bergamote|lavande;fleur d'oranger;cannelle;cumin|santal;vanille;cèdre;fève tonka;ambre
+Jean Paul Gaultier|So Scandal!|f|fleur d'oranger|tubéreuse;jasmin|accord lacté
+Jean Paul Gaultier|Le Male Ultra|m|bergamote;poire;menthe|cumin;sauge sclarée;lavande|ambre;vanille noire;bois
+Jean Paul Gaultier|Divine|f|calypsone;fruits rouges;bergamote|lys;ylang-ylang;jasmin|meringue;musc;patchouli

@@ -1,0 +1,34 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : fiches produit du site officiel Bon Parfumeur ; trois notes clés rangées au cœur)
+Bon Parfumeur|403|u||poivre du Timut;myrrhe;benjoin|
+Bon Parfumeur|001|u||fleur d'oranger;petitgrain;bergamote|
+Bon Parfumeur|002|u||néroli;jasmin;ambre blanc|
+Bon Parfumeur|003|u||yuzu;feuilles de violette;vétiver|
+Bon Parfumeur|004|u||gin;mandarine;musc|
+Bon Parfumeur|101|u||rose;pois de senteur;cèdre blanc|
+Bon Parfumeur|102|u||thé;cardamome;mimosa|
+Bon Parfumeur|103|u||fleur de tiaré;jasmin;hibiscus|
+Bon Parfumeur|104|u||orange verte;jacinthe;lierre|
+Bon Parfumeur|105|u||mandarine;cannelle;santal|
+Bon Parfumeur|106|u||rose de Damas;davana;vanille|
+Bon Parfumeur|107|u||tubéreuse;safran;cuir suédé|
+Bon Parfumeur|201|u||pomme verte;muguet;coing|
+Bon Parfumeur|202|u||pastèque;groseille;jasmin|
+Bon Parfumeur|203|u||framboise;vanille;mûre|
+Bon Parfumeur|301|u||ambre;cardamome;santal|
+Bon Parfumeur|303|u||piment;baies roses;benjoin|
+Bon Parfumeur|304|u||cumin;fleur d'amandier;cèdre|
+Bon Parfumeur|401|u||cèdre;prune confite;vanille|
+Bon Parfumeur|402|u||vanille;caramel;santal|
+Bon Parfumeur|501|u||praliné;réglisse;patchouli|
+Bon Parfumeur|502|u||iris;cacao;papyrus|
+Bon Parfumeur|601|u||vétiver;cèdre;bergamote|
+Bon Parfumeur|602|u||poivre;cèdre;patchouli|
+Bon Parfumeur|603|u||cuir;encens;fève tonka|
+Bon Parfumeur|701|u||eucalyptus;coriandre;cyprès|
+Bon Parfumeur|702|u||encens;lavande;bois de cachemire|
+Bon Parfumeur|801|u||embruns;cèdre;pamplemousse|
+Bon Parfumeur|802|u||pivoine;lotus;bambou|
+Bon Parfumeur|803|u||embruns;gingembre;patchouli|
+Bon Parfumeur|903|u||baies népalaises;safran;oud|
+Bon Parfumeur|904|u||vodka;tabac blond;genévrier|
+Bon Parfumeur|902|u||armagnac;tabac blond;cannelle|

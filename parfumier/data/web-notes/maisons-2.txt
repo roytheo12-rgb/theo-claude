@@ -1,0 +1,64 @@
+# Maison|Parfum|genre|tête|cœur|fond   (source : Notino, Parfumo, revendeurs et pages marque, via recherche web)
+Zadig & Voltaire|This Is Her!|f|albizia;jasmin;baies roses|marron;vanille;crème fouettée|santal;accord cachemire
+Zadig & Voltaire|Just Rock! Pour Elle|f|jasmin|vanille;encens|patchouli
+Zadig & Voltaire|Just Rock! Pour Lui|m|patchouli noir;encens|vanille noire;fève tonka;épices|
+Zadig & Voltaire|This is Love! Pour Lui|m|lavande;mandarine|cardamome;encens|cèdre;patchouli
+Zadig & Voltaire|Vibes of Freedom Pour Elle|f|poire;pivoine|jasmin;rose|
+Zadig & Voltaire|Girls Can Do Anything|f|poire;mandarine;bergamote;fleur d'oranger|fève tonka;tubéreuse|vanille;fougère;musc;girofle;ambroxan;patchouli
+Contes de Parfums|Agra|u|gingembre;cardamome;néroli|jasmin sambac;tubéreuse indienne;ylang-ylang|vanille;fève tonka
+Contes de Parfums|Alexandria|u|bergamote;cardamome;encens|jasmin;praliné|santal;oud;patchouli;vanille
+Contes de Parfums|Atlantis|u|algues;sel marin;safran|cypriol;mousse;jasmin auriculatum|ambroxan;musc;cèdre de Virginie
+Contes de Parfums|Babylon|u|maté;bergamote|myrtille;figue;fraise|cuir;cèdre;patchouli;gaïac
+Contes de Parfums|Bilbao|u|bergamote;poivre rose;lavande|café;copeaux de chêne;patchouli|ambrettolide;ambroxan;labdanum;oud du Laos
+Contes de Parfums|Dubai|u|datte;safran;mandarine|géranium;douceurs arabes;patchouli doré|mousse;ambre;vanille
+Contes de Parfums|Hydra|u|feuilles de menthe;pastèque|pétales de jasmin;jacinthe|écume de mer;musc blanc
+Contes de Parfums|Positano|u|huile d'orange;cassis;curcuma|foin;lavande;accord marin|
+Contes de Parfums|Reykjavik|u|vapeur de fjord;cardamome;poivre rose|sauge;romarin;accord sauna|ambre;cèdre;vétiver
+Contes de Parfums|Salalah|u|prune;rose|rose de Turquie;patchouli|accord oud;baume de gurjum;labdanum
+Contes de Parfums|Sevilla|u|thé blanc;linge frais;bergamote|néroli;jasmin;fleur d'oranger|musc;bois de cachemire;cèdre blanc
+Contes de Parfums|Shanghai|u|citron;nashi;accord feuille de thé|pivoine de Chine;eau de coco;jasmin|sinfonide;ambroxan;vétiver
+Contes de Parfums|Tokyo|u|poire;pamplemousse;fruits rouges|rose;thé à la bergamote;fleur de cerisier|musc;cèdre blanc;coton
+D'Orsay|Le Dandy|m|tabac;whisky;rhum;ananas|gingembre;muscade;cannelle;girofle|bois;baume
+D'Orsay|A.R. (Oud)|u|iris;cardamome|vétiver;cèdre|
+Dries Van Noten|Sur Ma Peau|u|bergamote;mandarine|accord fleur d'oranger;vétiver|accord vanille;fève tonka;benjoin
+Dries Van Noten|Mystic Moss|u|mandarine;cardamome;sel;algues|mousse|
+Histoires de Parfums|1725 Casanova|m|bergamote;agrumes;pamplemousse;réglisse|lavande;anis étoilé|vanille;amande;santal;cèdre;ambre
+Histoires de Parfums|1804 George Sand|f|gardénia de Tahiti;pêche de Corse;ananas d'Hawaï|girofle;muscade;jasmin indien;muguet;rose|santal;patchouli;benjoin;vanille;musc blanc
+Histoires de Parfums|1826 Eugénie de Montijo|f|bergamote;mandarine;fleurs blanches|violette;gingembre;cannelle|patchouli;ambre;encens de Jakarta;vanille
+Histoires de Parfums|1876 Mata Hari|f|orange;bergamote;litchi|rose;iris;violette;cumin;cannelle;œillet|santal;vétiver;gaïac;musc blanc;vanille
+Histoires de Parfums|1889 Moulin Rouge|f|mandarine;prune;cannelle|absinthe;rose de Damas|iris;patchouli;musc;fourrure
+Histoires de Parfums|1969 Parfum de Révolte|f|pêche|cardamome;girofle;rose;fleurs blanches|chocolat mexicain;patchouli;café;musc blanc
+Histoires de Parfums|Noir Patchouli|u|patchouli;cardamome|patchouli;fleurs;baies de genévrier|patchouli;cuir;musc;vanille
+Histoires de Parfums|Tubéreuse 1 Capricieuse|f|safran;bergamote;mandarine|tubéreuse;iris;ylang-ylang|cacao;daim;musc blanc
+Histoires de Parfums|Tubéreuse 2 (Virginale)|f|mandarine;cerise|tubéreuse;iris;tiaré;frangipanier|bois blonds;patchouli;vanille;musc blanc
+Histoires de Parfums|Tubéreuse 3 Animale|f|kumquat;bergamote;néroli;prune;herbes|foin;jasmin;tubéreuse;tabac blond;immortelle|bois;labdanum
+Histoires de Parfums|Petroleum|u|oud;bergamote;aldéhydes|rose|ambre;civette;cuir;patchouli;musc blanc
+Histoires de Parfums|Rosam|u|rose;citron;safran|encens;ambre|santal;patchouli;oud
+Histoires de Parfums|Fidelis|u|huile de cardamome;café du Guatemala;safran;cumin|rose absolue;framboise|patchouli;ambre;oud du Laos
+Giardini di Toscana|Bianco Latte|u|caramel|miel;coumarine|vanille;musc blanc
+Giardini di Toscana|Rosso Radice|u|bergamote;poivre rose;sauge sclarée|vétiver;cashmeran|ambroxan;ambrette
+Santa Maria Novella|Acqua della Regina|u|agrumes italiens;néroli;petitgrain|néroli;romarin;girofle;lavande|patchouli;musc
+Santa Maria Novella|Spanish Leather Cologne|u|bergamote de Calabre;jasmin;œillet|cèdre;néroli;feuilles de violette|civette;bouleau
+Santa Maria Novella|Rosa Novella|f|citron;petitgrain|rose centifolia;jasmin;gardénia|patchouli;santal;cèdre;musc
+Santa Maria Novella|Marescialla|u|agrumes;macis|cèdre;rose centifolia|santal;patchouli;mousse de chêne
+Santa Maria Novella|Russian Cologne|u|bergamote de Calabre;agrumes;néroli|petitgrain;romarin;lavande;girofle|benjoin de Sumatra;civette
+Santa Maria Novella|Muschio Oro|u|fleurs blanches|ylang-ylang;néroli;iris;muguet|vanille;cèdre;fève tonka;musc
+Santa Maria Novella|Quercia|u|lavande|vétiver;patchouli|bois de chêne
+Santa Maria Novella|Pot Pourri|u|chypre;bergamote;girofle|girofle;lavande;feuille de baie;romarin;thym|mousse;patchouli;baume du Pérou
+Horace|Ibiza '87|m||champagne;thym;labdanum|
+Horace|Mezcal Musc|m|poivre noir;davana|cyprès;gaïac|vétiver de Java;bouleau;musc
+Houbigant|Quelques Fleurs Royale|f|cassis;pamplemousse|jasmin;rose;tubéreuse;cire d'abeille;violette|santal;cèdre;vanille;musc
+Houbigant|Orangers en Fleurs|f|fleur d'oranger;rose|tubéreuse;ylang des Comores;muscade|cèdre;musc
+Houbigant|Iris des Champs|f|bergamote;muguet;poivre rose|beurre d'iris;iris;rose;jasmin sambac;ylang-ylang|santal;ambre boisé;vanille;musc
+Houbigant|Ambre Rubis|u|orange sanguine;poivre rose;encens|cerise;rhum;jasmin|ambre;baume de sapin;cèdre
+Houbigant|Rose du Désert|u|bergamote;fleur de citronnier;yuzu|iris;rose de Bulgarie;rose de Turquie;vanille;violette|ambre gris;cèdre;musc;patchouli
+Houbigant|Vanille Impériale|u|bergamote;orange sanguine;néroli|jasmin;rose;tubéreuse;vanille|ambre gris;graines d'ambrette;musc;ambre boisé
+Houbigant|Pivoine Souveraine|f|poivre rose;élémi blanc;clémentine|pivoine;rose;jasmin|santal;feuilles de thé;musc
+Van Cleef & Arpels|Gardenia Petale|f|notes vertes;agrumes;jasmin|gardénia;muguet|fleurs sauvages
+Van Cleef & Arpels|Orchidée Vanille|f|mandarine;litchi;amande amère;chocolat|orchidée;rose de Bulgarie;violette|cèdre;fève tonka;musc blanc
+Van Cleef & Arpels|California Reverie|f|mandarine;néroli|jasmin sambac;frangipanier;cire d'abeille|vanille
+Van Cleef & Arpels|Oud Blanc|u|accord datte|accord oud;rose de Turquie;encens|musc blanc;aldéhydes;vanille
+Van Cleef & Arpels|Ambre Impérial|u|poivre rose;bergamote|ambre;fève tonka;vanille;benjoin|bois
+Van Cleef & Arpels|Néroli Amara|u|citron d'Italie;mandarine;bergamote|poivre rose;cyprès|fleur d'oranger
+Van Cleef & Arpels|Bois d'Iris|u||iris;bois;ambre gris|
+Dior|Mitzah|f|coriandre|rose de Damas;cannelle|labdanum;ciste;vanille;miel;patchouli;encens
