@@ -11,9 +11,11 @@ def get(u):
         try: return urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=40).read().decode('utf-8', 'replace')
         except Exception: time.sleep(2 + 3 * i)
     return ''
-missing = json.load(open(root / 'data/web-raw/missing-img.json', encoding='utf-8'))
+import os
+MISS = os.environ.get('MISSING', 'missing-img.json'); TAG = os.environ.get('TAG', '')
+missing = json.load(open(root / 'data/web-raw' / MISS, encoding='utf-8'))
 part, parts = (int(sys.argv[1]), int(sys.argv[2])) if len(sys.argv) > 2 else (0, 1)
-out = root / f'data/web-raw/images-extra-{part}.jsonl'
+out = root / f'data/web-raw/images-extra-{TAG}{part}.jsonl'
 done = set()
 if out.exists():
     for l in out.open(encoding='utf-8'):
@@ -34,6 +36,12 @@ def hprefs(h):
     # plusieurs graphies possibles : on teste chaque variante séparée par deux espaces ou le nom complet
     base = norm(h).replace(' ', '-')
     alts = {base}
+    b2 = base.replace('-and-', '-'); alts.add(b2)
+    for pre in ('maison-', 'the-', 'les-'):
+        if base.startswith(pre): alts.add(base[len(pre):])
+    for suf in ('-paris', '-parfums', '-perfumes', '-london', '-parfum', '-maison-de-parfum'):
+        if base.endswith(suf): alts.add(base[:-len(suf)])
+    if '&' in h: alts.add(norm(h.replace('&', 'and')).replace(' ', '-'))
     for k, v in HOUSE_SLUG.items():
         if k == h:
             for name in {'dior', 'christian-dior'} if h == 'Dior' else {'yves-saint-laurent', 'ysl'} if h == 'Yves Saint Laurent' else {'paco-rabanne', 'rabanne'} if h == 'Rabanne' else {'giorgio-armani', 'armani'} if h == 'Armani' else {'bulgari', 'bvlgari'} if h == 'Bvlgari' else {'jo-malone-london', 'jo-malone'} if h == 'Jo Malone' else {'penhaligon-s', 'penhaligons'} if h == "Penhaligon's" else {base}: alts.add(name)
