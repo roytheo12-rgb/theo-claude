@@ -7,7 +7,7 @@ from PIL import Image
 root = pathlib.Path(__file__).resolve().parent.parent
 def norm(s): return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9 ]', ' ', ''.join(c for c in unicodedata.normalize('NFD', str(s or '').lower()) if not unicodedata.combining(c)))).strip()
 NAMES = ["Imagination","L'Immensité","Ombre Nomade","Attrape-Rêves","Tea Storm","Ink Mark","Moon Tale","Ambre Levant","Ombre Nomade","Fleur du Désert","Les Sables Roses","Pur Santal","Pur Santal","Pur Oud","Pur Ambre","Nuit de Feu","Afternoon Swim","Pacific Chill","Sun Song","California Dream","City of Stars","On the Beach","eLVes","Spell on You","Attrape-Rêves","Heures d'Absence","Le Jour Se Lève","Rose des Vents","Cœur Battant","Étoile Filante","Apogée","Matière Noire","Imagination","L'Immensité","LV Lovers","Météore","Orage","Nouveau Monde","Sur La Route","Fantasmagory","Symphony","Stellar Times","Dancing Blossom","Myriad","Cosmic Cloud","Rhapsody"]
-files = sorted(glob.glob(str(root / 'incoming/Capture*')))
+files = sorted(glob.glob(str(root / 'incoming/Capture*')))[:46]    # les 46 premières captures (16 h 11 à 16 h 17)
 assert len(files) == len(NAMES), (len(files), len(NAMES))
 def cut(im):
     im = im.convert('RGB').crop((70, 75, 560, 610))
@@ -30,18 +30,17 @@ def cut(im):
     ys, xs = np.where(keep)
     out = Image.fromarray(np.dstack([a.astype(np.uint8), (alpha * 255).astype(np.uint8)]))
     return out.crop((max(0, xs.min() - 4), max(0, ys.min() - 4), min(w, xs.max() + 5), min(h, ys.max() + 5)))
-imgweb_p = root / 'imgweb.js'
-txt = imgweb_p.read_text(encoding='utf-8'); m = re.search(r'IMGWEB = (\{.*?\});', txt, re.S); imgweb = json.loads(m.group(1))
-(root / 'v2/img/w').mkdir(parents=True, exist_ok=True)
+(root / 'v2/img/p').mkdir(parents=True, exist_ok=True)
+shots_p = root / 'data/imgshots.json'
+shots = json.loads(shots_p.read_text(encoding='utf-8')) if shots_p.exists() else {}
 ALIAS = {'Cœur Battant': ['Coeur Battant'], 'Météore': ['Meteore'], 'Sur La Route': ['Sur la Route']}
-seen = set(); done = []
+seen = set()
 for f, nm in zip(files, NAMES):
     if nm in seen: continue
     seen.add(nm)
     c = cut(Image.open(f)); c.thumbnail((480, 600))
-    fn = 'img/w/louis-vuitton-' + norm(nm).replace(' ', '-') + '.webp'
+    fn = 'img/p/louis-vuitton-' + norm(nm).replace(' ', '-') + '.webp'
     c.save(root / 'v2' / fn, 'WEBP', quality=80, method=5)
-    for n in [nm] + ALIAS.get(nm, []): imgweb['louis vuitton|' + norm(n)] = fn
-    done.append(nm)
-imgweb_p.write_text(txt[:m.start(1)] + json.dumps(imgweb, ensure_ascii=False, separators=(',', ':')) + txt[m.end(1):], encoding='utf-8')
-print(len(done), 'LV')
+    for n in [nm] + ALIAS.get(nm, []): shots['louis vuitton|' + norm(n)] = fn
+shots_p.write_text(json.dumps(shots, ensure_ascii=False, indent=0), encoding='utf-8')
+print(len(seen), 'LV')

@@ -6,13 +6,29 @@ import sys, re
 def js(path):
     return f"<script>\n{path.read_text()}\n</script>\n"
 
-def imgweb_artifact():
-    # L'artifact ne peut héberger qu'un nombre limité de fichiers : on n'y déclare que les photos publiées (liste dans data/artifact-imgweb.json).
+def _obj(name):
     import json
-    src = (up/'imgweb.js').read_text(); m = re.search(r'IMGWEB = (\{.*\});', src, re.S)
-    allowed = set(json.loads((up/'data/artifact-imgweb.json').read_text())) if (up/'data/artifact-imgweb.json').exists() else set()
-    d0 = json.loads(m.group(1)) if m else {}
-    return "<script>\nwindow.IMGWEB = " + json.dumps({k: v for k, v in d0.items() if k in allowed}, ensure_ascii=False, separators=(',', ':')) + ";\n</script>\n"
+    src = (up/(name + '.js')).read_text(); m = re.search(r'window\.' + name.upper() + r' = (\{.*?\});', src, re.S)
+    return json.loads(m.group(1)) if m else {}
+
+def imgdb_web_artifact(budget=505):
+    # L'artifact ne peut héberger qu'environ 510 fichiers : photos fournies (img/*.webp, img/p, img/nose) d'abord, puis, dans la place qui reste,
+    # les photos de base (IMGDB) et web (IMGWEB) des maisons les mieux classées. Le site public embarque tout. Liste écrite dans v2/artifact-files.json.
+    import json
+    new = _obj('imgnew'); fixed = set(v for v in new.values()) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text()))
+    fixed |= set('img/' + f.name for f in (d/'img').glob('*.webp'))
+    fame = {}
+    for i, h in enumerate(re.findall(r"'((?:[^'\\]|\\.)+)'", re.search(r'HOUSE_FAME\s*=\s*\[(.*?)\]', (up/'desc.js').read_text(), re.S).group(1))): fame.setdefault(re.sub(r'[^a-z0-9]+', ' ', __import__('unicodedata').normalize('NFD', h.lower()).encode('ascii', 'ignore').decode()).strip(), i)
+    db, web = _obj('imgdb'), _obj('imgweb'); allowed = set(json.loads((up/'data/artifact-imgweb.json').read_text())) if (up/'data/artifact-imgweb.json').exists() else set()
+    cand = [(fame.get(k.split('|')[0], 999), 0, k, v, 'db') for k, v in db.items() if k not in new] + [(fame.get(k.split('|')[0], 999), 1, k, v, 'web') for k, v in web.items() if k not in new and k not in db]
+    cand.sort(key=lambda x: x[:3]); room = budget - len(fixed); outdb, outweb, files = {}, {}, set(fixed)
+    for _, _, k, v, kind in cand:
+        if room <= 0: break
+        if v in files: continue
+        (outdb if kind == 'db' else outweb)[k] = v; files.add(v); room -= 1
+    (d/'artifact-files.json').write_text(json.dumps(sorted(files)), encoding='utf-8')
+    dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
+    return "<script>\nwindow.IMGDB = " + dump(outdb) + ";\n</script>\n<script>\nwindow.IMGWEB = " + dump(outweb) + ";\n</script>\n"
 
 def prompt_script():
     src = (d / 'prompt.mjs').read_text().replace('export function', 'function')
@@ -45,7 +61,7 @@ def page(scripts, head_extra=""):
 
 mode = sys.argv[1] if len(sys.argv) > 1 else "artifact"
 if mode == "artifact":
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + imgweb_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgnew.js') + imgdb_web_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
     out = d/'sillage.html'
     out.write_text(page(scripts))
     print(out, out.stat().st_size)

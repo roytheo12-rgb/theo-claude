@@ -32,7 +32,7 @@ todo, _seen = [], set()
 for r in rows:
     if (norm(r['house']) in houses or r.get('extra')) and key(r) not in have and norm(r['name']) not in hand and key(r) not in _seen: _seen.add(key(r)); todo.append(r)
 out = root / 'v2/img/w'; out.mkdir(parents=True, exist_ok=True)
-def cut_hard(im, thr=18):
+def cut_hard(im, thr=18, dil=6):
     if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
         rgba = im.convert('RGBA'); al = np.asarray(rgba)[:, :, 3]
         if (al < 250).mean() > 0.05:
@@ -42,12 +42,17 @@ def cut_hard(im, thr=18):
     im = im.convert('RGB'); a = np.asarray(im).astype(np.int16); h, w, _ = a.shape
     bg = np.median(np.array([a[2, 2], a[2, w - 3], a[h - 3, 2], a[h - 3, w - 3]]), axis=0)
     near = np.abs(a - bg).sum(axis=2) < thr
+    if thr > 18:      # fond de studio : on prend les teintes dominantes du pourtour (haut, sol plus clair, marge blanche d'une capture), pas seulement celle des coins
+        bd = np.concatenate([a[:6].reshape(-1, 3), a[-6:].reshape(-1, 3), a[:, :6].reshape(-1, 3), a[:, -6:].reshape(-1, 3)])
+        cols, cnt = np.unique(bd // 4, axis=0, return_counts=True)
+        for ci in np.argsort(-cnt)[:4]:
+            if cnt[ci] >= 0.05 * len(bd): near = near | (np.abs(a - (cols[ci] * 4 + 2)).sum(axis=2) < thr)
     lab, n = ndimage.label(near); edge = set(lab[0]) | set(lab[-1]) | set(lab[:, 0]) | set(lab[:, -1]); edge.discard(0)
     keep = ~np.isin(lab, list(edge))
     keep = ndimage.binary_fill_holes(ndimage.binary_closing(keep, structure=np.ones((9, 9))))     # les étiquettes blanches ne doivent pas être mangées
     keep = ndimage.binary_opening(keep, structure=np.ones((3, 3)))
     if thr > 18:      # fond de studio en dégradé : on garde le flacon (plus grand bloc) et ce qui lui touche, pas les débris du sol et des ombres
-        lb, nb = ndimage.label(ndimage.binary_dilation(keep, iterations=6))
+        lb, nb = ndimage.label(ndimage.binary_dilation(keep, iterations=dil))
         if nb > 1:
             sz = ndimage.sum(keep, lb, range(1, nb + 1)); keep = keep & np.isin(lb, [i + 1 for i, z in enumerate(sz) if z >= 0.2 * sz.max()])
     ys, xs = np.where(keep)
@@ -78,11 +83,11 @@ def cut(im):
         s2 = cut_soft(src)
         if s2 is not None: return s2
     return r
-def cut_studio(im):
+def cut_studio(im, dil=6):
     """Fond de studio en dégradé : on essaie plusieurs seuils et on garde le détourage le plus plein et le plus haut (un seuil trop fort mange le verre pâle, trop faible laisse le fond)."""
     best, bs = None, -1
     for thr in (30, 44, 58, 72):
-        r = cut_hard(im.copy(), thr)
+        r = cut_hard(im.copy(), thr, dil)
         if r is None: continue
         al = np.asarray(r)[:, :, 3] > 128
         sc = al.mean() * (r.size[1] / im.size[1]) ** 1.5 * min(1, 0.25 + al.sum() / max(1, 0.06 * im.size[0] * im.size[1]))

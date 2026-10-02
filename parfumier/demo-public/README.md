@@ -187,3 +187,9 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - **Photos** : `tools/build-lv.py` (46 captures Louis Vuitton déposées dans `incoming/`, détourées, nom lu sur chaque capture), `tools/images-from-houses.py` (Hermès, Bon Parfumeur, Atelier des Ors, D'Orsay lus chez les maisons) ; `build-web.py` détoure aussi les fonds en dégradé (`cut_soft`).
 - Recherche : mise en page aérée (blocs espacés, filtres repliés, nez dans un volet).
 - Non couvert faute de source accessible : Armani Privé (site officiel et revendeurs bloqués), Contes de Parfums (site « prochainement disponible »).
+
+## Captures Louis Vuitton, Frédéric Malle et Hermès (v52)
+- Les captures déposées dans `incoming/` (« Capture d'écran … ») sont lues par `tools/build-lv.py` (46 captures LV) et `tools/build-shots.py` (88 captures Malle et Hermès, noms écrits sous chaque capture). Résultat : `v2/img/p/*.webp` et `data/imgshots.json`, que `tools/build-png.py` fusionne dans `imgnew.js` : ces photos passent **avant** toutes les autres.
+- Malle et LV sont détourés ; Hermès reste en vignette 4:5 sur fond de studio (le verre pâle ne se détoure pas proprement).
+- 20 parfums vus sur les captures n'étaient pas dans la base : ajoutés dans `data/raw/99-incoming.txt`.
+- **Artifact** : `v2/build.py` remplit les ~510 fichiers autorisés avec les photos fournies d'abord (img/*.webp, `img/p`, `img/nose`), puis les photos web des maisons les mieux classées. La liste exacte est écrite dans `v2/artifact-files.json`.

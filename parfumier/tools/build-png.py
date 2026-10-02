@@ -114,6 +114,8 @@ for r in rows:
     if r.get('crop'): ph = bg.crop(tuple(int(v) for v in r['crop'].split(',')))      # recadrage manuel autour du visage (x0,y0,x1,y1)
     fn = f'img/nose/{slug(r["nose"])}.webp'
     save(ph, root / 'v2' / fn, 420); noses[r['nose']] = fn
+_sh = root / 'data/imgshots.json'      # captures de sites (Louis Vuitton, Frédéric Malle, Hermès) : tools/build-lv.py et tools/build-shots.py
+if _sh.exists(): imgnew.update(json.loads(_sh.read_text(encoding='utf-8')))
 for d, keep in (('p', set(imgnew.values())), ('nose', set(noses.values()))):
     for f in (root / 'v2/img' / d).glob('*.webp'):
         if f'img/{d}/{f.name}' not in keep: f.unlink()
