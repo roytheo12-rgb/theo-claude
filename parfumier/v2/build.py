@@ -16,7 +16,7 @@ def imgweb_artifact():
 
 def prompt_script():
     src = (d / 'prompt.mjs').read_text().replace('export function', 'function')
-    return f"<script>\n{src}\nwindow.SillagePrompts = {{ day: dayPrompt }};\n</script>\n"
+    return f"<script>\n{src}\nwindow.SillagePrompts = {{ day: dayPrompt, need: needPrompt }};\n</script>\n"
 
 def page(scripts, head_extra=""):
     return f"""<title>Sillage</title>{head_extra}

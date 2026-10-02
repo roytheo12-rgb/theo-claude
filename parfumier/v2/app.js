@@ -758,8 +758,25 @@
     const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g }), NEED.n);
     const lookup = {}; dbList().forEach((e) => { lookup[entryKey(e)] = e; });
     box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(E.needLabel(need) || 'Besoin compris')} · ${res.length} résultat${res.length > 1 ? 's' : ''}</p>` + (res.length ? `<div class="xgrid">${res.map((r) => { const e = r.c.entry || lookup[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, family: r.c.family, notes: r.c.notes, price: r.c.price, tags: [], cat: r.c }; return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small><em>${esc(r.m.why.join(' · '))}</em>${r.m.pitch ? `<em>${esc(r.m.pitch)}</em>` : ''}</span><i class="xm">${r.m.pct} %</i></button>`; }).join('')}</div>${NEED.n <= res.length ? '<button type="button" class="ghost" id="nmore">Voir plus</button>' : ''}` : '<div class="empty">Rien ne correspond vraiment. Enlève une contrainte (budget, note fuie) ou élargis le besoin.</div>');
+    box.insertAdjacentHTML('beforeend', `<div style="display:grid;gap:12px;margin-top:14px"><button type="button" class="cta" id="needai"><span>Affiner avec l'IA</span></button><p class="mono" id="needaimsg" style="text-transform:none;letter-spacing:0">L'IA compare les meilleurs candidats, tranche pour toi et explique pourquoi.</p><div id="needaires" style="display:grid;gap:12px"></div></div>`);
+    $('#needai', box).onclick = () => aiNeed(res, need);
     $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lookup[b.dataset.ent]; if (e) openEntry(e); }));
     if ($('#nmore', box)) $('#nmore', box).onclick = () => { NEED.n += 8; drawNeed(); };
+  }
+  // Conseil sur mesure : l'IA tranche parmi les candidats vérifiés par le moteur (tout est calculé sur de vraies notes).
+  const ROLE_L = { choix: 'Le choix', sur: 'Le sûr', audace: 'La petite audace' };
+  async function aiNeed(res, need) {
+    const msg = $('#needaimsg'), out = $('#needaires'), btn = $('#needai'); if (!msg) return;
+    msg.textContent = 'Je compare…'; btn.disabled = true; out.innerHTML = '';
+    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %'].join(' | ')).join('\n');
+    const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')}`).join('\n');
+    const args = { need: NEED.q, shortlist: short, collection: col, profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
+    try {
+      const j = window.SillageDemo ? await window.SillageDemo.need(args) : await aiJson(window.SillagePrompts.need(args), { modelTier: 'default' });
+      const picks = (j.picks || []).slice(0, 3);
+      out.innerHTML = (j.compris ? `<p class="rd">${esc(j.compris)}</p>` : '') + picks.map((k) => `<article class="card" style="display:grid;gap:8px"><p class="mono">${esc(ROLE_L[k.role] || 'Conseil')} · ${clamp(Math.round(+k.pct || 0), 0, 99)} %${k.hors_liste ? ' · hors de ma liste vérifiée' : ''}</p><b style="font-size:18px">${esc(k.name)}</b><small style="color:var(--muted)">${esc(k.house || '')}</small><p style="font-size:14.5px">${esc(k.pourquoi || '')}</p>${k.tete ? `<p style="font-size:13.5px;color:var(--muted)">Au début : ${esc(k.tete)}</p>` : ''}${k.peau ? `<p style="font-size:13.5px;color:var(--muted)">Sur ta peau, après 3 h : ${esc(k.peau)}</p>` : ''}${k.attention ? `<p style="font-size:13.5px">⚠ ${esc(k.attention)}</p>` : ''}</article>`).join('') + (j.eviter && j.eviter.name ? `<p style="font-size:14px"><b>À éviter pour toi : ${esc(j.eviter.name)}</b>${j.eviter.raison ? ' : ' + esc(j.eviter.raison) : ''}</p>` : '') + (j.test ? `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(j.test)}</p>` : '');
+      msg.textContent = picks.length ? '' : 'L\'IA n\'a rien trouvé de mieux.'; btn.disabled = false;
+    } catch (e) { msg.textContent = e && e.code === 'rate_limited' ? 'Plus d\'essais pour aujourd\'hui.' : 'L\'IA n\'est pas disponible ici. Les résultats ci-dessus restent valables.'; btn.disabled = false; }
   }
   function viewSearch() {
     const db = dbList(), houses = [...new Set(db.map((e) => e.house))].sort((a, b) => a.localeCompare(b, 'fr')), noses = [...new Set(db.flatMap((e) => e.noses || []))].sort((a, b) => a.localeCompare(b, 'fr'));

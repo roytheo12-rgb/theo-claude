@@ -34,6 +34,16 @@
     return j.data;
   }
 
+  // Conseil sur mesure à partir d'un besoin libre (même quota que le conseil du jour).
+  async function need(args) {
+    let r; try { r = await fetch('/api/need', { method: 'POST', headers: headers(), body: JSON.stringify(args) }); } catch (e) { throw { code: 'network' }; }
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : 'quota'); throw { code: 'rate_limited' }; }
+    if (!r.ok) throw { code: 'server' };
+    if (typeof j.left === 'number') left = j.left;
+    return j.data;
+  }
+
   // Identification d'un parfum (nom, image ou lien) par une IA légère : quota à part, quasi gratuit.
   async function identify({ text, url, file }) {
     const body = { text: text || '' };
@@ -111,6 +121,6 @@
     limits: async () => ({ maxPromptBytes: 100000, images: { maxCount: 1, maxInputBytes: 8000000, mediaTypes: ['image/jpeg', 'image/png', 'image/webp'] } }),
   });
   window.claude = { use: async (name) => (name === 'sample' ? locked : null) };
-  window.SillageDemo = { account, day, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
+  window.SillageDemo = { account, day, need, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
   refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
 })();

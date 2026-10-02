@@ -15,14 +15,30 @@ app = (root / 'v2/app.js').read_text(encoding='utf-8')
 hand = {norm(k) for k in re.findall(r"'((?:[^'\\]|\\.)+)':\s*\{\s*s:\s*'img/", app)}
 have = set(info['db']) | set(info['nw'])
 rows = [r for r in json.loads((root / 'data/web-resolved.json').read_text(encoding='utf-8')) if r.get('image')]
+import glob
+for pth in glob.glob(str(root / 'data/web-raw/images-extra-*.jsonl')):
+    for l in open(pth, encoding='utf-8'):
+        try: j = json.loads(l)
+        except Exception: continue
+        # photos d'ambiance ou flacons-échantillons (flux Amouage, Jovoy-Amouage, Bon Parfumeur) : détourage médiocre, on les écarte
+        if ('extra-feeds' in pth or 'extra-jovoy' in pth) and j['house'] in ('Amouage', 'Bon Parfumeur'): continue
+        if j.get('image'): rows.append({'house': j['house'], 'name': j['name'], 'image': j['image'], 'extra': True})
 def key(r): return norm(r['house']) + '|' + norm(r['name'])
 # maisons retenues : les mieux classées d'abord (HOUSE_FAME), puis celles qui ont le plus de parfums chez Luckyscent
 cnt = {}
 for r in rows: cnt[norm(r['house'])] = cnt.get(norm(r['house']), 0) + 1
 houses = sorted(cnt, key=lambda h: (fame.get(h, 1e6), -cnt[h]))[:top_n]
-todo = [r for r in rows if norm(r['house']) in houses and key(r) not in have and norm(r['name']) not in hand]
+todo, _seen = [], set()
+for r in rows:
+    if (norm(r['house']) in houses or r.get('extra')) and key(r) not in have and norm(r['name']) not in hand and key(r) not in _seen: _seen.add(key(r)); todo.append(r)
 out = root / 'v2/img/w'; out.mkdir(parents=True, exist_ok=True)
 def cut(im):
+    if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+        rgba = im.convert('RGBA'); al = np.asarray(rgba)[:, :, 3]
+        if (al < 250).mean() > 0.05:
+            ys, xs = np.where(al > 20)
+            if len(ys): return rgba.crop((max(0, xs.min() - 4), max(0, ys.min() - 4), xs.max() + 5, ys.max() + 5))
+        bgc = Image.new('RGB', rgba.size, (255, 255, 255)); bgc.paste(rgba, mask=rgba.split()[3]); im = bgc
     im = im.convert('RGB'); a = np.asarray(im).astype(np.int16); h, w, _ = a.shape
     bg = np.median(np.array([a[2, 2], a[2, w - 3], a[h - 3, 2], a[h - 3, w - 3]]), axis=0)
     near = np.abs(a - bg).sum(axis=2) < 18
@@ -39,6 +55,15 @@ old = root / 'imgweb.js'
 if old.exists():
     m = re.search(r'IMGWEB = (\{.*?\});', old.read_text(encoding='utf-8'), re.S)
     if m: imgweb = json.loads(m.group(1))
+    _deny = set()
+    for _f in ('feeds', 'jovoy'):
+        _p = root / f'data/web-raw/images-extra-{_f}.jsonl'
+        if _p.exists():
+            for _l in _p.open(encoding='utf-8'):
+                try: _j = json.loads(_l)
+                except Exception: continue
+                if _j['house'] in ('Amouage', 'Bon Parfumeur'): _deny.add(norm(_j['house']) + '|' + norm(_j['name']))
+    for _k in _deny: imgweb.pop(_k, None)
 ok = fail = 0
 for r in todo:
     k = key(r); fn = f'img/w/{slug(r["house"])}-{slug(r["name"])}.webp'

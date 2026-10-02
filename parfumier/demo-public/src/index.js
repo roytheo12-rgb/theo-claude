@@ -1,7 +1,7 @@
 // Sillage, démo publique : un seul Worker Cloudflare (gratuit) qui sert le site, garde le prompt côté serveur,
 // limite chaque visiteur à MAX_TRIES essais et récolte les inscriptions.
 import Anthropic from '@anthropic-ai/sdk';
-import { dayPrompt, identifyPrompt } from './prompt.mjs';
+import { dayPrompt, identifyPrompt, needPrompt } from './prompt.mjs';
 
 const JSON_H = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
 const reply = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: JSON_H });
@@ -121,6 +121,34 @@ export function makeWorker(deps = {}) {
         if (!data) return reply({ code: 'parse' }, 502);
 
         // Le compteur n'avance qu'après une réponse réussie.
+        await kv.put(`v:${vid}`, String(used + 1));
+        await kv.put(ipKey, String(ipUsed + 1), { expirationTtl: 172800 });
+        await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 });
+        return reply({ data, left: Math.max(0, Math.min(max - used - 1, ipMax - ipUsed - 1)) });
+      }
+
+      // ---- Conseil sur mesure (« Je cherche… ») : l'IA tranche parmi les candidats vérifiés par le moteur ; recherche web si WEB_SEARCH=1
+      if (url.pathname === '/api/need' && request.method === 'POST') {
+        const vid = request.headers.get('x-visitor') || '';
+        if (!VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
+        let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
+        const need = clean(body.need, 500); if (need.length < 3) return reply({ code: 'need' }, 400);
+        const used = int(await kv.get(`v:${vid}`), 0), ipUsed = int(await kv.get(ipKey), 0);
+        if (used >= max || ipUsed >= ipMax) return reply({ code: 'quota', left: 0 }, 429);
+        const capKey = `cap:${today()}`;
+        if (int(await kv.get(capKey), 0) >= cap) return reply({ code: 'busy', left: Math.max(0, max - used) }, 429);
+        const g = body.profile && typeof body.profile === 'object' ? body.profile : {}, age = Math.round(Number(g.age));
+        const args = { need, shortlist: String(body.shortlist || '').slice(0, 9000), collection: String(body.collection || '').slice(0, 3000), profile: { gender: GENDERS.includes(g.gender) ? g.gender : '', age: age >= 10 && age <= 99 ? age : null } };
+        let data;
+        try {
+          const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+          const req = { model: env.MODEL || 'claude-sonnet-5-5', max_tokens: 3000, output_config: { effort: env.EFFORT || 'low' }, messages: [{ role: 'user', content: [{ type: 'text', text: needPrompt(args) }] }] };
+          if (env.WEB_SEARCH === '1') req.tools = [{ type: 'web_search_20250305', name: 'web_search', max_uses: 3 }];
+          const res = await client.messages.create(req);
+          if (res.stop_reason === 'refusal') return reply({ code: 'refusal' }, 502);
+          data = extractJson((res.content || []).filter((b) => b.type === 'text').map((b) => b.text).join(''));
+        } catch (e) { return reply({ code: 'upstream' }, 502); }
+        if (!data || !Array.isArray(data.picks)) return reply({ code: 'parse' }, 502);
         await kv.put(`v:${vid}`, String(used + 1));
         await kv.put(ipKey, String(ipUsed + 1), { expirationTtl: 172800 });
         await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 });

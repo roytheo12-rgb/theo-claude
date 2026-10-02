@@ -5,7 +5,7 @@ const kvStore = new Map();
 const kv = { async get(k) { return kvStore.has(k) ? kvStore.get(k) : null; }, async put(k, v) { kvStore.set(k, v); }, async delete(k) { kvStore.delete(k); }, async list({ prefix }) { return { keys: [...kvStore.keys()].filter((k) => k.startsWith(prefix)).map((name) => ({ name })), list_complete: true }; } };
 const calls = [];
 let fail = false;
-const client = { messages: { async create(req) { calls.push(req); if (fail) throw new Error('down'); return { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Voici : {"pick":"p1","story":"ok","alts":[],"layers":[]} fin' }] }; } } };
+const client = { messages: { async create(req) { calls.push(req); if (fail) throw new Error('down'); if (JSON.stringify(req.messages).includes('CANDIDATS')) return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"compris":"ok","picks":[{"role":"choix","name":"Santal 33","house":"Le Labo","pct":80,"pourquoi":"x"}]}' }] }; return { stop_reason: 'end_turn', content: [{ type: 'text', text: 'Voici : {"pick":"p1","story":"ok","alts":[],"layers":[]} fin' }] }; } } };
 const w = makeWorker({ client });
 const env = { SILLAGE: kv, ASSETS: { fetch: async () => new Response('asset') }, ADMIN_KEY: 'secret', MAX_TRIES: '2', IP_MAX_PER_DAY: '6', DAILY_CAP: '10' };
 const V = (n) => 'visitor-' + String(n).padStart(12, '0');
@@ -35,6 +35,15 @@ await t('une panne IA ne consomme pas d\'essai', async () => {
 await t('plafond par adresse IP (contourner en changeant de navigateur)', async () => {
   let blocked = 0; for (let i = 20; i < 30; i++) { const r = await w.fetch(req('/api/day', { method: 'POST', vid: V(i), ip: '5.5.5.5', body: day }), env); if (r.status === 429) blocked++; }
   assert.ok(blocked >= 4, 'blocked=' + blocked);
+});
+await t('conseil sur mesure : le prompt contient la demande et les candidats, le quota avance', async () => {
+  const body = { need: 'un santal crémeux pour le bureau', shortlist: 'Le Labo | Santal 33 | boisé | santal, cèdre | sec | 80 %', collection: '', profile: { gender: 'm', age: 30 } };
+  let r = await w.fetch(req('/api/need', { method: 'POST', vid: V(60), ip: '6.6.6.6', body }), env), j = await r.json();
+  assert.equal(r.status, 200); assert.equal(j.data.picks[0].name, 'Santal 33'); assert.equal(j.left, 1);
+  const last = calls[calls.length - 1], txt = last.messages[0].content[0].text; assert.match(txt, /santal crémeux pour le bureau/); assert.match(txt, /CANDIDATS/); assert.ok(!last.tools, 'pas de recherche web sans WEB_SEARCH');
+  r = await w.fetch(req('/api/need', { method: 'POST', vid: V(60), ip: '6.6.6.6', body: { need: 'x' } }), env); assert.equal(r.status, 400);
+  const env2 = Object.assign({}, env, { WEB_SEARCH: '1' }); await w.fetch(req('/api/need', { method: 'POST', vid: V(61), ip: '6.6.6.7', body }), env2);
+  assert.equal(calls[calls.length - 1].tools[0].name, 'web_search');
 });
 await t('plafond quotidien global', async () => {
   const before = int(kvStore.get('cap:' + new Date().toISOString().slice(0, 10))); let busy = false;

@@ -15,7 +15,7 @@ for k in only:
             print(k, 'page', page, 'erreur', e); break
         ps = d.get('products', [])
         if not ps: break
-        for p in ps: out.append({'title': p['title'], 'type': p.get('product_type', ''), 'tags': p.get('tags', []), 'body': p.get('body_html') or '', 'handle': p.get('handle')})
+        for p in ps: out.append({'title': p['title'], 'type': p.get('product_type', ''), 'tags': p.get('tags', []), 'body': p.get('body_html') or '', 'handle': p.get('handle'), 'img': ((p.get('images') or [{}])[0].get('src') or '')})
         time.sleep(1.5)
     json.dump(out, open(root / f'data/brand-notes/{k}.json', 'w', encoding='utf-8'), ensure_ascii=False)
     print(k, len(out))
