@@ -543,3 +543,29 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .pyr3 { display: grid; gap: 14px; padding: 4px 0; }
 .pyr3 > div { display: grid; gap: 4px; border-left: 1px solid var(--line2); padding-left: 14px; }
 .pyr3 .pyn { color: var(--ink); font-size: 14.5px; line-height: 1.45; }
+
+/* Recherche : plus d'air, un bloc à la fois */
+.srch { gap: 36px; margin-top: 48px; }
+.srch > header { padding-bottom: 4px; }
+.srch .needbox { padding: 26px 24px 28px; display: grid; gap: 18px; }
+.srch .needbox .row { gap: 14px; }
+.srch .needbox input { padding: 16px 18px; }
+.srch .needbox .chips { gap: 12px; margin-top: 4px; }
+.srch #sq { padding: 18px 20px; margin: 4px 0 0; }
+.srch .nosefold { margin: 4px 0; }
+.srch .nosefold summary { cursor: pointer; padding: 14px 0; }
+.srch .nosefold .noserow { margin-top: 12px; }
+.srch .filters { margin: 0; padding: 4px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.srch .filters summary { padding: 18px 0; }
+.srch .filters[open] { padding-bottom: 28px; }
+.srch .filters .mono { margin-top: 30px; margin-bottom: 6px; }
+.srch .filters .chips { gap: 12px; margin-top: 12px; }
+.srch .filters .chip { padding: 10px 15px; }
+.srch .selrow { gap: 22px; margin-top: 30px; }
+.srch #sres { margin-top: 4px; }
+.srch .xgrid { gap: 22px; }
+.srch .xc { padding: 22px 22px 22px 16px; gap: 20px; grid-template-columns: 64px 1fr auto; }
+.srch .xth { width: 64px; height: 88px; }
+.srch .xt { gap: 8px; }
+.srch .xt em { margin-top: 4px; line-height: 1.55; }
+.srch .xtg { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }

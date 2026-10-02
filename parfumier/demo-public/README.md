@@ -178,3 +178,12 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 ## Photos : boutiques et nez en vedette (v50)
 - `tools/crawl-shops.py` lit les catalogues publics (Shopify `/products.json`) de boutiques de parfumerie ; `tools/images-from-shops.py` rapproche les parfums sans photo (maison + nom, sans coffrets, échantillons, soins) ; `tools/crawl-maxaroma.py` accepte `MISSING=missing-img2.json TAG=m2-`. `build-web.py` détoure (fond blanc ou transparent). Frédéric Malle : 28 parfums sur 38 ont leur vraie photo ; les 10 restants sont des éditions anniversaire / limitées ou arrêtées (Bois d'Orage, Muscs Koublaï Khan).
 - `incoming/PHOTOS-NEZ-MANQUANTES.md` liste, nez par nez, les parfums encore sans photo.
+
+## Conseils par profil, wishlist et photos (v51)
+- **Conseils différents d'un profil à l'autre** : `engine.recommend` part de goûts réels (collection + wishlist + notes aimées/évitées), puis ajoute un point de départ selon l'âge et le genre (`priorVec`, vite dépassé par les vrais goûts) et une petite variation propre au profil (graine = profil, nom, âge). La notoriété pèse moins (0,9 au lieu de 1,4). Pas plus de 2 parfums de la même maison dans la liste principale.
+- **La wishlist apprend tes goûts** (`engine.wishSignals`) : « J'adore » attire (note 5), « Bien » un peu (3,7), « Bof » repousse (1) et le parfum n'est plus conseillé, « à sentir » compte légèrement. L'onglet Wishlist résume ce qu'elle dit de toi.
+- **« Par envie »** : plus jamais un parfum déjà montré dans les conseils, ni une autre version du même parfum (bug Haltane ×2). Test e2e ajouté.
+- **Photos en premier** dans « Ajouter parfums », la recherche et les conseils (à pertinence égale).
+- **Photos** : `tools/build-lv.py` (46 captures Louis Vuitton déposées dans `incoming/`, détourées, nom lu sur chaque capture), `tools/images-from-houses.py` (Hermès, Bon Parfumeur, Atelier des Ors, D'Orsay lus chez les maisons) ; `build-web.py` détoure aussi les fonds en dégradé (`cut_soft`).
+- Recherche : mise en page aérée (blocs espacés, filtres repliés, nez dans un volet).
+- Non couvert faute de source accessible : Armani Privé (site officiel et revendeurs bloqués), Contes de Parfums (site « prochainement disponible »).

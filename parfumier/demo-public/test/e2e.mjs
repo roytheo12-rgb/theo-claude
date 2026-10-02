@@ -138,6 +138,7 @@ await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(300); await pg.click
 ok(/Niche/.test(await pg.textContent('.xg')) && /Abordable/.test(await pg.textContent('.xg')) && /Collection privée/.test(await pg.textContent('.xg')) && /Luxe/.test(await pg.textContent('.xg')), 'tags : niche, abordable, luxe, collection privée…');
 await pg.click('[data-xg=prive]'); await pg.waitForSelector('.xc'); ok(await pg.locator('.xc').count() > 10, 'tag « collection privée » : parfums des lignes privées'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
 await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); ok(/\d{4}\s+parfums/.test((await pg.textContent('#scount')).replace(/\s/g, ' ')) || /\d+ parfums/.test(await pg.textContent('#scount')), 'recherche : le nombre de parfums s\'affiche');
+await pg.screenshot({ path: OUT + '/e_search.png' });
 await pg.fill('#sq', 'baccarat'); await pg.waitForSelector('.xc'); ok(/Baccarat Rouge 540/.test(await pg.textContent('#sres')), 'recherche : « baccarat » trouve Baccarat Rouge 540');
 await pg.fill('#sq', ''); await pg.locator('.filters summary').click(); await pg.click('[data-st=niche]'); await pg.click('[data-st=abordable]'); await pg.waitForSelector('#sres');
 await pg.click('[data-ss=gourmand]'); await pg.waitForTimeout(300); const n1 = await pg.locator('#sres .xc').count();
@@ -145,7 +146,7 @@ ok(n1 === 0 || /Gourmand/.test(await pg.textContent('#sres')), 'recherche : filt
 await pg.click('[data-st=abordable]'); await pg.click('[data-st=niche]'); await pg.waitForTimeout(200);
 ok(await pg.locator('#sres .xc').count() > 0, 'recherche : un filtre se retire d\'un clic');
 await pg.locator('#sres .xc').first().click(); await pg.waitForSelector('#eown'); ok(await pg.locator('#ewish').count() === 1, 'fiche d\'un parfum : « Je l\'ai » et « À sentir »'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; });
-await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); if (await pg.locator('#sreset').count()) await pg.click('#sreset'); await pg.waitForSelector('[data-sn]'); await pg.click('[data-sn=\"Alberto Morillas\"]'); await pg.waitForSelector('.nosec'); await pg.waitForTimeout(300);
+await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); if (await pg.locator('#sreset').count()) await pg.click('#sreset'); await pg.click('.nosefold summary'); await pg.waitForSelector('[data-sn]'); await pg.click('[data-sn=\"Alberto Morillas\"]'); await pg.waitForSelector('.nosec'); await pg.waitForTimeout(300);
 ok(/Alberto Morillas/.test(await pg.textContent('.nosec')) && /Acqua di Giò/.test(await pg.textContent('#sres')), 'recherche par nez : Alberto Morillas, sa présentation et ses parfums (Acqua di Giò…)');
 await pg.click('[data-xa=nose]'); await pg.waitForTimeout(200);
 await pg.click('[data-tab=search]'); await pg.waitForSelector('#need'); await pg.fill('#need', 'vanille gourmand pour l\'hiver sans patchouli'); await pg.click('#needgo'); await pg.waitForSelector('#nres .xc');
@@ -155,6 +156,8 @@ ok(await pg.locator('#needai').count() === 1, 'recherche par besoin : bouton « 
 ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); if (sh) sh.hidden = true; });
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
+await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });
+{ const names = await pg.$$eval('.tipc b', (els) => els.map((e) => e.textContent.trim().toLowerCase())); ok(new Set(names).size === names.length, 'conseils : jamais deux fois le même parfum (' + names.length + ' fiches)'); const fam = await pg.$$eval('.tipc', (els) => els.map((e) => (e.querySelector('small') || {}).textContent.split('·')[0].trim() + '|' + e.querySelector('b').textContent.trim().split(/\s+/)[0].toLowerCase())); ok(new Set(fam).size === fam.length, 'conseils : jamais deux versions du même parfum (Haltane…)'); }
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);
 const after = await pg.evaluate(() => { const S = JSON.parse(localStorage.getItem('sillage.v3')); return { prof: S.profile, has: S.collection.some((p) => p.name === 'Santal 33'), ov: !!document.querySelector('#prof') || !!document.querySelector('#onb') }; });

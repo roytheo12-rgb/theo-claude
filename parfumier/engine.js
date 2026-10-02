@@ -703,15 +703,48 @@
     });
   }
 
+  // La wishlist nourrit les goûts : ce qu'on a senti et aimé attire, ce qu'on a senti sans aimer repousse, ce qu'on veut sentir compte un peu.
+  // Chaque entrée devient un pseudo-parfum noté (même échelle que la collection) dont les notes viennent de la base si la wishlist ne les a pas.
+  const WISH_RATING = { love: 5, ok: 3.7, no: 1 };
+  function wishSignals(wishlist, catalog) {
+    const idx = new Map(); for (const c of catalog || []) { const k = norm(c.name); if (!idx.has(k)) idx.set(k, c); }
+    const out = [];
+    for (const w0 of wishlist || []) {
+      const w = typeof w0 === 'string' ? { name: w0 } : w0; if (!w || !w.name) continue;
+      const base = idx.get(norm(w.name)) || {};
+      const smelled = w.st === 'smelled', r = smelled ? (w.verdict ? WISH_RATING[w.verdict] : 3.3) : 3.5;
+      out.push({ name: w.name, house: w.house || base.house || '', family: w.family || base.family || '', notes: (w.notes && w.notes.length ? w.notes : base.notes) || [], weight: base.weight, rating: r, fromWish: true, smelled, verdict: smelled ? w.verdict || '' : '' });
+    }
+    return out;
+  }
+  // Ce que l'âge et le genre suggèrent quand on ne sait encore rien d'autre : un point de départ qui change d'une personne à l'autre, vite dépassé par ses vrais goûts.
+  function priorVec(settings) {
+    const v = new Array(18).fill(0), add = (a, x) => { v[AXN.indexOf(a)] += x; };
+    const age = +settings.age || 0, g = settings.gender;
+    if (age && age <= 22) { add('fraicheur', 1); add('douceur', 1.2); add('fruite', 1); add('musque', .5); add('densite', -.5); add('formalite', -.8); }
+    else if (age && age <= 35) { add('sensualite', .5); add('boise', .3); add('douceur', .3); }
+    else if (age && age <= 50) { add('boise', .8); add('epice', .4); add('poudre', .4); add('formalite', .6); }
+    else if (age) { add('floral', .7); add('poudre', .9); add('resine', .5); add('vert', .3); add('formalite', .8); }
+    if (g === 'f') { add('floral', .8); add('douceur', .5); add('poudre', .3); }
+    else if (g === 'm') { add('boise', .6); add('vert', .4); add('fraicheur', .4); add('epice', .3); }
+    return v.some((x) => x) ? v : null;
+  }
+  const hash01 = (s) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10007) / 10007; };
+
   function recommend(catalog, collection, wishlist, settings) {
-    const prof = tasteProfile(collection, settings), pref = axisPref(collection);
+    const sig = wishSignals(wishlist, catalog), col = collection.concat(sig);
+    const prof = tasteProfile(col, settings);
+    let pref = axisPref(col); const prior = priorVec(settings);
+    if (prior) pref = pref ? pref.map((x, i) => x + 0.35 * prior[i]) : prior.map((x) => x * 0.8);
     const cov = coverage(collection);
     const owned = new Set(collection.map((p) => norm(p.name)));
+    const rejected = new Set(sig.filter((x) => x.verdict === 'no').map((x) => norm(x.name)));
+    const wishedSet = new Set(sig.map((x) => norm(x.name)));
     const avoid = (settings.avoid || []).map(norm);
-    const budget = settings.budget || 0;
+    const budget = settings.budget || 0, seed = String(settings.seed || '');
     const out = [];
     for (let c of catalog) {
-      if (owned.has(norm(c.name))) continue;
+      if (owned.has(norm(c.name)) || rejected.has(norm(c.name))) continue;
       if (c.notes && c.notes.length >= 3 && !(c.family && c.weight)) c = derive(c);
       if (settings.gender && root.genderOf) { const g = root.genderOf(c.name, c.house); if ((settings.gender === 'm' && g === 'f') || (settings.gender === 'f' && g === 'm')) continue; }
       if ((c.notes || []).some((n) => avoid.some((a) => a && norm(n).includes(a)))) continue;
@@ -724,17 +757,19 @@
       }
       const mates = collection.filter((p) => pairScore(c, p, false).s >= 2.5);
       const af = axisFit(c, pref), why = af != null ? axisWhy(c, pref) : [];
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 1.4 * fameOf(c) + (af != null ? 4.5 * af : 0);
+      // La notoriété ne fait plus la loi : elle départage à goûts égaux. Une petite variation propre à chaque profil évite que tout le monde reçoive la même liste.
+      const jit = seed ? (hash01(seed + '|' + norm(c.name)) - 0.5) * 1.8 : 0;
+      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0);
       out.push({
         c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: clamp(Math.round(af != null ? 50 + t.s * 4 + af * 30 : 50 + t.s * 7), 5, 99), overBudget: budget > 0 && c.price > budget,
-        wished: wishlist.some((w) => norm(w) === norm(c.name)),
+        wished: wishedSet.has(norm(c.name)),
       });
     }
     return out;
   }
 
-  const api = { deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { wishSignals, priorVec, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

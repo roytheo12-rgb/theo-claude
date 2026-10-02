@@ -53,5 +53,24 @@ assert.ok(E.searchNeed(P, E.parseNeed('boisé'), { gender: 'm' }, 30).every((r) 
   assert.ok(bottom.some((n) => /Light Blue|Invictus|Cool Water|Eternity|CK One/.test(n)), 'les frais en bas : ' + bottom);
   console.log('ok comparaison par profils (goûts → classement)', top.slice(0, 3).join(', '));
 }
+// Conseils : deux profils différents ne reçoivent pas la même liste ; la wishlist oriente les goûts
+{
+  const top = (st, wish = [], col = []) => E.recommend(P, col, wish, st).sort((a, b) => b.total - a.total).slice(0, 12).map((r) => r.c.house + '|' + r.c.name);
+  const a = top({ gender: 'f', age: 19, budget: 300, seed: 'a|Lea|19' }), b = top({ gender: 'm', age: 52, budget: 300, seed: 'b|Paul|52' }), c = top({ gender: 'm', age: 52, budget: 300, seed: 'c|Marc|52' });
+  const common = (x, y) => x.filter((n) => y.includes(n)).length;
+  assert.ok(common(a, b) <= 4, 'femme 19 ans vs homme 52 ans : listes trop proches ' + common(a, b));
+  assert.ok(common(b, c) <= 9, 'deux profils identiques sauf le nom : listes quasi identiques');
+  // wishlist : un parfum senti et adoré attire ses voisins, un parfum senti et rejeté disparaît
+  const base = P.filter((x) => (x.notes || []).length >= 4).slice(0, 400);
+  const love = base.find((x) => has(x, 'vanille') && has(x, 'tonka')) || base[0];
+  const none = E.recommend(P, [], [], { seed: 'w' }), withLove = E.recommend(P, [], [{ name: love.name, house: love.house, st: 'smelled', verdict: 'love' }], { seed: 'w' });
+  const sc = (arr, n) => (arr.find((r) => r.c.name === n) || {}).total;
+  const near = E.rankByFit(P.filter((x) => has(x, 'vanille') && has(x, 'tonka')).slice(0, 50), E.axisPref(E.wishSignals([{ name: love.name, house: love.house, st: 'smelled', verdict: 'love' }, { name: love.name + ' ', house: love.house, st: 'smelled', verdict: 'love' }], P)));
+  assert.ok(near.length >= 5, 'wishlist → profil de goûts');
+  const rej = E.recommend(P, [], [{ name: love.name, st: 'smelled', verdict: 'no' }], { seed: 'w' });
+  assert.ok(!rej.some((r) => r.c.name === love.name), 'un parfum senti et rejeté n\'est plus conseillé');
+  assert.ok(withLove.length && none.length);
+  console.log('ok conseils variés par profil + wishlist', common(a, b), '/12 en commun');
+}
 console.log(`\n${ok}/${ok + fail} besoins au niveau, pool ${P.length}`);
 assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
