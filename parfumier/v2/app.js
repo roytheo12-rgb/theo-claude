@@ -158,10 +158,33 @@
     const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 100000);
     try { return await sample.json(prompt, Object.assign({ cache: false, signal: ctl.signal }, opts || {})); } finally { clearTimeout(to); }
   }
+  // Remplit une fiche vide avec les vraies notes (IA). Si l'IA ne connaît pas le parfum, on n'invente rien.
+  const FAM_L = () => Object.keys(E.FAMILIES).join('|');
+  async function aiFill(p, nm) {
+    const j = await aiJson(`Identifie ce parfum${p.house ? ' de la maison "' + p.house + '"' : ''} : "${nm}". Si tu ne le connais pas avec certitude, réponds {"unknown":true} : n'invente jamais de notes. Sinon réponds UNIQUEMENT par un JSON : {"name":"nom officiel","house":"maison","family":"${FAM_L()}","notes":["6 à 10 notes réelles en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5,"price":nombre en euros indicatif}`, { modelTier: 'default' });
+    if (!j || j.unknown || !Array.isArray(j.notes) || j.notes.length < 3) throw { code: 'unknown' };
+    p.name = String(j.name || nm); p.house = String(j.house || p.house); p.notes = j.notes.map(String).slice(0, 10);
+    const d = E.derive({ name: p.name, house: p.house, notes: p.notes });
+    p.family = E.FAMILIES[j.family] ? j.family : d.family;
+    p.projection = clamp(Math.round(+j.projection || d.projection), 1, 5); p.longevity = clamp(Math.round(+j.longevity || d.longevity), 1, 5); p.weight = clamp(Math.round(+j.weight || d.weight), 1, 5); p.price = Math.round(+j.price) || 0;
+    delete p.incomplete; delete p.guessed; delete p._tags; delete p._ol;
+  }
+  // Dès qu'on ajoute un parfum dont la base n'a pas les notes, on les récupère (une seule tentative par session et par parfum).
+  const FILLED = new Set(); let FILLING = false;
+  async function autoFill() {
+    if (FILLING) return; FILLING = true; let any = false;
+    try {
+      for (const p of S.collection.filter((x) => x.incomplete && !FILLED.has(x.id)).slice(0, 8)) {
+        FILLED.add(p.id);
+        try { await aiFill(p, p.name); any = true; save(); } catch (e) { if (e && e.code === 'unavailable') break; }
+      }
+    } finally { FILLING = false; if (any) render(true); }
+  }
   async function initAI() {
     try { const c = window.claude; const a = c && c.use ? await c.use('assets') : null; HAS_ASSETS = !!a; } catch (e) { /* pas d'assets */ }
     try { const s = await getSample(); if (!s) return; const l = await s.limits(); CAN_IMG = !!(l && l.images); IMG_MAX = (l && l.images && l.images.maxCount) || 4; const b = $('#photoBtn'); if (b) b.hidden = !CAN_IMG; } catch (e) { /* pas d'images */ }
     if ($('#story').hidden && $('#sheet').hidden && tab !== 'today') render(true);
+    autoFill();
   }
 
   // ---------- État de session ----------
@@ -365,7 +388,7 @@
 
   // ---------- Conseils : compléter ta collection, ce qui t'irait, par envie ----------
   function tipsData() {
-    const P = S.collection, st = S.settings, cat = CAT.filter((c) => c.notes.length), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
+    const P = S.collection, st = S.settings, cat = needPool(), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
     const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), wrong = (c) => { const g = S.profile && S.profile.gender; return (g === 'm' && gd(c) === 'f') || (g === 'f' && gd(c) === 'm'); };
     const ok = (c) => !wrong(c) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!st.budget || !c.price || c.price <= st.budget);
     const out = { gaps: [], recs: [], tags: [], tips: [] };
@@ -501,7 +524,7 @@
       <p class="mono" style="text-transform:none;letter-spacing:0">${IC.spark} Ambiance : ${esc(FX.motifsOf(p).label)}${FX.motifsOf(p).notes.length ? ' · inspirée de ' + esc(FX.motifsOf(p).notes.join(', ')) : ''}</p>
       <div class="row" style="gap:14px">${buyLinks(p.name, p.house)}${HAS_ASSETS ? `<button class="ghost" id="phBtn">${p.img ? 'Changer la photo' : 'Ajouter cette photo'}</button>${p.img ? '<button class="ghost" id="phDel">Retirer la photo</button>' : ''}<input type="file" id="phIn" accept="image/*" hidden>` : ''}</div>
       ${(() => { const notes = S.log.filter((l) => l.id === p.id && (l.note || l.compl || l.dur)).slice(-3).reverse(); return notes.length ? `<div><p class="mono">Journal</p>${notes.map((l) => `<p style="font-size:14px;color:var(--muted);margin-top:6px">${esc(new Date(l.date + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }))} · ${esc([l.compl ? l.compl + ' compliment(s)' : '', l.dur || '', l.note || ''].filter(Boolean).join(' · '))}</p>`).join('')}</div>` : ''; })()}
-      ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">${p.guessed ? 'Cette fiche est estimée d\'après le nom du parfum. L\'IA peut la compléter avec les vraies notes.' : 'Je ne connais que la maison. Donne-moi le nom exact et l\'IA remplit les notes.'}</p><input type="text" id="fixin" value="${esc(p.guessed ? p.name : '')}" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
+      ${p.incomplete ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Fiche à compléter</p><p style="font-size:14px;color:var(--muted)">Les notes ne sont jamais devinées : tant que la fiche est vide, je ne peux pas l\'utiliser dans mes conseils. Donne-moi le nom exact et l\'IA remplit les vraies notes.</p><input type="text" id="fixin" value="${esc(p.name || '')}" placeholder="Nom exact du parfum"><button class="cta" id="fixgo"><span>Compléter avec l'IA</span></button><p class="mono" id="fixmsg" style="text-transform:none"></p></div>` : ''}
       <div class="card" style="display:grid;gap:10px"><b>Mon flacon</b>${stockHtml(p, 0)}<p class="mono" id="stkmsg" style="text-transform:none;letter-spacing:0">Je tiens compte de ton stock : un échantillon ou un flacon presque fini ne part pas en usage quotidien.</p></div>
       <p class="mono" id="phMsg" style="text-transform:none"></p>
       <div class="row"><button class="ghost" id="sx">Fermer</button><button class="ghost danger" id="sdel">Retirer</button></div>`);
@@ -509,12 +532,8 @@
     if ($('#fixgo', pn)) $('#fixgo', pn).onclick = async () => {
       const nm = $('#fixin', pn).value.trim(); if (!nm) { $('#fixin', pn).focus(); return; }
       $('#fixmsg', pn).textContent = 'Je cherche…'; $('#fixgo', pn).disabled = true;
-      try {
-        const j = await aiJson(`Identifie ce parfum${p.house ? ' de la maison "' + p.house + '"' : ''} : "${nm}". Réponds UNIQUEMENT par un JSON : {"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["6 à 10 notes en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5,"price":nombre en euros indicatif}`, { modelTier: 'default' });
-        p.name = String(j.name || nm); p.house = String(j.house || p.house); p.family = E.FAMILIES[j.family] ? j.family : p.family; p.notes = (j.notes || []).map(String).slice(0, 10);
-        p.projection = clamp(Math.round(+j.projection || 3), 1, 5); p.longevity = clamp(Math.round(+j.longevity || 3), 1, 5); p.weight = clamp(Math.round(+j.weight || 3), 1, 5); p.price = Math.round(+j.price) || 0; delete p.incomplete; delete p.guessed; delete p._tags;
-        save(); openDetail(id); render(true);
-      } catch (e) { $('#fixmsg', pn).textContent = 'L\'IA n\'est pas disponible ici. Réessaie plus tard.'; $('#fixgo', pn).disabled = false; }
+      try { await aiFill(p, nm); save(); openDetail(id); render(true); }
+      catch (e) { $('#fixmsg', pn).textContent = e && e.code === 'unknown' ? 'Je ne connais pas ce parfum avec certitude. Vérifie le nom exact ou ajoute-le depuis la base.' : 'L\'IA n\'est pas disponible ici. Réessaie plus tard.'; $('#fixgo', pn).disabled = false; }
     };
     if ($('#phBtn', pn)) {
       $('#phBtn', pn).onclick = () => $('#phIn', pn).click();
@@ -609,8 +628,16 @@
     if (DBL && DBL.n === CAT.length) return DBL.l;
     const out = [], seen = new Set(), HA = window.HOUSE_ALIAS || {}, ch = (h) => (h && HA[E.norm(h)]) || h, tg = window.tagsOf || (() => []), noses = noseOf;
     CAT.forEach((c) => { if (!c.name || !c.house) return; const h = ch(c.house); seen.add(E.norm(h + ' ' + c.name)); out.push({ g: gdOf(c.name, h), ed: false, name: c.name, house: h, conc: '', cat: c, family: c.family, notes: c.notes || [], price: c.price || 0, noses: noses(c.name, h), guess: false, tags: tg(c.name, h, c.price || 0, '') }); });
-    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc, fl]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const g = guessInfo(n), fk = (window.FACTS || {})[E.norm(h) + '|' + E.norm(n)], fn = fk && fk.n && fk.n.length >= 3 ? fk.n : null; out.push({ g: gdOf(n, h), ed: EDS.has(E.norm(h) + '|' + E.norm(n)), name: n, house: h, conc, cat: null, family: g.family, notes: fn || g.notes, weight: g.weight, price: 0, noses: noses(n, h), guess: !fn, tags: tg(n, h, 0, fl) }); }));
+    (window.INDEX || []).forEach(([h, arr]) => arr.forEach(([n, conc, fl]) => { const k = E.norm(h + ' ' + n); if (seen.has(k)) return; seen.add(k); const fk = (window.FACTS || {})[E.norm(h) + '|' + E.norm(n)], fn = fk && fk.n && fk.n.length >= 3 ? fk.n : null, dv = fn ? E.derive({ name: n, house: h, notes: fn }) : null; out.push({ g: gdOf(n, h), ed: EDS.has(E.norm(h) + '|' + E.norm(n)), name: n, house: h, conc, cat: null, family: dv ? dv.family : null, notes: fn || [], weight: dv ? dv.weight : 0, projection: dv ? dv.projection : 0, longevity: dv ? dv.longevity : 0, price: 0, noses: noses(n, h), guess: false, real: !!fn, tags: tg(n, h, 0, fl) }); }));
     DBL = { n: CAT.length, l: out }; return out;
+  }
+  // Pool des conseils et de la recherche par besoin : le catalogue détaillé + toute la base dont les notes sont réelles (jamais de devinette).
+  let NPOOL = null;
+  function needPool() {
+    const L = dbList(); if (NPOOL && NPOOL.l === L) return NPOOL.p;
+    const p = [], seen = new Set();
+    L.forEach((e) => { if (e.ed || !(e.notes || []).length) return; const k = entryKey(e); if (seen.has(k)) return; seen.add(k); p.push(e.cat ? Object.assign({}, e.cat, { curated: true, entry: e }) : { name: e.name, house: e.house, notes: e.notes, family: e.family, weight: e.weight, projection: e.projection, longevity: e.longevity, price: e.price || 0, entry: e }); });
+    NPOOL = { l: L, p }; return p;
   }
   const PRICE_TIERS = [['p1', 'Moins de 100 €', (p) => p > 0 && p < 100], ['p2', '100 à 200 €', (p) => p >= 100 && p < 200], ['p3', '200 à 300 €', (p) => p >= 200 && p < 300], ['p4', '300 € et plus', (p) => p >= 300]];
   function groupsOf(db, facet) {
@@ -629,7 +656,10 @@
   const entryKey = (e) => E.norm(e.house + ' ' + e.name);
   function entryToOwned(e) {
     if (e.cat) return Object.assign(fromCat(e.cat, 4), { size: 100, left: 100, use: 'free' });
-    return { id: uid(), name: e.name, house: e.house, family: e.family || 'boisé', notes: (e.notes || []).slice(), projection: 3, longevity: 3, weight: e.weight || 3, price: 0, rating: 4, occ: [], incomplete: true, guessed: true, size: 100, left: 100, use: 'free' };
+    // Jamais de notes devinées : si la base n'a pas les vraies notes, la fiche reste vide et l'IA la remplit dès l'ajout.
+    const base = { id: uid(), name: e.name, house: e.house, price: 0, rating: 4, occ: [], size: 100, left: 100, use: 'free' };
+    if (e.real && (e.notes || []).length >= 3) return Object.assign(base, { family: e.family, notes: e.notes.slice(), projection: e.projection || 3, longevity: e.longevity || 3, weight: e.weight || 3 });
+    return Object.assign(base, { family: '', notes: [], projection: 3, longevity: 3, weight: 3, incomplete: true });
   }
   const tagPills = (e) => (e.tags && e.tags.length ? `<span class="xtg">${e.tags.slice(0, 3).map((t) => `<i>${esc((window.TAGS || {})[t] || t)}</i>`).join('')}</span>` : '');
   const xThumb = (e) => { const ph = imgOf(e); return ph ? `<img class="xth" alt="" loading="lazy" src="${esc(ph.s)}">` : `<span class="xth">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'x' + E.norm(e.house + e.name).length }, { still: true, h: 64 })}</span>`; };
@@ -717,12 +747,26 @@
     $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = look[b.dataset.ent]; if (e) openEntry(e); }));
     if ($('#smore', box)) $('#smore', box).onclick = () => { SRCH.limit += 40; drawSearchResults(); };
   }
+  const NEED = { q: '', n: 8 };
+  const NEED_EX = ['frais pour le bureau en été', 'vanille sans patchouli pour l\'hiver', 'cuir fumé pour homme', 'rose poudrée', 'premier rendez-vous, pas trop sucré', 'boisé discret moins de 100 €'];
+  function drawNeed() {
+    const box = $('#nres'); if (!box) return;
+    const need = E.parseNeed(NEED.q);
+    if (!NEED.q.trim()) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Décris l\'occasion, la saison, les notes que tu veux ou fuis, le budget : je cherche dans toute la base, sur de vraies notes, et je te dis pourquoi.</p>'; return; }
+    if (need.empty) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Je n\'ai pas compris le besoin. Essaie avec une occasion (bureau, date), une saison, une note (vanille, rose) ou une famille (boisé, frais).</p>'; return; }
+    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g }), NEED.n);
+    const lookup = {}; dbList().forEach((e) => { lookup[entryKey(e)] = e; });
+    box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(E.needLabel(need) || 'Besoin compris')} · ${res.length} résultat${res.length > 1 ? 's' : ''}</p>` + (res.length ? `<div class="xgrid">${res.map((r) => { const e = r.c.entry || lookup[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, family: r.c.family, notes: r.c.notes, price: r.c.price, tags: [], cat: r.c }; return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small><em>${esc(r.m.why.join(' · '))}</em></span><i class="xm">${r.m.pct} %</i></button>`; }).join('')}</div>${NEED.n <= res.length ? '<button type="button" class="ghost" id="nmore">Voir plus</button>' : ''}` : '<div class="empty">Rien ne correspond vraiment. Enlève une contrainte (budget, note fuie) ou élargis le besoin.</div>');
+    $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lookup[b.dataset.ent]; if (e) openEntry(e); }));
+    if ($('#nmore', box)) $('#nmore', box).onclick = () => { NEED.n += 8; drawNeed(); };
+  }
   function viewSearch() {
     const db = dbList(), houses = [...new Set(db.map((e) => e.house))].sort((a, b) => a.localeCompare(b, 'fr')), noses = [...new Set(db.flatMap((e) => e.noses || []))].sort((a, b) => a.localeCompare(b, 'fr'));
     const sel = (id, label, opts, val) => `<label class="sel"><span class="mono">${label}</span><select id="${id}"><option value="">Tous</option>${opts.map((o) => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></label>`;
     const nF = SRCH.tags.length + (SRCH.style ? 1 : 0) + (SRCH.price ? 1 : 0) + (SRCH.house ? 1 : 0) + (SRCH.note ? 1 : 0) + (SRCH.nose ? 1 : 0) + (SRCH.conc ? 1 : 0) + (SRCH.gen ? 1 : 0) + (SRCH.photo ? 1 : 0);
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
+        <div class="card needbox"><p class="mono">Je cherche…</p><div class="row"><input type="search" id="need" placeholder="Ex. frais pour le bureau cet été, sans vanille" value="${esc(NEED.q)}" autocomplete="off" aria-label="Décris ce que tu cherches"><button class="cta" id="needgo"><span>Trouver</span></button></div><div class="chips">${NEED_EX.map((x) => `<button type="button" class="chip" data-nex="${esc(x)}">${esc(x)}</button>`).join('')}</div><div id="nres"></div></div>
         <input type="search" id="sq" placeholder="Un parfum, une maison…" value="${esc(SRCH.q)}" autocomplete="off" aria-label="Rechercher un parfum">
         ${SRCH.nose ? noseCard(SRCH.nose) : `<p class="mono">Les nez</p>${noseRow('data-sn', (window.NOSE_TOP || []).slice(0, 14))}`}
         <div class="chips actf">${[...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note : ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.gen ? ['gen', ({ f: 'Féminin', m: 'Masculin', u: 'Mixte' })[SRCH.gen]] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean).map(([k, l]) => `<button class="chip on" data-xa="${esc(k)}">${esc(l)} ✕</button>`).join('')}</div>
@@ -740,6 +784,10 @@
     $$('[data-sn]').forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.sn; re(); }));
     $('.filters').addEventListener('toggle', (e) => { SRCH.open = e.target.open; });
     $$('[data-xa]').forEach((b) => (b.onclick = () => { const k = b.dataset.xa; if (k.startsWith('t:')) SRCH.tags = SRCH.tags.filter((x) => x !== k.slice(2)); else if (k === 'photo') SRCH.photo = false; else SRCH[k] = ''; re(); }));
+    const goNeed = () => { NEED.q = $('#need').value; NEED.n = 8; drawNeed(); };
+    $('#needgo').onclick = goNeed; $('#need').addEventListener('keydown', (e) => { if (e.key === 'Enter') goNeed(); });
+    $$('[data-nex]').forEach((b) => (b.onclick = () => { $('#need').value = b.dataset.nex; goNeed(); }));
+    drawNeed();
     $('#sq').addEventListener('input', (e) => { SRCH.q = e.target.value; SRCH.limit = 40; drawSearchResults(); });
     $$('[data-st]').forEach((b) => (b.onclick = () => { const k = b.dataset.st, i = SRCH.tags.indexOf(k); if (i >= 0) SRCH.tags.splice(i, 1); else SRCH.tags.push(k); re(); }));
     $$('[data-ss]').forEach((b) => (b.onclick = () => { SRCH.style = SRCH.style === b.dataset.ss ? '' : b.dataset.ss; re(); }));
@@ -772,7 +820,7 @@
     if ($('#eown', pn)) $('#eown', pn).onclick = () => { addEntriesToCollection([e]); closeSheet(); render(true); };
     if ($('#ewish', pn)) $('#ewish', pn).onclick = () => { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); save(); closeSheet(); render(true); };
   }
-  function addEntriesToCollection(list) { list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); }
+  function addEntriesToCollection(list) { list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); autoFill(); }
   function openExplore(mode) {
     const pn = openSheet('<div id="exh"></div>');
     mountExplorer($('#exh', pn), mode === 'wish'

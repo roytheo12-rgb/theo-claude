@@ -147,6 +147,10 @@ await pg.locator('#sres .xc').first().click(); await pg.waitForSelector('#eown')
 await pg.click('[data-tab=search]'); await pg.waitForSelector('#sq'); if (await pg.locator('#sreset').count()) await pg.click('#sreset'); await pg.waitForSelector('[data-sn]'); await pg.click('[data-sn=\"Alberto Morillas\"]'); await pg.waitForSelector('.nosec'); await pg.waitForTimeout(300);
 ok(/Alberto Morillas/.test(await pg.textContent('.nosec')) && /Acqua di Giò/.test(await pg.textContent('#sres')), 'recherche par nez : Alberto Morillas, sa présentation et ses parfums (Acqua di Giò…)');
 await pg.click('[data-xa=nose]'); await pg.waitForTimeout(200);
+await pg.click('[data-tab=search]'); await pg.waitForSelector('#need'); await pg.fill('#need', 'vanille gourmand pour l\'hiver sans patchouli'); await pg.click('#needgo'); await pg.waitForSelector('#nres .xc');
+const nres = await pg.evaluate(() => [...document.querySelectorAll('#nres .xc')].map((b) => ({ t: b.textContent, pct: parseInt((b.querySelector('.xm') || {}).textContent) })));
+ok(nres.length >= 5 && nres.every((r) => /vanille/i.test(r.t) && r.pct > 50), 'recherche par besoin : résultats avec vanille, % de correspondance et raisons');
+ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);
