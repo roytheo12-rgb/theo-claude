@@ -11,24 +11,33 @@ def _obj(name):
     src = (up/(name + '.js')).read_text(); m = re.search(r'window\.' + name.upper() + r' = (\{.*?\});', src, re.S)
     return json.loads(m.group(1)) if m else {}
 
-def imgdb_web_artifact(budget=505):
-    # L'artifact ne peut héberger qu'environ 510 fichiers : photos fournies (img/*.webp, img/p, img/nose) d'abord, puis, dans la place qui reste,
-    # les photos de base (IMGDB) et web (IMGWEB) des maisons les mieux classées. Le site public embarque tout. Liste écrite dans v2/artifact-files.json.
-    import json
-    new = _obj('imgnew'); fixed = set(v for v in new.values()) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text()))
-    fixed |= set('img/' + f.name for f in (d/'img').glob('*.webp'))
+def imgpack_artifact(pack_mb=5):
+    # L'artifact ne peut héberger qu'environ 510 fichiers : les photos fournies (img/*.webp, img/p, img/nose) restent des fichiers ;
+    # TOUTES les photos de base (IMGDB) et web (IMGWEB) sont regroupées en paquets pk/N.wasm (maisons les plus connues d'abord) lus par v2/imgpack.js.
+    import json, unicodedata
     fame = {}
-    for i, h in enumerate(re.findall(r"'((?:[^'\\]|\\.)+)'", re.search(r'HOUSE_FAME\s*=\s*\[(.*?)\]', (up/'desc.js').read_text(), re.S).group(1))): fame.setdefault(re.sub(r'[^a-z0-9]+', ' ', __import__('unicodedata').normalize('NFD', h.lower()).encode('ascii', 'ignore').decode()).strip(), i)
-    db, web = _obj('imgdb'), _obj('imgweb'); allowed = set(json.loads((up/'data/artifact-imgweb.json').read_text())) if (up/'data/artifact-imgweb.json').exists() else set()
-    cand = [(fame.get(k.split('|')[0], 999), 0, k, v, 'db') for k, v in db.items() if k not in new] + [(fame.get(k.split('|')[0], 999), 1, k, v, 'web') for k, v in web.items() if k not in new and k not in db]
-    cand.sort(key=lambda x: x[:3]); room = budget - len(fixed); outdb, outweb, files = {}, {}, set(fixed)
-    for _, _, k, v, kind in cand:
-        if room <= 0: break
-        if v in files: continue
-        (outdb if kind == 'db' else outweb)[k] = v; files.add(v); room -= 1
-    (d/'artifact-files.json').write_text(json.dumps(sorted(files)), encoding='utf-8')
-    dump = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
-    return "<script>\nwindow.IMGDB = " + dump(outdb) + ";\n</script>\n<script>\nwindow.IMGWEB = " + dump(outweb) + ";\n</script>\n"
+    for i, h in enumerate(re.findall(r"'((?:[^'\\]|\\.)+)'", re.search(r'HOUSE_FAME\s*=\s*\[(.*?)\]', (up/'desc.js').read_text(), re.S).group(1))):
+        fame.setdefault(re.sub(r'[^a-z0-9]+', ' ', unicodedata.normalize('NFD', h.lower()).encode('ascii', 'ignore').decode()).strip(), i)
+    new = _obj('imgnew'); db, web = _obj('imgdb'), _obj('imgweb')
+    items = {}
+    for k, v in list(db.items()) + list(web.items()):
+        if (d/v).exists(): items.setdefault(v, fame.get(k.split('|')[0], 999))
+    order = sorted(items, key=lambda v: (items[v], v))
+    out = d/'pk'; out.mkdir(exist_ok=True)
+    for f in out.glob('*.wasm'): f.unlink()
+    idx, n, cur, size = {}, 0, bytearray(), 0
+    def flush():
+        nonlocal n, cur
+        if cur: (out/f'{n}.wasm').write_bytes(bytes(cur)); n += 1; cur = bytearray()
+    for v in order:
+        data = (d/v).read_bytes()
+        if len(cur) + len(data) > pack_mb * 1024 * 1024: flush()
+        idx[v] = [n, len(cur), len(data)]; cur += data
+    flush()
+    fixed = set(v for v in new.values()) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp'))
+    files = sorted(fixed | {f'pk/{i}.wasm' for i in range(n)})
+    (d/'artifact-files.json').write_text(json.dumps(files), encoding='utf-8')
+    return "<script>\nwindow.IMGPACK = " + json.dumps(idx, separators=(',', ':')) + ";\n</script>\n" + js(d/'imgpack.js')
 
 def prompt_script():
     src = (d / 'prompt.mjs').read_text().replace('export function', 'function')
@@ -61,7 +70,7 @@ def page(scripts, head_extra=""):
 
 mode = sys.argv[1] if len(sys.argv) > 1 else "artifact"
 if mode == "artifact":
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgnew.js') + imgdb_web_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + imgpack_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
     out = d/'sillage.html'
     out.write_text(page(scripts))
     print(out, out.stat().st_size)
