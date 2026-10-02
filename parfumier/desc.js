@@ -229,6 +229,7 @@
     [/lalique/, /encre noire/, 'm'], [/jean paul/, /^(?!.*(le male|le beau|ultra|scandal pour|monsieur))/, 'u'],
   ];
   function genderOf(name, house) {
+    if (root.FACTS) { const nz = (x) => String(x || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(), f = root.FACTS[nz(house) + '|' + nz(name)]; if (f && f.g) return f.g; }   // faits vérifiés (sites des marques) avant les règles
     if (GSET[name]) return GSET[name];
     const hn = String(house || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''), nn = String(name || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
     const base = String(name || '').replace(/\s+(EDP|EDT|EDC|Elixir|Intense|Parfum|Extrait)$/i, '');

@@ -136,3 +136,8 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Les rééditions (collector, limited, millésime, année, anniversaire…) sont repérées dans `index.js` (`window.EDITIONS`). Elles restent dans la fiche d'un nez et dans une recherche, mais disparaissent des listes par défaut. Les brumes cheveux / corps et huiles sont ignorées.
 - Recommandations, conseils et achats : une seule version par famille de parfum (maison + premier mot du nom), pas de flankers ni de concentrations multiples.
 - « Ajouter mes parfums » et Recherche ont un filtre Féminin / Masculin / Mixte (`genderOf` dans `desc.js` : listes de parfums, règles par maison et mots du nom ; ce qui n'est pas reconnu est « Mixte »).
+
+## Faits tirés des sites des marques (genre, notes)
+
+- Fragrantica est protégé par Cloudflare (403) : rien n'en est collecté. Les sites de plusieurs marques exposent un flux produits public (`/products.json`, autorisé par leur robots.txt) : Parfums de Marly, Creed, Diptyque, Tom Ford, Nasomatto, Matière Première, Amouage, Xerjoff, BDK, Memo, Initio, Serge Lutens.
+- Copier ces flux dans `data/brand-raw/<marque>.json` (non versionné : ce sont des textes de marque), puis `python3 tools/build-facts.py` écrit `facts.js` : uniquement des champs structurés (genre, notes données en étiquettes), jamais de texte marketing. `genderOf` utilise ces faits avant ses règles ; les notes remplacent les notes devinées.
