@@ -240,3 +240,6 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Nouveau moteur d'édition `data/playlists-edit.txt` (bios, « pourquoi » par parfum, groupes Homme/Femme à tailles variables).
 - 10 listes cinéma reconstruites, Icônes, Archétypes, 16 Destinations Homme/Femme (Italie : Buongiorno + Positano), ajouts Moments/Atmosphères, Historical/Strange/Layering, Compliments (Torino21), 3 nouveaux profils (La fille d'Opéra, Le mec des pop-ups, Le directeur artistique du Marais).
 - Parfums cités absents de la base : écartés et listés dans `data/playlists-introuvables.txt`.
+
+## v61 — Personnages volume 2
+- 17 nouvelles listes (Rick Owens, Virgil Abloh, Dalí, Amy Winehouse, Jay-Z, Le Qatari, Howard Ratner, Les Affranchis, Kendall et Logan Roy, Intouchables, Léon, Travis Bickle, Vivian Ward, Arthur Fleck, Vito Corleone, Jazz) ; fiches créées pour les parfums absents.
