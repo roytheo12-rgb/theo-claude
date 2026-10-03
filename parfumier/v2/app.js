@@ -1356,7 +1356,7 @@
         ${accords.length || notes.length ? `<div><p class="mono">L'ADN olfactif</p><div class="chips" style="margin-top:8px">${accords.map((a) => `<span class="chip on">${esc(a)}</span>`).join('')}${notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div></div>` : ''}
         <div class="row"><button class="cta" id="plshuf"><span>Un au hasard</span></button><button class="ghost" id="plwish">Tout en wishlist</button></div>
         ${(p.doc || []).map((d) => `<div class="pldoc"><p>${esc(d.t)}</p>${d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener noreferrer">Source : ${esc(d.s)}</a>` : ''}</div>`).join('')}
-        <div class="plist">${p.ps.map((x, i) => (p.grp && i % 10 === 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[i / 10].t)}</p><p class="pld">${esc(p.grp[i / 10].d)}</p></div>` : '') + row(x, i)).join('')}</div>
+        <div class="plist">${p.ps.map((x, i) => (p.grp && i % 10 === 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[i / 10].t)}</p>${p.grp[i / 10].d ? `<p class="pld">${esc(p.grp[i / 10].d)}</p>` : ''}</div>` : '') + row(x, i)).join('')}</div>
         ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
       </section>`;
     $('#plback').onclick = () => { PL.id = 0; render(); };
