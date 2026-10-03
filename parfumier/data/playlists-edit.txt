@@ -2018,3 +2018,22 @@ pal: 1a2a3a,6a8aa0,e8e0d0,waves
 - Serge Lutens Gris Clair | La lumière bleue du crépuscule sur la rivière Li.
 - Comme des Garçons Wonderwood | Le bambou, le roseau, le bois flottant.
 - Frederic Malle L'Eau d'Hiver | La lanterne du pêcheur : le seul point chaud dans tout ce bleu.
+
+## NEW L'Ivresse | Atmosphères
+d: Le bouchon qui saute, les bulles qui montent dans la coupe, le plateau d'argent, la robe noire. Le premier verre est le meilleur, le troisième est le vrai, le dernier on regrette déjà de ne pas l'avoir refusé. Champagne, grand soir et nuits qui durent.
+pal: 1a1410,d4b45a,f4ecd2,dots
+- Horace Ibiza '87 | Les aldéhydes recréent les bulles, puis le maquis méditerranéen prend le dessus : l'Ibiza d'avant, la première coupe encore froide.
+- Kilian Sparkling Royal | Inspiré du kir royal, champagne et cassis : le début de soirée absolu.
+- Kilian Champagne Rosé | La coupe tendue par quelqu'un qu'on ne connaît pas encore : léger, floral, éphémère comme la mousse.
+- Kilian Roses on Ice | Concombre, genièvre, rose : l'apéritif avant le champagne, glacé comme un verre sorti du seau.
+- Kilian Angels' Share | Cognac, chêne, cannelle, vanille : la part des anges, ce qui reste après la meilleure soirée de ta vie.
+- Kilian Black Phantom | Rhum noir, café, caramel : la soirée qui change de registre à minuit.
+- Maison Francis Kurkdjian Grand Soir | Le lustre, la robe longue, la première seconde dans la salle quand tout le monde se retourne.
+- Ex Nihilo Honoré Delights | Champagne, pamplemousse, caramel : le sucré et les bulles ensemble, festif et parisien.
+- Xerjoff Naxos | La table après le champagne : les coupes vides, la conversation qui dure.
+- Frederic Malle Musc Ravageur | Ce qui reste sur la peau à 4h du matin.
+- Dior Ambre Nuit | Entre minuit et l'aube : l'ivresse qui devient mélancolie douce.
+- Tom Ford Noir Extreme | Le smoking, la montre discrète, la table au fond réservée depuis trois semaines.
+- Maison Margiela Jazz Club | L'after : le plateau d'argent est reparti, la musique continue doucement.
+- Kilian Vodka on the Rocks | Le verre d'avant ou d'après, quand on change de cap à 2h du matin.
+- Santa Maria Novella Tabacco Toscano | Le cigare sur la terrasse après le dernier verre : personne n'a envie de rentrer.

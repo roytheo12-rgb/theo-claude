@@ -156,7 +156,7 @@ ok(await pg.locator('#needai').count() === 1, 'recherche par besoin : bouton « 
 ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); if (sh) sh.hidden = true; });
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
 await pg.waitForSelector('#sheet', { state: 'hidden' }); await pg.waitForTimeout(300); await pg.click('[data-tab=play]'); await pg.waitForSelector('.plcard');
-ok(await pg.locator('.plcard').count() >= 141 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 8, 'playlists : 8 étagères, 141 univers et une playlist du jour');
+ok(await pg.locator('.plcard').count() >= 142 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 8, 'playlists : 8 étagères, 142 univers et une playlist du jour');
 ok(await pg.locator('.plhero .plimg').count() === 1, 'liste du jour : toujours une liste avec photo');
 await pg.screenshot({ path: OUT + '/pl1_biblio.png' });
 await pg.locator('.plcard').first().click(); await pg.waitForSelector('.plist .plr');

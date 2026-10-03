@@ -128,3 +128,5 @@ Louis Vuitton|LVERS|EDP
 Ormonde Jayne|Montabaco|EDP
 Phaedon|Thé Vert|EDP
 Pharrell Williams|Girl|EDP
+Kilian|Champagne Rosé|EDP
+Kilian|Sparkling Royal|EDP
