@@ -1467,33 +1467,6 @@ x Le Labo Thé Matcha 26
 + Jo Malone Wood Sage & Sea Salt | Fresh-contrast layer. La fraîcheur qui crée un contraste dans une construction lourde. Idéal sur oud ou cuir.
 + Matière Première Parisian Musc | The invisible finish. Il ne change pas l'odeur — il la prolonge et lui donne de la projection. Le musc fixateur ultime.
 
-## NEW La fille d'Opéra | Archétypes
-d: Elle ne manque aucun pop-up Enfant de Palestine et passe toujours prendre un iced rose latte chez Dune Café avant de rejoindre Opéra. Elle s'habille chez Merrachi, porte des Tabi et finit souvent sa journée chez Go Un autour d'un poulet frit coréen.
-pal: 1c1020,6a2f4a,e4b5a0,arches
-+ Memo Paris Odéon | Odéon de Memo est inspiré d'un quartier parisien — rose de nuit, cardamome, patchouli crémeux. C'est le parfum qui colle au quartier.
-+ Armani Privé Rouge Malachite | Tubéreuse opulente, épicée, profonde — inspirée par la Russie et sa puissance contrastée. Elle est pas censée le porter selon les codes de son quartier mais elle s'en fout.
-+ Amouage Love Tuberose | La tubéreuse d'Amouage est plus douce, plus romantique. Elle l'associe à ses soirées Go Un — le dîner coréen, la conversation qui dure, le retour à pied sous les lumières d'Opéra.
-+ Diptyque Orphéon | Inspiré du cabaret parisien Orphéon dans le 11ème. C'est son parfum de soirée dans le quartier — boisé, légèrement poussiéreux, très Saint-Germain mais version underground.
-+ Vilhelm Parfumerie 125th & Bloom | Elle l'a découvert à l'occasion d'un pop-up. C'est le genre de parfum qu'on ne trouve pas partout — floral frais, légèrement photogénique.
-
-## NEW Le mec des pop-ups | Archétypes
-d: Il porte des Kayano 14 avec un t-shirt Abela et un short camo dès que les températures remontent. Tous les week-ends, tu peux le croiser rue Notre-Dame-de-Nazareth à un pop-up de marque émergente.
-pal: 1d2a1f,6b7a3e,e8d9a0,stripes
-+ Maison Crivelli Hibiscus Mahajád | Floral et direct — ni trop masculin ni trop féminin. Il l'assume.
-+ Louis Vuitton L'Immensité | Frais, boisé, légèrement minéral. C'est le parfum du voyage — et lui il voyage tous les week-ends.
-+ Xerjoff Erba Gold | Herbe fraîche, agrumes, vétiver blanc. Propre mais pas banal.
-+ Byredo Bal d'Afrique | Son parfum de concert — 630G, Yardland, les clubs de Rotterdam. Bal d'Afrique est chaud, enveloppant, très "fin de soirée qui a bien commencé".
-+ Aesop Hwyl | Forestier, légèrement cru, très japonais dans l'approche. C'est son parfum du dimanche — quand il rentre enfin, qu'il reste chez la même personne et que la semaine peut recommencer.
-
-## NEW Le directeur artistique du Marais | Archétypes
-d: Il ne quitte quasiment jamais Le Marais. Il s'habille en Issey Miyake, Comme des Garçons et The North Face Purple Label, alterne entre des Plasticana et des mules en cuir, passe chez Dover Street Market pour ses parfums et chez The Archivist pour dénicher des pièces vintage.
-pal: 202428,5a5f66,e0d8c8,grid
-+ Comme des Garçons 2 Man | CDG 2 est la version habillée de leur approche conceptuelle — floral-aldéhydé sur une base boisée légèrement fumée. C'est le parfum de quelqu'un qui sait exactement ce qu'il fait même quand ça n'a l'air de rien.
-+ Nasomatto Baraonda | Nasomatto est la maison des parfums-manifestes d'Alessandro Gualtieri. Baraonda ("chaos" en dialecte vénitien) sent le chaos élégant — alcool, cuir, animal.
-+ Notes de Bas de Page Carambolage | Maison française confidentielle, fondée par une ex-journaliste mode. Carambolage est un accord carambole-gingembre qui déroute au premier contact puis devient addictif.
-+ Comme des Garçons Kyoto | Encens de temple shinto, bois japonais, minimalisme absolu. C'est son parfum de travail — dans l'atelier, devant les maquettes, les références, les samples tissu.
-+ DS & Durga Bowmakers | L'atelier d'artisan en flacon. Il l'apprécie exactement pour ça — c'est un parfum qui sent le travail artisanal, la matière, le soin.
-
 ## NEW Rick Owens | Icônes
 d: Luxe nihilisme. Paris, béton, cuir patiné, Michele Lamy dans l'ombre. Ses parfums ne cherchent pas à séduire, ils cherchent à exister.
 pal: 15110f,4a3a32,c8c0b4,grid
@@ -1835,20 +1808,6 @@ pal: f2dfe0,b86a7a,5a3a3a,dots
 - Santa Maria Novella Melograno | La fraîcheur provinciale que Paris n'a jamais effacée.
 - Serge Lutens Gris Clair | Sa victoire finale : discrète, posée, irréversible.
 
-## NEW Anna Ozores | Cinéma, séries & livres
-d: La Régente, Clarín, 1884. Vetusta, Espagne : femme d'un magistrat, désirée par un prêtre, incomprise de tous. La grande héroïne tragique de la littérature espagnole.
-pal: 1a0f14,6a1f2f,d8b8a0,arches
-- Frederic Malle Portrait of a Lady | La femme désirée par tous ceux qui ne peuvent pas l'avoir.
-- Guerlain Shalimar | La passion contenue, tout ce qu'elle a réprimé pendant des années.
-- Robert Piguet Fracas | Ce qu'elle ressent mais ne peut pas montrer : l'explosion intérieure.
-- Serge Lutens Fleurs d'Oranger | L'été de Vetusta, les orangers d'une ville qui l'étouffe.
-- Chanel No. 5 | Le parfum qu'une femme de sa condition devrait porter, mais pas pour les raisons qu'on croit.
-- Dior Addict | L'addiction à la religion, à l'amour interdit, à une vie qu'elle ne vivra jamais.
-- Tom Ford Black Orchid | La face cachée, que Vetusta ne connaît pas.
-- Maison Crivelli Oud Maracujá | L'exotisme impossible dans une ville de province du XIXe siècle.
-- Nasomatto Narcotic Venus | Elle se meurt de ne pas être vue telle qu'elle est.
-- Comme des Garçons Black | La cathédrale, le prêtre, l'obscurité qui la consume.
-
 ## NEW L'Or | Atmosphères
 d: Arabesques ciselées. Byzance, l'empire moghol, Fabergé, Louis XIV à Versailles. L'or n'a pas d'odeur, mais s'il en avait une.
 pal: 2a1a06,d4a72c,fff0c0,rays
@@ -2121,3 +2080,13 @@ pal: 0a0f24,c8c0a0,f4e8c0,rays
 - Naomi Goodsir Bois d'Ascèse | 4 500 ans de silence autour de ces pierres.
 - 4711 Original Eau de Cologne | Napoléon était là en 1798 : il a vu cette même lune.
 - Frederic Malle L'Eau d'Hiver | La lumière lunaire sur le calcaire : le seul parfum assez discret pour ne pas troubler ce silence.
+
+## NEW Les Branchés | Archétypes
+d: Les gens branchés : pop-ups, vernissages, quartiers qui comptent. Trois profils parisiens, du Marais à Opéra.
+pal: 1c1020,6a2f4a,e4b5a0,arches
+@ La fille d'Opéra | Elle ne manque aucun pop-up Enfant de Palestine et passe toujours prendre un iced rose latte chez Dune Café avant de rejoindre Opéra. Elle s'habille chez Merrachi, porte des Tabi et finit souvent sa journée chez Go Un autour d'un poulet frit coréen.
+
+@ Le mec des pop-ups | Il porte des Kayano 14 avec un t-shirt Abela et un short camo dès que les températures remontent. Tous les week-ends, tu peux le croiser rue Notre-Dame-de-Nazareth à un pop-up de marque émergente.
+
+@ Le directeur artistique du Marais | Il ne quitte quasiment jamais Le Marais. Il s'habille en Issey Miyake, Comme des Garçons et The North Face Purple Label, alterne entre des Plasticana et des mules en cuir, passe chez Dover Street Market pour ses parfums et chez The Archivist pour dénicher des pièces vintage.
+
