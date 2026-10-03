@@ -37,7 +37,7 @@ const raw = fs.readFileSync(path.join(root, 'data', 'playlists-source.txt'), 'ut
 const SECS = [], PLS = [];
 let sec = '', cur = null, pend = [];
 const flush = () => { if (cur) { PLS.push(cur); cur = null; } };
-const SECMAP = { 'PERSONNAGES ICONIQUES': 'Personnages', 'THE GENTLEMEN': 'Personnages', 'DRAKE & CULTURE MUSICALE': 'Icônes', 'ICÔNES CULTURELLES': 'Icônes', 'CULTURE / INTERNET': 'Culture', 'VILLES / DESTINATIONS': 'Destinations', 'SAISONS / ATMOSPHÈRES': 'Atmosphères', 'LIFESTYLE': 'Moments', 'UNIVERS OLFACTIFS': 'Effets', 'LE WOLF OF WALL STREET / MONDE FINANCIER': 'Cinéma & séries', 'ART / ÉLÉGANCE / IMAGINAIRE': 'Atmosphères', 'HISTORICAL SCENTS': 'Atmosphères', "L'UNIQUE PLAYLIST ODEURS BIZARRES": 'Spécial', 'LAYERING': 'Spécial' };
+const SECMAP = { 'PERSONNAGES ICONIQUES': 'Personnages', 'THE GENTLEMEN': 'Personnages', 'DRAKE & CULTURE MUSICALE': 'Icônes', 'ICÔNES CULTURELLES': 'Icônes', 'CULTURE / INTERNET': 'Culture', 'VILLES / DESTINATIONS': 'Destinations', 'SAISONS / ATMOSPHÈRES': 'Atmosphères', 'LIFESTYLE': 'Moments', 'UNIVERS OLFACTIFS': 'Effets', 'LE WOLF OF WALL STREET / MONDE FINANCIER': 'Cinéma, séries & livres', 'ART / ÉLÉGANCE / IMAGINAIRE': 'Atmosphères', 'HISTORICAL SCENTS': 'Atmosphères', "L'UNIQUE PLAYLIST ODEURS BIZARRES": 'Spécial', 'LAYERING': 'Spécial' };
 for (let i = 0; i < raw.length; i++) {
   const l = raw[i].trim(); if (!l) continue;
   if (/^Les univers qui restent/.test(l)) break;
@@ -126,14 +126,14 @@ console.log(PLS.length, 'playlists', PLS.reduce((a, p) => a + p.ps.length, 0), '
 module.exports = { PLS };
 const DROP = /Même logique|sort(?:i|ie)?\b|supprimé|définitivement|^Je garde|garderais|Une seule playlist|Celle-ci/;
 const SECS_OF = (p) => { const i = p.id; const r = [];
-  if (i <= 16 || [71, 72].includes(i)) r.push('Cinéma & séries');      // tous les personnages, y compris Jordan et Naomi
+  if (i <= 16 || [71, 72].includes(i)) r.push('Cinéma, séries & livres');      // tous les personnages, y compris Jordan et Naomi
   if (i >= 17 && i <= 26) r.push('Icônes');
   if ((i >= 38 && i <= 48) || (i >= 82 && i <= 86)) r.push('Destinations');
   if ([53, 54, 55, 56, 57, 61, 62, 63, 87, 88, 89, 90, 91].includes(i)) r.push('Moments');
   if ((i >= 49 && i <= 52) || (i >= 74 && i <= 78)) r.push('Atmosphères');
   if ((i >= 64 && i <= 70) || (i >= 93 && i <= 95)) r.push('Effets');
   if ([79, 80, 81].includes(i)) r.push('Spécial');
-  if ((i >= 101 && i <= 113)) r.push('Cinéma & séries');
+  if ((i >= 101 && i <= 113)) r.push('Cinéma, séries & livres');
   if (i >= 120 && i <= 144 || (i >= 27 && i <= 37) || [58, 59, 60, 73, 96, 97].includes(i)) r.push('Archétypes');      // la section Culture est fondue dans Archétypes
   if (!r.length) throw new Error('sans section ' + i);
   return r; };
@@ -157,7 +157,7 @@ function out() {
     if (p.id === 81) o.combos = p.note.filter((l) => /^\* /.test(l)).map((l) => l.replace(/^\* /, '').split(' + '));
     return o;
   });
-  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Cinéma & séries', 'Icônes', 'Archétypes', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
+  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Cinéma, séries & livres', 'Icônes', 'Archétypes', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
   console.log('playlists.js', res.length);
 }
 if (require.main === module) out();

@@ -1578,7 +1578,7 @@ pal: f1e7d0,1f3a2e,c9a24a,arches
 - Abdul Samad Al Qurashi Oud Al Shams | Oud brut, encens, résines : ce qu'il porte vraiment chez lui.
 - Clive Christian No. 1 | Il n'achète pas le parfum, il achète le statut du flacon.
 
-## NEW Howard Ratner | Cinéma & séries
+## NEW Howard Ratner | Cinéma, séries & livres
 d: Joaillier du Diamond District, New York. Costard cheap, grosse chaîne, opale éthiopienne, pari risqué, téléphone qui sonne : adrénaline permanente.
 pal: 2a1a0a,c9a24a,e8e0c8,stripes
 - Tom Ford Tuscan Leather | Veut sentir riche et y est presque.
@@ -1592,7 +1592,7 @@ pal: 2a1a0a,c9a24a,e8e0c8,stripes
 - Clive Christian X For Men | Lu quelque part : « le parfum le plus cher du monde ».
 - Kilian Black Phantom | Son odeur de fin de soirée au casino.
 
-## NEW Les Affranchis | Cinéma & séries
+## NEW Les Affranchis | Cinéma, séries & livres
 d: Henry Hill, Jimmy Conway, Tommy DeVito, Paul Cicero. Brooklyn, fin des années 70. Costards italiens, restaurants, cigarettes et whisky : une fraternité qui sent le cuir, les épices et quelque chose d'irréversible.
 pal: 1a0f0a,8a2a1e,d8c7a5,stripes
 - Santa Maria Novella Tabacco Toscano | La cigarette froide dans le cendrier du restaurant.
@@ -1606,7 +1606,7 @@ pal: 1a0f0a,8a2a1e,d8c7a5,stripes
 - Creed Royal Oud | Le statut.
 - Xerjoff Naxos | Le dimanche matin chez Paul, avant que la semaine recommence.
 
-## NEW Kendall Roy | Cinéma & séries
+## NEW Kendall Roy | Cinéma, séries & livres
 d: Le fils qui veut plaire à son père. Il croit qu'il dirige. Mais son parfum, lui, est parfait.
 pal: 10202e,4a6a85,e0e4e8,grid
 - Tom Ford Grey Vetiver | L'héritier qui se croit plus discret qu'il n'est.
@@ -1620,7 +1620,7 @@ pal: 10202e,4a6a85,e0e4e8,grid
 - Frederic Malle French Lover | Sur le yacht, en mode « je lis des rapports ».
 - Roja Elysium | Trop cher, acheté sans savoir quoi choisir.
 
-## NEW Logan Roy | Cinéma & séries
+## NEW Logan Roy | Cinéma, séries & livres
 d: Il réfléchit depuis 45 secondes et il sait déjà tout. Son parfum ne demande l'approbation de personne.
 pal: 0c0c10,3a3f4a,b8a27a,stripes
 - Chanel Égoïste Platinum | L'« égoïste » dans le nom : trop juste.
@@ -1634,7 +1634,7 @@ pal: 0c0c10,3a3f4a,b8a27a,stripes
 - Santa Maria Novella Tabacco Toscano | Son bureau, ses cigares.
 - Ormonde Jayne Ormonde Man | La discrétion absolue du vrai pouvoir.
 
-## NEW Intouchables | Cinéma & séries
+## NEW Intouchables | Cinéma, séries & livres
 d: Driss et Philippe. Paris, le 16e et la banlieue : deux mondes qui apprennent à se sentir.
 pal: 1c2b4a,e0a34a,f2ead8,rays
 @ Driss | Châtillon, énergie brute, Nike, sourire. Il découvre l'opéra et ne le dit à personne.
@@ -1650,7 +1650,7 @@ pal: 1c2b4a,e0a34a,f2ead8,rays
 - Dior Homme Parfum | Avant que Driss le pousse dans le parapente.
 - Creed Green Irish Tweed | Celui que Driss a mis sans demander : « Ça sent quoi ça ? » « Toi. »
 
-## NEW Léon | Cinéma & séries
+## NEW Léon | Cinéma, séries & livres
 d: New York. Il arrose son lys, boit du lait, tue proprement. Pas de maison, pas d'identité : un flingue et une plante.
 pal: 14161a,5a6b5a,e8e4d6,grid
 - Comme des Garçons Black | L'absence de sentiment en parfum.
@@ -1664,7 +1664,7 @@ pal: 14161a,5a6b5a,e8e4d6,grid
 - Comme des Garçons Kyoto | Le temple vide, la concentration.
 - Naomi Goodsir Bois d'Ascèse | L'ascèse totale.
 
-## NEW Travis Bickle | Cinéma & séries
+## NEW Travis Bickle | Cinéma, séries & livres
 d: New York pourrie, les nuits blanches, la ville vue depuis un taxi. « Un jour, une vraie pluie viendra nettoyer les rues. »
 pal: 1a1a14,8a6a2a,d8c9a0,rain
 - Comme des Garçons Concrete | Les rues de New York en 1976, le film en parfum.
@@ -1678,7 +1678,7 @@ pal: 1a1a14,8a6a2a,d8c9a0,rain
 - Naomi Goodsir Bois d'Ascèse | Son appartement vide.
 - Maison Margiela Jazz Club | Le seul soir où il s'est senti normal, avec Betsy.
 
-## NEW Vivian Ward | Cinéma & séries
+## NEW Vivian Ward | Cinéma, séries & livres
 d: Hollywood Boulevard, Beverly Wilshire, Rodeo Drive. Bottes rouges, puis robe rouge, puis robe de bal : son évolution olfactive suit exactement ce chemin.
 pal: c8102e,f5e3d3,2a1a1a,dots
 - Dior Miss Dior Original | Ce qu'elle achète le premier jour sur Rodeo Drive.
@@ -1692,7 +1692,7 @@ pal: c8102e,f5e3d3,2a1a1a,dots
 - Diptyque Eau Rose | Rose simple, propre, sans artifice.
 - Frederic Malle Carnal Flower | La femme qu'elle devient : libre, accomplie.
 
-## NEW Arthur Fleck | Cinéma & séries
+## NEW Arthur Fleck | Cinéma, séries & livres
 d: New York, 1981. Sous-sol humide, maquillage blanc, costume bordeaux, métro graffité, rire incontrôlable. S'il portait un parfum, ce serait quelque chose qui dérange.
 pal: 2a0d12,8a2a2a,c9b27a,stripes
 - Comme des Garçons Series 6 Synthetic: Tar | Le métro de Gotham, littéral et brutal.
@@ -1706,7 +1706,7 @@ pal: 2a0d12,8a2a2a,c9b27a,stripes
 - DS & Durga Concrete After Lightning | La ville juste avant l'émeute.
 - Naomi Goodsir Bois d'Ascèse | Arthur qui devient quelque chose d'irréversible.
 
-## NEW Vito Corleone | Cinéma & séries
+## NEW Vito Corleone | Cinéma, séries & livres
 d: Le bureau sombre, le chat, la voix douce. Le jardin derrière, les tomates, la Sicile dans l'ombre. Il n'a jamais eu besoin d'élever la voix.
 pal: 1a120c,6a4a2a,d8c19a,grain
 - Santa Maria Novella Tabacco Toscano | Le bureau, le cigare, la maison sicilienne.
@@ -1764,3 +1764,257 @@ pal: 0d2b1f,e8e4d4,c9a24a,stripes
 - Amouage Reflection Man | Néroli, jasmin, santal : une élégance qui ne cherche rien.
 - Creed Carmina | Pamplemousse rose, jasmin, musc : une pièce rare, avant tout le monde dans son entourage.
 - Dusita Melodie de l'Amour | Jasmin sambac, rose, musc : maison confidentielle trouvée dans une boutique du Marais.
+
+## NEW Basquiat | Icônes
+d: Brooklyn, 1960. SAMO sur les murs du downtown, costume Armani sur les peintures fraîches. Royalty, heroism and the streets : Haïti, Porto Rico, New York. Mort à 27 ans avec 4 000 œuvres derrière lui.
+pal: 1a1a1a,e8c02a,c8102e,stripes
+- DS & Durga Radio Bombay | L'Afrique, l'Inde, les Caraïbes : un parfum qui refuse d'être d'un seul endroit.
+- Nasomatto Black Afgano | Encens, oud, résines : l'atelier de la rue Crosby à 3h du matin, la peinture encore humide.
+- Etat Libre d'Orange Rien | Du néant qui parle. SAMO© en parfum : une phrase sur un mur vide qui dit tout.
+- Comme des Garçons 2 Man | L'abstraction : le moment où le graffiti est devenu de l'art.
+- Memo African Leather | Cuir, cardamome, ciste, ambre : ses racines haïtiennes et caribéennes.
+- Maison Crivelli Oud Maracujá | Brooklyn, l'Orient et la galerie : l'exotisme revendiqué.
+- Vilhelm Parfumerie Basilico & Fellini | L'énergie brute du downtown, la peinture rapide et végétale.
+- Serge Lutens La Religieuse | Le sacré dans le profane : les crânes, les couronnes à trois pointes.
+- Zoologist Bat | Les sous-sols, les murs du métro new-yorkais en 1978 : l'obscurité qui précède la lumière.
+- Notes de Bas de Page Carambolage | La couleur sur la toile : vif, inattendu, pas de place pour l'hésitation.
+
+## NEW Pharrell Williams | Icônes
+d: Virginia Beach, Neptunes, le monde. La bande-son de deux générations, puis la direction artistique de Louis Vuitton Homme. Un parfum qui sent le soleil.
+pal: f2c21a,1a1a1a,f4f0e4,rays
+- Louis Vuitton LVERS | Co-créé avec Jacques Cavallier-Belletrud : le soleil sur le Pont Neuf lors de son premier défilé. La pièce centrale.
+- Louis Vuitton Nouveau Monde | Cacao, patchouli, musc : les matières premières africaines, le voyage permanent.
+- Pharrell Williams Girl | Poivre rose, fleurs blanches, patchouli, muscs : son premier parfum personnel.
+- Byredo Sundazed | La Californie de N.E.R.D., la chaleur permanente.
+- Maison Crivelli Hibiscus Mahajád | Le floral inattendu sur un homme, porté avec une assurance totale.
+- Xerjoff Torino21 | Moderne, ouvert, cross-culturel : entre le luxe américain et l'élégance italienne.
+- Escentric Molecules Molecule 04 | Invisible mais omniprésent, comme son influence sur la musique.
+- Aesop Hwyl | La rigueur derrière la joie : il ne fait rien par hasard.
+- DS & Durga Bowmakers | L'artisanat : chaque note placée à la main.
+- Matière Première Radical Rose | La rose comme symbole d'un luxe redéfini.
+
+## NEW Edmond Dantès | Cinéma, séries & livres
+d: Marseille, château d'If, l'Orient, Paris. Il a tout perdu, il a tout reconstruit, et il attend le moment exact.
+pal: 0c1c2e,8a6a2a,e8dcc0,waves
+- Abdul Samad Al Qurashi Oud Al Shams | Les années en Orient : ce qu'il a appris là-bas.
+- Amouage Jubilation XXV | La patience de la vengeance : complexe, il se révèle lentement.
+- Roja Parfums Diaghilev | Le Comte en société : impeccable, culturel, dangereux sous la surface.
+- Kilian Straight to Heaven | L'île de Monte-Cristo, la première bouffée d'air après 13 ans.
+- Serge Lutens Ambre Sultan | L'Orient qu'il a habité : la transformation.
+- Creed Royal Oud | Le Comte à Paris : richesse absolue, discrétion totale, origine mystérieuse.
+- Frederic Malle Monsieur | Edmond avant le château d'If : simple, droit, amoureux.
+- Xerjoff Alexandria II | L'Orient dans toute sa splendeur : ses voyages, ses maîtres, sa fortune.
+- Maison Crivelli Bois Datchaï | Les joyaux cachés dans l'obscurité de la grotte.
+- Maison Francis Kurkdjian Grand Soir | Le dîner chez Morcerf : la vengeance servie froide, dans une salle illuminée.
+
+## NEW Arsène Lupin | Cinéma, séries & livres
+d: Paris, Belle Époque. Il vole par élégance, pas par nécessité. Il entre dans les châteaux par la fenêtre et en ressort par la grande porte.
+pal: 14202e,c9a24a,efe6d0,arches
+- Penhaligon's The Tragedy of Lord George | Choisi précisément parce que ça ne correspond pas à son image.
+- Chanel Pour Monsieur Concentrée | L'élégance française absolue : le plus beau de ses masques.
+- Guerlain Vetiver | Le parfum du gentleman cambrioleur, irréprochable.
+- Hermès Bel Ami | On se souvient du parfum, pas du visage.
+- Atkinsons 24 Old Bond Street | Il connaît l'adresse par cœur.
+- Santa Maria Novella Acqua di Colonia | La discrétion absolue : sous toutes ses identités, il reste le même.
+- Floris No. 89 | Volé dans la chambre d'un lord écossais, il ne s'en est plus séparé.
+- DS & Durga Bowmakers | L'atelier du faussaire : les faux documents, les vraies œuvres d'art.
+- Maison Francis Kurkdjian 724 | Moderne, parisien, sans histoire apparente : Lupin aujourd'hui.
+- Roja Parfums Elysium | L'Élysée des parfums pour l'homme qui vit dans l'Élysée des cambrioleurs.
+
+## NEW Denise Baudu | Cinéma, séries & livres
+d: Au Bonheur des Dames, Zola, 1883. Jeune provinciale arrivée à Paris, vendeuse puis directrice. Elle résiste à tout avec une douceur absolue.
+pal: f2dfe0,b86a7a,5a3a3a,dots
+- L'Artisan Parfumeur Mûre et Musc | La province qu'elle porte encore en elle : simple, propre, vivace.
+- Guerlain L'Heure Bleue | Paris au crépuscule, vu depuis la fenêtre du magasin.
+- Diptyque Philosykos | La campagne normande qu'elle a quittée, le jardin de son enfance.
+- Fragonard Belle Chérie | Floral, doux, honnête : le parfum des vendeuses des grands magasins.
+- Maison Margiela Lazy Sunday Morning | Le dimanche avec ses frères, la seule journée sans le magasin.
+- Chanel No. 19 | Ce qu'elle portera quand elle sera directrice : la force tranquille.
+- Frederic Malle En Passant | L'air de Paris au printemps, la ville qu'elle apprend à aimer.
+- Goutal Un Matin d'Orage | Le matin dans les escaliers de service, avant l'ouverture.
+- Santa Maria Novella Melograno | La fraîcheur provinciale que Paris n'a jamais effacée.
+- Serge Lutens Gris Clair | Sa victoire finale : discrète, posée, irréversible.
+
+## NEW Anna Ozores | Cinéma, séries & livres
+d: La Régente, Clarín, 1884. Vetusta, Espagne : femme d'un magistrat, désirée par un prêtre, incomprise de tous. La grande héroïne tragique de la littérature espagnole.
+pal: 1a0f14,6a1f2f,d8b8a0,arches
+- Frederic Malle Portrait of a Lady | La femme désirée par tous ceux qui ne peuvent pas l'avoir.
+- Guerlain Shalimar | La passion contenue, tout ce qu'elle a réprimé pendant des années.
+- Robert Piguet Fracas | Ce qu'elle ressent mais ne peut pas montrer : l'explosion intérieure.
+- Serge Lutens Fleurs d'Oranger | L'été de Vetusta, les orangers d'une ville qui l'étouffe.
+- Chanel No. 5 | Le parfum qu'une femme de sa condition devrait porter, mais pas pour les raisons qu'on croit.
+- Dior Addict | L'addiction à la religion, à l'amour interdit, à une vie qu'elle ne vivra jamais.
+- Tom Ford Black Orchid | La face cachée, que Vetusta ne connaît pas.
+- Maison Crivelli Oud Maracujá | L'exotisme impossible dans une ville de province du XIXe siècle.
+- Nasomatto Narcotic Venus | Elle se meurt de ne pas être vue telle qu'elle est.
+- Comme des Garçons Black | La cathédrale, le prêtre, l'obscurité qui la consume.
+
+## NEW L'Or | Atmosphères
+d: Arabesques ciselées. Byzance, l'empire moghol, Fabergé, Louis XIV à Versailles. L'or n'a pas d'odeur, mais s'il en avait une.
+pal: 2a1a06,d4a72c,fff0c0,rays
+- Abdul Samad Al Qurashi Oud Al Shams | L'or liquide de la péninsule arabique.
+- Guerlain Shalimar Millésime Impérial | Le flacon Baccarat, la cour moghole qui a inspiré les jardins de Shalimar.
+- Xerjoff Alexandria II | L'or de la connaissance accumulée.
+- Roja Parfums Enigma | Le coffre fermé à clé, le portrait doré dans la galerie.
+- Maison Francis Kurkdjian Grand Soir | Le lustre, les bougies, l'or sur les invités.
+- Clive Christian No. 1 | L'or comme matière noble, pas comme ostentation.
+- Amouage Jubilation XXV | Les collections de Fabergé : l'or travaillé à la main.
+- Penhaligon's The Tragedy of Lord George | L'or britannique, austère mais indiscutable.
+- Serge Lutens Ambre Sultan | Le bazar d'Istanbul, l'or des épices.
+- Dior Or Poudré | Poudre d'or sur peau chaude : la version lumineuse de cet univers.
+
+## NEW L'Aventurier | Archétypes
+d: Canyons, rappel, cascades. Il saute d'un hélicoptère dans l'océan, descend en rappel dans une grotte avec une cascade. Il sent la roche mouillée, l'adrénaline, et quelque chose qu'on ne peut pas nommer.
+pal: 0e3a3a,3a8a7a,e8f0e0,waves
+- Creed Silver Mountain Water | L'air à 3 000 m d'altitude, la neige fondue sur les rochers.
+- Maison Margiela Replica When the Rain Stops | La cascade dans la grotte, l'instant d'après : la roche qui sèche.
+- Jo Malone Wood Sage & Sea Salt | Le saut dans l'océan depuis l'hélicoptère.
+- Aesop Hwyl | La forêt dense avant la falaise, la discipline du grimpeur.
+- Hermès Terre d'Hermès Eau Givrée | La roche, le silex, les mains qui glissent sur la paroi froide.
+- Xerjoff Join the Club 40 Knots | La vitesse dans l'eau, la sortie du canyon vers la mer.
+- Profumum Roma Acqua di Sale | Le fond de l'eau, quand il touche et remonte.
+- Creed Virgin Island Water | La surface après le plongeon, la lumière qui traverse.
+- Eau d'Italie Un Bateau pour Capri | Le retour : le bateau qui attend à l'entrée du canyon.
+- DS & Durga Concrete After Lightning | La grotte juste avant la cascade, l'air électrisé.
+
+## NEW L'Été en Black Tie | Moments
+d: Toscane, août. Smoking blanc ou costume sombre selon l'heure, cigares derrière la villa, vin rouge encore chaud, une conversation qui dure depuis deux heures.
+pal: 1c1410,8a2a2a,e8d8b0,grain
+- Acqua di Parma Colonia Assoluta | La colonia de l'hôte avant le dîner : simple, parfaite, italienne.
+- Santa Maria Novella Tabacco Toscano | Le cigare qu'il allume : la Toscane dans une bouffée.
+- Xerjoff Torino21 | L'élégance italienne contemporaine, ni trop ni pas assez.
+- Memo Italian Leather | La sellerie de la voiture garée devant, chauffée toute la journée.
+- Tom Ford Noir Extreme | Le smoking, la chemise blanche, la nuit qui commence.
+- Creed Royal Oud | Le statut de quelqu'un qui ne le montre jamais.
+- Frederic Malle Monsieur | L'hôte de la villa : il n'en fait pas plus que nécessaire.
+- Roja Parfums Elysium | L'invité qui vient pour la première fois et sera rappelé.
+- Ormonde Jayne Montabaco | Le deuxième cigare, la conversation plus intime.
+- Dior Homme Parfum | La séduction sans effort : il est minuit, il reste deux heures.
+
+## NEW L'Élégant | Archétypes
+d: Il prend son chien en laisse, met son manteau matelassé bleu marine et sort passer un coup de téléphone d'une demi-heure devant la boutique. Il a 70 ans. Il est impeccable.
+pal: e8e4da,1c2a4a,8a7a5a,stripes
+- Acqua di Parma Colonia | Le parfum qu'il porte depuis 45 ans. Il ne le changera jamais.
+- Santa Maria Novella Acqua di Colonia | La plus ancienne pharmacie-parfumerie du monde, à 200 m de chez lui.
+- Guerlain Vetiver | Guerlain Vetiver n'a jamais changé de formule, et lui non plus.
+- Chanel Pour Monsieur Concentrée | Continué par loyauté.
+- Hermès Bel Ami | Acheté lors d'un voyage à Paris en 1985.
+- Floris Santal | La maison royale britannique qu'il respecte profondément.
+- Dior Homme Original | La sophistication poudrée de l'homme cultivé.
+- Penhaligon's Blenheim Bouquet | Classique, british, impeccable : son cadeau de Noël depuis 30 ans.
+- Atkinsons 24 Old Bond Street | Il aime l'histoire des maisons.
+- Profumum Roma Acqua di Sale | Le week-end en mer Tyrrhénienne avec le chien : le seul moment où il se détend.
+
+## NEW La Cathédrale | Atmosphères
+d: Nef gothique, croix en or suspendue dans la pénombre, lumière des vitraux sur la pierre, l'encens qui monte. Le silence choisi.
+pal: 14121c,5a4a7a,d8c8a0,arches
+- Comme des Garçons Kyoto | Encens de temple, cèdre, camphre : le lieu sacré par excellence.
+- Serge Lutens La Religieuse | La dévotion absolue.
+- Naomi Goodsir Bois d'Ascèse | L'ascèse en parfum : ceux qui ont tout renoncé.
+- Santa Maria Novella Acqua di Colonia | La pharmacie des moines dominicains de Florence depuis 1221.
+- Comme des Garçons Hinoki | Chartres, Kyoto : la même odeur de dévotion.
+- Phaedon Thé Vert | Thé vert, oud, encens : un profil olfactif monastique.
+- DS & Durga Concrete After Lightning | La cathédrale après la pluie, l'air électrisé avant la messe.
+- Frederic Malle L'Eau d'Hiver | La lumière des vitraux sur la pierre froide.
+- Etat Libre d'Orange Rien | Le silence, le vide avant la prière.
+- Amouage Interlude Man | L'encens le plus noble du monde dans la pierre la plus ancienne.
+- Perris Monte Carlo Encens Sacré | L'encens des nefs.
+- Santa Maria Novella Incenso | L'encens de la pharmacie des moines.
+
+## NEW L'Artiste | Archétypes
+d: Rome ou Barcelone. Veste blanche, lunettes rondes teintées de rouge. Son atelier est un musée de lui-même : bustes en plâtre, portraits, livres ouverts. Très sérieux et très drôle à la fois.
+pal: f0ece4,c8102e,1a1a1a,dots
+- Nasomatto Baraonda | « Baraonda » : l'atelier à 18h, les modèles, la peinture fraîche.
+- Etat Libre d'Orange Fils de Dieu | Étonnamment doux pour un atelier : l'artiste le dimanche matin.
+- Comme des Garçons Wonderwood | Les sculptures, le bois, la matière première.
+- Santa Maria Novella Tabacco Toscano | La cigarette devant son travail.
+- DS & Durga Bowmakers | Les heures de travail derrière l'élégance.
+- Serge Lutens La Religieuse | La peinture est sa religion.
+- Frederic Malle Portrait of a Lady | Le portrait : c'est lui qui les fait, mais c'est aussi lui qui pose.
+- Maison Margiela Jazz Club | L'après-vernissage, debout jusqu'à 2h.
+- Vilhelm Parfumerie Basilico & Fellini | L'Italie dans l'atelier, la fraîcheur végétale sous la peinture.
+- Roja Parfums Diaghilev | Nommé d'après l'homme qui a transformé l'art en spectacle.
+
+## NEW Neuschwanstein | Destinations
+d: Bavière en hiver. Ludwig II, forêts de sapins sous la neige, tours qui percent les nuages. Un roi qui a construit un château pour n'y vivre que 172 jours : le froid, le bleu, l'impossible.
+pal: 12203a,5a7aa0,eaf0f6,rays
+- Creed Silver Mountain Water | L'eau de la montagne sous le château : le froid sec et pur.
+- Maison Margiela By the Fireplace | La cheminée de Ludwig, une nuit de janvier.
+- Comme des Garçons Kyoto | Wagner et les Nibelungen : le sacré nordique.
+- Serge Lutens Fille en Aiguilles | La forêt de Füssen sous la neige.
+- Aesop Hwyl | L'isolement choisi : Ludwig à regarder les Alpes.
+- Tom Ford Oud Wood | L'intérieur surchargé du château : dorures, velours, excès.
+- Naomi Goodsir Bois d'Ascèse | Il a construit quelque chose d'impossible et s'y est retiré seul.
+- Frederic Malle L'Eau d'Hiver | La lumière d'hiver, froide, oblique, fantomatique.
+- Demeter Snow | La neige sur les tours. Juste ça.
+- Ormonde Jayne Ormonde Man | Le roi dans sa bibliothèque : l'isolement comme forme suprême d'élégance.
+
+## NEW Aurores boréales | Destinations
+d: Reykjavik, minuit en janvier. Ils sont debout dans le froid, main dans la main. L'un d'eux montre le ciel à l'autre.
+pal: 06142a,2ab88a,c8f0e0,waves
+- Creed Silver Mountain Water | L'air arctique : pur, froid, électrique.
+- Maison Margiela Replica When the Rain Stops | L'air juste après la tempête, avant les aurores.
+- Jo Malone Wood Sage & Sea Salt | Le vent de l'Atlantique Nord sur les visages.
+- Byredo Mojave Ghost | La lumière verte qui descend sur deux personnes qui ne bougent plus.
+- Frederic Malle L'Eau d'Hiver | Fragile et cosmique à la fois.
+- Maison Crivelli Bois Datchaï | Le bonnet enfoncé, les joues rouges, le parfum qui reste chaud.
+- Aesop Tacit | Le silence : il n'y a rien à dire face aux aurores.
+- Matière Première Parisian Musc | L'écharpe de l'un sur l'épaule de l'autre.
+- Diptyque Tam Dao | La nuit qui dure, le retour à l'hôtel, la chaleur retrouvée.
+- Serge Lutens Gris Clair | Le matin après : un souvenir qui a déjà une odeur.
+
+## NEW Montagne arc-en-ciel | Destinations
+d: Pérou, 5 000 m d'altitude. Lamas à pompons rouges, ciel trop bleu, air rare. Des couleurs qui n'existent pas ailleurs.
+pal: c8102e,f2a900,1a8a6a,stripes
+- Maison Crivelli Citrus Batikanga | Vif, chaud, minéral : les couleurs de la montagne.
+- Byredo Bal d'Afrique | La rencontre des cultures, l'universel du voyage.
+- Comme des Garçons Kyoto | La spiritualité andine : la montagne comme temple.
+- DS & Durga Radio Bombay | Les épices du marché de Cusco, le choc des sens à 5 000 m.
+- Aesop Hwyl | L'effort, les poumons qui cherchent l'air, la récompense du sommet.
+- Creed Virgin Island Water | L'eau cristalline des sources andines.
+- Memo Inlé | Les offrandes sur les rochers.
+- Santa Maria Novella Acqua di Colonia | Le parfum le plus ancien d'Occident rencontre les Andes.
+- Xerjoff Erba Gold | L'herbe sèche à haute altitude.
+- Demeter Dirt | La terre rouge et verte de la montagne elle-même.
+
+## NEW Égypte | Destinations
+d: Gizeh, 7h du matin. Le soleil monte derrière la pyramide de Khéphren, le Sphinx regarde vers l'est depuis 4 500 ans, la poussière est encore froide.
+pal: 3a2a10,d4a050,f4e4c0,rays
+- Serge Lutens Ambre Sultan | L'Orient millénaire : ce que sentait le temple de Karnak.
+- Maison Crivelli Oud Maracujá | L'Égypte moderne : Khan el-Khalili, le bazar des parfumeurs.
+- Abdul Samad Al Qurashi Oud Al Shams | La péninsule arabique qui fait face à l'Égypte depuis l'éternité.
+- Guerlain Eau de Cologne Impériale | Napoléon à Gizeh en 1798 : l'histoire en parfum.
+- Comme des Garçons Black | L'intérieur de la pyramide, 4 500 ans de profondeur.
+- DS & Durga Bowmakers | Les artisans qui ont taillé la pierre : un savoir-faire transmis sur 100 générations.
+- Memo African Leather | Le cuir des selles de chameaux, le vent du désert.
+- Profumum Roma Acqua di Sale | Le Nil, la mer Rouge, le sel du désert.
+- Naomi Goodsir Bois d'Ascèse | Le mystère du Sphinx : 4 500 ans de silence.
+- 4711 Original Eau de Cologne | Napoléon en portait 60 flacons par mois. Il est passé ici.
+
+## NEW Antarctique | Destinations
+d: Péninsule antarctique, -8 °C. Le canot passe entre les icebergs, les manchots ne bougent pas. Un silence qui n'existe nulle part ailleurs sur terre.
+pal: 0a2a4a,6ab0d8,f0f8ff,waves
+- Creed Silver Mountain Water | L'eau glaciaire : pure, minérale, sans mémoire.
+- Maison Margiela Replica When the Rain Stops | L'air après la tempête : électrique et vide.
+- Demeter Snow | Neige fraîche, air arctique. Rien d'autre n'est nécessaire.
+- Comme des Garçons Concrete | La roche volcanique noire sous la neige.
+- Aesop Hwyl | La concentration absolue : on ne pense plus qu'à l'horizon.
+- Creed Virgin Island Water | Paradoxalement, l'eau, même froide, même gelée.
+- DS & Durga Concrete After Lightning | Les tempêtes du passage de Drake.
+- Frederic Malle L'Eau d'Hiver | La lumière d'été : 22h et le soleil ne se couche pas.
+- Profumum Roma Acqua di Sale | Le sel de l'eau la plus froide du monde.
+- Byredo Gypsy Water | Deux personnes dans un canot parmi les icebergs, au bout du monde.
+
+## NEW Chine ancienne | Destinations
+d: Province du Guangxi, rivière Li, crépuscule. Des pêcheurs debout sur des radeaux de bambou avec leurs cormorans, des karsts qui se fondent dans la brume bleue. Ça dure depuis 2 000 ans.
+pal: 1a2a3a,6a8aa0,e8e0d0,waves
+- Comme des Garçons Kyoto | L'Asie orientale dans un seul parfum : le temple, la rivière, la brume.
+- Comme des Garçons Hinoki | Le bambou des radeaux, le bois sacré de l'Asie.
+- Aesop Hwyl | Le matin sur la rivière, la brume qui monte.
+- DS & Durga Radio Bombay | Les routes de la soie qui partaient de Chine vers l'Occident.
+- Memo Inlé | Les temples au bord de la rivière, la dévotion quotidienne.
+- Maison Margiela Replica Sailing Day | Le radeau de bambou, l'eau qui glisse dessous.
+- Diptyque Tam Dao | La forêt de karsts dans la brume, l'humidité qui sature tout.
+- Serge Lutens Gris Clair | La lumière bleue du crépuscule sur la rivière Li.
+- Comme des Garçons Wonderwood | Le bambou, le roseau, le bois flottant.
+- Frederic Malle L'Eau d'Hiver | La lanterne du pêcheur : le seul point chaud dans tout ce bleu.
