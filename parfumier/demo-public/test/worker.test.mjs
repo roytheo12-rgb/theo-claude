@@ -199,7 +199,7 @@ console.log(ok, 'tests réussis');
 
 // ---------- Base de parfums : photos, variantes et doublons
 import fs from 'node:fs';
-globalThis.window = globalThis; createRequire(import.meta.url)('../../index.js'); createRequire(import.meta.url)('../../imgnew.js');
+globalThis.window = globalThis; createRequire(import.meta.url)('../../index.js'); createRequire(import.meta.url)('../../imgnew.js'); createRequire(import.meta.url)('../../imgdb.js'); createRequire(import.meta.url)('../../imgweb.js');
 await t('base : chaque photo existe, vise une fiche de la base, et aucune maison n\'a deux fiches pour le même parfum', async () => {
   const D = createRequire(import.meta.url)('../../data.js'), norm = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
   const HA = globalThis.HOUSE_ALIAS || {}, all = []; D.CATALOG.forEach((c) => all.push([HA[norm(c.house)] || c.house, c.name])); globalThis.INDEX.forEach(([h, l]) => l.forEach((x) => all.push([h, x[0]])));
@@ -210,6 +210,10 @@ await t('base : chaque photo existe, vise une fiche de la base, et aucune maison
   assert.ok(Object.keys(globalThis.IMGNEW).length > 200);
   // variantes : la version de base et sa version extrait / absolu ont chacune leur fiche et leur photo
   for (const k of ['maison francis kurkdjian|baccarat rouge 540', 'maison francis kurkdjian|baccarat rouge 540 extrait', 'diptyque|do son', 'diptyque|do son edt']) assert.ok(globalThis.IMGNEW[k], 'photo manquante : ' + k);
+  // jamais la même image pour deux parfums différents (photo mal rattachée), quelle que soit sa source
+  { const { createHash } = await import('node:crypto'); const core = (k) => { const [h, n0] = k.split('|'); const n = n0.replace('ch ur', 'choeur').replace('c ur', 'coeur'); const drop = new Set([...h.split(' '), 'hermessence', 'la', 'le', 'les', 'l', 'the', 'de', 'du', 'eau', 'parfum', 'edp', 'edt']); return n.split(' ').filter((t) => !drop.has(t)).sort().join(''); };
+    const by = new Map(); for (const g of ['IMGNEW', 'IMGDB', 'IMGWEB']) for (const [k, f] of Object.entries(globalThis[g] || {})) { if (!fs.existsSync(root + f)) continue; const h = createHash('md5').update(fs.readFileSync(root + f)).digest('hex'); (by.get(h) || by.set(h, []).get(h)).push(k); }
+    for (const ks of by.values()) if (ks.length > 1) assert.equal(new Set(ks.map(core)).size, 1, 'même image pour des parfums différents : ' + ks.join(' / ')); }
   for (const n of Object.values(globalThis.NOSE_IMG)) assert.ok(fs.existsSync(root + n));
   assert.ok(globalThis.NOSE_IMG['Alberto Morillas'] && globalThis.NOSE_IMG['Francis Kurkdjian'] && globalThis.NOSE_IMG['Julien Rasquinet']);
   // rééditions repérées (jamais mises en avant) ; les parfums de base ne le sont pas

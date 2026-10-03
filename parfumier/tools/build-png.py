@@ -16,22 +16,26 @@ REJETS = {
 def norm(s): return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9 ]', ' ', ''.join(c for c in unicodedata.normalize('NFD', str(s or '').lower()) if not unicodedata.combining(c)))).strip()
 def slug(s): return norm(s).replace(' ', '-')
 
-def trim_caption(a):
-    """Retire les lignes de légende collées sous le flacon : bandes fines, séparées du flacon par au moins 2 rangées vides."""
+def trim_caption(a, rgb=None):
+    """Retire les lignes de légende sous le flacon : groupes de rangées séparés du flacon par un vide, courts, et faits de texte sombre et neutre.
+    Sans les couleurs (rgb), retombe sur la règle de forme seule. Le verre clair d'un socle n'est jamais pris pour du texte."""
     h = a.shape[0]
-    for _ in range(3):
+    for _ in range(4):
         rows = np.where(a.any(axis=1))[0]
         if len(rows) < 2: break
-        cuts = np.where(np.diff(rows) > 2)[0]
+        cuts = np.where(np.diff(rows) > 12)[0]
         if not len(cuts): break
         top = rows[cuts[-1] + 1]; bottom = rows[-1]
-        if (bottom - top + 1) <= 0.06 * h and (rows[cuts[-1]] - rows[0]) >= 0.15 * h:
-            a = a.copy(); a[top:] = False
-        else: break
+        if (bottom - top + 1) > 0.14 * h or (rows[cuts[-1]] - rows[0]) < 0.15 * h: break
+        if rgb is not None:
+            seg = a[top:bottom + 1]; px = rgb[top:bottom + 1][seg]
+            lum = px.mean(axis=1); neutral = (px.max(axis=1) - px.min(axis=1)) < 28
+            if not (((lum < 120) & neutral).mean() > 0.55): break
+        a = a.copy(); a[top:] = False
     return a
 
 # Photos livrées avec un fond clair non détouré : on retire le fond relié aux bords (+ ombre pour les Serge Lutens, dont l'étiquette noire sert de repère)
-RECT_BG = {59: 0.30, 60: 0.13, 118: None}
+RECT_BG = {}      # (anciennes retouches par numéro : le lot de 303 est numéroté autrement, la détection se fait maintenant dans crop_bottle)
 def cut_rect_bg(im, margin):
     from PIL import ImageFilter
     arr0 = np.asarray(im).copy(); a = trim_caption(arr0[:, :, 3] > 40)
@@ -51,32 +55,56 @@ def cut_rect_bg(im, margin):
     yy, xx = np.where(arr[:, :, 3] > 0)
     return Image.fromarray(arr[yy.min():yy.max() + 1, xx.min():xx.max() + 1])
 
+def strip_box(im):
+    """Photos dont la légende est dans un cadre crème ou gris clair (nom + prix copiés d'un site) : on efface le cadre et tout ce qui est dessous."""
+    arr = np.asarray(im).copy(); a = arr[:, :, 3] > 100; h, w = a.shape
+    rgb = arr[:, :, :3].astype(int)
+    paper = a & (rgb.min(axis=2) >= 226) & ((rgb.max(axis=2) - rgb.min(axis=2)) <= 16)
+    wide = paper.sum(axis=1) >= 450
+    ys = np.where(wide)[0]
+    if not len(ys): return im
+    last = np.where(a.any(axis=1))[0][-1]
+    if ys[-1] < last - 0.03 * h: return im      # le cadre de légende est le dernier élément de l'image ; un flacon pâle et large a encore du contenu dessous
+    # dernier bloc de rangées larges (les lignes de texte laissent des trous de quelques rangées)
+    start = ys[-1]
+    for y in ys[::-1]:
+        if start - y <= 14: start = y
+        else: break
+    if ys[-1] - start < 40 or ys[-1] - start > 0.26 * h: return im      # un cadre de légende est bas ; un flacon clair et large ne l'est pas
+    arr[max(0, start - 3):, :, 3] = 0
+    return Image.fromarray(arr)
+
 def crop_bottle(im):
-    """Garde le flacon (plus grosse composante) et ce qui l'entoure ; retire la légende, située plus bas."""
+    """Garde tout le flacon (verre transparent compris) et retire la légende ; efface le fond blanc s'il est resté opaque."""
+    im = strip_box(im)
     a = np.asarray(im)[:, :, 3] > 40
     h, w = a.shape
-    a = trim_caption(a)
-    r = max(3, int(h * 0.016))
-    dil = ndimage.maximum_filter(a.astype(np.uint8), size=2 * r + 1) > 0
-    lab, n = ndimage.label(dil)
+    a = trim_caption(a, np.asarray(im)[:, :, :3].astype(int))
+    lab, n = ndimage.label(ndimage.maximum_filter(a.astype(np.uint8), size=2 * max(3, int(h * 0.016)) + 1) > 0)
     if n == 0: return None
-    mass = ndimage.sum(a, lab, range(1, n + 1))
-    main = int(np.argmax(mass)) + 1
-    ys, xs = np.where(lab == main)
-    y0, y1, x0, x1 = ys.min(), ys.max(), xs.min(), xs.max()
-    pad = int(0.03 * (y1 - y0))
+    mass = ndimage.sum(a, lab, range(1, n + 1)); main = int(np.argmax(mass)) + 1
+    ys, xs = np.where(lab == main); y0, y1, x0, x1 = ys.min(), ys.max(), xs.min(), xs.max()
     keep = np.zeros_like(a)
     for i in range(1, n + 1):
-        if i == main: continue
-        yy, xx = np.where(lab == i)
-        cy, cx = (yy.min() + yy.max()) / 2, (xx.min() + xx.max()) / 2
-        if y0 - pad <= cy <= y1 and x0 - pad <= cx <= x1 + pad: keep |= (lab == i)   # pièce détachée à l'intérieur de l'emprise du flacon
-    keep |= (lab == main)
-    keep = keep & a | (ndimage.binary_dilation(keep & a, iterations=2) & a)
+        yy, xx = np.where(lab == i); ch, cw = yy.max() - yy.min() + 1, xx.max() - xx.min() + 1
+        if i == main: keep |= (lab == i); continue
+        thin = ch < 0.03 * h and cw > 4 * ch                 # filet de légende
+        tiny = a[lab == i].sum() < 0.002 * h * w
+        inside = (yy.min() >= y0 - 0.03 * (y1 - y0)) and (yy.max() <= y1 + 0.03 * (y1 - y0))     # pièce du flacon : même hauteur que lui
+        if inside and not thin and not tiny: keep |= (lab == i)
+    keep &= a
     arr = np.asarray(im).copy(); arr[~keep] = 0
     ys, xs = np.where(keep)
-    box = (max(0, xs.min() - 6), max(0, ys.min() - 6), min(w, xs.max() + 7), min(h, ys.max() + 7))
-    return Image.fromarray(arr).crop(box)
+    arr = arr[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+    # fond blanc opaque autour du flacon (photo non détourée) : retiré s'il occupe le pourtour du cadre
+    rgb = arr[:, :, :3].astype(int); op = arr[:, :, 3] > 200; white = op & (rgb.min(axis=2) >= 212)
+    corners = [white[1, 1], white[1, -2], white[-2, 1], white[-2, -2]]      # photo restée en rectangle blanc : les quatre coins sont blancs et opaques (un flacon blanc détouré a des coins transparents)
+    if sum(bool(c) for c in corners) >= 3:
+        lab2, k = ndimage.label(white); edge = set(lab2[0]) | set(lab2[-1]) | set(lab2[:, 0]) | set(lab2[:, -1]); edge.discard(0)
+        arr[np.isin(lab2, list(edge)), 3] = 0
+        yy, xx = np.where(arr[:, :, 3] > 0)
+        arr = arr[yy.min():yy.max() + 1, xx.min():xx.max() + 1]
+    return Image.fromarray(arr)
 
 def save(im, path, maxh):
     im = im.copy(); im.thumbnail((maxh, maxh), Image.LANCZOS)
@@ -89,9 +117,11 @@ best = {}      # "maison|nom" -> numéro
 for r in rows:
     if 'house' not in r or r['n'] in REJETS: continue
     k = norm(r['house']) + '|' + norm(r['name'])
-    if k not in best or r['n'] > best[k][0]: best[k] = (r['n'], r)
+    pr = lambda n: (1 if n <= 303 else 0, n)      # le lot de 303 photos refaites à la main est le plus récent ; dedans, le numéro le plus haut gagne
+    if k not in best or pr(r['n']) > pr(best[k][0]): best[k] = (r['n'], r)
 imgnew, noses, rejected = {}, {}, []
 for k, (n, r) in sorted(best.items(), key=lambda kv: kv[1][0]):
+    if not (root / f'incoming/{n}.png').exists(): continue      # ancienne photo déjà détourée (data/imgshots.json)
     fn = f'img/p/{slug(r["house"])}-{slug(r["name"])}.webp'
     if not force and (root / 'v2' / fn).exists() and (root / 'v2' / fn).stat().st_mtime > (root / f'incoming/{n}.png').stat().st_mtime: imgnew[k] = fn; continue
     im = Image.open(root / f'incoming/{n}.png').convert('RGBA')
@@ -115,7 +145,10 @@ for r in rows:
     fn = f'img/nose/{slug(r["nose"])}.webp'
     save(ph, root / 'v2' / fn, 420); noses[r['nose']] = fn
 _sh = root / 'data/imgshots.json'      # captures de sites (Louis Vuitton, Frédéric Malle, Hermès) : tools/build-lv.py et tools/build-shots.py
-if _sh.exists(): imgnew.update(json.loads(_sh.read_text(encoding='utf-8')))
+if _sh.exists():      # les captures de sites sont plus récentes que les anciennes photos, mais pas que le lot de 303
+    from_303 = {k for k, (n, r) in best.items() if n <= 303}
+    for k, v in json.loads(_sh.read_text(encoding='utf-8')).items():
+        if k not in from_303: imgnew[k] = v
 for d, keep in (('p', set(imgnew.values())), ('nose', set(noses.values()))):
     for f in (root / 'v2/img' / d).glob('*.webp'):
         if f'img/{d}/{f.name}' not in keep: f.unlink()

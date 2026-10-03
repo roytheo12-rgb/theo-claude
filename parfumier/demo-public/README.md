@@ -208,3 +208,11 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Nouveaux moods : stressé(e), pas au top, dans la zone (focus), jour de match ; scénarios « Jour de match », « Dans la zone », « Compétition, grand oral », « Révisions / examen » ; « Effet recherché » (qu'on me sente, compliments, discret, plaire aux filles / aux garçons). Le moteur les lit aussi dans « Je cherche… ».
 - Ton de l'IA : champ lexical du voyage et de la rêverie, avec parcimonie.
 - `tools/prune.py` fusionne aussi les maisons écrites de deux façons (Penhaligon's / Penhaligons…) et retire les notes d'une déclinaison identiques à celles de la version de base.
+
+## Photos : correction des mauvais rattachements (v56)
+- **Cause** : le lot de 303 images (`incoming/1.png` à `303.png`) a été renuméroté (Hermès 1-56, Louis Vuitton 57-101, Gucci, Xerjoff, Amouage, PdM, MFK, Byredo, Contes de Parfums, Margiela, Serge Lutens… puis 190-303 refaits à la main). `data/imgmap2.txt` a été réécrit à partir des légendes lues sur chacune des 303 images. Les anciennes photos de la numérotation 1-189 sont gardées sous les numéros 1001-1189 (images dans `data/imgshots.json`) et ne servent que si le lot de 303 n'a pas le parfum.
+- **Priorité** : lot de 303 (numéro le plus haut gagne en cas de doublon) > captures de sites (`imgshots`) > anciennes photos > photos d'internet (`imgdb`, `imgweb`), jamais en doublon.
+- `tools/build-png.py` retire désormais le cadre de légende (nom + prix) des photos Hermès et Louis Vuitton, garde le verre transparent et efface le fond blanc des photos non détourées.
+- `tools/prune.py` supprime les photos d'internet attribuées à plusieurs parfums différents (erreur d'appariement) ; le test `worker.test.mjs` vérifie qu'aucune image n'est partagée entre deux parfums différents.
+- Artifact : les paquets d'images portent maintenant leur empreinte dans leur nom (`pk/<empreinte>.wasm`) : un paquet périmé ne peut plus se retrouver associé à un mauvais index (c'était la cause de photos décalées sur l'artifact).
+- Photo à la main : une photo de la liste « à la main » (`img/*.webp`) n'est utilisée que pour la maison de la fiche, pas pour un parfum de même nom ailleurs.

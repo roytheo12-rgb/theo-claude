@@ -15,7 +15,7 @@ def _obj(name):
 def imgpack_artifact(pack_mb=5):
     # L'artifact ne peut héberger qu'environ 510 fichiers : les photos fournies (img/*.webp, img/p, img/nose) restent des fichiers ;
     # TOUTES les photos de base (IMGDB) et web (IMGWEB) sont regroupées en paquets pk/N.wasm (maisons les plus connues d'abord) lus par v2/imgpack.js.
-    import json, unicodedata
+    import json, unicodedata, hashlib
     fame = {}
     for i, h in enumerate(re.findall(r"'((?:[^'\\]|\\.)+)'", re.search(r'HOUSE_FAME\s*=\s*\[(.*?)\]', (up/'desc.js').read_text(), re.S).group(1))):
         fame.setdefault(re.sub(r'[^a-z0-9]+', ' ', unicodedata.normalize('NFD', h.lower()).encode('ascii', 'ignore').decode()).strip(), i)
@@ -28,17 +28,19 @@ def imgpack_artifact(pack_mb=5):
     order = sorted(items, key=lambda v: (items[v], v))
     out = d/'pk'; out.mkdir(exist_ok=True)
     for f in out.glob('*.wasm'): f.unlink()
-    idx, n, cur, size = {}, 0, bytearray(), 0
+    idx, n, cur, size, names = {}, 0, bytearray(), 0, []
     def flush():
         nonlocal n, cur
-        if cur: (out/f'{n}.wasm').write_bytes(bytes(cur)); n += 1; cur = bytearray()
+        if cur:
+            nm = hashlib.sha1(bytes(cur)).hexdigest()[:10]; (out/f'{nm}.wasm').write_bytes(bytes(cur)); names.append(nm); n += 1; cur = bytearray()
     for v in order:
         data = (d/v).read_bytes()
         if len(cur) + len(data) > pack_mb * 1024 * 1024: flush()
         idx[v] = [n, len(cur), len(data)]; cur += data
     flush()
     fixed = set(v for v in new.values() if not v.startswith('img/p/')) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp'))
-    files = sorted(fixed | {f'pk/{i}.wasm' for i in range(n)})
+    files = sorted(fixed | {f'pk/{nm}.wasm' for nm in names})
+    idx = {v: [names[a], b, c] for v, (a, b, c) in idx.items()}
     (d/'artifact-files.json').write_text(json.dumps(files), encoding='utf-8')
     return "<script>\nwindow.IMGPACK = " + json.dumps(idx, separators=(',', ':')) + ";\n</script>\n" + js(d/'imgpack.js')
 

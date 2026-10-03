@@ -14,9 +14,11 @@ Santa Maria Novella|Delicate Pet Shampoo
 ~\b(travel set|traveler|traveller)\b
 ~^la decouverte (extraits|parisienne)$
 ~\bpet shampoo\b
-# Maison Francis Kurkdjian : un seul APOM (Pour Homme), on retire toutes les autres déclinaisons dont la version femme
-Maison Francis Kurkdjian|APOM
+# Maison Francis Kurkdjian : un seul APOM (celui de la nouvelle photo), on retire toutes les autres déclinaisons dont la version femme
 Maison Francis Kurkdjian|APOM Femme
 Maison Francis Kurkdjian|APOM Homme
 Maison Francis Kurkdjian|APOM Pour Femme
 Maison Francis Kurkdjian|APOM Pour Femme Elixir
+Maison Francis Kurkdjian|APOM Pour Homme
+# Louis Vuitton : « Coeur Battant » et « Cœur Battant » sont le même parfum
+Louis Vuitton|Coeur Battant

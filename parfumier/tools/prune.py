@@ -53,6 +53,12 @@ INDEX = _merged
 for k, v in MERGE.items(): ALIAS[k] = v
 idx_src = put(idx_src, 'HOUSE_ALIAS', ALIAS)
 canon = lambda h: norm(ALIAS.get(norm(h), h))
+# Hermès : « Hermessence Agar Ébène » et « Agar Ébène » sont le même parfum, on garde le nom court
+for _h, _arr in INDEX:
+    if norm(_h) == 'hermes':
+        _names = {norm(x[0]) for x in _arr}
+        for x in _arr:
+            if norm(x[0]).startswith('hermessence ') and norm(x[0])[len('hermessence '):] in _names: PERF.add('hermes|' + norm(x[0]))
 def house_gone(h): return norm(h) in H or canon(h) in H
 def name_gone(h, n):
     k = norm(h) + '|' + norm(n)
@@ -103,6 +109,25 @@ for fname, var in (('imgdb.js', 'IMGDB'), ('imgnew.js', 'IMGNEW'), ('imgweb.js',
             for k in ks[1:]:
                 if b and sorted(norm(x) for x in b) == sorted(norm(x) for x in (out[k].get('n') or [])): out[k] = {kk: vv for kk, vv in out[k].items() if kk != 'n'}
     n_removed[var] = len(d) - len(out); wr(fname, put(src, var, out))
+# --- photos d'internet (IMGDB, IMGWEB) : une même image attribuée à des parfums différents est une erreur d'appariement (déclinaison, autre parfum de la maison) : on ne la garde pas
+import hashlib
+def _core(k):
+    h, n = k.split('|', 1); n = n.replace('ch ur', 'choeur').replace('c ur', 'coeur')
+    drop = set(h.split()) | {'hermessence', 'la', 'le', 'les', 'l', 'the', 'de', 'du', 'eau', 'parfum', 'edp', 'edt'}
+    return ''.join(sorted(t for t in n.split() if t not in drop))
+_g = {}
+for _f, _v in (('imgdb.js', 'IMGDB'), ('imgweb.js', 'IMGWEB')):
+    _src = rd(_f); _d = grab(_src, _v)[2]
+    for k, v in _d.items():
+        pth = root / 'v2' / v
+        if pth.exists(): _g.setdefault(hashlib.md5(pth.read_bytes()).hexdigest(), []).append((_f, _v, k, v))
+_bad = {}
+for lst in _g.values():
+    if len(lst) > 1 and len({_core(k) for _, _, k, _ in lst}) > 1:
+        for f, v, k, fn in lst: _bad.setdefault((f, v), set()).add(k); files_dead.add(fn)
+for (_f, _v), ks in _bad.items():
+    _src = rd(_f); _d = grab(_src, _v)[2]; wr(_f, put(_src, _v, {k: x for k, x in _d.items() if k not in ks}))
+n_removed['partagées'] = sum(len(v) for v in _bad.values())
 # fichiers : on ne supprime que ceux que plus aucune clé ne référence
 alive = set()
 for fname, var in (('imgdb.js', 'IMGDB'), ('imgnew.js', 'IMGNEW'), ('imgweb.js', 'IMGWEB'), ('imgnew.js', 'NOSE_IMG')):
