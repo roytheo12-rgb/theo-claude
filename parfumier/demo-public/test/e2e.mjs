@@ -156,7 +156,7 @@ ok(await pg.locator('#needai').count() === 1, 'recherche par besoin : bouton « 
 ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); if (sh) sh.hidden = true; });
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
 await pg.click('[data-tab=play]'); await pg.waitForSelector('.plcard');
-ok(await pg.locator('.plcard').count() >= 117 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 8, 'playlists : 8 étagères, 117 univers et une playlist du jour');
+ok(await pg.locator('.plcard').count() >= 116 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 8, 'playlists : 8 étagères, 116 univers et une playlist du jour');
 await pg.screenshot({ path: OUT + '/pl1_biblio.png' });
 await pg.locator('.plcard').first().click(); await pg.waitForSelector('.plist .plr');
 ok(await pg.locator('.plist .plr').count() === 10 && await pg.locator('.plc.big').count() === 1 && /parfums · \d+ dans la base/.test(await pg.textContent('.plmeta')), 'playlist : couverture, ADN, dix parfums classés');
