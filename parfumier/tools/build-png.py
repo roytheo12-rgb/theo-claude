@@ -11,7 +11,7 @@ root = pathlib.Path(__file__).resolve().parent.parent
 rows = json.loads((root / 'data/imgmap2.resolved.json').read_text(encoding='utf-8'))
 # Photos défectueuses (fond blanc non détouré, flacon coupé, image vide, légende qui ne correspond pas à la photo) : écartées, voir PHOTOS-A-REFAIRE.md
 REJETS = {
-    190: 'image vide',   # (418 à 421 : photos officielles Guerlain, gardées telles quelles)
+    # (418 à 421 : photos officielles Guerlain, gardées telles quelles)
 }
 def norm(s): return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9 ]', ' ', ''.join(c for c in unicodedata.normalize('NFD', str(s or '').lower()) if not unicodedata.combining(c)))).strip()
 def slug(s): return norm(s).replace(' ', '-')

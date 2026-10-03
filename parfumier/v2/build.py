@@ -21,6 +21,8 @@ def imgpack_artifact(pack_mb=5):
         fame.setdefault(re.sub(r'[^a-z0-9]+', ' ', unicodedata.normalize('NFD', h.lower()).encode('ascii', 'ignore').decode()).strip(), i)
     new = _obj('imgnew'); db, web = _obj('imgdb'), _obj('imgweb')
     items = {}
+    for k, v in new.items():      # les photos fournies passent en tête des paquets (chargées les premières)
+        if v.startswith('img/p/') and (d/v).exists(): items.setdefault(v, -1)
     for k, v in list(db.items()) + list(web.items()):
         if (d/v).exists(): items.setdefault(v, fame.get(k.split('|')[0], 999))
     order = sorted(items, key=lambda v: (items[v], v))
@@ -35,7 +37,7 @@ def imgpack_artifact(pack_mb=5):
         if len(cur) + len(data) > pack_mb * 1024 * 1024: flush()
         idx[v] = [n, len(cur), len(data)]; cur += data
     flush()
-    fixed = set(v for v in new.values()) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp'))
+    fixed = set(v for v in new.values() if not v.startswith('img/p/')) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp'))
     files = sorted(fixed | {f'pk/{i}.wasm' for i in range(n)})
     (d/'artifact-files.json').write_text(json.dumps(files), encoding='utf-8')
     return "<script>\nwindow.IMGPACK = " + json.dumps(idx, separators=(',', ':')) + ";\n</script>\n" + js(d/'imgpack.js')

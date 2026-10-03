@@ -197,3 +197,8 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 ## Nettoyage de la base (v53)
 - `data/removed-houses.txt` (≈ 480 maisons, dont Bon Parfumeur, Histoires de Parfums, Sospiro) et `data/removed-perfumes.txt` (doublons, coffrets et sélections, mini-coffrets, travel sets, shampooing) : `tools/prune.py` retire tout de l'index, du catalogue, des fiches, des faits, des profils et des photos (fichiers compris). `v2/build.py` le lance en premier : rien ne revient après une régénération.
 - Doublons gardés : Byredo Cuir Sellier Extrait et Vanille Antique Extrait. Doublons de graphie retirés : Kilian « Love, don't be shy EDP », Elie Saab « Le Parfum Eau de Parfum Intense », Mon Guerlain « Eau de Parfum Intense », Mancera « Intense Cedrat Boise ».
+
+## Lot de 303 photos (v54)
+- `incoming/1.png` à `303.png` remplacent les anciennes versions mal détourées ; les numéros 190 à 303 sont nouveaux (légendes lues sur chaque photo, ajoutées à `data/imgmap2.txt`). Quand une photo du lot et une plus ancienne existent pour le même parfum, celle du lot gagne.
+- Sospiro est rétabli. MFK : un seul APOM (Pour Homme), les autres déclinaisons sont retirées (`data/removed-perfumes.txt`).
+- Artifact : les photos de `img/p` rejoignent aussi les paquets `pk/N.wasm` (en tête), ce qui libère de la place sous la limite de fichiers.
