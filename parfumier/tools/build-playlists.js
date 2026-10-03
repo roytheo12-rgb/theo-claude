@@ -43,7 +43,7 @@ for (let i = 0; i < raw.length; i++) {
   if (/^Les univers qui restent/.test(l)) break;
   let m;
   if ((m = l.match(/^\d\d — (.+)$/))) { flush(); sec = SECMAP[m[1].trim()] || m[1]; continue; }
-  if ((m = l.match(/^(\d{2,3})\. (.+)$/)) && (!cur || cur.ps.length >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — The Gentlemen$/, ''), d: '', ps: [], note: [] }; continue; }
+  if ((m = l.match(/^(\d{2,3})\. (.+)$/)) && (!cur || cur.ps.length >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — .*$/, ''), d: '', ps: [], note: [] }; continue; }
   if (!cur) continue;
   if ((m = l.match(/^(\d+)\. (.+)$/))) { const hist = cur.id === 79; const q = hist ? m[2].replace(/\s+—\s+.*$/, '') : m[2].replace(/\s+—\s+/, ' '); const hit = resolve(q); cur.ps.push({ q: q.replace(/\s*\([^)]*\)/g, ''), h: hit ? hit.h : '', n: hit ? hit.n : '' }); continue; }
   if (!cur.d && !cur.ps.length) { cur.d = l; continue; }
@@ -65,10 +65,12 @@ const DEL = new Set([128, 129, 30, 133, 63, 137, 29, 25, 92, 52, 101, 102, 108, 
 const MERGE = { 44: [50], 70: [95], 96: [97], 51: [78] };      // 78 Cinnamon Rolls rejoint Automne Cozy   // doublons fusionnés : tous les parfums sont gardés, sans répétition
 const PAIRS = [[120, 121, 'Les Artsy'], [122, 123, 'Les fashions du Marais'], [124, 125, 'Les DJ'], [126, 127, 'Corporate Weapons'], [142, 37, 'Model Off-Duty'], [132, 143, 'Les Fans de design'], [134, 144, 'Les Globe-trotters'], [130, 131, 'Les Petits budgets'], [136, 60, 'Les Sportifs stylés']];   // [homme, femme, titre] : 10 hommes puis 10 femmes
 PLS.find((p) => p.id === 60).d = "Elle court le matin, fait du pilates l'après-midi, mange bien, s'habille en sportwear premium et son parfum est frais sans être banal.";
-PAIRS.forEach(([h, f, title]) => { const a = PLS.find((p) => p.id === h), b = PLS.find((p) => p.id === f); a.grp = [{ t: 'Pour lui', d: a.d }, { t: 'Pour elle', d: b.d }]; a.ps = a.ps.concat(b.ps); a.t = title; a.d = ''; DEL.add(f);
+PAIRS.forEach(([h, f, title]) => { const a = PLS.find((p) => p.id === h), b = PLS.find((p) => p.id === f); a.grp = [{ t: 'Homme', d: a.d }, { t: 'Femme', d: b.d }]; a.ps = a.ps.concat(b.ps); a.t = title; a.d = ''; DEL.add(f);
   const COMMON = { 132: 'Ils ont un Eames dans leur salon, connaissent Noguchi, achètent des livres Phaidon et leur parfum est aussi épuré que leur intérieur.', 134: 'Ils rentrent du Pérou, repartent au Japon, ont un sac cabine parfait et une montre achetée à Bangkok.' };
-  if (COMMON[h]) { a.grp = [{ t: 'Pour lui', d: '' }, { t: 'Pour elle', d: '' }]; a.d = COMMON[h]; } });
-{ const a = PLS.find((p) => p.id === 109), b = PLS.find((p) => p.id === 110); a.grp = [{ t: 'Avant la transformation', d: a.d }, { t: 'Après la transformation', d: b.d }]; a.ps = a.ps.concat(b.ps); a.t = "Andy Sachs — Le Diable s'habille en Prada"; a.d = ''; DEL.add(110); }
+  if (COMMON[h]) { a.grp = [{ t: 'Homme', d: '' }, { t: 'Femme', d: '' }]; a.d = COMMON[h]; } });
+{ const a = PLS.find((p) => p.id === 109), b = PLS.find((p) => p.id === 110); a.grp = [{ t: 'Avant la transformation', d: a.d }, { t: 'Après la transformation', d: b.d }]; a.ps = a.ps.concat(b.ps); a.t = 'Andy Sachs'; a.d = ''; DEL.add(110); }
+const EXTRA = { 27: ['Ex Nihilo Fleur Narcotique', 'Ex Nihilo Fleur Narcotique Musc', 'Ex Nihilo Iris Porcelana'], 28: ['Ex Nihilo Fleur Narcotique', 'Ex Nihilo Fleur Narcotique Blossom', 'Ex Nihilo Iris Porcelana'] };      // la maison Ex Nihilo dans Clean Girl et Pilates Matcha Girl
+for (const [id, l] of Object.entries(EXTRA)) { const p = PLS.find((x) => x.id === +id); l.forEach((q) => { const hit = resolve(q); const k = norm(hit ? hit.h + ' ' + hit.n : q); if (!p.ps.some((x) => norm(x.h ? x.h + ' ' + x.n : x.q) === k)) p.ps.push({ q, h: hit ? hit.h : '', n: hit ? hit.n : '' }); }); }
 const TITLE = { 96: 'La vie de Ronnie' };
 for (const [k, others] of Object.entries(MERGE)) {
   const a = PLS.find((p) => p.id === +k), seen = new Set(a.ps.map((x) => norm(x.h ? x.h + ' ' + x.n : x.q)));

@@ -65,10 +65,10 @@
 63|La vie de Ronnie
 64|It Boy
 65|It Girl
-66|Vincent Vega — Pulp Fiction
+66|Vincent Vega
 67|Amélie Poulain
-68|Paul Allen — American Psycho
-69|Samantha Jones — Sex and the City
-70|Charlotte York — Sex and the City
-71|Andy Sachs — Le Diable s'habille en Prada
+68|Paul Allen
+69|Samantha Jones
+70|Charlotte York
+71|Andy Sachs
 72|Bruce Wayne

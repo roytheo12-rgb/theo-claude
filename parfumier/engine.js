@@ -25,7 +25,7 @@
   const MOMENTS = { jour: 'Journée', soir: 'Soirée', nuit: 'Nuit' };
   const MOODS = { confiant: 'Confiant', calme: 'Calme', energique: 'Énergique', romantique: 'Romantique', mysterieux: 'Mystérieux', joyeux: 'Joyeux', fatigue: 'Besoin de réconfort', creatif: 'Créatif', stresse: 'Stressé(e)', blues: 'Pas au top', focus: 'Dans la zone (focus)', match: 'Jour de match' };
   // Ce qu'on veut que les autres perçoivent : le sillage et la discrétion se règlent, ils ne se devinent pas.
-  const WANTS = { sent: 'Qu\'on me sente de loin', compliments: 'Des compliments', discret: 'Rester discret(e)', plaire_f: 'Plaire aux filles', plaire_g: 'Plaire aux garçons' };
+  const WANTS = { sent: 'Qu\'on me sente de loin', compliments: 'Des compliments', discret: 'Rester discret(e)', plaire_f: 'Plaire aux femmes', plaire_g: 'Plaire aux hommes' };
   const STYLES = { costume: 'Costume / formel', smart: 'Smart casual', casual: 'Casual', sport: 'Sport', soiree: 'Tenue de soirée', street: 'Streetwear' };
   const COLORS = { sombre: 'Sombre', neutre: 'Neutre', clair: 'Clair', colore: 'Coloré' };
   const FABRICS = { coton: 'Coton', lin: 'Lin', laine: 'Laine / maille', cuir: 'Cuir', denim: 'Denim', soie: 'Soie / satin', technique: 'Technique' };
@@ -242,8 +242,8 @@
     [/\b(concentration|concentre|concentree|focus|dans la zone|reviser|revisions|examen|travailler sans)\b/, { mood: 'focus' }],
     [/\b(jour de match|match|competition|tournoi|compet)\b/, { mood: 'match', style: 'sport' }],
     [/\b(compliments?|complimenter)\b/, { want: 'compliments' }],
-    [/\b(plaire aux filles|plaire a une fille|seduire une fille|seduire des filles)\b/, { want: 'plaire_f' }],
-    [/\b(plaire aux garcons|plaire a un garcon|seduire un garcon|seduire des garcons)\b/, { want: 'plaire_g' }],
+    [/\b(plaire aux filles|plaire aux femmes|plaire a une fille|plaire a une femme|seduire une fille|seduire une femme|seduire des filles|seduire des femmes)\b/, { want: 'plaire_f' }],
+    [/\b(plaire aux garcons|plaire aux hommes|plaire a un garcon|plaire a un homme|seduire un garcon|seduire un homme|seduire des garcons|seduire des hommes)\b/, { want: 'plaire_g' }],
     [/\b(qu on me sente|que tout le monde me sente|sente de loin)\b/, { want: 'sent' }],
     [/\b(date|rendez vous|rdv|amoureux|romantique|seduire|seduction|sensuel|sexy|charme)\b/, { ctx: 'date', tags: ['sensuel'] }],
     [/\b(soiree|boite|clubbing|sortir|fete|festif|nuit)\b/, { ctx: 'event', moment: 'soir' }],

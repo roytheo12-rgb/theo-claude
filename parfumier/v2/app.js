@@ -270,7 +270,7 @@
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
     $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish'].indexOf(tab) * 100}%)`;
     ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
-    if (!keepScroll) { window.scrollTo(0, 0); TIPDECK = null; }
+    if (!keepScroll) window.scrollTo(0, 0);
   }
 
   const keepText0 = () => { const t = $('#say'); if (t) SAY = t.value; };
@@ -440,29 +440,35 @@
   function tipCard(c, lead, body, extra) {
     return `<article class="card tipc"><div class="tiph">${bt(c, { still: true, h: 72 })}<div><p class="mono">${esc(lead)}</p><b>${esc(c.name)}</b><small>${esc(c.house)}${c.family ? ' · ' + esc(famLabel(c.family)) : ''}${c.price ? ' · ≈ ' + c.price + ' €' : ''}</small></div></div><p class="rd">${body}</p>${extra || ''}<div class="row"><button class="ghost" data-rw="${esc(c.name)}">${hasWish(c.name) ? 'Dans ma wishlist' : 'À sentir'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div></article>`;
   }
-  // ---------- « À découvrir » : cartes mélangées à chaque visite, jamais la même en premier ----------
-  let TIPDECK = null, TIPF = 'all';
-  function tipDeck() {
-    if (TIPDECK && TIPDECK.f === TIPF) return TIPDECK.a;
-    const a = (window.TIPS || []).filter((t) => TIPF === 'all' || t.c === TIPF);
-    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-    let last = null; try { last = localStorage.getItem('sillage.tipfirst'); } catch (e) { /* ok */ }
-    if (a.length > 1 && String(a[0].id) === last) { const k = 1 + Math.floor(Math.random() * (a.length - 1)); [a[0], a[k]] = [a[k], a[0]]; }
-    if (TIPF === 'all' && a.length) { try { localStorage.setItem('sillage.tipfirst', String(a[0].id)); } catch (e) { /* ok */ } }
-    TIPDECK = { f: TIPF, a }; return a;
+  // ---------- Carte du moment : les cartes de conseils défilent au hasard, une seule à la fois, sur chaque page ----------
+  let TT = null; const TT_MS = 14000;
+  function ttNext() {
+    if (!TT || TT.i >= TT.a.length - 1) {
+      const a = (window.TIPS || []).slice();
+      for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+      let last = TT ? TT.a[TT.a.length - 1].id : null; if (last == null) { try { last = localStorage.getItem('sillage.tipfirst'); } catch (e) { /* ok */ } }
+      if (a.length > 1 && String(a[0].id) === String(last)) { const k = 1 + Math.floor(Math.random() * (a.length - 1)); [a[0], a[k]] = [a[k], a[0]]; }
+      TT = { a, i: 0 }; if (a.length) { try { localStorage.setItem('sillage.tipfirst', String(a[0].id)); } catch (e) { /* ok */ } }
+    } else TT.i++;
+    return TT.a[TT.i];
   }
-  function discoverHtml() {
-    const cats = window.TIPS_CATS || {}, deck = tipDeck();
-    if (!deck.length) return '';
-    return `<section class="sec disc"><header><h2>À découvrir</h2><span class="mono">${deck.length} cartes · fais défiler</span></header>
-      <div class="chips discf">${[['all', 'Tout'], ...Object.entries(cats)].map(([k, v]) => `<button class="chip ${TIPF === k ? 'on' : ''}" data-tf="${k}">${esc(v)}</button>`).join('')}<button class="chip" data-tshuf="1">Mélanger</button></div>
-      <div class="snap tipk-row">${deck.map((t) => `<article class="tipk" data-k="${esc(t.c)}"><p class="mono">${esc(cats[t.c] || '')}</p><h3>${esc(t.t)}</h3><p>${esc(t.x)}</p></article>`).join('')}</div></section>`;
+  const ttInner = (t) => `<p class="mono">${esc((window.TIPS_CATS || {})[t.c] || '')}</p><h3>${esc(t.t)}</h3><p>${esc(t.x)}</p><button class="linkbtn" data-ttn>Une autre</button>`;
+  function ttAdvance(el) {
+    el.classList.add('out');
+    setTimeout(() => { el.innerHTML = ttInner(ttNext()); el.classList.remove('out'); const b = $('[data-ttn]', el); if (b) b.onclick = () => ttAdvance(el); }, 380);
   }
+  function ttMount() {
+    const v = $('#view'); if (!v || $('#tt', v) || !(window.TIPS || []).length) return;
+    if (!TT) ttNext();
+    v.insertAdjacentHTML('beforeend', `<section class="sec" id="tt"><div class="card lex tt">${ttInner(TT.a[TT.i])}</div></section>`);
+    const el = $('#tt .tt'); $('[data-ttn]', el).onclick = () => ttAdvance(el);
+  }
+  new MutationObserver(ttMount).observe($('#view'), { childList: true });
+  setInterval(() => { const el = $('#tt .tt'); if (el && !document.hidden) ttAdvance(el); }, TT_MS);
   function viewTips() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
     $('#view').innerHTML = `
-      ${discoverHtml()}
       <section class="sec"><header><h2>Conseils</h2><span class="mono">pour toi</span></header>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Mes conseils partent de ce que tu as déjà : ce qui te manque, ce qui te plaît.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
         ${T.gaps.length ? `<p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}` : ''}
@@ -480,10 +486,7 @@
           <div class="chips" id="askchips">${['un frais niche pour le bureau', 'quelque chose de très enveloppant pour l\'hiver', 'un layering pour Baccarat Rouge'].map((t) => `<button class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>
           <button class="cta" id="askgo">${IC.spark}<span>Me conseiller</span></button><div id="askres" class="aires"></div></div>
       </section>
-      ${lexCard()}`;
-    bindLex();
-    $$('[data-tf]').forEach((b) => (b.onclick = () => { TIPF = b.dataset.tf; TIPDECK = null; viewTips(); }));
-    if ($('[data-tshuf]')) $('[data-tshuf]').onclick = () => { TIPDECK = null; viewTips(); };
+      `;
     if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
@@ -1121,7 +1124,7 @@
     if (/date|rencard|resto|diner|amoureu|copine|copain|chéri|cheri/.test(t)) c.ctx = 'date';
     if (/famille|parents|mamie|papa|maman/.test(t)) c.ctx = 'famille';
     if (/stress|anxieu|angoiss|nerveu/.test(t)) c.mood = 'stresse'; else if (/pas bien|deprim|triste|blues|coup de mou/.test(t)) c.mood = 'blues'; else if (/concentr|focus|zone|revis|examen/.test(t)) c.mood = 'focus'; else if (/match|competition|tournoi/.test(t)) { c.mood = 'match'; c.style = 'sport'; }
-    if (/compliment/.test(t)) c.want = 'compliments'; else if (/plaire.*fille|seduire.*fille/.test(t)) c.want = 'plaire_f'; else if (/plaire.*garcon|seduire.*garcon/.test(t)) c.want = 'plaire_g'; else if (/discret/.test(t)) c.want = 'discret';
+    if (/compliment/.test(t)) c.want = 'compliments'; else if (/plaire.*(fille|femme)|seduire.*(fille|femme)/.test(t)) c.want = 'plaire_f'; else if (/plaire.*(garcon|homme)|seduire.*(garcon|homme)/.test(t)) c.want = 'plaire_g'; else if (/discret/.test(t)) c.want = 'discret';
     if (/ami|pote|bar|apero|brunch|terrasse/.test(t)) c.ctx = 'amis';
     if (/mariage|vernissage|gala|soiree|evenement|concert/.test(t)) c.ctx = 'event';
     if (/soir|diner|vernissage|nuit/.test(t)) c.moment = 'soir';
@@ -1319,7 +1322,7 @@
   function viewPlayLib() {
     const secs = (window.PL_SECTIONS || []).filter((s) => !PL.sec || s === PL.sec), day = plDay();
     $('#view').innerHTML = `
-      <section class="sec"><header><h2>Playlists</h2><span class="mono">${PLS.length} univers</span></header>
+      <section class="sec"><header><h2>Inspirations</h2><span class="mono">${PLS.length} univers</span></header>
         <p class="plintro">Un personnage, une ville, un instant, une envie. Chaque playlist a son décor, sa culture et ses accords.</p>
         <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Playlist du jour</span><b>${esc(day.t)}</b><em>${esc(plDesc(day))}</em></span></button>
         <div class="chips plsecs"><button class="chip ${PL.sec ? '' : 'on'}" data-psec="">Tout</button>${(window.PL_SECTIONS || []).map((s) => `<button class="chip ${PL.sec === s ? 'on' : ''}" data-psec="${esc(s)}">${esc(s)}</button>`).join('')}</div>
@@ -1348,7 +1351,7 @@
     const sm = (i) => { const e = st.es[i]; return `<button type="button" class="plcb" data-pe="${i}">${e ? xThumb(e) : '<span class="xth ph">?</span>'}<b>${esc(e ? e.name : p.ps[i].q)}</b></button>`; };
     $('#view').innerHTML = `
       <section class="sec pldet">
-        <button type="button" class="ghost plback" id="plback">← Playlists</button>
+        <button type="button" class="ghost plback" id="plback">← Inspirations</button>
         ${plCover(p, true)}
         <div><p class="mono">${esc(p.secs.join(' · '))}</p><h1 class="plh">${esc(p.t)}</h1></div>
         ${p.d ? `<p class="pld">${esc(p.d)}</p>` : ''}
@@ -1378,7 +1381,7 @@
       <section class="sec">${L.length ? L.map((w, i) => `<article class="wl" style="--i:${i}">${bt(w, { still: true })}<div class="wlb"><b>${esc(w.name)}</b><small>${esc(w.house)}${w.family ? ' · ' + esc(famLabel(w.family)) : ''}${w.price ? ' · ≈ ' + w.price + ' €' : ''}</small>${line(w)}
         ${WTAB === 'smell' ? `<div class="row" style="margin-top:10px"><button class="ghost" data-wsm="${esc(w.name)}">Je l'ai senti</button><button class="ghost" data-wown="${esc(w.name)}">Je l'ai</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${buyLinks(w.name, w.house)}`
           : `<div class="chips" style="margin-top:10px">${Object.entries(VERDICT).map(([k, v]) => `<button class="chip ${w.verdict === k ? 'on' : ''}" data-wv="${k}" data-n="${esc(w.name)}">${v}</button>`).join('')}</div><div class="row" style="margin-top:10px"><button class="ghost" data-wown="${esc(w.name)}">Je l'ai pris</button><button class="ghost" data-wre="${esc(w.name)}">À re-sentir</button><button class="ghost" data-wrm="${esc(w.name)}">Retirer</button></div>${w.verdict === 'love' ? buyLinks(w.name, w.house) : ''}`}</div></article>`).join('') : `<div class="empty">${WTAB === 'smell' ? 'Rien à sentir pour l\'instant. Explore la base, ou ajoute un parfum que tu veux essayer.' : 'Tu n\'as encore rien senti. Quand tu passes devant un parfum, note ce que tu en as pensé ici.'}</div>`}</section>
-      ${wishTaste()}${lexCard()}`;
+      ${wishTaste()}`;
     const byName = (n) => S.wishlist.find((x) => x.name === n);
     $$('[data-wt]').forEach((b) => (b.onclick = () => { WTAB = b.dataset.wt; viewWish(); }));
     $('#wexp').onclick = () => openExplore('wish');
@@ -1387,7 +1390,6 @@
     $$('[data-wre]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.wre); if (w) { w.st = 'smell'; delete w.verdict; save(); WTAB = 'smell'; viewWish(); } }));
     $$('[data-wv]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.n); if (w) { w.verdict = w.verdict === b.dataset.wv ? '' : b.dataset.wv; save(); viewWish(); } }));
     $$('[data-wown]').forEach((b) => (b.onclick = () => { const w = byName(b.dataset.wown); if (w) { S.collection.push(wishToOwned(w)); rmWish(w.name); viewWish(); } }));
-    bindLex();
     $('#wlgo').onclick = async () => {
       const v = $('#wlin').value.trim(), msg = $('#wlmsg'); if (!v) { $('#wlin').focus(); return; }
       msg.textContent = 'Je complète la fiche…'; $('#wlgo').disabled = true;
@@ -1402,15 +1404,6 @@
       viewWish();
     };
   }
-  // Un mot, une astuce ou un peu d'histoire : une carte par jour, sans en faire trop.
-  let LEXI = null;
-  function lexCard() {
-    const L = window.LEX || []; if (!L.length) return '';
-    if (LEXI == null) LEXI = Math.floor(Date.now() / 864e5) % L.length;
-    const [k, t, x] = L[LEXI % L.length];
-    return `<section class="sec"><div class="card lex"><p class="mono">${k === 'Mot' ? 'Un mot de parfumeur' : k === 'Astuce' ? 'Une astuce' : 'Un peu d\'histoire'}</p><h3>${esc(t)}</h3><p>${esc(x)}</p><button class="linkbtn" data-lex>Un autre</button></div></section>`;
-  }
-  function bindLex() { $$('[data-lex]').forEach((b) => (b.onclick = () => { LEXI = (LEXI + 1) % (window.LEX || [1]).length; if (tab === 'wish') viewWish(); else viewTips(); })); }
 
   // ---------- Balade olfactive ----------
   const SYMS = [
@@ -1533,7 +1526,7 @@
 
 
   // ---------- Profil : genre et façon de s'habiller (sauvegardé, réutilisé chaque jour) ----------
-  const GEN = [['m', 'Un garçon'], ['f', 'Une fille'], ['x', 'Je préfère ne pas dire']];
+  const GEN = [['m', 'Un homme'], ['f', 'Une femme'], ['x', 'Je préfère ne pas dire']];
   const DRESS = [['casual', 'Décontracté', 'jean, t-shirt, baskets'], ['smart', 'Smart casual', 'chemise, chino, blazer'], ['costume', 'Élégant', 'costume, tailleur'], ['street', 'Streetwear', 'hoodie, sneakers'], ['sport', 'Sportswear', 'tenue de sport'], ['soiree', 'Chic de soirée', 'robe, veste habillée']];
   const DRESS_SVG = {
     casual: '<path d="M16 10l-9 6 4 7 5-3v21h16V20l5 3 4-7-9-6c-1 3-4 5-8 5s-7-2-8-5z"/>',

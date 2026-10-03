@@ -166,9 +166,12 @@ await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard', { hasText:
 ok(await pg.locator('.plcombo').count() === 5, 'layering : cinq combinaisons proposées');
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });
-{ const n = await pg.locator('.tipk').count(); ok(n >= 100, 'conseils : beaucoup de cartes à découvrir (' + n + ')');
-  const firsts = []; for (let i = 0; i < 6; i++) { await pg.click('[data-tab=today]'); await pg.waitForTimeout(150); await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tipk'); firsts.push(await pg.locator('.tipk h3').first().textContent()); }
-  ok(firsts.every((f, i) => i === 0 || f !== firsts[i - 1]) && new Set(firsts).size >= 4, 'conseils : l\'ordre change à chaque retour, jamais la même carte en premier (' + new Set(firsts).size + ' différentes sur 6)'); }
+{ ok(await pg.locator('.tipk, .disc').count() === 0 && !(await pg.evaluate(() => /À découvrir/.test(document.body.innerText))), 'conseils : la rubrique « À découvrir » n\'existe plus');
+  const tabs = ['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish']; let okAll = true;
+  for (const t of tabs) { await pg.click('[data-tab=' + t + ']'); await pg.waitForTimeout(250); if ((await pg.locator('#tt .tt h3').count()) !== 1 || !(await pg.textContent('#tt .tt h3')).trim()) okAll = false; }
+  ok(okAll, 'une carte de conseil au bas de chaque page (7 onglets), une seule à la fois');
+  const seen = new Set(); for (let i = 0; i < 8; i++) { seen.add(await pg.textContent('#tt .tt h3')); await pg.click('[data-ttn]'); await pg.waitForTimeout(520); }
+  ok(seen.size === 8, 'les cartes défilent au hasard sans se répéter (' + seen.size + ' différentes sur 8)'); }
 await pg.click('[data-tab=today]'); await pg.waitForTimeout(200);
 ok(await pg.locator('[data-want]').count() === 5, 'accueil : effet recherché (compliments, discret, plaire…)');
 await pg.click('[data-cat=mouvement]'); ok(await pg.locator('[data-sc=match]').count() === 1 && await pg.locator('[data-sc=zone]').count() === 1, 'sport & voyage : jour de match et dans la zone');

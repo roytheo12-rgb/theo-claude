@@ -625,3 +625,6 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .plc.has::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, .72)); }
 .plgrp { display: grid; gap: 6px; margin: 14px 0 4px; }
 .plgrp .pld { font-size: 15px; }
+.card.lex.tt { transition: opacity .38s ease, transform .38s ease; min-height: 150px; align-content: start; }
+.card.lex.tt.out { opacity: 0; transform: translateY(6px); }
+@media (prefers-reduced-motion: reduce) { .card.lex.tt { transition: none; } }
