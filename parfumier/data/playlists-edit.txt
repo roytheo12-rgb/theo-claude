@@ -1735,3 +1735,32 @@ pal: 14100c,7a4a1e,e0b872,arches
 @ Femme | La salle, le micro, la voix.
 - Frederic Malle Musc Ravageur | La femme qui fume en écoutant Coltrane.
 - Robert Piguet Fracas | Billie Holiday en une bouffée.
+
+## NEW Kanye West | Icônes
+d: Chicago, Paris, New York. Manteau en fourrure, bracelet en or, le sourire de quelqu'un qui sait qu'il change la culture. Kanye West entre 2004 et 2013, de College Dropout à Yeezus.
+doc: Cette liste représente l'artiste entre 2004 et 2013 (College Dropout, Late Registration, Graduation, 808s, MBDTF, Yeezus), à son apogée créatif. Elle ne reflète ni ses prises de position ultérieures ni sa personnalité actuelle.
+pal: 1a1410,c9a24a,f0e6d0,stripes
+- Yves Saint Laurent L'Homme | Bergamote, gingembre, vétiver : simple, boisé, masculin. Le Kanye de tous les jours avant d'être une icône.
+- Yves Saint Laurent La Nuit de l'Homme | Cardamome, cèdre, lavande : plus sombre, plus nocturne.
+- Dior Homme Intense | Iris, cacao, ambre : l'élégance Dior Homme.
+- Jean Paul Gaultier Le Male | Lavande, vanille, menthe : la référence de College Dropout.
+- Byredo 1996 | Poivre rose, thé blanc, musc, ambre. L'hommage discret d'un obsédé de culture.
+- Byredo Gypsy Water | Bergamote, pin, encens, santal : l'errance créative, Chicago, Paris, partout.
+- Amouage Jubilation XXV | Grandiose, spirituel, maximaliste : déjà ce rapport au sacré dans MBDTF.
+- Comme des Garçons 2 Man | Aldéhydes, encens, cèdre, musc : l'artiste qui dépasse le rap.
+- Frederic Malle Portrait of a Lady | Du floral assumé avant que ce soit accepté.
+- Maison Margiela Replica Untitled | Avant-gardiste, presque sans odeur : exactement ce que représentait Yeezus.
+
+## NEW Le Footeux | Archétypes
+d: Premier League. Joueur technique, discret, élégant. Il sort du stade avec son trophée d'homme du match sous le bras et sa veste LV sur les épaules. Il aime les belles pièces, les sneakers rares, les parfums que personne dans son vestiaire ne connaît encore.
+pal: 0d2b1f,e8e4d4,c9a24a,stripes
+- Clive Christian X For Men | Bergamote, cardamome, vétiver, orris : une concentration de matières premières parmi les plus élevées du marché. Découvert chez Harrods.
+- Roja Parfums Diaghilev | Complexe, opulent, technique : le parfum d'un joueur qui aime la culture autant que le football.
+- Louis Vuitton Ombre Nomade | Oud, benjoin, rose, encens : la veste, les sneakers, le parfum. La cohérence totale.
+- Maison Francis Kurkdjian 724 | Frais, élégant, new-yorkais : son parfum d'avant-match, propre et concentré.
+- Penhaligon's The Tragedy of Lord George | Maison royale britannique, trouvée à Mayfair après un match à Wembley.
+- Dior Ambre Nuit | Nocturne, élégant, juste assez sombre pour sortir après le match.
+- Xerjoff Join the Club 40 Knots | Néroli, sel marin, cèdre blanc : le yacht et la mer, Monaco plutôt que le vestiaire.
+- Amouage Reflection Man | Néroli, jasmin, santal : une élégance qui ne cherche rien.
+- Creed Carmina | Pamplemousse rose, jasmin, musc : une pièce rare, avant tout le monde dans son entourage.
+- Dusita Melodie de l'Amour | Jasmin sambac, rose, musc : maison confidentielle trouvée dans une boutique du Marais.
