@@ -6,7 +6,7 @@ const w = { }; w.window = w; vm.createContext(w);
 for (const f of ['data', 'desc', 'index', 'facts']) vm.runInContext(fs.readFileSync(path.join(root, f + '.js'), 'utf8'), w);
 const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/n°|no\.|№/g, 'n ').replace(/&/g, ' and ').replace(/['’`.,–—-]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 const HA = w.HOUSE_ALIAS || {};
-const HOUSE_SYN = { 'goutal paris': 'maison goutal', 'yves rocher': 'yves rocher', ysl: 'yves saint laurent', memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
+const HOUSE_SYN = { goutal: 'maison goutal', 'goutal paris': 'maison goutal', 'yves rocher': 'yves rocher', ysl: 'yves saint laurent', memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
 // parfums cités sans maison dans le catalogue
 const BARE = { 'boss bottled parfum': 'Hugo Boss Boss Bottled Parfum', 'hermes eau de merveilles bleue': 'Hermès Eau des Merveilles Bleue', 'comme des garcons kyoto': 'Comme des Garçons Series 3 Incense: Kyoto', 'chloe eau de parfum': 'Chloé Chloé', 'fracas robert piguet': 'Robert Piguet Fracas', 'terre d hermes': 'Hermès Terre d\'Hermès', 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
 const entries = [];
@@ -80,6 +80,46 @@ for (const [k, others] of Object.entries(MERGE)) {
 const RENAME = { 32: ['Fur Coat Energy', null], 67: ['Je veux être envoûtant', 'Peau chaude, lumière basse, distance beaucoup trop courte. Rien d\'agressif : simplement impossible à quitter.'], 90: ['Boat Day', null], 73: ['Mayfair', null], 58: ['Funky Chic', "Un tailleur ou un costume impeccable, mais une couleur de trop, un accessoire inattendu et l'envie de danser jusqu'à la fermeture. Vous êtes soigné, jamais sage."], 34: ['Traditions', "Domaine de famille, polo blanc, cuir patiné et lumière dorée de fin d'après-midi. L'élégance de ceux qui n'ont plus rien à prouver."], 74: ['Garden Party', "Courses hippiques, mariage au château, cocktail sous les tilleuls : tous les événements où l'on s'habille avec soin, entre tailoring, champagne et gestes parfaitement maîtrisés."], 75: ["Soirée à l'opéra", null], 77: ['Chic Winter', null], 59: ['Effortless Chic', "Un jean, une chemise blanche, une veste jetée sur les épaules : rien n'est étudié, tout est juste. Le chic de ceux qui n'ont jamais l'air d'essayer."] };
 PLS.forEach((p) => { const r = RENAME[p.id]; if (r) { p.t = r[0]; if (r[1]) p.d = r[1]; } });
 for (let i = PLS.length - 1; i >= 0; i--) if (DEL.has(PLS[i].id)) PLS.splice(i, 1);
+
+// ---- Mises à jour éditoriales : data/playlists-edit.txt ----
+// ## Titre            → playlist existante ;  ## NEW Titre | Section → nouvelle playlist
+// d: bio   ·   doc: texte [| source | url]   ·   pal: a,b,c,motif   ·   @ Groupe | texte   ·   - Parfum | pourquoi (remplace la liste)
+// + Parfum | pourquoi (ajoute si absent)   ·   ~ Parfum | pourquoi (ajoute seulement le texte)   ·   x Parfum (retire)
+const EDIT_MISS = [], INTROUV = [];
+(function applyEdits() {
+  const f = path.join(root, 'data', 'playlists-edit.txt'); if (!fs.existsSync(f)) return;
+  const L = fs.readFileSync(f, 'utf8').split('\n'); let nid = 300, p = null, rep = null, grp = null;
+  const split = (s) => { const i = s.indexOf(' | '); return i < 0 ? [s.trim(), ''] : [s.slice(0, i).trim(), s.slice(i + 3).trim()]; };
+  const housesK = [...housesN];
+  const mk = (q, w) => { const hit = resolve(q); if (!hit) { const s = norm(q.replace(/\s*\([^)]*\)/g, '')); if (housesK.some((h) => h && s.startsWith(h + ' '))) { INTROUV.push(q); return null; } } const o = { q: q.replace(/\s*\([^)]*\)/g, ''), h: hit ? hit.h : '', n: hit ? hit.n : '' }; if (w) o.w = w; return o; };
+  const key = (x) => norm(x.h ? x.h + ' ' + x.n : x.q);
+  const fin = () => {
+    if (p && rep) { p.ps = rep; if (grp) p.grp = grp; else delete p.grp; }
+    p = rep = grp = null;
+  };
+  for (const raw0 of L) {
+    const l = raw0.replace(/\s+$/, ''); if (!l.trim() || l.startsWith('#!')) continue;
+    let m;
+    if ((m = l.match(/^## (NEW )?(.+)$/))) {
+      fin();
+      if (m[1]) { const [title, sect] = split(m[2].replace(/ \| /, ' | ')); const [tt, ss] = m[2].split(' | '); p = { id: nid++, secs: [(ss || 'Archétypes').trim()], t: tt.trim(), d: '', ps: [], note: [], isNew: true }; PLS.push(p); }
+      else { p = PLS.find((x) => norm(x.t) === norm(m[2])); if (!p) { console.error('édition : playlist introuvable : ' + m[2]); p = { ps: [], note: [], d: '', ghost: true }; } }
+      continue;
+    }
+    if (!p) continue;
+    if ((m = l.match(/^d: (.*)$/))) { p.d = m[1]; continue; }
+    if ((m = l.match(/^doc: (.*)$/))) { const [a, b, c] = m[1].split(' | '); p.doc2 = (p.doc2 || []).concat([c ? { t: a, s: b, u: c } : { t: a }]); continue; }
+    if ((m = l.match(/^pal: (.*)$/))) { p.pal = m[1].trim(); continue; }
+    if ((m = l.match(/^@ (.*)$/))) { const [t0, d0] = split(m[1]); rep = rep || []; grp = grp || []; const old = p.grp && p.grp[grp.length]; grp.push({ t: t0, d: d0 || (old ? old.d : ''), n: 0 }); continue; }
+    if ((m = l.match(/^- (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; rep = rep || []; rep.push(o); if (grp) grp[grp.length - 1].n++; continue; }
+    if ((m = l.match(/^\+ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = p.ps.find((x) => key(x) === key(o)); if (ex) { if (w) ex.w = w; } else p.ps.push(o); continue; }
+    if ((m = l.match(/^~ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = (rep || p.ps).find((x) => key(x) === key(o)); if (ex) ex.w = w; else EDIT_MISS.push(p.t + ' / ' + q); continue; }
+    if ((m = l.match(/^x (.*)$/))) { const o = mk(m[1].trim(), ''); p.ps = p.ps.filter((x) => key(x) !== key(o)); continue; }
+  }
+  fin();
+  fs.writeFileSync(path.join(root, 'data', 'playlists-introuvables.txt'), [...new Set(INTROUV)].sort().join('\n'));
+  for (let i = PLS.length - 1; i >= 0; i--) if (PLS[i].ghost) PLS.splice(i, 1);
+})();
 const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
 fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
 console.log(PLS.length, 'playlists', PLS.reduce((a, p) => a + p.ps.length, 0), 'parfums', 'hors base:', new Set(miss).size);
@@ -100,7 +140,7 @@ const SECS_OF = (p) => { const i = p.id; const r = [];
 const slug = (s) => norm(s).replace(/ /g, '-');
 function out() {
   const res = PLS.map((p) => {
-    const [a, b, c, m] = (PAL[p.id] || '222222,555555,dddddd,grain').split(',');
+    const [a, b, c, m] = (p.pal || PAL[p.id] || '222222,555555,dddddd,grain').split(',');
     const doc = [];
     p.note.forEach((l) => {
       if (DROP.test(l) || /^\*|^Exemples/.test(l)) return;
@@ -108,9 +148,11 @@ function out() {
       const txt = l.replace(/\s*\(\[[^\]]+\]\([^)]*\)\)/g, '').trim();
       if (txt) doc.push(ln ? { t: txt, s: ln[1], u: ln[2] } : { t: txt });
     });
-    const sl = slug(p.t); const o = { id: p.id, s: sl, grp: p.grp, secs: SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
+    const sl = slug(p.t); if (p.grp) { p.grp.forEach((g, gi) => { if (!g.n) g.n = gi === p.grp.length - 1 ? p.ps.length - (gi * 10) : 10; }); }
+    const o = { id: p.id, s: sl, grp: p.grp, secs: p.secs || SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.w) r.w = x.w; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
     if (p.id === 79) { doc.length = 0; doc.push({ t: 'La maison Atkinsons et le 24 Old Bond Street sont historiquement documentés ; le flacon d\'aujourd\'hui est une réinterprétation moderne de cet héritage, pas un flacon inchangé depuis le XIXe siècle.', s: 'Atkinsons 1799', u: 'https://www.atkinsons1799.com/pages/history' }); }
     if (fs.existsSync(path.join(root, 'v2', 'img', 'pl', sl + '.webp'))) o.img = 'img/pl/' + sl + '.webp';
+    if (p.doc2) p.doc2.forEach((d) => doc.push(d));
     if (doc.length) o.doc = doc;
     if (p.id === 81) o.combos = p.note.filter((l) => /^\* /.test(l)).map((l) => l.replace(/^\* /, '').split(' + '));
     return o;

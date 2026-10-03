@@ -628,3 +628,4 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .card.lex.tt { transition: opacity .38s ease, transform .38s ease; min-height: 150px; align-content: start; }
 .card.lex.tt.out { opacity: 0; transform: translateY(6px); }
 @media (prefers-reduced-motion: reduce) { .card.lex.tt { transition: none; } }
+.plwhy { font-style: normal; color: var(--muted); font-size: 12.5px; line-height: 1.4; }

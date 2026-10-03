@@ -63,3 +63,7 @@ Prada|Candy|EDP
 Yves Rocher|Comme une Evidence|EDP
 Zara|Gourmand Oud|EDP
 Hugo Boss|Boss Bottled Parfum|PAR
+Balmain|Vent Vert|EDT
+Diptyque|Eau Papier|EDT
+Diptyque|L'Eau|EDT
+Houbigant|Quelques Fleurs|EDP

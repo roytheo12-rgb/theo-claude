@@ -1,0 +1,1491 @@
+#! Mises à jour éditoriales (texte de Théo). Syntaxe décrite dans tools/build-playlists.js.
+
+## James Bond
+d: Savile Row, Aston Martin, vodka martini, mission à minuit.
+doc: Floris No. 89 est le parfum personnel d'Ian Fleming, mentionné dans les romans Moonraker et Diamonds Are Forever.
+- Floris No. 89 | Le parfum d'Ian Fleming, lien documenté.
+- Creed Green Irish Tweed | Favori du duc de Windsor et du prince Charles.
+- Acqua di Parma Colonia | Élégance britannique-italienne, intemporelle.
+- Dior Eau Sauvage | Masculinité classique des années 60, code d'espion.
+- Chanel Pour Monsieur | Discret, impeccable, jamais démonstratif.
+- Penhaligon's Sartorial | Barbershop de Jermyn Street, la rue de Floris.
+- Roja Elysium | Luxe britannique absolu, sillage parfait.
+- Hermès Terre d'Hermès | Sophistication sans ostentation.
+- Tom Ford Grey Vetiver | Costume gris, cocktail, minuit.
+- Creed Aventus | Pouvoir, victoire : le Bond contemporain.
+
+## Tony Montana
+d: Miami 1983. Costume blanc. Cigare. Excès total. Ambition pure.
+- Tom Ford Tuscan Leather | Cuir brut, framboise, rasoir.
+- Xerjoff Alexandria II | Oud, santal, vanille : l'opulence de Miami.
+- Initio Side Effect | L'addiction en parfum.
+- Nasomatto Black Afgano | Sombre, résineux, le côté noir du personnage.
+- Clive Christian X For Men | Le parfum que Tony porterait : l'un des plus chers du monde.
+- Amouage Interlude Man | Encens, goudron, bois sombre : la violence cachée.
+- Roja Elysium | Le pouvoir affiché, le statut.
+- Tom Ford Tobacco Vanille | Tabac, vanille, rhum : le cigare cubain.
+- Parfums de Marly Layton Exclusif | Sillage massif, pomme, vanille.
+- Xerjoff Naxos | Miel, tabac, vanille : la folie douce avant la chute.
+
+## Michael Corleone
+d: Sicile, New York, costume noir, jardin familial. Contrôle absolu, glacial.
+- Dior Homme Parfum | Iris, cuir, ambre : pouvoir discret et profond.
+- Acqua di Parma Colonia Assoluta | Italie, famille, tradition.
+- Santa Maria Novella Tabacco Toscano | Tabac toscan, une maison à l'italienne.
+- Chanel Sycomore | Vétiver sombre, bois : le silence du pouvoir.
+- Creed Royal Oud | Royauté sans couronne.
+- Xerjoff Naxos | Miel, tabac : la Sicile dans un flacon.
+- Maison Francis Kurkdjian Oud Satin Mood | Oud opulent, rose : la bascule vers l'ombre.
+- Armani Privé Bois d'Encens | Encens, bois sacrés : la Sicile et l'église.
+- Memo Italian Leather | Cuir italien, safran : le vrai luxe discret.
+- Bottega Veneta Pour Homme | Cuir de Vénétie, élégance italienne absolue.
+
+## Patrick Bateman
+d: Manhattan 1987. Carte de visite ivoire. Watermark. Impeccable, jusqu'à l'obsession du statut.
+- Dior Homme Parfum | Iris poudré, cuir : son obsession du propre parfait.
+- Creed Green Irish Tweed | Un parfum de prestige à citer.
+- Chanel Platinum Égoïste | Le nom parle : Égoïste.
+- Tom Ford Grey Vetiver | Costume gris, bureau, réunion à 8h.
+- Maison Francis Kurkdjian Masculin Pluriel | Musc propre, inattaquable en entretien.
+- Roja Elysium | Statut, prix : il vérifierait le prix avant tout.
+- Prada L'Homme | Iris, ambre boisé : clean, froid.
+- Frédéric Malle French Lover | Vétiver, bois vert : violent et cultivé.
+- Penhaligon's Sartorial | Barbershop britannique : il comparerait les cartes.
+- Acqua di Parma Colonia Assoluta | Pour la réunion de 7h42, précisément.
+
+## Thomas Shelby
+d: Birmingham sous la pluie. Tweed. Whisky. Chevaux. Volonté de fer, violence contrôlée.
+- Memo Irish Leather | Cuir irlandais, bois fumé : le tweed en parfum.
+- Penhaligon's Sartorial | Barbershop anglais, masculinité taillée.
+- Tom Ford Tobacco Vanille | Tabac, vanille, épices : le verre de whisky.
+- Serge Lutens Chergui | Fumée, miel, foin : les chevaux de Small Heath.
+- BDK Tabac Rose | Tabac, rose : la brutalité et l'élégance.
+- Parfums de Marly Herod | Tabac, vanille poivrée : Shelby en soirée.
+- Kilian Straight to Heaven | Rhum, bois fumé : le whisky en parfum.
+- Floris 1962 | Héritage britannique, fougère : l'aristocratie conquise.
+- Amouage Interlude Man | Encens, goudron : le soldat qui revient.
+- Marc-Antoine Barrois Ganymede | Métal, cuir, ambre sombre : les tranchées.
+
+## Don Draper
+d: Manhattan 1963. Bureau feutré. Cigarette. Whisky. Costume gris.
+- Chanel Pour Monsieur | Élégance des années 60, intemporel.
+- Dior Eau Sauvage | Lancé en 1966 : exactement son époque.
+- Guerlain Vétiver | Vétiver classique de 1961 : le bureau de Sterling Cooper.
+- Hermès Bel Ami | Cuir, bois, tabac : le gentleman qui ment bien.
+- Floris No. 89 | Barbershop de Jermyn Street, américanisé.
+- Caron Yatagan | Aromatique boisé sombre : le côté obscur de Dick Whitman.
+- Santa Maria Novella Tabacco Toscano | Le cigare dans le bureau.
+- Roja Vetiver | Vétiver noble : Don voudrait le meilleur.
+- Maison Francis Kurkdjian Masculin Pluriel | Musc propre et net : façade parfaite.
+- Creed Royal Oud | Aspirationnel : ce qu'il voulait devenir.
+
+## Tom Ripley
+d: Italie, Capri, Venise. Bateau en bois, chemise en lin, jazz, identité empruntée. Mimétisme parfait, esthète.
+- Acqua di Parma Colonia | L'Italie des années 50 : celle de Dickie Greenleaf.
+- Acqua di Parma Colonia Futura | Ripley qui s'approprie la modernité.
+- Dior Homme Cologne | Légèreté, élégance : le lin de Capri.
+- Xerjoff Torino21 | Italie, musique, culture : le casting parfait.
+- Santa Maria Novella Melograno | Venise, jardin, pierre ancienne.
+- Maison Crivelli Iris Malikhân | Iris, safran : la fausse aristocratie.
+- Creed Green Irish Tweed | Le parfum de quelqu'un d'autre, qu'il copierait.
+- Ormonde Jayne Ormonde Man | Bois sombre, élégance empruntée.
+- Diptyque Philosykos | Figuier, Méditerranée : Capri en bateau.
+- Frédéric Malle L'Eau d'Hiver | Lumière froide, fleur blanche : l'imposteur.
+
+## John Wick
+d: Hôtel Continental. Costume noir. Chien. Règles. Discipline absolue, deuil.
+- Dior Homme Parfum | Iris, cuir, ambre : l'élégance avant le carnage.
+- Tom Ford Oud Wood | Bois sombre, santal : le Continental.
+- Amouage Reflection Man | Blanc lumineux, propre : le costume.
+- Nasomatto Duro | Dur, minéral, sans concession.
+- Frédéric Malle French Lover | Vétiver, bois vert, masculinité brute.
+- Creed Royal Oud | Royauté sombre, le statut du Baba Yaga.
+- Marc-Antoine Barrois Ganymede | Métal froid, ambre : l'arme et le deuil.
+- Maison Francis Kurkdjian Masculin Pluriel | Musc blanc propre : la façade avant l'action.
+- Le Labo Santal 33 | Santal, cuir fumé : New York la nuit.
+- Chanel Sycomore | Vétiver noble : le silence entre deux scènes.
+
+## Tyler Durden
+d: Bar clandestin. Savon. Liberté. Chaos. Anarchie consciente, rejet du consumérisme.
+- Comme des Garçons Tar | Goudron, fumée : le combat.
+- Comme des Garçons Garage | Huile, métal : Tyler dans un parking.
+- Comme des Garçons Concrete | Ciment, béton : Fight Club, littéralement.
+- Comme des Garçons Black | Encre, caoutchouc, métal : la règle numéro 1.
+- Etat Libre d'Orange Rien | Cuir, métal : « you are not your khakis ».
+- Nasomatto Duro | Dur, ambre minéral : la violence calme.
+- Etat Libre d'Orange Sécrétions Magnifiques | Le plus provocant des parfums.
+- DS & Durga Bowmakers | Bois, colle, atelier : le savon artisanal.
+- Naomi Goodsir Bois d'Ascèse | Fumée de bois, cendres : ascèse radicale.
+- Demeter Dirt | Terre : retour à zéro.
+
+## Hannibal Lecter
+d: Bibliothèque. Opéra. Table dressée. Costume trois pièces. Le raffinement comme masque.
+- Frédéric Malle Portrait of a Lady | Rose, patchouli sombre : le génie.
+- Penhaligon's Halfeti | Rose, oud, cuir sombre : « le dîner est servi ».
+- Serge Lutens Ambre Sultan | Ambre, résine, encens : bibliothèque et Florence.
+- Ormonde Jayne Ormonde Man | Bois, ambre gris : élégance froide.
+- Amouage Epic Man | Encens, myrrhe, cuir : le rituel du repas.
+- Nasomatto Baraonda | Chaotique, sombre : ce qu'il cache.
+- Xerjoff Alexandria II | Oud royal : Florence et la cour des Médicis.
+- Maison Francis Kurkdjian Oud Satin Mood | Oud, rose, vanille : la séduction avant le danger.
+- BDK Gris Charnel Extrait | Vétiver, patchouli, vanille : la sensualité du prédateur.
+- Dior Homme Parfum | Iris, ambre : la façade parfaite.
+
+## Jay Gatsby
+- Maison Francis Kurkdjian Grand Soir | Soirée, opulence, champagne.
+- Xerjoff Naxos | Tabac, miel : sombre et fastueux.
+- Creed Royal Oud | Puissance discrète, aristocratie.
+- Clive Christian X For Men | Excès assumé, l'un des parfums les plus chers du monde.
+- Roja Enigma | Mystère, complexité, cuir.
+- Tom Ford Tobacco Vanille | Fête, tabac chaud, nuits qui durent.
+- Penhaligon's The Tragedy of Lord George | Nommé d'après un aristocrate tragique.
+- Amouage Jubilation XXV | Orientale majestueuse, opulence absolue.
+- Marc-Antoine Barrois Ganymede | Minéral, suède : l'élégance qui dépasse le clinquant.
+- BDK Tabac Rose | Rose et tabac : pour les soirées où Daisy arrive.
+
+## The Founder
+- Creed Aventus | Victoire, conquête : l'ambition.
+- Tom Ford Grey Vetiver | Costume gris, réunion à 7h, aucun compromis.
+- Chanel Platinum Égoïste | Froid, précis, intransigeant.
+- Prada L'Homme | Intelligence sobre, iris et ambre discret.
+- Le Labo Another 13 | Le propre qui marque sans chercher à impressionner.
+- Dior Homme Parfum | Iris et cuir : l'homme qui a déjà gagné.
+- Maison Francis Kurkdjian Masculin Pluriel | Musc aquatique, présence sans bruit.
+- Hermès Terre d'Hermès | Vétiver, pierre, volonté : bâtir du durable.
+- Atelier des Ors Nuda Veritas | Vérité nue : celui qui ne ment pas sur sa vision.
+- Essential Parfums Bois Impérial | Boisé sec, efficace, sans fioritures.
+
+## Eddie Horniman
+- Penhaligon's Sartorial | Tweed, laine, tailleur : le plus juste.
+- Creed Green Irish Tweed | Campagne, aristocratie, cheval.
+- Floris No. 89 | Maison royale britannique depuis 1730.
+- Creed Royal Oud | Puissance retenue, sang royal.
+- Acqua di Parma Colonia | Élégance classique, héritage.
+- Ormonde Jayne Ormonde Man | Boisé, très britannique et profond.
+- Tom Ford Grey Vetiver | Costume gris, propriété familiale.
+- Penhaligon's Halfeti | Rose, oud, safran : le côté sombre sous l'élégance.
+- Memo Irish Leather | Cuir irlandais, chasse, pluie.
+- Santa Maria Novella Tabacco Toscano | Cigare éteint dans une bibliothèque : le vice noble.
+
+## Bobby Glass
+- Tom Ford Oud Wood | Oud, santal, épices : puissance maîtrisée.
+- Penhaligon's Halfeti | Rose, oud, safran : le côté sombre de l'élégance britannique.
+- Clive Christian X For Men | Le parfum des hommes qui ne demandent pas le prix.
+- Creed Royal Oud | Autorité absolue.
+- Serge Lutens Chergui | Fumée, miel, tabac : mémoire et danger.
+- Roja Enigma | Complexe, opulent, inescrutable.
+- Nasomatto Baraonda | Chaos contrôlé derrière le costume.
+- Amouage Interlude Man | Encens, résines : pouvoir et solitude.
+- Tom Ford Tuscan Leather | Cuir brut, puissance animale.
+- Xerjoff Alexandria II | Oud royal, santal : un empire personnel.
+
+## Freddy Horniman
+- Penhaligon's The Tragedy of Lord George | L'héritier tragique : parfait.
+- Xerjoff Naxos | Tabac, miel : hédonisme total.
+- Creed Aventus | Conquête, charisme.
+- Parfums de Marly Layton | Élégant et légèrement excessif.
+- Maison Margiela Jazz Club | Rhum, tabac, nuit tardive.
+- Roja Elysium | Noble, mais pas sobre.
+- BDK Gris Charnel | Cardamome, iris, vétiver : le dandysme contemporain.
+- Marc-Antoine Barrois Ganymede | Cuir minéral : l'élégance qui surprend.
+- Initio Side Effect | Addictif, charnel : son côté imprévisible.
+- Kilian Angels' Share | Cognac, vanille, chêne : les nuits trop longues.
+
+## Suzie Glass
+- Maison Francis Kurkdjian Oud Satin Mood | Oud, rose, velours noir : sa présence dans une pièce.
+- Tom Ford Black Orchid | Puissance florale sombre, inimitable.
+- Parfums de Marly Delina Exclusif | Rose et poivre : une féminité qui ne demande pas la permission.
+- Maison Francis Kurkdjian Grand Soir | Soirée, opulence, mystère.
+- Kilian Black Phantom | Rhum, caramel, ombre : le vice élégant.
+- Frédéric Malle Portrait of a Lady | Rose et patchouli : la plus grande.
+- Narciso Rodriguez Musc Noir Rose | Musc profond, rose : peau et danger.
+- Amouage Guidance | Magnolia, musc : puissance féminine contemporaine.
+- Initio Atomic Rose | Rose explosive, intense : Suzie qui entre en réunion.
+- Nishane Wulong Cha | Thé oolong, bois fumé : l'intelligence qui se cache.
+
+## Jordan Belfort
+- Tom Ford Tuscan Leather | Cuir, framboise : l'accord brique.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Le parfum ostentatoire par excellence.
+- Creed Aventus | Victoire, champagne.
+- Clive Christian X For Men | Le plus cher comme déclaration.
+- Xerjoff Naxos | Miel, tabac : excès hédoniste.
+- Initio Side Effect | Addiction : son vice.
+- Parfums de Marly Layton | Projection maximale, élégance flashy.
+- Tom Ford Oud Wood | Puissance, richesse.
+- Amouage Interlude Man | Chaos structuré : les coups de téléphone à 3h du matin.
+- Roja Elysium | Paradis artificiel : tout ce qu'il croyait mériter.
+
+## Naomi
+- Tom Ford Lost Cherry | Cerise, liqueur : séduction directe.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Le parfum qu'on reconnaît avant elle.
+- Parfums de Marly Delina Exclusif | Rose intense, glamour assumé.
+- Kilian Love, Don't Be Shy | Caramel, rose : sensualité gourmande.
+- Tom Ford Bitter Peach | Pêche et vodka : la fête qui continue.
+- Initio Atomic Rose | Rose explosive et vanille : intensité féminine.
+- Frédéric Malle Portrait of a Lady | Rose et patchouli : la grande.
+- Maison Crivelli Hibiscus Mahajád | Hibiscus et musc : tropicale et luxueuse.
+- Kilian Black Phantom | Rhum, caramel : l'excès nocturne.
+- Xerjoff Dama Bianca | Floral blanc, musc : glamour pur.
+
+## Amélie Poulain
+x Serge Lutens Un Bois Vanille
++ L'Artisan Parfumeur Timbuktu | Bois, encens : le Montmartre mystérieux.
+
+## Samantha Jones
+x Mugler Angel Elixir
++ Nishane Hundred Silent Ways | Tubéreuse, musc blanc : féminité assumée, plus niche.
+
+## Charlotte York
+x Fragonard Belle Chérie
++ Penhaligon's The Favourite | Rose anglaise, miel : Charlotte qui lit Jane Austen.
+
+## Andy Sachs
+~ Chanel Beige | Déjà présent.
+
+## Drake
+d: Toronto la nuit. Il construit des atmosphères autant que des musiques : chaque pièce de sa maison sent quelque chose de précis.
+doc: Tuscan Leather est directement inscrit dans son œuvre : le titre d'un de ses morceaux. Better World Fragrance House est sa maison de parfum : Carby Musk, Summer Mink (premier EDP) et Cloudar.
+- Better World Fragrance House Carby Musk | Son odeur personnelle : musc de peau, lily of the valley, ambre gris.
+- Better World Fragrance House Summer Mink | Son premier EDP : agrumes, sauge, jasmin, musc crémeux. Toronto à 2h du matin.
+- Better World Fragrance House Cloudar | Gingembre, mandarine, vétiver haïtien : la version de tous les jours.
+- Tom Ford Tuscan Leather | Framboise, safran, cuir brut : agressif, charnel, jamais poli.
+- Tom Ford Ombré Leather | Cuir doux, cardamome, patchouli : l'émotion sous la surface.
+- Tom Ford Oud Wood | Oud, cardamome, santal : le succès discret.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Safran, jasmin, cèdre : l'ostentation assumée.
+- Maison Francis Kurkdjian Grand Soir | Ambre, benjoin, vanille : la suite d'hôtel à minuit.
+- Guy Laroche Drakkar Noir | Lavande, cèdre : les origines, Toronto, le père.
+- Clive Christian L | Bergamote, néroli, vétiver : l'objet le plus cher du vestiaire.
+
+## Rihanna
+d: Barbade, Mayfair, Paris. Féminine, mais jamais innocente : fleurs blanches, musc, vanille et peau chaude.
+doc: Fenty Eau de Parfum est son propre parfum (2021). Elle est l'égérie de Dior J'adore depuis juin 2024.
+- Kilian Love, Don't Be Shy | Vanille, marshmallow, fleur d'oranger : son odeur documentée. Doux, mais ça reste.
+- Fenty Eau de Parfum | Rose bulgare, magnolia, patchouli, musc : ce qu'elle a créé pour être elle-même.
+- Dior J'adore | Ylang-ylang, jasmin, rose, vanille : opulent, doré, intemporel.
+- Tom Ford Lost Cherry | Cerise noire, amaretto, jasmin : sombre et gourmand.
+- Kilian Good Girl Gone Bad | Rose, pêche, lilas, musc : l'audace dans la douceur.
+- Kilian Forbidden Games | Rose, cerise, framboise, patchouli : la tentation habillée en parfum.
+- Frédéric Malle Carnal Flower | Tubéreuse, ylang-ylang, musc : le plus charnel.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Safran, jasmin, cèdre : l'opulence signature.
+- Amouage Guidance | Jasmin sambac, encens, musc : la profondeur de l'artiste.
+- Initio Side Effect | Musc, vanille, ambre : l'effet qu'elle a sur une pièce.
+
+## Beyoncé
+d: Lumières rouges, scène immense, chaleur, sensualité et puissance.
+doc: Heat est son propre parfum, créé avec Coty (2010). Kilian Angels' Share : association rapportée en 2024, pendant la Renaissance Tour.
+- Kilian Angels' Share | Cognac, cannelle, vanille : chaleureux, opulent, victorieux.
+- Beyoncé Heat | Son propre parfum : orchidée vanillée, néroli, ambre.
+- Beyoncé Heat Rush | La version lumineuse et estivale.
+- Kilian Love, Don't Be Shy | Marshmallow, fleur d'oranger : le gourmand luxueux.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | L'opulence de la salle VIP après le concert.
+- Dior Hypnotic Poison | Amande, jasmin, vanille : sombre, hypnotique.
+- Tom Ford Soleil Blanc | Cardamome, ylang-ylang, coco : la piscine, le rosé, la peau dorée.
+- Tom Ford Lost Cherry | Cerise noire, amaretto : la femme qui n'a plus rien à perdre.
+- Atelier des Ors Iris Fauve | Iris, patchouli, musc : la profondeur artistique.
+- Maison Crivelli Hibiscus Mahajád | Hibiscus, figue, ambre : tropical, libre, unique.
+
+## Taylor Swift
+d: New York automnal. Appartement chaleureux. Chats. Rouge à lèvres rouge. Elle écrit des albums entiers sur des gens qui ne le méritent pas.
+- Tom Ford Santal Blush | Santal rose, ylang-ylang, cardamome : doux, féminin, chaleureux.
+- Jo Malone English Pear & Freesia | Poire d'automne, freesia : l'automne new-yorkais.
+- Jo Malone Peony & Blush Suede | Pivoine, pamplemousse rose, suède : l'ère Lover.
+- Maison Margiela By the Fireplace | Châtaigne, vanille, cèdre : le canapé, la cheminée.
+- Maison Margiela Coffee Break | Café, ambre, sucre : les sessions d'écriture.
+- Chanel Coco Mademoiselle | Orange, jasmin, rose : classique assumé.
+- Diptyque Eau Duelle | Vanille, poivre, cardamome : la facette épicée qu'on n'attendait pas.
+- Byredo Mojave Ghost | Ambrette, magnolia, musc : doux, sans rien à prouver.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | Cardamome, muscade, vanille : chaud et lumineux.
+- Marc-Antoine Barrois Ganymede | Ambre boisé, iris : l'élégance française pour les grandes cérémonies.
+
+## Bad Bunny
+d: San Juan, mode Tokyo, reggaeton Barcelone. Il porte du Comme des Garçons le jeudi et joue devant 80 000 personnes le vendredi.
+- Comme des Garçons 2 | Encens, ambre, notes vertes : la maison qu'il porte vraiment.
+- Nishane Hacivat | Pamplemousse, ananas, patchouli : tropical et luxueux.
+- Maison Crivelli Hibiscus Mahajád | Hibiscus, figue, musc : San Juan en flacon.
+- Tom Ford Tuscan Leather | Framboise, safran, cuir : sa veste en cuir en parfum.
+- Creed Aventus | Ananas, bouleau, musc : le parfum du succès mondial.
+- Xerjoff Torino21 | Bergamote, vétiver, ambre : l'élégance italienne de ses clips.
+- Byredo Bal d'Afrique | Néroli, musc, vétiver : l'artiste qui a uni des mondes.
+- Initio Oud for Greatness | Oud, safran, musc : l'ambition pure.
+- Le Labo Thé Matcha 26 | Matcha, cèdre, musc : sa facette Tokyo, mode, avant-garde.
+- BDK Rouge Smoking | Rose, poivre, tabac, cuir : androgyne, il casse les codes.
+
+## Brigitte Bardot
+d: Saint-Tropez, vélo, cuir, mer. Elle n'a jamais eu l'air de faire des efforts.
+- Guerlain Jicky | Lavande, cuir, civette : androgyne, animal, libre. Un parfum qu'elle portait.
+- Balmain Vent Vert | Galbanum, jasmin, mousse : le vert sauvage de la Riviera.
+- Chanel N°5 | Aldéhydes, jasmin, rose : la France distillée.
+- Guerlain Mitsouko | Pêche, chêne, mousse : la profondeur.
+- Diorissimo | Muguet, jasmin, lilas : la légèreté, le vélo à Saint-Tropez.
+- Guerlain Samsara | Santal, jasmin, ylang-ylang : solaire, sensuel, naturel.
+- Jean Patou Joy | Rose de Grasse, jasmin : le luxe floral.
+- Robert Piguet Fracas | Tubéreuse, jasmin, iris : la sensualité qui déborde.
+- Houbigant Quelques Fleurs | Bouquet floral, aldéhydes : l'histoire de la parfumerie.
+- Frédéric Malle Carnal Flower | Tubéreuse, musc, ylang-ylang : ce qu'elle porterait aujourd'hui.
+
+## Jane Birkin
+d: Un panier, un jean, une chemise blanche, un appartement parisien. L'Air de Rien a été créé avec elle : c'est son parfum. Le reste doit correspondre à la femme, pas au mythe.
+- Miller Harris L'Air de Rien | Créé avec elle : la peau propre après une journée à vivre.
+- Diptyque L'Eau | Cannelle, œillet, romarin : le Paris de la rive gauche.
+- Serge Lutens Féminité du Bois | Cèdre, iris, cannelle : le bois qui joue avec le féminin.
+- Diptyque Philosykos | Figue, bois de figuier : son week-end en Provence.
+- Guerlain L'Heure Bleue | Iris, anisé, vanille : la mélancolie douce.
+- Chanel N°19 | Galbanum, iris, vétiver : l'indépendance absolue.
+- Frédéric Malle En Passant | Lilas, concombre, blé : Paris le matin.
+- Le Labo Thé Noir 29 | Thé noir, figues, poivre : sa table de nuit.
+- L'Artisan Parfumeur Mûre et Musc | Mûre sauvage, musc : la peau naturelle.
+- Diptyque Eau Duelle | Vanille noire, poivre : la profondeur sous la simplicité.
+
+## Marilyn Monroe
+d: « Je porte quelques gouttes de Chanel No. 5. » C'est documenté.
+- Chanel N°5 | Aldéhydes, jasmin, rose, santal : citation historique réelle.
+- Guerlain Shalimar | Iris, jasmin, vanille : la sensualité glamour de Hollywood.
+- Jean Patou Joy | Rose de Grasse, jasmin : le luxe floral de son époque.
+- Robert Piguet Fracas | Tubéreuse, jasmin, iris : insolent, impossible à ignorer.
+- Guerlain L'Heure Bleue | Iris, rose, poudre vanillée : la mélancolie, seule à 3h du matin.
+- Caron Fleurs de Rocaille | Bouquet floral aldéhydé : Hollywood classique.
+- Guerlain Jicky | Lavande, civette, vanille : l'animal sous le glamour.
+- Houbigant Quelques Fleurs | Bouquet floral aldéhydé : la grande histoire du parfum.
+- Dior J'adore | Ylang-ylang, jasmin, rose : ce qu'elle porterait aujourd'hui.
+- Frédéric Malle Carnal Flower | Tubéreuse, musc : la tubéreuse moderne.
+
+## Clean Girl
+d: Elle se réveille à 6h30, fait du reformer pilates, boit de l'eau filtrée avec du citron, change ses draps blancs le lundi. Son appartement sent le linge propre et le bois blanc. Son parfum arrive avant elle et reste après qu'elle soit partie.
+- Byredo Blanche | Musc blanc, pivoine : la quintessence du skin clean.
+- Narciso Rodriguez Pure Musc | Le musc le plus peau-nu du marché.
+- Glossier You | Il disparaît et devient vous.
+- Maison Margiela Lazy Sunday Morning | Le nom dit tout : l'énergie clean girl.
+- Prada Infusion d'Iris | Iris « eau de rien », le plus propre des grands classiques.
+- Maison Francis Kurkdjian Aqua Universalis | La propreté élevée au rang d'art.
+- Le Labo Another 13 | Skin scent culte : une peau parfaite.
+- Diptyque Fleur de Peau | Le plus doux et intime de la liste.
+- Ex Nihilo Fleur Narcotique | Le floral frais du moment.
+- Ex Nihilo Fleur Narcotique Musc | La version musquée : « je l'ai mis, mais vous n'êtes pas sûrs ».
+- Ex Nihilo Iris Porcelana | Iris aérien, second-skin : le propre sophistiqué.
+- Jo Malone Wood Sage & Sea Salt | L'air marin distillé.
+- Aesop Tacit | L'équivalent parfumé d'un appartement bien rangé.
+- Diptyque Orphéon | Chypré propre avec de la profondeur.
+- Juliette Has a Gun Not a Perfume | Le parfum sans parfum.
+- Maison Margiela Flower Market | La version florale et printanière.
+
+## Pilates Matcha Girl
+d: Elle commence sa journée par un cours de Pilates chez Banote. Ensemble 437, ON aux pieds, 10 000 pas validés, matcha chez Kurage avant de parler de son taux de cortisol. Elle remet son Rhode Peptide Lip Tint toutes les heures, dîne chez Gallopin et ne sort jamais sans son Chanel.
+- Ex Nihilo Fleur Narcotique | Son parfum du midi après le cours : frais, lumineux.
+- Parfums de Marly Delina Exclusif | Pour le dîner : le luxe floral qui ne se justifie pas.
+- Yves Saint Laurent Babycat | Son côté secret sous le matching set.
+- Le Labo Thé Matcha 26 | La tasse de matcha en parfum.
+- Phlur Matcha Milk | La version comfort food : pour le soir après le cours.
+- Diptyque Eau Rose | Son parfum du week-end, au marché.
+- Narciso Rodriguez Pure Musc | Pour le reformer du matin : invisible mais présent.
+- Byredo Blanche | L'équivalent olfactif de ses draps blancs.
+- Liis Rose Struck | La maison coréenne du moment.
+- Aesop Tacit | « Je vais à un cours, mais je suis quand même chic ».
+- Maison Francis Kurkdjian Aqua Universalis | Toujours dans son sac.
+- Ex Nihilo Fleur Narcotique Blossom | Pour travailler depuis un café en terrasse.
+- Jo Malone English Pear & Freesia | Son parfum de saison.
+- Diptyque Eau Papier | Ultra-clean, presque conceptuel.
+- Glossier You | Elle dit qu'elle ne porte rien. C'est ça.
+
+## Coquette
+d: Rubans, roses, dentelle, lèvres glossy et romantisme absolument assumé. Elle sait exactement ce qu'elle fait et elle le fait très bien.
+- Maison Francis Kurkdjian À la Rose | La rose ultime, ni sucrée ni criarde.
+- Parfums de Marly Delina | Le parfum coquette par excellence.
+- Kilian Love, Don't Be Shy | Le nom dit tout.
+- Chanel Chance Eau Tendre | Son parfum des premiers rendez-vous.
+- Dior Miss Dior | L'icône du genre.
+- Guerlain Mon Guerlain | Le romantisme gourmand et poétique.
+- Maison Francis Kurkdjian Amyris Femme | Coquette sans que ça se voie.
+- Diptyque Eau Rose | La rose la plus simple et la plus belle.
+- Ex Nihilo Lust in Paradise | Floral tropical sensuel.
+- Prada Paradoxe | La coquette de 2025 : romantique, pas naïve.
+- Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
+- Jo Malone Peony & Blush Suede | Glamour doux, pour le dîner en amoureux.
+- Byredo Rose of No Man's Land | La rose niche accessible.
+- Guerlain Insolence | Poudré et romantique : les années 50.
+
+## Fur Coat Energy
+d: Elle entre dans la pièce avant son manteau. Le restaurant se retourne. Elle ne regarde personne en particulier.
+- Tom Ford Black Orchid | Personne ne demande « c'est quoi ».
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Elle le sait. Elle le porte quand même.
+- Tom Ford Ombré Leather | Le cuir de quelqu'un qui n'a pas à se justifier.
+- Xerjoff Naxos | Pour le dîner : complexe, impossible à ignorer.
+- Initio Side Effect | La séduction inconsciente.
+- BDK Tabac Rose | Une rose qui ne fait pas sage.
+- Kilian Black Phantom | « Memento Mori » sur le flacon : elle a de l'humour.
+- Amouage Guidance | Il reste dans la pièce après qu'elle soit partie.
+- Xerjoff Italica | Quand elle veut quelque chose de plus imposant.
+- Maison Crivelli Oud Maracujá | L'oud le plus inattendu.
+- Serge Lutens Fleurs d'Oranger | Blanc opulent, légèrement animal.
+- Frédéric Malle Portrait of a Lady | La peinture la plus dramatique en parfum.
+- Dior Addict | Opulent et addictif comme son style.
+- Tom Ford Lost Cherry | Gourmand sombre, pour les after-dîners.
+
+## Quiet Luxury
+@ Homme | Costume sans marque visible. Montre discrète. Il parle doucement. Tout le monde l'écoute.
+- Le Labo Another 13 | On ne le reconnaît pas, on le cherche.
+- Diptyque Tam Dao | La sobriété absolue du connaisseur discret.
+- Dior Bois d'Argent | Ceux qui le connaissent savent.
+- Chanel Sycomore | Il n'a pas besoin du logo.
+- Matière Première Parisian Musc | La maison la moins connue : c'est le point.
+- Hermès H24 | Aucune ostentation.
+- Ormonde Jayne Ormonde Man | Personne ne le connaît.
+- Aesop Hwyl | Déjà dans le registre quiet luxury.
+- Frédéric Malle L'Eau d'Hiver | Personne ne connaît son nom, tout le monde demande la référence.
+- Marc-Antoine Barrois Ganymede | Ultra-confidentielle : le quiet luxury pur.
+- Diptyque Orphéon | Discret, complexe, historique.
+- Serge Lutens Gris Clair | Ni chaud ni froid : le choix de celui qui évite les extrêmes.
+- Comme des Garçons 2 | Conceptuel et silencieux.
+- Diptyque Vetyverio | Le vétiver de référence : racine propre et terreuse.
+@ Femme | Elle porte du cachemire beige. Son sac est discret et coûte trois fois le vôtre. Elle n'a jamais besoin qu'on le sache.
+- Byredo Blanche | La pureté incarnée.
+- Frédéric Malle L'Eau d'Hiver | Hors du temps, discret : elle le porte depuis dix ans.
+- Dior Bois d'Argent | Pour celles qui n'ont pas besoin d'impressionner.
+- Diptyque Tam Dao | Une galerie d'art vide en parfum.
+- Chanel Beige | Le déjeuner entre femmes, élégant sans effort.
+- Matière Première Parisian Musc | Le silence olfactif.
+- Le Labo Another 13 | Comme une seconde peau.
+- Hermès Calèche | Hérité de sa mère, ou elle veut que vous le croyiez.
+- Marc-Antoine Barrois Ganymede | Une maison que personne ne connaît encore.
+- Serge Lutens Gris Clair | Le gris plutôt que le noir ou le blanc.
+- Diptyque Orphéon | Chypré poudré discret.
+- Diptyque Fleur de Peau | Invisible et inoubliable.
+- Prada Infusion d'Iris | Le minimalisme parfumé.
+- Chanel N°19 | Vert, froid, aristocratique.
+
+## Finance Bro
+d: Financial Times sous le bras, terminal Bloomberg ouvert, costume bien coupé et espresso avalé en 30 secondes entre deux calls.
+- Creed Aventus | Le parfum de bureau par excellence.
+- Dior Homme 2020 | Le costume en parfum : net, sans bavure.
+- Chanel Bleu de Chanel Parfum | Dix secondes le matin. Ça fonctionne depuis 2015.
+- Tom Ford Grey Vetiver | Pour les présentations : le parfum de la compétence.
+- Le Labo Santal 33 | Découvert à New York. Il n'en changera plus.
+- Prada L'Homme | Le daily driver : propre, efficace.
+- Roja Elysium | Quand il veut que son parfum coûte plus que son costume.
+- Maison Francis Kurkdjian Masculin Pluriel | De l'argent et du goût, dans cet ordre.
+- Amouage Reflection Man | Le vendredi : il y a autre chose.
+- Parfums de Marly Percival | Le chic quotidien, frais et élégant.
+- Diptyque Vetyverio | Le vétiver institutionnel parfait.
+- Hermès Terre d'Hermès Parfum | L'autorité en flacon.
+- Chanel Platinum Égoïste | Le classique oublié des connaisseurs.
+
+## Tech Bro
+d: MacBook Pro sur la table d'un café de Shoreditch ou du Marais. Cold brew. Pull Merz b. Schwanen. Il porte un parfum que vous ne reconnaissez pas.
+- Escentric Molecules Molecule 01 | Invisible sur certains, révélé sur d'autres : une logique d'algorithme.
+- Le Labo Another 13 | Il l'a découvert avant tout le monde.
+- Byredo Mojave Ghost | L'esthétique San Francisco, désert, minimalisme.
+- Comme des Garçons Wonderwood | Pensé comme une expérience.
+- Le Labo Santal 33 | Découvert à Brooklyn.
+- Aesop Hwyl | L'esthétique Aesop correspond à ses achats.
+- Diptyque Tam Dao | Le « boring » que les connaisseurs adorent.
+- DS & Durga I Don't Know What | Le nom est exactement son humour.
+- Maison Francis Kurkdjian Gentle Fluidity Silver | La version froide et intellectuelle.
+- Matière Première Parisian Musc | Le plus « produit bien conçu ».
+- Diptyque Orphéon | Complexe sans être creux.
+- Comme des Garçons 2 | Il réfléchit en systèmes.
+- Juliette Has a Gun Not a Perfume | Le « bug as a feature » de la parfumerie.
+- Aesop Tacit | Le minimalisme radical, comme son interface.
+
+## Funky Chic
+d: Il est parfaitement habillé mais il danse. Elle est en talons mais elle finit avec les chaussures à la main.
+- Xerjoff Naxos | L'énergie du dîner qui devient soirée.
+- Byredo Bal d'Afrique | Le plus chic et le plus festif à la fois.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | L'or liquide : élégant, mais qui tourne.
+- Roja Elysium | La version ultra-premium du frais habillé.
+- Parfums de Marly Layton | La pièce maîtresse des compliments.
+- Maison Crivelli Hibiscus Mahajád | Le floral qui fait danser sans perdre la classe.
+- Diptyque Eau Duelle | Pour les fins de soirée.
+- Kilian Angels' Share | Un cognac sophistiqué sur la peau.
+- Nishane Hacivat | Plus inattendu qu'Aventus, même impact.
+- BDK Gris Charnel Extrait | Un chai latte luxueux concentré.
+- Xerjoff Torino21 | Frais et italien : la version cocktail.
+- Tom Ford Tobacco Vanille | La vanille opulente qui tient toute la nuit.
+- Initio Side Effect | Quand il faut être irrésistible.
+- Diptyque Volutes | Le joker : épicé cosy.
+
+## Mayfair
+d: Pluie sur Grosvenor Square. Costume sombre. Espresso martini. Deal signé à 22h.
+- Tom Ford Oud Wood | L'oud le plus acceptable pour un dîner à Mayfair.
+- Creed Royal Oud | L'oud britannique : aristocratique sans être oriental.
+- Xerjoff Alexandria II | Pour les soirs où le deal est très grand.
+- Amouage Interlude Man | Le parfum des décisions importantes.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Il le sait : c'est pourquoi il le porte ici.
+- Roja Enigma | Personne ne le reconnaît. Tout le monde le remarque.
+- BDK Gris Charnel Extrait | Plus surprenant, parfait pour une soirée londonienne pluvieuse.
+- Penhaligon's Halfeti | La maison londonienne qui comprend Mayfair.
+- Serge Lutens Chergui | Pour la fin du dîner.
+- Floris Cefiro | La maison la plus ancienne de Bond Street.
+- Frédéric Malle Monsieur | L'autorité sans le bruit.
+- Diptyque Volutes | Chaud et épicé, pour les soirs de pluie sur Berkeley Square.
+- Atkinsons 24 Old Bond Street | Historiquement liée aux aristocrates britanniques.
+- Clive Christian X For Men | L'un des parfums les plus chers du monde.
+
+## Les Artsy
+@ Homme
+- Comme des Garçons 2 | Déroutant à première impression, fascinant sur la durée.
+- Etat Libre d'Orange Rien | Pas de séduction facile, pas de consensus.
+- DS & Durga Bowmakers | L'atelier d'un luthier à Brooklyn.
+- Nasomatto Baraonda | La fête d'atelier qui finit à 4h.
+- Aesop Hwyl | Sobriété et précision d'Aesop.
+- Comme des Garçons Wonderwood | Bois pur et conceptuel.
+- Le Labo Gaiac 10 | Quasi imperceptible, comme une seconde peau.
+- Serge Lutens Fille en Aiguilles | Encens, sapin : la forêt dans une chapelle.
+- Naomi Goodsir Bois d'Ascèse | L'œuvre comme trace, comme cicatrice.
+- Maison Crivelli Bois Datchaï | Précis, comme une installation minimaliste.
+- Notes de Bas de Page Carambolage | Pour l'artiste qui lit autant qu'il crée.
+- Marc-Antoine Barrois Ganymede | Couture et avant-garde.
+- BDK Gris Charnel | L'artiste qui vit et travaille au Palais Royal.
+@ Femme
+- Diptyque Orphéon | Une brasserie parisienne des années 60 : époque et modernité.
+- Frédéric Malle En Passant | Lilas, concombre, blé : la poésie de l'éphémère.
+- Comme des Garçons 2 | Elle refuse les clichés olfactifs féminins.
+- L'Artisan Parfumeur Mûre et Musc Extrême | La maison pionnière du niche français.
+- Serge Lutens Gris Clair | Le gris comme parti pris esthétique.
+- Maison Margiela Flower Market | Le marché aux fleurs de la Madeleine au petit matin.
+- Diptyque Tam Dao | Elle porte des parfums « d'hommes » parce que ça lui va mieux.
+- Le Labo Thé Matcha 26 | Tokyo dans un appartement parisien.
+- Etat Libre d'Orange Fils de Dieu | Doux, laiteux, presque troublant de douceur.
+- Aesop Tacit | « Tacite » : un art qui parle sans explications.
+- Diptyque Fleur de Peau | Quelque chose d'indéfinissable.
+
+## Les fashions du Marais
+@ Homme
+- Comme des Garçons Floriental | Beau et étrange : l'esthétique du Marais.
+- Nasomatto Baraonda | La soirée après le pop-up, dans un bar sans enseigne.
+- Diptyque Tam Dao | Le choix du connaisseur sobre.
+- Le Labo Gaiac 10 | Pour celui qui refuse l'ostentation.
+- Aesop Hwyl | Le même goût du design épuré.
+- DS & Durga I Don't Know What | L'ambiguïté assumée.
+- Comme des Garçons Wonderwood | Le bois comme abstraction.
+- Serge Lutens Gris Clair | Sa couleur préférée : le gris.
+- Notes de Bas de Page Carambolage | La pièce vintage trouvée chez The Archivist.
+- Issey Miyake L'Eau d'Issey Pour Homme Intense | Issey est cité dans l'archétype lui-même.
+- BDK Pas Ce Soir | Parisien, discret, pointu.
+- Marc-Antoine Barrois B683 | Rareté maximale, cohérence couture et parfum.
+@ Femme
+- Diptyque Orphéon | Le Marais la nuit, en Tabi, après un vernissage.
+- Comme des Garçons 2 | L'incontournable CDG.
+- Serge Lutens Gris Clair | Le parfum de la neutralité choisie.
+- Le Labo Thé Noir 29 | Thé noir sans sucre, achats chez Dover Street Market.
+- Maison Margiela Lazy Sunday Morning | L'ADN olfactif de Margiela : précis, poétique, discret.
+- Notes de Bas de Page Carambolage | La pièce rare : elle l'a avant tout le monde.
+- Byredo Gypsy Water | Nomade et propre.
+- Aesop Tacit | Elle laisse ses vêtements parler.
+- Juliette Has a Gun Not a Perfume | L'anti-parfum comme déclaration.
+- Diptyque Fleur de Peau | Elle les connaît tous et choisit le plus discret.
+
+## Les DJ
+@ Homme
+- Byredo Bal d'Afrique | Lagos, Berlin et Paris dans la même semaine.
+- Le Labo Another 13 | Le parfum qui amplifie la chaleur corporelle.
+- Escentric Molecules Molecule 01 | Présent partout, invisible jusqu'à ce qu'on s'approche.
+- DS & Durga Radio Bombay | Les sons de Bombay dans un club occidental.
+- Maison Margiela Jazz Club | La scène, la fumée, les basses.
+- Comme des Garçons Wonderwood | Le DJ minimaliste.
+- Matière Première Parisian Musc | Après le set, avant le taxi.
+- Initio Side Effect | Une ligne de basse qui reste en tête.
+- Byredo Mojave Ghost | Entre le désert californien et un rave berlinois.
+- Aesop Hwyl | Le silence avant d'entrer en scène.
+- Nishane Ani | Entre Orient et Occident : le DJ sans racines fixes.
+@ Femme
+- Byredo Bal d'Afrique | Voyageur et chaleureux.
+- Maison Margiela Jazz Club | Elle joue dans des clubs qui sentent ça.
+- Comme des Garçons Black | La rue à 4h du matin.
+- Le Labo Another 13 | Le parfum qui travaille avec la chaleur du corps.
+- Escentric Molecules Molecule 04 | La discrétion moléculaire, version féminine.
+- Matière Première Parisian Musc | Le parfum de transit.
+- Aesop Tacit | Pas besoin de se présenter.
+- Byredo Black Saffron | Le safran comme épice de nuit.
+- DS & Durga Debaser | Alternatif et frais, pour la DJ indie.
+- Diptyque Orphéon | La DJ parisienne des caves du 6ème.
+- BDK Rouge Smoking | La cerise sur le smoking.
+
+## Corporate Weapons
+@ Homme
+- Tom Ford Grey Vetiver | Le costume gris du vestiaire olfactif.
+- Creed Royal Oud | L'oud comme signe de puissance silencieuse.
+- Dior Homme Parfum | Le parfum du cadre qui a une carrière, pas juste un poste.
+- Chanel Platinum Égoïste | Il a décidé une fois pour toutes.
+- Hermès Terre d'Hermès Parfum | La version « dossier bouclé ».
+- Roja Elysium | Le partner du cabinet : ça coûte cher, ça se sent.
+- Penhaligon's Sartorial | Inspiré des tailleurs de Savile Row.
+- Frédéric Malle Monsieur | Sobre, précis, impossible à contester.
+- Maison Francis Kurkdjian Masculin Pluriel | La réunion de 8h sans excès.
+- Floris No. 89 | Fondée en 1730, fournisseur de la Couronne.
+- Amouage Reflection Man | Pour le partner qui travaille avec le Golfe.
+- Clive Christian X | Pour qui n'a pas à justifier le prix.
+@ Femme
+- Chanel N°19 | Vert, froid, intransigeant.
+- Frédéric Malle Portrait of a Lady | Une composition architecturale.
+- Le Labo Thé Noir 29 | Le café qui refroidit pendant la visio.
+- Dior Bois d'Argent | Minéral et précieux.
+- Chanel Beige | Le tailleur beige, le sac beige, le parfum beige.
+- Hermès Calèche | Un grand classique Hermès.
+- Maison Francis Kurkdjian Grand Soir | La même femme à 19h.
+- Serge Lutens Gris Clair | Monochrome depuis dix ans.
+- Tom Ford Santal Blush | Fort assez pour qu'on le remarque, élégant assez pour ne pas le regretter.
+- Maison Margiela Replica Coffee Break | Le moment humain dans la journée.
+- BDK 312 Saint-Honoré | L'adresse la plus corporate de Paris.
+- Houbigant Quelques Fleurs Royale | La séniorité comme avantage.
+
+## Les Petits budgets
+@ Homme
+- Prada L'Homme EDT | Le rapport qualité-prix le plus honnête des designers.
+- Bleu de Chanel EDT | La référence universelle.
+- Dior Sauvage EDT | Le blockbuster moderne.
+- Yves Saint Laurent Y EDP | Frais et structuré.
+- Azzaro Wanted | Masculin et épicé.
+- Armani Acqua di Giò Profumo | La version profonde du classique.
+- Mugler Cologne | Une cologne conçue par un créateur radical.
+- Lacoste L.12.12 Blanc | Le polo blanc en parfum.
+- Hermès H24 EDT | Hermès à prix d'entrée.
+- Hugo Boss Boss Bottled Parfum | Le classique moderne.
+- Essential Parfums Bois Impérial | Qualité niche à prix honnête.
+- Essential Parfums Orange x Santal | Frais et boisé, très au-dessus de son prix.
+- Place de la Rêverie Ambre | Maison abordable.
+- Place de la Rêverie Iris | Maison abordable.
+- Place de la Rêverie Jasmin | Maison abordable.
+- Place de la Rêverie Oud | Maison abordable.
+- Place de la Rêverie Passion Riviera | Maison abordable.
+- Place de la Rêverie Rose | Maison abordable.
+- Place de la Rêverie Santal de Paris | Maison abordable.
+- Place de la Rêverie Tubéreuse | Maison abordable.
+- Place de la Rêverie Vanille | Maison abordable.
+- Horace & Horace | Maison abordable.
+- Horace & Horace Extrait | Maison abordable.
+- Horace Ibiza '87 | Maison abordable.
+- Horace Mezcal Musc | Maison abordable.
+- Horace Oud Rose | Maison abordable.
+- Horace Vetiver Primavera | Maison abordable.
+- Horace Vintage Vanilla | Maison abordable.
+- Horace Vintage Vanilla Extrait | Maison abordable.
+@ Femme
+- Narciso Rodriguez For Her EDT | Le musc féminin de référence.
+- Chloé Eau de Parfum | Floral pastel et doux.
+- Yves Saint Laurent Mon Paris | Romantique et moderne.
+- Lancôme La Vie est Belle | Le best-seller mondial : il est bon.
+- Mugler Angel EDT | A inventé le parfum gourmand en 1992.
+- Prada Candy | La version sucrée de Prada.
+- Cacharel Amor Amor | Fraîcheur et romance.
+- Azzaro Wanted Girl | Frais et ambré.
+- Yves Rocher Comme une Evidence | Le parfum français discret et juste.
+- Essential Parfums The Musc | Le niche féminin accessible.
+- Essential Parfums Rose Magnetic | La rose moderne à prix accessible.
+- Zara Gourmand Oud | La dupe honnête.
+
+## Les Fans de design
+@ Homme
+- Aesop Hwyl | Aesop est une marque de design : le flacon est un objet.
+- Aesop Tacit | Le silence du design.
+- Diptyque Tam Dao | Classique, indémodable.
+- Le Labo Gaiac 10 | Les étiquettes typographiées à la main.
+- Comme des Garçons Kyoto | Le Japon comme source de design.
+- Maison Margiela Lazy Sunday Morning | La maison qui enlève les étiquettes.
+- DS & Durga I Don't Know What | Un parfum qui refuse d'être catégorisé.
+- Juliette Has a Gun Not a Perfume | Une idée réduite à son essence.
+- Escentric Molecules Molecule 01 | Qu'est-ce qu'un parfum quand on retire tout ?
+- Comme des Garçons Hinoki | Entre l'architecture et le parfum.
+- Marc-Antoine Barrois Ganymede | La rareté comme principe de design.
+@ Femme
+- Byredo Blanche | Le design scandinave appliqué au parfum.
+- Diptyque Fleur de Peau | Diptyque est né de designers.
+- Diptyque Orphéon | Nocturne et structuré.
+- Maison Margiela Lazy Sunday Morning | La déconstruction appliquée au dimanche.
+- Comme des Garçons 2 | CDG dessine ses boutiques, ses flacons, ses règles.
+- Le Labo Thé Noir 29 | Le packaging Le Labo est un manifeste design.
+- Matière Première Parisian Musc | La transparence des matériaux.
+- Prada Infusion d'Iris | Le Bauhaus olfactif de Miuccia Prada.
+- Narciso Rodriguez Pure Musc | Le minimalisme poussé à l'essentiel.
+- Frédéric Malle En Passant | L'architecture légère.
+
+## Les Globe-trotters
+@ Homme
+- Comme des Garçons Kyoto | Chaque voyage a un parfum : Kyoto pour le Japon.
+- Byredo Gypsy Water | Nomade par essence.
+- Aesop Hwyl | La forêt japonaise.
+- Creed Virgin Island Water | Les Caraïbes en flacon.
+- Le Labo Bergamote 22 | Le parfum des villes Le Labo.
+- Memo Inlé | Chaque Memo est un voyage documenté.
+- DS & Durga Radio Bombay | Il ramène des sons autant que des objets.
+- Diptyque Philosykos | « Ami du figuier » en grec : la Grèce.
+- Maison Margiela Replica When the Rain Stops | Il pleut pareil à Tokyo, Lagos et Paris.
+- Xerjoff 40 Knots | La traversée à haute vitesse.
+- Atelier des Ors Nuda Veritas | L'or comme matière première.
+- Parfum d'Empire Wazamba | L'encens des routes de la soie.
+@ Femme
+- Hermès Un Jardin sur le Nil | L'Égypte d'Hermès.
+- Jo Malone Wood Sage & Sea Salt | Les falaises anglaises ou n'importe quelle côte.
+- Tom Ford Soleil Blanc | La terrasse de l'hôtel à Positano.
+- Byredo Mojave Ghost | Le désert américain vu par un Suédois.
+- Diptyque Eau Rose | La rose est universelle.
+- Acqua di Parma Fico di Amalfi | La côte amalfitaine.
+- Maison Margiela Beach Walk | La plage peut être partout.
+- Le Labo Thé Matcha 26 | Prolonger le voyage au Japon sur la peau.
+- Maison Crivelli Hibiscus Mahajád | Mahajád veut dire « voyage » en arabe.
+- Byredo Sundazed | La même légèreté nomade.
+
+## La Romantique classique
+- Guerlain L'Heure Bleue | Créé en 1912 : l'heure bleue de Verlaine.
+- Diorissimo | Christian Dior adorait le muguet.
+- Chanel Gardenia | La fleur préférée de Coco Chanel.
+- Goutal Un Matin d'Orage | Lilas, magnolia : l'orage du matin.
+- Diptyque Eau Rose | Une rose réaliste : elle sent la rose, pas le bonbon.
+- L'Artisan Parfumeur Mûre et Musc Extrême | La maison pionnière du niche français.
+- Hermès Un Jardin en Méditerranée | Le romantisme de la botanique.
+- Frédéric Malle En Passant | Le parfum de ceux qui s'arrêtent pour regarder les fleurs.
+- Penhaligon's The Favourite | Inspiré de Sarah Churchill.
+- Chanel N°5 | Le parfum le plus célèbre du monde.
+- Houbigant Quelques Fleurs | Le premier bouquet floral de l'histoire.
+
+## Les Sportifs stylés
+@ Homme
+- Hermès H24 EDT | Le parfum masculin le plus moderne d'Hermès.
+- Acqua di Parma Colonia Futura | La Colonia pour celui qui voyage léger.
+- Carner Barcelona Tennis Club | Bergamote, citrus, sel : écrit pour ce profil.
+- Prada Luna Rossa Carbon | Inspiré de la voile de compétition.
+- Hermès Terre d'Hermès Eau Givrée | Fraîcheur maximale, l'après-sport.
+- Creed Aventus Cologne | Plus sportif que l'original.
+- Yves Saint Laurent Y EDP | Pour l'homme actif et stylé.
+- Dior Homme Sport | Sport et élégance au même niveau.
+- Maison Margiela Replica When the Rain Stops | Après l'effort, le calme.
+- Le Labo Bergamote 22 | Fraîche, nette, précise.
+- Nishane Ani | Doux et enveloppant après l'effort.
+@ Femme
+- Xerjoff Torino21 | La ville du football et du design.
+- Creed Aventus for Her | L'énergie d'Aventus en floral-musqué.
+- Hermès Un Jardin sur le Nil | Fraîcheur tropicale.
+- Maison Francis Kurkdjian Aqua Universalis | Il ne détonne dans aucune situation.
+- Chanel Chance Eau Fraîche | La version la plus dynamique de Chance.
+- Jo Malone Wood Sage & Sea Salt | La côte après la course.
+- Diptyque Philosykos | Le yoga dans un jardin méditerranéen.
+- Byredo Bal d'Afrique | Un parfum de fête athlétique.
+- Dior Addict Eau Fraîche | L'intensité adoucie par la fraîcheur.
+- Creed Love in White | Le blanc du tennis, de l'équitation, de la voile.
+- Essential Parfums Fig Infusion | Qualité niche accessible.
+- Acqua di Parma Buongiorno | L'énergie matinale.
+
+## Le Bookworm
+d: Librairie le samedi, café le dimanche, notes dans les marges. Elle a lu Proust deux fois. Il a une opinion sur Bolaño.
+- Comme des Garçons Kyoto | La bibliothèque d'un temple : silence, papier, bois.
+- Santa Maria Novella Tabacco Toscano | Fondée en 1221 par des moines.
+- Serge Lutens Chergui | Serge Lutens est photographe et écrivain autant que parfumeur.
+- Diptyque Tam Dao | La bibliothèque boisée.
+- Ormonde Jayne Ormonde Man | Les parfums les plus littéraires du marché.
+- Le Labo Thé Noir 29 | Le thé noir du dimanche après-midi, 400 pages devant soi.
+- Hermès Bel Ami | Le roman de Maupassant : pour celui qui lit les classiques.
+- Floris No. 89 | Fondé en 1730.
+- Maison Margiela Jazz Club | Le club de jazz vu par un romancier.
+- Notes de Bas de Page Carambolage | Le nom est la référence littéraire.
+- Parfum d'Empire Corsica Furiosa | Le maquis corse, un territoire sauvage.
+- Houbigant Fougère Royale | Le premier fougère de l'histoire (1882).
+
+## It Boy
+d: Il arrive en dernier, chemise blanche froissée, connaît le DJ, et tout le monde lui demande ce qu'il porte. Pas de règle : un instinct très affûté.
+- Le Labo Santal 33 | Le parfum de toute une génération stylée.
+- Byredo Bal d'Afrique | Frais, profond, voyageur.
+- Maison Crivelli Hibiscus Mahajád | Fruité et unique.
+- Parfums de Marly Layton | Compliments garantis.
+- Initio Side Effect | Chaud et addictif.
+- Xerjoff Naxos | Le gourmand masculin de luxe.
+- Le Labo Another 13 | Musc peau, discret et efficace.
+- Comme des Garçons Wonderwood | Boisé architectural, pour ceux qui savent.
+- Marc-Antoine Barrois B683 | Couture parisienne en spray.
+- BDK Gris Charnel | Le secret du Palais Royal.
+- Essential Parfums Bois Impérial | Moderne, propre, remarquable.
+- Atelier des Ors Bois Sikar | Rare, profond, de l'or dans le flacon.
+- Xerjoff Erba Gold | Frais et méconnu.
+
+## It Girl
+d: Elle porte trois parfums en rotation, connaît chaque maison indépendante, et son parfum change selon son humeur, pas selon la saison.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | Mixte, mais sculpturalement féminin.
+- Parfums de Marly Delina | La reine du floral niche des années 2020.
+- Byredo Mojave Ghost | Désertique et propre.
+- Kilian Love, Don't Be Shy | Sensuel et addictif.
+- Maison Margiela Lazy Sunday Morning | Le dimanche en flacon.
+- Initio Musk Therapy | La peau amplifiée.
+- Glossier You | Sentir son propre parfum, en mieux.
+- Diptyque Fleur de Peau | Poétique et intime.
+- Tom Ford Lost Cherry | Pour les soirs qui surprennent.
+- Le Labo Thé Matcha 26 | Épuré et végétal.
+- BDK Pas Ce Soir | Fruité-épicé, personnel.
+- Maison Crivelli Iris Malikhân | Déstabilisant et mémorable.
+- Atelier des Ors Lune Féline | Félin, féminin.
+- Ex Nihilo Fleur Narcotique | Floral addictif et ensoleillé.
+- Memo Inlé | Calme et voyage intérieur.
+- Diptyque Orphéon | Très mode, très Marais, très elle.
+
+## Model Off-Duty
+@ Homme | Il sort du shooting, enfile un jean et une veste de cuir vintage, commande un café, et tout le monde le regarde sans savoir pourquoi.
+- Tom Ford Grey Vetiver | Masculin, propre, sec.
+- Prada L'Homme | La sobriété incarnée.
+- Le Labo Santal 33 | Signature.
+- Aesop Hwyl | Forestier japonais.
+- Comme des Garçons Wonderwood | Boisé architectural.
+- Diptyque Tam Dao | Minimaliste et propre.
+- Hermès H24 | Moderne, frais, architectural.
+- Maison Margiela Jazz Club | Pour le soir après le shooting.
+- Acqua di Parma Colonia | Le classique italien.
+- Marc-Antoine Barrois B683 | Couture masculine.
+- Essential Parfums Bois Impérial | Épuré et remarquable.
+- BDK Gris Charnel Extrait | Fumé et élégant.
+- Atelier des Ors Bois Sikar | Rare et profond.
+- Maison Crivelli Bois Datchaï | Chaud et confidentiel.
+@ Femme | Elle porte peu, ça dure longtemps. Elle ne cherche pas à sentir bon : elle sent, c'est tout.
+- Byredo Mojave Ghost | Signature Byredo.
+- Le Labo Another 13 | Musc peau.
+- Byredo Bal d'Afrique | Frais et profond.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | Enveloppant.
+- Glossier You | Le skin scent par excellence.
+- Diptyque Fleur de Peau | Poétique.
+- Le Labo Thé Noir 29 | Fumé et discret : elle rentre de Bangkok.
+- Narciso Rodriguez For Her Musc Noir | Plus sombre que le classique.
+- Maison Margiela Lazy Sunday Morning | Le dimanche en flacon.
+- Matière Première Parisian Musc | Le musc parisien par excellence.
+- BDK 312 Saint-Honoré | Parisien pur.
+- Maison Crivelli Neroli Nasimba | Lumineux et chaud.
+- Diptyque Orphéon | Mode et Marais.
+- Marc-Antoine Barrois Ganymede | Sculptural et rare.
+
+## Effortless Chic
+d: Chemise blanche, jean parfait, appartement parisien, cheveux encore légèrement humides. Aucune apparence d'effort.
+@ Homme
+- Acqua di Parma Colonia Futura | Le plus contemporain de la collection Colonia.
+- Diptyque Tam Dao | Minimaliste absolu.
+- Maison Margiela Replica Sailing Day | Air marin, libre.
+- Essential Parfums Bois Impérial | Propre et profond.
+- Hermès H24 | Architectural et moderne.
+- Marc-Antoine Barrois Ganymede | Sans effort et pourtant rare.
+- BDK Gris Charnel | Élégance parisienne.
+- Prada L'Homme | La sobriété.
+- Byredo Bal d'Afrique | Musc et néroli sur peau chaude.
+- Aesop Hwyl | Hinoki, vétiver.
+@ Femme
+- Diptyque Orphéon | Floral poudré, très mode.
+- Byredo Blanche | Linge propre sur peau chaude.
+- Maison Francis Kurkdjian Aqua Universalis | La propreté élevée au rang d'art.
+- Matière Première Parisian Musc | Parisien en essence.
+- Prada Infusion d'Iris | Propre et bien élevé.
+- Maison Margiela Lazy Sunday Morning | Musc blanc, rose, poire.
+- Diptyque Fleur de Peau | Poétique.
+- Byredo Mojave Ghost | Santal, ambrette, magnolia.
+- Glossier You | Le skin scent ultime.
+- BDK 312 Saint-Honoré | L'adresse parisienne en parfum.
+- Atelier des Ors Lune Féline | L'or discret.
+- Memo Inlé | Le calme habillé.
+
+## Paris
+d: Rive gauche le matin, galerie l'après-midi, dîner rive droite et taxi sous la pluie.
+@ Homme
+- Le Labo Thé Noir 29 | L'intellectuel parisien qui lit Le Monde dans un café du 5ème.
+- Frédéric Malle Musc Ravageur | Le dîner tardif rive droite.
+- Dior Bois d'Argent | Le costume gris sur fond de pluie parisienne.
+- Chanel Sycomore | Un appartement dans le 16ème dont on ne parle jamais.
+- Serge Lutens Gris Clair | Rive gauche, appartement haussmannien, fenêtre entrouverte.
+- Matière Première Parisian Musc | Le parfum de peau : l'emblème du style parisien.
+- BDK Gris Charnel | Né rue Saint-Honoré : l'ADN parisien dans la formule.
+- Marc-Antoine Barrois Ganymede | Le couturier qui sent différemment.
+- Comme des Garçons Floriental | Reconnaissable, inclassable.
+- Parfum d'Empire Aziyade | Un pont entre l'Orient des rêves et le flair français.
+- Ex Nihilo Fleur Narcotique | Né à Paris : la galerie Vivienne à 18h.
+@ Femme
+- Diptyque Philosykos | Simple en apparence, complexe dans le fond.
+- Frédéric Malle En Passant | Le lilas de la rue de Rivoli un matin d'avril.
+- Serge Lutens Féminité du Bois | Le grand classique de 1992.
+- Chanel Coromandel | L'appartement de Coco Chanel, rue Cambon.
+- Matière Première Parisian Musc | Elle sent son parfum comme si c'était sa peau.
+- BDK Pas Ce Soir | Un refus élégant : un bain et un livre.
+- Ella K Kyoto mon Amour | Une maison qui croise deux cultures.
+- Floraïku Morning Dew on Moss | Une découverte de boutique cachée du 3ème.
+- Place de la Rêverie Trocadéro | La reco qu'on chuchote entre initiés.
+- Les Bains Guerbois Brume de Soie | Une institution parisienne.
+
+## New York
+d: Taxi jaune, espresso, skyline, galerie et dîner à 23h.
+@ Homme
+- Le Labo Santal 33 | LE parfum de New York.
+- Le Labo Another 13 | Pour ceux qui ne veulent pas sentir comme tout le monde.
+- Byredo Bal d'Afrique | La diversité de la ville.
+- Tom Ford Oud Wood | Manhattan après 22h.
+- Maison Margiela Jazz Club | West Village, comptoir en bois, Coltrane.
+- DS & Durga Bowmakers | Née à Brooklyn : l'atelier d'artisan de Red Hook.
+- Bond No. 9 New York Nights | Le Manhattan nocturne qu'on fantasme.
+- Byredo 1996 | Culte, pour les collectionneurs.
+- Marc-Antoine Barrois B683 | Comme pour un vernissage, même pour un café.
+- Atelier des Ors Lune Féline | Le New-Yorkais de l'Upper East Side.
+- Byredo Gypsy Water | Le photographe qui traverse Brooklyn à vélo.
+@ Femme
+- Frédéric Malle Musc Ravageur | L'Upper East Side le soir.
+- Le Labo Another 13 | Le meilleur parfum se sent en s'approchant.
+- Byredo Bal d'Afrique | Brooklyn, vélo, farmers market.
+- Maison Margiela Jazz Club | La fille qui écoute du jazz.
+- Bond No. 9 New York Nights | New York à 2h du matin.
+- Byredo 1996 | Les galeries de Chelsea.
+- Tom Ford Black Orchid | Dîner chez Cipriani.
+- DS & Durga Radio Bombay | Le meilleur restaurant indien de Jackson Heights.
+- Maison Crivelli Hibiscus Mahajád | Soho, robe colorée, café glacé.
+- BDK Vanille Caviar | Décadent et séduisant.
+
+## London
+d: Pluie, Mayfair, costume, espresso martini, voiture anglaise et club privé.
+@ Homme
+- Floris No. 89 | Classique britannique absolu.
+- Penhaligon's Sartorial | Le tailleur de Savile Row.
+- Penhaligon's Halfeti | Le gentleman qui revient d'Istanbul.
+- Roja Elysium | La grande niche britannique.
+- Atkinsons 24 Old Bond Street | Parfume l'élite depuis 1799 : l'adresse est le parfum.
+- Creed Green Irish Tweed | Le plus british des Creed.
+- Ormonde Jayne Ormonde Man | Née à Londres en 2002.
+- Clive Christian X For Men | Pour le membre du club de St James's Street.
+- Boadicea the Victorious Wellington | La reine guerrière et le duc.
+- Houbigant Fougère Royale | A inventé la famille fougère en 1882.
+- Jo Malone Wood Sage & Sea Salt | L'Angleterre côtière.
+@ Femme
+- Jo Malone Peony & Blush Suede | L'Anglaise aux pivoines, à Chelsea.
+- Penhaligon's The Favourite | Inspiré de Sarah Churchill.
+- Floris 1962 | L'élégance britannique féminine.
+- Roja Elysium Pour Femme | Le West End, l'opéra sans forcer.
+- Ormonde Jayne Ormonde Woman | Aussi british, aussi irréductible.
+- Boadicea the Victorious Glorious | La Londonienne qui ne demande pas la permission.
+- Houbigant Quelques Fleurs | Le premier multi-floral de l'histoire.
+- Clive Christian 1872 Woman | Ultra-luxueux, 100 % London.
+- Ella K Londonderry | La forêt anglaise en flacon.
+- Jo Malone English Pear & Freesia | La campagne anglaise à l'automne.
+- Marc-Antoine Barrois Encelade | Coupant et élégant.
+
+## Milan
+d: Costume parfaitement coupé, espresso au comptoir, cuir italien et galerie d'art.
+@ Homme
+- Acqua di Parma Colonia | Le parfum de Milan, depuis plus d'un siècle.
+- Xerjoff Torino21 | Né à Turin : le Salone del Mobile.
+- Xerjoff Naxos | Entre Milan et la villa d'été.
+- Santa Maria Novella Tabacco Toscano | La plus ancienne pharmacie du monde.
+- Prada L'Homme | Milan : le beau sans ostentation.
+- Armani Privé Bois d'Encens | Giorgio Armani est milanais.
+- Valentino Uomo Intense | Propre, chaud, couture.
+- Bottega Veneta Pour Homme | Le quiet luxury à l'italienne.
+- Xerjoff Renaissance | L'amateur d'art qui collectionne autant les parfums que les œuvres.
+- Acqua di Parma Buongiorno | Le matin italien.
+- Tiziana Terenzi Kirke | Ensorcelant comme une soirée milanaise.
+- Acqua di Parma Buongiorno Buonanotte | Délicat et réconfortant : la fin d'une nuit de rires, quand buongiorno et buonanotte ne font plus qu'un.
+- Acqua di Parma Buongiorno Amore Mio | Élégance subtile, comme des vêtements propres qui enveloppent la peau.
+- Acqua di Parma Buongiorno Dolce Far Niente | Légèreté : savourer une journée sans hâte.
+- Acqua di Parma Buongiorno Gioco del Destino | Gourmand et moderne : l'inattendu qui déclenche une joyeuse euphorie.
+- Acqua di Parma Buongiorno Al Bacio | Clair et étincelant : l'intimité d'un baiser au matin.
+- Contes de Parfums Positano | La côte amalfitaine.
+@ Femme
+- Acqua di Parma Fico di Amalfi | Quand Milan prend des vacances sur la côte.
+- Prada Paradoxe | Du noir en été, des couleurs vives en hiver, par choix.
+- Bottega Veneta Knot | Chaque pièce est choisie, jamais achetée.
+- Valentino Born in Roma Donna | La femme italienne contemporaine.
+- Xerjoff Renaissance | La Milanaise de la Brera.
+- Tiziana Terenzi Kirke | L'ensorcelante de la mythologie.
+- Santa Maria Novella Rosa | La pharmacie distille des roses depuis le Moyen Âge.
+- Armani Privé La Femme Bleue | La cliente qui commande sur mesure.
+- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
+- Maison Crivelli Hibiscus Mahajád | Moderne, reconnaissable.
+- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
+- Acqua di Parma Buongiorno Dolce Far Niente | Une journée sans hâte.
+- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
+- Acqua di Parma Buongiorno Al Bacio | Un baiser au matin.
+- Contes de Parfums Positano | La côte amalfitaine.
+
+## Rome
+d: Marbre, soleil, espresso, cuir, basilique et dîner dehors jusqu'à minuit.
+@ Homme
+- Acqua di Parma Colonia | L'homme romain qui porte le même parfum depuis trente ans.
+- Santa Maria Novella Melograno | La grenade, fruit de Rome.
+- Xerjoff Renaissance | Entre le Colisée et la Galleria Borghese.
+- Xerjoff Mefisto Gentiluomo | Le diable élégant, au Trastevere.
+- Profumum Roma Acqua di Sale | La côte romaine, Ostia en juillet.
+- Profumum Roma Neroli | Le jardin d'une villa romaine à l'aube.
+- Valentino Uomo | Une maison romaine pure.
+- Prada L'Homme | Le Romain contemporain.
+- Maison Crivelli Papyrus Moléculaire | L'Antiquité en parfum.
+- Creed Original Vetiver | Le vétiver, sobre : le plus romain.
+- Acqua di Parma Buongiorno Dolce Far Niente | La douce oisiveté : un dimanche romain, déjeuner jusqu'à 16h.
+- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
+- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
+- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
+- Acqua di Parma Buongiorno Al Bacio | Un baiser au matin.
+- Contes de Parfums Positano | La côte amalfitaine.
+@ Femme
+- Profumum Roma Acqua di Sale | Les week-ends à Capri ou Ponza.
+- Santa Maria Novella Melograno | Les oliviers de la maison de campagne.
+- Valentino Donna | L'élégance romaine depuis 1960.
+- Acqua di Parma Fico di Amalfi | Le lien entre la ville et la mer.
+- Tiziana Terenzi Kirke | La Romaine qui ensorcelle sans effort.
+- Maison Crivelli Papyrus Moléculaire | Un pont entre deux millénaires.
+- Profumum Roma Neroli | Le néroli de Rome au printemps.
+- Xerjoff Dama Bianca | L'élégance romaine classique.
+- Acqua di Parma Buongiorno Al Bacio | Parfait, délicieux : le matin romain.
+- Atelier des Ors Rose Oud | La rose de l'Apennin rencontre l'Orient.
+- Houbigant Quelques Fleurs | La grand-mère portait le même parfum.
+- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
+- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
+- Acqua di Parma Buongiorno Dolce Far Niente | Une journée sans hâte.
+- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
+- Contes de Parfums Positano | La côte amalfitaine.
+
+## Côte d'Azur
+d: Route côtière, linge blanc, figuier, déjeuner tardif et soleil sur la peau.
+@ Homme
+- Tom Ford Neroli Portofino | La route côtière en décapotable.
+- Creed Virgin Island Water | Le cocktail du déjeuner.
+- Acqua di Parma Fico di Amalfi | La terrasse en bois blanc, les olives, la mer.
+- Diptyque Philosykos | Le figuier : le référent absolu.
+- Maison Francis Kurkdjian Aqua Celestia | Un ciel azuréen.
+- Jo Malone Lime Basil & Mandarin | Le marché provençal.
+- Chanel Paris-Riviera | La Riviera selon Gabrielle Chanel.
+- Xerjoff Mefisto | Même le diable se détend.
+- Byredo Bal d'Afrique | Le monde entier en été.
+- Heeley Sel Marin | La Méditerranée pure.
+- Acqua di Parma Buongiorno Gioco del Destino | Le jeu du destin : chaque rencontre est un hasard magnifique.
+@ Femme
+- Tom Ford Soleil Blanc | Une journée parfaite sur un bateau blanc.
+- Chanel Paris-Riviera | Chanel et la Côte d'Azur : La Pausa.
+- Maison Francis Kurkdjian Aqua Celestia | Les cheveux au vent, sans regarder sa montre.
+- Creed Erolfa | Le large, propre et lumineux.
+- Byredo Sundazed | La sieste sous un parasol.
+- Jo Malone Lime Basil & Mandarin | Les herbes fraîches du marché.
+- Heeley Sel Marin | Le sel sur la peau après la baignade.
+- Diptyque Philosykos | Le figuier sur le mur blanc.
+- Ella K Casta Diva | La Méditerranée musicale.
+- Floraïku Cherry Blossom Rain | Décalé, volontairement.
+- Acqua di Parma Buongiorno Al Bacio | Un matin de juillet, avant la chaleur.
+
+## Saint-Tropez
+d: Pampelonne, figuier, chemise orange, yacht, rosé et retour à La Ponche.
+~ Tom Ford Neroli Portofino | La route côtière, les pins, la mer.
+~ Creed Virgin Island Water | Le cocktail du déjeuner au Club 55.
+~ Diptyque Philosykos | Le figuier derrière la villa.
+~ Acqua di Parma Fico di Amalfi | La terrasse blanche, les agrumes.
+~ Tom Ford Soleil Blanc | Crème solaire de luxe sur peau bronzée.
+~ Maison Francis Kurkdjian Aqua Celestia | Le ciel azur au-dessus de la rade.
+~ Byredo Sundazed | L'après-midi qui s'étire.
+~ Chanel Paris-Riviera | Chanel et Saint-Tropez.
+~ Creed Erolfa | Le large, la voile, la brise.
+~ Heeley Sel Marin | Le sel sur la peau après la baignade.
+~ Xerjoff Torino21 | Le soir à La Ponche, dîner dehors.
++ Byredo Mojave Ghost | La douceur d'un coucher de soleil.
++ Maison Crivelli Hibiscus Mahajád | Rose et blanc, photos en argentique.
+
+## Monaco
+d: Grand Prix, casino, yacht, hôtel et dîner avec vue sur le port.
+@ Homme
+- Roja Elysium | Roja Dove : un parfum parfait, exactement Monaco.
+- Creed Aventus | Le parfum du businessman international.
+- Tom Ford Grey Vetiver | Il gagne sans le montrer.
+- Creed Royal Oud | L'oud des palaces.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | L'or discret de Monaco.
+- Xerjoff Torino21 | Le paddock : sport et luxe.
+- Maison Francis Kurkdjian Masculin Pluriel | Du bateau au casino sans changer de parfum.
+- Dior Homme 2020 | Le Monégasque de moins de 40 ans.
+- Bvlgari Tygar | Le casino, les enjeux.
+- Roja Oceania | Le dîner avec vue sur le port.
+- Clive Christian X | La ville la plus chère, le parfum le plus cher.
+@ Femme
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Ostentation assumée et désirabilité maximale.
+- Roja Elysium Pour Femme | L'Opéra le samedi soir.
+- Tom Ford Soleil Blanc | La femme qui descend du bateau.
+- Kilian Love, Don't Be Shy | Elle gagne au baccara.
+- Xerjoff Dama Bianca | Grace Kelly en parfum.
+- Maison Francis Kurkdjian Grand Soir | Le gala au Sporting Club.
+- Chanel N°5 | Grace Kelly portait Chanel N°5.
+- Creed Fleurissimo | Créé pour le mariage de Grace Kelly en 1956.
+- Parfums de Marly Delina Exclusif | Il faut marquer les mémoires.
+- Roja Oceania | L'Hôtel de Paris : le port, les yachts.
+- Atelier des Ors Nuda Veritas | Sans artifice.
+
+## Lake Como
+d: Villa italienne, bateau en bois, citronniers, chemise en lin et coucher de soleil.
+@ Homme
+- Acqua di Parma Fico di Amalfi | Villa d'Este, villas anciennes : l'expression estivale parfaite.
+- Acqua di Parma Buongiorno Buonanotte | Les nuits sur le lac où l'on ne regarde plus l'heure.
+- Acqua di Parma Buongiorno Dolce Far Niente | L'inaction choisie : le luxe ultime.
+- Diptyque Philosykos | Les figuiers du lac.
+- Xerjoff Torino21 | Le bateau en bois, le déjeuner à Varenna.
+- Tom Ford Neroli Portofino | Le blanc, l'eau, les agrumes.
+- Creed Aventus Cologne | Le déjeuner en terrasse à Bellagio.
+- Armani Thé Yulong | Calme, propre, naturel.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | La chaleur dorée du coucher de soleil.
+- Byredo Bal d'Afrique | Les invités du monde entier sur la terrasse.
+- Maison Crivelli Papyrus Moléculaire | Le passé plutôt que le tourisme.
+- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
+- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
+- Acqua di Parma Buongiorno Al Bacio | Un baiser au matin.
+- Contes de Parfums Positano | La côte amalfitaine.
+@ Femme
+- Acqua di Parma Buongiorno Amore Mio | Le lac des lunes de miel et des amours romanesques.
+- Acqua di Parma Buongiorno Al Bacio | Le matin au bord du lac, un café dans les mains.
+- Santa Maria Novella Melograno | Le jardin méditerranéen en juillet.
+- Diptyque Philosykos | Les jardins de Villa Balbianello.
+- Maison Francis Kurkdjian Aqua Celestia | Le ciel reflété dans l'eau.
+- Byredo Mojave Ghost | L'empreinte d'un moment parfait.
+- Tom Ford Soleil Blanc | Une terrasse face au lac en fin d'après-midi.
+- Ella K Sotto la Luna Gardenia | Le lac la nuit, sous la pleine lune.
+- Floraïku The Wandering Minstrel | En solo, avec un carnet de croquis.
+- Maison Crivelli Hibiscus Mahajád | Les jardins des villas.
+- Houbigant Quelques Fleurs | Un parfum qui a de l'histoire.
+- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
+- Acqua di Parma Buongiorno Dolce Far Niente | Une journée sans hâte.
+- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
+- Contes de Parfums Positano | La côte amalfitaine.
+
+## Dubai
+d: Marbre, oud, soleil couchant, hôtel immense et parfum qui laisse une trace.
+@ Homme
+- Contes de Parfums Dubai | Créé par Anne Flipo après un voyage à Dubai : dattes, safran, vanille.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Dans l'air de chaque hôtel cinq étoiles.
+- Maison Francis Kurkdjian Oud Satin Mood | L'oud du Golfe, interprété avec précision française.
+- Amouage Interlude Man | Amouage est né à Oman : le voyage en Orient.
+- Xerjoff Alexandria II | Une ville de convergences.
+- Initio Oud for Greatness | Dubai est une ville d'ambition.
+- Maison Francis Kurkdjian Oud | L'oud sans détour.
+- Roja Enigma | Depuis le 148ème étage du Burj Khalifa.
+- Xerjoff Erba Pura | La lumière aveuglante de Dubai.
+- Parfums de Marly Layton | Un incontournable des perfume counters.
+- Initio Side Effect | Tout est plus grand, plus rapide, plus intense.
+@ Femme
+- Contes de Parfums Dubai | Sucré, chaud, majestueux.
+- Maison Francis Kurkdjian Baccarat Rouge 540 Extrait | Dubai mérite l'extrait : plus profond, plus long.
+- Amouage Guidance | Moderne et riche.
+- Maison Francis Kurkdjian Grand Soir | Dîner au Nobu : tout est spectaculaire.
+- Xerjoff Alexandria II | Cinq robes pour cinq dîners au Burj Al Arab.
+- Parfums de Marly Delina Exclusif | Partout, et pour cause.
+- Kilian Love, Don't Be Shy | Une ville qui assume ses désirs.
+- Roja Enigma | Cache autant qu'il révèle.
+- Initio Oud for Greatness | Une note masculine, portée mieux que quiconque.
+- Maison Crivelli Oud Maracujá | L'oud tempéré par la douceur tropicale.
+- Oman Luxury Al Qasaid | Le luxe authentique du Golfe.
+
+## Tokyo
+d: Pluie nocturne, costume noir, néons, café minuscule et temple au petit matin.
+@ Homme
+- Contes de Parfums Tokyo | Le hanami de 2019 : cerisiers en fleur, thé bergamote.
+- Comme des Garçons Hinoki | Le cyprès des temples shinto.
+- Aesop Hwyl | Une forêt dense après la pluie.
+- Diptyque Tam Dao | Le santal des temples bouddhistes.
+- Comme des Garçons Wonderwood | L'architecture de Kengo Kuma.
+- Le Labo Gaiac 10 | Le comptoir d'un café de Daikanyama à minuit.
+- Byredo Blanche | Un appartement minimaliste à Minami-Aoyama.
+- Nishane Wulong Cha | Un kissaten au sous-sol de Ginza.
+- Maison Crivelli Hibiscus Mahajád | Harajuku, Takeshita Street.
+- Floraïku Morning Dew | Une maison franco-japonaise inspirée des haïkus.
+@ Femme
+- Contes de Parfums Tokyo | Cerisier en fleur, thé bergamote.
+- Floraïku On The Road | Le Shinkansen, le Fuji qui défile.
+- Diptyque Fleur de Peau | Le linge de coton frais d'un hôtel de luxe.
+- Aesop Tacit | Le jardin zen de Ryoanji.
+- Maison Margiela Flower Market | Le marché aux fleurs de Tsukiji à 6h.
+- Comme des Garçons 2 | Un parfum de directrice artistique.
+- Byredo Bal d'Afrique | La Parisienne qui apporte sa lumière.
+- Nishane Wulong Cha | La cérémonie du thé revisitée.
+- Le Labo Thé Matcha 26 | Un salon de thé de Nakameguro.
+- Maison Crivelli Fleur Nakheel | Le contraste d'une ville cosmopolite.
+
+## Courchevel
+d: Chalet, cheminée, ski le matin, manteau en cachemire et dîner après la neige.
+@ Homme
+- Maison Francis Kurkdjian Grand Soir | La suite privée, les bougies, le cognac.
+- Tom Ford Tobacco Vanille | Le chalet dans ce qu'il a de plus décadent.
+- Kilian Angels' Share | Cognac chaud, vanille, cannelle.
+- Parfums de Marly Althaïr | Le dîner au Cheval Blanc.
+- Xerjoff Naxos | Fort mais jamais vulgaire.
+- Maison Margiela By the Fireplace | Le feu qui s'éteint.
+- Initio Side Effect | Sous le pull en cachemire.
+- Serge Lutens Chergui | Le bois qui brûle lentement.
+- Atelier des Ors Iris Fauve | Iris cuiré et boisé : le ski puis le dîner.
+- Amouage Interlude Man | Une cheminée de marbre à 1850.
+@ Femme
+- Maison Francis Kurkdjian Grand Soir | La même soirée, sur une autre peau.
+- Kilian Angels' Share | La femme qui connaît la différence entre un VSOP et un XO.
+- Tom Ford Tobacco Vanille | Près du feu, en cachemire crème.
+- Diptyque Eau Duelle | Elle lit pendant que les autres skient.
+- Parfums de Marly Delina Exclusif | Une féminité assumée, tout le monde se retourne.
+- Kilian Love, Don't Be Shy | Une guimauve chaude après le ski.
+- Memo Winter Palace | Les fastes de la Russie impériale en hiver.
+- Maison Margiela By the Fireplace | Le feu de cheminée, incarné.
+- Serge Lutens Un Bois Vanille | Le peignoir en cachemire après le bain.
+- Atelier des Ors Crépuscule des Âmes | Le coucher de soleil sur les Alpes.
+
+## Ibiza
+d: Sunset, chemise ouverte, musique électronique, peau salée et départ pour la nuit.
+@ Homme
+- Byredo Bal d'Afrique | La terrasse au coucher du soleil.
+- Le Labo Another 13 | Une signature : il disparaît dans la nuit et revient au matin.
+- Creed Virgin Island Water | Le bateau au mouillage avant la soirée.
+- Maison Crivelli Hibiscus Mahajád | Lumineux à l'heure du DJ set.
+- Escentric Molecules Molecule 01 | Un parfum fantôme que les gens cherchent à identifier.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | Magnétique pour le soir.
+- Diptyque Philosykos | Le figuier qui donne de l'ombre sur la terrasse.
+- BDK Citrus Riviera | Eau bleue, soleil, peau bronzée.
+- Matière Première Parisian Musc | Propre et séduisant à toutes les heures.
+- Marc-Antoine Barrois B683 | Une nuit ibizienne : sophistiqué, aérien.
+@ Femme
+- Byredo Mojave Ghost | Chaleur, sécheresse, beauté sans effort.
+- Byredo Sundazed | Le beach club avant que tout ne commence.
+- Maison Crivelli Hibiscus Mahajád | Ibiza vu d'une terrasse blanche.
+- Diptyque Orphéon | Élégant, légèrement rétro, au coucher du soleil.
+- Maison Francis Kurkdjian Amyris Femme | La peau propre et la crème solaire haut de gamme.
+- BDK Rouge Smoking | Une soirée à Pacha.
+- Escentric Molecules Molecule 04 | L'anti-parfum parfait.
+- Matière Première Parisian Musc | La Parisienne en vacances.
+- Creed Virgin Island Water | La plage, le bateau, le cocktail.
+- Kilian Love, Don't Be Shy | 2h du matin, robe légère.
+
+## Mykonos
+d: Blanc éclatant, mer bleue, terrasse blanche, soleil et nuit qui ne commence jamais avant 1h.
+@ Homme
+- Tom Ford Neroli Portofino | La villa blanche, la veste de lin.
+- Creed Virgin Island Water | Le bateau au mouillage dans les eaux turquoise.
+- Xerjoff Torino21 | La terrasse du Nammos à l'heure du déjeuner.
+- Acqua di Parma Fico di Amalfi | Le déjeuner sur la terrasse.
+- Le Labo Bergamote 22 | Sans jamais avoir besoin d'en changer.
+- Roja Elysium | Un paradis grec.
+- Byredo Bal d'Afrique | Le port, le coucher de soleil sur les moulins.
+- BDK Citrus Riviera | Méditerranée pure.
+- Diptyque Philosykos | La figue grecque existe depuis 3000 ans.
+- Contes de Parfums Hydra | Une île grecque, directement.
+@ Femme
+- Tom Ford Soleil Blanc | Crème solaire de luxe : peau bronzée, terrasse blanche.
+- Byredo Sundazed | Un transat à Ornos Beach.
+- Maison Francis Kurkdjian Aqua Universalis | L'architecture blanche de l'île.
+- Contes de Parfums Hydra | La mer Égée.
+- Diptyque Eau Rose | La robe blanche et la fleur dans les cheveux.
+- Maison Crivelli Hibiscus Mahajád | La couleur de Mykonos.
+- Roja Elysium Pour Femme | Little Venice au coucher du soleil.
+- Acqua di Parma Fico di Amalfi | Figue et soleil.
+- Jo Malone Peony & Blush Suede | La robe en lin rose pâle.
+- BDK Tabac Rose | Le soir venu : une rose qui fume.
+
+## Marrakech
+d: Terrasse au coucher du soleil, épices, cuir, thé à la menthe et jardins cachés.
+@ Homme
+- Contes de Parfums Marrakesh | Rose de Damas, safran, oud : la médina vue d'un riad.
+- Serge Lutens Ambre Sultan | Les marchés d'épices de la médina.
+- Maison Crivelli Oud Maracujá | Un oud lumineux face à la chaleur.
+- Maison Francis Kurkdjian Oud Satin Mood | Le palais intérieur du riad.
+- Memo African Leather | Tannerie, épices, bois.
+- Tom Ford Oud Wood | Un oriental lourd qui ne devient jamais vulgaire.
+- Xerjoff Alexandria II | La Mamounia vue du jardin.
+- Parfum d'Empire Ambre Russe | Le souvenir d'un caravansérail.
+- Kilian Straight to Heaven | Les jardins cachés après minuit.
+- Amouage Interlude Man | Les souks à l'heure du muezzin.
+@ Femme
+- Contes de Parfums Marrakesh | Le jardin secret du palais.
+- Serge Lutens Fleurs d'Oranger | Serge Lutens vit à Marrakech.
+- Maison Francis Kurkdjian Oud Satin Mood | Elle transforme l'espace.
+- Amouage Epic Woman | Le coucher de soleil sur les remparts.
+- Memo Inlé | Un patio, un livre de Driss Chraïbi.
+- Maison Crivelli Oud Maracujá | La terrasse du restaurant au coucher du soleil.
+- Parfum d'Empire Wazamba | Un encens pur : les hammams.
+- Diptyque Eau Duelle | Le thé à la menthe, mais quelque chose de plus intéressant.
+- Ella K Yuki Yuki | Un voyage sensoriel.
+- Kilian Love, Don't Be Shy | La fleur d'oranger marocaine.
+
+## Rio
+d: Samba, soleil, peau chaude, plage, citron vert et nuit qui continue jusqu'au matin.
+@ Homme
+- Creed Virgin Island Water | Citron vert et noix de coco : la caipirinha. Ipanema à 14h.
+- Xerjoff Torino21 | La veste jetée sur l'épaule avant de sortir.
+- Byredo Bal d'Afrique | Rio, une ville africaine dans son âme.
+- Tom Ford Mandarino di Amalfi | Après une session de surf à Barra da Tijuca.
+- Maison Francis Kurkdjian Aqua Universalis | Le boy carioca bien élevé.
+- Contes de Parfums Salvador da Bahia | La chaleur tropicale, le carnaval.
+- Acqua di Parma Fico di Amalfi | La soirée à Santa Teresa.
+- Byredo Sundazed | Un après-midi parfait à Lapa.
+- Le Labo Bergamote 22 | Fraîcheur immédiate sous 35 degrés.
+- Roja Elysium | Le Christ Rédempteur au coucher du soleil.
+@ Femme
+- Tom Ford Soleil Blanc | Ipanema vu depuis le Fasano.
+- Byredo Sundazed | Chapeau de paille, caipirinha à la main.
+- Maison Crivelli Hibiscus Mahajád | L'hibiscus est la fleur de Rio.
+- Creed Virgin Island Water | La femme qui sort de l'eau à Prainha.
+- Byredo Bal d'Afrique | Le pont entre deux continents.
+- Diptyque Philosykos | Le jardin botanique, les manguiers.
+- Ella K Ode à la Forêt | La Mata Atlântica.
+- Maison Francis Kurkdjian Amyris Femme | Santa Teresa, robe légère, vin dans la main.
+- Acqua di Parma Fico di Amalfi | Le passage de la plage à la soirée.
+- Kilian Love, Don't Be Shy | Le carnaval de nuit.
+
+
+## Ski Weekend
+
++ Atelier des Ors Lune Féline | Orientalisant, sombre et féminin-mixte. La "lune féline" évoque exactement la nuit en altitude — mystérieuse, froide dehors, chaude dedans.
++ Kilian Black Phantom | "Memento Mori." Un gourmand sombre : rhum et café torréfié. L'après-ski version "barre du chalet à minuit".
++ Houbigant Fougère Nobile | La maison la plus ancienne de Paris (1775). Fougère Nobile est leur signature contemporaine — boisé, chaud, élégant.
++ Memo Paris Winter Palace | Conçu directement pour l'hiver. Résines, encens doux, ambre profond.
+
+## Gameday
+x Versace Dylan Blue
++ Parfums de Marly Percival | Un frais aromatique de haute qualité, bien construit pour une journée de stade.
+
++ Acqua di Parma Colonia Buongiorno (Rouge) | La nouvelle collection Buongiorno d'ADP revisite les couleurs du matin sous forme olfactive. Le rouge — orange sanguine et cèdre — est le plus énergique, adapté à l'intensité d'un gameday.
++ Marc-Antoine Barrois Ganymede | Vainqueur aux Fragrance Foundation Awards 2020. Un cuir moderne et presque aérien, signé Quentin Bisch.
+
+## F1
+
++ Marc-Antoine Barrois Encelade | Cuir fumé et jungle volcanique — la rhubarbe fraîche contre le cuir animal est une tension unique. Pour le pilote hors normes, pas le classique champion en Aventus.
++ Xerjoff Nio | Propre, méditerranéen, légèrement épicé. Un autre Xerjoff parfait pour l'univers F1 — plus accessible que Torino21, même niveau de qualité.
++ Atelier des Ors Riviera Drive | Le nom dit tout : Riviera, Drive. Conçu autour d'une route côtière méditerranéenne.
+
+## First Date
+
++ Kilian Love, Don't Be Shy | Le nom est le brief. Sucré, peau chaude, légèrement addictif.
++ BDK Parfums Crème de Cuir | Un cuir crémeux et doux — pas animal, pas intimidant. La sophistication accessible.
++ Maison Crivelli Santal Volcanique | Un santal avec de l'énergie. Plus intense que le santal classique, sans être lourd.
++ Atelier des Ors Nuda Veritas | Floral aquatique, aérien et propre. La Vérité Nue — un parfum qui ne cache rien.
+
+## Board Meeting
+
++ Frederic Malle Monsieur | Un fougère classique et aristocratique. Frederic Malle a conçu ce parfum pour "l'homme qui sait" — précisément l'archétype d'une board meeting.
++ Penhaligon's Sartorial | Inspiré d'une taillerie de Savile Row. Sent exactement le costume sur mesure.
++ Houbigant Cologne Intense | La maison la plus ancienne de Paris dans une version contemporaine. Un cologne riche et structuré — élégance historique pour une salle de réunion moderne.
++ Marc-Antoine Barrois Ganymede | Award-winning, peu connu du grand public. Le choix de celui qui connaît vraiment la parfumerie.
+
+## Sunday Morning
+
++ Maison Crivelli Iris Malhikân | Un iris solaire et poudré. Lumineux et propre — la lumière du matin qui entre par la fenêtre.
++ BDK Parfums Citrus Riviera | Un agrume propre et lumineux. L'équivalent olfactif d'un verre d'eau froide avec une rondelle de citron un dimanche matin.
++ Floraïku The Pillow Book | Inspiré par le journal intime de Sei Shōnagon — littéralement "Le Livre de Chevet." Musc de riz et fleur de cerisier : le plus poétique pour un dimanche matin.
++ Essential Parfums Nice Bergamote | La maison Essential Parfums propose des fragrances épurées signées par de grands nez (Quentin Bisch, Sophie Labbé, Bruno Fazzolari). Nice Bergamote est leur frais signature : transparent, propre, lumineux.
+
+## En famille
+
++ Floraïku Sunrise Spell | Frais, propre, legèrement vert. La maison Floraïku est inspirée de la poésie japonaise — chaque parfum est une évocation sensorielle douce.
++ Essential Parfums Bois Imperial | Un boisé minimaliste et propre signé par Jordi Fernandez. La maison Essential Parfums est l'une des découvertes les plus intéressantes de ces 5 dernières années : grande qualité, prix accessibles.
++ Diptyque Philosykos | Le figuier dans toutes ses déclinaisons. Évoque un jardin méditerranéen familial — un espace commun, une mémoire partagée.
+
+## Wedding Guest
+
++ Houbigant Quelques Fleurs Royale | La maison la plus ancienne du monde (1775) et le premier multi-floral de l'histoire (1912). Quelques Fleurs Royale est une version moderne et aboutie.
++ Floraïku Cherry On Top | Floral fruité délicat. La légèreté d'un jardin fleuri en été.
++ Atelier des Ors Pink Me Up | Vibrant, floral et printanier. Pour un mariage de jardin ou champêtre.
+
+## Job Interview
+
++ Essential Parfums Dedication | Le nom est le brief. Fruité propre et boisé léger.
++ Floris No. 89 | Historiquement porté par Ian Fleming, qui en a fait le parfum de James Bond dans ses romans. Un fougère classique et sobre.
++ Maison Crivelli Papyrus Moléculaire | Propre, légèrement minéral. Différent sans être risqué.
+
+## Beach Club
+
++ Acqua di Parma Colonia Buongiorno (Jaune/Soleil) | La collection Buongiorno version "matin solaire" — citrus méditerranéen pur. Parfait pour le début de matinée au Beach Club.
++ Atelier des Ors Riviera Lazuli | La collection Riviera d'Atelier des Ors est entièrement conçue autour de la Méditerranée. Lazuli évoque la mer bleue et les pierres blanches — l'image exacte d'un Beach Club de la Côte d'Azur.
++ Maison Crivelli Citrus Batikanga | Citrus net et tropical. La "batik" est un tissu indonésien — l'exotisme solaire sans cliché.
++ Memo Paris Siwa | Inspiré de l'oasis de Siwa en Égypte — soleil, eau fraîche, minéral. Pour un beach club qui dépasse la Méditerranée habituelle.
+
+## Boat Day
+
++ Atelier des Ors Pomelo Riviera | Agrumes Riviera. Direct, propre, marin sans être cliché aquatique.
++ Memo Paris Île de Ré | Un parfum littéralement "marin" mais de haute qualité. Fleur de sel et ambre gris — l'air du large.
+
+## Night Out
+
++ Kilian Black Phantom | "Memento Mori." Un gourmand sombre et décadent. Café brûlé et rhum — la nuit qui ne s'arrête pas.
++ Amouage Guidance | Considéré par certains comme le parfum niche de l'année 2024-2025. Rose et cuir oriental.
++ BDK Parfums Velvet Tonka | Tonka veloutée et douce. Séduisante sans être lourde.
++ Maison Crivelli Oud Maracujá | L'oud tropical de Maison Crivelli. Exotique, chaud, légèrement fruit.
++ Atelier des Ors Lune Féline | La lune féline — séduction nocturne et mystère oriental. Cardamome et cuir sur fond de vanille sombre.
+
+## Hiver à New York
++ Marc-Antoine Barrois B683 Extrait | Vétiver fumé, cuir, bois secs, encens léger. Couture française pure.
++ Une Nuit Nomade Memory Motel | Tabac, patchouli, vanille, cuir, mousse. Hommage aux étés de Montauk, mais son dry-down hivernal est parfait.
++ Essential Parfums Bois Imperial | Bois de gaïac, vétiver, cèdre texan, ambre. Boisé sec et précis.
+
+## Automne Cozy
++ Ella K Amber K | Cigare cubain, cacao, iris, patchouli, ambre, tonka.
++ Une Nuit Nomade Sugar Leather | Caramel, cannelle, cuir, labdanum. Désert sucré.
+
+## Garden Party
++ Giardini di Toscana Giglio di Firenze | Lys, iris, bois blancs, musc. Florentin, aérien, précis.
++ D'Orsay Tilleul | Fleur de tilleul, bois, musc vert. Classique de la parfumerie française.
++ Rosendo Mateu No. 4 | Rose, jasmin, bois de oud, ambre. Floral oriental sophistiqué.
++ Place de la Rêverie Jardin de Minuit | Fleurs nocturnes, jasmin, musc blanc, vétiver.
+
+## Soirée à l'opéra
++ Marc-Antoine Barrois Ganymède Extrait | Cuir, iris, cèdre fumé, musc. Couture parisienne pure.
++ Floraïku Haiku in the Dark | Yuzu nocturne, iris, encens, bois. Minimalisme japonais habillé pour le soir.
++ D'Orsay Tilleul Extrait | Tilleul en extraction absolue, bois précieux, musc. Classique français de haute parfumerie.
+
+## Christmas Eve
++ Marc-Antoine Barrois Tilia | Tilleul, bois, musc, vanille légère. Best-seller 2024.
++ Une Nuit Nomade Jardins de Misfah | Cardamome, noix de muscade, dattes, rose absolue, safran, amande.
++ Ella K Amber K | Cigare cubain, cacao, iris, ambre, tonka.
+
+## Chic Winter
++ Marc-Antoine Barrois Ganymède Extrait | Cuir, iris, cèdre fumé.
++ Essential Parfums Bois Imperial | Gaïac, vétiver, cèdre texan, ambre. Boisé luxueux et accessible.
++ Floraïku Haiku in the Dark | Iris, encens, yuzu, bois nocturnes.
+
+
+## Compliments
+x Le Labo Thé Matcha 26
++ Xerjoff Torino21 | Frais et élégant, il génère énormément de compliments.
+
+## Historical Scents
++ Santa Maria Novella Acqua di Colonia | L'héritière directe de la tradition alchimiste médiévale. Un parfum que des frères franciscains auraient pu porter.
++ 4711 Original Eau de Cologne | L'Eau de Cologne de Napoléon. Une formule qui date de la Révolution française, encore disponible aujourd'hui.
++ Atkinsons 24 Old Bond Street | La parfumerie des cours européennes du XIXe siècle. Porter Atkinsons, c'est porter l'histoire de la monarchie britannique.
++ Guerlain Eau de Cologne Impériale | Le parfum du Second Empire. Commandé par la cour impériale, servi dans des flacons gravés d'abeilles napoléoniennes.
++ Houbigant Fougère Royale | Le Big Bang de la parfumerie synthétique. Sans Fougère Royale, il n'y a pas de Shalimar, pas de Chanel No.5, pas de parfumerie moderne.
++ Guerlain Jicky | 1889. Première utilisation assumée du synthétique dans un grand parfum. Révolutionnaire.
++ Guerlain Shalimar | 1925. Premier parfum ambré de l'histoire. Un accident de laboratoire devenu siècle de légende.
++ Chanel No. 5 | 1921. L'acte de naissance du parfum moderne tel qu'on le connaît. La rupture totale avec les parfums floraux naturalistes du XIXe siècle.
++ Jean Patou Joy | 1930. La réponse de la Haute Parfumerie à la crise : l'opulence absolue, l'excès floral comme acte de résistance.
++ Givenchy L'Interdit | 1957. Créé pour Audrey Hepburn, interdit au public pendant un an. Le parfum comme privilège exclusif d'une icône.
++ Miller Harris L'Air de Rien | 2006. Mais sa genèse appartient entièrement à une tradition — le parfum comme autobiographie olfactive d'une femme réelle.
++ Dior Eau Sauvage | 1966. La révolution du frais masculin. Et le parfum d'Alain Delon — association historique.
++ Floris No. 89 | 1730 pour la maison, 1951 pour ce flacon. Bond, Wellington, Victoria. La parfumerie britannique incarnée.
+
+## Strange Smells
++ Comme des Garçons Series 6 Synthetic: Tar | La route après la pluie. Une usine abandonnée.
++ Comme des Garçons Concrete | Le parking souterrain d'un immeuble moderniste. Le Corbusier en flacon.
++ Comme des Garçons Garage | Exactement ce que le nom dit. Un garage.
++ Etat Libre d'Orange Sécrétions Magnifiques | La mer. Et quelque chose de plus organique que ça.
++ Etat Libre d'Orange Rien | Un appartement vide après que quelqu'un de très élégant vient de partir. Du rien qui a de la personnalité.
++ DS & Durga Bowmakers | L'atelier d'un luthier à Crémone. La résine qui colle aux mains.
++ Naomi Goodsir Bois d'Ascèse | Feu de forêt, charbons refroidis, ermitage dans les montagnes. Austère, monastique, extrême.
++ Demeter Dirt | Un jardin après la pluie. La terre fraîchement retournée.
++ Demeter Paperback | Un livre de poche acheté dans une librairie d'occasion. La couverture jaunie.
++ CB I Hate Perfume Burning Leaves | Un dimanche d'octobre dans un jardin. Le tas de feuilles qui brûle lentement.
++ Zoologist Bat | L'intérieur d'une grotte calcaire. Humide, minéral, sombre.
++ Vilhelm Parfumerie Basilico & Fellini | Le basilic froissé entre les doigts. Une tomate cueillie dans le jardin, encore chaude.
+
+## Layering
++ Escentric Molecules Molecule 01 | Amplificateur. Il fait ressortir ce qu'il y a sous lui. À porter seul ou en base sous n'importe quel autre parfum.
++ Le Labo Another 13 | La peau parfaite. Il se fond complètement avec la peau et amplifie le parfum mis par-dessus. La base skin-scent par excellence.
++ MFK Gentle Fluidity Gold | Warmth layer. Il réchauffe et adoucit tout ce qui est posé par-dessus. La version Gold est plus chaude et vanillée que Silver.
++ Diptyque Eau Duelle | Structure layer. Il donne de la longueur et du caractère. La vanille de l'Eau Duelle est sèche et épicée — elle ne sucre pas, elle ancre.
++ MFK Aqua Universalis | Clean canvas. C'est le blanc dans la palette — il allonge, aère, "lave" les parfums trop lourds.
++ Byredo Blanche | Softness layer. Il apporte de la douceur propre. Comme un fond de peau frais.
++ Le Labo Thé Noir 29 | Complexity layer. Il apporte de la profondeur et du mystère. Dessous un parfum floral, il crée une tension intéressante.
++ Tom Ford Oud Wood | Depth layer. L'ancre boisée. Une touche suffit pour donner de la substance à un parfum léger.
++ Jo Malone Wood Sage & Sea Salt | Fresh-contrast layer. La fraîcheur qui crée un contraste dans une construction lourde. Idéal sur oud ou cuir.
++ Matière Première Parisian Musc | The invisible finish. Il ne change pas l'odeur — il la prolonge et lui donne de la projection. Le musc fixateur ultime.
+
+## NEW La fille d'Opéra | Archétypes
+d: Elle ne manque aucun pop-up Enfant de Palestine et passe toujours prendre un iced rose latte chez Dune Café avant de rejoindre Opéra. Elle s'habille chez Merrachi, porte des Tabi et finit souvent sa journée chez Go Un autour d'un poulet frit coréen.
+pal: 1c1020,6a2f4a,e4b5a0,arches
++ Memo Paris Odéon | Odéon de Memo est inspiré d'un quartier parisien — rose de nuit, cardamome, patchouli crémeux. C'est le parfum qui colle au quartier.
++ Armani Privé Rouge Malachite | Tubéreuse opulente, épicée, profonde — inspirée par la Russie et sa puissance contrastée. Elle est pas censée le porter selon les codes de son quartier mais elle s'en fout.
++ Amouage Love Tuberose | La tubéreuse d'Amouage est plus douce, plus romantique. Elle l'associe à ses soirées Go Un — le dîner coréen, la conversation qui dure, le retour à pied sous les lumières d'Opéra.
++ Diptyque Orphéon | Inspiré du cabaret parisien Orphéon dans le 11ème. C'est son parfum de soirée dans le quartier — boisé, légèrement poussiéreux, très Saint-Germain mais version underground.
++ Vilhelm Parfumerie 125th & Bloom | Elle l'a découvert à l'occasion d'un pop-up. C'est le genre de parfum qu'on ne trouve pas partout — floral frais, légèrement photogénique.
+
+## NEW Le mec des pop-ups | Archétypes
+d: Il porte des Kayano 14 avec un t-shirt Abela et un short camo dès que les températures remontent. Tous les week-ends, tu peux le croiser rue Notre-Dame-de-Nazareth à un pop-up de marque émergente.
+pal: 1d2a1f,6b7a3e,e8d9a0,stripes
++ Maison Crivelli Hibiscus Mahajád | Floral et direct — ni trop masculin ni trop féminin. Il l'assume.
++ Louis Vuitton L'Immensité | Frais, boisé, légèrement minéral. C'est le parfum du voyage — et lui il voyage tous les week-ends.
++ Xerjoff Erba Gold | Herbe fraîche, agrumes, vétiver blanc. Propre mais pas banal.
++ Byredo Bal d'Afrique | Son parfum de concert — 630G, Yardland, les clubs de Rotterdam. Bal d'Afrique est chaud, enveloppant, très "fin de soirée qui a bien commencé".
++ Aesop Hwyl | Forestier, légèrement cru, très japonais dans l'approche. C'est son parfum du dimanche — quand il rentre enfin, qu'il reste chez la même personne et que la semaine peut recommencer.
+
+## NEW Le directeur artistique du Marais | Archétypes
+d: Il ne quitte quasiment jamais Le Marais. Il s'habille en Issey Miyake, Comme des Garçons et The North Face Purple Label, alterne entre des Plasticana et des mules en cuir, passe chez Dover Street Market pour ses parfums et chez The Archivist pour dénicher des pièces vintage.
+pal: 202428,5a5f66,e0d8c8,grid
++ Comme des Garçons 2 Man | CDG 2 est la version habillée de leur approche conceptuelle — floral-aldéhydé sur une base boisée légèrement fumée. C'est le parfum de quelqu'un qui sait exactement ce qu'il fait même quand ça n'a l'air de rien.
++ Nasomatto Baraonda | Nasomatto est la maison des parfums-manifestes d'Alessandro Gualtieri. Baraonda ("chaos" en dialecte vénitien) sent le chaos élégant — alcool, cuir, animal.
++ Notes de Bas de Page Carambolage | Maison française confidentielle, fondée par une ex-journaliste mode. Carambolage est un accord carambole-gingembre qui déroute au premier contact puis devient addictif.
++ Comme des Garçons Kyoto | Encens de temple shinto, bois japonais, minimalisme absolu. C'est son parfum de travail — dans l'atelier, devant les maquettes, les références, les samples tissu.
++ DS & Durga Bowmakers | L'atelier d'artisan en flacon. Il l'apprécie exactement pour ça — c'est un parfum qui sent le travail artisanal, la matière, le soin.

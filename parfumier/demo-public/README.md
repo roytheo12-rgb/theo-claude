@@ -235,3 +235,8 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - 27 couvertures intégrées (recadrées : fond vert et légende retirés, `tools/cover_crop.py`, table `data/covers-map.txt`).
 - 26 nouvelles playlists : personnages de cinéma et séries (Fargo, Pulp Fiction, Sex and the City, Le Diable s'habille en Prada, Bruce Wayne…) et une section « Archétypes ». Les couples homme/femme sont fusionnés en une playlist à deux groupes (10 hommes puis 10 femmes).
 - Parfums absents ajoutés dans `data/keep-perfumes.txt`.
+
+## v60 — mises à jour éditoriales (Inspirations)
+- Nouveau moteur d'édition `data/playlists-edit.txt` (bios, « pourquoi » par parfum, groupes Homme/Femme à tailles variables).
+- 10 listes cinéma reconstruites, Icônes, Archétypes, 16 Destinations Homme/Femme (Italie : Buongiorno + Positano), ajouts Moments/Atmosphères, Historical/Strange/Layering, Compliments (Torino21), 3 nouveaux profils (La fille d'Opéra, Le mec des pop-ups, Le directeur artistique du Marais).
+- Parfums cités absents de la base : écartés et listés dans `data/playlists-introuvables.txt`.
