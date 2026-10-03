@@ -2037,3 +2037,87 @@ pal: 1a1410,d4b45a,f4ecd2,dots
 - Maison Margiela Jazz Club | L'after : le plateau d'argent est reparti, la musique continue doucement.
 - Kilian Vodka on the Rocks | Le verre d'avant ou d'après, quand on change de cap à 2h du matin.
 - Santa Maria Novella Tabacco Toscano | Le cigare sur la terrasse après le dernier verre : personne n'a envie de rentrer.
+
+## NEW Safari | Destinations
+d: Serengeti, Tanzanie. 6h du matin, la piste rouge est encore froide, les éléphants traversent sans se presser, le Land Rover attend. Quelque chose d'immense et de calme à la fois.
+pal: 8a3a1a,e8a040,f6e6c0,rays
+- Memo African Leather | Le cuir des sièges du Land Rover, la poussière rouge sur les mains.
+- Byredo Bal d'Afrique | L'Afrique dans sa pluralité : pas un cliché, une réalité complexe et belle.
+- Creed Aventus | L'aventure : celui qui est parti seul et revient transformé.
+- Serge Lutens Ambre Sultan | Le coucher de soleil orange sur la savane.
+- DS & Durga Radio Bombay | Les routes commerciales de l'océan Indien, avant les jeeps.
+- Aesop Hwyl | La discipline de l'attente : rester immobile trois heures pour voir les lions.
+- Demeter Dirt | La piste rouge après la pluie de la nuit.
+- Maison Crivelli Citrus Batikanga | L'éveil de la savane à l'aube : vif, chaud, minéral.
+- Tom Ford Oud Wood | Le soir au lodge : le bois qui brûle, les étoiles, le whisky.
+- Profumum Roma Acqua di Sale | Le lac Nakuru, les flamants roses, l'eau salée des Grands Lacs.
+
+## NEW Grande Muraille de Chine | Destinations
+d: Section de Mutianyu, lever de soleil. La muraille s'enfonce dans la brume verte des collines : 2 700 ans de pierre, et personne d'autre sur ce chemin à 5h du matin.
+pal: 2a3a2a,7a9a7a,e8e4d0,grid
+- Comme des Garçons Kyoto | La spiritualité millénaire de l'Asie orientale : ce qu'on respire entre les pierres.
+- Comme des Garçons Hinoki | Le bois des tourelles, la sève ancienne dans la pierre.
+- Aesop Hwyl | L'effort de la montée, l'air froid du matin, la récompense du sommet.
+- Memo Inlé | La prière du garde qui montait la nuit dans ces tours.
+- Serge Lutens Gris Clair | La brume verte sur les montagnes, le matin en altitude.
+- DS & Durga Bowmakers | La pierre taillée à la main.
+- Frederic Malle L'Eau d'Hiver | La lumière oblique du soleil levant qui passe dans l'arche.
+- Phaedon Thé Vert | Le thé bu dans le froid du matin, la thermos posée sur la pierre.
+- Naomi Goodsir Bois d'Ascèse | L'austérité de l'effort collectif sur des siècles.
+- Maison Margiela Replica When the Rain Stops | La muraille après la pluie de nuit : les pierres qui fument au soleil.
+
+## NEW Thaïlande | Destinations
+d: Province de Krabi, milieu de journée. Deux éléphants traversent une rivière verte au pied des karsts. L'air est chaud et humide : la jungle, l'eau douce, des fleurs qu'on ne reconnaît pas.
+pal: 0e4a3a,3ab08a,f4f0c8,waves
+- Maison Crivelli Hibiscus Mahajád | La chaleur florale de l'Asie du Sud-Est.
+- DS & Durga Radio Bombay | Les routes qui reliaient l'Inde et l'Asie du Sud-Est depuis des millénaires.
+- Byredo Sundazed | Le soleil filtré par la jungle.
+- Diptyque Philosykos | La végétation dense, les arbres géants au-dessus de la rivière.
+- Tom Ford Neroli Portofino | L'eau qui scintille : la Méditerranée transposée sous les tropiques.
+- Maison Crivelli Bois Datchaï | Les temples bouddhistes dans la jungle, l'encens qui sort par les fenêtres.
+- Aesop Hwyl | La forêt primaire, l'humidité qui pèse.
+- Comme des Garçons Kyoto | Les wats thaïlandais, orange et or dans le vert.
+- Profumum Roma Acqua di Sale | La rivière qui rejoint la mer.
+- Xerjoff Erba Gold | L'herbe haute que l'éléphant écrase en traversant.
+
+## NEW Méditerranée de nuit | Destinations
+d: Côte croate ou grecque, 22h. Il est entré dans l'eau habillé ou presque. Les lumières de la ville se reflètent sur les vagues, il a les bras levés, il n'y a personne.
+pal: 060f24,1a3a6a,c8d8f0,waves
+- Profumum Roma Acqua di Sale | La Méditerranée : salée, tiède, dense.
+- Xerjoff Join the Club 40 Knots | La vitesse dans l'eau noire, l'écume sur les bras levés.
+- Maison Margiela Replica Sailing Day | Le bateau qui attend dans le port, la liberté de ne pas y retourner tout de suite.
+- Creed Virgin Island Water | L'eau de nuit : plus sombre, plus profonde que le jour.
+- Jo Malone Wood Sage & Sea Salt | Ce qu'on respire quand on renverse la tête en arrière.
+- Tom Ford Neroli Portofino | Les lumières de la ville sur l'eau : Portofino, Dubrovnik, c'est pareil la nuit.
+- Eau d'Italie Un Bateau pour Capri | Le bateau du lendemain matin : cette nuit, on reste dans l'eau.
+- Frederic Malle L'Eau d'Hiver | La lumière sur l'eau : fragile, froide, belle sans effort.
+- Byredo Mojave Ghost | Seul, mais pas isolé : l'espace.
+- DS & Durga Concrete After Lightning | L'électricité dans l'air avant la pluie méditerranéenne.
+
+## NEW Le train de minerai | Destinations
+d: Mauritanie. Le train de minerai de fer de Zouerate à Nouadhibou : 704 km à travers le Sahara. Un homme en djellaba blanche allongé sur le minerai, la tempête de sable qui arrive, le ciel ocre.
+pal: 3a1a0a,b8541e,e8b878,stripes
+- Serge Lutens Ambre Sultan | Les résines qui chauffent au soleil : l'ambre millénaire du désert.
+- Naomi Goodsir Bois d'Ascèse | L'ascèse absolue : traverser 700 km de désert allongé sur du minerai.
+- Memo African Leather | Le cuir des selles, la chaleur animale du désert.
+- Demeter Dirt | La poussière rouge qui recouvre tout.
+- Abdul Samad Al Qurashi Oud Al Shams | La chaleur qui monte du métal chauffé à blanc.
+- Etat Libre d'Orange Rien | 700 km de rien. C'est tout.
+- CB I Hate Perfume Burning Leaves | La tempête de sable qui arrive : l'air qui s'épaissit, le ciel ocre.
+- DS & Durga Concrete After Lightning | L'électricité statique du désert vue du dessus du train.
+- Comme des Garçons Black | La nuit artificielle en plein jour, quand le sable recouvre tout.
+- Maison Crivelli Bois Datchaï | Les routes caravanières qui traversaient ce même désert avant le train.
+
+## NEW Pleine lune sur les pyramides | Destinations
+d: Gizeh, 2h du matin. Pleine lune parfaitement alignée sur la pyramide de Khéphren, une caravane de chameaux passe en silhouette. Pas un bruit, sauf le sable.
+pal: 0a0f24,c8c0a0,f4e8c0,rays
+- Abdul Samad Al Qurashi Oud Al Shams | L'oud des caravanes, ici lunaire.
+- Serge Lutens Ambre Sultan | Ce que sentait Karnak sous la lune il y a 3 000 ans.
+- Comme des Garçons Black | L'intérieur de la pyramide sous la lune.
+- Xerjoff Alexandria II | Alexandrie, la ville qui a traduit tout le savoir antique.
+- Nasomatto Black Afgano | La nuit en plein désert : quelque chose de légèrement hallucinatoire dans cette lune sur cette pierre.
+- Maison Francis Kurkdjian Grand Soir | La lune qui fait de la nuit un grand soir.
+- Memo African Leather | Le cuir des selles de chameaux dans la nuit froide.
+- Naomi Goodsir Bois d'Ascèse | 4 500 ans de silence autour de ces pierres.
+- 4711 Original Eau de Cologne | Napoléon était là en 1798 : il a vu cette même lune.
+- Frederic Malle L'Eau d'Hiver | La lumière lunaire sur le calcaire : le seul parfum assez discret pour ne pas troubler ce silence.
