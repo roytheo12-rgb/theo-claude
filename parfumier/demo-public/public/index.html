@@ -3821,7 +3821,7 @@ ${mist}
   const plCover = (p, big) => { const [a, b, c] = p.c, light = !p.img && plLum(a) * 0.5 + plLum(b) * 0.5 > 0.62; return `<span class="plc${big ? ' big' : ''}${light ? ' lt' : ''}${p.img ? ' has' : ''}" style="--a:#${a};--b:#${b};--c:#${c}">${p.img ? `<img class="plimg" alt="" loading="lazy" src="${esc(p.img)}">` : ''}<svg class="plm" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".7">${plMotif(p.m)}</svg><b>${esc(p.t)}</b><small>${esc(p.secs[0])}</small></span>`; };
   const plStats = (p) => { const es = p.ps.map(plEntry), inb = es.filter(Boolean); return { es, n: inb.length, mine: inb.filter((e) => S.collection.some((c) => E.norm(c.name) === E.norm(e.name))).length }; };
   const plDesc = (p) => p.d || (p.grp ? p.grp.map((g) => g.d).join(' ') : '');
-  const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(); return PLS[k % PLS.length]; };
+  const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(), L = PLS.filter((p) => p.img); return (L.length ? L : PLS)[k % (L.length || PLS.length)]; };      // jamais une liste sans photo
   function viewPlay() { PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
   function viewPlayLib() {
     const secs = (window.PL_SECTIONS || []).filter((s) => !PL.sec || s === PL.sec), day = plDay();
