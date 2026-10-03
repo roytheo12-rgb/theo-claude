@@ -1,0 +1,49 @@
+# Parfums réclamés par les playlists, ajoutés à la base même si leur maison est retirée. Format : Maison|Nom|Concentration (EDP, EDT, EXT, PAR, COL). Aucune note inventée : la fiche se complète à l'ajout.
+4711|Original Eau de Cologne|COL
+Atkinsons|24 Old Bond Street|EDP
+Better World Fragrance House|Carby Musk|EDP
+Better World Fragrance House|Cloudar|EDP
+Better World Fragrance House|Summer Mink|EDP
+Beyoncé|Heat|EDP
+Beyoncé|Heat Rush|EDT
+Chanel|Bleu de Chanel Parfum|PAR
+Boadicea the Victorious|Wellington|EDP
+Bond No. 9|New York Nights|EDP
+Byredo|1996|EDP
+CB I Hate Perfume|Burning Leaves|EDP
+Comme des Garçons|Garage|EDT
+Comme des Garçons|Hinoki|EDT
+Comme des Garçons|Tar|EDT
+Comptoir Sud Pacifique|Vanille Abricot|EDT
+DS & Durga|Bowmakers|EDP
+DS & Durga|I Don't Know What|EDP
+Demeter|Dirt|COL
+Demeter|Paperback|COL
+Dior|Gris Montaigne|EDP
+Etat Libre d'Orange|Rien|EDP
+Etat Libre d'Orange|Sécrétions Magnifiques|EDP
+Fenty|Eau de Parfum|EDP
+Floris|1962|EDP
+Robert Piguet|Fracas|EDP
+Givenchy|Gentleman Parfum|PAR
+Givenchy|Malachite|EDP
+Glossier|You|EDP
+Guy Laroche|Drakkar Noir|EDT
+Heeley|Sel Marin|EDP
+Indult|Tihota|EDP
+Jean Patou|Joy|EDP
+Kayali|Vanilla 28|EDP
+Liis|Rose Struck|EDP
+Maison Violet|Compliment|EDP
+Miller Harris|L'Air de Rien|EDP
+Naomi Goodsir|Bois d'Ascèse|EDP
+Ormonde Jayne|Ormonde Man|EDP
+Phlur|Matcha Milk|EDP
+Profumum Roma|Acqua di Sale|EDP
+Profumum Roma|Neroli|EDP
+Ralph Lauren|Polo|EDT
+Roja Parfums|Elysium|COL
+Roja Parfums|Enigma|PAR
+Tiziana Terenzi|Kirke|EXT
+Tom Ford|Vanille Fatale|EDP
+Yves Saint Laurent|MYSLF Extrême|EDP

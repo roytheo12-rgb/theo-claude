@@ -1311,7 +1311,7 @@
     else { let sd = 7; for (i = 0; i < 90; i++) { sd = (sd * 9301 + 49297) % 233280; const x = sd / 233280 * 100; sd = (sd * 9301 + 49297) % 233280; const y = sd / 233280 * 100; o.push(`<rect x="${f(x)}" y="${f(y)}" width="1.3" height="1.3" fill="currentColor" stroke="none"/>`); } }
     return o.join('');
   }
-  const plCover = (p, big) => { const [a, b, c] = p.c, light = plLum(a) * 0.5 + plLum(b) * 0.5 > 0.62; return `<span class="plc${big ? ' big' : ''}${light ? ' lt' : ''}" style="--a:#${a};--b:#${b};--c:#${c}"><svg class="plm" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".7">${plMotif(p.m)}</svg><b>${esc(p.t)}</b><small>${esc(p.secs[0])}</small></span>`; };
+  const plCover = (p, big) => { const [a, b, c] = p.c, light = !p.img && plLum(a) * 0.5 + plLum(b) * 0.5 > 0.62; return `<span class="plc${big ? ' big' : ''}${light ? ' lt' : ''}${p.img ? ' has' : ''}" style="--a:#${a};--b:#${b};--c:#${c}">${p.img ? `<img class="plimg" alt="" loading="lazy" src="${esc(p.img)}">` : ''}<svg class="plm" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".7">${plMotif(p.m)}</svg><b>${esc(p.t)}</b><small>${esc(p.secs[0])}</small></span>`; };
   const plStats = (p) => { const es = p.ps.map(plEntry), inb = es.filter(Boolean); return { es, n: inb.length, mine: inb.filter((e) => S.collection.some((c) => E.norm(c.name) === E.norm(e.name))).length }; };
   const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(); return PLS[k % PLS.length]; };
   function viewPlay() { PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }

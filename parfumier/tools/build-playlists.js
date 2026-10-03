@@ -8,7 +8,7 @@ const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-
 const HA = w.HOUSE_ALIAS || {};
 const HOUSE_SYN = { ysl: 'yves saint laurent', memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
 // parfums cités sans maison dans le catalogue
-const BARE = { 'terre d hermes': 'Hermès Terre d\'Hermès', 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
+const BARE = { 'chloe eau de parfum': 'Chloé Chloé', 'fracas robert piguet': 'Robert Piguet Fracas', 'terre d hermes': 'Hermès Terre d\'Hermès', 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
 const entries = [];
 (w.CATALOG || []).forEach((c) => c.name && c.house && entries.push({ h: c.house, n: c.name }));
 (w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => entries.push({ h, n })));
@@ -58,23 +58,32 @@ const PAL = {
 61:'f4efe6,d9cdb8,8f7f66,waves',62:'f3d9a4,e08e4e,fff4e0,dots',63:'2b2216,8a6a3a,e8d8b0,arches',64:'ff2e63,08090a,f9f871,rays',65:'10100f,6e5a2a,e5d6a8,grid',66:'f4fbfc,bfe3ea,ffffff,waves',67:'2a0610,9c1537,f0a58f,waves',68:'0a0a1e,2a2a5c,8e8ec8,grain',69:'080808,6a0d0d,e5391a,rays',70:'fff0c9,ffb347,d65a31,dots',
 71:'0e3b2d,c9a227,f0e6c8,stripes',72:'4b0f3a,c43a8b,f5d0e6,rays',73:'0a2a3a,1d6f8c,e8d9a8,waves',74:'e9efe1,4f7a46,7a1f2b,stripes',75:'3a0b18,9c1b30,e7c67a,arches',76:'0f2a1d,a41e22,e8c872,dots',77:'3c0a14,9b2335,d9b26f,arches',78:'6e3a1b,c98a4a,f7e3c0,waves',79:'3a2c1a,a88b5a,efe3c8,grain',80:'202020,6e7f4a,b0b0a0,grain',81:'2c2c54,706fd3,f7f1e3,rings',82:'1f2a3a,8aa6c1,f4efe6,dots',83:'f28c38,7b2d8e,ffe6b0,waves',84:'f4f7fa,1e78c2,ffffff,waves',85:'7a2e12,d9822b,f6d9a0,arches',86:'0b7a3e,f2c500,1b6ac9,rays',87:'e8eddc,b7a3c9,6b4f2a,dots',88:'e6e9ee,5a6b82,1b2432,grid',89:'fbfaf6,3fb1c9,f0c27b,stripes',90:'fafcff,0e4a7b,d9b26f,waves',91:'09090f,6a1bb0,ff3d9a,rays',92:'fbeaf2,c7b6e6,a0d2c0,dots',93:'1a1a1a,f2e63d,e5e5e5,grain',94:'ff9f1c,ffd166,fffbe6,rays',95:'2b0a3d,c0398a,ffd9ef,rings',96:'101010,3a3a3a,c9a64b,arches',97:'0a0a14,5b1d8f,f0d78a,rays' };
 const HIST = { 'chanel n 5': ['Porté par', 'Marilyn Monroe'], 'givenchy l interdit': ['Créé pour', 'Audrey Hepburn'], 'miller harris l air de rien': ['Créé avec', 'Jane Birkin'], 'dior eau sauvage': ['Associé à', 'Alain Delon'], 'jean patou joy': ['Inspiré d\'une époque', 'Grandes figures féminines'], 'guerlain eau de cologne imperiale': ['Maison liée à', 'l\'Impératrice Eugénie'], 'atkinsons 24 old bond street': ['Maison liée à', 'Mayfair, 24 Old Bond Street'], '4711 original eau de cologne': ['Maison liée à', 'Cologne'], 'floris n 89': ['Maison liée à', 'Jermyn Street, Londres'], 'guerlain shalimar': ['Inspiré d\'une époque', 'Les Années folles'] };
+const DEL = new Set([25, 92]);          // Audrey Hepburn, Soft Girl : retirées
+const MERGE = { 44: [50], 70: [95], 96: [97] };   // doublons fusionnés : tous les parfums sont gardés, sans répétition
+const TITLE = { 96: 'La vie de Ronnie' };
+for (const [k, others] of Object.entries(MERGE)) {
+  const a = PLS.find((p) => p.id === +k), seen = new Set(a.ps.map((x) => norm(x.h ? x.h + ' ' + x.n : x.q)));
+  others.forEach((o) => { const b = PLS.find((p) => p.id === o); b.ps.forEach((x) => { const kk = norm(x.h ? x.h + ' ' + x.n : x.q); if (!seen.has(kk)) { seen.add(kk); a.ps.push(x); } }); b.note.forEach((n) => { if (!a.note.includes(n)) a.note.push(n); }); DEL.add(o); });
+  if (TITLE[k]) a.t = TITLE[k];
+}
+for (let i = PLS.length - 1; i >= 0; i--) if (DEL.has(PLS[i].id)) PLS.splice(i, 1);
 const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
 fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
 console.log(PLS.length, 'playlists', PLS.reduce((a, p) => a + p.ps.length, 0), 'parfums', 'hors base:', new Set(miss).size);
 module.exports = { PLS };
 const DROP = /Même logique|sort(?:i|ie)?\b|supprimé|définitivement|^Je garde|garderais|Une seule playlist|Celle-ci/;
 const SECS_OF = (p) => { const i = p.id; const r = [];
-  if ([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(i)) r.push('Personnages');
-  if ([2, 3, 4, 6, 7, 71].includes(i)) r.push('Cinéma & séries');
+  if (i <= 16 || [71, 72].includes(i)) r.push('Cinéma & séries');      // tous les personnages, y compris Jordan et Naomi
   if (i >= 17 && i <= 26) r.push('Icônes');
   if ((i >= 27 && i <= 37) || [58, 59, 60, 92].includes(i)) r.push('Culture');
   if ((i >= 38 && i <= 48) || (i >= 82 && i <= 86)) r.push('Destinations');
   if ([53, 54, 55, 56, 57, 61, 62, 63, 87, 88, 89, 90, 91].includes(i)) r.push('Moments');
   if ((i >= 49 && i <= 52) || (i >= 74 && i <= 79)) r.push('Atmosphères');
   if ((i >= 64 && i <= 70) || (i >= 93 && i <= 95)) r.push('Effets');
-  if ([71, 72, 73, 80, 81, 96, 97].includes(i)) r.push('Spécial');
+  if ([73, 80, 81, 96, 97].includes(i)) r.push('Spécial');
   if (!r.length) throw new Error('sans section ' + i);
   return r; };
+const slug = (s) => norm(s).replace(/ /g, '-');
 function out() {
   const res = PLS.map((p) => {
     const [a, b, c, m] = (PAL[p.id] || '222222,555555,dddddd,grain').split(',');
@@ -85,13 +94,14 @@ function out() {
       const txt = l.replace(/\s*\(\[[^\]]+\]\([^)]*\)\)/g, '').trim();
       if (txt) doc.push(ln ? { t: txt, s: ln[1], u: ln[2] } : { t: txt });
     });
-    const o = { id: p.id, secs: SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
+    const sl = slug(p.t); const o = { id: p.id, s: sl, secs: SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
     if (p.id === 79) { doc.length = 0; doc.push({ t: 'La maison Atkinsons et le 24 Old Bond Street sont historiquement documentés ; le flacon d\'aujourd\'hui est une réinterprétation moderne de cet héritage, pas un flacon inchangé depuis le XIXe siècle.', s: 'Atkinsons 1799', u: 'https://www.atkinsons1799.com/pages/history' }); }
+    if (fs.existsSync(path.join(root, 'v2', 'img', 'pl', sl + '.webp'))) o.img = 'img/pl/' + sl + '.webp';
     if (doc.length) o.doc = doc;
     if (p.id === 81) o.combos = p.note.filter((l) => /^\* /.test(l)).map((l) => l.replace(/^\* /, '').split(' + '));
     return o;
   });
-  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Personnages', 'Cinéma & séries', 'Icônes', 'Culture', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
+  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Cinéma & séries', 'Icônes', 'Culture', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
   console.log('playlists.js', res.length);
 }
 if (require.main === module) out();

@@ -3,7 +3,10 @@ d = pathlib.Path(__file__).parent
 up = d.parent
 import sys, re, subprocess
 subprocess.run([sys.executable, str(up/'tools/prune.py')], check=True)      # retire les maisons et parfums écartés (data/removed-*.txt) avant tout assemblage
-subprocess.run(['node', str(up/'tools/build-playlists.js')], check=True, stdout=subprocess.DEVNULL)      # relie les playlists à la base nettoyée
+subprocess.run([sys.executable, str(up/'tools/add-kept.py')], check=True)      # parfums gardés malgré une maison retirée
+subprocess.run(['node', str(up/'tools/build-playlists.js')], check=True, stdout=subprocess.DEVNULL)
+subprocess.run([sys.executable, str(up/'tools/build-covers.py')], check=True)
+subprocess.run(['node', str(up/'tools/build-playlists.js')], check=True, stdout=subprocess.DEVNULL)      # 2e passage : repère les couvertures disponibles      # relie les playlists à la base nettoyée
 
 def js(path):
     return f"<script>\n{path.read_text()}\n</script>\n"
@@ -39,7 +42,7 @@ def imgpack_artifact(pack_mb=5):
         if len(cur) + len(data) > pack_mb * 1024 * 1024: flush()
         idx[v] = [n, len(cur), len(data)]; cur += data
     flush()
-    fixed = set(v for v in new.values() if not v.startswith('img/p/')) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp'))
+    fixed = set(v for v in new.values() if not v.startswith('img/p/')) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp')) | set('img/pl/' + f.name for f in (d/'img'/'pl').glob('*.webp'))
     files = sorted(fixed | {f'pk/{nm}.wasm' for nm in names})
     idx = {v: [names[a], b, c] for v, (a, b, c) in idx.items()}
     (d/'artifact-files.json').write_text(json.dumps(files), encoding='utf-8')

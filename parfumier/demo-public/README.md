@@ -222,3 +222,10 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Septième onglet du dock : une bibliothèque de 81 univers (Personnages, Cinéma & séries, Icônes, Culture, Destinations, Moments, Atmosphères, Effets, Spécial), chacun avec sa couverture (dégradé + motif propre), son histoire, son ADN olfactif (familles et notes calculées sur les vrais parfums) et dix parfums classés.
 - Source éditoriale : `data/playlists-source.txt`. `tools/build-playlists.js` la relie à la base nettoyée et génère `playlists.js` (appelé par `v2/build.py`). Les parfums absents de la base sont listés dans `data/playlists-hors-base.txt` et s'affichent en texte seul, avec « À sentir ».
 - Historical Scents distingue « porté par », « créé pour/avec », « maison liée à » et « inspiré d'une époque » ; Layering propose cinq combinaisons.
+
+## v58 — Playlists : nettoyage et couvertures
+
+- Playlists retirées : Audrey Hepburn, Soft Girl. Doublons fusionnés (tous les parfums gardés, sans répétition) : Saint-Tropez + Été à Saint-Tropez, Compliments + « qu'on me demande mon parfum », La vie de Ronnie (deux listes en une).
+- Section « Cinéma & séries » : tous les personnages, plus Jordan et Naomi.
+- `data/keep-perfumes.txt` + `tools/add-kept.py` : parfums gardés dans la base même si leur maison est retirée (fiches sans notes inventées).
+- Couvertures : images déposées dans `incoming/playlists/` → `tools/build-covers.py` → `v2/img/pl/<slug>.webp`, utilisées par la bibliothèque.

@@ -1,0 +1,3 @@
+Dépose ici les couvertures des playlists (JPG, PNG ou WEBP).
+Nom du fichier = nom de la playlist en minuscules avec des tirets (james-bond.jpg, la-vie-de-ronnie.jpg) ou son numéro.
+Exporter en 1600 px de large, moins de 2 Mo par image.

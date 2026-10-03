@@ -620,3 +620,6 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .plcombo > i { font: 200 24px var(--sf); color: var(--muted); font-style: normal; }
 .plcb { display: grid; justify-items: center; gap: 6px; border: 0; background: none; color: inherit; font-size: 12.5px; text-align: center; padding: 0; }
 .plcb b { font-weight: 500; }
+.plc .plimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.plc.has .plm { display: none; }
+.plc.has::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 35%, rgba(0, 0, 0, .72)); }
