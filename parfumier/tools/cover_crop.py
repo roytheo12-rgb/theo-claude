@@ -1,7 +1,7 @@
 """Isole la photo d'une couverture déposée : retire le fond uni et la légende. Renvoie (image photo, image légende)."""
 import numpy as np
 from PIL import Image
-BOX = {'1.png': (429, 86, 1486, 1714)}      # cadre à la main quand le fond se confond avec la photo
+BOX = {}      # cadres à la main si le fond se confond avec la photo
 def split(path):
     im = Image.open(path).convert('RGB'); a = np.asarray(im).astype(int)
     import os

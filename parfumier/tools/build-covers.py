@@ -22,6 +22,7 @@ done, lost = 0, []
 for f in sorted(inbox.glob('*')) if inbox.exists() else []:
     if f.suffix.lower() not in ('.jpg', '.jpeg', '.png', '.webp'): continue
     mp = MAP.get(f.name)
+    if mp == '-': continue
     k = slug(mp) if mp else slug(f.stem); p = by_slug.get(k) or by_id.get(f.stem.strip()) or by_slug.get(re.sub(r'^\d+-', '', k))
     if not p: lost.append(f.name); continue
     im = split(f)[0] if f.name in MAP else Image.open(f).convert('RGB'); im.thumbnail((900, 900)); im.save(out / (p['s'] + '.webp'), 'WEBP', quality=78, method=6); done += 1

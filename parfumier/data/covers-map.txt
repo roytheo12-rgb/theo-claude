@@ -1,28 +1,74 @@
 # Fichier déposé dans incoming/playlists/ | titre de la playlist (celui de la légende de l'image)
-1|Finance Bro
-2|James Bond
-3|Michael Corleone
-4|Patrick Bateman
-5|Thomas Shelby
-6|Tom Ripley
-7|John Wick
-8|Tyler Durden
-9|Hannibal Lecter
-10|Jay Gatsby
-11|The Founder
-12|Eddie Horniman
-13|Bobby Glass
-14|Freddy Horniman
-15|Suzie Glass
-16|Tony Montana
-17|Jordan Belfort
-18|Drake
-19|Rihanna
-20|Beyoncé
-21|Taylor Swift
-22|Bad Bunny
-23|Alain Delon
-24|Brigitte Bardot
-25|Jane Birkin
-26|Marilyn Monroe
-27|Clean Girl
+# 4 Dark Feminine, 14 Femme Sportive : playlists supprimées ou fusionnées ; 20 : remplacée par 43 pour Saint-Tropez ; « - » = ignorer
+1|Don Draper
+2|Clean Girl
+3|Pilates Matcha Girl
+4|-
+5|Coquette
+6|Mob Wife
+7|Quiet Luxury
+8|Traditions
+9|Tech Bro
+10|Model Off-Duty
+11|Funky Chic
+12|Effortless Chic
+13|Paris
+14|-
+15|New York
+16|London
+17|Milan
+18|Rome
+19|Côte d'Azur
+20|-
+21|Monaco
+22|Lake Como
+23|Dubai
+24|Tokyo
+25|Courchevel
+26|Ibiza
+27|Mykonos
+28|Rio
+29|Marrakech
+30|Ski Weekend
+31|Gameday
+32|F1
+33|First Date
+34|Board Meeting
+35|Sunday Morning
+36|En famille
+37|Wedding Guest
+38|Job Interview
+39|Beach Club
+40|Yacht Day
+41|Night Out
+42|Hiver à New York
+43|Saint-Tropez
+44|Automne Cozy
+45|Garden Party
+46|Soirée à l'opéra
+47|Christmas Eve
+48|Chic Winter
+49|Historical Scents
+50|Naomi
+51|Évasion fiscale
+52|Les Artsy
+53|Les fashions du Marais
+54|Les DJ
+55|Corporate Weapons
+56|Les Petits budgets
+57|Les Fans de design
+58|Le Bookworm
+59|Les Sportifs stylés
+60|La Romantique classique
+61|Strange Smells
+62|Layering
+63|La vie de Ronnie
+64|It Boy
+65|It Girl
+66|Vincent Vega — Pulp Fiction
+67|Amélie Poulain
+68|Paul Allen — American Psycho
+69|Samantha Jones — Sex and the City
+70|Charlotte York — Sex and the City
+71|Andy Sachs — Le Diable s'habille en Prada
+72|Bruce Wayne
