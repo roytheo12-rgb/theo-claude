@@ -268,8 +268,8 @@
   // ---------- Vues ----------
   function render(keepScroll) {
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
-    $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'walk', 'wish'].indexOf(tab) * 100}%)`;
-    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, walk: viewWalk, wish: viewWish })[tab]();
+    $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish'].indexOf(tab) * 100}%)`;
+    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
     if (!keepScroll) { window.scrollTo(0, 0); TIPDECK = null; }
   }
 
@@ -1291,6 +1291,80 @@
     const lines = [up.length ? `<p class="rd">Tu es attiré par : <b>${up.map(esc).join(', ')}</b>.</p>` : '', down.length ? `<p class="rd">Tu aimes moins : <b>${down.map(esc).join(', ')}</b>.</p>` : ''].join('');
     return `<section class="sec"><article class="card" style="display:grid;gap:12px"><p class="mono">Ce que ta wishlist dit de toi</p>${lines || '<p class="rd">Dis ce que tu as pensé des parfums sentis : J\'adore, Bien ou Bof.</p>'}<p class="mono" style="text-transform:none;letter-spacing:0">${judged} parfum${judged > 1 ? 's' : ''} jugé${judged > 1 ? 's' : ''} sur ${S.wishlist.length}. Plus tu en juges, plus les conseils te ressemblent : ce que tu aimes attire, ce qui ne t'a pas plu est écarté.</p></article></section>`;
   }
+
+  // ---------- Playlists : une bibliothèque d'univers ----------
+  const PLS = window.PLAYLISTS || [], PL = { id: 0, sec: '' };
+  let PLK = null;
+  const plLook = () => { const L = dbList(); if (PLK && PLK.l === L) return PLK.m; const m = new Map(); L.forEach((e) => { const k = entryKey(e); if (!m.has(k)) m.set(k, e); }); PLK = { l: L, m }; return m; };
+  const plEntry = (x) => { if (!x.h) return null; const HA = window.HOUSE_ALIAS || {}; return plLook().get(E.norm((HA[E.norm(x.h)] || x.h) + ' ' + x.n)) || null; };
+  const plLum = (hex) => { const n = parseInt(hex, 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; };
+  function plMotif(m) {
+    const o = [], f = (v) => Math.round(v * 10) / 10; let i;
+    if (m === 'rays') for (i = 0; i < 13; i++) { const a = (Math.PI * (0.1 + 0.8 * i / 12)); o.push(`<path d="M50 108L${f(50 + 140 * Math.cos(a))} ${f(108 - 140 * Math.sin(a))}"/>`); }
+    else if (m === 'stripes') for (i = 0; i < 16; i++) o.push(`<path d="M${-30 + i * 11} 100L${70 + i * 11} 0"/>`);
+    else if (m === 'grid') for (i = 1; i < 8; i++) o.push(`<path d="M${i * 12.5} 0V100M0 ${i * 12.5}H100"/>`);
+    else if (m === 'rain') for (i = 0; i < 26; i++) { const x = (i * 37) % 100, y = (i * 53) % 86; o.push(`<path d="M${x} ${y}l-2 12"/>`); }
+    else if (m === 'arches') for (i = 1; i < 7; i++) { const r = i * 14; o.push(`<path d="M${50 - r} 100V${100 - r * 0.6}A${r} ${r} 0 0 1 ${50 + r} ${100 - r * 0.6}V100"/>`); }
+    else if (m === 'dots') for (i = 0; i < 49; i++) { const r = Math.floor(i / 7), c = i % 7; o.push(`<circle cx="${8 + c * 14 + (r % 2) * 7}" cy="${8 + r * 14}" r="1.8" fill="currentColor" stroke="none"/>`); }
+    else if (m === 'waves') for (i = 0; i < 8; i++) { const y = 14 + i * 12; o.push(`<path d="M-5 ${y}Q20 ${y - 9} 45 ${y}T95 ${y}T145 ${y}"/>`); }
+    else if (m === 'rings') for (i = 1; i < 8; i++) o.push(`<circle cx="50" cy="50" r="${i * 9}"/>`);
+    else { let sd = 7; for (i = 0; i < 90; i++) { sd = (sd * 9301 + 49297) % 233280; const x = sd / 233280 * 100; sd = (sd * 9301 + 49297) % 233280; const y = sd / 233280 * 100; o.push(`<rect x="${f(x)}" y="${f(y)}" width="1.3" height="1.3" fill="currentColor" stroke="none"/>`); } }
+    return o.join('');
+  }
+  const plCover = (p, big) => { const [a, b, c] = p.c, light = plLum(a) * 0.5 + plLum(b) * 0.5 > 0.62; return `<span class="plc${big ? ' big' : ''}${light ? ' lt' : ''}" style="--a:#${a};--b:#${b};--c:#${c}"><svg class="plm" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".7">${plMotif(p.m)}</svg><b>${esc(p.t)}</b><small>${esc(p.secs[0])}</small></span>`; };
+  const plStats = (p) => { const es = p.ps.map(plEntry), inb = es.filter(Boolean); return { es, n: inb.length, mine: inb.filter((e) => S.collection.some((c) => E.norm(c.name) === E.norm(e.name))).length }; };
+  const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(); return PLS[k % PLS.length]; };
+  function viewPlay() { PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
+  function viewPlayLib() {
+    const secs = (window.PL_SECTIONS || []).filter((s) => !PL.sec || s === PL.sec), day = plDay();
+    $('#view').innerHTML = `
+      <section class="sec"><header><h2>Playlists</h2><span class="mono">${PLS.length} univers</span></header>
+        <p class="plintro">Un personnage, une ville, un instant, une envie. Chaque playlist a son décor, sa culture et ses accords.</p>
+        <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Playlist du jour</span><b>${esc(day.t)}</b><em>${esc(day.d)}</em></span></button>
+        <div class="chips plsecs"><button class="chip ${PL.sec ? '' : 'on'}" data-psec="">Tout</button>${(window.PL_SECTIONS || []).map((s) => `<button class="chip ${PL.sec === s ? 'on' : ''}" data-psec="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      </section>
+      ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
+    $$('[data-pl]').forEach((b) => (b.onclick = () => { PL.id = +b.dataset.pl; render(); }));
+    $$('[data-psec]').forEach((b) => (b.onclick = () => { PL.sec = b.dataset.psec; viewPlayLib(); }));
+  }
+  function viewPlaylist(p) {
+    if (!p) { PL.id = 0; return viewPlayLib(); }
+    const st = plStats(p), ents = st.es.filter(Boolean);
+    const fam = new Map(), nt = new Map();
+    ents.forEach((e) => { if (e.family) fam.set(e.family, (fam.get(e.family) || 0) + 1); (e.notes || []).forEach((n) => nt.set(n, (nt.get(n) || 0) + 1)); });
+    const top = (m, k) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, k);
+    const accords = top(fam, 3).map(([f]) => famLabel(f)), notes = top(nt, 5).filter((x) => x[1] >= 2).map((x) => x[0]);
+    const row = (x, i) => {
+      const e = st.es[i], have = e && S.collection.some((c) => E.norm(c.name) === E.norm(e.name)), wished = hasWish(e ? e.name : x.q);
+      const lab = x.lab ? `<em class="pllab">${esc(x.lab[0])} ${esc(x.lab[1])}</em>` : '';
+      const mark = have ? '✓ chez toi' : wished ? '♡' : '';
+      return e
+        ? `<div class="plr"><i class="pln">${i + 1}</i><button type="button" class="xc" data-pe="${i}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : ''].filter(Boolean).join(' · '))}</small>${lab}</span><i class="xm">${mark}</i></button></div>`
+        : `<div class="plr"><i class="pln">${i + 1}</i><button type="button" class="xc off" data-pe="${i}"><span class="xth ph">?</span><span class="xt"><b>${esc(x.q)}</b><small>Pas encore dans la base</small>${lab}</span><i class="xm">${wished ? '♡' : ''}</i></button></div>`;
+    };
+    const find1 = (s) => { const k = E.norm(s); const i = p.ps.findIndex((x) => E.norm(x.q).includes(k)); return i < 0 ? null : i; };
+    const combos = (p.combos || []).map((c) => c.map(find1)).filter((c) => c.every((i) => i != null));
+    const sm = (i) => { const e = st.es[i]; return `<button type="button" class="plcb" data-pe="${i}">${e ? xThumb(e) : '<span class="xth ph">?</span>'}<b>${esc(e ? e.name : p.ps[i].q)}</b></button>`; };
+    $('#view').innerHTML = `
+      <section class="sec pldet">
+        <button type="button" class="ghost plback" id="plback">← Playlists</button>
+        ${plCover(p, true)}
+        <div><p class="mono">${esc(p.secs.join(' · '))}</p><h1 class="plh">${esc(p.t)}</h1></div>
+        <p class="pld">${esc(p.d)}</p>
+        <p class="mono plmeta">${p.ps.length} parfums · ${st.n} dans la base${st.mine ? ' · ' + st.mine + ' chez toi' : ''}</p>
+        ${accords.length || notes.length ? `<div><p class="mono">L'ADN olfactif</p><div class="chips" style="margin-top:8px">${accords.map((a) => `<span class="chip on">${esc(a)}</span>`).join('')}${notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div></div>` : ''}
+        <div class="row"><button class="cta" id="plshuf"><span>Un au hasard</span></button><button class="ghost" id="plwish">Tout en wishlist</button></div>
+        ${(p.doc || []).map((d) => `<div class="pldoc"><p>${esc(d.t)}</p>${d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener noreferrer">Source : ${esc(d.s)}</a>` : ''}</div>`).join('')}
+        <div class="plist">${p.ps.map(row).join('')}</div>
+        ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
+      </section>`;
+    $('#plback').onclick = () => { PL.id = 0; render(); };
+    const open = (i) => { const e = st.es[i], x = p.ps[i]; if (e) return openEntry(e); const pn = openSheet(`<div><h2>${esc(x.q)}</h2><p class="mono" style="margin-top:6px">Pas encore dans la base de Sillage</p></div><p style="color:var(--muted);font-size:14px">Ce parfum fait partie de la playlist « ${esc(p.t)} », mais je n'ai pas encore sa fiche. Tu peux le garder en wishlist pour le sentir.</p><div class="row">${hasWish(x.q) ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="cta" id="plw"><span>À sentir</span></button>'}<button class="ghost" id="ex">Fermer</button></div>`); $('#ex', pn).onclick = closeSheet; if ($('#plw', pn)) $('#plw', pn).onclick = () => { addWish({ name: x.q, house: '', family: '', notes: [], price: 0, st: 'smell' }); save(); closeSheet(); viewPlaylist(p); }; };
+    $$('[data-pe]').forEach((b) => (b.onclick = () => open(+b.dataset.pe)));
+    $('#plshuf').onclick = () => { const L = p.ps.map((x, i) => i).filter((i) => st.es[i]); if (L.length) open(L[Math.floor(Math.random() * L.length)]); };
+    $('#plwish').onclick = () => { let n = 0; ents.forEach((e) => { if (!hasWish(e.name) && !S.collection.some((c) => E.norm(c.name) === E.norm(e.name))) { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); n++; } }); save(); $('#plwish').textContent = n ? n + ' ajouté' + (n > 1 ? 's' : '') + ' ♡' : 'Déjà tout là'; };
+  }
+
   function viewWish() {
     S.wishlist.forEach((w) => { if (!w.st) w.st = 'smell'; });
     const all = S.wishlist, L = all.filter((w) => w.st === WTAB), nS = all.filter((w) => w.st === 'smell').length, nD = all.length - nS, total = all.filter((w) => w.st === 'smell').reduce((a, w) => a + (w.price || 0), 0);
@@ -1628,7 +1702,7 @@
   window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
 
   // ---------- Démarrage ----------
-  $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { tab = b.dataset.tab; render(); } });
+  $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { if (b.dataset.tab === 'play' && tab === 'play') PL.id = 0; tab = b.dataset.tab; render(); } });
   $('#profileBtn').onclick = openProfile;
   render();
   initStore();

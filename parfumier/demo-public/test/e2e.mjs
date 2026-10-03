@@ -55,7 +55,7 @@ ok(/3 choisis/.test(await pg.textContent('.exp-foot')), 'trois parfums choisis d
 const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')));
 ok(prof.profile.gender === 'f' && prof.profile.age === 27 && prof.profile.name === 'Léa' && prof.settings.liked.includes('vanille') && prof.settings.liked.includes('cèdre'), 'profil sauvegardé : Léa, fille, 27 ans, goûts (vanille, cèdre…)');
 ok(/(Bonjour|Bon après-midi|Bonsoir), Léa\./.test(await pg.textContent('.hero h1')), 'accueil : « Bonjour, Léa. » selon l\'heure');
-ok(await pg.locator('#dock button').count() === 6 && await pg.locator('[data-tab=walk]').count() === 1 && await pg.locator('[data-tab=search]').count() === 1, 'onglets : accueil, étagère, recherche, conseils, balade, wishlist');
+ok(await pg.locator('#dock button').count() === 7 && await pg.locator('[data-tab=play]').count() === 1 && await pg.locator('[data-tab=walk]').count() === 1 && await pg.locator('[data-tab=search]').count() === 1, 'onglets : accueil, étagère, recherche, conseils, playlists, balade, wishlist');
 await pg.click('[data-tab=walk]'); await pg.waitForTimeout(400); ok(await pg.locator('.wcard').count() === 0, 'balade : aucune balade d\'exemple (la fausse « Rue Saint-Honoré » ne s\'affiche chez personne)'); await pg.click('[data-tab=today]'); await pg.waitForTimeout(300);
 ok(await pg.locator('#dresses .dchip').count() === 6, 'au moment de choisir le parfum : 6 tenues proposées avec icônes'); await pg.click('[data-dress=smart]'); await pg.waitForTimeout(300);
 ok(await pg.locator('#whens .chip').count() === 3 && await pg.locator('#venues .chip').count() === 9, 'conditions : quand (jour, soir, nuit) et où (9 types d\'endroits)');
@@ -155,6 +155,15 @@ ok(nres.length >= 5 && nres.every((r) => /vanille/i.test(r.t) && r.pct > 50), 'r
 ok(await pg.locator('#needai').count() === 1, 'recherche par besoin : bouton « Affiner avec l\'IA »'); await pg.evaluate(() => document.querySelector('#needai').click()); await pg.waitForFunction(() => document.querySelector('#needaimsg').textContent.length > 0 || document.querySelector('#needaires article'), null, { timeout: 8000 });
 ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); if (sh) sh.hidden = true; });
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
+await pg.click('[data-tab=play]'); await pg.waitForSelector('.plcard');
+ok(await pg.locator('.plcard').count() >= 81 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 9, 'playlists : 9 étagères, 81 univers et une playlist du jour');
+await pg.screenshot({ path: OUT + '/pl1_biblio.png' });
+await pg.locator('.plcard').first().click(); await pg.waitForSelector('.plist .plr');
+ok(await pg.locator('.plist .plr').count() === 10 && await pg.locator('.plc.big').count() === 1 && /parfums · \d+ dans la base/.test(await pg.textContent('.plmeta')), 'playlist : couverture, ADN, dix parfums classés');
+await pg.screenshot({ path: OUT + '/pl2_detail.png', fullPage: true });
+await pg.locator('.plist .xc:not(.off)').first().click(); await pg.waitForSelector('#sheet:not([hidden]) .big-bottle'); await pg.click('#ex'); await pg.click('#plback'); await pg.waitForSelector('.plcard');
+await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard').last().click(); await pg.waitForSelector('.plcombo');
+ok(await pg.locator('.plcombo').count() === 5, 'layering : cinq combinaisons proposées');
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });
 { const n = await pg.locator('.tipk').count(); ok(n >= 100, 'conseils : beaucoup de cartes à découvrir (' + n + ')');

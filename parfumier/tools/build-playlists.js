@@ -1,0 +1,97 @@
+// Lit data/playlists-source.txt (catalogue éditorial de Théo) et produit playlists.js :
+// chaque parfum est relié à la base (INDEX / CATALOG) quand il existe, sinon marqué hors base.
+const vm = require('vm'), fs = require('fs'), path = require('path');
+const root = path.join(__dirname, '..');
+const w = { }; w.window = w; vm.createContext(w);
+for (const f of ['data', 'desc', 'index', 'facts']) vm.runInContext(fs.readFileSync(path.join(root, f + '.js'), 'utf8'), w);
+const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/n°|no\.|№/g, 'n ').replace(/&/g, ' and ').replace(/['’`.,–—-]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+const HA = w.HOUSE_ALIAS || {};
+const HOUSE_SYN = { memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
+// parfums cités sans maison dans le catalogue
+const BARE = { 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
+const entries = [];
+(w.CATALOG || []).forEach((c) => c.name && c.house && entries.push({ h: c.house, n: c.name }));
+(w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => entries.push({ h, n })));
+const housesN = new Set();
+const byKey = new Map();
+entries.forEach((e) => { const hn = norm(HA[norm(e.h)] || e.h), full = hn + ' ' + norm(e.n); housesN.add(hn); if (!byKey.has(full)) byKey.set(full, e); const raw = norm(e.h) + ' ' + norm(e.n); if (!byKey.has(raw)) byKey.set(raw, e); const nn = norm(e.n); if (nn.startsWith(hn + ' ') && !byKey.has(nn)) byKey.set(nn, e); const rp = nn.replace(/^replica /, ''); if (rp !== nn && !byKey.has(hn + ' ' + rp)) byKey.set(hn + ' ' + rp, e); });
+const NAME_FIX = { 'n 5': 'n 5', 'n5': 'n 5' };
+function resolve(line) {
+  let s = norm(line.replace(/\s+[—-]\s+(?=[A-ZÉ])/g, ' ')); // « House — Name »
+  if (BARE[s]) s = norm(BARE[s]);
+  const tries = [s];
+  Object.keys(HOUSE_SYN).forEach((k) => { if (s === k || s.startsWith(k + ' ')) tries.push(HOUSE_SYN[k] + s.slice(k.length)); });
+  tries.push(s.replace(/\bpour\b/g, 'pour'), s.replace(/ extrait$/, ' extrait de parfum'), s.replace(/^(\S+ )(n 5)$/, '$1n 5'));
+  for (const t of tries) if (byKey.has(t)) return byKey.get(t);
+  // maison + reste : tolérance (concentration, suffixe)
+  for (const t of tries) {
+    const c = [...byKey.keys()].filter((k) => k.startsWith(t + ' ') && /^( (edp|edt|parfum|extrait|de|eau|cologne|pure|n|5|edition|160|anniversaire))+$/.test(k.slice(t.length)));
+    if (c.length) { c.sort((a, b) => a.length - b.length); return byKey.get(c[0]); }
+  }
+  return null;
+}
+const raw = fs.readFileSync(path.join(root, 'data', 'playlists-source.txt'), 'utf8').split('\n');
+const SECS = [], PLS = [];
+let sec = '', cur = null, pend = [];
+const flush = () => { if (cur) { PLS.push(cur); cur = null; } };
+const SECMAP = { 'PERSONNAGES ICONIQUES': 'Personnages', 'THE GENTLEMEN': 'Personnages', 'DRAKE & CULTURE MUSICALE': 'Icônes', 'ICÔNES CULTURELLES': 'Icônes', 'CULTURE / INTERNET': 'Culture', 'VILLES / DESTINATIONS': 'Destinations', 'SAISONS / ATMOSPHÈRES': 'Atmosphères', 'LIFESTYLE': 'Moments', 'UNIVERS OLFACTIFS': 'Effets', 'LE WOLF OF WALL STREET / MONDE FINANCIER': 'Cinéma & séries', 'ART / ÉLÉGANCE / IMAGINAIRE': 'Atmosphères', 'HISTORICAL SCENTS': 'Atmosphères', "L'UNIQUE PLAYLIST ODEURS BIZARRES": 'Spécial', 'LAYERING': 'Spécial' };
+for (let i = 0; i < raw.length; i++) {
+  const l = raw[i].trim(); if (!l) continue;
+  if (/^Les univers qui restent/.test(l)) break;
+  let m;
+  if ((m = l.match(/^\d\d — (.+)$/))) { flush(); sec = SECMAP[m[1].trim()] || m[1]; continue; }
+  if ((m = l.match(/^(\d\d)\. (.+)$/)) && (!cur || cur.ps.length >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — The Gentlemen$/, ''), d: '', ps: [], note: [] }; continue; }
+  if (!cur) continue;
+  if ((m = l.match(/^(\d+)\. (.+)$/))) { const hist = cur.id === 79; const q = hist ? m[2].replace(/\s+—\s+.*$/, '') : m[2].replace(/\s+—\s+/, ' '); const hit = resolve(q); cur.ps.push({ q, h: hit ? hit.h : '', n: hit ? hit.n : '' }); continue; }
+  if (!cur.d && !cur.ps.length) { cur.d = l; continue; }
+  if (/^\*|^Exemples de combinaisons/.test(l)) { cur.note.push(l); continue; }
+  cur.note.push(l);
+}
+flush();
+const PAL = {
+1:'0e1a2b,27405f,c9b27a,rays',2:'1b9aaa,ef476f,fff1d6,stripes',3:'1a0f0a,4a2c1a,b08a5a,grain',4:'e9e9ec,b9bcc4,1c1c22,grid',5:'1e2326,4a5258,a8784a,rain',6:'3a3a3a,6d5a45,d8c7a5,stripes',7:'f0e0b8,7aa6a1,c85a3c,arches',8:'050505,1a1a1d,d9b44a,grid',9:'2a2a2a,8c3b2a,e8e0c8,grain',10:'2b0d14,5a1a26,c8b79a,arches',
+11:'0b2a2a,c9a64b,f5eccf,rays',12:'c8102e,ffc72c,fff6e0,stripes',13:'1f3a2a,55704a,d4c19a,grid',14:'181818,5a4630,c7a24a,stripes',15:'4a1e2e,8a3b4c,e5c79a,dots',16:'23162b,6a2f4a,e4b5a0,arches',17:'101426,3b2b5a,f2c14e,rays',18:'5a0f2a,d2386c,ffd5e0,dots',19:'3d0707,c4181f,f6c453,rays',20:'2a1a2e,a0526b,e8cfc4,dots',
+21:'0d4d46,f2a900,ff6f61,waves',22:'10253a,4c7a9a,e8ddc7,waves',23:'f6d7c3,e58a74,fff5e8,dots',24:'efe8dc,9c8f78,2d3a4a,stripes',25:'f1e6e0,2a2a2a,b9a98f,arches',26:'f5e3e3,d9a5a8,ffffff,rays',27:'eef3f4,cfe1e6,5d8fa0,waves',28:'dfeacb,9bbd85,ffffff,waves',29:'f6ead2,e0c796,a8825a,dots',30:'14060d,5b0d2a,c1113f,arches',
+31:'fbe3ea,f0a9bd,ffffff,dots',32:'1a0d0d,5b2a1c,d4a15a,rays',33:'e9e3d8,c7bca8,4a4337,grid',34:'14264a,7c1d28,efe6d2,stripes',35:'0a1f33,16558f,d7e3ef,grid',36:'e6e8ea,9ba3ab,1d1f22,grid',37:'d8d2c8,8c8579,111111,stripes',38:'3b4252,8e99ab,e8d9c0,arches',39:'121212,f2b705,6d6d6d,grid',40:'2a2f3a,7a1f2b,c8ccd2,rain',
+41:'cfc6b8,7f1d1d,1c1c1c,arches',42:'d98a4a,a8452c,f4dfb8,arches',43:'1d7fb0,7dd1d9,fff4d6,waves',44:'f26b21,2d9cdb,fff1d0,stripes',45:'b0121f,f4f1ea,101820,grid',46:'234e52,6fa8a0,e9dfc8,waves',47:'7a5a1f,d9b14a,14100a,rays',48:'0d0d1f,e0245e,4de1ff,grid',49:'22344f,8aa4c2,f2f5f8,dots',50:'ff9a3c,ffd166,1b9aaa,rays',
+51:'5a2e12,b5622a,f0c987,rain',52:'c8683a,f0a766,ffffff,stripes',53:'213a57,7aa5d2,ffffff,dots',54:'0f5a2a,e8f0e8,111111,stripes',55:'111111,e10600,f2f2f2,stripes',56:'5b1b3a,d56a8a,f8dfd0,dots',57:'12202e,3a5a78,d0d6dc,grid',58:'2a1a4a,f26ca7,ffd166,dots',59:'e7dfd2,b8a98f,222222,stripes',60:'1d6f42,e9f0d8,f4a261,stripes',
+61:'f4efe6,d9cdb8,8f7f66,waves',62:'f3d9a4,e08e4e,fff4e0,dots',63:'2b2216,8a6a3a,e8d8b0,arches',64:'ff2e63,08090a,f9f871,rays',65:'10100f,6e5a2a,e5d6a8,grid',66:'f4fbfc,bfe3ea,ffffff,waves',67:'2a0610,9c1537,f0a58f,waves',68:'0a0a1e,2a2a5c,8e8ec8,grain',69:'080808,6a0d0d,e5391a,rays',70:'fff0c9,ffb347,d65a31,dots',
+71:'0e3b2d,c9a227,f0e6c8,stripes',72:'4b0f3a,c43a8b,f5d0e6,rays',73:'0a2a3a,1d6f8c,e8d9a8,waves',74:'e9efe1,4f7a46,7a1f2b,stripes',75:'3a0b18,9c1b30,e7c67a,arches',76:'0f2a1d,a41e22,e8c872,dots',77:'3c0a14,9b2335,d9b26f,arches',78:'6e3a1b,c98a4a,f7e3c0,waves',79:'3a2c1a,a88b5a,efe3c8,grain',80:'202020,6e7f4a,b0b0a0,grain',81:'2c2c54,706fd3,f7f1e3,rings' };
+const HIST = { 'chanel n 5': ['Porté par', 'Marilyn Monroe'], 'givenchy l interdit': ['Créé pour', 'Audrey Hepburn'], 'miller harris l air de rien': ['Créé avec', 'Jane Birkin'], 'dior eau sauvage': ['Associé à', 'Alain Delon'], 'jean patou joy': ['Inspiré d\'une époque', 'Grandes figures féminines'], 'guerlain eau de cologne imperiale': ['Maison liée à', 'l\'Impératrice Eugénie'], 'atkinsons 24 old bond street': ['Maison liée à', 'Mayfair, 24 Old Bond Street'], '4711 original eau de cologne': ['Maison liée à', 'Cologne'], 'floris n 89': ['Maison liée à', 'Jermyn Street, Londres'], 'guerlain shalimar': ['Inspiré d\'une époque', 'Les Années folles'] };
+const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
+fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
+console.log(PLS.length, 'playlists', PLS.reduce((a, p) => a + p.ps.length, 0), 'parfums', 'hors base:', new Set(miss).size);
+module.exports = { PLS };
+const DROP = /Même logique|sort(?:i|ie)?\b|supprimé|définitivement|^Je garde|garderais|Une seule playlist|Celle-ci/;
+const SECS_OF = (p) => { const i = p.id; const r = [];
+  if ([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(i)) r.push('Personnages');
+  if ([2, 3, 4, 6, 7, 71].includes(i)) r.push('Cinéma & séries');
+  if (i >= 17 && i <= 26) r.push('Icônes');
+  if ((i >= 27 && i <= 37) || [58, 59, 60].includes(i)) r.push('Culture');
+  if (i >= 38 && i <= 48) r.push('Destinations');
+  if ([53, 54, 55, 56, 57, 61, 62, 63].includes(i)) r.push('Moments');
+  if ((i >= 49 && i <= 52) || (i >= 74 && i <= 79)) r.push('Atmosphères');
+  if (i >= 64 && i <= 70) r.push('Effets');
+  if ([71, 72, 73, 80, 81].includes(i)) r.push('Spécial');
+  if (!r.length) throw new Error('sans section ' + i);
+  return r; };
+function out() {
+  const res = PLS.map((p) => {
+    const [a, b, c, m] = (PAL[p.id] || '222222,555555,dddddd,grain').split(',');
+    const doc = [];
+    p.note.forEach((l) => {
+      if (DROP.test(l) || /^\*|^Exemples/.test(l)) return;
+      const ln = l.match(/\(\[([^\]]+)\]\(([^)?]+)[^)]*\)\)/);
+      const txt = l.replace(/\s*\(\[[^\]]+\]\([^)]*\)\)/g, '').trim();
+      if (txt) doc.push(ln ? { t: txt, s: ln[1], u: ln[2] } : { t: txt });
+    });
+    const o = { id: p.id, secs: SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
+    if (p.id === 79) { doc.length = 0; doc.push({ t: 'La maison Atkinsons et le 24 Old Bond Street sont historiquement documentés ; le flacon d\'aujourd\'hui est une réinterprétation moderne de cet héritage, pas un flacon inchangé depuis le XIXe siècle.', s: 'Atkinsons 1799', u: 'https://www.atkinsons1799.com/pages/history' }); }
+    if (doc.length) o.doc = doc;
+    if (p.id === 81) o.combos = p.note.filter((l) => /^\* /.test(l)).map((l) => l.replace(/^\* /, '').split(' + '));
+    return o;
+  });
+  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Personnages', 'Cinéma & séries', 'Icônes', 'Culture', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
+  console.log('playlists.js', res.length);
+}
+if (require.main === module) out();

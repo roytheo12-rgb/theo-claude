@@ -1,0 +1,5636 @@
+[
+ {
+  "id": 1,
+  "sec": "Personnages",
+  "t": "James Bond",
+  "d": "Un Martini, un Aston Martin, un costume parfaitement coupé. Il ne cherche jamais à être remarqué : il est simplement impossible à ignorer.",
+  "ps": [
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Dior Eau Sauvage",
+    "lab": "",
+    "h": "Dior",
+    "n": "Eau Sauvage"
+   },
+   {
+    "q": "Chanel Pour Monsieur",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Pour Monsieur"
+   },
+   {
+    "q": "Hermès Terre d'Hermès",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Terre d'Hermès"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Grey Vetiver Tom Ford",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Penhaligon's Sartorial",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Sartorial"
+   }
+  ],
+  "note": [
+   "Green Irish Tweed et Floris No. 89 ont ici une vraie dimension historique/culturelle, plutôt qu'un simple casting marketing."
+  ]
+ },
+ {
+  "id": 2,
+  "sec": "Personnages",
+  "t": "Tony Montana",
+  "d": "Miami, chemise ouverte, costume blanc, cuir chaud et excès assumé. Rien n'est discret, absolument rien.",
+  "ps": [
+   {
+    "q": "Tom Ford Tuscan Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tuscan Leather"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Parfums de Marly Layton",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Layton"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "Nasomatto Black Afgano",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Black Afgano"
+   },
+   {
+    "q": "Amouage Interlude Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Interlude Man"
+   },
+   {
+    "q": "Clive Christian X for Men",
+    "lab": "",
+    "h": "Clive Christian",
+    "n": "X For Men"
+   },
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   }
+  ],
+  "note": [
+   "Le costume blanc, les costumes trois-pièces, les chemises ouvertes et l'escalade vers une esthétique beaucoup plus ostentatoire sont effectivement constitutifs du personnage. ([MensUSA](https://www.mensusa.com/en-au/blogs/news/what-suit-does-tony-montana-wear-in-scarface?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 3,
+  "sec": "Personnages",
+  "t": "Michael Corleone",
+  "d": "Costume sombre, cuir italien, bois sec, silence. Il n'entre pas dans la pièce pour parler.",
+  "ps": [
+   {
+    "q": "Dior Homme Parfum",
+    "lab": "",
+    "h": "Dior",
+    "n": "Dior Homme Parfum"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Armani Privé Bois d'Encens",
+    "lab": "",
+    "h": "Armani",
+    "n": "Bois d'Encens"
+   },
+   {
+    "q": "Chanel Sycomore",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Sycomore"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Oud",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   },
+   {
+    "q": "Xerjoff Mefisto Gentiluomo",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Mefisto Gentiluomo"
+   },
+   {
+    "q": "Santa Maria Novella Tabacco Toscano",
+    "lab": "",
+    "h": "Santa Maria Novella",
+    "n": "Tabacco Toscano"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Bottega Veneta Pour Homme",
+    "lab": "",
+    "h": "Bottega Veneta",
+    "n": "Bottega Veneta Pour Homme"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 4,
+  "sec": "Personnages",
+  "t": "Patrick Bateman",
+  "d": "Wall Street à 7h30, costume impeccable, appartement minimaliste, carte de visite parfaitement centrée.",
+  "ps": [
+   {
+    "q": "Dior Homme Parfum",
+    "lab": "",
+    "h": "Dior",
+    "n": "Dior Homme Parfum"
+   },
+   {
+    "q": "Le Labo Santal 33",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Santal 33"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Chanel Bleu de Chanel Parfum",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Frederic Malle French Lover",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "French Lover"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 5,
+  "sec": "Personnages",
+  "t": "Thomas Shelby",
+  "d": "Birmingham sous la pluie, tweed humide, whisky, tabac et une voiture noire qui attend devant le pub.",
+  "ps": [
+   {
+    "q": "Memo Irish Leather",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Penhaligon's Sartorial",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Sartorial"
+   },
+   {
+    "q": "Tom Ford Tobacco Vanille",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tobacco Vanille"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Maison Margiela Jazz Club",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Jazz Club"
+   },
+   {
+    "q": "By Kilian Straight to Heaven",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Straight to Heaven"
+   },
+   {
+    "q": "Parfums de Marly Herod",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Herod"
+   },
+   {
+    "q": "Floris 1962",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Acqua di Parma Oud",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Oud"
+   },
+   {
+    "q": "BDK Tabac Rose",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Tabac Rose"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 6,
+  "sec": "Personnages",
+  "t": "Don Draper",
+  "d": "Manhattan 1962. Costume gris, bureau en noyer, bourbon après le travail et cigarette devant l'immeuble.",
+  "ps": [
+   {
+    "q": "Chanel Pour Monsieur",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Pour Monsieur"
+   },
+   {
+    "q": "Dior Eau Sauvage",
+    "lab": "",
+    "h": "Dior",
+    "n": "Eau Sauvage"
+   },
+   {
+    "q": "Guerlain Vetiver",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Vétiver"
+   },
+   {
+    "q": "Hermès Bel Ami",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Bel Ami"
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Caron Yatagan",
+    "lab": "",
+    "h": "Caron",
+    "n": "Yatagan"
+   },
+   {
+    "q": "Roja Vetiver",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Vetiver"
+   },
+   {
+    "q": "Santa Maria Novella Tobacco Toscano",
+    "lab": "",
+    "h": "Santa Maria Novella",
+    "n": "Tobacco Toscano"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 7,
+  "sec": "Personnages",
+  "t": "Tom Ripley",
+  "d": "Une villa italienne, une chemise en lin, un piano au loin. Quelqu'un ment probablement.",
+  "ps": [
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Santa Maria Novella Melograno",
+    "lab": "",
+    "h": "Santa Maria Novella",
+    "n": "Melograno"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Maison Crivelli Iris Malikhân",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Iris Malikhân"
+   },
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 8,
+  "sec": "Personnages",
+  "t": "John Wick",
+  "d": "Hôtel cinq étoiles, costume noir, cuir, bois froid et aucune envie de conversation.",
+  "ps": [
+   {
+    "q": "Dior Homme Parfum",
+    "lab": "",
+    "h": "Dior",
+    "n": "Dior Homme Parfum"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Le Labo Santal 33",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Santal 33"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Nasomatto Duro",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Duro"
+   },
+   {
+    "q": "Frederic Malle French Lover",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "French Lover"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "BDK Gris Charnel Extrait",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel Extrait"
+   },
+   {
+    "q": "Nishane Ani",
+    "lab": "",
+    "h": "Nishane",
+    "n": "Ani"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 9,
+  "sec": "Personnages",
+  "t": "Tyler Durden",
+  "d": "Garage industriel, essence, métal, fumée, savon et vêtements trouvés au fond d'un sac.",
+  "ps": [
+   {
+    "q": "Comme des Garçons Tar",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Comme des Garçons Garage",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Comme des Garçons Concrete",
+    "lab": "",
+    "h": "Comme des Garçons",
+    "n": "Concrete"
+   },
+   {
+    "q": "Etat Libre d'Orange Rien",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Etat Libre d'Orange Sécrétions Magnifiques",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "DS & Durga Bowmakers",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Nasomatto Duro",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Duro"
+   },
+   {
+    "q": "Comme des Garçons Black",
+    "lab": "",
+    "h": "Comme des Garçons",
+    "n": "Black"
+   },
+   {
+    "q": "Naomi Goodsir Bois d'Ascèse",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Demeter Dirt",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": [
+   "Dior Homme Parfum est définitivement sorti. Ici, le côté industriel et abrasif est beaucoup plus important."
+  ]
+ },
+ {
+  "id": 10,
+  "sec": "Personnages",
+  "t": "Hannibal Lecter",
+  "d": "Une bibliothèque ancienne, un dîner formel, du cuir, du bois ciré et une élégance presque inquiétante.",
+  "ps": [
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Serge Lutens Ambre Sultan",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Ambre Sultan"
+   },
+   {
+    "q": "Dior Homme Parfum",
+    "lab": "",
+    "h": "Dior",
+    "n": "Dior Homme Parfum"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Nasomatto Baraonda",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Baraonda"
+   },
+   {
+    "q": "Amouage Epic Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Epic Man"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Oud",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud"
+   },
+   {
+    "q": "Penhaligon's Halfeti",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Halfeti"
+   },
+   {
+    "q": "BDK Gris Charnel Extrait",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel Extrait"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 11,
+  "sec": "Personnages",
+  "t": "Jay Gatsby",
+  "d": "Long Island, chemise blanche, jardin illuminé, champagne et une fête qui ne finit jamais.",
+  "ps": [
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Parfums de Marly Delina",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Clive Christian X",
+    "lab": "",
+    "h": "Clive Christian",
+    "n": "X"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 12,
+  "sec": "Personnages",
+  "t": "The Founder",
+  "d": "Il est déjà au bureau avant tout le monde. Café noir, carnet ouvert, écran allumé. Tout est pensé.",
+  "ps": [
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Chanel Platinum Égoïste",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Égoïste Platinum"
+   },
+   {
+    "q": "Dior Homme 2020",
+    "lab": "",
+    "h": "Dior",
+    "n": "Homme 2020"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   },
+   {
+    "q": "Escentric Molecules Molecule 01",
+    "lab": "",
+    "h": "Escentric Molecules",
+    "n": "Molecule 01"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 13,
+  "sec": "Personnages",
+  "t": "Eddie Horniman",
+  "d": "Un duc anglais qui découvre qu'il peut être aussi à l'aise dans un domaine ancestral que dans un business criminel.",
+  "ps": [
+   {
+    "q": "Penhaligon's Sartorial",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Sartorial"
+   },
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Dior Homme 2020",
+    "lab": "",
+    "h": "Dior",
+    "n": "Homme 2020"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 14,
+  "sec": "Personnages",
+  "t": "Bobby Glass",
+  "d": "Un gangster anglais qui pourrait discuter affaires dans une prison comme dans un club privé.",
+  "ps": [
+   {
+    "q": "Amouage Jubilation XXV",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Jubilation XXV"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Penhaligon's Halfeti",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Halfeti"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Roja Enigma",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Enigma Pour Homme"
+   },
+   {
+    "q": "Amouage Interlude Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Interlude Man"
+   },
+   {
+    "q": "Clive Christian X for Men",
+    "lab": "",
+    "h": "Clive Christian",
+    "n": "X For Men"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "BDK Tabac Rose",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Tabac Rose"
+   },
+   {
+    "q": "Nasomatto Baraonda",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Baraonda"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 15,
+  "sec": "Personnages",
+  "t": "Freddy Horniman",
+  "d": "Aristocrate, imprévisible, légèrement chaotique, mais toujours habillé comme s'il allait à une réception.",
+  "ps": [
+   {
+    "q": "Penhaligon's The Tragedy of Lord George",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "The Tragedy of Lord George"
+   },
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Parfums de Marly Layton",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Layton"
+   },
+   {
+    "q": "Tom Ford Beau de Jour",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Beau de Jour"
+   },
+   {
+    "q": "Maison Margiela Jazz Club",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Jazz Club"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "BDK Gris Charnel",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 16,
+  "sec": "Personnages",
+  "t": "Suzie Glass",
+  "d": "Une femme qui n’a pas besoin d’élever la voix pour contrôler la pièce. Tailleur impeccable, Londres, art contemporain, soirées privées, whisky sec et danger parfaitement maîtrisé. Féminine sans être douce, sophistiquée sans être sage.",
+  "ps": [
+   {
+    "q": "Maison Francis Kurkdjian Oud Satin Mood",
+    "lab": "Oud Satin Mood",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "Tom Ford Black Orchid",
+    "lab": "Black Orchid",
+    "h": "Tom Ford",
+    "n": "Black Orchid"
+   },
+   {
+    "q": "Parfums de Marly Delina Exclusif",
+    "lab": "Delina Exclusif",
+    "h": "Parfums de Marly",
+    "n": "Delina Exclusif"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Grand Soir",
+    "lab": "Grand Soir",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "Kilian Black Phantom",
+    "lab": "Black Phantom",
+    "h": "Kilian",
+    "n": "Black Phantom"
+   },
+   {
+    "q": "Serge Lutens Feminité du Bois",
+    "lab": "Feminité du Bois",
+    "h": "Serge Lutens",
+    "n": "Féminité du Bois"
+   },
+   {
+    "q": "Initio Atomic Rose",
+    "lab": "Atomic Rose",
+    "h": "Initio",
+    "n": "Atomic Rose"
+   },
+   {
+    "q": "Xerjoff Italica",
+    "lab": "Italica",
+    "h": "Xerjoff",
+    "n": "Italica"
+   },
+   {
+    "q": "Frédéric Malle Portrait of a Lady",
+    "lab": "Portrait of a Lady",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Narciso Rodriguez Musc Noir Rose",
+    "lab": "Musc Noir Rose",
+    "h": "Narciso Rodriguez",
+    "n": "Musc Noir Rose"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 17,
+  "sec": "Icônes",
+  "t": "Drake",
+  "d": "Toronto la nuit. Un studio, un verre posé sur la console, cuir, bois, musc et quelque chose de beaucoup plus intime derrière l'assurance.",
+  "ps": [
+   {
+    "q": "Tom Ford Tuscan Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tuscan Leather"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   },
+   {
+    "q": "Guy Laroche Drakkar Noir",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Clive Christian L",
+    "lab": "",
+    "h": "Clive Christian",
+    "n": "L"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Better World Fragrance House Carby Musk",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Better World Fragrance House Summer Mink",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Better World Fragrance House Cloudar",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Francis Kurkdjian Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   }
+  ],
+  "note": [
+   "Tuscan Leather n'est pas ici un simple parfum « qui ressemble à Drake » : il est directement inscrit dans son œuvre. Drake a expliqué à GQ l'origine du titre Tuscan Leather, et des sources consacrées à ses habitudes olfactives citent également Drakkar Noir, Clive Christian L et BR540. ([GQ](https://www.gq.com/story/rapper-drake-in-america-july-2013?utm_source=chatgpt.com))",
+   "Et désormais, Summer Mink + Cloudar + Carby Musk donnent à la playlist un véritable ADN Drake contemporain. ([parlux.com](https://parlux.com/betterworld?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 18,
+  "sec": "Icônes",
+  "t": "Rihanna",
+  "d": "Une aura très féminine, mais jamais innocente : fleurs blanches, musc, vanille et peau chaude.",
+  "ps": [
+   {
+    "q": "Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Dior J'adore",
+    "lab": "",
+    "h": "Dior",
+    "n": "J'adore"
+   },
+   {
+    "q": "Fenty Eau de Parfum",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Tom Ford Lost Cherry",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Lost Cherry"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "By Kilian Good Girl Gone Bad",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Good Girl Gone Bad"
+   },
+   {
+    "q": "Frederic Malle Carnal Flower",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Carnal Flower"
+   },
+   {
+    "q": "Initio Musk Therapy",
+    "lab": "",
+    "h": "Initio",
+    "n": "Musk Therapy"
+   },
+   {
+    "q": "Narciso Rodriguez Musc Noir Rose",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Musc Noir Rose"
+   }
+  ],
+  "note": [
+   "Les trois premiers ont une vraie base documentaire autour de Rihanna, même si elle n'a pas déclaré un unique « signature scent » officiel. ([Allure](https://www.allure.com/story/rihanna-favorite-perfumes?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 19,
+  "sec": "Icônes",
+  "t": "Beyoncé",
+  "d": "Lumières rouges, scène immense, chaleur, sensualité et puissance.",
+  "ps": [
+   {
+    "q": "Beyoncé Heat",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Beyoncé Heat Rush",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Dior Hypnotic Poison",
+    "lab": "",
+    "h": "Dior",
+    "n": "Hypnotic Poison"
+   },
+   {
+    "q": "Tom Ford Lost Cherry",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Lost Cherry"
+   },
+   {
+    "q": "Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "Mugler Alien",
+    "lab": "",
+    "h": "Mugler",
+    "n": "Alien"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Parfums de Marly Delina Exclusif",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina Exclusif"
+   },
+   {
+    "q": "Carolina Herrera Good Girl",
+    "lab": "",
+    "h": "Carolina Herrera",
+    "n": "Good Girl"
+   }
+  ],
+  "note": [
+   "Heat est évidemment la pièce historique de la playlist : Beyoncé a participé à sa création et l'a lancé en 2010. ([Fragrantica](https://www.fragrantica.com/perfume/Beyonce/Heat-7745.html?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 20,
+  "sec": "Icônes",
+  "t": "Taylor Swift",
+  "d": "Une bibliothèque new-yorkaise, du rouge à lèvres, du bois de santal et une mélancolie parfaitement mise en scène.",
+  "ps": [
+   {
+    "q": "Tom Ford Santal Blush",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Santal Blush"
+   },
+   {
+    "q": "Maison Margiela Replica By the Fireplace",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "By the Fireplace"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Jo Malone English Pear & Freesia",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "English Pear & Freesia"
+   },
+   {
+    "q": "Chanel Coco Mademoiselle",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Coco Mademoiselle"
+   },
+   {
+    "q": "Byredo Mojave Ghost",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Mojave Ghost"
+   },
+   {
+    "q": "Diptyque Tam Dao",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Tam Dao"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Amyris",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Amyris"
+   }
+  ],
+  "note": [
+   "Santal Blush est bien la référence la plus documentée autour de Taylor Swift. ([Page Six](https://pagesix.com/2026/09/28/style/we-found-the-lipstick-taylor-swift-and-dakota-johnson-wear-in-the-patient-zero-video/?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 21,
+  "sec": "Icônes",
+  "t": "Bad Bunny",
+  "d": "San Juan, mode, nuit, chaleur tropicale et luxe contemporain.",
+  "ps": [
+   {
+    "q": "Le Labo Thé Matcha 26",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Matcha 26"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Creed Virgin Island Water",
+    "lab": "",
+    "h": "Creed",
+    "n": "Virgin Island Water"
+   },
+   {
+    "q": "Tom Ford Soleil Blanc",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Soleil Blanc"
+   },
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Byredo Sundazed",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Sundazed"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   }
+  ],
+  "note": [
+   "Le Matcha 26 est ici particulièrement intéressant car son association avec Bad Bunny est documentée, contrairement à beaucoup d'autres castings d'artistes."
+  ]
+ },
+ {
+  "id": 22,
+  "sec": "Icônes",
+  "t": "Alain Delon",
+  "d": "Le costume sombre, les lunettes noires, la Méditerranée et cette élégance française qui n'a jamais besoin d'explication.",
+  "ps": [
+   {
+    "q": "Dior Eau Sauvage",
+    "lab": "",
+    "h": "Dior",
+    "n": "Eau Sauvage"
+   },
+   {
+    "q": "Chanel Pour Monsieur",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Pour Monsieur"
+   },
+   {
+    "q": "Guerlain Vetiver",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Vétiver"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Hermès Terre d'Hermès",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Terre d'Hermès"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Dior Homme Original",
+    "lab": "",
+    "h": "Dior",
+    "n": "Dior Homme Original"
+   },
+   {
+    "q": "Chanel Platinum Égoïste",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Égoïste Platinum"
+   }
+  ],
+  "note": [
+   "Eau Sauvage possède ici un ancrage historique particulièrement fort avec Delon. ([Wikipédia](https://fr.wikipedia.org/wiki/Eau_sauvage?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 23,
+  "sec": "Icônes",
+  "t": "Brigitte Bardot",
+  "d": "Saint-Tropez, cheveux au vent, peau chauffée par le soleil et sensualité sans effort.",
+  "ps": [
+   {
+    "q": "Guerlain Shalimar",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Shalimar"
+   },
+   {
+    "q": "Diorissimo",
+    "lab": "",
+    "h": "Dior",
+    "n": "Diorissimo"
+   },
+   {
+    "q": "Chanel No. 5",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°5 EDP"
+   },
+   {
+    "q": "Jean Patou Joy",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Guerlain L'Heure Bleue",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "L'Heure Bleue"
+   },
+   {
+    "q": "Fracas Robert Piguet",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Chanel No. 19",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°19"
+   },
+   {
+    "q": "Diptyque Eau Rose",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Rose"
+   },
+   {
+    "q": "Frederic Malle Carnal Flower",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Carnal Flower"
+   },
+   {
+    "q": "Tom Ford Soleil Blanc",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Soleil Blanc"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 24,
+  "sec": "Icônes",
+  "t": "Jane Birkin",
+  "d": "Un panier, un jean, une chemise blanche, un appartement parisien et une odeur qui semble appartenir à la peau.",
+  "ps": [
+   {
+    "q": "Miller Harris L'Air de Rien",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Guerlain L'Heure Bleue",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "L'Heure Bleue"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Serge Lutens Féminité du Bois",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Féminité du Bois"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Chanel No. 19",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°19"
+   },
+   {
+    "q": "Frederic Malle En Passant",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "En Passant"
+   },
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Hermès Un Jardin sur le Nil",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Un Jardin Sur Le Nil"
+   }
+  ],
+  "note": [
+   "L'Air de Rien a été créé en collaboration avec Jane Birkin et reste directement présenté par Miller Harris comme son parfum iconique. ([Miller Harris](https://eu.millerharris.com/blogs/notes/l-air-de-rien-the-scent-of-quiet-rebellion?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 25,
+  "sec": "Icônes",
+  "t": "Audrey Hepburn",
+  "d": "Gamine parisienne, couture Givenchy, fleurs blanches et élégance absolue.",
+  "ps": [
+   {
+    "q": "Givenchy L'Interdit",
+    "lab": "",
+    "h": "Givenchy",
+    "n": "L'Interdit"
+   },
+   {
+    "q": "Diorissimo",
+    "lab": "",
+    "h": "Dior",
+    "n": "Diorissimo"
+   },
+   {
+    "q": "Chanel No. 5",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°5 EDP"
+   },
+   {
+    "q": "Guerlain L'Heure Bleue",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "L'Heure Bleue"
+   },
+   {
+    "q": "Chanel No. 19",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°19"
+   },
+   {
+    "q": "Hermès Calèche",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Caleche"
+   },
+   {
+    "q": "Jean Patou Joy",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Guerlain Chamade",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Chamade"
+   },
+   {
+    "q": "Dior J'adore",
+    "lab": "",
+    "h": "Dior",
+    "n": "J'adore"
+   },
+   {
+    "q": "Frederic Malle En Passant",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "En Passant"
+   }
+  ],
+  "note": [
+   "L'Interdit est ici un véritable lien historique : Givenchy l'avait créé pour Hepburn, qui fut sa seule porteuse avant sa commercialisation. ([Vogue France](https://www.vogue.fr/article/parfum-audrey-hepburn-nouvelle-version?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 26,
+  "sec": "Icônes",
+  "t": "Marilyn Monroe",
+  "d": "Hollywood, satin, lumière blanche et sensualité glamour.",
+  "ps": [
+   {
+    "q": "Chanel No. 5",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°5 EDP"
+   },
+   {
+    "q": "Dior J'adore",
+    "lab": "",
+    "h": "Dior",
+    "n": "J'adore"
+   },
+   {
+    "q": "Guerlain Shalimar",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Shalimar"
+   },
+   {
+    "q": "Jean Patou Joy",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Fracas",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Tom Ford Lost Cherry",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Lost Cherry"
+   },
+   {
+    "q": "Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Guerlain Samsara",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Samsara"
+   },
+   {
+    "q": "Dior Hypnotic Poison",
+    "lab": "",
+    "h": "Dior",
+    "n": "Hypnotic Poison"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   }
+  ],
+  "note": [
+   "N°5 est ici une association historique explicitement documentée par Chanel elle-même. ([CHANEL](https://www.chanel.com/ie/about-chanel/the-house-of-chanel/1950/?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 27,
+  "sec": "Culture",
+  "t": "Clean Girl",
+  "d": "Douche fraîche, cheveux propres, chemise blanche, skincare, appartement impeccable.",
+  "ps": [
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Narciso Rodriguez Pure Musc",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Pure Musc"
+   },
+   {
+    "q": "Glossier You",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Margiela Lazy Sunday Morning",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Lazy Sunday Morning"
+   },
+   {
+    "q": "Prada Infusion d'Iris",
+    "lab": "",
+    "h": "Prada",
+    "n": "Infusion d'Iris"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Diptyque Fleur de Peau",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Fleur de Peau"
+   },
+   {
+    "q": "Jo Malone Wood Sage & Sea Salt",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "Wood Sage & Sea Salt"
+   },
+   {
+    "q": "Aesop Tacit",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Tacit"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 28,
+  "sec": "Culture",
+  "t": "Pilates Matcha Girl",
+  "d": "Elle commence sa journée par Pilates, matcha glacé, cheveux attachés et parfum propre avant de sortir.",
+  "ps": [
+   {
+    "q": "Le Labo Thé Matcha 26",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Matcha 26"
+   },
+   {
+    "q": "Phlur Matcha Milk",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Liis Rose Struck",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Diptyque Eau Rose",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Rose"
+   },
+   {
+    "q": "Narciso Rodriguez Pure Musc",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Pure Musc"
+   },
+   {
+    "q": "Aesop Tacit",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Tacit"
+   },
+   {
+    "q": "Glossier You",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Jo Malone English Pear & Freesia",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "English Pear & Freesia"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 29,
+  "sec": "Culture",
+  "t": "Vanilla Girl",
+  "d": "Tout est crème, vanille, cachemire et peau chaude.",
+  "ps": [
+   {
+    "q": "Kayali Vanilla 28",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Guerlain Spiritueuse Double Vanille",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Spiritueuse Double Vanille"
+   },
+   {
+    "q": "Maison Mataha Escapade Gourmande",
+    "lab": "",
+    "h": "Maison Matahá",
+    "n": "Escapade Gourmande"
+   },
+   {
+    "q": "Nishane Ani",
+    "lab": "",
+    "h": "Nishane",
+    "n": "Ani"
+   },
+   {
+    "q": "Parfums de Marly Althaïr",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Althaïr"
+   },
+   {
+    "q": "Tom Ford Vanille Fatale",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "By Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Indult Tihota",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Francis Kurkdjian Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 30,
+  "sec": "Culture",
+  "t": "Dark Feminine",
+  "d": "Noir, velours, lèvres rouges, fleurs sombres et parfum qui reste longtemps après ton départ.",
+  "ps": [
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Tom Ford Black Orchid",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Black Orchid"
+   },
+   {
+    "q": "MFK Oud Satin Mood",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "By Kilian Black Phantom",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Black Phantom"
+   },
+   {
+    "q": "Serge Lutens Arabie",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Arabie"
+   },
+   {
+    "q": "Nasomatto Narcotic Venus",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Narcotic Venus"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   },
+   {
+    "q": "Amouage Guidance",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Guidance"
+   },
+   {
+    "q": "Initio Atomic Rose",
+    "lab": "",
+    "h": "Initio",
+    "n": "Atomic Rose"
+   },
+   {
+    "q": "Chanel Coromandel",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Coromandel"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 31,
+  "sec": "Culture",
+  "t": "Coquette",
+  "d": "Rubans, poudre, fleurs, vanille et une séduction volontairement théâtrale.",
+  "ps": [
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Parfums de Marly Delina",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina"
+   },
+   {
+    "q": "Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Chanel Chance Eau Tendre",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Chance Eau Tendre"
+   },
+   {
+    "q": "Dior Miss Dior",
+    "lab": "",
+    "h": "Dior",
+    "n": "Miss Dior EDP"
+   },
+   {
+    "q": "Guerlain Mon Guerlain",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Mon Guerlain"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Amyris Femme",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Amyris Femme"
+   },
+   {
+    "q": "Diptyque Eau Rose",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Rose"
+   },
+   {
+    "q": "Byredo Rose of No Man's Land",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Rose of No Man's Land"
+   },
+   {
+    "q": "Prada Paradoxe",
+    "lab": "",
+    "h": "Prada",
+    "n": "Paradoxe"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 32,
+  "sec": "Culture",
+  "t": "Mob Wife",
+  "d": "Fourrure, lunettes noires, cuir, restaurant italien et parfum qui arrive avant elle.",
+  "ps": [
+   {
+    "q": "Tom Ford Black Orchid",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Black Orchid"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   },
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "BDK Tabac Rose",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Tabac Rose"
+   },
+   {
+    "q": "Kilian Black Phantom",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Black Phantom"
+   },
+   {
+    "q": "Amouage Guidance",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Guidance"
+   },
+   {
+    "q": "Xerjoff Italica",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Italica"
+   },
+   {
+    "q": "Maison Crivelli Oud Maracujá",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Oud Maracujá"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 33,
+  "sec": "Culture",
+  "t": "Quiet Luxury",
+  "d": "Cashmere, galerie d'art, bois clair et silence. Rien ne cherche à prouver quoi que ce soit.",
+  "ps": [
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Diptyque Tam Dao",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Tam Dao"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Chanel Sycomore",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Sycomore"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   },
+   {
+    "q": "Frederic Malle L'Eau d'Hiver",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "L'Eau d'Hiver"
+   },
+   {
+    "q": "Hermès H24",
+    "lab": "",
+    "h": "Hermès",
+    "n": "H24"
+   },
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Aesop Hwyl",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Hwyl"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 34,
+  "sec": "Culture",
+  "t": "The Ralph Lauren Campaign",
+  "d": "Si ta vie ressemblait à une campagne Ralph Lauren : chevaux, chemise blanche, country house, cuir et fin d'après-midi dorée.",
+  "ps": [
+   {
+    "q": "Ralph Lauren Polo",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Penhaligon's Sartorial",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Sartorial"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Hermès Terre d'Hermès",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Terre d'Hermès"
+   },
+   {
+    "q": "Chanel Pour Monsieur",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Pour Monsieur"
+   },
+   {
+    "q": "Dior Eau Sauvage",
+    "lab": "",
+    "h": "Dior",
+    "n": "Eau Sauvage"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Roja Vetiver",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Vetiver"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 35,
+  "sec": "Culture",
+  "t": "Finance Bro",
+  "d": "Terminal ouvert, chemise Oxford, café à emporter, Manhattan et une obsession pour la prochaine transaction.",
+  "ps": [
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Dior Homme 2020",
+    "lab": "",
+    "h": "Dior",
+    "n": "Homme 2020"
+   },
+   {
+    "q": "Bleu de Chanel Parfum",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Le Labo Santal 33",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Santal 33"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "MFK Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   },
+   {
+    "q": "Parfums de Marly Percival",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Percival"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 36,
+  "sec": "Culture",
+  "t": "Tech Bro",
+  "d": "MacBook, hoodie parfaitement choisi, coffee shop, startup et parfum minimaliste que personne n'arrive à identifier.",
+  "ps": [
+   {
+    "q": "Escentric Molecules Molecule 01",
+    "lab": "",
+    "h": "Escentric Molecules",
+    "n": "Molecule 01"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Byredo Mojave Ghost",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Mojave Ghost"
+   },
+   {
+    "q": "Comme des Garçons Wonderwood",
+    "lab": "",
+    "h": "Comme des Garçons",
+    "n": "Wonderwood"
+   },
+   {
+    "q": "Le Labo Santal 33",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Santal 33"
+   },
+   {
+    "q": "Aesop Hwyl",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Hwyl"
+   },
+   {
+    "q": "Diptyque Tam Dao",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Tam Dao"
+   },
+   {
+    "q": "DS & Durga I Don't Know What",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Francis Kurkdjian Gentle Fluidity Silver",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Silver"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 37,
+  "sec": "Culture",
+  "t": "Model Off-Duty",
+  "d": "Elle sort du studio avec un jean, des lunettes noires et donne l'impression de n'avoir rien fait.",
+  "ps": [
+   {
+    "q": "Byredo Mojave Ghost",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Mojave Ghost"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Glossier You",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Diptyque Fleur de Peau",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Fleur de Peau"
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Narciso Rodriguez For Her Musc Noir",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "For Her Musc Noir"
+   },
+   {
+    "q": "Maison Margiela Lazy Sunday Morning",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Lazy Sunday Morning"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 38,
+  "sec": "Destinations",
+  "t": "Paris",
+  "d": "Matin gris, boulangerie, manteau noir, librairie, café en terrasse et taxi sous la pluie.",
+  "ps": [
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "Frederic Malle Musc Ravageur",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Musc Ravageur"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   },
+   {
+    "q": "Serge Lutens Féminité du Bois",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Féminité du Bois"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Chanel Coromandel",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Coromandel"
+   },
+   {
+    "q": "Maison Crivelli Bois Datchaï",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Bois Datchaï"
+   },
+   {
+    "q": "Ex Nihilo Fleur Narcotique",
+    "lab": "",
+    "h": "Ex Nihilo",
+    "n": "Fleur Narcotique"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 39,
+  "sec": "Destinations",
+  "t": "New York",
+  "d": "Espresso à SoHo, taxi jaune, rooftop, costume noir et nuit qui finit beaucoup trop tard.",
+  "ps": [
+   {
+    "q": "Le Labo Santal 33",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Santal 33"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Maison Margiela Jazz Club",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Jazz Club"
+   },
+   {
+    "q": "Frederic Malle Musc Ravageur",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Musc Ravageur"
+   },
+   {
+    "q": "Bond No. 9 New York Nights",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "DS & Durga Bowmakers",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Byredo 1996",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 40,
+  "sec": "Destinations",
+  "t": "London",
+  "d": "Pluie sur les vitres, Mayfair, espresso martini, cuir, tweed et taxi noir.",
+  "ps": [
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Penhaligon's Sartorial",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Sartorial"
+   },
+   {
+    "q": "Penhaligon's Halfeti",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Halfeti"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Atkinsons 24 Old Bond Street",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Jo Malone Wood Sage & Sea Salt",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "Wood Sage & Sea Salt"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Boadicea the Victorious Wellington",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": [
+   "Atkinsons est particulièrement intéressant ici : la maison est historiquement liée à Mayfair et au 24 Old Bond Street depuis le XIXe siècle. ([Atkinsons 1799](https://www.atkinsons1799.com/pages/history?utm_source=chatgpt.com))"
+  ]
+ },
+ {
+  "id": 41,
+  "sec": "Destinations",
+  "t": "Milan",
+  "d": "Costume italien, espresso debout au comptoir, cuir, marbre et rendez-vous entre deux défilés.",
+  "ps": [
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   },
+   {
+    "q": "Santa Maria Novella Tabacco Toscano",
+    "lab": "",
+    "h": "Santa Maria Novella",
+    "n": "Tabacco Toscano"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Armani Privé Bois d'Encens",
+    "lab": "",
+    "h": "Armani",
+    "n": "Bois d'Encens"
+   },
+   {
+    "q": "Valentino Uomo Intense",
+    "lab": "",
+    "h": "Valentino",
+    "n": "Uomo Intense"
+   },
+   {
+    "q": "Bottega Veneta Pour Homme",
+    "lab": "",
+    "h": "Bottega Veneta",
+    "n": "Bottega Veneta Pour Homme"
+   },
+   {
+    "q": "Xerjoff Renaissance",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Renaissance"
+   },
+   {
+    "q": "Tiziana Terenzi Kirke",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 42,
+  "sec": "Destinations",
+  "t": "Rome",
+  "d": "Pierres chaudes, chemise blanche, vieille Fiat, espresso et coucher de soleil sur les toits.",
+  "ps": [
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Santa Maria Novella Melograno",
+    "lab": "",
+    "h": "Santa Maria Novella",
+    "n": "Melograno"
+   },
+   {
+    "q": "Xerjoff Renaissance",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Renaissance"
+   },
+   {
+    "q": "Xerjoff Mefisto Gentiluomo",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Mefisto Gentiluomo"
+   },
+   {
+    "q": "Profumum Roma Acqua di Sale",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Profumum Roma Neroli",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Valentino Uomo",
+    "lab": "",
+    "h": "Valentino",
+    "n": "Uomo"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Maison Crivelli Papyrus Moléculaire",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Papyrus Moléculaire"
+   },
+   {
+    "q": "Creed Original Vetiver",
+    "lab": "",
+    "h": "Creed",
+    "n": "Original Vetiver"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 43,
+  "sec": "Destinations",
+  "t": "Côte d'Azur",
+  "d": "Décapotable, chemise en lin, peau salée, agrumes et après-midi interminable.",
+  "ps": [
+   {
+    "q": "Tom Ford Neroli Portofino",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Neroli Portofino"
+   },
+   {
+    "q": "Creed Virgin Island Water",
+    "lab": "",
+    "h": "Creed",
+    "n": "Virgin Island Water"
+   },
+   {
+    "q": "Acqua di Parma Fico di Amalfi",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Fico di Amalfi"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Celestia",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Celestia"
+   },
+   {
+    "q": "Jo Malone Lime Basil & Mandarin",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "Lime Basil & Mandarin"
+   },
+   {
+    "q": "Chanel Paris–Riviera",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Paris-Riviera"
+   },
+   {
+    "q": "Xerjoff Mefisto",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Mefisto"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Tom Ford Soleil Blanc",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Soleil Blanc"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 44,
+  "sec": "Destinations",
+  "t": "Saint-Tropez",
+  "d": "Une chemise Souleiado orange, un bateau au port, rosé glacé et coucher de soleil.",
+  "ps": [
+   {
+    "q": "Tom Ford Neroli Portofino",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Neroli Portofino"
+   },
+   {
+    "q": "Creed Virgin Island Water",
+    "lab": "",
+    "h": "Creed",
+    "n": "Virgin Island Water"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Acqua di Parma Fico di Amalfi",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Fico di Amalfi"
+   },
+   {
+    "q": "Tom Ford Soleil Blanc",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Soleil Blanc"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Celestia",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Celestia"
+   },
+   {
+    "q": "Byredo Sundazed",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Sundazed"
+   },
+   {
+    "q": "Chanel Paris–Riviera",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Paris-Riviera"
+   },
+   {
+    "q": "Creed Erolfa",
+    "lab": "",
+    "h": "Creed",
+    "n": "Erolfa"
+   },
+   {
+    "q": "Heeley Sel Marin",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 45,
+  "sec": "Destinations",
+  "t": "Monaco",
+  "d": "Monte-Carlo, paddock, cuir, architecture blanche et élégance très précise.",
+  "ps": [
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Dior Homme 2020",
+    "lab": "",
+    "h": "Dior",
+    "n": "Homme 2020"
+   },
+   {
+    "q": "Bvlgari Tygar",
+    "lab": "",
+    "h": "Bvlgari",
+    "n": "Tygar"
+   },
+   {
+    "q": "Roja Oceania",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Oceania"
+   }
+  ],
+  "note": [
+   "BR540 sort définitivement de Monaco."
+  ]
+ },
+ {
+  "id": 46,
+  "sec": "Destinations",
+  "t": "Lake Como",
+  "d": "Villa au bord de l'eau, bateau en bois, chemise ouverte et jardin italien.",
+  "ps": [
+   {
+    "q": "Acqua di Parma Fico di Amalfi",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Fico di Amalfi"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Tom Ford Neroli Portofino",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Neroli Portofino"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Armani Privé Thé Yulong",
+    "lab": "",
+    "h": "Armani",
+    "n": "Thé Yulong"
+   },
+   {
+    "q": "Santa Maria Novella Melograno",
+    "lab": "",
+    "h": "Santa Maria Novella",
+    "n": "Melograno"
+   },
+   {
+    "q": "Maison Crivelli Papyrus Moléculaire",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Papyrus Moléculaire"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 47,
+  "sec": "Destinations",
+  "t": "Dubai",
+  "d": "Marbre, oud, saffran, hôtel immense et parfum qui reste dans l'ascenseur.",
+  "ps": [
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "MFK Oud Satin Mood",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "Amouage Interlude Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Interlude Man"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Initio Oud for Greatness",
+    "lab": "",
+    "h": "Initio",
+    "n": "Oud for Greatness"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Oud",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud"
+   },
+   {
+    "q": "Roja Enigma",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Enigma Pour Homme"
+   },
+   {
+    "q": "Xerjoff Erba Pura",
+    "lab": "",
+    "h": "Sospiro",
+    "n": "Erba Pura"
+   },
+   {
+    "q": "Parfums de Marly Layton",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Layton"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 48,
+  "sec": "Destinations",
+  "t": "Tokyo",
+  "d": "Néons, architecture minimaliste, thé, bois de hinoki et silence.",
+  "ps": [
+   {
+    "q": "Comme des Garçons Hinoki",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Le Labo Gaiac 10",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Gaiac 10"
+   },
+   {
+    "q": "Aesop Hwyl",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Hwyl"
+   },
+   {
+    "q": "Diptyque Tam Dao",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Tam Dao"
+   },
+   {
+    "q": "Comme des Garçons Wonderwood",
+    "lab": "",
+    "h": "Comme des Garçons",
+    "n": "Wonderwood"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Nishane Wulong Cha",
+    "lab": "",
+    "h": "Nishane",
+    "n": "Wulong Cha"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 49,
+  "sec": "Atmosphères",
+  "t": "Hiver à New York",
+  "d": "Il neige dehors. Espresso martini dans un lounge privé, manteau noir et taxi jusqu'à Tribeca.",
+  "ps": [
+   {
+    "q": "Maison Margiela By the Fireplace",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "By the Fireplace"
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Tom Ford Tobacco Vanille",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tobacco Vanille"
+   },
+   {
+    "q": "MFK Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "By Kilian Straight to Heaven",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Straight to Heaven"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Oud Satin Mood",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Parfums de Marly Herod",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Herod"
+   },
+   {
+    "q": "Nasomatto Baraonda",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Baraonda"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 50,
+  "sec": "Atmosphères",
+  "t": "Été à Saint-Tropez",
+  "d": "Midi au soleil, mer bleue, peau chaude, figuier et coucher de soleil orange.",
+  "ps": [
+   {
+    "q": "Tom Ford Neroli Portofino",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Neroli Portofino"
+   },
+   {
+    "q": "Creed Virgin Island Water",
+    "lab": "",
+    "h": "Creed",
+    "n": "Virgin Island Water"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Acqua di Parma Fico di Amalfi",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Fico di Amalfi"
+   },
+   {
+    "q": "Tom Ford Soleil Blanc",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Soleil Blanc"
+   },
+   {
+    "q": "Creed Erolfa",
+    "lab": "",
+    "h": "Creed",
+    "n": "Erolfa"
+   },
+   {
+    "q": "Byredo Sundazed",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Sundazed"
+   },
+   {
+    "q": "Chanel Paris–Riviera",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Paris-Riviera"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Celestia",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Celestia"
+   },
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 51,
+  "sec": "Atmosphères",
+  "t": "Automne Cozy",
+  "d": "Pull en maille, pluie contre la fenêtre, cinnamon rolls au four et livre ouvert.",
+  "ps": [
+   {
+    "q": "Maison Margiela By the Fireplace",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "By the Fireplace"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Parfums de Marly Althaïr",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Althaïr"
+   },
+   {
+    "q": "Maison Mataha Escapade Gourmande",
+    "lab": "",
+    "h": "Maison Matahá",
+    "n": "Escapade Gourmande"
+   },
+   {
+    "q": "Nishane Ani",
+    "lab": "",
+    "h": "Nishane",
+    "n": "Ani"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Tom Ford Tobacco Vanille",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tobacco Vanille"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   },
+   {
+    "q": "BDK Gris Charnel",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel"
+   },
+   {
+    "q": "Replica Coffee Break",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 52,
+  "sec": "Atmosphères",
+  "t": "Sunset Tennis",
+  "d": "Dernier match de la journée. Terre battue, polo blanc, peau chaude et soleil qui disparaît derrière les arbres.",
+  "ps": [
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Hermès H24",
+    "lab": "",
+    "h": "Hermès",
+    "n": "H24"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Creed Original Vetiver",
+    "lab": "",
+    "h": "Creed",
+    "n": "Original Vetiver"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Chanel Allure Homme Sport",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Allure Homme Sport"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Parfums de Marly Percival",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Percival"
+   },
+   {
+    "q": "Bvlgari Tygar",
+    "lab": "",
+    "h": "Bvlgari",
+    "n": "Tygar"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 53,
+  "sec": "Atmosphères",
+  "t": "Ski Weekend",
+  "d": "Chalet en bois, neige fraîche, pull en cachemire et vin chaud devant la cheminée.",
+  "ps": [
+   {
+    "q": "Maison Margiela By the Fireplace",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "By the Fireplace"
+   },
+   {
+    "q": "Parfums de Marly Herod",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Herod"
+   },
+   {
+    "q": "Tom Ford Tobacco Vanille",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tobacco Vanille"
+   },
+   {
+    "q": "BDK Gris Charnel Extrait",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel Extrait"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Parfums de Marly Althaïr",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Althaïr"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   }
+  ],
+  "note": [
+   "Interlude Man est sorti. Le chalet doit sentir le bois, la fumée, les épices et le textile chaud, pas l'encens omanais."
+  ]
+ },
+ {
+  "id": 54,
+  "sec": "Moments",
+  "t": "Gameday",
+  "d": "Maillot, veste légère, soleil de fin d'après-midi, stade et après-match.",
+  "ps": [
+   {
+    "q": "Hermès H24",
+    "lab": "",
+    "h": "Hermès",
+    "n": "H24"
+   },
+   {
+    "q": "Creed Aventus Cologne",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus Cologne"
+   },
+   {
+    "q": "Prada Luna Rossa Carbon",
+    "lab": "",
+    "h": "Prada",
+    "n": "Luna Rossa Carbon"
+   },
+   {
+    "q": "Chanel Allure Homme Sport Eau Extrême",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Allure Homme Sport Eau Extrême"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Creed Original Vetiver",
+    "lab": "",
+    "h": "Creed",
+    "n": "Original Vetiver"
+   },
+   {
+    "q": "Parfums de Marly Percival",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Percival"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Guerlain Homme",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Guerlain Homme"
+   },
+   {
+    "q": "Bvlgari Tygar",
+    "lab": "",
+    "h": "Bvlgari",
+    "n": "Tygar"
+   }
+  ],
+  "note": [
+   "Dylan Blue est supprimé."
+  ]
+ },
+ {
+  "id": 55,
+  "sec": "Moments",
+  "t": "F1",
+  "d": "Monaco, paddock, cuir, pneus chauds, champagne et soleil méditerranéen.",
+  "ps": [
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Bvlgari Tygar",
+    "lab": "",
+    "h": "Bvlgari",
+    "n": "Tygar"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "MFK Gentle Fluidity Silver",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Silver"
+   },
+   {
+    "q": "Maison Crivelli Papyrus Moléculaire",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Papyrus Moléculaire"
+   },
+   {
+    "q": "Parfums de Marly Percival",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Percival"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 56,
+  "sec": "Moments",
+  "t": "First Date",
+  "d": "Vous vous êtes préparés sans vouloir avoir l'air de vous être préparés.",
+  "ps": [
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "MFK Gentle Fluidity Silver",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Silver"
+   },
+   {
+    "q": "Narciso Rodriguez For Her Musc Noir",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "For Her Musc Noir"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Initio Musk Therapy",
+    "lab": "",
+    "h": "Initio",
+    "n": "Musk Therapy"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Amyris",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Amyris"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Parfums de Marly Delina",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina"
+   },
+   {
+    "q": "Bleu de Chanel Parfum",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 57,
+  "sec": "Moments",
+  "t": "Board Meeting",
+  "d": "Salle vitrée, costume impeccable, café noir. Personne ne parle inutilement.",
+  "ps": [
+   {
+    "q": "Tom Ford Grey Vetiver",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Grey Vetiver"
+   },
+   {
+    "q": "Chanel Platinum Égoïste",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Égoïste Platinum"
+   },
+   {
+    "q": "Dior Homme 2020",
+    "lab": "",
+    "h": "Dior",
+    "n": "Homme 2020"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "MFK Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Hermès Terre d'Hermès",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Terre d'Hermès"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 58,
+  "sec": "Moments",
+  "t": "Elegant But Fun",
+  "d": "Costume impeccable mais sourire facile. Vous êtes élégant, pas coincé.",
+  "ps": [
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Parfums de Marly Layton",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Layton"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Nishane Hacivat",
+    "lab": "",
+    "h": "Nishane",
+    "n": "Hacivat"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 59,
+  "sec": "Moments",
+  "t": "Effortless Chic",
+  "d": "Tu as l'air d'avoir attrapé les premiers vêtements venus. Ils coûtent simplement beaucoup trop bien.",
+  "ps": [
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Byredo Mojave Ghost",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Mojave Ghost"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Chanel Paris–Deauville",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Paris-Deauville"
+   },
+   {
+    "q": "Aesop Tacit",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Tacit"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 60,
+  "sec": "Moments",
+  "t": "Femme Sportive",
+  "d": "Elle sort du tennis, remet ses lunettes et va déjeuner sans jamais perdre son élégance.",
+  "ps": [
+   {
+    "q": "Xerjoff Torino21",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Torino21"
+   },
+   {
+    "q": "Creed Aventus for Her",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus for Her"
+   },
+   {
+    "q": "Hermès Un Jardin sur le Nil",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Un Jardin Sur Le Nil"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Chanel Chance Eau Fraîche",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Chance Eau Fraîche"
+   },
+   {
+    "q": "Jo Malone Wood Sage & Sea Salt",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "Wood Sage & Sea Salt"
+   },
+   {
+    "q": "Diptyque Philosykos",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Philosykos"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Dior Addict Eau Fraîche",
+    "lab": "",
+    "h": "Dior",
+    "n": "Addict Eau Fraîche"
+   },
+   {
+    "q": "Creed Love in White",
+    "lab": "",
+    "h": "Creed",
+    "n": "Love in White"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 61,
+  "sec": "Moments",
+  "t": "Sunday Morning",
+  "d": "Draps propres, café, lumière du soleil et absolument aucun rendez-vous.",
+  "ps": [
+   {
+    "q": "Maison Margiela Lazy Sunday Morning",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Lazy Sunday Morning"
+   },
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Narciso Rodriguez Pure Musc",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Pure Musc"
+   },
+   {
+    "q": "Glossier You",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Diptyque Fleur de Peau",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Fleur de Peau"
+   },
+   {
+    "q": "Prada Infusion d'Iris",
+    "lab": "",
+    "h": "Prada",
+    "n": "Infusion d'Iris"
+   },
+   {
+    "q": "MFK Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Aesop Tacit",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Tacit"
+   },
+   {
+    "q": "Jo Malone English Pear & Freesia",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "English Pear & Freesia"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 62,
+  "sec": "Moments",
+  "t": "En famille",
+  "d": "Dimanche midi, cuisine ouverte, enfants qui courent et grand-mère qui arrive avec un gâteau.",
+  "ps": [
+   {
+    "q": "Guerlain L'Instant de Guerlain",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "L'Instant de Guerlain"
+   },
+   {
+    "q": "Chanel Allure",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Allure"
+   },
+   {
+    "q": "Hermès Un Jardin sur le Nil",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Un Jardin Sur Le Nil"
+   },
+   {
+    "q": "Jo Malone English Pear & Freesia",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "English Pear & Freesia"
+   },
+   {
+    "q": "Diptyque Eau Rose",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Rose"
+   },
+   {
+    "q": "Dior Homme Original",
+    "lab": "",
+    "h": "Dior",
+    "n": "Dior Homme Original"
+   },
+   {
+    "q": "Acqua di Parma Colonia",
+    "lab": "",
+    "h": "Acqua di Parma",
+    "n": "Colonia"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 63,
+  "sec": "Moments",
+  "t": "Hôtel Lobby",
+  "d": "Marbre, fleurs fraîches, bois ciré, bagages en cuir et parfum qui flotte dans l'air.",
+  "ps": [
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   },
+   {
+    "q": "MFK Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 64,
+  "sec": "Effets",
+  "t": "Je veux qu'on me remarque",
+  "d": "Pas forcément fort. Juste impossible à oublier.",
+  "ps": [
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Maison Crivelli Oud Maracujá",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Oud Maracujá"
+   },
+   {
+    "q": "Amouage Guidance",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Guidance"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "Xerjoff Erba Pura",
+    "lab": "",
+    "h": "Sospiro",
+    "n": "Erba Pura"
+   },
+   {
+    "q": "Parfums de Marly Delina Exclusif",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina Exclusif"
+   },
+   {
+    "q": "Tom Ford Lost Cherry",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Lost Cherry"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   },
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Nasomatto Black Afgano",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Black Afgano"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 65,
+  "sec": "Effets",
+  "t": "Je veux sentir cher",
+  "d": "Bois précieux, iris, musc propre et matières qui donnent immédiatement une impression de sophistication.",
+  "ps": [
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Chanel Sycomore",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Sycomore"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Masculin Pluriel",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Masculin Pluriel"
+   },
+   {
+    "q": "Amouage Reflection Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Reflection Man"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 66,
+  "sec": "Effets",
+  "t": "Je veux sentir propre",
+  "d": "La chemise vient de sortir de la blanchisserie.",
+  "ps": [
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Prada L'Homme",
+    "lab": "",
+    "h": "Prada",
+    "n": "L'Homme"
+   },
+   {
+    "q": "Narciso Rodriguez Pure Musc",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Pure Musc"
+   },
+   {
+    "q": "Maison Margiela Lazy Sunday Morning",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Lazy Sunday Morning"
+   },
+   {
+    "q": "MFK Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Glossier You",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Chanel 1957",
+    "lab": "",
+    "h": "Chanel",
+    "n": "1957"
+   },
+   {
+    "q": "Diptyque Fleur de Peau",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Fleur de Peau"
+   },
+   {
+    "q": "Aesop Tacit",
+    "lab": "",
+    "h": "Aesop",
+    "n": "Tacit"
+   },
+   {
+    "q": "Maison Francis Kurkdjian 724",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "724"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 67,
+  "sec": "Effets",
+  "t": "Je veux sentir sexy",
+  "d": "Peau chaude, lumière basse et distance beaucoup trop courte.",
+  "ps": [
+   {
+    "q": "MFK Oud Satin Mood",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "Tom Ford Lost Cherry",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Lost Cherry"
+   },
+   {
+    "q": "Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "Frederic Malle Musc Ravageur",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Musc Ravageur"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   },
+   {
+    "q": "Parfums de Marly Delina Exclusif",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina Exclusif"
+   },
+   {
+    "q": "Narciso Rodriguez Musc Noir Rose",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Musc Noir Rose"
+   },
+   {
+    "q": "By Kilian Black Phantom",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Black Phantom"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 68,
+  "sec": "Effets",
+  "t": "Je veux sentir mystérieux",
+  "d": "Personne ne sait exactement ce que c'est. C'est précisément le but.",
+  "ps": [
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Maison Crivelli Iris Malikhân",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Iris Malikhân"
+   },
+   {
+    "q": "Nasomatto Baraonda",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Baraonda"
+   },
+   {
+    "q": "Comme des Garçons Black",
+    "lab": "",
+    "h": "Comme des Garçons",
+    "n": "Black"
+   },
+   {
+    "q": "Amouage Memoir Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Memoir Man"
+   },
+   {
+    "q": "BDK Gris Charnel Extrait",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel Extrait"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 69,
+  "sec": "Effets",
+  "t": "Je veux sentir dangereux",
+  "d": "Pas agressif. Dangereusement séduisant.",
+  "ps": [
+   {
+    "q": "Tom Ford Tuscan Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tuscan Leather"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   },
+   {
+    "q": "Nasomatto Black Afgano",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Black Afgano"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "Amouage Interlude Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Interlude Man"
+   },
+   {
+    "q": "Maison Crivelli Oud Maracujá",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Oud Maracujá"
+   },
+   {
+    "q": "By Kilian Black Phantom",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Black Phantom"
+   },
+   {
+    "q": "Serge Lutens Arabie",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Arabie"
+   },
+   {
+    "q": "Nasomatto Duro",
+    "lab": "",
+    "h": "Nasomatto",
+    "n": "Duro"
+   },
+   {
+    "q": "Etat Libre d'Orange Rien",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 70,
+  "sec": "Effets",
+  "t": "Compliments",
+  "d": "La playlist dont le KPI est simple : « C'est quoi ton parfum ? »",
+  "ps": [
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Parfums de Marly Delina",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina"
+   },
+   {
+    "q": "Parfums de Marly Layton",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Layton"
+   },
+   {
+    "q": "Initio Musk Therapy",
+    "lab": "",
+    "h": "Initio",
+    "n": "Musk Therapy"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Byredo Bal d'Afrique",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Bal d'Afrique"
+   },
+   {
+    "q": "Narciso Rodriguez Musc Noir Rose",
+    "lab": "",
+    "h": "Narciso Rodriguez",
+    "n": "Musc Noir Rose"
+   },
+   {
+    "q": "Dior Sauvage Elixir",
+    "lab": "",
+    "h": "Dior",
+    "n": "Sauvage Elixir"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 71,
+  "sec": "Cinéma & séries",
+  "t": "Jordan Belfort",
+  "d": "Long Island, costume rayé, champagne, club privé et confiance complètement disproportionnée.",
+  "ps": [
+   {
+    "q": "Tom Ford Tuscan Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tuscan Leather"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Creed Aventus",
+    "lab": "",
+    "h": "Creed",
+    "n": "Aventus"
+   },
+   {
+    "q": "Roja Enigma",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Enigma Pour Homme"
+   },
+   {
+    "q": "Clive Christian X for Men",
+    "lab": "",
+    "h": "Clive Christian",
+    "n": "X For Men"
+   },
+   {
+    "q": "Initio Side Effect",
+    "lab": "",
+    "h": "Initio",
+    "n": "Side Effect"
+   },
+   {
+    "q": "Parfums de Marly Layton",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Layton"
+   },
+   {
+    "q": "Xerjoff Naxos",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Naxos"
+   },
+   {
+    "q": "Tom Ford Ombré Leather",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Ombré Leather"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 72,
+  "sec": "Cinéma & séries",
+  "t": "Naomi",
+  "d": "New York, robe moulante, champagne, cheveux impeccables et parfum qui remplit la pièce.",
+  "ps": [
+   {
+    "q": "Tom Ford Lost Cherry",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Lost Cherry"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Parfums de Marly Delina Exclusif",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Delina Exclusif"
+   },
+   {
+    "q": "Kilian Love, Don't Be Shy",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Love, Don't Be Shy"
+   },
+   {
+    "q": "Initio Atomic Rose",
+    "lab": "",
+    "h": "Initio",
+    "n": "Atomic Rose"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Xerjoff Erba Pura",
+    "lab": "",
+    "h": "Sospiro",
+    "n": "Erba Pura"
+   },
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Tom Ford Bitter Peach",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Bitter Peach"
+   },
+   {
+    "q": "Maison Crivelli Hibiscus Mahajád",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Hibiscus Mahajád"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 73,
+  "sec": "Cinéma & séries",
+  "t": "Évasion fiscale",
+  "d": "Mayfair, sociétés offshore, comptes à l'étranger, costume sombre et téléphone qui ne quitte jamais la poche.",
+  "ps": [
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Creed Royal Oud",
+    "lab": "",
+    "h": "Creed",
+    "n": "Royal Oud"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Amouage Interlude Man",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Interlude Man"
+   },
+   {
+    "q": "MFK Baccarat Rouge 540",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Baccarat Rouge 540"
+   },
+   {
+    "q": "Roja Enigma",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Enigma Pour Homme"
+   },
+   {
+    "q": "BDK Gris Charnel Extrait",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel Extrait"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Oud",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud"
+   },
+   {
+    "q": "Serge Lutens Chergui",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Chergui"
+   },
+   {
+    "q": "Penhaligon's Halfeti",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Halfeti"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 74,
+  "sec": "Atmosphères",
+  "t": "Le Grand Prix de l'élégance",
+  "d": "Un événement mondain hors du temps : chevaux, tailoring, champagne, jardins et gestes parfaitement maîtrisés.",
+  "ps": [
+   {
+    "q": "Creed Green Irish Tweed",
+    "lab": "",
+    "h": "Creed",
+    "n": "Green Irish Tweed"
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Chanel Sycomore",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Sycomore"
+   },
+   {
+    "q": "Roja Elysium",
+    "lab": "",
+    "h": "Roja Parfums",
+    "n": "Elysium Noir"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Penhaligon's Sartorial",
+    "lab": "",
+    "h": "Penhaligon's",
+    "n": "Sartorial"
+   },
+   {
+    "q": "Hermès Terre d'Hermès",
+    "lab": "",
+    "h": "Hermès",
+    "n": "Terre d'Hermès"
+   },
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Ormonde Jayne Ormonde Man",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 75,
+  "sec": "Atmosphères",
+  "t": "Tchaïkovski",
+  "d": "Velours rouge, orchestre, lumière tamisée et une élégance presque impériale.",
+  "ps": [
+   {
+    "q": "Guerlain L'Heure Bleue",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "L'Heure Bleue"
+   },
+   {
+    "q": "Chanel No. 5",
+    "lab": "",
+    "h": "Chanel",
+    "n": "N°5 EDP"
+   },
+   {
+    "q": "Frederic Malle Portrait of a Lady",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Portrait of a Lady"
+   },
+   {
+    "q": "Serge Lutens Féminité du Bois",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Féminité du Bois"
+   },
+   {
+    "q": "MFK Oud Satin Mood",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "Amouage Lyric Woman",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Lyric Woman"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Guerlain Shalimar",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Shalimar"
+   },
+   {
+    "q": "Xerjoff Alexandria II",
+    "lab": "",
+    "h": "Xerjoff",
+    "n": "Alexandria II"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 76,
+  "sec": "Atmosphères",
+  "t": "Christmas Eve",
+  "d": "Église, cire chaude, manteau en laine, sapin et retour à la maison sous les lumières de Noël.",
+  "ps": [
+   {
+    "q": "Serge Lutens Fille en Aiguilles",
+    "lab": "",
+    "h": "Serge Lutens",
+    "n": "Fille en Aiguilles"
+   },
+   {
+    "q": "Maison Margiela By the Fireplace",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "By the Fireplace"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "MFK Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "Guerlain Spiritueuse Double Vanille",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Spiritueuse Double Vanille"
+   },
+   {
+    "q": "Parfums de Marly Althaïr",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Althaïr"
+   },
+   {
+    "q": "Tom Ford Tobacco Vanille",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tobacco Vanille"
+   },
+   {
+    "q": "Amouage Jubilation XXV",
+    "lab": "",
+    "h": "Amouage",
+    "n": "Jubilation XXV"
+   },
+   {
+    "q": "Maison Crivelli Bois Datchaï",
+    "lab": "",
+    "h": "Maison Crivelli",
+    "n": "Bois Datchaï"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 77,
+  "sec": "Atmosphères",
+  "t": "Christmas at Hôtel Costes",
+  "d": "Décembre à Paris, manteau noir, réception, champagne et taxi tard dans la nuit.",
+  "ps": [
+   {
+    "q": "MFK Grand Soir",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Grand Soir"
+   },
+   {
+    "q": "Dior Bois d'Argent",
+    "lab": "",
+    "h": "Dior",
+    "n": "Bois d'Argent"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Oud Satin Mood",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Oud Satin Mood"
+   },
+   {
+    "q": "Tom Ford Tobacco Vanille",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Tobacco Vanille"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   },
+   {
+    "q": "Frederic Malle Musc Ravageur",
+    "lab": "",
+    "h": "Frédéric Malle",
+    "n": "Musc Ravageur"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "BDK Gris Charnel Extrait",
+    "lab": "",
+    "h": "BDK Parfums",
+    "n": "Gris Charnel Extrait"
+   },
+   {
+    "q": "Chanel Coromandel",
+    "lab": "",
+    "h": "Chanel",
+    "n": "Coromandel"
+   },
+   {
+    "q": "By Kilian Straight to Heaven",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Straight to Heaven"
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 78,
+  "sec": "Atmosphères",
+  "t": "Cinnamon Rolls",
+  "d": "Dimanche matin, beurre fondu, cannelle, vanille et cuisine encore chaude.",
+  "ps": [
+   {
+    "q": "Maison Mataha Escapade Gourmande",
+    "lab": "",
+    "h": "Maison Matahá",
+    "n": "Escapade Gourmande"
+   },
+   {
+    "q": "Parfums de Marly Althaïr",
+    "lab": "",
+    "h": "Parfums de Marly",
+    "n": "Althaïr"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Nishane Ani",
+    "lab": "",
+    "h": "Nishane",
+    "n": "Ani"
+   },
+   {
+    "q": "Kilian Angels' Share",
+    "lab": "",
+    "h": "Kilian",
+    "n": "Angels' Share"
+   },
+   {
+    "q": "Guerlain Spiritueuse Double Vanille",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Spiritueuse Double Vanille"
+   },
+   {
+    "q": "Kayali Vanilla 28",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Indult Tihota",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Maison Margiela Coffee Break",
+    "lab": "",
+    "h": "Maison Margiela",
+    "n": "Coffee Break"
+   },
+   {
+    "q": "Comptoir Sud Pacifique Vanille Abricot",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": []
+ },
+ {
+  "id": 79,
+  "sec": "Atmosphères",
+  "t": "Historical Scents",
+  "d": "Les parfums qui racontent réellement quelque chose avant même d'être vaporisés.",
+  "ps": [
+   {
+    "q": "Chanel N°5 Marilyn Monroe",
+    "lab": "Marilyn Monroe",
+    "h": "Chanel",
+    "n": "N°5 EDP"
+   },
+   {
+    "q": "Givenchy L'Interdit Audrey Hepburn",
+    "lab": "Audrey Hepburn",
+    "h": "Givenchy",
+    "n": "L'Interdit"
+   },
+   {
+    "q": "Miller Harris L'Air de Rien Jane Birkin",
+    "lab": "Jane Birkin",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Dior Eau Sauvage Alain Delon",
+    "lab": "Alain Delon",
+    "h": "Dior",
+    "n": "Eau Sauvage"
+   },
+   {
+    "q": "Jean Patou Joy tradition iconique / grandes figures féminines",
+    "lab": "tradition iconique / grandes figures féminines",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Guerlain Eau de Cologne Impériale",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Eau de Cologne Impériale Edition 160 Anniversaire"
+   },
+   {
+    "q": "Atkinsons 24 Old Bond Street",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "4711 Original Eau de Cologne",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Floris No. 89",
+    "lab": "",
+    "h": "Floris",
+    "n": "No. 89"
+   },
+   {
+    "q": "Guerlain Shalimar",
+    "lab": "",
+    "h": "Guerlain",
+    "n": "Shalimar"
+   }
+  ],
+  "note": [
+   "Atkinsons mérite bien une nuance dans ta base : la maison et le 24 Old Bond Street sont historiquement documentés, mais le flacon contemporain est une réinterprétation moderne d'un héritage historique, pas simplement un flacon inchangé depuis le XIXe siècle. ([Atkinsons 1799](https://www.atkinsons1799.com/pages/history?utm_source=chatgpt.com))",
+   "Même logique pour les autres : on distingue désormais dans ta DB « parfum porté par X », « maison liée à X », « parfum inspiré d'une époque »."
+  ]
+ },
+ {
+  "id": 80,
+  "sec": "Spécial",
+  "t": "Strange Smells",
+  "d": "Pour les gens qui ne veulent surtout pas sentir « comme un parfum ». Asphalte, goudron, métal, poussière, garage, peau et fumée.",
+  "ps": [
+   {
+    "q": "Comme des Garçons Tar",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Comme des Garçons Garage",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Comme des Garçons Concrete",
+    "lab": "",
+    "h": "Comme des Garçons",
+    "n": "Concrete"
+   },
+   {
+    "q": "Etat Libre d'Orange Sécrétions Magnifiques",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Etat Libre d'Orange Rien",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "DS & Durga Bowmakers",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Naomi Goodsir Bois d'Ascèse",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Demeter Dirt",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "Demeter Paperback",
+    "lab": "",
+    "h": "",
+    "n": ""
+   },
+   {
+    "q": "CB I Hate Perfume Burning Leaves",
+    "lab": "",
+    "h": "",
+    "n": ""
+   }
+  ],
+  "note": [
+   "Une seule playlist. Pas besoin de créer « Industrial », « Weird », « Dark Weird », « Strange Notes », etc."
+  ]
+ },
+ {
+  "id": 81,
+  "sec": "Spécial",
+  "t": "Layering",
+  "d": "Parce qu'en 2026 le parfum fonctionne de plus en plus comme une garde-robe : on construit son odeur au lieu de chercher une seule signature. ([Allure](https://www.allure.com/story/rihanna-favorite-perfumes?utm_source=chatgpt.com))",
+  "ps": [
+   {
+    "q": "Escentric Molecules Molecule 01",
+    "lab": "",
+    "h": "Escentric Molecules",
+    "n": "Molecule 01"
+   },
+   {
+    "q": "Le Labo Another 13",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Another 13"
+   },
+   {
+    "q": "MFK Gentle Fluidity Gold",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Gentle Fluidity Gold"
+   },
+   {
+    "q": "Diptyque Eau Duelle",
+    "lab": "",
+    "h": "Diptyque",
+    "n": "Eau Duelle"
+   },
+   {
+    "q": "Maison Francis Kurkdjian Aqua Universalis",
+    "lab": "",
+    "h": "Maison Francis Kurkdjian",
+    "n": "Aqua Universalis"
+   },
+   {
+    "q": "Byredo Blanche",
+    "lab": "",
+    "h": "Byredo",
+    "n": "Blanche"
+   },
+   {
+    "q": "Le Labo Thé Noir 29",
+    "lab": "",
+    "h": "Le Labo",
+    "n": "Thé Noir 29"
+   },
+   {
+    "q": "Tom Ford Oud Wood",
+    "lab": "",
+    "h": "Tom Ford",
+    "n": "Oud Wood"
+   },
+   {
+    "q": "Jo Malone Wood Sage & Sea Salt",
+    "lab": "",
+    "h": "Jo Malone",
+    "n": "Wood Sage & Sea Salt"
+   },
+   {
+    "q": "Matière Première Parisian Musc",
+    "lab": "",
+    "h": "Matière Première",
+    "n": "Parisian Musc"
+   }
+  ],
+  "note": [
+   "Exemples de combinaisons dans l'app :",
+   "* Molecule 01 + Oud Wood",
+   "* Another 13 + Thé Noir 29",
+   "* Aqua Universalis + Gentle Fluidity Gold",
+   "* Wood Sage & Sea Salt + Eau Duelle",
+   "* Parisian Musc + Blanche"
+  ]
+ }
+]

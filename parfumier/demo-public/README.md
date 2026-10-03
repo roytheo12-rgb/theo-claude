@@ -216,3 +216,9 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - `tools/prune.py` supprime les photos d'internet attribuées à plusieurs parfums différents (erreur d'appariement) ; le test `worker.test.mjs` vérifie qu'aucune image n'est partagée entre deux parfums différents.
 - Artifact : les paquets d'images portent maintenant leur empreinte dans leur nom (`pk/<empreinte>.wasm`) : un paquet périmé ne peut plus se retrouver associé à un mauvais index (c'était la cause de photos décalées sur l'artifact).
 - Photo à la main : une photo de la liste « à la main » (`img/*.webp`) n'est utilisée que pour la maison de la fiche, pas pour un parfum de même nom ailleurs.
+
+## v57 — Onglet Playlists
+
+- Septième onglet du dock : une bibliothèque de 81 univers (Personnages, Cinéma & séries, Icônes, Culture, Destinations, Moments, Atmosphères, Effets, Spécial), chacun avec sa couverture (dégradé + motif propre), son histoire, son ADN olfactif (familles et notes calculées sur les vrais parfums) et dix parfums classés.
+- Source éditoriale : `data/playlists-source.txt`. `tools/build-playlists.js` la relie à la base nettoyée et génère `playlists.js` (appelé par `v2/build.py`). Les parfums absents de la base sont listés dans `data/playlists-hors-base.txt` et s'affichent en texte seul, avec « À sentir ».
+- Historical Scents distingue « porté par », « créé pour/avec », « maison liée à » et « inspiré d'une époque » ; Layering propose cinq combinaisons.

@@ -1,0 +1,1202 @@
+rajoute un onglet playlists (genre on donne des themes et a chaque theme on fait une selection de parfum) genre en mode pour upgrader l'appli et faire un peu un spotify du parfum : une bibliothèque d’univers où chaque playlist doit avoir son propre ADN visuel, culturel et olfactif.
+01 — PERSONNAGES ICONIQUES
+01. James Bond
+Un Martini, un Aston Martin, un costume parfaitement coupé. Il ne cherche jamais à être remarqué : il est simplement impossible à ignorer.
+
+1. Creed Green Irish Tweed
+2. Floris No. 89
+3. Acqua di Parma Colonia
+4. Roja Elysium
+5. Dior Eau Sauvage
+6. Chanel Pour Monsieur
+7. Hermès Terre d'Hermès
+8. Creed Aventus
+9. Grey Vetiver Tom Ford
+10. Penhaligon's Sartorial
+
+Green Irish Tweed et Floris No. 89 ont ici une vraie dimension historique/culturelle, plutôt qu'un simple casting marketing.
+02. Tony Montana
+Miami, chemise ouverte, costume blanc, cuir chaud et excès assumé. Rien n'est discret, absolument rien.
+
+1. Tom Ford Tuscan Leather
+2. Tom Ford Ombré Leather
+3. Xerjoff Alexandria II
+4. Roja Elysium
+5. Parfums de Marly Layton
+6. Initio Side Effect
+7. Nasomatto Black Afgano
+8. Amouage Interlude Man
+9. Clive Christian X for Men
+10. Xerjoff Naxos
+
+Le costume blanc, les costumes trois-pièces, les chemises ouvertes et l'escalade vers une esthétique beaucoup plus ostentatoire sont effectivement constitutifs du personnage. ([MensUSA](https://www.mensusa.com/en-au/blogs/news/what-suit-does-tony-montana-wear-in-scarface?utm_source=chatgpt.com))
+03. Michael Corleone
+Costume sombre, cuir italien, bois sec, silence. Il n'entre pas dans la pièce pour parler.
+
+1. Dior Homme Parfum
+2. Tom Ford Oud Wood
+3. Armani Privé Bois d'Encens
+4. Chanel Sycomore
+5. Maison Francis Kurkdjian Oud
+6. Amouage Reflection Man
+7. Xerjoff Mefisto Gentiluomo
+8. Santa Maria Novella Tabacco Toscano
+9. Creed Royal Oud
+10. Bottega Veneta Pour Homme
+
+04. Patrick Bateman
+Wall Street à 7h30, costume impeccable, appartement minimaliste, carte de visite parfaitement centrée.
+
+1. Dior Homme Parfum
+2. Le Labo Santal 33
+3. Creed Aventus
+4. Tom Ford Grey Vetiver
+5. Chanel Bleu de Chanel Parfum
+6. Prada L'Homme
+7. Frederic Malle French Lover
+8. Maison Francis Kurkdjian Masculin Pluriel
+9. Roja Elysium
+10. Tom Ford Oud Wood
+
+05. Thomas Shelby
+Birmingham sous la pluie, tweed humide, whisky, tabac et une voiture noire qui attend devant le pub.
+
+1. Memo Irish Leather
+2. Penhaligon's Sartorial
+3. Tom Ford Tobacco Vanille
+4. Serge Lutens Chergui
+5. Maison Margiela Jazz Club
+6. By Kilian Straight to Heaven
+7. Parfums de Marly Herod
+8. Floris 1962
+9. Acqua di Parma Oud
+10. BDK Tabac Rose
+
+06. Don Draper
+Manhattan 1962. Costume gris, bureau en noyer, bourbon après le travail et cigarette devant l'immeuble.
+
+1. Chanel Pour Monsieur
+2. Dior Eau Sauvage
+3. Guerlain Vetiver
+4. Hermès Bel Ami
+5. Floris No. 89
+6. Creed Royal Oud
+7. Caron Yatagan
+8. Roja Vetiver
+9. Santa Maria Novella Tobacco Toscano
+10. Maison Francis Kurkdjian Masculin Pluriel
+
+07. Tom Ripley
+Une villa italienne, une chemise en lin, un piano au loin. Quelqu'un ment probablement.
+
+1. Dior Bois d'Argent
+2. Creed Green Irish Tweed
+3. Xerjoff Torino21
+4. Acqua di Parma Colonia
+5. Santa Maria Novella Melograno
+6. Ormonde Jayne Ormonde Man
+7. Creed Royal Oud
+8. Diptyque Philosykos
+9. Maison Crivelli Iris Malikhân
+10. Frederic Malle Portrait of a Lady
+
+08. John Wick
+Hôtel cinq étoiles, costume noir, cuir, bois froid et aucune envie de conversation.
+
+1. Dior Homme Parfum
+2. Tom Ford Oud Wood
+3. Le Labo Santal 33
+4. Amouage Reflection Man
+5. Maison Francis Kurkdjian Masculin Pluriel
+6. Nasomatto Duro
+7. Frederic Malle French Lover
+8. Creed Royal Oud
+9. BDK Gris Charnel Extrait
+10. Nishane Ani
+
+09. Tyler Durden
+Garage industriel, essence, métal, fumée, savon et vêtements trouvés au fond d'un sac.
+
+1. Comme des Garçons Tar
+2. Comme des Garçons Garage
+3. Comme des Garçons Concrete
+4. Etat Libre d'Orange Rien
+5. Etat Libre d'Orange Sécrétions Magnifiques
+6. DS & Durga Bowmakers
+7. Nasomatto Duro
+8. Comme des Garçons Black
+9. Naomi Goodsir Bois d'Ascèse
+10. Demeter Dirt
+
+Dior Homme Parfum est définitivement sorti. Ici, le côté industriel et abrasif est beaucoup plus important.
+10. Hannibal Lecter
+Une bibliothèque ancienne, un dîner formel, du cuir, du bois ciré et une élégance presque inquiétante.
+
+1. Frederic Malle Portrait of a Lady
+2. Serge Lutens Ambre Sultan
+3. Dior Homme Parfum
+4. Ormonde Jayne Ormonde Man
+5. Nasomatto Baraonda
+6. Amouage Epic Man
+7. Xerjoff Alexandria II
+8. Maison Francis Kurkdjian Oud
+9. Penhaligon's Halfeti
+10. BDK Gris Charnel Extrait
+
+11. Jay Gatsby
+Long Island, chemise blanche, jardin illuminé, champagne et une fête qui ne finit jamais.
+
+1. Roja Elysium
+2. MFK Gentle Fluidity Gold
+3. Creed Aventus
+4. Parfums de Marly Delina
+5. Maison Francis Kurkdjian Grand Soir
+6. Xerjoff Naxos
+7. Amouage Reflection Man
+8. Dior Bois d'Argent
+9. Byredo Bal d'Afrique
+10. Clive Christian X
+
+12. The Founder
+Il est déjà au bureau avant tout le monde. Café noir, carnet ouvert, écran allumé. Tout est pensé.
+
+1. Le Labo Another 13
+2. Maison Francis Kurkdjian Masculin Pluriel
+3. Tom Ford Grey Vetiver
+4. Chanel Platinum Égoïste
+5. Dior Homme 2020
+6. Prada L'Homme
+7. Creed Aventus
+8. Matière Première Parisian Musc
+9. Escentric Molecules Molecule 01
+10. Byredo Bal d'Afrique
+
+02 — THE GENTLEMEN
+Je garde uniquement les personnages masculins, conformément à ta nouvelle règle cinéma/séries. La série Netflix a bien Eddie Horniman, Freddy Horniman, Bobby Glass et Susie Glass  parmi ses personnages centraux ; la saison 2 pousse encore davantage l'univers aristocratie anglaise + criminalité + Italie. ([Netflix](https://www.netflix.com/tudum/articles/the-gentlemen-season-2-cast-release-date-news?utm_source=chatgpt.com))
+13. Eddie Horniman
+Un duc anglais qui découvre qu'il peut être aussi à l'aise dans un domaine ancestral que dans un business criminel.
+
+1. Penhaligon's Sartorial
+2. Creed Green Irish Tweed
+3. Floris No. 89
+4. Roja Elysium
+5. Tom Ford Grey Vetiver
+6. Dior Homme 2020
+7. Creed Royal Oud
+8. Acqua di Parma Colonia
+9. Ormonde Jayne Ormonde Man
+10. Maison Francis Kurkdjian Masculin Pluriel
+
+14. Bobby Glass
+Un gangster anglais qui pourrait discuter affaires dans une prison comme dans un club privé.
+
+1. Amouage Jubilation XXV
+2. Tom Ford Oud Wood
+3. Penhaligon's Halfeti
+4. Serge Lutens Chergui
+5. Roja Enigma
+6. Amouage Interlude Man
+7. Clive Christian X for Men
+8. Creed Royal Oud
+9. BDK Tabac Rose
+10. Nasomatto Baraonda
+
+15. Freddy Horniman
+Aristocrate, imprévisible, légèrement chaotique, mais toujours habillé comme s'il allait à une réception.
+
+1. Penhaligon's The Tragedy of Lord George
+2. Xerjoff Naxos
+3. Creed Aventus
+4. Parfums de Marly Layton
+5. Tom Ford Beau de Jour
+6. Maison Margiela Jazz Club
+7. Roja Elysium
+8. Byredo Bal d'Afrique
+9. Diptyque Eau Duelle
+10. BDK Gris Charnel
+
+16. Suzie Glass — The Gentlemen
+Une femme qui n’a pas besoin d’élever la voix pour contrôler la pièce. Tailleur impeccable, Londres, art contemporain, soirées privées, whisky sec et danger parfaitement maîtrisé. Féminine sans être douce, sophistiquée sans être sage.
+
+1. Maison Francis Kurkdjian — Oud Satin Mood
+2. Tom Ford — Black Orchid
+3. Parfums de Marly — Delina Exclusif
+4. Maison Francis Kurkdjian — Grand Soir
+5. Kilian — Black Phantom
+6. Serge Lutens — Feminité du Bois
+7. Initio — Atomic Rose
+8. Xerjoff — Italica
+9. Frédéric Malle — Portrait of a Lady
+10. Narciso Rodriguez — Musc Noir Rose
+
+03 — DRAKE & CULTURE MUSICALE
+17. Drake
+Toronto la nuit. Un studio, un verre posé sur la console, cuir, bois, musc et quelque chose de beaucoup plus intime derrière l'assurance.
+
+1. Tom Ford Tuscan Leather
+2. Tom Ford Oud Wood
+3. Tom Ford Ombré Leather
+4. Guy Laroche Drakkar Noir
+5. Clive Christian L
+6. Maison Francis Kurkdjian Baccarat Rouge 540
+7. Better World Fragrance House Carby Musk
+8. Better World Fragrance House Summer Mink
+9. Better World Fragrance House Cloudar
+10. Maison Francis Kurkdjian Grand Soir
+
+Tuscan Leather n'est pas ici un simple parfum « qui ressemble à Drake » : il est directement inscrit dans son œuvre. Drake a expliqué à GQ l'origine du titre Tuscan Leather, et des sources consacrées à ses habitudes olfactives citent également Drakkar Noir, Clive Christian L et BR540. ([GQ](https://www.gq.com/story/rapper-drake-in-america-july-2013?utm_source=chatgpt.com))
+Et désormais, Summer Mink + Cloudar + Carby Musk donnent à la playlist un véritable ADN Drake contemporain. ([parlux.com](https://parlux.com/betterworld?utm_source=chatgpt.com))
+18. Rihanna
+Une aura très féminine, mais jamais innocente : fleurs blanches, musc, vanille et peau chaude.
+
+1. Kilian Love, Don't Be Shy
+2. Dior J'adore
+3. Fenty Eau de Parfum
+4. Tom Ford Lost Cherry
+5. MFK Baccarat Rouge 540
+6. Maison Francis Kurkdjian Gentle Fluidity Gold
+7. By Kilian Good Girl Gone Bad
+8. Frederic Malle Carnal Flower
+9. Initio Musk Therapy
+10. Narciso Rodriguez Musc Noir Rose
+
+Les trois premiers ont une vraie base documentaire autour de Rihanna, même si elle n'a pas déclaré un unique « signature scent » officiel. ([Allure](https://www.allure.com/story/rihanna-favorite-perfumes?utm_source=chatgpt.com))
+19. Beyoncé
+Lumières rouges, scène immense, chaleur, sensualité et puissance.
+
+1. Beyoncé Heat
+2. Beyoncé Heat Rush
+3. Dior Hypnotic Poison
+4. Tom Ford Lost Cherry
+5. Kilian Love, Don't Be Shy
+6. Initio Side Effect
+7. Mugler Alien
+8. Maison Francis Kurkdjian Baccarat Rouge 540
+9. Parfums de Marly Delina Exclusif
+10. Carolina Herrera Good Girl
+
+Heat est évidemment la pièce historique de la playlist : Beyoncé a participé à sa création et l'a lancé en 2010. ([Fragrantica](https://www.fragrantica.com/perfume/Beyonce/Heat-7745.html?utm_source=chatgpt.com))
+20. Taylor Swift
+Une bibliothèque new-yorkaise, du rouge à lèvres, du bois de santal et une mélancolie parfaitement mise en scène.
+
+1. Tom Ford Santal Blush
+2. Maison Margiela Replica By the Fireplace
+3. Diptyque Eau Duelle
+4. Le Labo Thé Noir 29
+5. Jo Malone English Pear & Freesia
+6. Chanel Coco Mademoiselle
+7. Byredo Mojave Ghost
+8. Diptyque Tam Dao
+9. MFK Gentle Fluidity Gold
+10. Maison Francis Kurkdjian Amyris
+
+Santal Blush est bien la référence la plus documentée autour de Taylor Swift. ([Page Six](https://pagesix.com/2026/09/28/style/we-found-the-lipstick-taylor-swift-and-dakota-johnson-wear-in-the-patient-zero-video/?utm_source=chatgpt.com))
+21. Bad Bunny
+San Juan, mode, nuit, chaleur tropicale et luxe contemporain.
+
+1. Le Labo Thé Matcha 26
+2. Byredo Bal d'Afrique
+3. Creed Virgin Island Water
+4. Tom Ford Soleil Blanc
+5. Xerjoff Torino21
+6. Diptyque Philosykos
+7. Byredo Sundazed
+8. Maison Crivelli Hibiscus Mahajád
+9. Creed Aventus
+10. Le Labo Another 13
+
+Le Matcha 26 est ici particulièrement intéressant car son association avec Bad Bunny est documentée, contrairement à beaucoup d'autres castings d'artistes.
+04 — ICÔNES CULTURELLES
+22. Alain Delon
+Le costume sombre, les lunettes noires, la Méditerranée et cette élégance française qui n'a jamais besoin d'explication.
+
+1. Dior Eau Sauvage
+2. Chanel Pour Monsieur
+3. Guerlain Vetiver
+4. Acqua di Parma Colonia
+5. Creed Green Irish Tweed
+6. Floris No. 89
+7. Hermès Terre d'Hermès
+8. Roja Elysium
+9. Dior Homme Original
+10. Chanel Platinum Égoïste
+
+Eau Sauvage possède ici un ancrage historique particulièrement fort avec Delon. ([Wikipédia](https://fr.wikipedia.org/wiki/Eau_sauvage?utm_source=chatgpt.com))
+23. Brigitte Bardot
+Saint-Tropez, cheveux au vent, peau chauffée par le soleil et sensualité sans effort.
+
+1. Guerlain Shalimar
+2. Diorissimo
+3. Chanel No. 5
+4. Jean Patou Joy
+5. Guerlain L'Heure Bleue
+6. Fracas Robert Piguet
+7. Chanel No. 19
+8. Diptyque Eau Rose
+9. Frederic Malle Carnal Flower
+10. Tom Ford Soleil Blanc
+
+24. Jane Birkin
+Un panier, un jean, une chemise blanche, un appartement parisien et une odeur qui semble appartenir à la peau.
+
+1. Miller Harris L'Air de Rien
+2. Guerlain L'Heure Bleue
+3. Diptyque Eau Duelle
+4. Le Labo Thé Noir 29
+5. Serge Lutens Féminité du Bois
+6. Diptyque Philosykos
+7. Chanel No. 19
+8. Frederic Malle En Passant
+9. Byredo Blanche
+10. Hermès Un Jardin sur le Nil
+
+L'Air de Rien a été créé en collaboration avec Jane Birkin et reste directement présenté par Miller Harris comme son parfum iconique. ([Miller Harris](https://eu.millerharris.com/blogs/notes/l-air-de-rien-the-scent-of-quiet-rebellion?utm_source=chatgpt.com))
+25. Audrey Hepburn
+Gamine parisienne, couture Givenchy, fleurs blanches et élégance absolue.
+
+1. Givenchy L'Interdit
+2. Diorissimo
+3. Chanel No. 5
+4. Guerlain L'Heure Bleue
+5. Chanel No. 19
+6. Hermès Calèche
+7. Jean Patou Joy
+8. Guerlain Chamade
+9. Dior J'adore
+10. Frederic Malle En Passant
+
+L'Interdit est ici un véritable lien historique : Givenchy l'avait créé pour Hepburn, qui fut sa seule porteuse avant sa commercialisation. ([Vogue France](https://www.vogue.fr/article/parfum-audrey-hepburn-nouvelle-version?utm_source=chatgpt.com))
+26. Marilyn Monroe
+Hollywood, satin, lumière blanche et sensualité glamour.
+
+1. Chanel No. 5
+2. Dior J'adore
+3. Guerlain Shalimar
+4. Jean Patou Joy
+5. Fracas
+6. Tom Ford Lost Cherry
+7. Kilian Love, Don't Be Shy
+8. Guerlain Samsara
+9. Dior Hypnotic Poison
+10. MFK Baccarat Rouge 540
+
+N°5 est ici une association historique explicitement documentée par Chanel elle-même. ([CHANEL](https://www.chanel.com/ie/about-chanel/the-house-of-chanel/1950/?utm_source=chatgpt.com))
+05 — CULTURE / INTERNET
+27. Clean Girl
+Douche fraîche, cheveux propres, chemise blanche, skincare, appartement impeccable.
+
+1. Byredo Blanche
+2. Narciso Rodriguez Pure Musc
+3. Glossier You
+4. Maison Margiela Lazy Sunday Morning
+5. Prada Infusion d'Iris
+6. Maison Francis Kurkdjian Aqua Universalis
+7. Le Labo Another 13
+8. Diptyque Fleur de Peau
+9. Jo Malone Wood Sage & Sea Salt
+10. Aesop Tacit
+
+28. Pilates Matcha Girl
+Elle commence sa journée par Pilates, matcha glacé, cheveux attachés et parfum propre avant de sortir.
+
+1. Le Labo Thé Matcha 26
+2. Phlur Matcha Milk
+3. Maison Francis Kurkdjian Aqua Universalis
+4. Byredo Blanche
+5. Liis Rose Struck
+6. Diptyque Eau Rose
+7. Narciso Rodriguez Pure Musc
+8. Aesop Tacit
+9. Glossier You
+10. Jo Malone English Pear & Freesia
+
+29. Vanilla Girl
+Tout est crème, vanille, cachemire et peau chaude.
+
+1. Kayali Vanilla 28
+2. Diptyque Eau Duelle
+3. Guerlain Spiritueuse Double Vanille
+4. Maison Mataha Escapade Gourmande
+5. Nishane Ani
+6. Parfums de Marly Althaïr
+7. Tom Ford Vanille Fatale
+8. By Kilian Love, Don't Be Shy
+9. Indult Tihota
+10. Maison Francis Kurkdjian Gentle Fluidity Gold
+
+30. Dark Feminine
+Noir, velours, lèvres rouges, fleurs sombres et parfum qui reste longtemps après ton départ.
+
+1. Frederic Malle Portrait of a Lady
+2. Tom Ford Black Orchid
+3. MFK Oud Satin Mood
+4. By Kilian Black Phantom
+5. Serge Lutens Arabie
+6. Nasomatto Narcotic Venus
+7. Maison Crivelli Hibiscus Mahajád
+8. Amouage Guidance
+9. Initio Atomic Rose
+10. Chanel Coromandel
+
+31. Coquette
+Rubans, poudre, fleurs, vanille et une séduction volontairement théâtrale.
+
+1. MFK Gentle Fluidity Gold
+2. Parfums de Marly Delina
+3. Kilian Love, Don't Be Shy
+4. Chanel Chance Eau Tendre
+5. Dior Miss Dior
+6. Guerlain Mon Guerlain
+7. Maison Francis Kurkdjian Amyris Femme
+8. Diptyque Eau Rose
+9. Byredo Rose of No Man's Land
+10. Prada Paradoxe
+
+32. Mob Wife
+Fourrure, lunettes noires, cuir, restaurant italien et parfum qui arrive avant elle.
+
+1. Tom Ford Black Orchid
+2. MFK Baccarat Rouge 540
+3. Tom Ford Ombré Leather
+4. Xerjoff Naxos
+5. Initio Side Effect
+6. BDK Tabac Rose
+7. Kilian Black Phantom
+8. Amouage Guidance
+9. Xerjoff Italica
+10. Maison Crivelli Oud Maracujá
+
+33. Quiet Luxury
+Cashmere, galerie d'art, bois clair et silence. Rien ne cherche à prouver quoi que ce soit.
+
+1. Le Labo Another 13
+2. Diptyque Tam Dao
+3. Dior Bois d'Argent
+4. Chanel Sycomore
+5. Matière Première Parisian Musc
+6. Frederic Malle L'Eau d'Hiver
+7. Hermès H24
+8. Byredo Blanche
+9. Ormonde Jayne Ormonde Man
+10. Aesop Hwyl
+
+34. The Ralph Lauren Campaign
+Si ta vie ressemblait à une campagne Ralph Lauren : chevaux, chemise blanche, country house, cuir et fin d'après-midi dorée.
+
+1. Ralph Lauren Polo
+2. Creed Green Irish Tweed
+3. Floris No. 89
+4. Penhaligon's Sartorial
+5. Acqua di Parma Colonia
+6. Hermès Terre d'Hermès
+7. Chanel Pour Monsieur
+8. Dior Eau Sauvage
+9. Ormonde Jayne Ormonde Man
+10. Roja Vetiver
+
+35. Finance Bro
+Terminal ouvert, chemise Oxford, café à emporter, Manhattan et une obsession pour la prochaine transaction.
+
+1. Creed Aventus
+2. Dior Homme 2020
+3. Bleu de Chanel Parfum
+4. Tom Ford Grey Vetiver
+5. Le Labo Santal 33
+6. Prada L'Homme
+7. Roja Elysium
+8. MFK Masculin Pluriel
+9. Amouage Reflection Man
+10. Parfums de Marly Percival
+
+36. Tech Bro
+MacBook, hoodie parfaitement choisi, coffee shop, startup et parfum minimaliste que personne n'arrive à identifier.
+
+1. Escentric Molecules Molecule 01
+2. Le Labo Another 13
+3. Byredo Mojave Ghost
+4. Comme des Garçons Wonderwood
+5. Le Labo Santal 33
+6. Aesop Hwyl
+7. Diptyque Tam Dao
+8. DS & Durga I Don't Know What
+9. Maison Francis Kurkdjian Gentle Fluidity Silver
+10. Matière Première Parisian Musc
+
+37. Model Off-Duty
+Elle sort du studio avec un jean, des lunettes noires et donne l'impression de n'avoir rien fait.
+
+1. Byredo Mojave Ghost
+2. Le Labo Another 13
+3. Byredo Bal d'Afrique
+4. Maison Francis Kurkdjian Gentle Fluidity Gold
+5. Glossier You
+6. Diptyque Fleur de Peau
+7. Le Labo Thé Noir 29
+8. Narciso Rodriguez For Her Musc Noir
+9. Maison Margiela Lazy Sunday Morning
+10. Matière Première Parisian Musc
+
+06 — VILLES / DESTINATIONS
+38. Paris
+Matin gris, boulangerie, manteau noir, librairie, café en terrasse et taxi sous la pluie.
+
+1. Le Labo Thé Noir 29
+2. Diptyque Philosykos
+3. Maison Francis Kurkdjian Grand Soir
+4. Frederic Malle Musc Ravageur
+5. Matière Première Parisian Musc
+6. Serge Lutens Féminité du Bois
+7. Dior Bois d'Argent
+8. Chanel Coromandel
+9. Maison Crivelli Bois Datchaï
+10. Ex Nihilo Fleur Narcotique
+
+39. New York
+Espresso à SoHo, taxi jaune, rooftop, costume noir et nuit qui finit beaucoup trop tard.
+
+1. Le Labo Santal 33
+2. Le Labo Another 13
+3. Byredo Bal d'Afrique
+4. Tom Ford Oud Wood
+5. Maison Margiela Jazz Club
+6. Frederic Malle Musc Ravageur
+7. Bond No. 9 New York Nights
+8. DS & Durga Bowmakers
+9. Le Labo Thé Noir 29
+10. Byredo 1996
+
+40. London
+Pluie sur les vitres, Mayfair, espresso martini, cuir, tweed et taxi noir.
+
+1. Floris No. 89
+2. Penhaligon's Sartorial
+3. Penhaligon's Halfeti
+4. Roja Elysium
+5. Creed Green Irish Tweed
+6. Atkinsons 24 Old Bond Street
+7. Ormonde Jayne Ormonde Man
+8. Jo Malone Wood Sage & Sea Salt
+9. Tom Ford Oud Wood
+10. Boadicea the Victorious Wellington
+
+Atkinsons est particulièrement intéressant ici : la maison est historiquement liée à Mayfair et au 24 Old Bond Street depuis le XIXe siècle. ([Atkinsons 1799](https://www.atkinsons1799.com/pages/history?utm_source=chatgpt.com))
+41. Milan
+Costume italien, espresso debout au comptoir, cuir, marbre et rendez-vous entre deux défilés.
+
+1. Acqua di Parma Colonia
+2. Xerjoff Torino21
+3. Xerjoff Naxos
+4. Santa Maria Novella Tabacco Toscano
+5. Prada L'Homme
+6. Armani Privé Bois d'Encens
+7. Valentino Uomo Intense
+8. Bottega Veneta Pour Homme
+9. Xerjoff Renaissance
+10. Tiziana Terenzi Kirke
+
+42. Rome
+Pierres chaudes, chemise blanche, vieille Fiat, espresso et coucher de soleil sur les toits.
+
+1. Acqua di Parma Colonia
+2. Santa Maria Novella Melograno
+3. Xerjoff Renaissance
+4. Xerjoff Mefisto Gentiluomo
+5. Profumum Roma Acqua di Sale
+6. Profumum Roma Neroli
+7. Valentino Uomo
+8. Prada L'Homme
+9. Maison Crivelli Papyrus Moléculaire
+10. Creed Original Vetiver
+
+43. Côte d'Azur
+Décapotable, chemise en lin, peau salée, agrumes et après-midi interminable.
+
+1. Tom Ford Neroli Portofino
+2. Creed Virgin Island Water
+3. Acqua di Parma Fico di Amalfi
+4. Diptyque Philosykos
+5. Maison Francis Kurkdjian Aqua Celestia
+6. Jo Malone Lime Basil & Mandarin
+7. Chanel Paris–Riviera
+8. Xerjoff Mefisto
+9. Byredo Bal d'Afrique
+10. Tom Ford Soleil Blanc
+
+44. Saint-Tropez
+Une chemise Souleiado orange, un bateau au port, rosé glacé et coucher de soleil.
+
+1. Tom Ford Neroli Portofino
+2. Creed Virgin Island Water
+3. Diptyque Philosykos
+4. Acqua di Parma Fico di Amalfi
+5. Tom Ford Soleil Blanc
+6. Maison Francis Kurkdjian Aqua Celestia
+7. Byredo Sundazed
+8. Chanel Paris–Riviera
+9. Creed Erolfa
+10. Heeley Sel Marin
+
+45. Monaco
+Monte-Carlo, paddock, cuir, architecture blanche et élégance très précise.
+
+1. Roja Elysium
+2. Creed Aventus
+3. Tom Ford Grey Vetiver
+4. Creed Royal Oud
+5. MFK Gentle Fluidity Gold
+6. Xerjoff Torino21
+7. Maison Francis Kurkdjian Masculin Pluriel
+8. Dior Homme 2020
+9. Bvlgari Tygar
+10. Roja Oceania
+
+BR540 sort définitivement de Monaco.
+46. Lake Como
+Villa au bord de l'eau, bateau en bois, chemise ouverte et jardin italien.
+
+1. Acqua di Parma Fico di Amalfi
+2. Diptyque Philosykos
+3. Xerjoff Torino21
+4. Tom Ford Neroli Portofino
+5. Creed Aventus
+6. Armani Privé Thé Yulong
+7. Santa Maria Novella Melograno
+8. Maison Crivelli Papyrus Moléculaire
+9. MFK Gentle Fluidity Gold
+10. Byredo Bal d'Afrique
+
+47. Dubai
+Marbre, oud, saffran, hôtel immense et parfum qui reste dans l'ascenseur.
+
+1. MFK Baccarat Rouge 540
+2. MFK Oud Satin Mood
+3. Amouage Interlude Man
+4. Xerjoff Alexandria II
+5. Initio Oud for Greatness
+6. Maison Francis Kurkdjian Oud
+7. Roja Enigma
+8. Xerjoff Erba Pura
+9. Parfums de Marly Layton
+10. Initio Side Effect
+
+48. Tokyo
+Néons, architecture minimaliste, thé, bois de hinoki et silence.
+
+1. Comme des Garçons Hinoki
+2. Le Labo Gaiac 10
+3. Aesop Hwyl
+4. Diptyque Tam Dao
+5. Comme des Garçons Wonderwood
+6. Maison Francis Kurkdjian Aqua Universalis
+7. Le Labo Another 13
+8. Byredo Blanche
+9. Nishane Wulong Cha
+10. Maison Crivelli Hibiscus Mahajád
+
+07 — SAISONS / ATMOSPHÈRES
+49. Hiver à New York
+Il neige dehors. Espresso martini dans un lounge privé, manteau noir et taxi jusqu'à Tribeca.
+
+1. Maison Margiela By the Fireplace
+2. Le Labo Thé Noir 29
+3. Tom Ford Tobacco Vanille
+4. MFK Grand Soir
+5. By Kilian Straight to Heaven
+6. Diptyque Eau Duelle
+7. Maison Francis Kurkdjian Oud Satin Mood
+8. Serge Lutens Chergui
+9. Parfums de Marly Herod
+10. Nasomatto Baraonda
+
+50. Été à Saint-Tropez
+Midi au soleil, mer bleue, peau chaude, figuier et coucher de soleil orange.
+
+1. Tom Ford Neroli Portofino
+2. Creed Virgin Island Water
+3. Diptyque Philosykos
+4. Acqua di Parma Fico di Amalfi
+5. Tom Ford Soleil Blanc
+6. Creed Erolfa
+7. Byredo Sundazed
+8. Chanel Paris–Riviera
+9. Maison Francis Kurkdjian Aqua Celestia
+10. Xerjoff Torino21
+
+51. Automne Cozy
+Pull en maille, pluie contre la fenêtre, cinnamon rolls au four et livre ouvert.
+
+1. Maison Margiela By the Fireplace
+2. Diptyque Eau Duelle
+3. Parfums de Marly Althaïr
+4. Maison Mataha Escapade Gourmande
+5. Nishane Ani
+6. Serge Lutens Chergui
+7. Tom Ford Tobacco Vanille
+8. Kilian Angels' Share
+9. BDK Gris Charnel
+10. Replica Coffee Break
+
+52. Sunset Tennis
+Dernier match de la journée. Terre battue, polo blanc, peau chaude et soleil qui disparaît derrière les arbres.
+
+1. Xerjoff Torino21
+2. Creed Green Irish Tweed
+3. Hermès H24
+4. Roja Elysium
+5. Creed Original Vetiver
+6. Acqua di Parma Colonia
+7. Chanel Allure Homme Sport
+8. Maison Francis Kurkdjian Aqua Universalis
+9. Parfums de Marly Percival
+10. Bvlgari Tygar
+
+53. Ski Weekend
+Chalet en bois, neige fraîche, pull en cachemire et vin chaud devant la cheminée.
+
+1. Maison Margiela By the Fireplace
+2. Parfums de Marly Herod
+3. Tom Ford Tobacco Vanille
+4. BDK Gris Charnel Extrait
+5. Diptyque Eau Duelle
+6. Serge Lutens Chergui
+7. Parfums de Marly Althaïr
+8. Maison Francis Kurkdjian Grand Soir
+9. Kilian Angels' Share
+10. Initio Side Effect
+
+Interlude Man est sorti. Le chalet doit sentir le bois, la fumée, les épices et le textile chaud, pas l'encens omanais.
+08 — LIFESTYLE
+54. Gameday
+Maillot, veste légère, soleil de fin d'après-midi, stade et après-match.
+
+1. Hermès H24
+2. Creed Aventus Cologne
+3. Prada Luna Rossa Carbon
+4. Chanel Allure Homme Sport Eau Extrême
+5. Acqua di Parma Colonia
+6. Creed Original Vetiver
+7. Parfums de Marly Percival
+8. Roja Elysium
+9. Guerlain Homme
+10. Bvlgari Tygar
+
+Dylan Blue est supprimé.
+55. F1
+Monaco, paddock, cuir, pneus chauds, champagne et soleil méditerranéen.
+
+1. Xerjoff Torino21
+2. Roja Elysium
+3. Creed Aventus
+4. Tom Ford Grey Vetiver
+5. Bvlgari Tygar
+6. Creed Royal Oud
+7. MFK Gentle Fluidity Silver
+8. Maison Crivelli Papyrus Moléculaire
+9. Parfums de Marly Percival
+10. Tom Ford Ombré Leather
+
+56. First Date
+Vous vous êtes préparés sans vouloir avoir l'air de vous être préparés.
+
+1. MFK Gentle Fluidity Gold
+2. MFK Gentle Fluidity Silver
+3. Narciso Rodriguez For Her Musc Noir
+4. Le Labo Another 13
+5. Byredo Bal d'Afrique
+6. Initio Musk Therapy
+7. Maison Francis Kurkdjian Amyris
+8. Diptyque Eau Duelle
+9. Parfums de Marly Delina
+10. Bleu de Chanel Parfum
+
+57. Board Meeting
+Salle vitrée, costume impeccable, café noir. Personne ne parle inutilement.
+
+1. Tom Ford Grey Vetiver
+2. Chanel Platinum Égoïste
+3. Dior Homme 2020
+4. Creed Aventus
+5. MFK Masculin Pluriel
+6. Hermès Terre d'Hermès
+7. Prada L'Homme
+8. Roja Elysium
+9. Creed Royal Oud
+10. Amouage Reflection Man
+
+58. Elegant But Fun
+Costume impeccable mais sourire facile. Vous êtes élégant, pas coincé.
+
+1. Xerjoff Naxos
+2. Byredo Bal d'Afrique
+3. MFK Gentle Fluidity Gold
+4. Roja Elysium
+5. Parfums de Marly Layton
+6. Maison Crivelli Hibiscus Mahajád
+7. Diptyque Eau Duelle
+8. Creed Aventus
+9. Nishane Hacivat
+10. Kilian Angels' Share
+
+59. Effortless Chic
+Tu as l'air d'avoir attrapé les premiers vêtements venus. Ils coûtent simplement beaucoup trop bien.
+
+1. Le Labo Another 13
+2. Byredo Mojave Ghost
+3. Diptyque Philosykos
+4. Maison Francis Kurkdjian Gentle Fluidity Gold
+5. Matière Première Parisian Musc
+6. Dior Bois d'Argent
+7. Byredo Bal d'Afrique
+8. Le Labo Thé Noir 29
+9. Chanel Paris–Deauville
+10. Aesop Tacit
+
+60. Femme Sportive
+Elle sort du tennis, remet ses lunettes et va déjeuner sans jamais perdre son élégance.
+
+1. Xerjoff Torino21
+2. Creed Aventus for Her
+3. Hermès Un Jardin sur le Nil
+4. Maison Francis Kurkdjian Aqua Universalis
+5. Chanel Chance Eau Fraîche
+6. Jo Malone Wood Sage & Sea Salt
+7. Diptyque Philosykos
+8. Byredo Bal d'Afrique
+9. Dior Addict Eau Fraîche
+10. Creed Love in White
+
+61. Sunday Morning
+Draps propres, café, lumière du soleil et absolument aucun rendez-vous.
+
+1. Maison Margiela Lazy Sunday Morning
+2. Byredo Blanche
+3. Narciso Rodriguez Pure Musc
+4. Glossier You
+5. Diptyque Fleur de Peau
+6. Prada Infusion d'Iris
+7. MFK Aqua Universalis
+8. Aesop Tacit
+9. Jo Malone English Pear & Freesia
+10. Le Labo Another 13
+
+62. En famille
+Dimanche midi, cuisine ouverte, enfants qui courent et grand-mère qui arrive avec un gâteau.
+
+1. Guerlain L'Instant de Guerlain
+2. Chanel Allure
+3. Hermès Un Jardin sur le Nil
+4. Jo Malone English Pear & Freesia
+5. Diptyque Eau Rose
+6. Dior Homme Original
+7. Acqua di Parma Colonia
+8. Prada L'Homme
+9. Byredo Bal d'Afrique
+10. Maison Francis Kurkdjian Aqua Universalis
+
+63. Hôtel Lobby
+Marbre, fleurs fraîches, bois ciré, bagages en cuir et parfum qui flotte dans l'air.
+
+1. MFK Baccarat Rouge 540
+2. Dior Bois d'Argent
+3. Le Labo Another 13
+4. Tom Ford Oud Wood
+5. Byredo Bal d'Afrique
+6. Diptyque Eau Duelle
+7. Xerjoff Alexandria II
+8. Roja Elysium
+9. Amouage Reflection Man
+10. MFK Grand Soir
+
+09 — UNIVERS OLFACTIFS
+64. Je veux qu'on me remarque
+Pas forcément fort. Juste impossible à oublier.
+
+1. MFK Baccarat Rouge 540
+2. Maison Crivelli Oud Maracujá
+3. Amouage Guidance
+4. Initio Side Effect
+5. Xerjoff Erba Pura
+6. Parfums de Marly Delina Exclusif
+7. Tom Ford Lost Cherry
+8. Kilian Angels' Share
+9. Frederic Malle Portrait of a Lady
+10. Nasomatto Black Afgano
+
+65. Je veux sentir cher
+Bois précieux, iris, musc propre et matières qui donnent immédiatement une impression de sophistication.
+
+1. Dior Bois d'Argent
+2. MFK Gentle Fluidity Gold
+3. Creed Royal Oud
+4. Tom Ford Oud Wood
+5. Chanel Sycomore
+6. Roja Elysium
+7. Xerjoff Alexandria II
+8. Maison Francis Kurkdjian Masculin Pluriel
+9. Amouage Reflection Man
+10. Ormonde Jayne Ormonde Man
+
+66. Je veux sentir propre
+La chemise vient de sortir de la blanchisserie.
+
+1. Byredo Blanche
+2. Prada L'Homme
+3. Narciso Rodriguez Pure Musc
+4. Maison Margiela Lazy Sunday Morning
+5. MFK Aqua Universalis
+6. Glossier You
+7. Chanel 1957
+8. Diptyque Fleur de Peau
+9. Aesop Tacit
+10. Maison Francis Kurkdjian 724
+
+67. Je veux sentir sexy
+Peau chaude, lumière basse et distance beaucoup trop courte.
+
+1. MFK Oud Satin Mood
+2. Tom Ford Lost Cherry
+3. Kilian Love, Don't Be Shy
+4. Initio Side Effect
+5. Frederic Malle Musc Ravageur
+6. Tom Ford Ombré Leather
+7. Maison Crivelli Hibiscus Mahajád
+8. Parfums de Marly Delina Exclusif
+9. Narciso Rodriguez Musc Noir Rose
+10. By Kilian Black Phantom
+
+68. Je veux sentir mystérieux
+Personne ne sait exactement ce que c'est. C'est précisément le but.
+
+1. Le Labo Thé Noir 29
+2. Serge Lutens Chergui
+3. Diptyque Eau Duelle
+4. Ormonde Jayne Ormonde Man
+5. Frederic Malle Portrait of a Lady
+6. Maison Crivelli Iris Malikhân
+7. Nasomatto Baraonda
+8. Comme des Garçons Black
+9. Amouage Memoir Man
+10. BDK Gris Charnel Extrait
+
+69. Je veux sentir dangereux
+Pas agressif. Dangereusement séduisant.
+
+1. Tom Ford Tuscan Leather
+2. Tom Ford Ombré Leather
+3. Nasomatto Black Afgano
+4. Initio Side Effect
+5. Amouage Interlude Man
+6. Maison Crivelli Oud Maracujá
+7. By Kilian Black Phantom
+8. Serge Lutens Arabie
+9. Nasomatto Duro
+10. Etat Libre d'Orange Rien
+
+70. Compliments
+La playlist dont le KPI est simple : « C'est quoi ton parfum ? »
+
+1. MFK Gentle Fluidity Gold
+2. MFK Baccarat Rouge 540
+3. Parfums de Marly Delina
+4. Parfums de Marly Layton
+5. Initio Musk Therapy
+6. Maison Crivelli Hibiscus Mahajád
+7. Creed Aventus
+8. Byredo Bal d'Afrique
+9. Narciso Rodriguez Musc Noir Rose
+10. Dior Sauvage Elixir
+
+10 — LE WOLF OF WALL STREET / MONDE FINANCIER
+71. Jordan Belfort
+Long Island, costume rayé, champagne, club privé et confiance complètement disproportionnée.
+
+1. Tom Ford Tuscan Leather
+2. Tom Ford Oud Wood
+3. MFK Baccarat Rouge 540
+4. Creed Aventus
+5. Roja Enigma
+6. Clive Christian X for Men
+7. Initio Side Effect
+8. Parfums de Marly Layton
+9. Xerjoff Naxos
+10. Tom Ford Ombré Leather
+
+72. Naomi
+New York, robe moulante, champagne, cheveux impeccables et parfum qui remplit la pièce.
+
+1. Tom Ford Lost Cherry
+2. MFK Baccarat Rouge 540
+3. Parfums de Marly Delina Exclusif
+4. Kilian Love, Don't Be Shy
+5. Initio Atomic Rose
+6. Maison Francis Kurkdjian Gentle Fluidity Gold
+7. Xerjoff Erba Pura
+8. Frederic Malle Portrait of a Lady
+9. Tom Ford Bitter Peach
+10. Maison Crivelli Hibiscus Mahajád
+
+73. Évasion fiscale
+Mayfair, sociétés offshore, comptes à l'étranger, costume sombre et téléphone qui ne quitte jamais la poche.
+
+1. Tom Ford Oud Wood
+2. Creed Royal Oud
+3. Xerjoff Alexandria II
+4. Amouage Interlude Man
+5. MFK Baccarat Rouge 540
+6. Roja Enigma
+7. BDK Gris Charnel Extrait
+8. Maison Francis Kurkdjian Oud
+9. Serge Lutens Chergui
+10. Penhaligon's Halfeti
+
+11 — ART / ÉLÉGANCE / IMAGINAIRE
+74. Le Grand Prix de l'élégance
+Un événement mondain hors du temps : chevaux, tailoring, champagne, jardins et gestes parfaitement maîtrisés.
+
+1. Creed Green Irish Tweed
+2. Floris No. 89
+3. Dior Bois d'Argent
+4. Chanel Sycomore
+5. Roja Elysium
+6. MFK Gentle Fluidity Gold
+7. Penhaligon's Sartorial
+8. Hermès Terre d'Hermès
+9. Frederic Malle Portrait of a Lady
+10. Ormonde Jayne Ormonde Man
+
+75. Tchaïkovski
+Velours rouge, orchestre, lumière tamisée et une élégance presque impériale.
+
+1. Guerlain L'Heure Bleue
+2. Chanel No. 5
+3. Frederic Malle Portrait of a Lady
+4. Serge Lutens Féminité du Bois
+5. MFK Oud Satin Mood
+6. Amouage Lyric Woman
+7. Dior Bois d'Argent
+8. Guerlain Shalimar
+9. Xerjoff Alexandria II
+10. Maison Francis Kurkdjian Grand Soir
+
+76. Christmas Eve
+Église, cire chaude, manteau en laine, sapin et retour à la maison sous les lumières de Noël.
+
+1. Serge Lutens Fille en Aiguilles
+2. Maison Margiela By the Fireplace
+3. Diptyque Eau Duelle
+4. MFK Grand Soir
+5. Guerlain Spiritueuse Double Vanille
+6. Parfums de Marly Althaïr
+7. Tom Ford Tobacco Vanille
+8. Amouage Jubilation XXV
+9. Maison Crivelli Bois Datchaï
+10. Kilian Angels' Share
+
+77. Christmas at Hôtel Costes
+Décembre à Paris, manteau noir, réception, champagne et taxi tard dans la nuit.
+
+1. MFK Grand Soir
+2. Dior Bois d'Argent
+3. Maison Francis Kurkdjian Oud Satin Mood
+4. Tom Ford Tobacco Vanille
+5. Kilian Angels' Share
+6. Frederic Malle Musc Ravageur
+7. Diptyque Eau Duelle
+8. BDK Gris Charnel Extrait
+9. Chanel Coromandel
+10. By Kilian Straight to Heaven
+
+78. Cinnamon Rolls
+Dimanche matin, beurre fondu, cannelle, vanille et cuisine encore chaude.
+
+1. Maison Mataha Escapade Gourmande
+2. Parfums de Marly Althaïr
+3. Diptyque Eau Duelle
+4. Nishane Ani
+5. Kilian Angels' Share
+6. Guerlain Spiritueuse Double Vanille
+7. Kayali Vanilla 28
+8. Indult Tihota
+9. Maison Margiela Coffee Break
+10. Comptoir Sud Pacifique Vanille Abricot
+
+12 — HISTORICAL SCENTS
+Celle-ci, je la garderais comme playlist patrimoniale, avec une règle stricte : le parfum doit avoir une véritable connexion historique à une personne, une époque ou une maison, et pas simplement « faire ancien ».
+79. Historical Scents
+Les parfums qui racontent réellement quelque chose avant même d'être vaporisés.
+
+1. Chanel N°5 — Marilyn Monroe
+2. Givenchy L'Interdit — Audrey Hepburn
+3. Miller Harris L'Air de Rien — Jane Birkin
+4. Dior Eau Sauvage — Alain Delon
+5. Jean Patou Joy — tradition iconique / grandes figures féminines
+6. Guerlain Eau de Cologne Impériale
+7. Atkinsons 24 Old Bond Street
+8. 4711 Original Eau de Cologne
+9. Floris No. 89
+10. Guerlain Shalimar
+
+Atkinsons mérite bien une nuance dans ta base : la maison et le 24 Old Bond Street sont historiquement documentés, mais le flacon contemporain est une réinterprétation moderne d'un héritage historique, pas simplement un flacon inchangé depuis le XIXe siècle. ([Atkinsons 1799](https://www.atkinsons1799.com/pages/history?utm_source=chatgpt.com))
+Même logique pour les autres : on distingue désormais dans ta DB « parfum porté par X », « maison liée à X », « parfum inspiré d'une époque ».
+13 — L'UNIQUE PLAYLIST ODEURS BIZARRES
+80. Strange Smells
+Pour les gens qui ne veulent surtout pas sentir « comme un parfum ». Asphalte, goudron, métal, poussière, garage, peau et fumée.
+
+1. Comme des Garçons Tar
+2. Comme des Garçons Garage
+3. Comme des Garçons Concrete
+4. Etat Libre d'Orange Sécrétions Magnifiques
+5. Etat Libre d'Orange Rien
+6. DS & Durga Bowmakers
+7. Naomi Goodsir Bois d'Ascèse
+8. Demeter Dirt
+9. Demeter Paperback
+10. CB I Hate Perfume Burning Leaves
+
+Une seule playlist. Pas besoin de créer « Industrial », « Weird », « Dark Weird », « Strange Notes », etc.
+14 — LAYERING
+81. Layering
+Parce qu'en 2026 le parfum fonctionne de plus en plus comme une garde-robe : on construit son odeur au lieu de chercher une seule signature. ([Allure](https://www.allure.com/story/rihanna-favorite-perfumes?utm_source=chatgpt.com))
+
+1. Escentric Molecules Molecule 01
+2. Le Labo Another 13
+3. MFK Gentle Fluidity Gold
+4. Diptyque Eau Duelle
+5. Maison Francis Kurkdjian Aqua Universalis
+6. Byredo Blanche
+7. Le Labo Thé Noir 29
+8. Tom Ford Oud Wood
+9. Jo Malone Wood Sage & Sea Salt
+10. Matière Première Parisian Musc
+
+Exemples de combinaisons dans l'app :
+
+* Molecule 01 + Oud Wood
+* Another 13 + Thé Noir 29
+* Aqua Universalis + Gentle Fluidity Gold
+* Wood Sage & Sea Salt + Eau Duelle
+* Parisian Musc + Blanche
+
+
+
+Les univers qui restent parce qu'ils racontent quelque chose
+PERSONNAGES
+James Bond · Michael Corleone · Patrick Bateman · Thomas Shelby · Don Draper · Tom Ripley · John Wick · Tyler Durden · Hannibal Lecter · Jay Gatsby · The Founder · Eddie Horniman · Bobby Glass · Freddy Horniman  suzie glass 
+CULTURE
+Clean Girl · Pilates Matcha Girl · Vanilla Girl · Soft Girl · Dark Feminine · Coquette · Mob Wife · Quiet Luxury · Ralph Lauren Campaign · Finance Bro · Tech Bro · Model Off-Duty · Wellness Girl · Elegant But Fun · Effortless Chic · Femme Sportive
+ICÔNES
+Alain Delon · Brigitte Bardot · Jane Birkin · Audrey Hepburn · Marilyn Monroe · Drake · Rihanna · Beyoncé · Taylor Swift · Bad Bunny
+DESTINATIONS
+Paris · New York · London · Milan · Rome · Côte d'Azur · Saint-Tropez · Monaco · Lake Como · Courchevel · Ibiza · Mykonos · Dubai · Tokyo · Marrakech · Rio
+CINÉMA / SÉRIES
+On passe désormais par les personnages masculins : Tony Montana, Michael Corleone, Patrick Bateman, Don Draper, Tom Ripley, Jordan Belfort, Mr. Big, Rip Wheeler, etc. Les personnages féminins restent dans les playlists icônes / culture, pas dans cette section.
+MOMENTS
+First Date · Wedding Guest · Job Interview · Board Meeting · Au travail · En famille · Sunday Morning · Beach Club · Yacht Day · Ski Weekend · Hotel Lobby · Dinner at Nobu · Night Out · Afterparty · Private Jet · Vacation · Gameday · F1
+ATMOSPHÈRES
+Hiver à New York · Été à Saint-Tropez · Automne Cozy · Sunset Tennis · Christmas Eve · Christmas at Hôtel Costes · Tchaïkovski · Cinnamon Rolls · Historical Scents
+EFFETS
+Je veux qu'on me remarque · Je veux sentir cher · Je veux sentir propre · Je veux sentir sexy · Je veux sentir mystérieux · Je veux sentir dangereux · Je veux sentir unique · Je veux sentir rassurant · Je veux sentir intelligent · Je veux sentir inaccessible · Je veux sentir solaire · Je veux sentir comme une peau propre · Je veux qu'on me demande mon parfum · Compliments
+SPÉCIAL
+Wolf of Wall Street / Jordan · Naomi · Évasion fiscale · Strange Smells · Layering
+Et surtout, La vie de Ronnie reste bien à part du foot : je la traiterais comme un univers de joie de vivre, Paris, soleil, séduction, rue, musique, voyage et spontanéité, pas comme une playlist sportive.
+La logique générale devient donc : personnage → culture → lieu → moment → saison → esthétique → effet → histoire. C'est beaucoup plus proche d'une vraie plateforme éditoriale que d'un simple catalogue de recommandations. /// il doit y avoir du storytelling autour de tout et application commence vraiment à devenir un Spotify de la parfumerie, plutôt qu'une énième base de données de parfums. Le mouvement vers une fragrance wardrobe personnalisable et le layering est précisément ce qui rend cette logique particulièrement pertinente aujourd'hui.
