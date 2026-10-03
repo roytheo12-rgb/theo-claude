@@ -22,3 +22,5 @@ Maison Francis Kurkdjian|APOM Pour Femme Elixir
 Maison Francis Kurkdjian|APOM Pour Homme
 # Louis Vuitton : « Coeur Battant » et « Cœur Battant » sont le même parfum
 Louis Vuitton|Coeur Battant
+# Doublon : on garde « Oud Satin Mood » (notes réelles) avec la photo la plus récente et la mieux détourée
+Maison Francis Kurkdjian|Oud Satin Mood Extrait

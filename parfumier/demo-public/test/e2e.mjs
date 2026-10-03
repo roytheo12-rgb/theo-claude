@@ -156,13 +156,13 @@ ok(await pg.locator('#needai').count() === 1, 'recherche par besoin : bouton « 
 ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); if (sh) sh.hidden = true; });
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
 await pg.click('[data-tab=play]'); await pg.waitForSelector('.plcard');
-ok(await pg.locator('.plcard').count() >= 81 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 9, 'playlists : 9 étagères, 81 univers et une playlist du jour');
+ok(await pg.locator('.plcard').count() >= 97 && await pg.locator('.plhero').count() === 1 && await pg.locator('.plsec').count() === 9, 'playlists : 9 étagères, 97 univers et une playlist du jour');
 await pg.screenshot({ path: OUT + '/pl1_biblio.png' });
 await pg.locator('.plcard').first().click(); await pg.waitForSelector('.plist .plr');
 ok(await pg.locator('.plist .plr').count() === 10 && await pg.locator('.plc.big').count() === 1 && /parfums · \d+ dans la base/.test(await pg.textContent('.plmeta')), 'playlist : couverture, ADN, dix parfums classés');
 await pg.screenshot({ path: OUT + '/pl2_detail.png', fullPage: true });
 await pg.locator('.plist .xc:not(.off)').first().click(); await pg.waitForSelector('#sheet:not([hidden]) .big-bottle'); await pg.click('#ex'); await pg.click('#plback'); await pg.waitForSelector('.plcard');
-await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard').last().click(); await pg.waitForSelector('.plcombo');
+await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard', { hasText: 'Layering' }).first().click(); await pg.waitForSelector('.plcombo');
 ok(await pg.locator('.plcombo').count() === 5, 'layering : cinq combinaisons proposées');
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });

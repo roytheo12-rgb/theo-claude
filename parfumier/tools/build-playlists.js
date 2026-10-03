@@ -6,9 +6,9 @@ const w = { }; w.window = w; vm.createContext(w);
 for (const f of ['data', 'desc', 'index', 'facts']) vm.runInContext(fs.readFileSync(path.join(root, f + '.js'), 'utf8'), w);
 const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/n°|no\.|№/g, 'n ').replace(/&/g, ' and ').replace(/['’`.,–—-]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 const HA = w.HOUSE_ALIAS || {};
-const HOUSE_SYN = { memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
+const HOUSE_SYN = { ysl: 'yves saint laurent', memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
 // parfums cités sans maison dans le catalogue
-const BARE = { 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
+const BARE = { 'terre d hermes': 'Hermès Terre d\'Hermès', 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
 const entries = [];
 (w.CATALOG || []).forEach((c) => c.name && c.house && entries.push({ h: c.house, n: c.name }));
 (w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => entries.push({ h, n })));
@@ -56,7 +56,7 @@ const PAL = {
 41:'cfc6b8,7f1d1d,1c1c1c,arches',42:'d98a4a,a8452c,f4dfb8,arches',43:'1d7fb0,7dd1d9,fff4d6,waves',44:'f26b21,2d9cdb,fff1d0,stripes',45:'b0121f,f4f1ea,101820,grid',46:'234e52,6fa8a0,e9dfc8,waves',47:'7a5a1f,d9b14a,14100a,rays',48:'0d0d1f,e0245e,4de1ff,grid',49:'22344f,8aa4c2,f2f5f8,dots',50:'ff9a3c,ffd166,1b9aaa,rays',
 51:'5a2e12,b5622a,f0c987,rain',52:'c8683a,f0a766,ffffff,stripes',53:'213a57,7aa5d2,ffffff,dots',54:'0f5a2a,e8f0e8,111111,stripes',55:'111111,e10600,f2f2f2,stripes',56:'5b1b3a,d56a8a,f8dfd0,dots',57:'12202e,3a5a78,d0d6dc,grid',58:'2a1a4a,f26ca7,ffd166,dots',59:'e7dfd2,b8a98f,222222,stripes',60:'1d6f42,e9f0d8,f4a261,stripes',
 61:'f4efe6,d9cdb8,8f7f66,waves',62:'f3d9a4,e08e4e,fff4e0,dots',63:'2b2216,8a6a3a,e8d8b0,arches',64:'ff2e63,08090a,f9f871,rays',65:'10100f,6e5a2a,e5d6a8,grid',66:'f4fbfc,bfe3ea,ffffff,waves',67:'2a0610,9c1537,f0a58f,waves',68:'0a0a1e,2a2a5c,8e8ec8,grain',69:'080808,6a0d0d,e5391a,rays',70:'fff0c9,ffb347,d65a31,dots',
-71:'0e3b2d,c9a227,f0e6c8,stripes',72:'4b0f3a,c43a8b,f5d0e6,rays',73:'0a2a3a,1d6f8c,e8d9a8,waves',74:'e9efe1,4f7a46,7a1f2b,stripes',75:'3a0b18,9c1b30,e7c67a,arches',76:'0f2a1d,a41e22,e8c872,dots',77:'3c0a14,9b2335,d9b26f,arches',78:'6e3a1b,c98a4a,f7e3c0,waves',79:'3a2c1a,a88b5a,efe3c8,grain',80:'202020,6e7f4a,b0b0a0,grain',81:'2c2c54,706fd3,f7f1e3,rings' };
+71:'0e3b2d,c9a227,f0e6c8,stripes',72:'4b0f3a,c43a8b,f5d0e6,rays',73:'0a2a3a,1d6f8c,e8d9a8,waves',74:'e9efe1,4f7a46,7a1f2b,stripes',75:'3a0b18,9c1b30,e7c67a,arches',76:'0f2a1d,a41e22,e8c872,dots',77:'3c0a14,9b2335,d9b26f,arches',78:'6e3a1b,c98a4a,f7e3c0,waves',79:'3a2c1a,a88b5a,efe3c8,grain',80:'202020,6e7f4a,b0b0a0,grain',81:'2c2c54,706fd3,f7f1e3,rings',82:'1f2a3a,8aa6c1,f4efe6,dots',83:'f28c38,7b2d8e,ffe6b0,waves',84:'f4f7fa,1e78c2,ffffff,waves',85:'7a2e12,d9822b,f6d9a0,arches',86:'0b7a3e,f2c500,1b6ac9,rays',87:'e8eddc,b7a3c9,6b4f2a,dots',88:'e6e9ee,5a6b82,1b2432,grid',89:'fbfaf6,3fb1c9,f0c27b,stripes',90:'fafcff,0e4a7b,d9b26f,waves',91:'09090f,6a1bb0,ff3d9a,rays',92:'fbeaf2,c7b6e6,a0d2c0,dots',93:'1a1a1a,f2e63d,e5e5e5,grain',94:'ff9f1c,ffd166,fffbe6,rays',95:'2b0a3d,c0398a,ffd9ef,rings',96:'101010,3a3a3a,c9a64b,arches',97:'0a0a14,5b1d8f,f0d78a,rays' };
 const HIST = { 'chanel n 5': ['Porté par', 'Marilyn Monroe'], 'givenchy l interdit': ['Créé pour', 'Audrey Hepburn'], 'miller harris l air de rien': ['Créé avec', 'Jane Birkin'], 'dior eau sauvage': ['Associé à', 'Alain Delon'], 'jean patou joy': ['Inspiré d\'une époque', 'Grandes figures féminines'], 'guerlain eau de cologne imperiale': ['Maison liée à', 'l\'Impératrice Eugénie'], 'atkinsons 24 old bond street': ['Maison liée à', 'Mayfair, 24 Old Bond Street'], '4711 original eau de cologne': ['Maison liée à', 'Cologne'], 'floris n 89': ['Maison liée à', 'Jermyn Street, Londres'], 'guerlain shalimar': ['Inspiré d\'une époque', 'Les Années folles'] };
 const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
 fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
@@ -67,12 +67,12 @@ const SECS_OF = (p) => { const i = p.id; const r = [];
   if ([1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].includes(i)) r.push('Personnages');
   if ([2, 3, 4, 6, 7, 71].includes(i)) r.push('Cinéma & séries');
   if (i >= 17 && i <= 26) r.push('Icônes');
-  if ((i >= 27 && i <= 37) || [58, 59, 60].includes(i)) r.push('Culture');
-  if (i >= 38 && i <= 48) r.push('Destinations');
-  if ([53, 54, 55, 56, 57, 61, 62, 63].includes(i)) r.push('Moments');
+  if ((i >= 27 && i <= 37) || [58, 59, 60, 92].includes(i)) r.push('Culture');
+  if ((i >= 38 && i <= 48) || (i >= 82 && i <= 86)) r.push('Destinations');
+  if ([53, 54, 55, 56, 57, 61, 62, 63, 87, 88, 89, 90, 91].includes(i)) r.push('Moments');
   if ((i >= 49 && i <= 52) || (i >= 74 && i <= 79)) r.push('Atmosphères');
-  if (i >= 64 && i <= 70) r.push('Effets');
-  if ([71, 72, 73, 80, 81].includes(i)) r.push('Spécial');
+  if ((i >= 64 && i <= 70) || (i >= 93 && i <= 95)) r.push('Effets');
+  if ([71, 72, 73, 80, 81, 96, 97].includes(i)) r.push('Spécial');
   if (!r.length) throw new Error('sans section ' + i);
   return r; };
 function out() {

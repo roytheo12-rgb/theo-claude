@@ -911,16 +911,16 @@ Marbre, fleurs fraîches, bois ciré, bagages en cuir et parfum qui flotte dans 
 64. Je veux qu'on me remarque
 Pas forcément fort. Juste impossible à oublier.
 
-1. MFK Baccarat Rouge 540
+1. MFK Baccarat Rouge 540 Extrait
 2. Maison Crivelli Oud Maracujá
-3. Amouage Guidance
+3. Parfums de Marly Delina Exclusif
 4. Initio Side Effect
-5. Xerjoff Erba Pura
-6. Parfums de Marly Delina Exclusif
+5. Xerjoff Naxos
+6. Amouage Guidance
 7. Tom Ford Lost Cherry
-8. Kilian Angels' Share
-9. Frederic Malle Portrait of a Lady
-10. Nasomatto Black Afgano
+8. Roja Enigma
+9. MFK Oud Satin Mood
+10. Frederic Malle Portrait of a Lady
 
 65. Je veux sentir cher
 Bois précieux, iris, musc propre et matières qui donnent immédiatement une impression de sophistication.
@@ -939,58 +939,58 @@ Bois précieux, iris, musc propre et matières qui donnent immédiatement une im
 66. Je veux sentir propre
 La chemise vient de sortir de la blanchisserie.
 
-1. Byredo Blanche
-2. Prada L'Homme
-3. Narciso Rodriguez Pure Musc
-4. Maison Margiela Lazy Sunday Morning
-5. MFK Aqua Universalis
+1. Prada L'Homme
+2. Byredo Blanche
+3. MFK Aqua Universalis
+4. Narciso Rodriguez Pure Musc
+5. Maison Margiela Lazy Sunday Morning
 6. Glossier You
-7. Chanel 1957
-8. Diptyque Fleur de Peau
-9. Aesop Tacit
-10. Maison Francis Kurkdjian 724
+7. Diptyque Fleur de Peau
+8. Le Labo Another 13
+9. Creed Silver Mountain Water
+10. Chanel No. 5 L'Eau
 
 67. Je veux sentir sexy
 Peau chaude, lumière basse et distance beaucoup trop courte.
 
-1. MFK Oud Satin Mood
-2. Tom Ford Lost Cherry
-3. Kilian Love, Don't Be Shy
-4. Initio Side Effect
-5. Frederic Malle Musc Ravageur
-6. Tom Ford Ombré Leather
-7. Maison Crivelli Hibiscus Mahajád
-8. Parfums de Marly Delina Exclusif
-9. Narciso Rodriguez Musc Noir Rose
-10. By Kilian Black Phantom
+1. MFK Gentle Fluidity Gold
+2. Initio Side Effect
+3. Tom Ford Lost Cherry
+4. Dior Addict
+5. MFK Oud Satin Mood
+6. Maison Crivelli Hibiscus Mahajád
+7. Kilian Love, Don't Be Shy
+8. Frederic Malle Musc Ravageur
+9. Tom Ford Ombré Leather
+10. Parfums de Marly Delina Exclusif
 
 68. Je veux sentir mystérieux
 Personne ne sait exactement ce que c'est. C'est précisément le but.
 
 1. Le Labo Thé Noir 29
-2. Serge Lutens Chergui
-3. Diptyque Eau Duelle
-4. Ormonde Jayne Ormonde Man
-5. Frederic Malle Portrait of a Lady
-6. Maison Crivelli Iris Malikhân
-7. Nasomatto Baraonda
-8. Comme des Garçons Black
-9. Amouage Memoir Man
-10. BDK Gris Charnel Extrait
+2. Tom Ford Black Orchid
+3. Serge Lutens Chergui
+4. MFK Oud Satin Mood
+5. Amouage Interlude Man
+6. Frederic Malle Portrait of a Lady
+7. Comme des Garçons Black
+8. Byredo Black Saffron
+9. Maison Crivelli Oud Maracujá
+10. Nasomatto Baraonda
 
 69. Je veux sentir dangereux
 Pas agressif. Dangereusement séduisant.
 
 1. Tom Ford Tuscan Leather
-2. Tom Ford Ombré Leather
-3. Nasomatto Black Afgano
+2. Nasomatto Duro
+3. Amouage Interlude Man
 4. Initio Side Effect
-5. Amouage Interlude Man
-6. Maison Crivelli Oud Maracujá
-7. By Kilian Black Phantom
-8. Serge Lutens Arabie
-9. Nasomatto Duro
-10. Etat Libre d'Orange Rien
+5. Kilian Black Phantom
+6. Tom Ford Ombré Leather
+7. Comme des Garçons Black
+8. Frederic Malle Monsieur
+9. Serge Lutens Chergui
+10. Naomi Goodsir Bois d'Ascèse
 
 70. Compliments
 La playlist dont le KPI est simple : « C'est quoi ton parfum ? »
@@ -998,13 +998,13 @@ La playlist dont le KPI est simple : « C'est quoi ton parfum ? »
 1. MFK Gentle Fluidity Gold
 2. MFK Baccarat Rouge 540
 3. Parfums de Marly Delina
-4. Parfums de Marly Layton
-5. Initio Musk Therapy
-6. Maison Crivelli Hibiscus Mahajád
-7. Creed Aventus
+4. Initio Musk Therapy
+5. Parfums de Marly Althaïr
+6. Creed Aventus
+7. Dior Homme Intense
 8. Byredo Bal d'Afrique
-9. Narciso Rodriguez Musc Noir Rose
-10. Dior Sauvage Elixir
+9. Maison Crivelli Hibiscus Mahajád
+10. Bleu de Chanel Parfum
 
 10 — LE WOLF OF WALL STREET / MONDE FINANCIER
 71. Jordan Belfort
@@ -1178,6 +1178,230 @@ Exemples de combinaisons dans l'app :
 * Parisian Musc + Blanche
 
 
+
+82. Courchevel
+Chalet, cheminée, ski le matin, manteau en cachemire et dîner après la neige.
+
+1. MFK Grand Soir
+2. Tom Ford Tobacco Vanille
+3. By Kilian Angels' Share
+4. Parfums de Marly Althaïr
+5. Xerjoff Naxos
+6. Diptyque Eau Duelle
+7. Maison Margiela By the Fireplace
+8. Initio Side Effect
+9. Serge Lutens Chergui
+10. Amouage Interlude Man
+
+83. Ibiza
+Sunset, chemise ouverte, musique électronique, peau salée et départ pour la nuit.
+
+1. Byredo Bal d'Afrique
+2. Le Labo Another 13
+3. Creed Virgin Island Water
+4. Maison Crivelli Hibiscus Mahajád
+5. Le Labo Santal 33
+6. Escentric Molecules Molecule 01
+7. Diptyque Philosykos
+8. MFK Gentle Fluidity Gold
+9. Byredo Mojave Ghost
+10. Matière Première Parisian Musc
+
+84. Mykonos
+Blanc éclatant, mer bleue, terrasse blanche, soleil et nuit qui ne commence jamais avant 1h.
+
+1. Tom Ford Neroli Portofino
+2. MFK Aqua Universalis
+3. Creed Virgin Island Water
+4. Roja Elysium
+5. Byredo Sundazed
+6. Le Labo Bergamote 22
+7. Xerjoff Torino21
+8. Diptyque Philosykos
+9. Acqua di Parma Fico di Amalfi
+10. Byredo Bal d'Afrique
+
+85. Marrakech
+Terrasse au coucher du soleil, épices, cuir, thé à la menthe et jardins cachés.
+
+1. Serge Lutens Ambre Sultan
+2. Maison Crivelli Oud Maracujá
+3. MFK Oud Satin Mood
+4. Memo African Leather
+5. Amouage Epic Woman
+6. Tom Ford Oud Wood
+7. Parfums de Marly Haltane
+8. Xerjoff Alexandria II
+9. Diptyque Eau Duelle
+10. By Kilian Straight to Heaven
+
+86. Rio
+Samba, soleil, peau chaude, plage, citron vert et nuit qui continue jusqu'au matin.
+
+1. Creed Virgin Island Water
+2. Xerjoff Torino21
+3. Byredo Bal d'Afrique
+4. Tom Ford Mandarino di Amalfi
+5. MFK Aqua Universalis
+6. Diptyque Philosykos
+7. Acqua di Parma Fico di Amalfi
+8. Roja Elysium
+9. Byredo Sundazed
+10. Le Labo Bergamote 22
+
+87. Wedding Guest
+Costume ou robe parfaitement choisis, jardin, champagne et parfum suffisamment élégant pour les photos.
+
+1. Creed Green Irish Tweed
+2. MFK Gentle Fluidity Gold
+3. MFK Aqua Universalis
+4. Dior Homme Intense
+5. Parfums de Marly Delina
+6. Chanel Chance Eau Tendre
+7. Creed Aventus Cologne
+8. MFK Amyris Femme
+9. Roja Elysium
+10. Diptyque Eau Rose
+
+88. Job Interview
+Chemise repassée, CV imprimé, cinq minutes d'avance et aucune envie que le parfum arrive avant vous.
+
+1. Prada L'Homme
+2. Terre d'Hermès
+3. Chanel Platinum Égoïste
+4. MFK Masculin Pluriel
+5. Dior Homme 2020
+6. Chanel Chance Eau Tendre
+7. Narciso Rodriguez Pure Musc
+8. MFK Aqua Universalis
+9. Acqua di Parma Colonia
+10. Byredo Blanche
+
+89. Beach Club
+11h30, lunettes noires, serviette blanche, déjeuner tardif et soleil sur les épaules.
+
+1. Tom Ford Soleil Blanc
+2. Tom Ford Eau de Soleil Blanc
+3. Creed Virgin Island Water
+4. Maison Margiela Beach Walk
+5. MFK Aqua Universalis
+6. Le Labo Bergamote 22
+7. Acqua di Parma Fico di Amalfi
+8. Byredo Sundazed
+9. Diptyque Philosykos
+10. Tom Ford Neroli Portofino
+
+90. Yacht Day
+Bateau blanc, chemise en lin, eau salée, citron et coucher de soleil sur le pont.
+
+1. Creed Virgin Island Water
+2. Tom Ford Neroli Portofino
+3. Le Labo Bergamote 22
+4. Acqua di Parma Fico di Amalfi
+5. MFK Aqua Universalis
+6. Roja Elysium
+7. Eau d'Italie Un Bateau pour Capri
+8. Xerjoff 40 Knots
+9. Diptyque Philosykos
+10. Byredo Sundazed
+
+91. Night Out
+Vous aviez prévu un verre. Il est 4h17.
+
+1. Initio Side Effect
+2. MFK Baccarat Rouge 540 Extrait
+3. Kilian Angels' Share
+4. Tom Ford Lost Cherry
+5. Tom Ford Ombré Leather
+6. Parfums de Marly Layton
+7. Maison Crivelli Hibiscus Mahajád
+8. Byredo Black Saffron
+9. Dior Addict
+10. Xerjoff Naxos
+
+92. Soft Girl
+Cardigan pastel, fleurs fraîches, musique douce, peau poudrée et rendez-vous dans un café.
+
+1. Narciso Rodriguez For Her
+2. Prada Infusion d'Iris
+3. Diptyque Fleur de Peau
+4. MFK Amyris Femme
+5. Byredo Blanche
+6. Chloé Eau de Parfum
+7. Guerlain Mon Guerlain
+8. Chanel Chance Eau Tendre
+9. Jo Malone Peony & Blush Suede
+10. Maison Violet Compliment
+
+93. Je veux sentir unique
+Pas un parfum qu'on croise : un parfum qu'on te prête.
+
+1. Comme des Garçons 2
+2. DS & Durga Bowmakers
+3. Aesop Hwyl
+4. Le Labo Gaiac 10
+5. Etat Libre d'Orange Rien
+6. Maison Crivelli Hibiscus Mahajád
+7. Serge Lutens Fille en Aiguilles
+8. Ormonde Jayne Ormonde Man
+9. Nasomatto Baraonda
+10. Comme des Garçons Tar
+
+94. Je veux sentir solaire
+Peau chaude, agrumes, sel et lumière de fin d'après-midi.
+
+1. Tom Ford Soleil Blanc
+2. Creed Virgin Island Water
+3. Byredo Sundazed
+4. Maison Crivelli Hibiscus Mahajád
+5. Tom Ford Neroli Portofino
+6. MFK Aqua Universalis
+7. Acqua di Parma Fico di Amalfi
+8. Le Labo Bergamote 22
+9. Roja Elysium
+10. Diptyque Philosykos
+
+95. Je veux qu'on me demande mon parfum
+Celui qui fait se retourner, puis poser la question.
+
+1. MFK Gentle Fluidity Gold
+2. Maison Crivelli Hibiscus Mahajád
+3. Le Labo Another 13
+4. Parfums de Marly Althaïr
+5. MFK Baccarat Rouge 540
+6. Initio Musk Therapy
+7. Byredo Bal d'Afrique
+8. Xerjoff Naxos
+9. Diptyque Eau Duelle
+10. Le Labo Thé Matcha 26
+
+96. La vie de Ronnie · Collections privées
+Paris, 23h. Il sort du match, passe chez son coiffeur en bas de Barbès, il est à l'Hôtel Costes à minuit. Sneakers propres, veste Vuitton, parfum trouvé chez un caviste de niche rue du Faubourg. Il kiffe ce qui est beau, pas ce qui est connu. Ronaldinho en fond d'écran, du rap FR au son brésilien, une collection qui ferait pâlir un parfumeur de Grasse. Ce n'est pas un personnage : c'est quelqu'un qui sait vivre.
+
+1. Louis Vuitton Ombre Nomade
+2. Louis Vuitton Imagination
+3. Louis Vuitton Matière Noire
+4. Dior Gris Montaigne
+5. Dior Oud Ispahan
+6. Dior Bois d'Argent
+7. Givenchy Malachite
+8. Givenchy Gentleman Parfum
+9. YSL Tuxedo
+10. YSL MYSLF Extrême
+
+97. La vie de Ronnie · Niche
+Paris, 23h. Il sort du match, passe chez son coiffeur en bas de Barbès, il est à l'Hôtel Costes à minuit. Sneakers propres, veste Vuitton, parfum trouvé chez un caviste de niche rue du Faubourg. Il kiffe ce qui est beau, pas ce qui est connu. Ronaldinho en fond d'écran, du rap FR au son brésilien, une collection qui ferait pâlir un parfumeur de Grasse. Ce n'est pas un personnage : c'est quelqu'un qui sait vivre.
+
+1. MFK Baccarat Rouge 540 Extrait
+2. MFK Grand Soir
+3. Byredo Black Saffron
+4. Byredo Bal d'Afrique
+5. Maison Crivelli Oud Maracujá
+6. Maison Crivelli Hibiscus Mahajád
+7. Bvlgari Tygar
+8. Frederic Malle Musc Ravageur
+9. Frederic Malle Portrait of a Lady
+10. Initio Side Effect
 
 Les univers qui restent parce qu'ils racontent quelque chose
 PERSONNAGES

@@ -517,7 +517,7 @@
 380|Zara|Spell Caramel|
 381|Ella K|Musk K|
 382|Maison Francis Kurkdjian|Gentle Fluidity Silver|
-383|Maison Francis Kurkdjian|Oud Satin Mood|Extrait
+383|Maison Francis Kurkdjian|Oud Satin Mood|
 385|Horace|& Horace|Extrait
 386|Parfum d'Empire|Un Bel Amour d'Été|
 387|Acqua di Parma|Zafferano|
@@ -563,7 +563,6 @@
 427|Maison Francis Kurkdjian|Aqua Universalis|
 428|Guerlain|Spiritueuse Double Vanille|
 429|Guerlain|Fève Gourmande|
-430|Maison Francis Kurkdjian|Oud Satin Mood|
 431|Celine|Réptile|
 432|Emporio Armani|Stronger With You Spices|
 433|Kilian|Angels' Share Paradis|
