@@ -67,3 +67,46 @@ Balmain|Vent Vert|EDT
 Diptyque|Eau Papier|EDT
 Diptyque|L'Eau|EDT
 Houbigant|Quelques Fleurs|EDP
+Acqua di Parma|Colonia Buongiorno Soleil|EDP
+Acqua di Parma|Colonia Buongiorno Rouge|EDP
+Armani|La Femme Bleue|EDP
+Atelier des Ors|Rose Oud|EDP
+Boadicea the Victorious|Glorious|EDP
+Clive Christian|1872 Woman|EDP
+Comme des Garçons|Series 6 Synthetic: Tar|EDP
+D'Orsay|Tilleul|EDP
+D'Orsay|Tilleul Extrait|EDP
+Ella K|Casta Diva|EDP
+Ella K|Kyoto mon Amour|EDP
+Ella K|Londonderry|EDP
+Ella K|Ode à la Forêt|EDP
+Ella K|Sotto la Luna Gardenia|EDP
+Ella K|Yuki Yuki|EDP
+Essential Parfums|Dedication|EDP
+Floraïku|Cherry Blossom Rain|EDP
+Floraïku|Cherry On Top|EDP
+Floraïku|Haiku in the Dark|EDP
+Floraïku|Morning Dew|EDP
+Floraïku|Morning Dew on Moss|EDP
+Floraïku|On The Road|EDP
+Floraïku|Sunrise Spell|EDP
+Floraïku|The Pillow Book|EDP
+Floraïku|The Wandering Minstrel|EDP
+Giardini di Toscana|Giglio di Firenze|EDP
+Houbigant|Fougère Nobile|EDP
+Les Bains Guerbois|Brume de Soie|EDP
+Maison Crivelli|Fleur Nakheel|EDP
+Maison Crivelli|Iris Malhikân|EDP
+Marc-Antoine Barrois|B683 Extrait|EDP
+Marc-Antoine Barrois|Ganymède Extrait|EDP
+Memo Paris|Siwa|EDP
+Memo Paris|Île de Ré|EDP
+Oman Luxury|Al Qasaid|EDP
+Place de la Rêverie|Jardin de Minuit|EDP
+Place de la Rêverie|Trocadéro|EDP
+Rosendo Mateu|No. 4|EDP
+Santa Maria Novella|Rosa|EDP
+Dries Van Noten|Dries Van Noten|EDP
+Memo Paris|Shams Oud|EDP
+Vilhelm Parfumerie|125th & Bloom|EDP
+Vilhelm Parfumerie|Basilico & Fellini|EDP

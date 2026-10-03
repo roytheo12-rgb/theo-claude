@@ -845,6 +845,8 @@ d: Elle porte trois parfums en rotation, connaît chaque maison indépendante, e
 - Diptyque Orphéon | Mode et Marais.
 - Marc-Antoine Barrois Ganymede | Sculptural et rare.
 
+- Memo Paris Shams Oud | Pour les fins de shooting à l'étranger.
+
 ## Effortless Chic
 d: Chemise blanche, jean parfait, appartement parisien, cheveux encore légèrement humides. Aucune apparence d'effort.
 @ Homme
@@ -897,6 +899,8 @@ d: Rive gauche le matin, galerie l'après-midi, dîner rive droite et taxi sous 
 - Floraïku Morning Dew on Moss | Une découverte de boutique cachée du 3ème.
 - Place de la Rêverie Trocadéro | La reco qu'on chuchote entre initiés.
 - Les Bains Guerbois Brume de Soie | Une institution parisienne.
+
+- Dries Van Noten Dries Van Noten | La parisienne qui suit les collections.
 
 ## New York
 d: Taxi jaune, espresso, skyline, galerie et dîner à 23h.
@@ -1319,7 +1323,7 @@ d: Samba, soleil, peau chaude, plage, citron vert et nuit qui continue jusqu'au 
 x Versace Dylan Blue
 + Parfums de Marly Percival | Un frais aromatique de haute qualité, bien construit pour une journée de stade.
 
-+ Acqua di Parma Colonia Buongiorno (Rouge) | La nouvelle collection Buongiorno d'ADP revisite les couleurs du matin sous forme olfactive. Le rouge — orange sanguine et cèdre — est le plus énergique, adapté à l'intensité d'un gameday.
++ Acqua di Parma Colonia Buongiorno Rouge | La nouvelle collection Buongiorno d'ADP revisite les couleurs du matin sous forme olfactive. Le rouge — orange sanguine et cèdre — est le plus énergique, adapté à l'intensité d'un gameday.
 + Marc-Antoine Barrois Ganymede | Vainqueur aux Fragrance Foundation Awards 2020. Un cuir moderne et presque aérien, signé Quentin Bisch.
 
 ## F1
@@ -1369,7 +1373,7 @@ x Versace Dylan Blue
 
 ## Beach Club
 
-+ Acqua di Parma Colonia Buongiorno (Jaune/Soleil) | La collection Buongiorno version "matin solaire" — citrus méditerranéen pur. Parfait pour le début de matinée au Beach Club.
++ Acqua di Parma Colonia Buongiorno Soleil | La collection Buongiorno version "matin solaire" — citrus méditerranéen pur. Parfait pour le début de matinée au Beach Club.
 + Atelier des Ors Riviera Lazuli | La collection Riviera d'Atelier des Ors est entièrement conçue autour de la Méditerranée. Lazuli évoque la mer bleue et les pierres blanches — l'image exacte d'un Beach Club de la Côte d'Azur.
 + Maison Crivelli Citrus Batikanga | Citrus net et tropical. La "batik" est un tissu indonésien — l'exotisme solaire sans cliché.
 + Memo Paris Siwa | Inspiré de l'oasis de Siwa en Égypte — soleil, eau fraîche, minéral. Pour un beach club qui dépasse la Méditerranée habituelle.
