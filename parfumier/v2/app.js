@@ -1313,6 +1313,7 @@
   }
   const plCover = (p, big) => { const [a, b, c] = p.c, light = !p.img && plLum(a) * 0.5 + plLum(b) * 0.5 > 0.62; return `<span class="plc${big ? ' big' : ''}${light ? ' lt' : ''}${p.img ? ' has' : ''}" style="--a:#${a};--b:#${b};--c:#${c}">${p.img ? `<img class="plimg" alt="" loading="lazy" src="${esc(p.img)}">` : ''}<svg class="plm" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none" stroke="currentColor" stroke-width=".7">${plMotif(p.m)}</svg><b>${esc(p.t)}</b><small>${esc(p.secs[0])}</small></span>`; };
   const plStats = (p) => { const es = p.ps.map(plEntry), inb = es.filter(Boolean); return { es, n: inb.length, mine: inb.filter((e) => S.collection.some((c) => E.norm(c.name) === E.norm(e.name))).length }; };
+  const plDesc = (p) => p.d || (p.grp ? p.grp.map((g) => g.d).join(' ') : '');
   const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(); return PLS[k % PLS.length]; };
   function viewPlay() { PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
   function viewPlayLib() {
@@ -1320,7 +1321,7 @@
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Playlists</h2><span class="mono">${PLS.length} univers</span></header>
         <p class="plintro">Un personnage, une ville, un instant, une envie. Chaque playlist a son décor, sa culture et ses accords.</p>
-        <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Playlist du jour</span><b>${esc(day.t)}</b><em>${esc(day.d)}</em></span></button>
+        <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Playlist du jour</span><b>${esc(day.t)}</b><em>${esc(plDesc(day))}</em></span></button>
         <div class="chips plsecs"><button class="chip ${PL.sec ? '' : 'on'}" data-psec="">Tout</button>${(window.PL_SECTIONS || []).map((s) => `<button class="chip ${PL.sec === s ? 'on' : ''}" data-psec="${esc(s)}">${esc(s)}</button>`).join('')}</div>
       </section>
       ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
@@ -1339,8 +1340,8 @@
       const lab = x.lab ? `<em class="pllab">${esc(x.lab[0])} ${esc(x.lab[1])}</em>` : '';
       const mark = have ? '✓ chez toi' : wished ? '♡' : '';
       return e
-        ? `<div class="plr"><i class="pln">${i + 1}</i><button type="button" class="xc" data-pe="${i}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : ''].filter(Boolean).join(' · '))}</small>${lab}</span><i class="xm">${mark}</i></button></div>`
-        : `<div class="plr"><i class="pln">${i + 1}</i><button type="button" class="xc off" data-pe="${i}"><span class="xth ph">?</span><span class="xt"><b>${esc(x.q)}</b><small>Pas encore dans la base</small>${lab}</span><i class="xm">${wished ? '♡' : ''}</i></button></div>`;
+        ? `<div class="plr"><i class="pln">${p.grp ? (i % 10) + 1 : i + 1}</i><button type="button" class="xc" data-pe="${i}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : ''].filter(Boolean).join(' · '))}</small>${lab}</span><i class="xm">${mark}</i></button></div>`
+        : `<div class="plr"><i class="pln">${p.grp ? (i % 10) + 1 : i + 1}</i><button type="button" class="xc off" data-pe="${i}"><span class="xth ph">?</span><span class="xt"><b>${esc(x.q)}</b><small>Pas encore dans la base</small>${lab}</span><i class="xm">${wished ? '♡' : ''}</i></button></div>`;
     };
     const find1 = (s) => { const k = E.norm(s); const i = p.ps.findIndex((x) => E.norm(x.q).includes(k)); return i < 0 ? null : i; };
     const combos = (p.combos || []).map((c) => c.map(find1)).filter((c) => c.every((i) => i != null));
@@ -1350,12 +1351,12 @@
         <button type="button" class="ghost plback" id="plback">← Playlists</button>
         ${plCover(p, true)}
         <div><p class="mono">${esc(p.secs.join(' · '))}</p><h1 class="plh">${esc(p.t)}</h1></div>
-        <p class="pld">${esc(p.d)}</p>
+        ${p.d ? `<p class="pld">${esc(p.d)}</p>` : ''}
         <p class="mono plmeta">${p.ps.length} parfums · ${st.n} dans la base${st.mine ? ' · ' + st.mine + ' chez toi' : ''}</p>
         ${accords.length || notes.length ? `<div><p class="mono">L'ADN olfactif</p><div class="chips" style="margin-top:8px">${accords.map((a) => `<span class="chip on">${esc(a)}</span>`).join('')}${notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div></div>` : ''}
         <div class="row"><button class="cta" id="plshuf"><span>Un au hasard</span></button><button class="ghost" id="plwish">Tout en wishlist</button></div>
         ${(p.doc || []).map((d) => `<div class="pldoc"><p>${esc(d.t)}</p>${d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener noreferrer">Source : ${esc(d.s)}</a>` : ''}</div>`).join('')}
-        <div class="plist">${p.ps.map(row).join('')}</div>
+        <div class="plist">${p.ps.map((x, i) => (p.grp && i % 10 === 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[i / 10].t)}</p><p class="pld">${esc(p.grp[i / 10].d)}</p></div>` : '') + row(x, i)).join('')}</div>
         ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
       </section>`;
     $('#plback').onclick = () => { PL.id = 0; render(); };

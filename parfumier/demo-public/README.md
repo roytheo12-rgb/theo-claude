@@ -229,3 +229,9 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - Section « Cinéma & séries » : tous les personnages, plus Jordan et Naomi.
 - `data/keep-perfumes.txt` + `tools/add-kept.py` : parfums gardés dans la base même si leur maison est retirée (fiches sans notes inventées).
 - Couvertures : images déposées dans `incoming/playlists/` → `tools/build-covers.py` → `v2/img/pl/<slug>.webp`, utilisées par la bibliothèque.
+
+## v59 — Playlists : couvertures photo et archétypes
+
+- 27 couvertures intégrées (recadrées : fond vert et légende retirés, `tools/cover_crop.py`, table `data/covers-map.txt`).
+- 26 nouvelles playlists : personnages de cinéma et séries (Fargo, Pulp Fiction, Sex and the City, Le Diable s'habille en Prada, Bruce Wayne…) et une section « Archétypes ». Les couples homme/femme sont fusionnés en une playlist à deux groupes (10 hommes puis 10 femmes).
+- Parfums absents ajoutés dans `data/keep-perfumes.txt`.

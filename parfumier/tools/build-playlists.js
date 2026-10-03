@@ -6,9 +6,9 @@ const w = { }; w.window = w; vm.createContext(w);
 for (const f of ['data', 'desc', 'index', 'facts']) vm.runInContext(fs.readFileSync(path.join(root, f + '.js'), 'utf8'), w);
 const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/n°|no\.|№/g, 'n ').replace(/&/g, ' and ').replace(/['’`.,–—-]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 const HA = w.HOUSE_ALIAS || {};
-const HOUSE_SYN = { ysl: 'yves saint laurent', memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
+const HOUSE_SYN = { 'goutal paris': 'maison goutal', 'yves rocher': 'yves rocher', ysl: 'yves saint laurent', memo: 'memo paris', replica: 'maison margiela', mfk: 'maison francis kurkdjian', 'by kilian': 'kilian', bdk: 'bdk parfums', 'frederic malle': 'frederic malle', 'armani prive': 'armani', roja: 'roja parfums', margiela: 'maison margiela', 'maison crivelli': 'maison crivelli', 'maison mataha': 'maison mataha', 'jo malone': 'jo malone', 'cdg': 'comme des garcons', 'bleu de chanel': 'chanel bleu de chanel', 'tom ford': 'tom ford' };
 // parfums cités sans maison dans le catalogue
-const BARE = { 'chloe eau de parfum': 'Chloé Chloé', 'fracas robert piguet': 'Robert Piguet Fracas', 'terre d hermes': 'Hermès Terre d\'Hermès', 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
+const BARE = { 'boss bottled parfum': 'Hugo Boss Boss Bottled Parfum', 'hermes eau de merveilles bleue': 'Hermès Eau des Merveilles Bleue', 'comme des garcons kyoto': 'Comme des Garçons Series 3 Incense: Kyoto', 'chloe eau de parfum': 'Chloé Chloé', 'fracas robert piguet': 'Robert Piguet Fracas', 'terre d hermes': 'Hermès Terre d\'Hermès', 'chanel platinum egoiste': 'Chanel Egoiste Platinum', 'xerjoff erba pura': 'Sospiro Erba Pura', 'grey vetiver tom ford': 'Tom Ford Grey Vetiver', 'maison margiela replica by the fireplace': 'Maison Margiela By the Fireplace', 'guerlain eau de cologne imperiale': 'Guerlain Eau de Cologne Impériale Edition 160 Anniversaire', 'fracas': 'Robert Piguet Fracas', 'diorissimo': 'Dior Diorissimo', 'bleu de chanel parfum': 'Chanel Bleu de Chanel Parfum', 'chanel n5 marilyn monroe': 'Chanel N°5', 'chanel no 5': 'Chanel N°5' };
 const entries = [];
 (w.CATALOG || []).forEach((c) => c.name && c.house && entries.push({ h: c.house, n: c.name }));
 (w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => entries.push({ h, n })));
@@ -17,12 +17,15 @@ const byKey = new Map();
 entries.forEach((e) => { const hn = norm(HA[norm(e.h)] || e.h), full = hn + ' ' + norm(e.n); housesN.add(hn); if (!byKey.has(full)) byKey.set(full, e); const raw = norm(e.h) + ' ' + norm(e.n); if (!byKey.has(raw)) byKey.set(raw, e); const nn = norm(e.n); if (nn.startsWith(hn + ' ') && !byKey.has(nn)) byKey.set(nn, e); const rp = nn.replace(/^replica /, ''); if (rp !== nn && !byKey.has(hn + ' ' + rp)) byKey.set(hn + ' ' + rp, e); });
 const NAME_FIX = { 'n 5': 'n 5', 'n5': 'n 5' };
 function resolve(line) {
+  line = line.replace(/\s*\([^)]*\)/g, '');
   let s = norm(line.replace(/\s+[—-]\s+(?=[A-ZÉ])/g, ' ')); // « House — Name »
+  s = s.replace(' replica ', ' ');
   if (BARE[s]) s = norm(BARE[s]);
   const tries = [s];
   Object.keys(HOUSE_SYN).forEach((k) => { if (s === k || s.startsWith(k + ' ')) tries.push(HOUSE_SYN[k] + s.slice(k.length)); });
   tries.push(s.replace(/\bpour\b/g, 'pour'), s.replace(/ extrait$/, ' extrait de parfum'), s.replace(/^(\S+ )(n 5)$/, '$1n 5'));
   for (const t of tries) if (byKey.has(t)) return byKey.get(t);
+  const nc = s.replace(/ (edt|edp)$/, ''); if (nc !== s) { const r = resolve(line.replace(/\s+(EDT|EDP)$/, '')); if (r) return r; }
   // maison + reste : tolérance (concentration, suffixe)
   for (const t of tries) {
     const c = [...byKey.keys()].filter((k) => k.startsWith(t + ' ') && /^( (edp|edt|parfum|extrait|de|eau|cologne|pure|n|5|edition|160|anniversaire))+$/.test(k.slice(t.length)));
@@ -40,9 +43,9 @@ for (let i = 0; i < raw.length; i++) {
   if (/^Les univers qui restent/.test(l)) break;
   let m;
   if ((m = l.match(/^\d\d — (.+)$/))) { flush(); sec = SECMAP[m[1].trim()] || m[1]; continue; }
-  if ((m = l.match(/^(\d\d)\. (.+)$/)) && (!cur || cur.ps.length >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — The Gentlemen$/, ''), d: '', ps: [], note: [] }; continue; }
+  if ((m = l.match(/^(\d{2,3})\. (.+)$/)) && (!cur || cur.ps.length >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — The Gentlemen$/, ''), d: '', ps: [], note: [] }; continue; }
   if (!cur) continue;
-  if ((m = l.match(/^(\d+)\. (.+)$/))) { const hist = cur.id === 79; const q = hist ? m[2].replace(/\s+—\s+.*$/, '') : m[2].replace(/\s+—\s+/, ' '); const hit = resolve(q); cur.ps.push({ q, h: hit ? hit.h : '', n: hit ? hit.n : '' }); continue; }
+  if ((m = l.match(/^(\d+)\. (.+)$/))) { const hist = cur.id === 79; const q = hist ? m[2].replace(/\s+—\s+.*$/, '') : m[2].replace(/\s+—\s+/, ' '); const hit = resolve(q); cur.ps.push({ q: q.replace(/\s*\([^)]*\)/g, ''), h: hit ? hit.h : '', n: hit ? hit.n : '' }); continue; }
   if (!cur.d && !cur.ps.length) { cur.d = l; continue; }
   if (/^\*|^Exemples de combinaisons/.test(l)) { cur.note.push(l); continue; }
   cur.note.push(l);
@@ -56,10 +59,12 @@ const PAL = {
 41:'cfc6b8,7f1d1d,1c1c1c,arches',42:'d98a4a,a8452c,f4dfb8,arches',43:'1d7fb0,7dd1d9,fff4d6,waves',44:'f26b21,2d9cdb,fff1d0,stripes',45:'b0121f,f4f1ea,101820,grid',46:'234e52,6fa8a0,e9dfc8,waves',47:'7a5a1f,d9b14a,14100a,rays',48:'0d0d1f,e0245e,4de1ff,grid',49:'22344f,8aa4c2,f2f5f8,dots',50:'ff9a3c,ffd166,1b9aaa,rays',
 51:'5a2e12,b5622a,f0c987,rain',52:'c8683a,f0a766,ffffff,stripes',53:'213a57,7aa5d2,ffffff,dots',54:'0f5a2a,e8f0e8,111111,stripes',55:'111111,e10600,f2f2f2,stripes',56:'5b1b3a,d56a8a,f8dfd0,dots',57:'12202e,3a5a78,d0d6dc,grid',58:'2a1a4a,f26ca7,ffd166,dots',59:'e7dfd2,b8a98f,222222,stripes',60:'1d6f42,e9f0d8,f4a261,stripes',
 61:'f4efe6,d9cdb8,8f7f66,waves',62:'f3d9a4,e08e4e,fff4e0,dots',63:'2b2216,8a6a3a,e8d8b0,arches',64:'ff2e63,08090a,f9f871,rays',65:'10100f,6e5a2a,e5d6a8,grid',66:'f4fbfc,bfe3ea,ffffff,waves',67:'2a0610,9c1537,f0a58f,waves',68:'0a0a1e,2a2a5c,8e8ec8,grain',69:'080808,6a0d0d,e5391a,rays',70:'fff0c9,ffb347,d65a31,dots',
-71:'0e3b2d,c9a227,f0e6c8,stripes',72:'4b0f3a,c43a8b,f5d0e6,rays',73:'0a2a3a,1d6f8c,e8d9a8,waves',74:'e9efe1,4f7a46,7a1f2b,stripes',75:'3a0b18,9c1b30,e7c67a,arches',76:'0f2a1d,a41e22,e8c872,dots',77:'3c0a14,9b2335,d9b26f,arches',78:'6e3a1b,c98a4a,f7e3c0,waves',79:'3a2c1a,a88b5a,efe3c8,grain',80:'202020,6e7f4a,b0b0a0,grain',81:'2c2c54,706fd3,f7f1e3,rings',82:'1f2a3a,8aa6c1,f4efe6,dots',83:'f28c38,7b2d8e,ffe6b0,waves',84:'f4f7fa,1e78c2,ffffff,waves',85:'7a2e12,d9822b,f6d9a0,arches',86:'0b7a3e,f2c500,1b6ac9,rays',87:'e8eddc,b7a3c9,6b4f2a,dots',88:'e6e9ee,5a6b82,1b2432,grid',89:'fbfaf6,3fb1c9,f0c27b,stripes',90:'fafcff,0e4a7b,d9b26f,waves',91:'09090f,6a1bb0,ff3d9a,rays',92:'fbeaf2,c7b6e6,a0d2c0,dots',93:'1a1a1a,f2e63d,e5e5e5,grain',94:'ff9f1c,ffd166,fffbe6,rays',95:'2b0a3d,c0398a,ffd9ef,rings',96:'101010,3a3a3a,c9a64b,arches',97:'0a0a14,5b1d8f,f0d78a,rays' };
+71:'0e3b2d,c9a227,f0e6c8,stripes',72:'4b0f3a,c43a8b,f5d0e6,rays',73:'0a2a3a,1d6f8c,e8d9a8,waves',74:'e9efe1,4f7a46,7a1f2b,stripes',75:'3a0b18,9c1b30,e7c67a,arches',76:'0f2a1d,a41e22,e8c872,dots',77:'3c0a14,9b2335,d9b26f,arches',78:'6e3a1b,c98a4a,f7e3c0,waves',79:'3a2c1a,a88b5a,efe3c8,grain',80:'202020,6e7f4a,b0b0a0,grain',81:'2c2c54,706fd3,f7f1e3,rings',101:'e9eef2,7ea1b8,b5323a,dots',102:'1c1c24,4a1f2e,c9b9a0,rain',103:'0f0f0f,c9a227,e8e0c8,stripes',104:'2f6b4f,c8553d,f5e6c8,dots',105:'101722,6b6f78,e8e4da,grid',106:'3d0a24,e0408a,ffd8ec,rays',107:'f7d9e3,e59ab5,fff4f8,dots',108:'23303d,5b7389,e5e8ec,grid',109:'7fb0d6,dfe9f1,2c3e50,dots',110:'0e0e12,8b1e2d,e6d5b8,arches',111:'e7e2da,a8362e,1b1b1b,stripes',112:'1c1020,6e3a80,e9d9a6,arches',113:'060912,1f2a44,c7b26b,rays',120:'e9e1d3,c0392b,1d3557,stripes',122:'121212,e63946,f1f1f1,grid',124:'0b0b16,3a1c71,d76d77,rings',126:'12181f,3b4a5a,c9b27a,grid',129:'dfeaf2,2f6f9f,f4e8d0,waves',130:'f2f0e6,3a7d44,d99a2b,dots',132:'ecebe6,b9b5aa,2b2b2b,grid',133:'f1e0c5,c9792b,5a3a1a,dots',134:'1b3a4b,d99a2b,f1e8d4,waves',135:'f6e4e0,d9a5b3,7a5a5a,arches',136:'dff0e6,2e8b57,1a2a22,stripes',137:'efe9de,a3b18a,5a6a4a,rings',138:'3a2a1c,8a6a3f,e8d9b8,arches',82:'1f2a3a,8aa6c1,f4efe6,dots',83:'f28c38,7b2d8e,ffe6b0,waves',84:'f4f7fa,1e78c2,ffffff,waves',85:'7a2e12,d9822b,f6d9a0,arches',86:'0b7a3e,f2c500,1b6ac9,rays',87:'e8eddc,b7a3c9,6b4f2a,dots',88:'e6e9ee,5a6b82,1b2432,grid',89:'fbfaf6,3fb1c9,f0c27b,stripes',90:'fafcff,0e4a7b,d9b26f,waves',91:'09090f,6a1bb0,ff3d9a,rays',92:'fbeaf2,c7b6e6,a0d2c0,dots',93:'1a1a1a,f2e63d,e5e5e5,grain',94:'ff9f1c,ffd166,fffbe6,rays',95:'2b0a3d,c0398a,ffd9ef,rings',96:'101010,3a3a3a,c9a64b,arches',97:'0a0a14,5b1d8f,f0d78a,rays' };
 const HIST = { 'chanel n 5': ['Porté par', 'Marilyn Monroe'], 'givenchy l interdit': ['Créé pour', 'Audrey Hepburn'], 'miller harris l air de rien': ['Créé avec', 'Jane Birkin'], 'dior eau sauvage': ['Associé à', 'Alain Delon'], 'jean patou joy': ['Inspiré d\'une époque', 'Grandes figures féminines'], 'guerlain eau de cologne imperiale': ['Maison liée à', 'l\'Impératrice Eugénie'], 'atkinsons 24 old bond street': ['Maison liée à', 'Mayfair, 24 Old Bond Street'], '4711 original eau de cologne': ['Maison liée à', 'Cologne'], 'floris n 89': ['Maison liée à', 'Jermyn Street, Londres'], 'guerlain shalimar': ['Inspiré d\'une époque', 'Les Années folles'] };
 const DEL = new Set([25, 92]);          // Audrey Hepburn, Soft Girl : retirées
 const MERGE = { 44: [50], 70: [95], 96: [97] };   // doublons fusionnés : tous les parfums sont gardés, sans répétition
+const PAIRS = [[120, 121, "L'Artsy"], [122, 123, 'Le Marais fashion'], [124, 125, 'Le DJ'], [126, 127, "L'Avocat"], [129, 128, 'Le Nepo baby'], [130, 131, 'Le Petit budget']];   // [homme, femme, titre] : 10 hommes puis 10 femmes
+PAIRS.forEach(([h, f, title]) => { const a = PLS.find((p) => p.id === h), b = PLS.find((p) => p.id === f); a.grp = [{ t: 'Pour lui', d: a.d }, { t: 'Pour elle', d: b.d }]; a.ps = a.ps.concat(b.ps); a.t = title; a.d = ''; DEL.add(f); });
 const TITLE = { 96: 'La vie de Ronnie' };
 for (const [k, others] of Object.entries(MERGE)) {
   const a = PLS.find((p) => p.id === +k), seen = new Set(a.ps.map((x) => norm(x.h ? x.h + ' ' + x.n : x.q)));
@@ -81,6 +86,8 @@ const SECS_OF = (p) => { const i = p.id; const r = [];
   if ((i >= 49 && i <= 52) || (i >= 74 && i <= 79)) r.push('Atmosphères');
   if ((i >= 64 && i <= 70) || (i >= 93 && i <= 95)) r.push('Effets');
   if ([73, 80, 81, 96, 97].includes(i)) r.push('Spécial');
+  if ((i >= 101 && i <= 113)) r.push('Cinéma & séries');
+  if (i >= 120 && i <= 138) r.push('Archétypes');
   if (!r.length) throw new Error('sans section ' + i);
   return r; };
 const slug = (s) => norm(s).replace(/ /g, '-');
@@ -94,14 +101,14 @@ function out() {
       const txt = l.replace(/\s*\(\[[^\]]+\]\([^)]*\)\)/g, '').trim();
       if (txt) doc.push(ln ? { t: txt, s: ln[1], u: ln[2] } : { t: txt });
     });
-    const sl = slug(p.t); const o = { id: p.id, s: sl, secs: SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
+    const sl = slug(p.t); const o = { id: p.id, s: sl, grp: p.grp, secs: SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
     if (p.id === 79) { doc.length = 0; doc.push({ t: 'La maison Atkinsons et le 24 Old Bond Street sont historiquement documentés ; le flacon d\'aujourd\'hui est une réinterprétation moderne de cet héritage, pas un flacon inchangé depuis le XIXe siècle.', s: 'Atkinsons 1799', u: 'https://www.atkinsons1799.com/pages/history' }); }
     if (fs.existsSync(path.join(root, 'v2', 'img', 'pl', sl + '.webp'))) o.img = 'img/pl/' + sl + '.webp';
     if (doc.length) o.doc = doc;
     if (p.id === 81) o.combos = p.note.filter((l) => /^\* /.test(l)).map((l) => l.replace(/^\* /, '').split(' + '));
     return o;
   });
-  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Cinéma & séries', 'Icônes', 'Culture', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
+  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Cinéma & séries', 'Icônes', 'Culture', 'Archétypes', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
   console.log('playlists.js', res.length);
 }
 if (require.main === module) out();

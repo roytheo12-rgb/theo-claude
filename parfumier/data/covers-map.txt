@@ -1,0 +1,28 @@
+# Fichier déposé dans incoming/playlists/ | titre de la playlist (celui de la légende de l'image)
+1|Finance Bro
+2|James Bond
+3|Michael Corleone
+4|Patrick Bateman
+5|Thomas Shelby
+6|Tom Ripley
+7|John Wick
+8|Tyler Durden
+9|Hannibal Lecter
+10|Jay Gatsby
+11|The Founder
+12|Eddie Horniman
+13|Bobby Glass
+14|Freddy Horniman
+15|Suzie Glass
+16|Tony Montana
+17|Jordan Belfort
+18|Drake
+19|Rihanna
+20|Beyoncé
+21|Taylor Swift
+22|Bad Bunny
+23|Alain Delon
+24|Brigitte Bardot
+25|Jane Birkin
+26|Marilyn Monroe
+27|Clean Girl
