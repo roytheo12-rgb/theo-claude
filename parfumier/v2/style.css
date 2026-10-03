@@ -569,3 +569,13 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .srch .xt { gap: 8px; }
 .srch .xt em { margin-top: 4px; line-height: 1.55; }
 .srch .xtg { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* À découvrir : cartes qui défilent */
+.disc .discf { gap: 10px; }
+.tipk-row { gap: 16px; padding-bottom: 20px; }
+.tipk { flex: 0 0 min(78vw, 300px); scroll-snap-align: start; display: grid; gap: 12px; align-content: start; padding: 26px 24px 28px; border: 1px solid var(--line); border-radius: 8px; background: linear-gradient(180deg, rgba(255, 255, 255, .03), transparent); min-height: 230px; }
+.tipk h3 { font: 300 22px/1.2 var(--sf); letter-spacing: -.01em; }
+.tipk p:last-child { color: var(--muted); font-size: 15px; line-height: 1.6; }
+.disc .discf { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -20px; padding: 2px 20px 6px; }
+.disc .discf::-webkit-scrollbar { display: none; }
+.disc .discf .chip { flex: 0 0 auto; white-space: nowrap; }

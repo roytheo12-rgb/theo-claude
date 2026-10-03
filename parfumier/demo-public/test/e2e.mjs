@@ -157,6 +157,15 @@ ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
 await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });
+{ const n = await pg.locator('.tipk').count(); ok(n >= 100, 'conseils : beaucoup de cartes à découvrir (' + n + ')');
+  const firsts = []; for (let i = 0; i < 6; i++) { await pg.click('[data-tab=today]'); await pg.waitForTimeout(150); await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tipk'); firsts.push(await pg.locator('.tipk h3').first().textContent()); }
+  ok(firsts.every((f, i) => i === 0 || f !== firsts[i - 1]) && new Set(firsts).size >= 4, 'conseils : l\'ordre change à chaque retour, jamais la même carte en premier (' + new Set(firsts).size + ' différentes sur 6)'); }
+await pg.click('[data-tab=today]'); await pg.waitForTimeout(200);
+ok(await pg.locator('[data-want]').count() === 5, 'accueil : effet recherché (compliments, discret, plaire…)');
+await pg.click('[data-cat=mouvement]'); ok(await pg.locator('[data-sc=match]').count() === 1 && await pg.locator('[data-sc=zone]').count() === 1, 'sport & voyage : jour de match et dans la zone');
+if (!(await pg.locator('[data-mood=stresse]').count())) { await pg.click('[data-refine]'); await pg.waitForTimeout(200); }
+ok(await pg.locator('[data-mood=stresse]').count() === 1 && await pg.locator('[data-mood=blues]').count() === 1 && await pg.locator('[data-mood=focus]').count() === 1, 'mood : stressé, pas au top, focus');
+await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist, .tipc');
 { const names = await pg.$$eval('.tipc b', (els) => els.map((e) => e.textContent.trim().toLowerCase())); ok(new Set(names).size === names.length, 'conseils : jamais deux fois le même parfum (' + names.length + ' fiches)'); const fam = await pg.$$eval('.tipc', (els) => els.map((e) => (e.querySelector('small') || {}).textContent.split('·')[0].trim() + '|' + e.querySelector('b').textContent.trim().split(/\s+/)[0].toLowerCase())); ok(new Set(fam).size === fam.length, 'conseils : jamais deux versions du même parfum (Haltane…)'); }
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);

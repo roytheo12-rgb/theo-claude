@@ -202,3 +202,9 @@ Non testé à ce jour : appel réel à l'API Anthropic, déploiement Cloudflare 
 - `incoming/1.png` à `303.png` remplacent les anciennes versions mal détourées ; les numéros 190 à 303 sont nouveaux (légendes lues sur chaque photo, ajoutées à `data/imgmap2.txt`). Quand une photo du lot et une plus ancienne existent pour le même parfum, celle du lot gagne.
 - Sospiro est rétabli. MFK : un seul APOM (Pour Homme), les autres déclinaisons sont retirées (`data/removed-perfumes.txt`).
 - Artifact : les photos de `img/p` rejoignent aussi les paquets `pk/N.wasm` (en tête), ce qui libère de la place sous la limite de fichiers.
+
+## Conseils : cartes à découvrir, moods, effets (v55)
+- `tips.js` : 158 cartes (histoire, matières premières et leur fabrication, nez cultes, parfums cultes, classiques, à essayer, insolite, lieux, astuces). Écrites à notre façon, faits courants ; ton sobre, une image à la fois. Mélangées à chaque visite de l'onglet, jamais la même carte en premier (`sillage.tipfirst`), filtre par thème, bouton Mélanger.
+- Nouveaux moods : stressé(e), pas au top, dans la zone (focus), jour de match ; scénarios « Jour de match », « Dans la zone », « Compétition, grand oral », « Révisions / examen » ; « Effet recherché » (qu'on me sente, compliments, discret, plaire aux filles / aux garçons). Le moteur les lit aussi dans « Je cherche… ».
+- Ton de l'IA : champ lexical du voyage et de la rêverie, avec parcimonie.
+- `tools/prune.py` fusionne aussi les maisons écrites de deux façons (Penhaligon's / Penhaligons…) et retire les notes d'une déclinaison identiques à celles de la version de base.

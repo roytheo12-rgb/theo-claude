@@ -194,7 +194,7 @@
   let tab = 'today', WX = null, PHOTO = null, SAY = '';
   const WXS = { canicule: { l: 'Canicule', t: 34 }, chaud: { l: 'Chaud', t: 29 }, doux: { l: 'Doux', t: 20 }, pluie: { l: 'Pluie', t: 13, rain: true }, froid: { l: 'Froid', t: 4 }, neige: { l: 'Neige', t: -1, rain: true } };
   const clockMoment = () => { const h = new Date().getHours(); return h >= 6 && h < 18 ? 'jour' : h >= 18 && h < 22 ? 'soir' : 'nuit'; };
-  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false, dress: null, when: clockMoment(), venue: null };
+  const CHOICE = { cat: 'travail', sc: null, mood: null, place: null, dur: null, hum: false, dress: null, when: clockMoment(), venue: null, want: null };
   if (S.settings.last && S.settings.last.cat) CHOICE.cat = S.settings.last.cat;
   if (S.settings.last && S.settings.last.dress) CHOICE.dress = S.settings.last.dress;
   const CATS = { travail: 'Travail', amour: 'Romantique', sorties: 'Sorties', famille: 'Famille', mouvement: 'Sport & voyage' };
@@ -204,6 +204,7 @@
       ['entretien', 'Entretien d\'embauche', { ctx: 'pro', with: 'boss', moment: 'jour', style: 'costume', mood: 'confiant', place: 'interieur' }],
       ['client', 'Réunion client', { ctx: 'pro', with: 'boss', moment: 'jour', style: 'smart', place: 'interieur' }],
       ['bureau', 'Journée de bureau', { ctx: 'pro', with: 'collegues', moment: 'jour', style: 'smart', place: 'interieur', dur: 'longue' }],
+      ['revisions', 'Révisions / examen', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'interieur', dur: 'longue', mood: 'focus' }],
       ['teletravail', 'Télétravail', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'interieur', dur: 'longue', mood: 'creatif' }],
       ['presentation', 'Présentation / conférence', { ctx: 'pro', with: 'inconnus', moment: 'jour', style: 'costume', mood: 'confiant' }],
       ['afterwork', 'Afterwork', { ctx: 'amis', with: 'collegues', moment: 'soir', style: 'smart' }],
@@ -236,6 +237,9 @@
       ['grandsparents', 'Chez les grands-parents', { ctx: 'famille', with: 'famille', moment: 'jour', style: 'smart', mood: 'calme' }],
     ],
     mouvement: [
+      ['match', 'Jour de match', { ctx: 'perso', with: 'amis', moment: 'jour', style: 'sport', mood: 'match', place: 'exterieur' }],
+      ['zone', 'Dans la zone (focus)', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'interieur', dur: 'longue', mood: 'focus' }],
+      ['compet', 'Compétition, grand oral', { ctx: 'pro', with: 'inconnus', moment: 'jour', style: 'sport', mood: 'focus' }],
       ['sport', 'Sport / salle', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'sport', mood: 'energique' }],
       ['rando', 'Randonnée', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'exterieur', dur: 'longue' }],
       ['voyage', 'Journée de voyage', { ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual', place: 'transport', dur: 'longue', mood: 'calme' }],
@@ -251,6 +255,7 @@
     if (CHOICE.dress) o.style = CHOICE.dress;
     if (CHOICE.when) o.moment = CHOICE.when;
     if (CHOICE.venue) o.venue = CHOICE.venue;
+    if (CHOICE.want) o.want = CHOICE.want;
     if (CHOICE.place) o.place = CHOICE.place;
     if (CHOICE.dur) o.dur = CHOICE.dur;
     if (WX && WX.hum > 75) o.hum = WX.hum;
@@ -264,7 +269,7 @@
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
     $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'walk', 'wish'].indexOf(tab) * 100}%)`;
     ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, walk: viewWalk, wish: viewWish })[tab]();
-    if (!keepScroll) window.scrollTo(0, 0);
+    if (!keepScroll) { window.scrollTo(0, 0); TIPDECK = null; }
   }
 
   const keepText0 = () => { const t = $('#say'); if (t) SAY = t.value; };
@@ -281,7 +286,7 @@
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
         ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
         <h1>${hello}</h1>
-        <p class="q">Qu'est-ce qui t'attend aujourd'hui&nbsp;?</p>
+        <p class="q">Où te mène ta journée&nbsp;?</p>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Choisis tes parfums dans la base (par maison, style, notes…), écris-les, ou prends-les en photo.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
         <div class="say-wrap">
           <p class="mono">Ta journée</p>
@@ -291,6 +296,8 @@
           <div class="chips" id="whens">${Object.entries(E.MOMENTS).map(([k, v]) => `<button class="chip ${CHOICE.when === k ? 'on' : ''}" data-when="${k}">${esc(v)}</button>`).join('')}</div>
           <p class="mono">Où</p>
           <div class="chips" id="venues">${Object.entries(E.VENUES).map(([k, v]) => `<button class="chip ${CHOICE.venue === k ? 'on' : ''}" data-venue="${k}">${esc(v)}</button>`).join('')}</div>
+          <p class="mono">Effet recherché</p>
+          <div class="chips" id="wants">${Object.entries(E.WANTS).map(([k, v]) => `<button class="chip ${CHOICE.want === k ? 'on' : ''}" data-want="${k}">${esc(v)}</button>`).join('')}</div>
           <label class="fieldlab" for="say"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4L17 4l3 3L8 19z"/><path d="M14 7l3 3"/></svg>Ou écris-la avec tes mots</label>
           <textarea id="say" rows="2" placeholder="Ex : dîner en terrasse avec des amis, chemise en lin blanche…" aria-label="Ta journée">${esc(SAY)}</textarea>
           <p class="mono">Ta tenue</p>
@@ -343,6 +350,7 @@
     $$('[data-sc]').forEach((b) => (b.onclick = () => { const k = b.dataset.sc; CHOICE.sc = CHOICE.sc === k ? null : k; SAY = CHOICE.sc ? scenByKey(k)[1] : ''; if (CHOICE.sc && scenByKey(k)[2].moment) CHOICE.when = scenByKey(k)[2].moment; viewToday(); }));
     $$('[data-when]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.when = b.dataset.when; viewToday(); }));
     $$('[data-venue]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.venue = CHOICE.venue === b.dataset.venue ? null : b.dataset.venue; viewToday(); }));
+    $$('[data-want]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.want = CHOICE.want === b.dataset.want ? null : b.dataset.want; viewToday(); }));
     $$('[data-mood]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.mood = CHOICE.mood === b.dataset.mood ? null : b.dataset.mood; viewToday(); }));
     $$('[data-place]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.place = CHOICE.place === b.dataset.place ? null : b.dataset.place; viewToday(); }));
     $$('[data-dur]').forEach((b) => (b.onclick = () => { keepText(); CHOICE.dur = CHOICE.dur === b.dataset.dur ? null : b.dataset.dur; viewToday(); }));
@@ -431,16 +439,35 @@
   function tipCard(c, lead, body, extra) {
     return `<article class="card tipc"><div class="tiph">${bt(c, { still: true, h: 72 })}<div><p class="mono">${esc(lead)}</p><b>${esc(c.name)}</b><small>${esc(c.house)}${c.family ? ' · ' + esc(famLabel(c.family)) : ''}${c.price ? ' · ≈ ' + c.price + ' €' : ''}</small></div></div><p class="rd">${body}</p>${extra || ''}<div class="row"><button class="ghost" data-rw="${esc(c.name)}">${hasWish(c.name) ? 'Dans ma wishlist' : 'À sentir'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div></article>`;
   }
+  // ---------- « À découvrir » : cartes mélangées à chaque visite, jamais la même en premier ----------
+  let TIPDECK = null, TIPF = 'all';
+  function tipDeck() {
+    if (TIPDECK && TIPDECK.f === TIPF) return TIPDECK.a;
+    const a = (window.TIPS || []).filter((t) => TIPF === 'all' || t.c === TIPF);
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    let last = null; try { last = localStorage.getItem('sillage.tipfirst'); } catch (e) { /* ok */ }
+    if (a.length > 1 && String(a[0].id) === last) { const k = 1 + Math.floor(Math.random() * (a.length - 1)); [a[0], a[k]] = [a[k], a[0]]; }
+    if (TIPF === 'all' && a.length) { try { localStorage.setItem('sillage.tipfirst', String(a[0].id)); } catch (e) { /* ok */ } }
+    TIPDECK = { f: TIPF, a }; return a;
+  }
+  function discoverHtml() {
+    const cats = window.TIPS_CATS || {}, deck = tipDeck();
+    if (!deck.length) return '';
+    return `<section class="sec disc"><header><h2>À découvrir</h2><span class="mono">${deck.length} cartes · fais défiler</span></header>
+      <div class="chips discf">${[['all', 'Tout'], ...Object.entries(cats)].map(([k, v]) => `<button class="chip ${TIPF === k ? 'on' : ''}" data-tf="${k}">${esc(v)}</button>`).join('')}<button class="chip" data-tshuf="1">Mélanger</button></div>
+      <div class="snap tipk-row">${deck.map((t) => `<article class="tipk" data-k="${esc(t.c)}"><p class="mono">${esc(cats[t.c] || '')}</p><h3>${esc(t.t)}</h3><p>${esc(t.x)}</p></article>`).join('')}</div></section>`;
+  }
   function viewTips() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
     $('#view').innerHTML = `
+      ${discoverHtml()}
       <section class="sec"><header><h2>Conseils</h2><span class="mono">pour toi</span></header>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Mes conseils partent de ce que tu as déjà : ce qui te manque, ce qui te plaît.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
         ${T.gaps.length ? `<p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}` : ''}
         ${T.tips.length && S.collection.length ? `<div class="card"><p class="mono">Ta collection en bref</p><ul class="tiplist">${T.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
       </section>
-      <section class="sec"><header><h2>On pense que ça t'irait</h2><span class="mono">tes goûts</span></header>
+      <section class="sec"><header><h2>Des flacons pour toi</h2><span class="mono">tes goûts</span></header>
         ${T.recs.length ? `<div class="snap">${T.recs.slice(0, 6).map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
       </section>
       ${T.tags.length ? `<section class="sec"><header><h2>Par envie</h2><span class="mono">niche, luxe, abordable…</span></header>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</section>` : ''}
@@ -454,6 +481,8 @@
       </section>
       ${lexCard()}`;
     bindLex();
+    $$('[data-tf]').forEach((b) => (b.onclick = () => { TIPF = b.dataset.tf; TIPDECK = null; viewTips(); }));
+    if ($('[data-tshuf]')) $('[data-tshuf]').onclick = () => { TIPDECK = null; viewTips(); };
     if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
@@ -1082,7 +1111,7 @@
   const pickKey = (v, obj, d) => (typeof v === 'string' && v in obj ? v : d);
   function normCond(c, wx) {
     c = c || {};
-    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), venue: pickKey(c.venue, E.VENUES, ''), dur: pickKey(c.dur, E.DURS, '') };
+    return { ctx: pickKey(c.ctx, E.CONTEXTS, 'perso'), with: pickKey(c.with, E.WITHS, 'seul'), moment: pickKey(c.moment, E.MOMENTS, 'jour'), mood: pickKey(c.mood, E.MOODS, 'confiant'), style: pickKey(c.style, E.STYLES, 'smart'), color: pickKey(c.color, E.COLORS, 'neutre'), fabric: pickKey(c.fabric, E.FABRICS, ''), temp: typeof c.temp === 'number' ? c.temp : wx ? wx.t : 18, rain: !!(wx && wx.rain) || !!c.rain, hum: typeof c.hum === 'number' ? c.hum : 50, place: pickKey(c.place, E.PLACES, ''), want: pickKey(c.want, E.WANTS, ''), venue: pickKey(c.venue, E.VENUES, ''), dur: pickKey(c.dur, E.DURS, '') };
   }
   function keywordCond(text, wx) {
     const t = E.norm(text), c = { temp: wx ? wx.t : 18 };
@@ -1090,6 +1119,8 @@
     if (/pro|reunion|bureau|client|travail|entretien|teletravail/.test(t)) c.ctx = 'pro';
     if (/date|rencard|resto|diner|amoureu|copine|copain|chéri|cheri/.test(t)) c.ctx = 'date';
     if (/famille|parents|mamie|papa|maman/.test(t)) c.ctx = 'famille';
+    if (/stress|anxieu|angoiss|nerveu/.test(t)) c.mood = 'stresse'; else if (/pas bien|deprim|triste|blues|coup de mou/.test(t)) c.mood = 'blues'; else if (/concentr|focus|zone|revis|examen/.test(t)) c.mood = 'focus'; else if (/match|competition|tournoi/.test(t)) { c.mood = 'match'; c.style = 'sport'; }
+    if (/compliment/.test(t)) c.want = 'compliments'; else if (/plaire.*fille|seduire.*fille/.test(t)) c.want = 'plaire_f'; else if (/plaire.*garcon|seduire.*garcon/.test(t)) c.want = 'plaire_g'; else if (/discret/.test(t)) c.want = 'discret';
     if (/ami|pote|bar|apero|brunch|terrasse/.test(t)) c.ctx = 'amis';
     if (/mariage|vernissage|gala|soiree|evenement|concert/.test(t)) c.ctx = 'event';
     if (/soir|diner|vernissage|nuit/.test(t)) c.moment = 'soir';
@@ -1115,6 +1146,7 @@
     if (CHOICE.dress) { const dr = DRESS.find((x) => x[0] === CHOICE.dress); if (dr) bits.push('tenue : ' + dr[1].toLowerCase() + ' (' + dr[2] + ')'); }
     if (CHOICE.when) bits.push('moment : ' + E.MOMENTS[CHOICE.when].toLowerCase());
     if (o.venue) bits.push('endroit : ' + E.VENUES[o.venue].toLowerCase());
+    if (o.want) bits.push('effet recherché : ' + E.WANTS[o.want].toLowerCase());
     if (o.place) bits.push('lieu : ' + E.PLACES[o.place]);
     if (o.dur) bits.push('durée : ' + E.DURS[o.dur]);
     if (CHOICE.hum) bits.push('air très humide');
@@ -1166,7 +1198,7 @@
       <div class="msgs center">${['Je lis ta journée…', 'Je sens ton étagère…', 'Je compose l\'accord…'].map((m, i) => `<span style="animation-delay:${i * 2.1}s">${m}</span>`).join('')}</div>`;
     $('#prog').innerHTML = '';
   }
-  const condChips = (c) => [E.CONTEXTS[c.ctx], E.WITHS[c.with], E.MOMENTS[c.moment], Math.round(c.temp) + '°' + (c.rain ? ' pluie' : ''), E.MOODS[c.mood], c.venue ? E.VENUES[c.venue] : (c.place ? E.PLACES[c.place] : null), c.dur ? E.DURS[c.dur] : null, c.hum > 75 ? 'humide' : null, E.STYLES[c.style] + (c.fabric ? ' · ' + E.FABRICS[c.fabric].toLowerCase() : '')].filter(Boolean);
+  const condChips = (c) => [E.CONTEXTS[c.ctx], E.WITHS[c.with], E.MOMENTS[c.moment], Math.round(c.temp) + '°' + (c.rain ? ' pluie' : ''), E.MOODS[c.mood], c.venue ? E.VENUES[c.venue] : (c.place ? E.PLACES[c.place] : null), c.want && E.WANTS[c.want] ? E.WANTS[c.want] : null, c.dur ? E.DURS[c.dur] : null, c.hum > 75 ? 'humide' : null, E.STYLES[c.style] + (c.fabric ? ' · ' + E.FABRICS[c.fabric].toLowerCase() : '')].filter(Boolean);
   function buildScenes(R) {
     const p = R.pick, sc = [];
     const nW = (t) => String(t || '').split(/\s+/).filter(Boolean).length;

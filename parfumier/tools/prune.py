@@ -32,6 +32,26 @@ def put(src, var, val):
     return src[:a] + 'window.' + var + ' = ' + json.dumps(val, ensure_ascii=False, separators=(',', ':')) + src[b:]
 idx_src = rd('index.js')
 _, _, INDEX = grab(idx_src, 'INDEX'); _, _, ALIAS = grab(idx_src, 'HOUSE_ALIAS')
+# --- maisons écrites de deux façons (Penhaligon's / Penhaligons, Comme des Garçons / Garcons…) : une seule, avec ses parfums fusionnés
+_base = lambda h: re.sub(r'\b(maison|parfums|parfum|paris|london|the|de|des|la|le|les|by|and)\b', ' ', norm(h)).replace(' ', '')
+_groups = {}
+for h, arr in INDEX: _groups.setdefault(_base(h), []).append((h, arr))
+MERGE = {}      # norm(variante) -> nom retenu
+_merged = []
+for h, arr in INDEX:
+    g = _groups[_base(h)]
+    if len(g) == 1 or _base(h) == '': _merged.append([h, arr]); continue
+    best = max(g, key=lambda x: (len(x[1]) + (100 if re.search(r"[^\x00-\x7f']|'", x[0]) else 0), x[0]))[0]
+    if h != best: MERGE[norm(h)] = best; continue
+    seen_n = {}; rows = []
+    for hh, aa in g:
+        for x in aa:
+            k = norm(x[0]).replace(' ', '')
+            if k not in seen_n: seen_n[k] = x; rows.append(x)
+    _merged.append([best, sorted(rows, key=lambda x: norm(x[0]))])
+INDEX = _merged
+for k, v in MERGE.items(): ALIAS[k] = v
+idx_src = put(idx_src, 'HOUSE_ALIAS', ALIAS)
 canon = lambda h: norm(ALIAS.get(norm(h), h))
 def house_gone(h): return norm(h) in H or canon(h) in H
 def name_gone(h, n):
@@ -53,6 +73,13 @@ idx_src = put(idx_src, 'INDEX', newidx)
 _, _, NB = grab(idx_src, 'NOSE_BY'); idx_src = put(idx_src, 'NOSE_BY', {k: v for k, v in NB.items() if k not in dead_nose and not any(k.startswith(h + ' ') for h in H)})
 _, _, ED = grab(idx_src, 'EDITIONS'); idx_src = put(idx_src, 'EDITIONS', [k for k in ED if k not in dead_keys and k.split('|')[0] not in H])
 wr('index.js', idx_src)
+def remap(d):
+    out = {}
+    for k, v in d.items():
+        h, n = k.split('|', 1); h2 = norm(MERGE[h]) if h in MERGE else h
+        kk = h2 + '|' + n
+        if kk not in out or h2 == h: out[kk] = v
+    return out
 def key_gone(k):
     h, n = k.split('|', 1)
     return h in H or canon(h) in H or k in dead_keys or k in PERF or any(p.search(n) for p in PAT)
@@ -60,10 +87,21 @@ def key_gone(k):
 files_dead = set(); n_removed = {}
 for fname, var in (('imgdb.js', 'IMGDB'), ('imgnew.js', 'IMGNEW'), ('imgweb.js', 'IMGWEB'), ('facts.js', 'FACTS'), ('profils.js', 'PROFILS')):
     src = rd(fname); _, _, d = grab(src, var); out = {}
+    d = remap(d)
     for k, v in d.items():
         if key_gone(k):
             if isinstance(v, str) and v.startswith('img/'): files_dead.add(v)
         else: out[k] = v
+    if var == 'FACTS':      # une version (extrait, absolu, esprit…) ne reprend pas les notes de la version de base : si elles sont identiques, on les retire de la déclinaison
+        _vw = re.compile(r'\b(extrait de parfum|extrait|eau de parfum|eau de toilette|eau de cologne|edp|edt|parfum|esprit de parfum|esprit|absolu de parfum|absolu|absolue|intense|elixir|cologne)\b')
+        grp = {}
+        for k in out:
+            h, n = k.split('|', 1); grp.setdefault(h + '|' + re.sub(r'\s+', ' ', _vw.sub(' ', n)).strip(), []).append(k)
+        for ks in grp.values():
+            if len(ks) < 2: continue
+            ks.sort(key=len); b = out[ks[0]].get('n') or []
+            for k in ks[1:]:
+                if b and sorted(norm(x) for x in b) == sorted(norm(x) for x in (out[k].get('n') or [])): out[k] = {kk: vv for kk, vv in out[k].items() if kk != 'n'}
     n_removed[var] = len(d) - len(out); wr(fname, put(src, var, out))
 # fichiers : on ne supprime que ceux que plus aucune clé ne référence
 alive = set()

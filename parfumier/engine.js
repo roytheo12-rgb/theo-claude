@@ -23,7 +23,9 @@
   const CONTEXTS = { pro: 'Pro', perso: 'Perso', date: 'Date', event: 'Événement', famille: 'Famille', amis: 'Amis' };
   const WITHS = { seul: 'Seul(e)', partenaire: 'Partenaire', premier: 'Premier rendez-vous', collegues: 'Collègues / clients', boss: 'Patron / entretien', famille: 'Famille', amis: 'Amis', inconnus: 'Beaucoup d\'inconnus' };
   const MOMENTS = { jour: 'Journée', soir: 'Soirée', nuit: 'Nuit' };
-  const MOODS = { confiant: 'Confiant', calme: 'Calme', energique: 'Énergique', romantique: 'Romantique', mysterieux: 'Mystérieux', joyeux: 'Joyeux', fatigue: 'Besoin de réconfort', creatif: 'Créatif' };
+  const MOODS = { confiant: 'Confiant', calme: 'Calme', energique: 'Énergique', romantique: 'Romantique', mysterieux: 'Mystérieux', joyeux: 'Joyeux', fatigue: 'Besoin de réconfort', creatif: 'Créatif', stresse: 'Stressé(e)', blues: 'Pas au top', focus: 'Dans la zone (focus)', match: 'Jour de match' };
+  // Ce qu'on veut que les autres perçoivent : le sillage et la discrétion se règlent, ils ne se devinent pas.
+  const WANTS = { sent: 'Qu\'on me sente de loin', compliments: 'Des compliments', discret: 'Rester discret(e)', plaire_f: 'Plaire aux filles', plaire_g: 'Plaire aux garçons' };
   const STYLES = { costume: 'Costume / formel', smart: 'Smart casual', casual: 'Casual', sport: 'Sport', soiree: 'Tenue de soirée', street: 'Streetwear' };
   const COLORS = { sombre: 'Sombre', neutre: 'Neutre', clair: 'Clair', colore: 'Coloré' };
   const FABRICS = { coton: 'Coton', lin: 'Lin', laine: 'Laine / maille', cuir: 'Cuir', denim: 'Denim', soie: 'Soie / satin', technique: 'Technique' };
@@ -81,6 +83,17 @@
     joyeux: { joyeux: 2, fruité: 1, énergique: 0.5, agrumes: 0.5 },
     fatigue: { confortable: 2, doux: 1.5, gourmand: 1, musqué: 1, statement: -1 },
     creatif: { créatif: 2, vert: 1, naturel: 1, aromatique: 0.5 },
+    stresse: { calme: 2, doux: 1, naturel: 1, confortable: 1.2, aromatique: 0.8, vert: 0.5, statement: -1, dense: -0.5 },
+    blues: { confortable: 2, doux: 1.5, gourmand: 1.2, joyeux: 1, musqué: 0.8, statement: -0.5 },
+    focus: { focus: 2.5, calme: 1, boisé: 0.8, discret: 1, propre: 0.5, résineux: 1, gourmand: -1, fruité: -0.8, statement: -1.2 },
+    match: { énergique: 2, sportif: 1.5, frais: 1.2, confiant: 1, léger: 0.5, dense: -1.5, gourmand: -1 },
+  };
+  const WANT = {
+    sent: { w: { statement: 2, audacieux: 0.5, dense: 0.3, discret: -2 }, proj: [4, 5] },
+    compliments: { w: { doux: 1, propre: 1, gourmand: 0.8, sensuel: 0.8, élégant: 0.8, polyvalent: 0.5, frais: 0.3, audacieux: -0.3 }, proj: [3, 4] },
+    discret: { w: { discret: 2, propre: 1, léger: 0.8, statement: -2, dense: -1 }, proj: [1, 2] },
+    plaire_f: { w: { doux: 1, gourmand: 1, sensuel: 1.2, propre: 0.8, boisé: 0.5, frais: 0.3 }, proj: [3, 4] },
+    plaire_g: { w: { boisé: 1, frais: 1, sensuel: 1, élégant: 0.7, épicé: 0.5, ambré: 0.5 }, proj: [3, 4] },
   };
   const STYLE = {
     costume: { élégant: 2, discret: 1, boisé: 0.5, statement: -0.5, sportif: -2 },
@@ -110,6 +123,7 @@
     gourmand: ['vanille', 'tonka', 'caramel', 'praliné', 'miel', 'cacao', 'café', 'datte', 'châtaigne', 'marron'],
     frais: ['citron', 'bergamote', 'pamplemousse', 'mandarine', 'orange', 'marin', 'menthe', 'sel', 'linge propre'],
     doux: ['iris', 'benjoin'],
+    focus: ['encens', 'oliban', 'myrrhe', 'vétiver', 'vetiver', 'cèdre', 'cedre', 'papyrus', 'thé', 'genévrier', 'cyprès', 'santal'],
   };
 
   function perfumeTags(p) {
@@ -223,6 +237,14 @@
     [/\b(energique|dynamique|tonique|reveil|motivant)\b/, { mood: 'energique' }],
     [/\b(joyeux|gai|joie|bonne humeur|solaire|lumineux)\b/, { mood: 'joyeux' }],
     [/\b(creatif|inspirant|inspiration)\b/, { mood: 'creatif' }],
+    [/\b(stresse|stress|anxieux|anxieuse|angoisse|nerveux|nerveuse|tendu|tendue)\b/, { mood: 'stresse' }],
+    [/\b(pas bien|deprime|deprimee|triste|blues|coup de mou|moral bas|pas au top|reconfort)\b/, { mood: 'blues' }],
+    [/\b(concentration|concentre|concentree|focus|dans la zone|reviser|revisions|examen|travailler sans)\b/, { mood: 'focus' }],
+    [/\b(jour de match|match|competition|tournoi|compet)\b/, { mood: 'match', style: 'sport' }],
+    [/\b(compliments?|complimenter)\b/, { want: 'compliments' }],
+    [/\b(plaire aux filles|plaire a une fille|seduire une fille|seduire des filles)\b/, { want: 'plaire_f' }],
+    [/\b(plaire aux garcons|plaire a un garcon|seduire un garcon|seduire des garcons)\b/, { want: 'plaire_g' }],
+    [/\b(qu on me sente|que tout le monde me sente|sente de loin)\b/, { want: 'sent' }],
     [/\b(date|rendez vous|rdv|amoureux|romantique|seduire|seduction|sensuel|sexy|charme)\b/, { ctx: 'date', tags: ['sensuel'] }],
     [/\b(soiree|boite|clubbing|sortir|fete|festif|nuit)\b/, { ctx: 'event', moment: 'soir' }],
     [/\b(mariage|ceremonie|gala|evenement|event)\b/, { ctx: 'event' }],
@@ -275,7 +297,7 @@
       if (!re.test(wantTxt)) continue;
       if (fx.tags) fx.tags.forEach((x) => !need.tags.includes(x) && need.tags.push(x));
       if (fx.fam && !need.fams.includes(fx.fam)) need.fams.push(fx.fam);
-      for (const k of ['ctx', 'moment', 'temp', 'style', 'with', 'mood']) if (fx[k] != null && need.cond[k] == null) need.cond[k] = fx[k];
+      for (const k of ['ctx', 'moment', 'temp', 'style', 'with', 'mood', 'want']) if (fx[k] != null && need.cond[k] == null) need.cond[k] = fx[k];
       if (fx.proj) need.proj = fx.proj;
       for (const k of ['powder', 'smoke', 'niche', 'cheap', 'dur']) if (fx[k]) need.flags[k] = true;
     }
@@ -536,6 +558,8 @@
       + 0.8 * (projPenalty((CTX[cond.ctx] || {}).proj, proj) + projPenalty((WITH[cond.with] || {}).proj, proj));
     if ((p.occ || []).includes(cond.ctx)) parts.ctx += 2;
     parts.mood = 1.5 * sum(MOOD[cond.mood] || {});
+    const wn = WANT[cond.want];
+    parts.want = wn ? sum(wn.w) + 0.8 * projPenalty(wn.proj, proj) : 0;
     const pl = PLACE[cond.place];
     if (pl) parts.ctx += sum(pl.w) + 0.8 * projPenalty(pl.proj, proj);
     const vn = VENUE[cond.venue];
@@ -570,6 +594,7 @@
     if (parts.weather >= 1) r.push(`Météo : ${weatherLabel(cond)}`);
     if (parts.ctx >= 1.5) r.push(`Colle à ta journée (${CONTEXTS[cond.ctx].toLowerCase()} · ${WITHS[cond.with].toLowerCase()})`);
     if (parts.mood >= 1) r.push(`Épouse ton mood (${MOODS[cond.mood].toLowerCase()})`);
+    if (cond.want && WANTS[cond.want] && parts.want >= 1) r.push(`Pour ton envie : ${WANTS[cond.want].toLowerCase()}`);
     if (cond.place && parts.ctx >= 1) r.push(`Adapté au lieu (${PLACES[cond.place].toLowerCase()})`);
     if (cond.venue && VENUES[cond.venue] && parts.ctx >= 1) r.push(`Fait pour ${VENUES[cond.venue].toLowerCase()}`);
     const mo = p.m || (root.DESC && root.DESC[p.name] && root.DESC[p.name][0]);
@@ -769,7 +794,7 @@
     return out;
   }
 
-  const api = { wishSignals, priorVec, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { wishSignals, priorVec, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

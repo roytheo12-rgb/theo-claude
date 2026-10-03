@@ -72,5 +72,16 @@ assert.ok(E.searchNeed(P, E.parseNeed('boisé'), { gender: 'm' }, 30).every((r) 
   assert.ok(withLove.length && none.length);
   console.log('ok conseils variés par profil + wishlist', common(a, b), '/12 en commun');
 }
+// Nouveaux moods et effets recherchés : ils changent le classement et ne plantent pas
+{
+  const col = P.filter((x) => (x.notes || []).length >= 4).slice(0, 300).map((x) => Object.assign({}, E.derive(x), { id: x.name }));
+  const base = { temp: 18, ctx: 'perso', with: 'seul', moment: 'jour', style: 'casual' };
+  const top = (c) => E.rank(col, Object.assign({}, base, c), {}).slice(0, 5).map((r) => r.p.name).join('|');
+  const ref = top({ mood: 'confiant' });
+  for (const m of ['stresse', 'blues', 'focus', 'match']) assert.ok(E.MOODS[m] && top({ mood: m }) !== ref, 'mood ' + m + ' sans effet');
+  for (const w of Object.keys(E.WANTS)) assert.ok(top({ want: w }) !== top({}), 'effet ' + w + ' sans effet');
+  assert.ok(E.parseNeed('je suis stressé avant mon match').cond.mood, 'parseNeed lit le mood');
+  console.log('ok moods stressé / pas au top / focus / match et effets recherchés');
+}
 console.log(`\n${ok}/${ok + fail} besoins au niveau, pool ${P.length}`);
 assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
