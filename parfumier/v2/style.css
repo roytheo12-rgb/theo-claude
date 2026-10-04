@@ -724,3 +724,8 @@ a.chip { text-decoration: none; display: inline-block; }
 #view[data-v=tips] #planbox .plan > div[style*="grid"] { gap: 20px !important; }
 #view[data-v=tips] #planbox .plan .row { padding-top: 4px; }
 #view[data-v=tips] .sec > .card.emptycard { text-align: left; }
+
+/* Fiche éditoriale : de l'air entre les blocs */
+.edfiche { display: grid; gap: 28px; }
+.edfiche > div > .mono { margin-bottom: 4px; }
+.edfiche .rd { line-height: 1.7; }
