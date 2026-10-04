@@ -54,3 +54,14 @@ Narciso Rodriguez|Narciso Rodriguez For Her
 Comme des Garçons|Tar
 Clive Christian|X
 Clive Christian|X Masculine
+# Doublons fusionnés (2e passe)
+Clive Christian|1872
+Clive Christian|1872 Feminine
+Clive Christian|1872 Woman
+Clive Christian|1872 Masculine
+Clive Christian|X Feminine
+Diptyque|Eau Papier
+Jovoy|Liturgie des Heures
+Cartier|Panthère
+Jean Paul Gaultier|Gaultier Divine
+Jean Paul Gaultier|Gaultier Divine Le Parfum

@@ -97,6 +97,16 @@ def key_gone(k):
     h, n = k.split('|', 1)
     if k in KEEP and k not in PERF: return False
     return h in H or canon(h) in H or k in dead_keys or k in PERF or any(p.search(n) for p in PAT)
+# alias de photos (data/img-alias.txt) : une photo rattachée à un nom voisin sert aussi la fiche de la base qui porte l'autre nom
+_al = root / 'data/img-alias.txt'
+if _al.exists():
+    _al_rows = [l.split('|') for l in _al.read_text(encoding='utf-8').splitlines() if l.strip() and not l.startswith('#') and l.count('|') == 2]
+    for _f, _v in (('imgnew.js', 'IMGNEW'), ('imgdb.js', 'IMGDB'), ('imgweb.js', 'IMGWEB')):
+        _src = rd(_f); _d = grab(_src, _v)[2]; _ch = False
+        for _h, _a, _b in _al_rows:
+            ka, kb = norm(_h) + '|' + norm(_a), norm(_h) + '|' + norm(_b)
+            if ka in _d and kb not in _d: _d[kb] = _d[ka]; _ch = True
+        if _ch: wr(_f, put(_src, _v, _d))
 # --- cartes de clés (photos, faits, profils)
 files_dead = set(); n_removed = {}
 for fname, var in (('imgdb.js', 'IMGDB'), ('imgnew.js', 'IMGNEW'), ('imgweb.js', 'IMGWEB'), ('facts.js', 'FACTS'), ('profils.js', 'PROFILS')):
@@ -143,16 +153,6 @@ for lst in _g.values():
 for (_f, _v), ks in _bad.items():
     _src = rd(_f); _d = grab(_src, _v)[2]; wr(_f, put(_src, _v, {k: x for k, x in _d.items() if k not in ks}))
 n_removed['partagées'] = sum(len(v) for v in _bad.values())
-# alias de photos (data/img-alias.txt) : une photo rattachée à un nom voisin sert aussi la fiche de la base qui porte l'autre nom
-_al = root / 'data/img-alias.txt'
-if _al.exists():
-    _al_rows = [l.split('|') for l in _al.read_text(encoding='utf-8').splitlines() if l.strip() and not l.startswith('#') and l.count('|') == 2]
-    for _f, _v in (('imgnew.js', 'IMGNEW'), ('imgdb.js', 'IMGDB'), ('imgweb.js', 'IMGWEB')):
-        _src = rd(_f); _d = grab(_src, _v)[2]; _ch = False
-        for _h, _a, _b in _al_rows:
-            ka, kb = norm(_h) + '|' + norm(_a), norm(_h) + '|' + norm(_b)
-            if ka in _d and kb not in _d: _d[kb] = _d[ka]; _ch = True
-        if _ch: wr(_f, put(_src, _v, _d))
 # fichiers : on ne supprime que ceux que plus aucune clé ne référence
 alive = set()
 for fname, var in (('imgdb.js', 'IMGDB'), ('imgnew.js', 'IMGNEW'), ('imgweb.js', 'IMGWEB'), ('imgnew.js', 'NOSE_IMG')):

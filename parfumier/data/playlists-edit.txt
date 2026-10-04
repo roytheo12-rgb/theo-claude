@@ -382,7 +382,7 @@ d: Elle commence sa journée par un cours de Pilates chez Banote. Ensemble 437, 
 - Maison Francis Kurkdjian Aqua Universalis | Toujours dans son sac.
 - Ex Nihilo Fleur Narcotique Blossom | Pour travailler depuis un café en terrasse.
 - Jo Malone English Pear & Freesia | Son parfum de saison.
-- Diptyque Eau Papier | Ultra-clean, presque conceptuel.
+- Diptyque L'Eau Papier | Ultra-clean, presque conceptuel.
 - Glossier You | Elle dit qu'elle ne porte rien. C'est ça.
 
 ## Coquette
@@ -403,6 +403,7 @@ d: Rubans, roses, dentelle, lèvres glossy et romantisme absolument assumé. Ell
 - Guerlain Insolence | Poudré et romantique : les années 50.
 
 ## Fur Coat Energy
+t: Russian Baddie
 d: Elle entre dans la pièce avant son manteau. Le restaurant se retourne. Elle ne regarde personne en particulier.
 - Tom Ford Black Orchid | Personne ne demande « c'est quoi ».
 - Maison Francis Kurkdjian Baccarat Rouge 540 | Elle le sait. Elle le porte quand même.
@@ -917,7 +918,7 @@ d: Pluie, Mayfair, costume, espresso martini, voiture anglaise et club privé.
 - Ormonde Jayne Ormonde Woman | Aussi british, aussi irréductible.
 - Boadicea the Victorious Glorious | La Londonienne qui ne demande pas la permission.
 - Houbigant Quelques Fleurs | Le premier multi-floral de l'histoire.
-- Clive Christian 1872 Woman | Ultra-luxueux, 100 % London.
+- Clive Christian 1872 For Women | Ultra-luxueux, 100 % London.
 - Ella K Londonderry | La forêt anglaise en flacon.
 - Jo Malone English Pear & Freesia | La campagne anglaise à l'automne.
 - Marc-Antoine Barrois Encelade | Coupant et élégant.
@@ -2070,7 +2071,7 @@ x Essential Parfums Dedication
 ## Clean Girl
 + Le Labo Thé Matcha 26 | La tasse de matcha en parfum.
 + Phlur Matcha Milk | La version comfort food : pour le soir après le cours.
-+ Diptyque Eau Papier | Ultra-clean, presque conceptuel.
++ Diptyque L'Eau Papier | Ultra-clean, presque conceptuel.
 + Ex Nihilo Fleur Narcotique Blossom | Pour travailler depuis un café en terrasse.
 
 ## La Romantique classique
