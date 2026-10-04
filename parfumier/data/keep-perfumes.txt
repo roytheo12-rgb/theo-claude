@@ -501,3 +501,26 @@ Nishane|Meltemia|EDP
 Nishane|A Date with Oud|EDP
 Nishane|Oudous Cerasus|EDP
 Nishane|Oudous Lux Solis|EDP
+L'Artisan Parfumeur|Caligna|EDP
+L'Artisan Parfumeur|Dzing !|EDP
+L'Artisan Parfumeur|Cuir Grenat|EDP
+Celine|Black Tie|EDP
+Celine|Bois Dormant|EDP
+Celine|Cologne Céleste|EDP
+Celine|Cologne Française|EDP
+Celine|Dans Paris|EDP
+Celine|Eau de Californie|EDP
+Celine|La Peau Nue|EDP
+Celine|Nightclubbing|EDP
+Celine|Parade|EDP
+Celine|Rimbaud|EDP
+Celine|Saint-Germain-Des-Prés|EDP
+Celine|Un Été Français|EDP
+Celine|Zouzou|EDP
+Matière Première|Santal Austral Extrait|EDP
+Matière Première|Black Currant Extrait|EDP
+Memo Paris|Sherwood|EDP
+Memo Paris|Moon Fever|EDP
+Memo Paris|Tamarindo|EDP
+Memo Paris|Iberian Leather|EDP
+Memo Paris|Flam|EDP
