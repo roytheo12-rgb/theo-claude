@@ -269,6 +269,7 @@
   function render(keepScroll) {
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
     $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish'].indexOf(tab) * 100}%)`;
+    $('#view').dataset.v = tab;
     ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
   }
@@ -859,12 +860,11 @@
     return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? (e.guess ? '≈ ' : '') + famLabel(e.family) : '', e.conc && e.conc !== 'EDP' ? e.conc.split(',').map((x) => CONC_L[x] || x).join('/') : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small>${d && e.cat ? `<em>${tx(d[1])}</em>` : ''}${tagPills(e)}</span><i class="xm">${inCol ? '✓ chez toi' : inW ? '♡ wishlist' : '›'}</i></button>`;
   }
   function drawSearchResults() {
-    const r = filterDb(), box = $('#sres'); if (!box) return;
+    const r = filterDb(), box = $('#sbody'); if (!box) return;
     $('#scount').textContent = r.length + ' parfum' + (r.length > 1 ? 's' : '');
-    box.innerHTML = r.length ? `<div class="xgrid">${r.slice(0, SRCH.limit).map(rowCard).join('')}</div>${r.length > SRCH.limit ? '<button type="button" class="ghost" id="smore">Voir plus</button>' : ''}` : '<div class="empty">Aucun parfum ne correspond. Enlève un filtre ou change les mots.</div>';
-    const look = {}; dbList().forEach((e) => { look[entryKey(e)] = e; });
-    $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = look[b.dataset.ent]; if (e) openEntry(e); }));
-    if ($('#smore', box)) $('#smore', box).onclick = () => { SRCH.limit += 40; drawSearchResults(); };
+    box.innerHTML = (SRCH.nose ? noseCard(SRCH.nose) : '') + (r.length ? `<div class="pgrid">${r.slice(0, SRCH.limit).map((e) => pCard(e)).join('')}</div>${r.length > SRCH.limit ? '<button type="button" class="ghost" id="smore" style="justify-self:start">Voir plus</button>' : ''}` : '<div class="empty">Aucun parfum ne correspond. Retire un filtre en haut.</div>');
+    bindEnt(box);
+    if ($('#smore', box)) $('#smore', box).onclick = () => { SRCH.limit += 24; drawSearchResults(); };
   }
 
   // « un parfum comme Aventus mais moins cher » : on retrouve le parfum cité et on classe la base par proximité de profil.
@@ -886,7 +886,7 @@
     }).filter((r) => r && r.sim > 0.42 && (!need.maxPrice || !r.c.price || r.c.price <= need.maxPrice) && (!cheaper || !ref.price || (r.c.price > 0 && r.c.price < ref.price * 0.8))).sort((x, y) => y.sim - x.sim);
     return { ref, cheaper, res };
   }
-  const NEED = { q: '', n: 8 };
+  const NEED = { q: '', n: 6, mode: 'disc' };
   const NEED_EX = ['un parfum pour compléter ma collection', 'un parfum comme Aventus mais moins cher', 'frais pour le bureau en été', 'vanille sans patchouli pour l\'hiver', 'cuir fumé pour homme', 'rose poudrée', 'premier rendez-vous, pas trop sucré', 'boisé discret moins de 100 €'];
   function drawNeed() {
     const box = $('#nres'); if (!box) return;
@@ -925,46 +925,94 @@
       msg.textContent = picks.length ? '' : 'L\'IA n\'a rien trouvé de mieux.'; btn.disabled = false;
     } catch (e) { msg.textContent = e && e.code === 'rate_limited' ? 'Plus d\'essais pour aujourd\'hui.' : 'L\'IA n\'est pas disponible ici. Les résultats ci-dessus restent valables.'; btn.disabled = false; }
   }
+  // ---------- Recherche : une seule barre qui cherche partout (parfums, maisons, nez, notes, envies), ou on se laisse guider ----------
+  const SD = { facet: 'brand', all: false };
+  const ENVIES = [['Frais pour le bureau', 'frais pour le bureau'], ['Une soirée qui marque', 'une soirée qui marque, sillage fort'], ['Premier rendez-vous', 'premier rendez-vous, pas trop sucré'], ['Cocooning d\'hiver', 'vanille pour l\'hiver'], ['Chaleur d\'été', 'frais pour l\'été'], ['Original, qui ose', 'un parfum original et clivant'], ['Doux et propre', 'musc propre et doux'], ['Compléter ma collection', 'un parfum pour compléter ma collection']];
+  const pCard = (e, badge) => `<button type="button" class="pc" data-ent="${esc(entryKey(e))}">${badge ? `<i class="pcm">${badge}</i>` : ''}${xThumb(e)}<b>${esc(e.name)}</b><small>${esc(e.house)}</small>${e.price ? `<em>≈ ${e.price} €</em>` : ''}</button>`;
+  const popularList = () => { const by = new Map(dbList().map((e) => [E.norm(e.house) + '|' + E.norm(e.name), e])); return (window.INCONT || []).map((k) => by.get(k)).filter((e) => e && !e.ed); };
+  const sFilters = () => SRCH.tags.length || SRCH.style || SRCH.price || SRCH.house || SRCH.note || SRCH.nose || SRCH.conc || SRCH.gen || SRCH.photo;
+  function bindEnt(root) { const look = plLook(); $$('[data-ent]', root).forEach((b) => (b.onclick = () => { const e = look.get(b.dataset.ent); if (e) openEntry(e); })); }
   function viewSearch() {
-    const db = dbList(), houses = [...new Set(db.map((e) => e.house))].sort((a, b) => a.localeCompare(b, 'fr')), noses = [...new Set(db.flatMap((e) => e.noses || []))].sort((a, b) => a.localeCompare(b, 'fr'));
-    const sel = (id, label, opts, val) => `<label class="sel"><span class="mono">${label}</span><select id="${id}"><option value="">Tous</option>${opts.map((o) => `<option value="${esc(o)}" ${o === val ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select></label>`;
-    const nF = SRCH.tags.length + (SRCH.style ? 1 : 0) + (SRCH.price ? 1 : 0) + (SRCH.house ? 1 : 0) + (SRCH.note ? 1 : 0) + (SRCH.nose ? 1 : 0) + (SRCH.conc ? 1 : 0) + (SRCH.gen ? 1 : 0) + (SRCH.photo ? 1 : 0);
+    const act = [...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.gen ? ['gen', ({ f: 'Féminin', m: 'Masculin', u: 'Mixte' })[SRCH.gen]] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean);
     $('#view').innerHTML = `
       <section class="sec srch"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
-        <div class="card needbox"><p class="mono">Je cherche…</p><div class="row"><input type="search" id="need" placeholder="Ex. frais pour le bureau cet été, sans vanille" value="${esc(NEED.q)}" autocomplete="off" aria-label="Décris ce que tu cherches"><button class="cta" id="needgo"><span>Trouver</span></button></div><div class="chips">${NEED_EX.map((x) => `<button type="button" class="chip" data-nex="${esc(x)}">${esc(x)}</button>`).join('')}</div><div id="nres"></div></div>
-        <input type="search" id="sq" placeholder="Un parfum, une maison…" value="${esc(SRCH.q)}" autocomplete="off" aria-label="Rechercher un parfum">
-        ${SRCH.nose ? noseCard(SRCH.nose) : `<details class="nosefold"><summary class="mono">Parcourir par parfumeur</summary>${noseRow('data-sn', (window.NOSE_TOP || []).slice(0, 14))}</details>`}
-        <div class="chips actf">${[...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note : ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.gen ? ['gen', ({ f: 'Féminin', m: 'Masculin', u: 'Mixte' })[SRCH.gen]] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean).map(([k, l]) => `<button class="chip on" data-xa="${esc(k)}">${esc(l)} ✕</button>`).join('')}</div>
-        <details class="filters" ${SRCH.open ? 'open' : ''}><summary class="mono">Filtres${nF ? ' · ' + nF : ''}</summary>
-          <p class="mono">Tags</p><div class="chips">${Object.entries(window.TAGS || {}).map(([k, v]) => `<button class="chip ${SRCH.tags.includes(k) ? 'on' : ''}" data-st="${k}">${esc(v)}</button>`).join('')}</div>
-          <p class="mono">Style</p><div class="chips">${Object.keys(E.FAMILIES).map((k) => `<button class="chip ${SRCH.style === k ? 'on' : ''}" data-ss="${k}">${esc(famLabel(k))}</button>`).join('')}</div>
-          <p class="mono">Prix</p><div class="chips">${PRICE_TIERS.map(([k, l]) => `<button class="chip ${SRCH.price === k ? 'on' : ''}" data-sp="${k}">${l}</button>`).join('')}</div>
-          <p class="mono">Pour qui</p><div class="chips">${[['f', 'Féminin'], ['m', 'Masculin'], ['u', 'Mixte']].map(([k, l]) => `<button class="chip ${SRCH.gen === k ? 'on' : ''}" data-sgen="${k}">${l}</button>`).join('')}</div>
-          <p class="mono">Concentration</p><div class="chips">${[['EDT', 'Eau de toilette'], ['EDP', 'Eau de parfum'], ['EXT', 'Extrait'], ['PAR', 'Parfum'], ['COL', 'Cologne']].map(([k, l]) => `<button class="chip ${SRCH.conc === k ? 'on' : ''}" data-sc2="${k}">${l}</button>`).join('')}<button class="chip ${SRCH.photo ? 'on' : ''}" data-sph="1">Avec photo</button></div>
-          <div class="selrow">${sel('sh', 'Maison', houses, SRCH.house)}${sel('sn', 'Note', FACET_NOTES.slice().sort((a, b) => a.localeCompare(b, 'fr')), SRCH.note)}${sel('sno', 'Parfumeur', noses, SRCH.nose)}</div>
-          ${nF ? '<button class="ghost" id="sreset">Tout effacer</button>' : ''}
-        </details>
-        <div id="sres"></div></section>`;
-    const re = () => { SRCH.limit = 40; viewSearch(); };
-    $$('[data-sn]').forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.sn; re(); }));
-    $('.filters').addEventListener('toggle', (e) => { SRCH.open = e.target.open; });
+        <div class="sbar"><input type="search" id="need" placeholder="Parfum, maison, nez, note, envie…" value="${esc(NEED.q)}" autocomplete="off" aria-label="Chercher dans toute la base"><button class="cta" id="needgo"><span>Chercher</span></button></div>
+        <div class="seg" id="smode"><button type="button" data-m="disc" class="${NEED.mode === 'disc' ? 'on' : ''}">Je découvre</button><button type="button" data-m="know" class="${NEED.mode === 'know' ? 'on' : ''}">Je sais ce que je cherche</button></div>
+        ${act.length ? `<div class="chips actf">${act.map(([k, l]) => `<button class="chip on" data-xa="${esc(k)}">${esc(l)} ✕</button>`).join('')}</div>` : ''}
+        <div id="sbody" class="sbody"></div></section>`;
+    const re = () => { SRCH.limit = 24; viewSearch(); };
     $$('[data-xa]').forEach((b) => (b.onclick = () => { const k = b.dataset.xa; if (k.startsWith('t:')) SRCH.tags = SRCH.tags.filter((x) => x !== k.slice(2)); else if (k === 'photo') SRCH.photo = false; else SRCH[k] = ''; re(); }));
-    const goNeed = () => { NEED.q = $('#need').value; NEED.n = 8; drawNeed(); };
-    $('#needgo').onclick = goNeed; $('#need').addEventListener('keydown', (e) => { if (e.key === 'Enter') goNeed(); });
-    $$('[data-nex]').forEach((b) => (b.onclick = () => { $('#need').value = b.dataset.nex; goNeed(); }));
-    drawNeed();
-    $('#sq').addEventListener('input', (e) => { SRCH.q = e.target.value; SRCH.limit = 40; drawSearchResults(); });
-    $$('[data-st]').forEach((b) => (b.onclick = () => { const k = b.dataset.st, i = SRCH.tags.indexOf(k); if (i >= 0) SRCH.tags.splice(i, 1); else SRCH.tags.push(k); re(); }));
-    $$('[data-ss]').forEach((b) => (b.onclick = () => { SRCH.style = SRCH.style === b.dataset.ss ? '' : b.dataset.ss; re(); }));
-    $$('[data-sp]').forEach((b) => (b.onclick = () => { SRCH.price = SRCH.price === b.dataset.sp ? '' : b.dataset.sp; re(); }));
-    $$('[data-sgen]').forEach((b) => (b.onclick = () => { SRCH.gen = SRCH.gen === b.dataset.sgen ? '' : b.dataset.sgen; re(); }));
-    $$('[data-sc2]').forEach((b) => (b.onclick = () => { SRCH.conc = SRCH.conc === b.dataset.sc2 ? '' : b.dataset.sc2; re(); }));
-    if ($('[data-sph]')) $('[data-sph]').onclick = () => { SRCH.photo = !SRCH.photo; re(); };
-    $('#sh').onchange = (e) => { SRCH.house = e.target.value; re(); }; $('#sn').onchange = (e) => { SRCH.note = e.target.value; re(); }; $('#sno').onchange = (e) => { SRCH.nose = e.target.value; re(); };
-    if ($('#sreset')) $('#sreset').onclick = () => { Object.assign(SRCH, { tags: [], style: '', price: '', house: '', note: '', nose: '', conc: '', gen: '', photo: false, limit: 40 }); viewSearch(); };
-    { const nf = $('.nosefold'); if (nf) nf.addEventListener('toggle', () => { if (nf.open) initFolds(nf); }); initFolds($('#view')); }
-    drawSearchResults();
+    const goNeed = () => { NEED.q = $('#need').value; NEED.n = 6; SD.all = false; drawBody(); };
+    $('#needgo').onclick = goNeed;
+    let tm = 0; $('#need').addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(goNeed, 260); });
+    $('#need').addEventListener('keydown', (e) => { if (e.key === 'Enter') { clearTimeout(tm); goNeed(); } });
+    $$('#smode button').forEach((b) => (b.onclick = () => { NEED.mode = b.dataset.m; $$('#smode button').forEach((x) => x.classList.toggle('on', x === b)); drawBody(); }));
+    drawBody();
   }
+  function drawBody() {
+    const box = $('#sbody'); if (!box) return;
+    const q = (NEED.q || '').trim();
+    if (q) return drawUni(box, q);
+    if (sFilters()) return drawSearchResults();
+    $('#scount').textContent = '';
+    if (NEED.mode === 'know') {
+      box.innerHTML = `<p class="soft2">Tape un nom de parfum, une maison, un nez, une note, ou décris ce que tu veux. Je cherche dans toute la base de l'app.</p><div class="chips">${NEED_EX.slice(0, 6).map((x) => `<button type="button" class="chip" data-nex="${esc(x)}">${esc(x)}</button>`).join('')}</div>`;
+      $$('[data-nex]', box).forEach((b) => (b.onclick = () => { $('#need').value = b.dataset.nex; NEED.q = b.dataset.nex; NEED.n = 6; drawBody(); }));
+      return;
+    }
+    drawDisc(box);
+  }
+  function drawDisc(box) {
+    const db = dbList(), recs = (() => { try { return tipsData().recs.slice(0, 8); } catch (e) { return []; } })(), pop = popularList().slice(0, 18);
+    const FAC = [['brand', 'Maison'], ['nose', 'Parfumeur'], ['note', 'Note'], ['style', 'Style'], ['price', 'Prix']];
+    const groups = groupsOf(db, SD.facet);
+    const look = plLook();
+    box.innerHTML = `
+      <div class="dsec"><p class="mono">Une envie</p><div class="envies">${ENVIES.map(([l, q]) => `<button type="button" class="envie" data-env="${esc(q)}">${esc(l)}</button>`).join('')}</div></div>
+      ${recs.length ? `<div class="dsec"><p class="mono">Pour toi</p><div class="rail">${recs.map((r) => { const e = look.get(entryKey(r.c)) || r.c; return pCard(e, r.pct + ' %'); }).join('')}</div></div>` : ''}
+      ${pop.length ? `<div class="dsec"><p class="mono">Les incontournables</p><div class="rail">${pop.map((e) => pCard(e)).join('')}</div></div>` : ''}
+      <div class="dsec"><p class="mono">Explorer par</p><div class="chips" id="dfac">${FAC.map(([k, l]) => `<button type="button" class="chip ${SD.facet === k ? 'on' : ''}" data-fac="${k}">${l}</button>`).join('')}</div>
+        ${foldWrap(groups.map((g) => `<button type="button" class="chip" data-gk="${esc(g.key)}">${esc(g.label)} <small>${g.items.length}</small></button>`).join(''), 'xg')}</div>`;
+    $$('[data-env]', box).forEach((b) => (b.onclick = () => { $('#need').value = b.dataset.env; NEED.q = b.dataset.env; NEED.n = 6; drawBody(); window.scrollTo(0, 0); }));
+    $$('[data-fac]', box).forEach((b) => (b.onclick = () => { SD.facet = b.dataset.fac; drawDisc(box); }));
+    $$('[data-gk]', box).forEach((b) => (b.onclick = () => { const g = groups.find((x) => x.key === b.dataset.gk); if (!g) return; const f = SD.facet; if (f === 'brand') SRCH.house = g.label; else if (f === 'nose') SRCH.nose = g.label; else if (f === 'note') SRCH.note = g.label; else if (f === 'style') SRCH.style = g.key; else if (f === 'price') SRCH.price = g.key; SRCH.limit = 24; viewSearch(); window.scrollTo(0, 0); }));
+    bindEnt(box); initFolds(box);
+  }
+  // Recherche libre : tout ce qui correspond au texte, regroupé par type (parfums, maisons, nez, notes, styles), puis le besoin compris.
+  function drawUni(box, q) {
+    const nq = E.norm(q), words = nq.split(' ').filter(Boolean), db = dbList();
+    SRCH.q = q; const ps = filterDb(); SRCH.q = '';
+    const has = (s) => { const n = E.norm(s); return words.every((w) => n.includes(w)); };
+    const cnt = (f) => db.filter((e) => !e.ed && f(e)).length;
+    const houses = [...new Set(db.map((e) => e.house))].filter(has).slice(0, 6).map((h) => [h, cnt((e) => e.house === h)]);
+    const noses = [...new Set(db.flatMap((e) => e.noses || []))].filter(has).slice(0, 6);
+    const notes = nq.length >= 3 ? noteVocab().filter((o) => words.every((w) => o.k.includes(w))).slice(0, 5).map((o) => [o.n, cnt((e) => (e.notes || []).some((x) => E.norm(x).includes(o.k)))]).filter((x) => x[1] > 0) : [];
+    const fams = Object.keys(E.FAMILIES).filter((k) => has(famLabel(k))).slice(0, 3);
+    const tags = Object.entries(window.TAGS || {}).filter(([k, v]) => has(v)).slice(0, 4);
+    const need = E.parseNeed(q), sim = simSearch(q, need), plan = PLAN_RX.test(q) && !/\bfrais|bureau|date|hiver|été|ete\b/i.test(q.replace(/ma collection|ma collec/gi, ''));
+    const wantNeed = !!sim || plan || (!need.empty && (!ps.length || words.length >= 3));
+    const lim = SD.all ? (SRCH.limit || 24) : 12;
+    const chipRow = (title, items) => (items.length ? `<div class="dsec"><p class="mono">${title}</p><div class="chips">${items.join('')}</div></div>` : '');
+    $('#scount').textContent = ps.length ? ps.length + ' parfum' + (ps.length > 1 ? 's' : '') : '';
+    box.innerHTML = `
+      ${ps.length ? `<div class="dsec"><p class="mono">Parfums</p>${SD.all ? `<div class="pgrid">${ps.slice(0, lim).map((e) => pCard(e)).join('')}</div>` : `<div class="rail">${ps.slice(0, 12).map((e) => pCard(e)).join('')}</div>`}${ps.length > lim ? `<button type="button" class="ghost" id="uall" style="justify-self:start">${SD.all ? 'Voir plus' : 'Voir les ' + ps.length}</button>` : ''}</div>` : ''}
+      ${chipRow('Maisons', houses.map(([h, n]) => `<button type="button" class="chip" data-uh="${esc(h)}">${esc(h)} <small>${n}</small></button>`))}
+      ${chipRow('Parfumeurs', noses.map((n) => `<button type="button" class="chip" data-un="${esc(n)}">${esc(n)}</button>`))}
+      ${chipRow('Notes', notes.map(([n, c]) => `<button type="button" class="chip" data-uo="${esc(n)}">${esc(n)} <small>${c}</small></button>`))}
+      ${chipRow('Styles', [...fams.map((k) => `<button type="button" class="chip" data-uf="${k}">${esc(famLabel(k))}</button>`), ...tags.map(([k, v]) => `<button type="button" class="chip" data-ut="${k}">${esc(v)}</button>`)])}
+      ${wantNeed ? `<div class="dsec"><p class="mono">Selon ton envie</p><div id="nres"></div></div>` : ''}
+      ${!ps.length && !houses.length && !noses.length && !notes.length && !fams.length && !tags.length && !wantNeed ? `<div class="empty">Rien dans la base pour « ${esc(q)} ». Essaie un autre mot, ou décris ce que tu veux (frais pour le bureau, vanille sans patchouli…).</div>` : ''}`;
+    bindEnt(box);
+    const go = (fn) => { SRCH.limit = 24; NEED.q = ''; fn(); viewSearch(); window.scrollTo(0, 0); };
+    $$('[data-uh]', box).forEach((b) => (b.onclick = () => go(() => { SRCH.house = b.dataset.uh; })));
+    $$('[data-un]', box).forEach((b) => (b.onclick = () => go(() => { SRCH.nose = b.dataset.un; })));
+    $$('[data-uo]', box).forEach((b) => (b.onclick = () => go(() => { SRCH.note = b.dataset.uo; })));
+    $$('[data-uf]', box).forEach((b) => (b.onclick = () => go(() => { SRCH.style = b.dataset.uf; })));
+    $$('[data-ut]', box).forEach((b) => (b.onclick = () => go(() => { SRCH.tags = [b.dataset.ut]; })));
+    if ($('#uall', box)) $('#uall', box).onclick = () => { if (SD.all) SRCH.limit = (SRCH.limit || 24) + 24; else { SD.all = true; SRCH.limit = 24; } drawUni(box, q); };
+    if (wantNeed) drawNeed();
+  }
+
   // Fiche d'un parfum de la base : description, tags, notes, et les actions (collection, wishlist)
   // Pyramide olfactive (tête, cœur, fond) quand la fiche est détaillée.
   const pyramidOf = (e) => { const y = (window.PYRAMID || {})[E.norm(e.house) + '|' + E.norm(e.name)]; if (!y) return ''; const col = (l, a) => (a && a.length ? `<div><p class="mono">${l}</p><p class="pyn">${a.map(esc).join(' · ')}</p></div>` : ''); return `<div class="pyr3">${col('Tête', y.t)}${col('Cœur', y.h)}${col('Fond', y.b)}</div>`; };
@@ -1293,7 +1341,7 @@
     let pos = S.settings.geo && S.settings.geo.lat != null ? { lat: S.settings.geo.lat, lon: S.settings.geo.lon, place: S.settings.geo.place || '' } : null, rad = 3000, map = null;
     const pn = openSheet(`<div><h2>Où acheter près de moi</h2><p style="color:var(--muted);margin-top:6px">Les parfumeries, les enseignes beauté et les grands magasins autour de toi, sur une carte.</p></div>
       <div class="row"><button class="cta" id="smGeo"><span>Autour de moi</span></button></div>
-      <div class="acwrap"><input type="text" id="smCity" placeholder="Ou une ville, un quartier (Lyon, Marais…)" autocomplete="off" aria-label="Ville"></div>
+      <div class="sbar"><div class="acwrap"><input type="text" id="smCity" placeholder="Ou une ville, un quartier (Lyon, Marais…)" autocomplete="off" autocapitalize="words" enterkeyhint="search" aria-label="Ville"><div class="aclist" id="smAc" hidden></div></div><button type="button" class="cta" id="smCityGo"><span>Chercher</span></button></div>
       <div class="chips" id="smRad">${[[1000, '1 km'], [3000, '3 km'], [10000, '10 km'], [25000, '25 km']].map(([v, l]) => `<button type="button" class="chip ${v === rad ? 'on' : ''}" data-rad="${v}">${l}</button>`).join('')}</div>
       <p class="mono" id="smMsg" style="text-transform:none;letter-spacing:0"></p>
       <div id="smMap" class="smmap" hidden></div><div id="smList" style="display:grid;gap:10px"></div><div id="smLinks"></div>`);
@@ -1321,9 +1369,27 @@
     }
     const setPos = (lat, lon, place) => { pos = { lat, lon, place: place || '' }; S.settings.geo = Object.assign({}, S.settings.geo, { lat, lon, place: place || (S.settings.geo && S.settings.geo.place) || '', ts: Date.now() }); save(); go(); };
     $('#smGeo', pn).onclick = () => { if (!navigator.geolocation) { msg('Ton appareil ne donne pas sa position. Tape une ville.'); return; } msg('Je cherche ta position…'); navigator.geolocation.getCurrentPosition((p) => setPos(p.coords.latitude, p.coords.longitude, ''), () => msg('Position refusée. Tape une ville ou un quartier juste en dessous.'), { timeout: 10000, maximumAge: 300000 }); };
-    const city = async () => { const v = $('#smCity', pn).value.trim(); if (!v) return; msg('Je cherche ' + v + '…'); try { const g = await geocodeCity(v); setPos(g.lat, g.lon, g.place); } catch (e) { msg('Ville introuvable, ou pas de connexion.'); } };
-    $('#smCity', pn).addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); city(); } });
-    $('#smCity', pn).addEventListener('change', city);
+    const lookup = async (v) => {
+      try { const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(v)}&count=5&language=fr`); const j = await r.json(); const out = (j.results || []).map((g) => ({ lat: g.latitude, lon: g.longitude, place: g.name, sub: [g.admin1, g.country].filter(Boolean).join(', ') })); if (out.length) return out; } catch (e) { /* on tente l'autre service */ }
+      const r2 = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=5&accept-language=fr&q=${encodeURIComponent(v)}`); const j2 = await r2.json();
+      return j2.map((g) => ({ lat: +g.lat, lon: +g.lon, place: String(g.display_name).split(',')[0], sub: String(g.display_name).split(',').slice(1, 3).join(',').trim() }));
+    };
+    const inp = $('#smCity', pn), ac = $('#smAc', pn); let ctl = 0;
+    const pick = (g) => { ac.hidden = true; inp.value = g.place; setPos(g.lat, g.lon, g.place); };
+    const suggest = async (auto) => {
+      const v = inp.value.trim(); if (v.length < 2) { ac.hidden = true; return; }
+      const id = ++ctl; if (!auto) msg('Je cherche ' + v + '…');
+      let r = []; try { r = await lookup(v); } catch (e) { if (id === ctl) msg('Impossible de joindre le service de recherche des villes. Utilise « Autour de moi ».'); return; }
+      if (id !== ctl) return;
+      if (!r.length) { ac.hidden = true; if (!auto) msg('Aucune ville trouvée pour « ' + v + ' ».'); return; }
+      if (!auto) { pick(r[0]); return; }
+      ac.innerHTML = r.map((g, i) => `<button type="button" class="acitem" data-i="${i}"><b>${esc(g.place)}</b><small>${esc(g.sub)}</small></button>`).join(''); ac.hidden = false;
+      $$('.acitem', ac).forEach((b) => (b.onpointerdown = (ev) => { ev.preventDefault(); pick(r[+b.dataset.i]); }));
+    };
+    let tm = 0; inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => suggest(true), 320); });
+    inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(tm); suggest(false); } });
+    inp.addEventListener('blur', () => setTimeout(() => { ac.hidden = true; }, 150));
+    $('#smCityGo', pn).onclick = () => { clearTimeout(tm); suggest(false); };
     $$('[data-rad]', pn).forEach((b) => (b.onclick = () => { rad = +b.dataset.rad; $$('[data-rad]', pn).forEach((x) => x.classList.toggle('on', x === b)); go(); }));
     if (pos) go(); else msg('Touche « Autour de moi » ou tape ta ville.');
   }
@@ -1567,7 +1633,7 @@
         <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Liste du jour</span><b>${esc(day.t)}</b><em>${esc(plDesc(day))}</em></span></button>
         <div class="chips plsecs"><button class="chip ${PL.sec ? '' : 'on'}" data-psec="">Tout</button>${(window.PL_SECTIONS || []).map((s) => `<button class="chip ${PL.sec === s ? 'on' : ''}" data-psec="${esc(s)}">${esc(s)}</button>`).join('')}</div>
       </section>
-      ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
+      ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)).sort((a, b) => (b.top ? 1 : 0) - (a.top ? 1 : 0)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
     $$('[data-pl]').forEach((b) => (b.onclick = () => { PL.id = +b.dataset.pl; render(); }));
     $$('[data-psec]').forEach((b) => (b.onclick = () => { PL.sec = b.dataset.psec; viewPlayLib(); }));
   }

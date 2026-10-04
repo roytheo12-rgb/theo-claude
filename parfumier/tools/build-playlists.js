@@ -110,6 +110,7 @@ const EDIT_MISS = [], INTROUV = [];
     if (!p) continue;
     if ((m = l.match(/^t: (.*)$/))) { p.t = m[1].trim(); continue; }
     if ((m = l.match(/^secs: (.*)$/))) { p.secs = m[1].split(',').map((x) => x.trim()); continue; }
+    if (/^top: /.test(l)) { p.top = 1; continue; }
     if (/^first: /.test(l)) { p.first = +l.slice(7) || 1; continue; }
     if ((m = l.match(/^d: (.*)$/))) { p.d = m[1]; continue; }
     if ((m = l.match(/^doc: (.*)$/))) { const [a, b, c] = m[1].split(' | '); p.doc2 = (p.doc2 || []).concat([c ? { t: a, s: b, u: c } : { t: a }]); continue; }
@@ -174,7 +175,7 @@ function out() {
       if (txt) doc.push(ln ? { t: txt, s: ln[1], u: ln[2] } : { t: txt });
     });
     const sl = slug(p.t); if (p.grp) { p.grp.forEach((g, gi) => { if (!g.n) g.n = gi === p.grp.length - 1 ? p.ps.length - (gi * 10) : 10; }); }
-    const o = { id: p.id, s: sl, grp: p.grp, secs: p.secs || SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.w) r.w = x.w; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
+    const o = { id: p.id, s: sl, top: p.top ? 1 : undefined, grp: p.grp, secs: p.secs || SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.w) r.w = x.w; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
     if (p.id === 79) { doc.length = 0; doc.push({ t: 'La maison Atkinsons et le 24 Old Bond Street sont historiquement documentés ; le flacon d\'aujourd\'hui est une réinterprétation moderne de cet héritage, pas un flacon inchangé depuis le XIXe siècle.', s: 'Atkinsons 1799', u: 'https://www.atkinsons1799.com/pages/history' }); }
     if (fs.existsSync(path.join(root, 'v2', 'img', 'pl', sl + '.webp'))) o.img = 'img/pl/' + sl + '.webp';
     if (p.doc2) p.doc2.forEach((d) => doc.push(d));
