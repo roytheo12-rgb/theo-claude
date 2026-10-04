@@ -46,7 +46,6 @@ Roja Parfums|Elysium|COL
 Roja Parfums|Enigma|PAR
 Tiziana Terenzi|Kirke|EXT
 Tom Ford|Vanille Fatale|EDP
-Yves Saint Laurent|MYSLF Extrême|EDP
 Carner Barcelona|Tennis Club|EDP
 Chanel|Pour Monsieur Concentrée|EDP
 Creed|Fleurissimo|EDP
@@ -65,28 +64,15 @@ Hugo Boss|Boss Bottled Parfum|PAR
 Balmain|Vent Vert|EDT
 Diptyque|L'Eau|EDT
 Houbigant|Quelques Fleurs|EDP
-Acqua di Parma|Colonia Buongiorno Soleil|EDP
 Armani|La Femme Bleue|EDP
 Atelier des Ors|Rose Oud|EDP
 Boadicea the Victorious|Glorious|EDP
 Comme des Garçons|Series 6 Synthetic: Tar|EDP
 D'Orsay|Tilleul|EDP
 D'Orsay|Tilleul Extrait|EDP
-Ella K|Casta Diva|EDP
-Ella K|Kyoto mon Amour|EDP
-Ella K|Londonderry|EDP
-Ella K|Ode à la Forêt|EDP
 Ella K|Sotto la Luna Gardenia|EDP
-Ella K|Yuki Yuki|EDP
 Essential Parfums|Dedication|EDP
-Floraïku|Cherry Blossom Rain|EDP
-Floraïku|Cherry On Top|EDP
 Floraïku|Haiku in the Dark|EDP
-Floraïku|Morning Dew|EDP
-Floraïku|Morning Dew on Moss|EDP
-Floraïku|On The Road|EDP
-Floraïku|Sunrise Spell|EDP
-Floraïku|The Pillow Book|EDP
 Floraïku|The Wandering Minstrel|EDP
 Giardini di Toscana|Giglio di Firenze|EDP
 Houbigant|Fougère Nobile|EDP
@@ -142,3 +128,4 @@ Carner Barcelona|D600|EDP
 Maison Sensara|Souvenir de Oummi|EDP
 Yves Saint Laurent|Pour Homme|EDT
 Storie Veneziane|Mica d'Oro I|Extrait
+Floraïku|Morning Mist|EDP

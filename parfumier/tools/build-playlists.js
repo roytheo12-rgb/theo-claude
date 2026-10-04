@@ -125,6 +125,13 @@ const EDIT_MISS = [], INTROUV = [];
   for (let i = PLS.length - 1; i >= 0; i--) if (PLS[i].ghost) PLS.splice(i, 1);
   PLS.sort((a, b) => (b.first || 0) - (a.first || 0));      // « first: » : en tête de sa section
 })();
+// parfums retirés de l'appli (data/removed-perfumes.txt) : leurs lignes non résolues disparaissent aussi des playlists
+(function dropRemoved() {
+  const f = path.join(root, 'data', 'removed-perfumes.txt'); if (!fs.existsSync(f)) return;
+  const gone = new Set(fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.includes('|') && !l.startsWith('#') && !l.startsWith('~')).map((l) => { const [h, n] = l.split('|'); return norm(h + ' ' + n); }));
+  const expand = (q) => { const s = norm(q.replace(/\s*\([^)]*\)/g, '')); const o = [s]; Object.keys(HOUSE_SYN).forEach((k) => { if (s.startsWith(k + ' ')) o.push(HOUSE_SYN[k] + s.slice(k.length)); }); return o; };
+  PLS.forEach((p) => { const keep = []; p.ps.forEach((x, i) => { if (!x.h && expand(x.q).some((e) => gone.has(e))) { if (p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (i < c) { g.n--; break; } } } } else keep.push(x); }); p.ps = keep; });
+})();
 const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
 fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
 console.log(PLS.length, 'playlists', PLS.reduce((a, p) => a + p.ps.length, 0), 'parfums', 'hors base:', new Set(miss).size);
