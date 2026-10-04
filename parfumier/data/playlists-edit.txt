@@ -465,7 +465,7 @@ d: Financial Times sous le bras, terminal Bloomberg ouvert, costume bien coupé 
 - Amouage Reflection Man | Le vendredi : il y a autre chose.
 - Parfums de Marly Percival | Le chic quotidien, frais et élégant.
 - Diptyque Vetyverio | Le vétiver institutionnel parfait.
-- Hermès Terre d'Hermès Parfum | L'autorité en flacon.
+- Hermès Terre d'Hermès | L'autorité en flacon.
 - Chanel Platinum Égoïste | Le classique oublié des connaisseurs.
 
 ## Tech Bro
@@ -605,7 +605,7 @@ d: Pluie sur Grosvenor Square. Costume sombre. Espresso martini. Deal signé à 
 - Creed Royal Oud | L'oud comme signe de puissance silencieuse.
 - Dior Homme Parfum | Le parfum du cadre qui a une carrière, pas juste un poste.
 - Chanel Platinum Égoïste | Il a décidé une fois pour toutes.
-- Hermès Terre d'Hermès Parfum | La version « dossier bouclé ».
+- Hermès Terre d'Hermès | La version « dossier bouclé ».
 - Roja Elysium | Le partner du cabinet : ça coûte cher, ça se sent.
 - Penhaligon's Sartorial | Inspiré des tailleurs de Savile Row.
 - Frédéric Malle Monsieur | Sobre, précis, impossible à contester.
@@ -1464,7 +1464,7 @@ pal: 0e0e12,b08d2c,efe6cf,rays
 - Dior Ambre Nuit | Rose de Turquie, ambre, musc : son parfum de soirée.
 - Tom Ford Grey Vetiver | L'élégance sobre du milliardaire.
 - Maison Francis Kurkdjian Grand Soir | Son parfum de gala.
-- Hermès Terre d'Hermès Parfum | La terre ferme : il n'a jamais bougé de ses fondations.
+- Hermès Terre d'Hermès | La terre ferme : il n'a jamais bougé de ses fondations.
 - Roja Elysium | Beyond mainstream.
 - Tom Ford Oud Wood | Son rapport à la culture du Moyen-Orient, absorbée dans ses voyages.
 - Parfums de Marly Layton Exclusif | L'entrée dans la niche.
