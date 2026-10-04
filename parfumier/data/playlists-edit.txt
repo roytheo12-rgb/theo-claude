@@ -2065,7 +2065,7 @@ x Essential Parfums Dedication
 + Dior Miss Dior EDP | L'icône du genre.
 + Guerlain Mon Guerlain | Le romantisme gourmand et poétique.
 + Maison Francis Kurkdjian Amyris Femme | Romantique sans que ça se voie.
-+ Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
++F Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
 + Jo Malone Peony & Blush Suede | Glamour doux, pour le dîner en amoureux.
 + Byredo Rose of No Man's Land | La rose niche accessible.
 + Guerlain Insolence | Poudré et romantique : les années 50.
@@ -2095,7 +2095,7 @@ d: Librairie le samedi, café le dimanche, notes dans les marges. Elle a lu Prou
 + Dior Miss Dior EDP | L'icône du genre.
 + Guerlain Mon Guerlain | Le romantisme gourmand et poétique.
 + Maison Francis Kurkdjian Amyris Femme | Romantique sans que ça se voie.
-+ Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
++F Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
 + Jo Malone Peony & Blush Suede | Glamour doux, pour le dîner en amoureux.
 + Byredo Rose of No Man's Land | La rose niche accessible.
 + Guerlain Insolence | Poudré et romantique : les années 50.
@@ -3737,7 +3737,7 @@ x Maison Margiela Coffee Break
 + Essential Parfums Nice Bergamote | Inspiré par Nice.
 + Mancera French Riviera | Inspiré par Riviera.
 + Nishane Ambra Calabria | Inspiré par Calabria.
-+ Lanvin A Girl In Capri | Inspiré par Capri.
++F Lanvin A Girl In Capri | Inspiré par Capri.
 + Montale Soleil de Capri | Inspiré par Capri.
 + Nicolaï Riviera Verbena | Inspiré par Riviera.
 + Parfum d'Empire Corsica Furiosa | Inspiré par Corsica.
@@ -3755,7 +3755,7 @@ x Maison Margiela Coffee Break
 + Floris Bergamotto di Positano | Inspiré par Positano.
 + Perris Monte Carlo Bergamotto di Calabria | Inspiré par Calabria.
 + Dolce & Gabbana Light Blue Capri in Love | Inspiré par Capri.
-+ Dolce & Gabbana Light Blue Love in Capri | Inspiré par Capri.
++F Dolce & Gabbana Light Blue Love in Capri | Inspiré par Capri.
 + Guerlain Aqua Allegoria Bergamote Calabria | Inspiré par Calabria.
 
 ## Lake Como
@@ -3834,7 +3834,7 @@ x Maison Margiela Coffee Break
 + Floris London 1968 | Inspiré par London.
 + Fragrance du Bois London Spice | Inspiré par London.
 + Floris Jermyn Street | Inspiré par Jermyn.
-+ Burberry London for Men | Inspiré par London.
++H Burberry London for Men | Inspiré par London.
 + Roja Parfums Burlington 1819 | Inspiré par Burlington.
 + Burberry Her London Dream | Inspiré par London.
 
@@ -4206,3 +4206,134 @@ d: Pour un usage quotidien, un parfum de niche doit cocher plusieurs cases. Il e
 
 ## Le Cigare de minuit
 t: Tuxedo Society
+
+# Revue complète des 138 playlists : doublons trop fréquents, parfums au mauvais genre, hors sujet
+## Patrick Bateman
+x Dior New Look
+x Roja Parfums Elysium
+## Tony Montana
+x Roja Parfums Elysium
++ Initio Oud for Greatness | Oud, safran et patchouli : la démesure pure.
+## Freddy Horniman
+x Roja Parfums Elysium
++ Creed Millésime Impérial | Citron, bergamote et fruits : l'aristocrate qui fait la fête en blazer.
+## Jordan Belfort
+x Roja Parfums Elysium
++ Tom Ford Fucking Fabulous | Cuir, amande et lavande : l'excès assumé.
+## Kendall Roy
+x Roja Parfums Elysium
++ Hermès H24 | Propre et tendu, un costume qui cache le doute.
+## Arsène Lupin
+x Roja Parfums Elysium
++ Guerlain Habit Rouge | Le gentleman cambrioleur en cuir poudré et vanille.
+## Don Draper
+x Creed Royal Oud
++ Dior Fahrenheit | Violette, cuir et vétiver : le bureau enfumé qui devient moderne.
+## John Wick
+x Creed Royal Oud
++ Tom Ford Noir Extreme | Sombre, ambré et épicé, le deuil en costume noir.
+## Jay Gatsby
+x Creed Royal Oud
++ Roja Parfums Diaghilev | Un luxe de ballets russes pour une fête qui ne finit jamais.
+## The Founder
+x Creed Royal Oud
+## Eddie Horniman
+x Creed Royal Oud
++ Hermès Bel Ami | Cuir clair et iris, l'élégance d'un duc qui connaît le monde.
+## Les Affranchis
+x Creed Royal Oud
+## Logan Roy
+x Creed Royal Oud
++ Clive Christian No. 1 Masculine | Le luxe sec de celui qui n'a pas besoin de l'approbation.
+## Vito Corleone
+x Creed Royal Oud
++ Dior Eau Sauvage | Un classique de 1966, discret et impeccable.
+## Les Branchés
+x Creed Royal Oud
+## Finance Bro
+x Creed Royal Oud
+## Corporate Weapons
+x Roja Parfums Elysium
+x Creed Royal Oud
+## Funky Chic
+x Roja Parfums Elysium
+## Jay-Z
+x Roja Parfums Elysium
++ Tom Ford Tuscan Leather | Cuir, safran et daim : puissance calme.
+## Marilyn Monroe
+x Dior J'adore
+x Frédéric Malle Carnal Flower
++ Guerlain Mitsouko | Un chypre du temps de Hollywood, poudré et profond.
++ Dior Diorissimo | Muguet intemporel, la fleur la plus propre de la parfumerie.
+## Brigitte Bardot
+x Frédéric Malle Carnal Flower
++ Hermès Calèche | Aldéhydes et fleurs blanches, l'élégance des années 60.
+## La vie de Ronnie
+x Frédéric Malle Portrait of a Lady
+## Le Footeux
+x Creed Carmina
+## Le Collectionneur
+x Frédéric Malle Portrait of a Lady
++ Serge Lutens Chergui | Tabac, miel et foin, un atelier qui sent le vieux bois.
+## Le Qatari
+x Ella K Lettre de Pushkar
+## Historical Scents
+x Miller Harris L'Air de Rien
+## New York
+x Carolina Herrera 212 Men NYC
+## London
+x Burberry London for Men
++H Burberry London for Men | Tabac, cuir et bois, l'élégance britannique accessible.
+## Rome
+x Valentino Born in Roma Uomo
+## Côte d'Azur
+x Lanvin A Girl In Capri
+x Dolce & Gabbana Light Blue Love in Capri
++F Lanvin A Girl In Capri | Fleurs blanches et fruits, la Méditerranée en robe d'été.
++F Dolce & Gabbana Light Blue Love in Capri | Agrumes et fleurs, le soleil de Capri.
+## Marrakech
+x Parfum d'Empire Ambre Russe
+## First Date
+x Hermès L'Ombre des Merveilles
+x Tom Ford Lost Cherry
++F Hermès L'Ombre des Merveilles | Cuir, résine et fleurs blanches, une présence qui intrigue.
++F Tom Ford Lost Cherry | Cerise noire et amande : le premier rendez-vous qui ne se refuse pas.
+## Wedding Guest
+x Louis Vuitton Stellar Times
+x Roja Parfums Elysium
++F Louis Vuitton Stellar Times | Ambre doux et fleur d'oranger, la robe du soir.
+## Tuxedo Society
+x Roja Parfums Elysium
+## Sous la chaleur
+x Roja Parfums Elysium
+## Garden Party
+x Roja Parfums Elysium
+## Gameday
+x Roja Parfums Elysium
+## F1
+x Roja Parfums Elysium
+x Creed Royal Oud
+## Daily
+x Parfums de Marly Greenley
++H Parfums de Marly Greenley | Pomme verte, bergamote, bois de cachemire et chêne vert. Un pétillant de luxe qui passe en toutes saisons.
++F Byredo Blanche | Un blanc très propre, poudré et léger, parfait pour le bureau.
++F Frédéric Malle En Passant | Lilas, blé et concombre, une fraîcheur de printemps étonnante.
++F Diptyque Do Son | Tubéreuse et fleur d'oranger sur du musc, élégant et lumineux.
++F Maison Margiela Lazy Sunday Morning | Linge propre, poire et muguet, discret et doux.
++F Prada Infusion d'Iris | Un iris froid et net, l'élégance au quotidien.
++F Hermès Un Jardin Sur Le Nil | Mangue verte, lotus et encens, frais sans fadeur.
+## First Date
++H Yves Saint Laurent La Nuit de l'Homme | Cardamome, lavande et cèdre, le classique du rendez-vous du soir.
++H Dior Dior Homme Intense | Iris poudré, très séduisant de près.
++H Bvlgari Man in Black | Rhum, épices et cuir doux, chaud et rassurant.
++H Tom Ford Oud Wood | Un oud boisé et poli, sensuel sans en faire trop.
++H Valentino Uomo Born in Roma | Menthe, gingembre et vanille, jeune et sûr de lui.
++H Dior Sauvage Elixir | Épicé et enveloppant, il laisse un sillage qu'on remarque.
++H Jean Paul Gaultier Le Male | Menthe, lavande et vanille, un classique qui plaît.
+## Wedding Guest
++H Guerlain L'Homme Idéal | Amande douce et cuir tendre, chaleureux sans écraser.
++H Yves Saint Laurent L'Homme | Gingembre, citron et violette, propre et élégant.
++H Prada L'Homme Intense | Iris poudré et ambre, impeccable sous un col blanc.
++H Bvlgari Man Wood Essence | Bois, agrumes et benjoin, raffiné pour le cocktail.
++H Acqua di Parma Colonia | Citron et lavande, l'élégance italienne de la cérémonie.
++H Dior Dior Homme Parfum | Iris et cuir doux, le costume sombre en parfum.

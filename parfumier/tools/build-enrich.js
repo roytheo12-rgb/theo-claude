@@ -45,13 +45,17 @@ const all = [];
 (w.CATALOG || []).forEach((c) => c.name && c.house && all.push([c.house, c.name]));
 const byHouse = {}, byColl = {};
 Object.keys(E).forEach((k) => { const o = E[k]; if (!o.p) return; const h = k.split('|')[0]; (byHouse[h] = byHouse[h] || []).push(o.p); if (o.c) (byColl[h + '|' + o.c] = byColl[h + '|' + o.c] || []).push(o.p); });
+const STOPN = new Set(['di', 'de', 'du', 'des', 'la', 'le', 'les', 'l', 'd', 'eau', 'the', 'and', 'et', 'by', 'pour']);
+const lineKey = (hn, name) => { const t = norm(name).split(' ').filter((x) => x && !STOPN.has(x)); return t.length >= 2 ? hn + '|' + t[0] + ' ' + t[1] : null; };
+const byLine = {};
+Object.keys(E).forEach((k) => { const o = E[k]; if (!o.p) return; const i = k.indexOf('|'), lk = lineKey(k.slice(0, i), k.slice(i + 1)); if (lk) (byLine[lk] = byLine[lk] || []).push(o.p); });
 const med = (a) => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
 const round5 = (x) => Math.round(x / 5) * 5;
 let est = 0, cnt = 0;
 all.forEach(([h, n]) => {
   const k = norm(ch(h)) + '|' + norm(n), o = E[k] || (E[k] = {});
   if (!o.p) {
-    const hn = norm(ch(h)), L = (o.c && byColl[hn + '|' + o.c]) || byHouse[hn];
+    const hn = norm(ch(h)), lk = lineKey(hn, n), LL = lk && byLine[lk] && byLine[lk].length >= 2 ? byLine[lk] : null, L = (o.c && byColl[hn + '|' + o.c]) || LL || byHouse[hn];
     if (L && L.length) { o.p = round5(med(L)); o.pe = 1; est++; }
   }
   cnt++;

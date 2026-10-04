@@ -1614,7 +1614,7 @@
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Inspirations</h2><span class="mono">${PLS.length} univers</span></header>
         <p class="plintro">Un personnage, une ville, un instant, une envie. Chaque liste a son décor, sa culture et ses accords.</p>
-        <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Liste du jour</span><b>${esc(day.t)}</b><em>${esc(plDesc(day))}</em></span></button>
+        <button type="button" class="plhero" data-pl="${day.id}">${plCover(day, true)}<span class="plhi"><span class="mono">Liste du jour</span><b>${esc(day.t)}</b><em>${tx(plDesc(day))}</em></span></button>
         <div class="chips plsecs"><button class="chip ${PL.sec ? '' : 'on'}" data-psec="">Tout</button>${(window.PL_SECTIONS || []).map((s) => `<button class="chip ${PL.sec === s ? 'on' : ''}" data-psec="${esc(s)}">${esc(s)}</button>`).join('')}</div>
       </section>
       ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)).sort((a, b) => (b.top ? 1 : 0) - (a.top ? 1 : 0)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
@@ -1644,12 +1644,12 @@
         <button type="button" class="ghost plback" id="plback">← Inspirations</button>
         ${plCover(p, true)}
         <div><p class="mono">${esc(p.secs.join(' · '))}</p><h1 class="plh">${esc(p.t)}</h1></div>
-        ${p.d ? `<p class="pld">${esc(p.d)}</p>` : ''}
+        ${p.d ? `<p class="pld">${tx(p.d)}</p>` : ''}
         <p class="mono plmeta">${p.ps.length} parfums · ${st.n} dans la base${st.mine ? ' · ' + st.mine + ' chez toi' : ''}</p>
         ${accords.length || notes.length ? `<div><p class="mono">L'ADN olfactif</p><div class="chips" style="margin-top:8px">${accords.map((a) => `<button type="button" class="chip on" data-adn="a:${esc(a)}">${esc(a)}</button>`).join('')}${notes.map((n) => `<button type="button" class="chip" data-adn="n:${esc(n)}">${esc(n)}</button>`).join('')}</div></div>` : ''}
         <div class="row"><button class="cta" id="plshuf"><span>Un au hasard</span></button><button class="ghost" id="plwish">Tout en wishlist</button></div>
-        ${(p.doc || []).map((d) => `<div class="pldoc"><p>${esc(d.t)}</p>${d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener noreferrer">Source : ${esc(d.s)}</a>` : ''}</div>`).join('')}
-        <div class="plist">${p.ps.map((x, i) => (p.grp && plGrpAt(p, i) >= 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[plGrpAt(p, i)].t)}</p>${p.grp[plGrpAt(p, i)].d ? `<p class="pld">${esc(p.grp[plGrpAt(p, i)].d)}</p>` : ''}</div>` : '') + row(x, i)).join('')}</div>
+        ${(p.doc || []).map((d) => `<div class="pldoc"><p>${tx(d.t)}</p>${d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener noreferrer">Source ${esc(d.s)}</a>` : ''}</div>`).join('')}
+        <div class="plist">${p.ps.map((x, i) => (p.grp && plGrpAt(p, i) >= 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[plGrpAt(p, i)].t)}</p>${p.grp[plGrpAt(p, i)].d ? `<p class="pld">${tx(p.grp[plGrpAt(p, i)].d)}</p>` : ''}</div>` : '') + row(x, i)).join('')}</div>
         ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
       </section>`;
     $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; render(); } else goNeedText(v); }));
