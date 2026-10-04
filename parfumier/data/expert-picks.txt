@@ -1,5 +1,5 @@
 # Sélection d'experts (Théo) — elle prime sur les sélections faites par IA. Format : thème|Maison|Parfum (noms de la base)
-chaleur|Guerlain|Cologne Forte
+chaleur|Guerlain|L'Homme Idéal Cologne Forte
 chaleur|Louis Vuitton|Imagination
 chaleur|Une Nuit Nomade|Nothing but Sea and Sky
 chaleur|Place de la Rêverie|Passion Riviera
@@ -40,7 +40,8 @@ clean|Majouri|Imperial Vanilla
 niche-petit-prix|The Different Company|Red Burning Night
 niche-petit-prix|Maison Siraj|Élixir d'Amande Extrait
 niche-petit-prix|Une Nuit Nomade|Sugar Leather
-niche-petit-prix|Maison Unika|Oud Osmanthus Tonka Sesame
+niche-petit-prix|Maison Unika|Oud Osmanthus
+niche-petit-prix|Maison Unika|Tonka Sesame
 niche-petit-prix|Carner Barcelona|Tennis Club
 niche-petit-prix|Carner Barcelona|Tardes
 niche-petit-prix|Carner Barcelona|Cuirs
@@ -73,7 +74,7 @@ daily|Louis Vuitton|Meteore
 daily|Place de la Rêverie|Santal de Paris
 daily|Maison Francis Kurkdjian|Gentle Fluidity Gold
 signature|Ex Nihilo|Brompton Immortals
-bateman|Yves Saint Laurent|Pour Homme
+bateman|Yves Saint Laurent|Y EDP
 bateman|Caron|Pour un Homme
 bateman|Dior|New Look
 bateman|Comme des Garçons|Zero

@@ -2130,7 +2130,7 @@ first: 1
 ## NEW Sous la chaleur | Moments
 d: Trente-cinq degrés à l'ombre, la peau qui colle, la ville qui fond. Les parfums que les experts portent quand il fait une chaleur énorme.
 pal: ffb400,ff6b35,fff1c8,rays
-- Guerlain Cologne Forte | Choix d'experts pour une chaleur énorme.
+- Guerlain L'Homme Idéal Cologne Forte | Choix d'experts pour une chaleur énorme.
 - Louis Vuitton Imagination | Choix d'experts pour une chaleur énorme.
 - Une Nuit Nomade Nothing but Sea and Sky | Choix d'experts pour une chaleur énorme.
 - Place de la Rêverie Passion Riviera | Choix d'experts pour une chaleur énorme.
@@ -2145,7 +2145,8 @@ pal: 2a3a2a,6a8a5a,efe6cf,dots
 - The Different Company Red Burning Night | Choix d'experts : de la niche à prix doux.
 - Maison Siraj Élixir d'Amande Extrait | Choix d'experts : de la niche à prix doux.
 - Une Nuit Nomade Sugar Leather | Choix d'experts : de la niche à prix doux.
-- Maison Unika Oud Osmanthus Tonka Sesame | Choix d'experts : de la niche à prix doux.
+- Maison Unika Oud Osmanthus | Choix d'experts : de la niche à prix doux.
+- Maison Unika Tonka Sesame | Choix d'experts : de la niche à prix doux.
 - Carner Barcelona Tennis Club | Choix d'experts : de la niche à prix doux.
 - Carner Barcelona Tardes | Choix d'experts : de la niche à prix doux.
 - Carner Barcelona Cuirs | Choix d'experts : de la niche à prix doux.
@@ -2236,7 +2237,7 @@ pal: e8e4d8,8a9a8a,2a2a2a,grid
 + Ex Nihilo Brompton Immortals | Choix d'experts : un parfum signature.
 
 ## Patrick Bateman
-+ Yves Saint Laurent Pour Homme | Le costume bien coupé : choix d'experts.
++ Yves Saint Laurent Y EDP | Le costume bien coupé : choix d'experts.
 + Caron Pour un Homme | Le costume bien coupé : choix d'experts.
 + Dior New Look | Le costume bien coupé : choix d'experts.
 + Comme des Garçons Zero | Le costume bien coupé : choix d'experts.
@@ -2755,3 +2756,199 @@ x Givenchy Malachite
 
 ## Wedding Guest
 + Ella K Lettre de Pushkar | Rose, fleur d'oranger et vanille : un oriental élégant pour une cérémonie en soirée.
+
+## Tokyo
+@ Homme
+- Contes de Parfums Tokyo | Le hanami de 2019 : cerisiers en fleur, thé bergamote.
+- Comme des Garçons Hinoki | Le cyprès des temples shinto.
+- Aesop Hwyl | Une forêt dense après la pluie.
+- Diptyque Tam Dao | Le santal des temples bouddhistes.
+- Comme des Garçons Wonderwood | L'architecture de Kengo Kuma.
+- Le Labo Gaiac 10 | Le comptoir d'un café de Daikanyama à minuit.
+- Byredo Blanche | Un appartement minimaliste à Minami-Aoyama.
+- Nishane Wulong Cha | Un kissaten au sous-sol de Ginza.
+- Maison Crivelli Hibiscus Mahajád | Harajuku, Takeshita Street.
+@ Femme
+- Contes de Parfums Tokyo | Cerisier en fleur, thé bergamote.
+- Diptyque Fleur de Peau | Le linge de coton frais d'un hôtel de luxe.
+- Aesop Tacit | Le jardin zen de Ryoanji.
+- Maison Margiela Flower Market | Le marché aux fleurs de Tsukiji à 6h.
+- Comme des Garçons 2 | Un parfum de directrice artistique.
+- Byredo Bal d'Afrique | La Parisienne qui apporte sa lumière.
+- Nishane Wulong Cha | La cérémonie du thé revisitée.
+- Le Labo Thé Matcha 26 | Un salon de thé de Nakameguro.
+- Maison Crivelli Fleur Diamantine | Le contraste d'une ville cosmopolite : un floral lumineux, éclat de verre et de lumière.
+
+## Dubai
+@ Homme
+- Contes de Parfums Dubai | Créé par Anne Flipo après un voyage à Dubai : dattes, safran, vanille.
+- Maison Francis Kurkdjian Baccarat Rouge 540 | Dans l'air de chaque hôtel cinq étoiles.
+- Maison Francis Kurkdjian Oud Satin Mood | L'oud du Golfe, interprété avec précision française.
+- Amouage Interlude Man | Amouage est né à Oman : le voyage en Orient.
+- Xerjoff Alexandria II | Une ville de convergences.
+- Initio Oud for Greatness | Dubai est une ville d'ambition.
+- Maison Francis Kurkdjian Oud | L'oud sans détour.
+- Roja Parfums Enigma | Depuis le 148ème étage du Burj Khalifa.
+- Sospiro Erba Pura | La lumière aveuglante de Dubai.
+- Parfums de Marly Layton | Un incontournable des perfume counters.
+- Initio Side Effect | Tout est plus grand, plus rapide, plus intense.
+- Kilian Smoking Hot | Le tabac épicé qui accompagne les soirées de tour en rooftop.
+- Ella K Lettre de Pushkar | Épices et ambre : l'oriental de nuit, élégant et ample.
+- Oman Luxury Khanjar | L'emblème de la maison omanaise : ambré, épicé, royal, avec son poignard sur le flacon.
+- Oman Luxury Hommage 1744 | Agrumes, framboise, oud et encens : un oud très civilisé pour dîner en tenue.
+@ Femme
+- Contes de Parfums Dubai | Sucré, chaud, majestueux.
+- Maison Francis Kurkdjian Baccarat Rouge 540 Extrait | Dubai mérite l'extrait : plus profond, plus long.
+- Amouage Guidance | Moderne et riche.
+- Maison Francis Kurkdjian Grand Soir | Dîner au Nobu : tout est spectaculaire.
+- Xerjoff Alexandria II | Cinq robes pour cinq dîners au Burj Al Arab.
+- Parfums de Marly Delina Exclusif | Partout, et pour cause.
+- Kilian Love, Don't Be Shy | Une ville qui assume ses désirs.
+- Roja Parfums Enigma | Cache autant qu'il révèle.
+- Initio Oud for Greatness | Une note masculine, portée mieux que quiconque.
+- Maison Crivelli Oud Maracujá | L'oud tempéré par la douceur tropicale.
+- Kilian Smoking Hot | Chaude, épicée, impossible à ignorer : un sillage de suite royale.
+- Ella K Lettre de Pushkar | Une opulence orientale : safran, rose, vanille et cyprès, signée Ella K.
+- Oman Luxury Mariya | Floral blanc opulent : la féminité radieuse d'une grande dame du Golfe.
+- Oman Luxury Angham | Une symphonie vanillée et épicée, enveloppante et addictive.
+
+## Marrakech
+@ Homme
+- Contes de Parfums Marrakesh | Rose de Damas, safran, oud : la médina vue d'un riad.
+- Serge Lutens Ambre Sultan | Les marchés d'épices de la médina.
+- Maison Crivelli Oud Maracujá | Un oud lumineux face à la chaleur.
+- Maison Francis Kurkdjian Oud Satin Mood | Le palais intérieur du riad.
+- Memo Paris African Leather | Tannerie, épices, bois.
+- Tom Ford Oud Wood | Un oriental lourd qui ne devient jamais vulgaire.
+- Xerjoff Alexandria II | La Mamounia vue du jardin.
+- Parfum d'Empire Ambre Russe | Le souvenir d'un caravansérail.
+- Kilian Straight to Heaven | Les jardins cachés après minuit.
+- Amouage Interlude Man | Les souks à l'heure du muezzin.
+- Kilian Smoking Hot | Cannelle, tabac et cuir chaud : le souk à l'heure où les lanternes s'allument.
+- Ella K Lettre de Pushkar | Safran, noix de muscade et vanille : une oriental-ambrée qui s'impose sans bruit.
+- Oman Luxury Caden | Safran, cardamome et vanille cuirée : la chaleur d'un souk à la nuit tombée.
+@ Femme
+- Contes de Parfums Marrakesh | Le jardin secret du palais.
+- Serge Lutens Fleurs d'Oranger | Serge Lutens vit à Marrakech.
+- Maison Francis Kurkdjian Oud Satin Mood | Elle transforme l'espace.
+- Amouage Epic Woman | Le coucher de soleil sur les remparts.
+- Memo Paris Inlé | Un patio, un livre de Driss Chraïbi.
+- Maison Crivelli Oud Maracujá | La terrasse du restaurant au coucher du soleil.
+- Parfum d'Empire Wazamba | Un encens pur : les hammams.
+- Diptyque Eau Duelle | Le thé à la menthe, mais quelque chose de plus intéressant.
+- Kilian Love, Don't Be Shy | La fleur d'oranger marocaine.
+- Kilian Smoking Hot | Épices et vanille fumée : les ruelles de la médina au coucher du soleil.
+- Ella K Ghibli | Un voyage sensoriel, chaud et poétique.
+- Ella K Lettre de Pushkar | Safran, cannelle, rose et patchouli : les épices et les roses d'un soir à Marrakech.
+- Oman Luxury Angham | Épices, vanille et bois : le riad aux lanternes allumées.
+
+## Les Globe-trotters
+@ Homme
+- Comme des Garçons Series 3 Incense: Kyoto | Chaque voyage a un parfum : Kyoto pour le Japon.
+- Byredo Gypsy Water | Nomade par essence.
+- Aesop Hwyl | La forêt japonaise.
+- Creed Virgin Island Water | Les Caraïbes en flacon.
+- Le Labo Bergamote 22 | Le parfum des villes Le Labo.
+- Memo Paris Inlé | Chaque Memo est un voyage documenté.
+- DS & Durga Radio Bombay | Il ramène des sons autant que des objets.
+- Diptyque Philosykos | « Ami du figuier » en grec : la Grèce.
+- Maison Margiela When the Rain Stops | Il pleut pareil à Tokyo, Lagos et Paris.
+- Xerjoff 40 Knots | La traversée à haute vitesse.
+- Atelier des Ors Nuda Veritas | L'or comme matière première.
+- Parfum d'Empire Wazamba | L'encens des routes de la soie.
+- Creed Silver Mountain Water | L'eau glaciaire du bout du monde : pure, minérale, sans mémoire.
+- Comme des Garçons Concrete | La roche volcanique noire sous la neige.
+- DS & Durga Concrete After Lightning | Les tempêtes du passage de Drake.
+- Oman Luxury Voyage | Bergamote, poivre rose et gingembre sur encens et patchouli : le baroudeur chic.
+@ Femme
+- Hermès Un Jardin Sur Le Nil | L'Égypte d'Hermès.
+- Jo Malone Wood Sage & Sea Salt | Les falaises anglaises ou n'importe quelle côte.
+- Tom Ford Soleil Blanc | La terrasse de l'hôtel à Positano.
+- Byredo Mojave Ghost | Le désert américain vu par un Suédois.
+- Diptyque Eau Rose | La rose est universelle.
+- Acqua di Parma Fico di Amalfi | La côte amalfitaine.
+- Maison Margiela Beach Walk | La plage peut être partout.
+- Le Labo Thé Matcha 26 | Prolonger le voyage au Japon sur la peau.
+- Maison Crivelli Hibiscus Mahajád | Mahajád veut dire « voyage » en arabe.
+- Byredo Sundazed | La même légèreté nomade.
+- Demeter Snow | Neige fraîche, air arctique : rien d'autre n'est nécessaire.
+- Frédéric Malle L'Eau d'Hiver | La lumière d'été polaire : 22h et le soleil ne se couche pas.
+- Profumum Roma Acqua di Sale | Le sel de l'eau la plus froide du monde.
+
+## Quiet Luxury
+@ Homme | Costume sans marque visible. Montre discrète. Il parle doucement. Tout le monde l'écoute.
+- Le Labo Another 13 | On ne le reconnaît pas, on le cherche.
+- Diptyque Tam Dao | La sobriété absolue du connaisseur discret.
+- Dior Bois d'Argent | Ceux qui le connaissent savent.
+- Chanel Sycomore | Il n'a pas besoin du logo.
+- Matière Première Parisian Musc | La maison la moins connue : c'est le point.
+- Hermès H24 | Aucune ostentation.
+- Ormonde Jayne Ormonde Man | Personne ne le connaît.
+- Aesop Hwyl | Déjà dans le registre quiet luxury.
+- Frédéric Malle L'Eau d'Hiver | Personne ne connaît son nom, tout le monde demande la référence.
+- Marc-Antoine Barrois Ganymede | Ultra-confidentielle : le quiet luxury pur.
+- Diptyque Orphéon | Discret, complexe, historique.
+- Serge Lutens Gris Clair | Ni chaud ni froid : le choix de celui qui évite les extrêmes.
+- Comme des Garçons 2 | Conceptuel et silencieux.
+- Diptyque Vetyverio | Le vétiver de référence : racine propre et terreuse.
+- Storie Veneziane Mica d'Oro I | Rhum, chantilly, vanille : un luxe doré et feutré, jamais criard.
+@ Femme | Elle porte du cachemire beige. Son sac est discret et coûte trois fois le vôtre. Elle n'a jamais besoin qu'on le sache.
+- Byredo Blanche | La pureté incarnée.
+- Frédéric Malle L'Eau d'Hiver | Hors du temps, discret : elle le porte depuis dix ans.
+- Dior Bois d'Argent | Pour celles qui n'ont pas besoin d'impressionner.
+- Diptyque Tam Dao | Une galerie d'art vide en parfum.
+- Chanel Beige | Le déjeuner entre femmes, élégant sans effort.
+- Matière Première Parisian Musc | Le silence olfactif.
+- Le Labo Another 13 | Comme une seconde peau.
+- Hermès Caleche | Hérité de sa mère, ou elle veut que vous le croyiez.
+- Marc-Antoine Barrois Ganymede | Une maison que personne ne connaît encore.
+- Serge Lutens Gris Clair | Le gris plutôt que le noir ou le blanc.
+- Diptyque Orphéon | Chypré poudré discret.
+- Diptyque Fleur de Peau | Invisible et inoubliable.
+- Prada Infusion d'Iris | Le minimalisme parfumé.
+- Chanel N°19 | Vert, froid, aristocratique.
+- Storie Veneziane Mica d'Oro I | Rhum, chantilly, vanille : un luxe doré et feutré, jamais criard.
+
+## It Girl
++ Storie Veneziane Mica d'Oro I | Rhum, chantilly, vanille : le gourmand doré que tout le monde veut sentir.
+
+## It Boy
++ Storie Veneziane Mica d'Oro I | Une fragrance mixte gourmande et dorée : la signature qu'on remarque sans la reconnaître.
+
+## Russian Baddie
++ Storie Veneziane Mica d'Oro I | Rhum, chantilly, vanille : l'éclat d'or d'un bal masqué vénitien.
++ Oman Luxury Dejan | Cuiré, sombre, ténébreux : sans compromis.
+
+## Le Qatari
++ Oman Luxury Khanjar | Le poignard omanais sur le flacon, l'ambré épicé dans le sillage : cohérence totale.
++ Oman Luxury Royal Incense | Un hommage magistral à l'encens omanais, mystique et solennel.
++ Oman Luxury Dejan | Cuiré, sombre et animalique : l'autorité sans un mot.
+
+## Je veux sentir opulent
++ Oman Luxury Khanjar | Un pilier de la haute parfumerie omanaise : opulence royale, ambré et épicé.
++ Oman Luxury Angham | Vanillé, épicé, boisé : une symphonie qui prend toute la pièce.
++ Oman Luxury Paramour 91 | Rose, cuir, oud et caramel : une complexité folle, en édition ultra-limitée.
++ Oman Luxury Zafar | Un oud animal et ténébreux pour connaisseurs, d'une profondeur abyssale.
+
+## Automne Cozy
++ Oman Luxury Caden | Une vanille cuirée et épicée, chaude et enveloppante.
++ Oman Luxury Angham | Vanille, épices et bois : les soirs frais, en intérieur.
+
+## Chic Winter
++ Oman Luxury Caden | Vanille cuirée, safran et daim : la chaleur sous le manteau.
+
+## Garden Party
++ Oman Luxury Flowerlush | Un floral vert, frais et pétillant : une explosion de fleurs fraîches.
+
+## Daily
++ Oman Luxury Belfiore | Pêche, osmanthus et poudre : une douceur veloutée et lumineuse au quotidien.
+
+## Sunday Morning
++ Oman Luxury Serenity | Aromatique et boisé, doux : une bulle de quiétude, un parfum de spa de luxe.
+
+## Wedding Guest
++ Oman Luxury Mariya | Floral blanc opulent : la grande dame de la cérémonie.
+
+## Niche à petit prix
+x Place de la Rêverie Passion Riviera
+x Place de la Rêverie Santal de Paris

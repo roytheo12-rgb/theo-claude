@@ -76,16 +76,10 @@ Floraïku|Haiku in the Dark|EDP
 Floraïku|The Wandering Minstrel|EDP
 Giardini di Toscana|Giglio di Firenze|EDP
 Houbigant|Fougère Nobile|EDP
-Les Bains Guerbois|Brume de Soie|EDP
-Maison Crivelli|Fleur Nakheel|EDP
 Maison Crivelli|Iris Malhikân|EDP
 Marc-Antoine Barrois|B683 Extrait|EDP
 Marc-Antoine Barrois|Ganymède Extrait|EDP
 Memo Paris|Siwa|EDP
-Memo Paris|Île de Ré|EDP
-Oman Luxury|Al Qasaid|EDP
-Place de la Rêverie|Jardin de Minuit|EDP
-Place de la Rêverie|Trocadéro|EDP
 Rosendo Mateu|No. 4|EDP
 Santa Maria Novella|Rosa|EDP
 Dries Van Noten|Dries Van Noten|EDP
@@ -111,7 +105,6 @@ Phaedon|Thé Vert|EDP
 Pharrell Williams|Girl|EDP
 Kilian|Sparkling Royal|EDP
 # Sélection d'experts : fiches à créer (sans notes inventées)
-Guerlain|Cologne Forte|COL
 Ex Nihilo|Blue Talisman Extrait|EXT
 Armani|Iris Bleu|EDP
 Guerlain|Aqua Allegoria Forte Mandarine Basilic|EDT
@@ -120,7 +113,6 @@ Corner Barcelona|Isla Bohemia|EDP
 Majouri|Imperial Vanilla|EDP
 The Different Company|Red Burning Night|EDP
 Maison Siraj|Élixir d'Amande Extrait|EXT
-Maison Unika|Oud Osmanthus Tonka Sesame|EDP
 Carner Barcelona|Tardes|EDP
 Carner Barcelona|Cuirs|EDP
 Carner Barcelona|El Born|EDP
@@ -129,3 +121,19 @@ Maison Sensara|Souvenir de Oummi|EDP
 Yves Saint Laurent|Pour Homme|EDT
 Storie Veneziane|Mica d'Oro I|Extrait
 Floraïku|Morning Mist|EDP
+Maison Unika|Oud Osmanthus|EDP
+Maison Unika|Tonka Sesame|EDP
+Guerlain|L'Homme Idéal Cologne Forte|EDP
+Oman Luxury|Hommage 1744 Limited Edition|EDP
+Oman Luxury|Paramour 91|EDP
+Oman Luxury|Belfiore|EDP
+Oman Luxury|Flowerlush|EDP
+Oman Luxury|Serenity|EDP
+Oman Luxury|Voyage|EDP
+Oman Luxury|Wanderlust 2023 Edition|EDP
+Oman Luxury|Wani|EDP
+Oman Luxury|Angham|EDP
+Oman Luxury|Overdose|EDP
+Oman Luxury|Wasla|EDP
+Oman Luxury|Dejan|EDP
+Oman Luxury|Mariya|EDP

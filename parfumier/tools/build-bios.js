@@ -14,9 +14,12 @@ const by = new Map();
   by.set(k, o);
 }));
 const out = {};
+const extra = new Map();      // data/bios-extra.txt : bios écrites à la main, placées avant les phrases de playlists
+try { fs.readFileSync(path.join(root, 'data', 'bios-extra.txt'), 'utf8').split('\n').forEach((l) => { if (!l.trim() || l.startsWith('#')) return; const [h, n, ...t] = l.split('|'); extra.set(h.trim() + '|' + n.trim(), t.join('|').trim()); }); } catch (e) { /* facultatif */ }
+for (const k of extra.keys()) if (!by.has(k)) by.set(k, { w: [], pl: [] });
 for (const [k, o] of by) {
-  const parts = []; let len = 0;
-  for (const t of o.w) { if (parts.length >= 4 || len + t.length > 460) break; parts.push(t); len += t.length + 1; }
+  const parts = []; let len = 0; if (extra.has(k)) { parts.push(extra.get(k)); len = extra.get(k).length; }
+  for (const t of (extra.has(k) ? [] : o.w)) { if (parts.length >= 4 || len + t.length > (extra.has(k) ? 1100 : 460)) break; parts.push(t); len += t.length + 1; }
   if (parts.length) out[k] = [parts.join(' '), o.pl.slice(0, 6)];
 }
 fs.writeFileSync(path.join(root, 'bios.js'), 'window.BIOS = ' + JSON.stringify(out) + ';\n');

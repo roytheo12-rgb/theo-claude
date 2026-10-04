@@ -1,7 +1,7 @@
 """Photos déposées dans incoming/ sous la forme Maison_Nom_du_parfum.ext (fond uni) : détourage, rattachement à la fiche, v2/img/p/<maison>-<nom>.webp et data/imgshots.json.
 Le nom de fichier perd les accents (GitHub) : la comparaison se fait sur les lettres ASCII seules. Cible : les parfums des listes Inspirations (data/parfums-sans-image.md) et toute fiche de la base.
 Usage : python3 tools/build-incoming-named.py"""
-import json, re, pathlib, subprocess, unicodedata
+import json, re, pathlib, subprocess, unicodedata, sys
 import numpy as np
 from scipy import ndimage
 from PIL import Image
@@ -45,6 +45,7 @@ sh = root / 'data/imgshots.json'; shots = json.loads(sh.read_text(encoding='utf-
 done, lost, bad = [], [], []
 for f in sorted((root / 'incoming').iterdir()):
     if f.suffix.lower() not in ('.jpg', '.jpeg', '.png', '.webp', '.avif') or re.match(r'^\d+\.', f.name) or f.name.startswith('Capture'): continue
+    if sys.argv[1:] and not any(a in f.stem for a in sys.argv[1:]): continue      # lancement partiel : python3 tools/build-incoming-named.py 062_ ella-k
     t = targets.get(asc(MAP[f.stem][0] + ' ' + MAP[f.stem][1])) if f.stem in MAP else targets.get(asc(f.stem))
     if not t: lost.append(f.name); continue
     if f.stem in SKIP: bad.append(f.name + ' (blanc sur blanc)'); continue

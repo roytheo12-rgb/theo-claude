@@ -158,12 +158,10 @@ Clive Christian|Cosmos Flower|gourmand|u|pomme;citron;orange;poivre rose;cerise;
 Amouage|Oud Ulya|boisé|u|oud|vanille|bouleau|3|4|5|0
 Xerjoff|Oud Luban|ambré|u|poivre noir;rose|fleur d'oranger|oud;cèdre;vétiver;encens|3|4|4|0
 Clive Christian|Rock Rose|épicé|u|orange;bergamote;poivre noir;cassis;néroli;elemi;menthe;pamplemousse;cardamome|rose;lavande;myrrhe;ambre;sauge;coriandre;lentisque;jasmin;noix de muscade|patchouli;ambre;cèdre;santal;benjoin;cacao;musc;safran;vanille|4|4|4|0
-Oman Luxury|Dejan|boisé|u|rose|labdanum;cypriol|oud;ambre;musc|5|5|5|0
 Amouage|Vanilla Barka|floral|u|vanille|tonka|encens|5|5|5|0
 Xerjoff|Java Blossom|ambré|u|bergamote|fleur d'oranger;encens;tubéreuse|oud;vétiver;santal|3|4|4|0
 Clive Christian|E Cashmere Musk|agrumes|u|baies roses;bergamote;gingembre;poivre noir;ambrette;orange sanguine|cashmeran;notes fleuries;magnolia;jasmin|gaïac;vétiver;bois;musc;ambroxan;cèdre;mousse|2|3|3|0
 Amouage|Rose Aqor|floral|u|rose|encens|santal|5|5|4|0
-Oman Luxury|Mariya|floral|u|fleur d'oranger;coriandre;mandarine;bergamote|rose;géranium;whisky|café;caramel;vanille;patchouli;description;afficher les ingrédients;fleuri, poudré;faites vous livrer depuis;uk|3|3|3|0
 Memoirs of a Perfume Collector|Tales From Zanzibar Golden Hour|ambré|u|citron vert;menthe;mandarine;poivre rose|noix de coco;goyave;vétiver;néroli|musc;mousse;ambre;fruits confits;ambre gris|3|3|3|0
 Xerjoff|Zefiro|ambré|u|elemi;bergamote;vin;davana|oeillet;cardamome;cannelle;iris|encens;oud;ambre;miel|3|4|5|0
 Clive Christian|V Amber Fougere Masculine|aromatique|u|elemi;pin baumier;bergamote|poivre noir;iris;cèdre;lavande;poivre rose|encens;ambre;vétiver;description;amber fougère –;afficher les ingrédients;fougère, ambré;faites vous livrer depuis|3|3|3|0

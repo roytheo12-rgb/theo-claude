@@ -1,0 +1,23 @@
+# Oman Luxury (dossier fourni par Théo, oct. 2026) et fiches ajoutées à la main. Format : Maison|Parfum|famille|genre|tête|cœur|fond|projection|tenue|sillage|prix
+Oman Luxury|Hommage 1744|boisé|u|pomelo;framboise;bergamote;citron|oud;fleurs blanches;ambroxan|encens;ambre;bois de cachemire;patchouli|4|4|4|0
+Oman Luxury|Hommage 1744 Limited Edition|boisé|u|pomelo;framboise;bergamote;citron|oud;fleurs blanches;ambroxan|encens;ambre;bois de cachemire;patchouli|4|4|4|0
+Oman Luxury|Paramour 91|cuir|u|bergamote;pamplemousse;safran;framboise|rose;jasmin;lys;cannelle;osmanthus|cuir;oud;caramel;vanille;ambre;bois précieux|5|5|5|0
+Oman Luxury|Paramour|épicé|u|rose|cuir;résines|ambre|5|4|4|0
+Oman Luxury|Belfiore|fruité|u|pêche|osmanthus;poudre|bois|3|3|3|0
+Oman Luxury|Caden|ambré|u|safran;cardamome;huile de cade;notes alcoolisées|daim;benjoin;café|vanille;fève tonka;amberwood;ciste|4|5|5|0
+Oman Luxury|Flowerlush|vert|u|notes vertes|fleurs fraîches|musc|3|3|3|0
+Oman Luxury|Oud Aquilaria|oud|u|épices|gourmand|oud;bois|4|5|4|0
+Oman Luxury|Overdose|boisé|u|épices|ambre|bois|5|4|5|0
+Oman Luxury|Royal Incense|ambré|u|épices|encens;résines|baume|4|5|4|0
+Oman Luxury|Serenity|aromatique|u|aromatiques|bois doux|musc|2|3|2|0
+Oman Luxury|Voyage|épicé|u|bergamote;poivre rose;gingembre|épices|encens;patchouli|4|4|4|215
+Oman Luxury|Wanderlust 2023 Edition|boisé|u|épices|bois|ambre|3|3|3|0
+Oman Luxury|Wani|fruité|u|fruits|épices|cuir;bois|3|3|3|0
+Oman Luxury|Angham|ambré|u|épices|vanille|bois|5|5|5|0
+Oman Luxury|Dejan|cuir|u|rose|labdanum;cypriol|oud;ambre;musc;cuir|5|5|5|0
+Oman Luxury|Khanjar|ambré|u|épices|ambre|résines|5|5|5|0
+Oman Luxury|Mariya|floral|f|fleur d'oranger;coriandre;mandarine;bergamote|rose;géranium;fleurs blanches|vanille;patchouli;café;caramel|4|4|5|0
+Oman Luxury|Nasaj|floral|u|pamplemousse;mandarine;cardamome;poire;poivre rose|jasmin;gardénia;lys;tubéreuse;magnolia;néroli|fève tonka;santal;encens;cypriol;patchouli;cuir saffiano|3|4|3|0
+Oman Luxury|Wasla|floral|u|fleurs|ambre|bois|3|3|3|0
+Oman Luxury|Zafar|oud|u|épices|oud|animal;terre|5|5|5|0
+Guerlain|L'Homme Idéal Cologne Forte|aromatique|m|amande;pamplemousse;bergamote;poivre rose|encens;néroli;bois de gaïac;fruits secs|vétiver;cuir;patchouli;ciste|4|4|4|0
