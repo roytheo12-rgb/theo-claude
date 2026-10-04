@@ -1,0 +1,39 @@
+# Fichiers sans maison dans incoming/ (visuels officiels, un fichier = un parfum) : Nom du fichier sans extension|Maison|Parfum
+Iris Bleu|Armani|Iris Bleu
+Vent Vert|Balmain|Vent Vert
+Tardes|Carner Barcelona|Tardes
+Cuirs|Carner Barcelona|Cuirs
+El Born|Carner Barcelona|El Born
+D600|Carner Barcelona|D600
+Isla Bohemia|Corner Barcelona|Isla Bohemia
+Yatagan|Caron|Yatagan
+Fleurs de Rocaille|Caron|Fleurs de Rocaille
+L|Clive Christian|L
+No. 1 Masculine|Clive Christian|No. 1 Masculine
+Fleurissimo|Creed|Fleurissimo
+I Dont Know What|DS & Durga|I Don't Know What
+Debaser|DS & Durga|Debaser
+Blue Talisman Extrait|Ex Nihilo|Blue Talisman Extrait
+Bois dHiver|Ex Nihilo|Bois d'Hiver
+Citizen X|Ex Nihilo|Citizen X
+Cologne 352|Ex Nihilo|Cologne 352
+Cuir Celeste|Ex Nihilo|Cuir Celeste Par Mathieu Cesar
+Devil Tender|Ex Nihilo|Devil Tender
+Love Shot|Ex Nihilo|Love Shot
+Viper Green|Ex Nihilo|Viper Green
+Gentleman Parfum|Givenchy|Gentleman Parfum
+Aqua Allegoria Forte Mandarine Basilic|Guerlain|Aqua Allegoria Forte Mandarine Basilic
+Nirmal|Laboratorio Olfattivo|Nirmal
+Kashnoir|Laboratorio Olfattivo|Kashnoir
+Vanagloria|Laboratorio Olfattivo|Vanagloria
+Rose Struck|Liis|Rose Struck
+Flower Market|Maison Margiela|Flower Market
+Esprit de Contradiction|Maison Matine|Esprit de Contradiction
+Elixir dAmande Extrait|Maison Siraj|Élixir d'Amande Extrait
+Imperial Vanilla|Majouri|Imperial Vanilla
+Tabac Tabou|Parfum d'Empire|Tabac Tabou
+Viandante|Profumo di Firenze|Viandante
+Red Burning Night|The Different Company|Red Burning Night
+Comme une Evidence|Yves Rocher|Comme une Evidence
+MICA D'ORO I|Storie Veneziane|Mica d'Oro I
+Vert Malachite|Armani|Vert Malachite
