@@ -79,7 +79,7 @@ gh4|Amy Winehouse
 gh5|Jay-Z
 gh6|Kanye West
 gh7|-
-gh8|Howard Ratner
+gh8|-
 gh9|Les Affranchis
 gh10|Kendall Roy
 gh11|Logan Roy
@@ -87,8 +87,8 @@ gh12|Intouchables
 gh13|Aurores boréales
 gh14|Le Footeux
 gh15|L'Élégant
-gh16|L'Artiste
-gh17|Neuschwanstein
+gh16|Le Collectionneur
+gh17|-
 gh18|-
 gh19|Égypte
 gh20|Antarctique
