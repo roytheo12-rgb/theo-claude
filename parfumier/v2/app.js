@@ -1321,12 +1321,6 @@
   }
   // ---------- Où acheter près de moi : carte OpenStreetMap + parfumeries autour de la position ----------
   const CITIES = 'Paris,48.857,2.352,France;Marseille,43.296,5.370,France;Lyon,45.764,4.836,France;Toulouse,43.605,1.444,France;Nice,43.710,7.262,France;Nantes,47.218,-1.554,France;Montpellier,43.611,3.877,France;Strasbourg,48.573,7.752,France;Bordeaux,44.838,-0.579,France;Lille,50.629,3.057,France;Rennes,48.117,-1.678,France;Reims,49.258,4.032,France;Le Havre,49.494,0.108,France;Saint-Étienne,45.440,4.387,France;Toulon,43.124,5.928,France;Grenoble,45.189,5.724,France;Dijon,47.322,5.041,France;Angers,47.478,-0.563,France;Nîmes,43.837,4.360,France;Clermont-Ferrand,45.777,3.087,France;Le Mans,48.006,0.199,France;Aix-en-Provence,43.530,5.447,France;Brest,48.390,-4.486,France;Tours,47.394,0.685,France;Amiens,49.894,2.296,France;Limoges,45.831,1.261,France;Metz,49.119,6.176,France;Perpignan,42.699,2.895,France;Besançon,47.238,6.024,France;Orléans,47.903,1.909,France;Rouen,49.443,1.099,France;Mulhouse,47.751,7.336,France;Caen,49.182,-0.371,France;Nancy,48.693,6.184,France;Avignon,43.949,4.806,France;Cannes,43.553,7.017,France;Antibes,43.581,7.125,France;Saint-Tropez,43.272,6.640,France;Monaco,43.738,7.425,Monaco;La Rochelle,46.160,-1.151,France;Biarritz,43.483,-1.559,France;Pau,43.295,-0.371,France;Poitiers,46.580,0.340,France;Annecy,45.899,6.129,France;Chambéry,45.565,5.921,France;Valence,44.933,4.892,France;Ajaccio,41.919,8.739,France;Bastia,42.697,9.450,France;Troyes,48.297,4.074,France;Lorient,47.748,-3.370,France;Vannes,47.658,-2.760,France;Quimper,47.996,-4.102,France;Saint-Malo,48.649,-2.026,France;Colmar,48.079,7.358,France;Versailles,48.805,2.130,France;Boulogne-Billancourt,48.835,2.240,France;Neuilly-sur-Seine,48.885,2.269,France;Saint-Denis,48.936,2.357,France;Montreuil,48.861,2.443,France;La Défense,48.892,2.236,France;Bruxelles,50.850,4.352,Belgique;Anvers,51.220,4.400,Belgique;Liège,50.633,5.567,Belgique;Genève,46.204,6.143,Suisse;Lausanne,46.520,6.633,Suisse;Zurich,47.377,8.541,Suisse;Berne,46.948,7.447,Suisse;Luxembourg,49.611,6.132,Luxembourg;Londres,51.507,-0.128,Royaume-Uni;London,51.507,-0.128,Royaume-Uni;Manchester,53.481,-2.243,Royaume-Uni;Édimbourg,55.953,-3.189,Royaume-Uni;Dublin,53.350,-6.260,Irlande;Madrid,40.417,-3.704,Espagne;Barcelone,41.385,2.173,Espagne;Valence (Espagne),39.470,-0.376,Espagne;Séville,37.389,-5.984,Espagne;Lisbonne,38.722,-9.139,Portugal;Porto,41.150,-8.611,Portugal;Rome,41.903,12.496,Italie;Milan,45.464,9.190,Italie;Florence,43.770,11.255,Italie;Venise,45.441,12.316,Italie;Naples,40.852,14.268,Italie;Turin,45.070,7.687,Italie;Berlin,52.520,13.405,Allemagne;Munich,48.137,11.575,Allemagne;Hambourg,53.551,9.994,Allemagne;Francfort,50.110,8.682,Allemagne;Cologne,50.938,6.960,Allemagne;Düsseldorf,51.227,6.774,Allemagne;Vienne,48.209,16.373,Autriche;Amsterdam,52.370,4.895,Pays-Bas;Copenhague,55.676,12.568,Danemark;Stockholm,59.329,18.069,Suède;Oslo,59.914,10.752,Norvège;Helsinki,60.170,24.938,Finlande;Varsovie,52.230,21.012,Pologne;Prague,50.075,14.438,Tchéquie;Budapest,47.498,19.040,Hongrie;Athènes,37.984,23.728,Grèce;Istanbul,41.008,28.978,Turquie;Dubaï,25.205,55.271,Émirats arabes unis;Dubai,25.205,55.271,Émirats arabes unis;Abou Dabi,24.454,54.377,Émirats arabes unis;Doha,25.285,51.531,Qatar;Riyad,24.714,46.675,Arabie saoudite;Casablanca,33.573,-7.590,Maroc;Marrakech,31.629,-7.981,Maroc;Tanger,35.759,-5.834,Maroc;Tunis,36.807,10.182,Tunisie;Alger,36.753,3.059,Algérie;Le Caire,30.044,31.236,Égypte;Dakar,14.693,-17.447,Sénégal;Abidjan,5.360,-4.008,Côte d\'Ivoire;New York,40.713,-74.006,États-Unis;Los Angeles,34.052,-118.244,États-Unis;Miami,25.762,-80.192,États-Unis;Chicago,41.878,-87.630,États-Unis;San Francisco,37.775,-122.419,États-Unis;Las Vegas,36.170,-115.140,États-Unis;Montréal,45.502,-73.567,Canada;Toronto,43.653,-79.383,Canada;Vancouver,49.283,-123.121,Canada;Québec,46.813,-71.208,Canada;Mexico,19.433,-99.133,Mexique;São Paulo,-23.551,-46.633,Brésil;Rio de Janeiro,-22.907,-43.173,Brésil;Buenos Aires,-34.604,-58.382,Argentine;Tokyo,35.690,139.692,Japon;Kyoto,35.012,135.768,Japon;Osaka,34.694,135.502,Japon;Séoul,37.567,126.978,Corée du Sud;Pékin,39.904,116.407,Chine;Shanghai,31.230,121.474,Chine;Hong Kong,22.320,114.169,Chine;Singapour,1.352,103.820,Singapour;Bangkok,13.756,100.502,Thaïlande;Mumbai,19.076,72.878,Inde;Delhi,28.614,77.209,Inde;Sydney,-33.869,151.209,Australie;Melbourne,-37.814,144.963,Australie;Saint-Pétersbourg,59.931,30.361,Russie;Moscou,55.756,37.617,Russie'.split(';').map((x) => { const a = x.split(','); return { place: a[0], lat: +a[1], lon: +a[2], sub: a[3] }; });
-  let LEAF = null;
-  const loadLeaflet = () => LEAF || (LEAF = new Promise((ok, ko) => {
-    if (window.L && window.L.map) return ok(window.L);
-    const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css'; document.head.appendChild(css);
-    const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js'; sc.onload = () => (window.L ? ok(window.L) : ko()); sc.onerror = () => { LEAF = null; ko(); }; document.head.appendChild(sc);
-  }));
   const kmBetween = (a, b, c, d) => { const r = Math.PI / 180, x = (c - a) * r, y = (d - b) * r * Math.cos(((a + c) / 2) * r); return 6371 * Math.sqrt(x * x + y * y); };
   async function fetchShops(lat, lon, rad) {
     const q = `[out:json][timeout:20];(nwr["shop"="perfumery"](around:${rad},${lat},${lon});nwr["shop"="cosmetics"]["name"~"Sephora|Nocib|Marionnaud|Douglas|Yves Rocher",i](around:${rad},${lat},${lon});nwr["shop"="department_store"]["name"~"Galeries Lafayette|Printemps|Bon March|Harrods|Selfridges|El Corte|La Rinascente|KaDeWe",i](around:${rad},${lat},${lon}););out center 80;`;
@@ -1339,64 +1333,50 @@
       return { name: t.name, kind, addr, lat: la, lon: lo, site: t.website || t['contact:website'] || '', hours: t.opening_hours || '', km: kmBetween(lat, lon, la, lo) }; })
       .filter((x) => x && !seen.has(x.name + x.lat.toFixed(4)) && seen.add(x.name + x.lat.toFixed(4))).sort((a, b) => a.km - b.km);
   }
+  const SHOP_CHAINS = [['Sephora', 'Beaucoup de choix designer, avec une sélection niche.', 'Sephora'], ['Nocibé', 'Parfumerie sélective, conseil en magasin.', 'Nocibé'], ['Marionnaud', 'Parfumerie sélective, souvent en centre-ville.', 'Marionnaud'], ['Douglas', 'Parfums et soins, grandes marques.', 'Douglas'], ['Grands magasins', 'Rayons parfum des grandes enseignes du centre-ville.', 'grand magasin parfumerie'], ['Parfumeries indépendantes', 'Le meilleur endroit pour sentir de la niche et se faire conseiller.', 'parfumerie indépendante niche'], ['Boutiques de marques', 'Les boutiques d\'une seule maison, pour tout sentir.', 'boutique parfum']];
+  const PARIS_SHOPS = [['Jovoy Paris', '4 rue de Castiglione, 75001', 'Niche et luxe, un des meilleurs choix de la capitale.'], ['Nose', '20 rue Bachaumont, 75002', 'Concept store de la niche, avec des conseillers.'], ['Officine Universelle Buly', '6 rue de Bourbon-le-Château, 75006', 'Parfumerie et apothicaire à l\'ancienne.'], ['Frédéric Malle, Éditions de Parfums', '37 rue de Grenelle, 75007', 'La boutique de la maison.'], ['Maison Francis Kurkdjian', '5 rue d\'Alger, 75001', 'La boutique de la maison.'], ['Diptyque', '34 boulevard Saint-Germain, 75005', 'La boutique historique.'], ['Le Bon Marché Rive Gauche', '24 rue de Sèvres, 75007', 'Un grand rayon parfum, niche comprise.'], ['Sephora Champs-Élysées', '70 avenue des Champs-Élysées, 75008', 'Le grand magasin de la marque.']];
   function openShopMap() {
-    let pos = S.settings.geo && S.settings.geo.lat != null ? { lat: S.settings.geo.lat, lon: S.settings.geo.lon, place: S.settings.geo.place || '' } : null, rad = 3000, map = null;
-    const pn = openSheet(`<div><h2>Où acheter près de moi</h2><p style="color:var(--muted);margin-top:6px">Les parfumeries, les enseignes beauté et les grands magasins autour de toi, sur une carte.</p></div>
-      <div class="row"><button class="cta" id="smGeo"><span>Autour de moi</span></button></div>
-      <div class="sbar"><div class="acwrap"><input type="text" id="smCity" placeholder="Ou une ville, un quartier (Lyon, Marais…)" autocomplete="off" autocapitalize="words" enterkeyhint="search" aria-label="Ville"><div class="aclist" id="smAc" hidden></div></div><button type="button" class="cta" id="smCityGo"><span>Chercher</span></button></div>
-      <div class="chips" id="smRad">${[[1000, '1 km'], [3000, '3 km'], [10000, '10 km'], [25000, '25 km']].map(([v, l]) => `<button type="button" class="chip ${v === rad ? 'on' : ''}" data-rad="${v}">${l}</button>`).join('')}</div>
-      <p class="mono" id="smMsg" style="text-transform:none;letter-spacing:0"></p>
-      <div id="smMap" class="smmap" hidden></div><div id="smList" style="display:grid;gap:10px"></div><div id="smLinks"></div>`);
+    let pos = S.settings.geo && S.settings.geo.lat != null ? { lat: S.settings.geo.lat, lon: S.settings.geo.lon, place: S.settings.geo.place || '' } : null;
+    const pn = openSheet(`<div><h2>Où acheter près de moi</h2><p style="color:var(--muted);margin-top:6px">Choisis ta ville, je te liste les enseignes et les boutiques où sentir et acheter.</p></div>
+      <div class="sbar"><div class="acwrap"><input type="text" id="smCity" placeholder="Ta ville (Tours, Lyon, Bordeaux…)" autocomplete="off" autocapitalize="words" enterkeyhint="search" aria-label="Ville"><div class="aclist" id="smAc" hidden></div></div><button type="button" class="cta" id="smCityGo"><span>Chercher</span></button></div>
+      <div class="row"><button class="ghost" id="smGeo">Autour de moi</button></div>
+      <p class="mono" id="smMsg" style="text-transform:none;letter-spacing:0"></p><div id="smList" style="display:grid;gap:14px"></div>`);
     const msg = (t) => { $('#smMsg', pn).textContent = t; };
-    const links = () => { if (!pos) { $('#smLinks', pn).innerHTML = ''; return; } const at = `@${pos.lat.toFixed(4)},${pos.lon.toFixed(4)},14z`, pl = pos.place ? encodeURIComponent(pos.place) : ''; $('#smLinks', pn).innerHTML = `<p class="mono">Ouvrir la carte</p><div class="chips"><a class="chip on" target="_blank" rel="noopener" href="https://www.google.com/maps/search/parfumerie/${at}">Parfumeries autour de ${pos.place ? esc(pos.place) : 'moi'}</a><a class="chip" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${pos.lat}&mlon=${pos.lon}#map=14/${pos.lat}/${pos.lon}">OpenStreetMap</a></div><p class="mono">Chercher aussi</p><div class="chips">${[['Parfumerie niche', 'parfumerie+niche'], ['Sephora', 'Sephora'], ['Nocibé', 'Nocib%C3%A9'], ['Marionnaud', 'Marionnaud'], ['Parfumerie', 'parfumerie']].map(([l, q]) => `<a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${q}/${at}">${l}</a>`).join('')}</div>`; };
+    const gm = (q) => `https://www.google.com/maps/search/${encodeURIComponent(q + (pos.place ? ' ' + pos.place : ''))}/@${pos.lat.toFixed(4)},${pos.lon.toFixed(4)},13z`;
+    const card = (title, sub, extra, href, label) => `<article class="card shopc"><b>${esc(title)}</b>${extra ? `<small>${esc(extra)}</small>` : ''}<p class="rd" style="margin:0">${esc(sub)}</p><div class="row"><a class="linkbtn" target="_blank" rel="noopener" href="${href}">${label}</a></div></article>`;
     async function go() {
-      if (!pos) return; links(); msg('Je cherche les boutiques autour de toi…'); $('#smList', pn).innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>';
-      let shops = [], failed = false;
-      try { shops = await fetchShops(pos.lat, pos.lon, rad); } catch (e) { failed = true; }
-      if (!$('#smList', pn)) return;
-      msg(failed ? 'La liste n\'a pas pu se charger ici. Ouvre la carte avec les boutons ci-dessous, ils marchent à coup sûr.' : shops.length ? `${shops.length} adresse${shops.length > 1 ? 's' : ''} trouvée${shops.length > 1 ? 's' : ''}${pos.place ? ' près de ' + pos.place : ''}. Vérifie les horaires avant de te déplacer.` : 'Rien trouvé dans ce rayon. Élargis-le ou lance une recherche ci-dessous.');
-      const mb = $('#smMap', pn); mb.hidden = false;
-      const dlat = rad / 111000 * 1.1, dlon = dlat / Math.max(.2, Math.cos(pos.lat * Math.PI / 180));
-      const iframe = () => { mb.innerHTML = `<iframe title="Carte" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${pos.lon - dlon},${pos.lat - dlat},${pos.lon + dlon},${pos.lat + dlat}&layer=mapnik&marker=${pos.lat},${pos.lon}"></iframe>`; };
-      try {
-        const L = await loadLeaflet(); mb.innerHTML = ''; if (map) { map.remove(); map = null; }
-        map = L.map(mb, { zoomControl: true, attributionControl: true }).setView([pos.lat, pos.lon], rad <= 1000 ? 16 : rad <= 3000 ? 14 : rad <= 10000 ? 12 : 10);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
-        L.circleMarker([pos.lat, pos.lon], { radius: 8, color: '#fff', weight: 2, fillColor: '#4a8cff', fillOpacity: 1 }).addTo(map).bindPopup('Toi');
-        shops.forEach((x, i) => { x.m = L.circleMarker([x.lat, x.lon], { radius: 8, color: '#fff', weight: 1.5, fillColor: '#b4394a', fillOpacity: 1 }).addTo(map).bindPopup(x.name); });
-        setTimeout(() => map && map.invalidateSize(), 250);
-      } catch (e) { iframe(); }
-      $('#smList', pn).innerHTML = shops.slice(0, 25).map((x, i) => `<article class="card" style="display:grid;gap:6px"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(x.name)}</b><span class="tag">${x.km < 1 ? Math.round(x.km * 1000) + ' m' : x.km.toFixed(1) + ' km'}</span></div><small style="color:var(--muted)">${esc(x.kind)}${x.addr ? ' · ' + esc(x.addr) : ''}</small>${x.hours ? `<small style="color:var(--muted)">Horaires ${esc(String(x.hours).slice(0, 80))}</small>` : ''}<div class="row"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}">Itinéraire</a>${map ? `<button type="button" class="linkbtn" data-sf="${i}" style="background:none">Sur la carte</button>` : ''}${x.site && /^https?:\/\//.test(x.site) ? `<a class="linkbtn" target="_blank" rel="noopener" href="${esc(x.site)}">Site</a>` : ''}</div></article>`).join('');
-      $$('[data-sf]', pn).forEach((b) => (b.onclick = () => { const x = shops[+b.dataset.sf]; if (map && x && x.m) { map.setView([x.lat, x.lon], 17); x.m.openPopup(); $('#smMap', pn).scrollIntoView({ block: 'center', behavior: 'smooth' }); } }));
+      if (!pos) return; const where = pos.place ? ' à ' + pos.place : ' autour de toi', list = $('#smList', pn);
+      msg('Voici où chercher' + where + '.');
+      const houses = [...new Set(S.wishlist.concat(S.collection).map((x) => x.house).filter(Boolean))].slice(0, 4);
+      const paris = kmBetween(pos.lat, pos.lon, 48.857, 2.352) < 12;
+      const draw = (found) => {
+        list.innerHTML =
+          (found.length ? `<p class="mono">Adresses trouvées près de toi</p>${found.slice(0, 15).map((x) => card(x.name, x.kind, (x.km < 1 ? Math.round(x.km * 1000) + ' m' : x.km.toFixed(1) + ' km') + (x.addr ? ' · ' + x.addr : ''), `https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}`, 'Itinéraire')).join('')}` : '') +
+          (paris ? `<p class="mono">Les adresses à connaître à Paris</p>${PARIS_SHOPS.map(([n, a, d]) => card(n, d, a, `https://www.google.com/maps/search/${encodeURIComponent(n + ' Paris')}`, 'Voir sur la carte')).join('')}` : '') +
+          `<p class="mono">Les enseignes${esc(where)}</p>${SHOP_CHAINS.map(([n, d, q]) => card(n, d, '', gm(q), 'Voir les adresses' + esc(where))).join('')}` +
+          (houses.length ? `<p class="mono">Les maisons de ta liste</p>${houses.map((h) => card(h, 'Trouver une boutique ou un revendeur de cette maison.', '', gm(h + ' boutique parfum'), 'Chercher' + esc(where))).join('')}` : '');
+      };
+      draw([]);
+      try { const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 6000); const shops = await Promise.race([fetchShops(pos.lat, pos.lon, 5000), new Promise((_, ko) => setTimeout(() => ko(), 6500))]); clearTimeout(t); if (shops && shops.length && $('#smList', pn)) draw(shops); } catch (e) { /* hors ligne ou bloqué : les enseignes restent */ }
     }
-    const setPos = (lat, lon, place) => { pos = { lat, lon, place: place || '' }; S.settings.geo = Object.assign({}, S.settings.geo, { lat, lon, place: place || (S.settings.geo && S.settings.geo.place) || '', ts: Date.now() }); save(); go(); };
-    $('#smGeo', pn).onclick = () => { if (!navigator.geolocation) { msg('Ton appareil ne donne pas sa position. Tape une ville.'); return; } msg('Je cherche ta position…'); navigator.geolocation.getCurrentPosition((p) => setPos(p.coords.latitude, p.coords.longitude, ''), () => msg('Position refusée. Tape une ville ou un quartier juste en dessous.'), { timeout: 10000, maximumAge: 300000 }); };
-    const lookup = async (v) => {
-      const q = E.norm(v), loc = CITIES.filter((c) => E.norm(c.place).includes(q)).sort((x, y) => (E.norm(x.place).startsWith(q) ? 0 : 1) - (E.norm(y.place).startsWith(q) ? 0 : 1)).slice(0, 5);
-      if (loc.length >= 1 && q.length >= 3) return loc;
-      let net = [];
-      try { const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(v)}&count=5&language=fr`); const j = await r.json(); net = (j.results || []).map((g) => ({ lat: g.latitude, lon: g.longitude, place: g.name, sub: [g.admin1, g.country].filter(Boolean).join(', ') })); } catch (e) { /* hors ligne ou bloqué */ }
-      if (!net.length) { try { const r2 = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=5&accept-language=fr&q=${encodeURIComponent(v)}`); const j2 = await r2.json(); net = j2.map((g) => ({ lat: +g.lat, lon: +g.lon, place: String(g.display_name).split(',')[0], sub: String(g.display_name).split(',').slice(1, 3).join(',').trim() })); } catch (e) { /* idem */ } }
-      return loc.concat(net).slice(0, 5);
-    };
-    const inp = $('#smCity', pn), ac = $('#smAc', pn); let ctl = 0;
+    const setPos = (lat, lon, place) => { pos = { lat, lon, place: place || '' }; S.settings.geo = Object.assign({}, S.settings.geo, { lat, lon, place: place || '', ts: Date.now() }); save(); go(); };
+    $('#smGeo', pn).onclick = () => { if (!navigator.geolocation) { msg('Ton appareil ne donne pas sa position. Tape ta ville.'); return; } msg('Je cherche ta position…'); navigator.geolocation.getCurrentPosition((p) => setPos(p.coords.latitude, p.coords.longitude, ''), () => msg('Position refusée. Tape ta ville juste au-dessus.'), { timeout: 10000, maximumAge: 300000 }); };
+    const inp = $('#smCity', pn), ac = $('#smAc', pn);
+    const find = (v) => { const q = E.norm(v); return CITIES.filter((c) => E.norm(c.place).includes(q)).sort((x, y) => (E.norm(x.place).startsWith(q) ? 0 : 1) - (E.norm(y.place).startsWith(q) ? 0 : 1)).slice(0, 6); };
     const pick = (g) => { ac.hidden = true; inp.value = g.place; setPos(g.lat, g.lon, g.place); };
-    const suggest = async (auto) => {
+    const suggest = (auto) => {
       const v = inp.value.trim(); if (v.length < 2) { ac.hidden = true; return; }
-      const id = ++ctl; if (!auto) msg('Je cherche ' + v + '…');
-      let r = []; try { r = await lookup(v); } catch (e) { r = []; }
-      if (id !== ctl) return;
-      if (!r.length) { ac.hidden = true; if (!auto) { msg('Cette ville n\'est pas dans ma liste.'); $('#smLinks', pn).innerHTML = `<div class="chips"><a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/parfumerie+${encodeURIComponent(v)}">Parfumeries à ${esc(v)} sur Google Maps</a><a class="chip" target="_blank" rel="noopener" href="https://www.openstreetmap.org/search?query=${encodeURIComponent('parfumerie ' + v)}">Sur OpenStreetMap</a></div>`; } return; }
+      const r = find(v);
+      if (!r.length) { ac.hidden = true; if (!auto) { msg('Cette ville n\'est pas dans ma liste. Ouvre-la sur la carte.'); $('#smList', pn).innerHTML = card('Parfumeries à ' + v, 'Ouvre la recherche sur Google Maps.', '', `https://www.google.com/maps/search/${encodeURIComponent('parfumerie ' + v)}`, 'Ouvrir'); } return; }
       if (!auto) { pick(r[0]); return; }
       ac.innerHTML = r.map((g, i) => `<button type="button" class="acitem" data-i="${i}"><b>${esc(g.place)}</b><small>${esc(g.sub)}</small></button>`).join(''); ac.hidden = false;
       $$('.acitem', ac).forEach((b) => (b.onpointerdown = (ev) => { ev.preventDefault(); pick(r[+b.dataset.i]); }));
     };
-    let tm = 0; inp.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => suggest(true), 320); });
-    inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(tm); suggest(false); } });
+    inp.addEventListener('input', () => suggest(true));
+    inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); suggest(false); } });
     inp.addEventListener('blur', () => setTimeout(() => { ac.hidden = true; }, 150));
-    $('#smCityGo', pn).onclick = () => { clearTimeout(tm); suggest(false); };
-    $$('[data-rad]', pn).forEach((b) => (b.onclick = () => { rad = +b.dataset.rad; $$('[data-rad]', pn).forEach((x) => x.classList.toggle('on', x === b)); go(); }));
-    if (pos) go(); else msg('Touche « Autour de moi » ou tape ta ville.');
+    $('#smCityGo', pn).onclick = () => suggest(false);
+    if (pos) { inp.value = pos.place; go(); } else msg('Tape ta ville, ou touche « Autour de moi ».');
   }
   const wxButtonHtml = () => (WXSTATE === 'blocked' ? '' : WX && WX.k === 'auto' ? `<button class="chip on" id="wxAuto">${esc(AUTOW)}</button><button class="chip" id="wxCity">Changer de ville</button>` : `<button class="chip" id="wxAuto">Météo automatique</button>`);
 

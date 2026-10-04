@@ -729,3 +729,6 @@ a.chip { text-decoration: none; display: inline-block; }
 .edfiche { display: grid; gap: 28px; }
 .edfiche > div > .mono { margin-bottom: 4px; }
 .edfiche .rd { line-height: 1.7; }
+.shopc { display: grid; gap: 8px; padding: 22px 22px 20px; }
+.shopc b { font: 400 18px var(--sf); }
+.shopc small { color: var(--muted); }

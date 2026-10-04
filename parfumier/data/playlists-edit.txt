@@ -4123,7 +4123,6 @@ top: 1
 d: Pour un usage quotidien, un parfum de niche doit cocher plusieurs cases. Il est élégant, polyvalent et tient très bien sans gêner l'entourage, au bureau comme dans les espaces partagés. Il garde aussi ce supplément d'âme et de complexité qui fait la haute parfumerie.
 @ Homme | Ses parfums de tous les jours, élégants, polyvalents et tenaces, qui ne dérangent personne au bureau.
 - Essential Parfums Bois Impérial | Un boisé épicé moderne, propre et vibrant, porté par l'akigalawood, le vétiver et le basilic. Une performance énorme et un sillage remarquable pour un prix de niche raisonnable.
-- Coelia Cap Spartel | Un citron propre, une tonka torréfiée et un santal crémeux. Après trois heures il change complètement et devient difficile à classer, ce qui est très bon signe.
 - Hermès Eau de Citron Noir | Citron, thé noir et gaïac fumé. Frais, avec juste ce qu'il faut de sombre.
 - Initio Musk Therapy | Un musc blanc et rose avec du magnolia et du santal blanc. Doux, propre et très peau.
 - Byredo Bal d'Afrique | Vétiver, agrumes, tagète et fleurs douces. Légèrement poudré et boisé, réconfortant, avec une signature très reconnaissable.
@@ -4146,6 +4145,8 @@ d: Pour un usage quotidien, un parfum de niche doit cocher plusieurs cases. Il e
 - Maison Francis Kurkdjian Gentle Fluidity Gold | Choix d'experts pour tous les jours.
 - Oman Luxury Belfiore | Pêche, osmanthus et poudre : une douceur veloutée et lumineuse au quotidien.
 - Hermès Terre d'Hermès | Une référence moderne qui va avec le costume comme avec le casual.
+- Coelia Cap Spartel | Un citron propre, une tonka torréfiée et un santal crémeux. Après trois heures il change complètement et devient difficile à classer, ce qui est très bon signe.
+- Coelia Cap Spartel | Un citron propre, une tonka torréfiée et un santal crémeux. Après trois heures il change complètement et devient difficile à classer, ce qui est très bon signe.
 - Chanel Boy Chanel | Lavande, géranium et muscs : unisexe, propre, professionnel.
 - Tom Ford Beau de Jour | Le gentleman du quotidien.
 - Initio Rehab | Élégance quotidienne : propre, polyvalent, discret.
@@ -4153,7 +4154,6 @@ d: Pour un usage quotidien, un parfum de niche doit cocher plusieurs cases. Il e
 - Celine Parade | Hespéridé et chic, du bureau au dîner.
 @ Femme | Ses parfums de tous les jours, doux, polyvalents et soignés, avec ce petit supplément d'âme.
 - Essential Parfums Bois Impérial | Un boisé épicé moderne, propre et vibrant, porté par l'akigalawood, le vétiver et le basilic. Une performance énorme et un sillage remarquable pour un prix de niche raisonnable.
-- Coelia Cap Spartel | Un citron propre, une tonka torréfiée et un santal crémeux. Après trois heures il change complètement et devient difficile à classer, ce qui est très bon signe.
 - Hermès Eau de Citron Noir | Citron, thé noir et gaïac fumé. Frais, avec juste ce qu'il faut de sombre.
 - Initio Musk Therapy | Un musc blanc et rose avec du magnolia et du santal blanc. Doux, propre et très peau.
 - Byredo Bal d'Afrique | Vétiver, agrumes, tagète et fleurs douces. Légèrement poudré et boisé, réconfortant, avec une signature très reconnaissable.
@@ -4173,6 +4173,8 @@ d: Pour un usage quotidien, un parfum de niche doit cocher plusieurs cases. Il e
 - Louis Vuitton Meteore | Choix d'experts pour tous les jours.
 - Place de la Rêverie Santal de Paris | Choix d'experts pour tous les jours.
 - Maison Francis Kurkdjian Gentle Fluidity Gold | Choix d'experts pour tous les jours.
+- Coelia Cap Spartel | Un citron propre, une tonka torréfiée et un santal crémeux. Après trois heures il change complètement et devient difficile à classer, ce qui est très bon signe.
+- Coelia Cap Spartel | Un citron propre, une tonka torréfiée et un santal crémeux. Après trois heures il change complètement et devient difficile à classer, ce qui est très bon signe.
 - Oman Luxury Belfiore | Pêche, osmanthus et poudre : une douceur veloutée et lumineuse au quotidien.
 - Yves Saint Laurent Grain de Poudre | Chic effortless, propre et racé.
 - Jo Malone English Pear & Freesia | Poire et freesia : très facile à porter.
@@ -4193,3 +4195,11 @@ d: Pour un usage quotidien, un parfum de niche doit cocher plusieurs cases. Il e
 
 ## Niche à petit prix
 + Boucheron Jaipur Homme | Un oriental épicé et vanillé, très abordable.
+
+## Niche à petit prix
++ Montale White Musk | Un musc blanc propre et enveloppant, très accessible.
++ Montale Roses Musk | Rose et musc, un classique de la maison à prix doux.
++ Montale Intense Cafe | Un café gourmand et rond, simple à aimer.
++ Montale Arabians Tonka | Tonka et ambre chaleureux, un oriental facile.
++ Montale Black Aoud | Le oud sombre de la maison, à prix très raisonnable.
++ Montale Soleil de Capri | Un solaire frais, parfait pour l'été.
