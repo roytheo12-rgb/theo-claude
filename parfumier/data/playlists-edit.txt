@@ -2046,7 +2046,6 @@ pal: 1c1020,6a2f4a,e4b5a0,arches
 + Maison Crivelli Tobacco Color | Le tabac chaud sous le col roulé.
 
 ## Automne Cozy
-+ Maison Crivelli Tobacco Color | Le tabac et la couverture.
 
 ## Night Out
 + Maison Crivelli Tobacco Color | Le tabac de l'after.
@@ -2116,3 +2115,14 @@ d: Librairie le samedi, café le dimanche, notes dans les marges. Elle a lu Prou
 + Guerlain Insolence | Poudré et romantique : les années 50.
 
 ## DEL La Romantique classique
+
+## Automne Cozy
+x Maison Crivelli Tobacco Color
++ Giardini di Toscana Bianco Latte | Caramel, miel, vanille : le café au lait du dimanche sous le plaid.
++ Matière Première Vanilla Powder | Une vanille poudrée, douce comme un pull en laine.
++ Essential Parfums Ambre Latte | L'ambre crémeux : le latte qui réchauffe les mains.
++ Guerlain Vanille Planifolia | La vanille de gousse, chaude et ronde, des après-midi de novembre.
++ Serge Lutens Un Bois Vanille | Bois et vanille : la bibliothèque et la cheminée.
++ Parfum d'Empire Madagascar Le Baume Vanille | Le baume vanillé : une tisane à la fenêtre pendant la pluie.
++ Guerlain Tonka Sarrapia | La fève tonka, gourmande et enveloppante.
++ Matière Première Encens Suave | L'encens doux d'une maison qui sent bon la bougie.
