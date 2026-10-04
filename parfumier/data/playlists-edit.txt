@@ -4690,3 +4690,15 @@ x Parfums de Marly Greenley
 ~ Chanel Chance Eau Tendre | Coing, pamplemousse et jasmin, tendre pour la cérémonie.
 ~ Maison Francis Kurkdjian Amyris Femme | Rose, citron et iris, clair et élégant.
 ~ Maison Francis Kurkdjian Gentle Fluidity Gold | Genévrier et vanille, une chaleur douce qui tient jusqu'à la piste de danse.
+
+# Paris : les parfums de Maison Francis Kurkdjian inspirés de Paris, dans les deux groupes
+## Paris
++H Maison Francis Kurkdjian Petit Matin | Le premier café, les volets qui s'ouvrent et la lumière douce de Paris au réveil.
++F Maison Francis Kurkdjian Petit Matin | Le premier café, les volets qui s'ouvrent et la lumière douce de Paris au réveil.
++H Maison Francis Kurkdjian 724 | Un musc lumineux et propre, Paris à toute heure.
++F Maison Francis Kurkdjian 724 | Un musc lumineux et propre, Paris à toute heure.
++H Maison Francis Kurkdjian 754 | Un parfum parisien aldéhydé et lumineux, propre comme une heure du matin.
++F Maison Francis Kurkdjian 754 | Un parfum parisien aldéhydé et lumineux, propre comme une heure du matin.
++F Maison Francis Kurkdjian Grand Soir | Ambre, cannelle et benjoin, le dîner parisien qui se prolonge.
++H Maison Francis Kurkdjian Trianon Palace Versailles | Une fleur d'oranger royale, Versailles aux portes de Paris.
++F Maison Francis Kurkdjian Trianon Palace Versailles | Une fleur d'oranger royale, Versailles aux portes de Paris.
