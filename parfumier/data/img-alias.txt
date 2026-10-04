@@ -1,3 +1,8 @@
 # Alias de photos : Maison|Nom de la fiche qui a la photo|Nom de la fiche à qui l'appliquer
 Givenchy|Gentleman Réserve Privée|Gentleman Eau de Parfum Réserve Privée
 Houbigant|Quelques Fleurs L'Original|Quelques Fleurs
+Chanel|Pour Monsieur Concentrée|Pour Monsieur
+Clive Christian|X For Men|X
+Clive Christian|1872|1872 Woman
+Narciso Rodriguez|For Her Musc Noir Rose|Musc Noir Rose
+Diptyque|L'Eau Papier|Eau Papier

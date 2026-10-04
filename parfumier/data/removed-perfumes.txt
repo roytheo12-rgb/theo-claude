@@ -50,3 +50,7 @@ Fendi|Life Essence
 Gucci|Gucci Bloom
 Valentino|Valentino Donna
 Narciso Rodriguez|Narciso Rodriguez For Her
+# Doublons fusionnés (audit images)
+Comme des Garçons|Tar
+Clive Christian|X
+Clive Christian|X Masculine

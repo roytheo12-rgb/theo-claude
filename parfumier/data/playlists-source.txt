@@ -117,7 +117,7 @@ Hôtel cinq étoiles, costume noir, cuir, bois froid et aucune envie de conversa
 09. Tyler Durden
 Garage industriel, essence, métal, fumée, savon et vêtements trouvés au fond d'un sac.
 
-1. Comme des Garçons Tar
+1. Comme des Garçons Series 6 Synthetic: Tar
 2. Comme des Garçons Garage
 3. Comme des Garçons Concrete
 4. Etat Libre d'Orange Rien
@@ -155,7 +155,7 @@ Long Island, chemise blanche, jardin illuminé, champagne et une fête qui ne fi
 7. Amouage Reflection Man
 8. Dior Bois d'Argent
 9. Byredo Bal d'Afrique
-10. Clive Christian X
+10. Clive Christian X For Men
 
 12. The Founder
 Il est déjà au bureau avant tout le monde. Café noir, carnet ouvert, écran allumé. Tout est pensé.
@@ -1142,7 +1142,7 @@ Même logique pour les autres : on distingue désormais dans ta DB « parfum por
 80. Strange Smells
 Pour les gens qui ne veulent surtout pas sentir « comme un parfum ». Asphalte, goudron, métal, poussière, garage, peau et fumée.
 
-1. Comme des Garçons Tar
+1. Comme des Garçons Series 6 Synthetic: Tar
 2. Comme des Garçons Garage
 3. Comme des Garçons Concrete
 4. Etat Libre d'Orange Sécrétions Magnifiques
@@ -1345,7 +1345,7 @@ Pas un parfum qu'on croise : un parfum qu'on te prête.
 7. Serge Lutens Fille en Aiguilles
 8. Ormonde Jayne Ormonde Man
 9. Nasomatto Baraonda
-10. Comme des Garçons Tar
+10. Comme des Garçons Series 6 Synthetic: Tar
 
 94. Je veux sentir solaire
 Peau chaude, agrumes, sel et lumière de fin d'après-midi.
@@ -1438,7 +1438,7 @@ Los Angeles 1994. Costume noir, cravate noire, cheeseburger, dance floor et un s
 2. Nasomatto Duro
 3. Serge Lutens Chergui
 4. Santa Maria Novella Tabacco Toscano
-5. Comme des Garçons Tar
+5. Comme des Garçons Series 6 Synthetic: Tar
 6. DS & Durga Bowmakers
 7. Memo Irish Leather
 8. Tom Ford Tobacco Vanille

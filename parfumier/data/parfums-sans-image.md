@@ -1,4 +1,4 @@
-Parfums des listes Inspirations sans image : 145
+Parfums des listes Inspirations sans image : 139
 
 - Acqua di Parma Cipresso di Toscana  ← Lake Como
 - Acqua di Parma Colonia Buongiorno Soleil  ← Beach Club
@@ -27,16 +27,12 @@ Parfums des listes Inspirations sans image : 145
 - Caron Fleurs de Rocaille  ← Marilyn Monroe
 - Caron Yatagan  ← Don Draper
 - Chanel Beige  ← Quiet Luxury, Andy Sachs, Corporate Weapons
-- Chanel Gardenia  ← Charlotte York, La Romantique classique
+- Chanel Gardenia  ← Charlotte York, Bookworm
 - Chanel N°19  ← Jane Birkin, Quiet Luxury, Corporate Weapons, Denise Baudu
 - Chanel Paris-Riviera  ← Côte d'Azur, Saint-Tropez
-- Chanel Pour Monsieur  ← James Bond, Don Draper, Alain Delon
 - Chloé Chloé  ← Les Petits budgets
-- Clive Christian 1872 Woman  ← London
 - Clive Christian L  ← Drake
-- Clive Christian X  ← Monaco, Corporate Weapons
 - Comme des Garçons Garage  ← Tyler Durden, Strange Smells, Arthur Fleck
-- Comme des Garçons Tar  ← Tyler Durden, Strange Smells, Je veux sentir unique, Vincent Vega
 - Comptoir Sud Pacifique Vanille Abricot  ← Automne Cozy
 - Contes de Parfums Pompeii  ← Rome
 - Creed Fleurissimo  ← Monaco
@@ -46,7 +42,6 @@ Parfums des listes Inspirations sans image : 145
 - DS & Durga I Don't Know What  ← Tech Bro, Les Fans de design, Les Branchés
 - Demeter Paperback  ← Strange Smells
 - Dior Gris Montaigne  ← La vie de Ronnie
-- Diptyque Eau Papier  ← Clean Girl
 - Diptyque L'Eau  ← Jane Birkin
 - Dries Van Noten Dries Van Noten  ← Paris
 - Ella K Casta Diva  ← Côte d'Azur
@@ -99,7 +94,7 @@ Parfums des listes Inspirations sans image : 145
 - Maison Crivelli Iris Malhikân  ← Sunday Morning
 - Maison Crivelli Tobacco Color  ← Hiver à New York, Automne Cozy, Night Out, Les Affranchis, Vito Corleone, Jazz, Le Cigare de minuit, L'Ivresse
 - Maison Goutal Petite Chérie  ← Amélie Poulain
-- Maison Goutal Un Matin d'Orage  ← Charlotte York, La Romantique classique, Denise Baudu
+- Maison Goutal Un Matin d'Orage  ← Charlotte York, Bookworm, Denise Baudu
 - Maison Margiela Coffee Break  ← Taylor Swift, Automne Cozy, Corporate Weapons
 - Maison Margiela Flower Market  ← Clean Girl, Tokyo, Amélie Poulain, Les Artsy
 - Maison Matahá Escapade Gourmande  ← Automne Cozy
@@ -110,7 +105,6 @@ Parfums des listes Inspirations sans image : 145
 - Memo Paris Île de Ré  ← Boat Day
 - Miller Harris L'Air de Rien  ← Jane Birkin, Historical Scents
 - Mugler Cologne  ← Les Petits budgets
-- Narciso Rodriguez Musc Noir Rose  ← Suzie Glass
 - Oman Luxury Al Qasaid  ← Dubai
 - Ormonde Jayne Ormonde Woman  ← London
 - Phlur Matcha Milk  ← Clean Girl
