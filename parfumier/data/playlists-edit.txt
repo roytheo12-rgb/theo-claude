@@ -1987,6 +1987,11 @@ pal: 1c1020,6a2f4a,e4b5a0,arches
 - Amouage Love Tuberose | La tubéreuse d'Amouage est plus douce, plus romantique. Elle l'associe à ses soirées Go Un — le dîner coréen, la conversation qui dure, le retour à pied sous les lumières d'Opéra.
 - Diptyque Orphéon | Inspiré du cabaret parisien Orphéon dans le 11ème. C'est son parfum de soirée dans le quartier — boisé, légèrement poussiéreux, très Saint-Germain mais version underground.
 - Vilhelm Parfumerie 125th & Bloom | Elle l'a découvert à l'occasion d'un pop-up. C'est le genre de parfum qu'on ne trouve pas partout — floral frais, légèrement photogénique.
+- Parfums de Marly Delina Exclusif | Pour le dîner : le luxe floral qui ne se justifie pas.
+- Yves Saint Laurent Babycat | Son côté secret sous le matching set.
+- Diptyque Eau Rose | Son parfum du week-end, au marché.
+- Liis Rose Struck | La maison coréenne du moment.
+- Jo Malone English Pear & Freesia | Son parfum de saison.
 @ Le mec des pop-ups | Il porte des Kayano 14 avec un t-shirt Abela et un short camo dès que les températures remontent. Tous les week-ends, tu peux le croiser rue Notre-Dame-de-Nazareth à un pop-up de marque émergente.
 - Maison Crivelli Hibiscus Mahajád | Floral et direct — ni trop masculin ni trop féminin. Il l'assume.
 - Louis Vuitton L'Immensité | Frais, boisé, légèrement minéral. C'est le parfum du voyage — et lui il voyage tous les week-ends.
@@ -1999,6 +2004,30 @@ pal: 1c1020,6a2f4a,e4b5a0,arches
 - Notes de Bas de Page Carambolage | Maison française confidentielle, fondée par une ex-journaliste mode. Carambolage est un accord carambole-gingembre qui déroute au premier contact puis devient addictif.
 - Comme des Garçons Kyoto | Encens de temple shinto, bois japonais, minimalisme absolu. C'est son parfum de travail — dans l'atelier, devant les maquettes, les références, les samples tissu.
 - DS & Durga Bowmakers | L'atelier d'artisan en flacon. Il l'apprécie exactement pour ça — c'est un parfum qui sent le travail artisanal, la matière, le soin.
+@ Les fashions du Marais · Homme | Issey Miyake le lundi, Comme des Garçons le jeudi, mules en cuir, Dover Street Market et une opinion très arrêtée sur tout.
+- Comme des Garçons Floriental | Beau et étrange : l'esthétique du Marais.
+- Nasomatto Baraonda | La soirée après le pop-up, dans un bar sans enseigne.
+- Diptyque Tam Dao | Le choix du connaisseur sobre.
+- Le Labo Gaiac 10 | Pour celui qui refuse l'ostentation.
+- Aesop Hwyl | Le même goût du design épuré.
+- DS & Durga I Don't Know What | L'ambiguïté assumée.
+- Comme des Garçons Wonderwood | Le bois comme abstraction.
+- Serge Lutens Gris Clair | Sa couleur préférée : le gris.
+- Notes de Bas de Page Carambolage | La pièce vintage trouvée chez The Archivist.
+- Issey Miyake L'Eau d'Issey Pour Homme Intense | Issey est cité dans l'archétype lui-même.
+- BDK Parfums Pas Ce Soir | Parisien, discret, pointu.
+- Marc-Antoine Barrois B683 | Rareté maximale, cohérence couture et parfum.
+@ Les fashions du Marais · Femme | Sac vintage Prada, sneakers propres, tabi Margiela, pop-up Jacquemus et café glacé à la main.
+- Diptyque Orphéon | Le Marais la nuit, en Tabi, après un vernissage.
+- Comme des Garçons 2 | L'incontournable CDG.
+- Serge Lutens Gris Clair | Le parfum de la neutralité choisie.
+- Le Labo Thé Noir 29 | Thé noir sans sucre, achats chez Dover Street Market.
+- Maison Margiela Lazy Sunday Morning | L'ADN olfactif de Margiela : précis, poétique, discret.
+- Notes de Bas de Page Carambolage | La pièce rare : elle l'a avant tout le monde.
+- Byredo Gypsy Water | Nomade et propre.
+- Aesop Tacit | Elle laisse ses vêtements parler.
+- Juliette Has a Gun Not a Perfume | L'anti-parfum comme déclaration.
+- Diptyque Fleur de Peau | Elle les connaît tous et choisit le plus discret.
 
 ## L'Ivresse
 + Maison Crivelli Tobacco Color | Le tabac de fin de soirée, quand le champagne est fini.
@@ -2033,3 +2062,30 @@ x Essential Parfums Dedication
 
 ## Tech Bro
 + Marc-Antoine Barrois Ganymede | Le cuir moderne et discret des fondateurs qui connaissent la parfumerie.
+
+## DEL Pilates Matcha Girl
+
+## DEL Coquette
+
+## Clean Girl
++ Le Labo Thé Matcha 26 | La tasse de matcha en parfum.
++ Phlur Matcha Milk | La version comfort food : pour le soir après le cours.
++ Diptyque Eau Papier | Ultra-clean, presque conceptuel.
++ Ex Nihilo Fleur Narcotique Blossom | Pour travailler depuis un café en terrasse.
+
+## La Romantique classique
++ Maison Francis Kurkdjian À la rose | La rose ultime, ni sucrée ni criarde.
++ Chanel Chance Eau Tendre | Son parfum des premiers rendez-vous.
++ Dior Miss Dior EDP | L'icône du genre.
++ Guerlain Mon Guerlain | Le romantisme gourmand et poétique.
++ Maison Francis Kurkdjian Amyris Femme | Romantique sans que ça se voie.
++ Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
++ Jo Malone Peony & Blush Suede | Glamour doux, pour le dîner en amoureux.
++ Byredo Rose of No Man's Land | La rose niche accessible.
++ Guerlain Insolence | Poudré et romantique : les années 50.
+
+## It Girl
++ Prada Paradoxe | Romantique, pas naïve.
++ Ex Nihilo Lust in Paradise | Floral tropical sensuel.
+
+## DEL Les fashions du Marais

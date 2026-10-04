@@ -86,8 +86,16 @@ def remap(d):
         kk = h2 + '|' + n
         if kk not in out or h2 == h: out[kk] = v
     return out
+KEEP = set()
+_kp = root / 'data/keep-perfumes.txt'
+if _kp.exists():
+    for _l in _kp.read_text(encoding='utf-8').splitlines():
+        _l = _l.strip()
+        if _l and not _l.startswith('#') and _l.count('|') >= 2:
+            _h, _n = _l.split('|')[:2]; KEEP.add(norm(_h) + '|' + norm(_n))      # parfums gardés volontairement, même quand leur maison est retirée
 def key_gone(k):
     h, n = k.split('|', 1)
+    if k in KEEP and k not in PERF: return False
     return h in H or canon(h) in H or k in dead_keys or k in PERF or any(p.search(n) for p in PAT)
 # --- cartes de clés (photos, faits, profils)
 files_dead = set(); n_removed = {}
@@ -121,13 +129,30 @@ for _f, _v in (('imgdb.js', 'IMGDB'), ('imgweb.js', 'IMGWEB')):
     for k, v in _d.items():
         pth = root / 'v2' / v
         if pth.exists(): _g.setdefault(hashlib.md5(pth.read_bytes()).hexdigest(), []).append((_f, _v, k, v))
+_ALK = set()
+_alp = root / 'data/img-alias.txt'
+if _alp.exists():
+    for _l in _alp.read_text(encoding='utf-8').splitlines():
+        if _l.strip() and not _l.startswith('#') and _l.count('|') == 2:
+            _h, _a, _b = _l.split('|'); _ALK |= {norm(_h) + '|' + norm(_a), norm(_h) + '|' + norm(_b)}
 _bad = {}
 for lst in _g.values():
+    if any(k in _ALK for _, _, k, _ in lst): continue      # alias voulu : une même photo pour deux noms de fiche
     if len(lst) > 1 and len({_core(k) for _, _, k, _ in lst}) > 1:
         for f, v, k, fn in lst: _bad.setdefault((f, v), set()).add(k); files_dead.add(fn)
 for (_f, _v), ks in _bad.items():
     _src = rd(_f); _d = grab(_src, _v)[2]; wr(_f, put(_src, _v, {k: x for k, x in _d.items() if k not in ks}))
 n_removed['partagées'] = sum(len(v) for v in _bad.values())
+# alias de photos (data/img-alias.txt) : une photo rattachée à un nom voisin sert aussi la fiche de la base qui porte l'autre nom
+_al = root / 'data/img-alias.txt'
+if _al.exists():
+    _al_rows = [l.split('|') for l in _al.read_text(encoding='utf-8').splitlines() if l.strip() and not l.startswith('#') and l.count('|') == 2]
+    for _f, _v in (('imgnew.js', 'IMGNEW'), ('imgdb.js', 'IMGDB'), ('imgweb.js', 'IMGWEB')):
+        _src = rd(_f); _d = grab(_src, _v)[2]; _ch = False
+        for _h, _a, _b in _al_rows:
+            ka, kb = norm(_h) + '|' + norm(_a), norm(_h) + '|' + norm(_b)
+            if ka in _d and kb not in _d: _d[kb] = _d[ka]; _ch = True
+        if _ch: wr(_f, put(_src, _v, _d))
 # fichiers : on ne supprime que ceux que plus aucune clé ne référence
 alive = set()
 for fname, var in (('imgdb.js', 'IMGDB'), ('imgnew.js', 'IMGNEW'), ('imgweb.js', 'IMGWEB'), ('imgnew.js', 'NOSE_IMG')):

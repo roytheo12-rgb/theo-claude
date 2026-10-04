@@ -1,0 +1,3 @@
+# Alias de photos : Maison|Nom de la fiche qui a la photo|Nom de la fiche à qui l'appliquer
+Givenchy|Gentleman Réserve Privée|Gentleman Eau de Parfum Réserve Privée
+Houbigant|Quelques Fleurs L'Original|Quelques Fleurs
