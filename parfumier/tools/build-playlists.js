@@ -100,6 +100,7 @@ const EDIT_MISS = [], INTROUV = [];
   for (const raw0 of L) {
     const l = raw0.replace(/\s+$/, ''); if (!l.trim() || l.startsWith('#!')) continue;
     let m;
+    if ((m = l.match(/^## DEL (.+)$/))) { fin(); const q = PLS.find((x) => norm(x.t) === norm(m[1])); if (q) q.ghost = true; p = null; continue; }
     if ((m = l.match(/^## (NEW )?(.+)$/))) {
       fin();
       if (m[1]) { const [title, sect] = split(m[2].replace(/ \| /, ' | ')); const [tt, ss] = m[2].split(' | '); p = { id: nid++, secs: [(ss || 'Archétypes').trim()], t: tt.trim(), d: '', ps: [], note: [], isNew: true }; PLS.push(p); }

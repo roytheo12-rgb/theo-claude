@@ -813,39 +813,7 @@ d: Elle porte trois parfums en rotation, connaît chaque maison indépendante, e
 - Memo Inlé | Calme et voyage intérieur.
 - Diptyque Orphéon | Très mode, très Marais, très elle.
 
-## Model Off-Duty
-@ Homme | Il sort du shooting, enfile un jean et une veste de cuir vintage, commande un café, et tout le monde le regarde sans savoir pourquoi.
-- Tom Ford Grey Vetiver | Masculin, propre, sec.
-- Prada L'Homme | La sobriété incarnée.
-- Le Labo Santal 33 | Signature.
-- Aesop Hwyl | Forestier japonais.
-- Comme des Garçons Wonderwood | Boisé architectural.
-- Diptyque Tam Dao | Minimaliste et propre.
-- Hermès H24 | Moderne, frais, architectural.
-- Maison Margiela Jazz Club | Pour le soir après le shooting.
-- Acqua di Parma Colonia | Le classique italien.
-- Marc-Antoine Barrois B683 | Couture masculine.
-- Essential Parfums Bois Impérial | Épuré et remarquable.
-- BDK Gris Charnel Extrait | Fumé et élégant.
-- Atelier des Ors Bois Sikar | Rare et profond.
-- Maison Crivelli Bois Datchaï | Chaud et confidentiel.
-@ Femme | Elle porte peu, ça dure longtemps. Elle ne cherche pas à sentir bon : elle sent, c'est tout.
-- Byredo Mojave Ghost | Signature Byredo.
-- Le Labo Another 13 | Musc peau.
-- Byredo Bal d'Afrique | Frais et profond.
-- Maison Francis Kurkdjian Gentle Fluidity Gold | Enveloppant.
-- Glossier You | Le skin scent par excellence.
-- Diptyque Fleur de Peau | Poétique.
-- Le Labo Thé Noir 29 | Fumé et discret : elle rentre de Bangkok.
-- Narciso Rodriguez For Her Musc Noir | Plus sombre que le classique.
-- Maison Margiela Lazy Sunday Morning | Le dimanche en flacon.
-- Matière Première Parisian Musc | Le musc parisien par excellence.
-- BDK 312 Saint-Honoré | Parisien pur.
-- Maison Crivelli Neroli Nasimba | Lumineux et chaud.
-- Diptyque Orphéon | Mode et Marais.
-- Marc-Antoine Barrois Ganymede | Sculptural et rare.
-
-- Memo Paris Shams Oud | Pour les fins de shooting à l'étranger.
+## DEL Model Off-Duty
 
 ## Effortless Chic
 d: Chemise blanche, jean parfait, appartement parisien, cheveux encore légèrement humides. Aucune apparence d'effort.
@@ -958,76 +926,52 @@ d: Pluie, Mayfair, costume, espresso martini, voiture anglaise et club privé.
 ## Milan
 d: Costume parfaitement coupé, espresso au comptoir, cuir italien et galerie d'art.
 @ Homme
-- Acqua di Parma Colonia | Le parfum de Milan, depuis plus d'un siècle.
-- Xerjoff Torino21 | Né à Turin : le Salone del Mobile.
-- Xerjoff Naxos | Entre Milan et la villa d'été.
-- Santa Maria Novella Tabacco Toscano | La plus ancienne pharmacie du monde.
-- Prada L'Homme | Milan : le beau sans ostentation.
-- Armani Privé Bois d'Encens | Giorgio Armani est milanais.
-- Valentino Uomo Intense | Propre, chaud, couture.
-- Bottega Veneta Pour Homme | Le quiet luxury à l'italienne.
-- Xerjoff Renaissance | L'amateur d'art qui collectionne autant les parfums que les œuvres.
-- Acqua di Parma Buongiorno | Le matin italien.
-- Tiziana Terenzi Kirke | Ensorcelant comme une soirée milanaise.
-- Acqua di Parma Buongiorno Buonanotte | Délicat et réconfortant : la fin d'une nuit de rires, quand buongiorno et buonanotte ne font plus qu'un.
-- Acqua di Parma Buongiorno Amore Mio | Élégance subtile, comme des vêtements propres qui enveloppent la peau.
-- Acqua di Parma Buongiorno Dolce Far Niente | Légèreté : savourer une journée sans hâte.
-- Acqua di Parma Buongiorno Gioco del Destino | Gourmand et moderne : l'inattendu qui déclenche une joyeuse euphorie.
-- Acqua di Parma Buongiorno Al Bacio | Clair et étincelant : l'intimité d'un baiser au matin.
-- Contes de Parfums Positano | La côte amalfitaine.
+- Acqua di Parma Colonia | La signature milanaise : la cologne du costume bien coupé.
+- Prada L'Homme Intense | L'iris Prada, la galerie de la Fondation un samedi matin.
+- Prada Luna Rossa Carbon | Le sport chic de la Via Montenapoleone.
+- Bottega Veneta Pour Homme Extreme | Le cuir tressé, la discrétion qui coûte cher.
+- Armani Bois d'Encens | Giorgio Armani est milanais : la sobriété en encens.
+- Fendi Uomo | La boutique de la Via Sant'Andrea, le cuir et le bois.
+- Bvlgari Man in Black | Le smoking noir avant la Scala.
+- Xerjoff Casamorati Gran Ballo | Le bal des Casamorati : l'Italie des salons.
+- Versace Pour Homme | Les Versace sont milanais : un frais méditerranéen en ville.
+- Acqua di Parma Buongiorno Buonanotte | L'espresso du matin à la nuit : l'aperitivo qui s'étire.
 @ Femme
-- Acqua di Parma Fico di Amalfi | Quand Milan prend des vacances sur la côte.
-- Prada Paradoxe | Du noir en été, des couleurs vives en hiver, par choix.
-- Bottega Veneta Knot | Chaque pièce est choisie, jamais achetée.
-- Valentino Born in Roma Donna | La femme italienne contemporaine.
-- Xerjoff Renaissance | La Milanaise de la Brera.
-- Tiziana Terenzi Kirke | L'ensorcelante de la mythologie.
-- Santa Maria Novella Rosa | La pharmacie distille des roses depuis le Moyen Âge.
-- Armani Privé La Femme Bleue | La cliente qui commande sur mesure.
-- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
-- Maison Crivelli Hibiscus Mahajád | Moderne, reconnaissable.
-- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
-- Acqua di Parma Buongiorno Dolce Far Niente | Une journée sans hâte.
-- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
-- Acqua di Parma Buongiorno Al Bacio | Un baiser au matin.
-- Contes de Parfums Positano | La côte amalfitaine.
+- Prada Paradoxe | La femme Prada : lumineuse, contemporaine, jamais sage.
+- Prada Infusion d'Iris | L'iris poudré du showroom.
+- Bottega Veneta Knot | Le nœud, la maille, le cuir : le chic discret.
+- Bottega Veneta Illusione | Un floral habillé pour le vernissage.
+- Giardini di Toscana Donna di Milano | Le nom dit tout.
+- Gucci Bloom | La fleur Gucci des terrasses de Brera.
+- Armani La Femme Bleue | La cliente qui commande sur mesure.
+- Xerjoff Bouquet Ideale | Le bouquet idéal des salons milanais.
+- Fendi Palazzo | Le palais, les marbres, la maison de mode.
+- Acqua di Parma Buongiorno Amore Mio | L'aperitivo en terrasse : un matin d'amour qui dure jusqu'au soir.
 
 ## Rome
 d: Marbre, soleil, espresso, cuir, basilique et dîner dehors jusqu'à minuit.
 @ Homme
-- Acqua di Parma Colonia | L'homme romain qui porte le même parfum depuis trente ans.
-- Santa Maria Novella Melograno | La grenade, fruit de Rome.
-- Xerjoff Renaissance | Entre le Colisée et la Galleria Borghese.
-- Xerjoff Mefisto Gentiluomo | Le diable élégant, au Trastevere.
-- Profumum Roma Acqua di Sale | La côte romaine, Ostia en juillet.
-- Profumum Roma Neroli | Le jardin d'une villa romaine à l'aube.
-- Valentino Uomo | Une maison romaine pure.
-- Prada L'Homme | Le Romain contemporain.
-- Maison Crivelli Papyrus Moléculaire | L'Antiquité en parfum.
-- Creed Original Vetiver | Le vétiver, sobre : le plus romain.
-- Acqua di Parma Buongiorno Dolce Far Niente | La douce oisiveté : un dimanche romain, déjeuner jusqu'à 16h.
-- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
-- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
-- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
-- Acqua di Parma Buongiorno Al Bacio | Un baiser au matin.
-- Contes de Parfums Positano | La côte amalfitaine.
+- Valentino Uomo Born in Roma | La Rome de Valentino : l'arrogance élégante.
+- Valentino Uomo Intense | Le smoking sur les marches de la Piazza di Spagna.
+- Xerjoff La Capitale | La capitale : les pins, la pierre chaude.
+- Xerjoff Mefisto Gentiluomo | Le gentilhomme romain, café et cigare.
+- Profumum Roma Acqua di Sale | La maison est romaine : le sel de la mer d'Ostie.
+- Bvlgari Pour Homme | Bvlgari, via Condotti : le thé et le bois.
+- Bvlgari Man Wood Essence | Les bois précieux de la bijouterie romaine.
+- Fendi Fan di Fendi Pour Homme | Le palais de la civilisation italienne, le travertin.
+- Creed Original Vetiver | Le vétiver sec des ruines au soleil.
+- Acqua di Parma Buongiorno Dolce Far Niente | La dolce vita : ne rien faire, très bien.
 @ Femme
-- Profumum Roma Acqua di Sale | Les week-ends à Capri ou Ponza.
-- Santa Maria Novella Melograno | Les oliviers de la maison de campagne.
-- Valentino Donna | L'élégance romaine depuis 1960.
-- Acqua di Parma Fico di Amalfi | Le lien entre la ville et la mer.
-- Tiziana Terenzi Kirke | La Romaine qui ensorcelle sans effort.
-- Maison Crivelli Papyrus Moléculaire | Un pont entre deux millénaires.
-- Profumum Roma Neroli | Le néroli de Rome au printemps.
-- Xerjoff Dama Bianca | L'élégance romaine classique.
-- Acqua di Parma Buongiorno Al Bacio | Parfait, délicieux : le matin romain.
-- Atelier des Ors Rose Oud | La rose de l'Apennin rencontre l'Orient.
-- Houbigant Quelques Fleurs | La grand-mère portait le même parfum.
-- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
-- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
-- Acqua di Parma Buongiorno Dolce Far Niente | Une journée sans hâte.
-- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
-- Contes de Parfums Positano | La côte amalfitaine.
+- Valentino Donna Born in Roma | Le rose et le noir de Rome : l'audace.
+- Valentino Voce Viva | La voix, la Vespa, les lunettes noires.
+- Profumum Roma Neroli | Le néroli des jardins du Janicule.
+- Bvlgari Rose Goldea | La rose des bijoux de la via Condotti.
+- Bvlgari Mon Jasmin Noir | Le jasmin noir d'un dîner à Trastevere.
+- Fendi Furiosa | Le cuir et la fourrure Fendi, avec l'énergie romaine.
+- Contes de Parfums Pompeii | Les ruines, les fresques, la cendre chaude.
+- Acqua di Parma Buongiorno Al Bacio | Un baiser sur la Fontaine de Trevi.
+- Tiziana Terenzi Kirke | Le fruit et le soleil des collines.
+- Fendi Life Essence | La vie romaine, élégante et légère.
 
 ## Côte d'Azur
 d: Route côtière, linge blanc, figuier, déjeuner tardif et soleil sur la peau.
@@ -1102,37 +1046,27 @@ d: Grand Prix, casino, yacht, hôtel et dîner avec vue sur le port.
 ## Lake Como
 d: Villa italienne, bateau en bois, citronniers, chemise en lin et coucher de soleil.
 @ Homme
-- Acqua di Parma Fico di Amalfi | Villa d'Este, villas anciennes : l'expression estivale parfaite.
-- Acqua di Parma Buongiorno Buonanotte | Les nuits sur le lac où l'on ne regarde plus l'heure.
-- Acqua di Parma Buongiorno Dolce Far Niente | L'inaction choisie : le luxe ultime.
-- Diptyque Philosykos | Les figuiers du lac.
-- Xerjoff Torino21 | Le bateau en bois, le déjeuner à Varenna.
-- Tom Ford Neroli Portofino | Le blanc, l'eau, les agrumes.
-- Creed Aventus Cologne | Le déjeuner en terrasse à Bellagio.
-- Armani Thé Yulong | Calme, propre, naturel.
-- Maison Francis Kurkdjian Gentle Fluidity Gold | La chaleur dorée du coucher de soleil.
-- Byredo Bal d'Afrique | Les invités du monde entier sur la terrasse.
-- Maison Crivelli Papyrus Moléculaire | Le passé plutôt que le tourisme.
-- Acqua di Parma Buongiorno Amore Mio | Comme des vêtements propres sur la peau.
-- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
-- Acqua di Parma Buongiorno Al Bacio | Un baiser au matin.
-- Contes de Parfums Positano | La côte amalfitaine.
+- Acqua di Parma Colonia Assoluta | La colonia des villas du lac : citron et vétiver.
+- Acqua di Parma Cipresso di Toscana | Les cyprès qui bordent le jardin de la villa.
+- Giardini di Toscana Colonia Nobile | Une colonia noble pour le bateau en bois.
+- Giardini di Toscana Verde Respiro | Le jardin après la pluie, l'herbe coupée.
+- Bottega Veneta Parco Palladiano XII: Quercia | Le parc d'une villa palladienne : le chêne.
+- Prada Infusion de Vetiver | Le vétiver mouillé du ponton.
+- Creed Aventus Cologne | Le frais énergique du bateau qui traverse le lac.
+- Armani Thé Yulong | Le thé du matin sur la terrasse.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | La chaleur ambrée d'un dîner de mariage.
+- Acqua di Parma Buongiorno Gioco del Destino | Un jeu de hasard au casino de Campione.
 @ Femme
-- Acqua di Parma Buongiorno Amore Mio | Le lac des lunes de miel et des amours romanesques.
-- Acqua di Parma Buongiorno Al Bacio | Le matin au bord du lac, un café dans les mains.
-- Santa Maria Novella Melograno | Le jardin méditerranéen en juillet.
-- Diptyque Philosykos | Les jardins de Villa Balbianello.
-- Maison Francis Kurkdjian Aqua Celestia | Le ciel reflété dans l'eau.
-- Byredo Mojave Ghost | L'empreinte d'un moment parfait.
-- Tom Ford Soleil Blanc | Une terrasse face au lac en fin d'après-midi.
-- Ella K Sotto la Luna Gardenia | Le lac la nuit, sous la pleine lune.
-- Floraïku The Wandering Minstrel | En solo, avec un carnet de croquis.
-- Maison Crivelli Hibiscus Mahajád | Les jardins des villas.
-- Houbigant Quelques Fleurs | Un parfum qui a de l'histoire.
-- Acqua di Parma Buongiorno Buonanotte | La fin d'une nuit de rires.
-- Acqua di Parma Buongiorno Dolce Far Niente | Une journée sans hâte.
-- Acqua di Parma Buongiorno Gioco del Destino | L'inattendu qui déclenche une joyeuse euphorie.
-- Contes de Parfums Positano | La côte amalfitaine.
+- Acqua di Parma Magnolia Infinita | Le magnolia du jardin de la Villa Carlotta.
+- Acqua di Parma Gelsomino Nobile | Le jasmin de la terrasse, au coucher du soleil.
+- Giardini di Toscana Giglio di Firenze | Le lys du jardin à l'italienne.
+- Bottega Veneta Parco Palladiano IX: Violetta | La violette d'un parc de villa.
+- Xerjoff Dama Bianca | La dame en blanc sur l'embarcadère.
+- Santa Maria Novella Fresia | Le freesia des bouquets de mariage.
+- Eau d'Italie Jardin du Poete | Le jardin du poète.
+- Maison Francis Kurkdjian Aqua Celestia | Le ciel et l'eau du lac.
+- Jo Malone Orange Blossom | La fleur d'oranger de la terrasse du palace.
+- Contes de Parfums Positano | La côte, le bateau, les citronniers.
 
 ## Dubai
 d: Marbre, oud, soleil couchant, hôtel immense et parfum qui laisse une trace.
@@ -1239,27 +1173,27 @@ d: Sunset, chemise ouverte, musique électronique, peau salée et départ pour l
 ## Mykonos
 d: Blanc éclatant, mer bleue, terrasse blanche, soleil et nuit qui ne commence jamais avant 1h.
 @ Homme
-- Tom Ford Neroli Portofino | La villa blanche, la veste de lin.
-- Creed Virgin Island Water | Le bateau au mouillage dans les eaux turquoise.
-- Xerjoff Torino21 | La terrasse du Nammos à l'heure du déjeuner.
-- Acqua di Parma Fico di Amalfi | Le déjeuner sur la terrasse.
-- Le Labo Bergamote 22 | Sans jamais avoir besoin d'en changer.
-- Roja Elysium | Un paradis grec.
-- Byredo Bal d'Afrique | Le port, le coucher de soleil sur les moulins.
-- BDK Citrus Riviera | Méditerranée pure.
-- Diptyque Philosykos | La figue grecque existe depuis 3000 ans.
-- Contes de Parfums Hydra | Une île grecque, directement.
+- Tom Ford Neroli Portofino | Le néroli de la plage de Paradise.
+- Roja Parfums Isola Blu | L'île bleue : l'eau, la lumière, le blanc.
+- Contes de Parfums Hydra | L'île voisine : le port, le soleil, les ânes.
+- Le Labo Bergamote 22 | Fraîcheur immédiate au bord de la piscine du club.
+- Maison Margiela Sailing Day | Le départ en bateau à l'aube.
+- Heeley Sel Marin | Le sel sur la peau après la baignade.
+- Jo Malone Wood Sage & Sea Salt | Le vent et la mer dans le petit port.
+- Acqua di Parma Mirto di Panarea | Le myrte et la mer Égée.
+- Diptyque Philosykos | Le figuier blanchi à la chaux de la terrasse.
+- Xerjoff Join the Club 40 Knots | Le yacht qui traverse le chenal.
 @ Femme
-- Tom Ford Soleil Blanc | Crème solaire de luxe : peau bronzée, terrasse blanche.
-- Byredo Sundazed | Un transat à Ornos Beach.
-- Maison Francis Kurkdjian Aqua Universalis | L'architecture blanche de l'île.
-- Contes de Parfums Hydra | La mer Égée.
-- Diptyque Eau Rose | La robe blanche et la fleur dans les cheveux.
-- Maison Crivelli Hibiscus Mahajád | La couleur de Mykonos.
-- Roja Elysium Pour Femme | Little Venice au coucher du soleil.
-- Acqua di Parma Fico di Amalfi | Figue et soleil.
-- Jo Malone Peony & Blush Suede | La robe en lin rose pâle.
-- BDK Tabac Rose | Le soir venu : une rose qui fume.
+- Diptyque Eau Rose | La rose simple du matin.
+- Guerlain Aqua Allegoria Nerolia Bianca | Le néroli blanc : la maison blanche.
+- Atelier Cologne Pomélo Paradis | Un jus de pomélo en terrasse.
+- Maison Francis Kurkdjian Aqua Universalis | Le linge blanc au vent.
+- Acqua di Parma Fico di Amalfi | La figue, le soleil, la pierre chaude.
+- Dior Dioriviera | La Riviera version méditerranéenne : l'élégance estivale.
+- Jo Malone Fig & Lotus Flower | La figue et la fleur sous le cyprès.
+- Hermès Eau de Néroli Doré | Le néroli doré du coucher de soleil.
+- Tom Ford Costa Azzurra | La côte azur à l'heure du déjeuner.
+- BDK Parfums Citrus Riviera | La limonade glacée, la bougainvillée.
 
 ## Marrakech
 d: Terrasse au coucher du soleil, épices, cuir, thé à la menthe et jardins cachés.
@@ -1289,28 +1223,27 @@ d: Terrasse au coucher du soleil, épices, cuir, thé à la menthe et jardins ca
 ## Rio
 d: Samba, soleil, peau chaude, plage, citron vert et nuit qui continue jusqu'au matin.
 @ Homme
-- Creed Virgin Island Water | Citron vert et noix de coco : la caipirinha. Ipanema à 14h.
-- Xerjoff Torino21 | La veste jetée sur l'épaule avant de sortir.
-- Byredo Bal d'Afrique | Rio, une ville africaine dans son âme.
+- Creed Virgin Island Water | Citron vert et noix de coco : la caipirinha, Ipanema à 14h.
+- Xerjoff NeoRio | Le nom de la ville : Rio, version Xerjoff.
 - Tom Ford Mandarino di Amalfi | Après une session de surf à Barra da Tijuca.
-- Maison Francis Kurkdjian Aqua Universalis | Le boy carioca bien élevé.
 - Contes de Parfums Salvador da Bahia | La chaleur tropicale, le carnaval.
-- Acqua di Parma Fico di Amalfi | La soirée à Santa Teresa.
 - Byredo Sundazed | Un après-midi parfait à Lapa.
-- Le Labo Bergamote 22 | Fraîcheur immédiate sous 35 degrés.
-- Roja Elysium | Le Christ Rédempteur au coucher du soleil.
+- Byredo Bal d'Afrique | Rio, une ville africaine dans son âme.
+- Mancera Tonka Cola | Le kiosque de la plage, le soda glacé.
+- Guerlain Aqua Allegoria Limon Verde | Le citron vert pressé, glace pilée.
+- Prada Luna Rossa Ocean | L'Atlantique à Copacabana.
+- Acqua di Parma Buongiorno Buonanotte | Le jour qui bascule en soirée à Santa Teresa.
 @ Femme
 - Tom Ford Soleil Blanc | Ipanema vu depuis le Fasano.
-- Byredo Sundazed | Chapeau de paille, caipirinha à la main.
+- Guerlain Aqua Allegoria Coconut Fizz | La noix de coco fraîche sur la plage.
 - Maison Crivelli Hibiscus Mahajád | L'hibiscus est la fleur de Rio.
-- Creed Virgin Island Water | La femme qui sort de l'eau à Prainha.
-- Byredo Bal d'Afrique | Le pont entre deux continents.
-- Diptyque Philosykos | Le jardin botanique, les manguiers.
+- Tom Ford Soleil Brûlant | La peau chaude à 15h, la plage pleine.
+- Kilian Love, Don't Be Shy | Le carnaval de nuit.
 - Ella K Ode à la Forêt | La Mata Atlântica.
 - Maison Francis Kurkdjian Amyris Femme | Santa Teresa, robe légère, vin dans la main.
-- Acqua di Parma Fico di Amalfi | Le passage de la plage à la soirée.
-- Kilian Love, Don't Be Shy | Le carnaval de nuit.
-
+- Guerlain Aqua Allegoria Passiflora | La passion de la fruit de la passion.
+- Mancera Roses Vanille | Une rose sucrée pour la nuit.
+- Byredo Mojave Ghost | Le sable doré de la plage, la dernière lumière.
 
 ## Ski Weekend
 
@@ -1937,7 +1870,7 @@ pal: c8102e,f2a900,1a8a6a,stripes
 - Demeter Dirt | La terre rouge et verte de la montagne elle-même.
 
 ## NEW Égypte | Destinations
-d: Gizeh, 7h du matin. Le soleil monte derrière la pyramide de Khéphren, le Sphinx regarde vers l'est depuis 4 500 ans, la poussière est encore froide.
+d: Gizeh, 7h du matin : le soleil monte derrière la pyramide de Khéphren, le Sphinx regarde vers l'est depuis 4 500 ans. Et la nuit, pleine lune alignée sur Khéphren, une caravane de chameaux en silhouette, pas un bruit sauf le sable.
 pal: 3a2a10,d4a050,f4e4c0,rays
 - Serge Lutens Ambre Sultan | L'Orient millénaire : ce que sentait le temple de Karnak.
 - Maison Crivelli Oud Maracujá | L'Égypte moderne : Khan el-Khalili, le bazar des parfumeurs.
@@ -1949,6 +1882,10 @@ pal: 3a2a10,d4a050,f4e4c0,rays
 - Profumum Roma Acqua di Sale | Le Nil, la mer Rouge, le sel du désert.
 - Naomi Goodsir Bois d'Ascèse | Le mystère du Sphinx : 4 500 ans de silence.
 - 4711 Original Eau de Cologne | Napoléon en portait 60 flacons par mois. Il est passé ici.
+- Xerjoff Alexandria II | Alexandrie, la ville qui a traduit tout le savoir antique.
+- Nasomatto Black Afgano | La nuit en plein désert : quelque chose de légèrement hallucinatoire dans cette lune sur cette pierre.
+- Maison Francis Kurkdjian Grand Soir | La lune qui fait de la nuit un grand soir.
+- Frederic Malle L'Eau d'Hiver | La lumière lunaire sur le calcaire : le seul parfum assez discret pour ne pas troubler ce silence.
 
 ## NEW Antarctique | Destinations
 d: Péninsule antarctique, -8 °C. Le canot passe entre les icebergs, les manchots ne bougent pas. Un silence qui n'existe nulle part ailleurs sur terre.
@@ -1965,7 +1902,7 @@ pal: 0a2a4a,6ab0d8,f0f8ff,waves
 - Byredo Gypsy Water | Deux personnes dans un canot parmi les icebergs, au bout du monde.
 
 ## NEW Chine ancienne | Destinations
-d: Province du Guangxi, rivière Li, crépuscule. Des pêcheurs debout sur des radeaux de bambou avec leurs cormorans, des karsts qui se fondent dans la brume bleue. Ça dure depuis 2 000 ans.
+d: Rivière Li, province du Guangxi, crépuscule : des pêcheurs sur des radeaux de bambou avec leurs cormorans, des karsts fondus dans la brume bleue. Et au lever du jour, la Grande Muraille à Mutianyu qui s'enfonce dans la brume verte, 2 700 ans de pierre et personne sur le chemin.
 pal: 1a2a3a,6a8aa0,e8e0d0,waves
 - Comme des Garçons Kyoto | L'Asie orientale dans un seul parfum : le temple, la rivière, la brume.
 - Comme des Garçons Hinoki | Le bambou des radeaux, le bois sacré de l'Asie.
@@ -1977,6 +1914,10 @@ pal: 1a2a3a,6a8aa0,e8e0d0,waves
 - Serge Lutens Gris Clair | La lumière bleue du crépuscule sur la rivière Li.
 - Comme des Garçons Wonderwood | Le bambou, le roseau, le bois flottant.
 - Frederic Malle L'Eau d'Hiver | La lanterne du pêcheur : le seul point chaud dans tout ce bleu.
+- DS & Durga Bowmakers | La pierre taillée à la main.
+- Phaedon Thé Vert | Le thé bu dans le froid du matin, la thermos posée sur la pierre.
+- Naomi Goodsir Bois d'Ascèse | L'austérité de l'effort collectif sur des siècles.
+- Maison Margiela Replica When the Rain Stops | La muraille après la pluie de nuit : les pierres qui fument au soleil.
 
 ## NEW L'Ivresse | Atmosphères
 d: Le bouchon qui saute, les bulles qui montent dans la coupe, le plateau d'argent, la robe noire. Le premier verre est le meilleur, le troisième est le vrai, le dernier on regrette déjà de ne pas l'avoir refusé. Champagne, grand soir et nuits qui durent.
@@ -2010,20 +1951,6 @@ pal: 8a3a1a,e8a040,f6e6c0,rays
 - Maison Crivelli Citrus Batikanga | L'éveil de la savane à l'aube : vif, chaud, minéral.
 - Tom Ford Oud Wood | Le soir au lodge : le bois qui brûle, les étoiles, le whisky.
 - Profumum Roma Acqua di Sale | Le lac Nakuru, les flamants roses, l'eau salée des Grands Lacs.
-
-## NEW Grande Muraille de Chine | Destinations
-d: Section de Mutianyu, lever de soleil. La muraille s'enfonce dans la brume verte des collines : 2 700 ans de pierre, et personne d'autre sur ce chemin à 5h du matin.
-pal: 2a3a2a,7a9a7a,e8e4d0,grid
-- Comme des Garçons Kyoto | La spiritualité millénaire de l'Asie orientale : ce qu'on respire entre les pierres.
-- Comme des Garçons Hinoki | Le bois des tourelles, la sève ancienne dans la pierre.
-- Aesop Hwyl | L'effort de la montée, l'air froid du matin, la récompense du sommet.
-- Memo Inlé | La prière du garde qui montait la nuit dans ces tours.
-- Serge Lutens Gris Clair | La brume verte sur les montagnes, le matin en altitude.
-- DS & Durga Bowmakers | La pierre taillée à la main.
-- Frederic Malle L'Eau d'Hiver | La lumière oblique du soleil levant qui passe dans l'arche.
-- Phaedon Thé Vert | Le thé bu dans le froid du matin, la thermos posée sur la pierre.
-- Naomi Goodsir Bois d'Ascèse | L'austérité de l'effort collectif sur des siècles.
-- Maison Margiela Replica When the Rain Stops | La muraille après la pluie de nuit : les pierres qui fument au soleil.
 
 ## NEW Thaïlande | Destinations
 d: Province de Krabi, milieu de journée. Deux éléphants traversent une rivière verte au pied des karsts. L'air est chaud et humide : la jungle, l'eau douce, des fleurs qu'on ne reconnaît pas.
@@ -2067,26 +1994,48 @@ pal: 3a1a0a,b8541e,e8b878,stripes
 - Comme des Garçons Black | La nuit artificielle en plein jour, quand le sable recouvre tout.
 - Maison Crivelli Bois Datchaï | Les routes caravanières qui traversaient ce même désert avant le train.
 
-## NEW Pleine lune sur les pyramides | Destinations
-d: Gizeh, 2h du matin. Pleine lune parfaitement alignée sur la pyramide de Khéphren, une caravane de chameaux passe en silhouette. Pas un bruit, sauf le sable.
-pal: 0a0f24,c8c0a0,f4e8c0,rays
-- Abdul Samad Al Qurashi Oud Al Shams | L'oud des caravanes, ici lunaire.
-- Serge Lutens Ambre Sultan | Ce que sentait Karnak sous la lune il y a 3 000 ans.
-- Comme des Garçons Black | L'intérieur de la pyramide sous la lune.
-- Xerjoff Alexandria II | Alexandrie, la ville qui a traduit tout le savoir antique.
-- Nasomatto Black Afgano | La nuit en plein désert : quelque chose de légèrement hallucinatoire dans cette lune sur cette pierre.
-- Maison Francis Kurkdjian Grand Soir | La lune qui fait de la nuit un grand soir.
-- Memo African Leather | Le cuir des selles de chameaux dans la nuit froide.
-- Naomi Goodsir Bois d'Ascèse | 4 500 ans de silence autour de ces pierres.
-- 4711 Original Eau de Cologne | Napoléon était là en 1798 : il a vu cette même lune.
-- Frederic Malle L'Eau d'Hiver | La lumière lunaire sur le calcaire : le seul parfum assez discret pour ne pas troubler ce silence.
-
 ## NEW Les Branchés | Archétypes
 d: Les gens branchés : pop-ups, vernissages, quartiers qui comptent. Trois profils parisiens, du Marais à Opéra.
 pal: 1c1020,6a2f4a,e4b5a0,arches
 @ La fille d'Opéra | Elle ne manque aucun pop-up Enfant de Palestine et passe toujours prendre un iced rose latte chez Dune Café avant de rejoindre Opéra. Elle s'habille chez Merrachi, porte des Tabi et finit souvent sa journée chez Go Un autour d'un poulet frit coréen.
-
+- Memo Paris Odéon | Odéon de Memo est inspiré d'un quartier parisien — rose de nuit, cardamome, patchouli crémeux. C'est le parfum qui colle au quartier.
+- Armani Privé Rouge Malachite | Tubéreuse opulente, épicée, profonde — inspirée par la Russie et sa puissance contrastée. Elle est pas censée le porter selon les codes de son quartier mais elle s'en fout.
+- Amouage Love Tuberose | La tubéreuse d'Amouage est plus douce, plus romantique. Elle l'associe à ses soirées Go Un — le dîner coréen, la conversation qui dure, le retour à pied sous les lumières d'Opéra.
+- Diptyque Orphéon | Inspiré du cabaret parisien Orphéon dans le 11ème. C'est son parfum de soirée dans le quartier — boisé, légèrement poussiéreux, très Saint-Germain mais version underground.
+- Vilhelm Parfumerie 125th & Bloom | Elle l'a découvert à l'occasion d'un pop-up. C'est le genre de parfum qu'on ne trouve pas partout — floral frais, légèrement photogénique.
 @ Le mec des pop-ups | Il porte des Kayano 14 avec un t-shirt Abela et un short camo dès que les températures remontent. Tous les week-ends, tu peux le croiser rue Notre-Dame-de-Nazareth à un pop-up de marque émergente.
-
+- Maison Crivelli Hibiscus Mahajád | Floral et direct — ni trop masculin ni trop féminin. Il l'assume.
+- Louis Vuitton L'Immensité | Frais, boisé, légèrement minéral. C'est le parfum du voyage — et lui il voyage tous les week-ends.
+- Xerjoff Erba Gold | Herbe fraîche, agrumes, vétiver blanc. Propre mais pas banal.
+- Byredo Bal d'Afrique | Son parfum de concert — 630G, Yardland, les clubs de Rotterdam. Bal d'Afrique est chaud, enveloppant, très "fin de soirée qui a bien commencé".
+- Aesop Hwyl | Forestier, légèrement cru, très japonais dans l'approche. C'est son parfum du dimanche — quand il rentre enfin, qu'il reste chez la même personne et que la semaine peut recommencer.
 @ Le directeur artistique du Marais | Il ne quitte quasiment jamais Le Marais. Il s'habille en Issey Miyake, Comme des Garçons et The North Face Purple Label, alterne entre des Plasticana et des mules en cuir, passe chez Dover Street Market pour ses parfums et chez The Archivist pour dénicher des pièces vintage.
+- Comme des Garçons 2 Man | CDG 2 est la version habillée de leur approche conceptuelle — floral-aldéhydé sur une base boisée légèrement fumée. C'est le parfum de quelqu'un qui sait exactement ce qu'il fait même quand ça n'a l'air de rien.
+- Nasomatto Baraonda | Nasomatto est la maison des parfums-manifestes d'Alessandro Gualtieri. Baraonda ("chaos" en dialecte vénitien) sent le chaos élégant — alcool, cuir, animal.
+- Notes de Bas de Page Carambolage | Maison française confidentielle, fondée par une ex-journaliste mode. Carambolage est un accord carambole-gingembre qui déroute au premier contact puis devient addictif.
+- Comme des Garçons Kyoto | Encens de temple shinto, bois japonais, minimalisme absolu. C'est son parfum de travail — dans l'atelier, devant les maquettes, les références, les samples tissu.
+- DS & Durga Bowmakers | L'atelier d'artisan en flacon. Il l'apprécie exactement pour ça — c'est un parfum qui sent le travail artisanal, la matière, le soin.
 
+## L'Ivresse
++ Maison Crivelli Tobacco Color | Le tabac de fin de soirée, quand le champagne est fini.
+
+## Jazz
++ Maison Crivelli Tobacco Color | Le tabac du club, la fumée entre deux morceaux.
+
+## Les Affranchis
++ Maison Crivelli Tobacco Color | Le tabac de la table du fond.
+
+## L'Été en Black Tie
++ Maison Crivelli Tobacco Color | Le cigare derrière la villa.
+
+## Hiver à New York
++ Maison Crivelli Tobacco Color | Le tabac chaud sous le col roulé.
+
+## Automne Cozy
++ Maison Crivelli Tobacco Color | Le tabac et la couverture.
+
+## Night Out
++ Maison Crivelli Tobacco Color | Le tabac de l'after.
+
+## Vito Corleone
++ Maison Crivelli Tobacco Color | Le tabac du bureau sombre.

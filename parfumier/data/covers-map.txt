@@ -58,7 +58,7 @@
 56|Les Petits budgets
 57|Les Fans de design
 58|Le Bookworm
-59|Les Sportifs stylés
+59|-
 60|La Romantique classique
 61|Strange Smells
 62|Layering
