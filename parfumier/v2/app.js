@@ -858,23 +858,30 @@
   // Fiche d'un parfum de la base : description, tags, notes, et les actions (collection, wishlist)
   // Pyramide olfactive (tête, cœur, fond) quand la fiche est détaillée.
   const pyramidOf = (e) => { const y = (window.PYRAMID || {})[E.norm(e.house) + '|' + E.norm(e.name)]; if (!y) return ''; const col = (l, a) => (a && a.length ? `<div><p class="mono">${l}</p><p class="pyn">${a.map(esc).join(' · ')}</p></div>` : ''); return `<div class="pyr3">${col('Tête', y.t)}${col('Cœur', y.h)}${col('Fond', y.b)}</div>`; };
+  const HOUSE_SITE = { 'dior': 'https://www.dior.com/fr_fr/beauty/parfums', 'yves saint laurent': 'https://www.yslbeauty.fr/parfums', 'guerlain': 'https://www.guerlain.com/fr/fr-fr/c/lart-et-la-matiere-collection.html', 'hermes': 'https://www.hermes.com/fr/fr/category/parfums/', 'tom ford': 'https://www.tomfordbeauty.com/collections/fragrance', 'chanel': 'https://www.chanel.com/fr/parfums/', 'parfums de marly': 'https://parfums-de-marly.com/fr/collections/fragrances', 'jo malone': 'https://www.jomalone.fr/products/colognes', 'mancera': 'https://www.manceraparfums.com/fr/', 'khadlaj': 'https://www.fragrantica.fr/designer/Khadlaj-Perfumes.html', 'oman luxury': 'https://odorare.fr/collections/oman-luxury', 'ella k': 'https://www.ellakparfums.com/', 'horace': 'https://www.horace.com/', 'ex nihilo': 'https://www.exnihilo-paris.com/', 'maison francis kurkdjian': 'https://www.franciskurkdjian.com/fr/', 'frederic malle': 'https://www.fredericmalle.com/', 'xerjoff': 'https://www.xerjoff.com/', 'maison crivelli': 'https://www.maisoncrivelli.com/', 'parfum d empire': 'https://www.parfumdempire.com/' };
+  const siteOf = (e) => HOUSE_SITE[E.norm(e.house)] || null;
+  const goPlaylist = (title) => { const p = (window.PLAYLISTS || []).find((x) => x.t === title); if (!p) return; closeSheet(); tab = 'play'; PL.id = p.id; render(); };
+  const goNeedText = (t) => { closeSheet(); tab = 'search'; render(); setTimeout(() => { const n = $('#need'); if (n) { n.value = t; const g = $('#needgo'); if (g) g.click(); window.scrollTo(0, 0); } }, 60); };
   const edOf = (e) => { const ED = window.EDITORIAL || {}, HA = window.HOUSE_ALIAS || {}; return ED[E.norm((HA[E.norm(e.house)] || e.house)) + '|' + E.norm(e.name)] || ED[E.norm(e.house) + '|' + E.norm(e.name)] || null; };
   const edHtml = (e) => {
     const d = edOf(e); if (!d) return '';
     const L = (t, a, ic) => (a && a.length ? `<div><p class="mono">${t}</p><ul style="margin:6px 0 0;padding-left:18px">${a.map((x) => `<li style="margin:2px 0">${ic} ${esc(x)}</li>`).join('')}</ul></div>` : '');
     const TIER = { S: 'Incontournable', A: 'Excellent choix', B: 'Très bon' }, DISPO = { restreint: 'Distribution restreinte', secondaire: 'Plutôt marché secondaire', discontinue: 'Discontinué ou introuvable' };
-    const chips = [d.an ? String(d.an) : '', d.nez ? 'Nez : ' + d.nez : '', TIER[d.tier] || '', DISPO[d.dispo] || ''].filter(Boolean).map((t) => `<span class="chip">${esc(t)}</span>`).join('');
+    const facts = [d.an ? String(d.an) : '', TIER[d.tier] || '', DISPO[d.dispo] || ''].filter(Boolean).join(' · ');
+    const nez = d.nez ? `<button class="chip" data-nz="${esc(d.nez.split(',')[0].trim())}">Nez : ${esc(d.nez)}</button>` : '';
+    const site = siteOf(e);
     const meta = [d.prix ? '≈ ' + d.prix + ' €' : '', d.achat ? 'Où l\'acheter : ' + d.achat : ''].filter(Boolean).join(' · ');
     return `<div class="edfiche">
-      ${chips ? `<div class="chips">${chips}</div>` : ''}
+      ${facts || nez ? `<div class="chips">${facts ? `<span class="mono">${esc(facts)}</span>` : ''}${nez}</div>` : ''}
       ${d.desc ? `<p class="rd">${esc(d.desc)}</p>` : ''}
       ${L('Ses forces', d.forts, '＋')}${L('Ses limites', d.faibles, '－')}
       ${d.pour ? `<div><p class="mono">Pour qui</p><p class="rd" style="margin-top:6px">${esc(d.pour)}</p></div>` : ''}
       ${d.eviter ? `<div><p class="mono">À éviter</p><p class="rd" style="margin-top:6px">${esc(d.eviter)}</p></div>` : ''}
-      ${(d.sit || []).length ? `<div><p class="mono">Situations</p><div class="chips" style="margin-top:8px">${d.sit.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
+      ${(d.sit || []).length ? `<div><p class="mono">Situations : toucher pour chercher</p><div class="chips" style="margin-top:8px">${d.sit.map((t) => `<button class="chip" data-gosit="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>` : ''}
       ${d.tenue ? `<div><p class="mono">Tenue</p><p class="rd" style="margin-top:6px">${esc(d.tenue)}</p></div>` : ''}
       ${d.mood ? `<div><p class="mono">Mood</p><p class="rd" style="margin-top:6px">${esc(d.mood)}</p></div>` : ''}
       ${meta ? `<p style="color:var(--muted);font-size:14px">${esc(meta)}</p>` : ''}
+      ${site ? `<div class="buy"><a class="linkbtn" target="_blank" rel="noopener" href="${site}">Site officiel</a></div>` : ''}
     </div>`;
   };
   let BIOM = null;
@@ -884,19 +891,23 @@
     const pn = openSheet(`
       <div class="big-bottle">${bt({ name: e.name, house: e.house, family: e.family || 'boisé', id: 'e' + E.norm(e.name).length }, { spray: true })}</div>
       <div><h2>${esc(e.name)}</h2><p class="mono" style="margin-top:6px">${esc(e.house)}${e.family ? ' · ' + (e.guess ? '≈ ' : '') + esc(famLabel(e.family)) : ''}${e.conc ? ' · ' + esc(e.conc.split(',').map((x) => CONC_L[x] || x).join(' / ')) : ''}</p></div>
-      ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
+      ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<button type="button" class="chip" data-gotag="${esc(t)}">${esc((window.TAGS || {})[t] || t)}</button>`).join('')}</div>` : ''}
       ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
-      ${(() => { const q = E.profOf ? E.profOf({ name: e.name, house: e.house, notes: e.notes || [], family: e.family }) : null; if (!q) return ''; const ST = { culte: 'Culte', sous: 'Sous-coté', sur: 'Très hypé', juste: 'À sa juste valeur' }; const bits = [q.st ? `<span class="chip">${ST[q.st]}</span>` : '', q.pas && !q.derived ? `<span class="chip" style="opacity:.85">À éviter : ${esc(String(q.pas).slice(0, 90))}</span>` : ''].filter(Boolean); return bits.length ? `<div class="chips">${bits.join('')}</div>` : ''; })()}
+      ${(() => { const q = E.profOf ? E.profOf({ name: e.name, house: e.house, notes: e.notes || [], family: e.family }) : null; if (!q) return ''; const ST = { culte: 'Culte', sous: 'Sous-coté', sur: 'Très hypé', juste: 'À sa juste valeur' }; const bits = [q.st ? ST[q.st] : '', q.pas && !q.derived ? 'À éviter : ' + String(q.pas).slice(0, 90) : ''].filter(Boolean); return bits.length ? `<p class="mono" style="text-transform:none">${bits.map(esc).join(' · ')}</p>` : ''; })()}
       ${edOf(e) ? edHtml(e) : ''}
-      ${!edOf(e) && bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${esc(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
+      ${!edOf(e) && bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${esc(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<button class="chip" data-gopl="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>` : ''}
       ${pyramidOf(e)}
-      ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
+      ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<button type="button" class="chip" data-gonote="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
       <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>
       ${(e.noses || []).length ? `<div><p class="mono">Créé par</p><div class="chips" style="margin-top:8px">${e.noses.slice(0, 4).map((n) => `<button class="chip" data-nz="${esc(n)}">${esc(n)}</button>`).join('')}</div>${e.noses.length >= 3 ? '<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:8px">Plusieurs nez sont cités pour ce parfum : les sources divergent.</p>' : ''}</div>` : ''}
       <div class="row">${inCol ? '<span class="mono">Dans ta collection ✓</span>' : '<button class="cta" id="eown"><span>Je l\'ai</span></button>'}${inW ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="ghost" id="ewish">À sentir</button>'}<button class="ghost" id="ex">Fermer</button></div>
       ${buyLinks(e.name, e.house)}`);
     $('#ex', pn).onclick = closeSheet;
     $$('[data-nz]', pn).forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.nz; closeSheet(); tab = 'search'; render(); }));
+    $$('[data-gopl]', pn).forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl)));
+    $$('[data-gosit]', pn).forEach((b) => (b.onclick = () => goNeedText(b.dataset.gosit)));
+    $$('[data-gotag]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.tags = [b.dataset.gotag]; SRCH.limit = 40; tab = 'search'; render(); }));
+    $$('[data-gonote]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.note = b.dataset.gonote; SRCH.limit = 40; tab = 'search'; render(); }));
     if ($('#eown', pn)) $('#eown', pn).onclick = () => { addEntriesToCollection([e]); closeSheet(); render(true); };
     if ($('#ewish', pn)) $('#ewish', pn).onclick = () => { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); save(); closeSheet(); render(true); };
   }
@@ -1382,12 +1393,13 @@
         <div><p class="mono">${esc(p.secs.join(' · '))}</p><h1 class="plh">${esc(p.t)}</h1></div>
         ${p.d ? `<p class="pld">${esc(p.d)}</p>` : ''}
         <p class="mono plmeta">${p.ps.length} parfums · ${st.n} dans la base${st.mine ? ' · ' + st.mine + ' chez toi' : ''}</p>
-        ${accords.length || notes.length ? `<div><p class="mono">L'ADN olfactif</p><div class="chips" style="margin-top:8px">${accords.map((a) => `<span class="chip on">${esc(a)}</span>`).join('')}${notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div></div>` : ''}
+        ${accords.length || notes.length ? `<div><p class="mono">L'ADN olfactif</p><div class="chips" style="margin-top:8px">${accords.map((a) => `<button type="button" class="chip on" data-adn="a:${esc(a)}">${esc(a)}</button>`).join('')}${notes.map((n) => `<button type="button" class="chip" data-adn="n:${esc(n)}">${esc(n)}</button>`).join('')}</div></div>` : ''}
         <div class="row"><button class="cta" id="plshuf"><span>Un au hasard</span></button><button class="ghost" id="plwish">Tout en wishlist</button></div>
         ${(p.doc || []).map((d) => `<div class="pldoc"><p>${esc(d.t)}</p>${d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener noreferrer">Source : ${esc(d.s)}</a>` : ''}</div>`).join('')}
         <div class="plist">${p.ps.map((x, i) => (p.grp && plGrpAt(p, i) >= 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[plGrpAt(p, i)].t)}</p>${p.grp[plGrpAt(p, i)].d ? `<p class="pld">${esc(p.grp[plGrpAt(p, i)].d)}</p>` : ''}</div>` : '') + row(x, i)).join('')}</div>
         ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
       </section>`;
+    $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; render(); } else goNeedText(v); }));
     $('#plback').onclick = () => { PL.id = 0; render(); };
     const open = (i) => { const e = st.es[i], x = p.ps[i]; if (e) return openEntry(e); const pn = openSheet(`<div><h2>${esc(x.q)}</h2><p class="mono" style="margin-top:6px">Pas encore dans la base de Sillage</p></div><p style="color:var(--muted);font-size:14px">Ce parfum fait partie de la liste « ${esc(p.t)} », mais je n'ai pas encore sa fiche. Tu peux le garder en wishlist pour le sentir.</p><div class="row">${hasWish(x.q) ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="cta" id="plw"><span>À sentir</span></button>'}<button class="ghost" id="ex">Fermer</button></div>`); $('#ex', pn).onclick = closeSheet; if ($('#plw', pn)) $('#plw', pn).onclick = () => { addWish({ name: x.q, house: '', family: '', notes: [], price: 0, st: 'smell' }); save(); closeSheet(); viewPlaylist(p); }; };
     $$('[data-pe]').forEach((b) => (b.onclick = () => open(+b.dataset.pe)));

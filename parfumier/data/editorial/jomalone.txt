@@ -1,0 +1,70 @@
+Jo Malone|Wood Sage & Sea Salt|desc=Minéral, salin, boisé, aérien : propre, britannique, naturel, minimaliste, extrêmement facile à porter. Le sel marin apporte une impression minérale et iodée, le bois et la sauge une sécheresse élégante.|forts=très élégant;extrêmement facile à porter;excellent parfum de journée;unisexe;esthétique quiet luxury|faibles=tenue souvent insuffisante pour son prix;projection modérée;peut sembler trop discret|pour=25 à 50 ans, personne élégante, minimaliste, créative ou professionnelle|sit=travail;brunch;vacances;rendez-vous décontracté;networking|eviter=clubbing|tenue=chemise blanche, pantalon beige, polo en maille, costume déstructuré, lin|mood=je suis propre, calme, bien habillé et je n'ai rien à démontrer|st=juste|prix=152|achat=Jo Malone London|tier=S
+Jo Malone|Myrrh & Tonka|desc=Myrrhe et fève tonka, Cologne Intense : ambré, balsamique, gourmand, oriental. Beaucoup plus dense que les Colognes classiques ; la myrrhe apporte une profondeur résineuse presque sacrée, la tonka une douceur vanillée et amandée. Best-seller.|forts=excellente signature olfactive;beaucoup plus performant que la majorité des Colognes;sophistiqué;très beau en automne-hiver;excellent pour les soirées;masculin et féminin|faibles=moins adapté aux fortes chaleurs;assez identifiable;prix élevé|pour=25 à 50 ans, élégant, costume, manteau, cuir, maille|sit=dîner;date;soirée chic;business|eviter=sport;chaleur|mood=dîner dans un hôtel cinq étoiles à 21h|st=juste|prix=205|achat=Jo Malone London|tier=S
+Jo Malone|Lime Basil & Mandarin|desc=Citron vert, basilic et mandarine : l'ADN historique de Jo Malone, énergie, facette verte piquante, rondeur de la mandarine. Fraîcheur, élégance, sophistication discrète.|forts=construction élégante|faibles=performance|sit=printemps, été;journée;bureau;vacances;costume clair|tenue=chemise blanche, costume clair|st=sous|prix=152|achat=Jo Malone London|tier=A
+Jo Malone|English Pear & Freesia|desc=Poire juteuse, floralité propre, fraîcheur lumineuse : probablement l'un des parfums les plus immédiatement « Jo Malone ». Best-seller.|forts=très polyvalent;extrêmement facile à aimer|faibles=trop consensuel pour qui cherche une signature originale|pour=20 à 45 ans, mais portable plus âgé|sit=bureau;brunch;mariage;date;vacances;soirée|st=juste|prix=152|achat=Jo Malone London|tier=A
+Jo Malone|Oud & Bergamot|desc=Cologne Intense : oud, agrumes, boisé, ambré. L'agrume apporte la lumière, l'oud une profondeur sombre et luxueuse. Pour qui veut quelque chose de chic, mais moins sage.|forts=sophistiqué;sort du registre jolie Cologne britannique|pour=30 à 55 ans, tailoring|sit=costume;dîner;hôtel;networking;voyage;soirées;automne, hiver|st=sous|prix=205|achat=Jo Malone London|tier=A
+Jo Malone|Pomegranate Noir|desc=Fruité, épicé, boisé, ambré : plus sombre et mystérieux que l'image très propre de Jo Malone.|forts=caractère;sensualité;excellente identité;plus mystérieux que beaucoup de Colognes;parfait en soirée|faibles=moins polyvalent;peut paraître austère;moins facile à aimer immédiatement|sit=soirée;dîner|mood=dîner londonien, manteau noir, bar feutré|st=sous
+Jo Malone|Blackberry & Bay|desc=Fruité, aromatique, vert : la mûre pour le fruité, le laurier pour la dimension verte. Plus jeune et casual que Myrrh & Tonka.|forts=frais avec une vraie personnalité|faibles=trop léger pour une grosse soirée ou black tie|sit=journée;week-end;printemps, été;vacances|tenue=casual chic|st=sous
+Jo Malone|Peony & Blush Suede|desc=Floral, fruité, musqué : très élégant, féminin dans son expression, mais portable par qui aime les floraux.|pour=personne sophistiquée, sociale, élégante, plutôt urbaine|tenue=robe, blazer, tailleur, chemise en soie, cocktail|mood=Paris, galerie d'art, déjeuner chic|st=juste
+Jo Malone|Orange Blossom|desc=Un floral blanc lumineux autour de la fleur d'oranger, propre, solaire, féminin sans être lourd, très printemps-été.|forts=lumineux;propre|faibles=performance limitée;manque de profondeur|sit=journée;vacances;mariage;date|eviter=soirée hivernale|st=sous
+Jo Malone|Nectarine Blossom & Honey|desc=Un fruité gourmand très accessible : pêche et nectarine juteuses, miel, floralité légère.|pour=personne solaire, optimiste, jeune, casual chic, chaleureuse|sit=printemps, été;brunch;vacances;date diurne|eviter=business formel;soirée sophistiquée|st=juste
+Jo Malone|Basil & Neroli|desc=Frais, aromatique, légèrement floral, très propre : un Jo Malone intéressant pour le quiet luxury masculin.|tenue=chemise blanche, costume bleu marine, polo, tailoring estival|mood=directeur créatif londonien qui sort d'une réunion|st=sous
+Jo Malone|Mimosa & Cardamom|desc=Une construction douce et texturée : mimosa poudré, cardamome fraîche et épicée. L'un des Jo Malone à mettre haut dans un algorithme pour qui veut raffiné mais pas mainstream.|sit=date;dîner;printemps;automne doux;tenue élégante|st=sous
+Jo Malone|Scarlet Poppy|desc=Cologne Intense : floral, gourmand, ambré. Plus opulent que les Colognes classiques, pour une présence plus importante sans passer à un oriental lourd.|sit=dîner;soirée;date;automne, hiver;tenue habillée|st=sous|prix=205
+Jo Malone|Cypress & Grapevine|desc=Cologne Intense : boisé, aromatique, sombre et élégant. L'un des meilleurs candidats masculins et unisexes de la maison.|pour=30 à 55 ans, costume, cuir, manteau, business premium|mood=old money britannique, sans cosplay|sit=networking;automne|st=sous|prix=205|tier=A
+Jo Malone|Dark Amber & Ginger Lily|desc=Plus mystérieux, sombre et oriental.|forts=profondeur;sophistication;originalité;soirée;automne, hiver|faibles=moins polyvalent;peut sembler mature;pas idéal en plein été|st=sous
+Jo Malone|Velvet Rose & Oud|desc=Rose sombre, oud, texture riche : une référence pour la soirée, le gala, le date, le smoking.|pour=personne sûre d'elle, sophistiquée, qui assume son parfum|sit=gala;soirée;date;événement luxe|tenue=tenue noire, smoking|st=juste|tier=A
+Jo Malone|Tuberose Angelica|desc=Floral blanc très présent.|sit=soirée;mariage;robe;événement;printemps;été nocturne|pour=plus sophistiqué que casual|st=sous
+Jo Malone|Vetiver & Golden Vanilla|desc=Vétiver sec et vanille chaleureuse : chaud, mais pas simplement sucré.|sit=automne, hiver;date;dîner;business casual|st=sous
+Jo Malone|Oud & Safran|desc=Épicé, chaud, luxueux : le safran lui donne une aura plus niche que les Colognes traditionnelles.|sit=soirée;dîner;automne, hiver|tenue=vêtements sombres|st=sous
+Jo Malone|Red Roses|desc=Une rose extrêmement directe, pas une rose sucrée : rose fraîche, tiges, jardin anglais.|sit=printemps, été;journée;mariage;rendez-vous;brunch|st=sous
+Jo Malone|Wild Bluebell|desc=Floral vert, délicat, aérien. Très féminin dans l'imaginaire mais portable par un homme qui aime les floraux verts.|sit=printemps;journée|faibles=performance|tenue=casual chic|st=juste
+Jo Malone|Orange Bitters|desc=Un agrume plus sombre et adulte : orange amère, chaleur épicée, impression de cocktail.|sit=automne, hiver;soirée;bar;date;costume|mood=Old Fashioned dans un hôtel londonien|st=sous
+Jo Malone|English Oak & Hazelnut|desc=Boisé, sec, légèrement noisetté. Promenade dans un parc anglais en octobre.|pour=homme ou femme élégant(e), discret(e), automne, laine|st=sous
+Jo Malone|English Oak & Redcurrant|desc=Plus fruité et lumineux que Hazelnut : un boisé moins sérieux.|sit=printemps, automne;journée;casual chic|st=juste
+Jo Malone|Fig & Lotus Flower|desc=Fruité, floral, aquatique, plus doux et lumineux.|sit=été;vacances;journée|tenue=tenue blanche|faibles=manque de puissance|st=juste
+Jo Malone|Honeysuckle & Davana|desc=Floral, fruité, légèrement aromatique : une signature florale lumineuse sans tomber dans le bouquet.|st=sous
+Jo Malone|Red Hibiscus|desc=Plus solaire et exotique. La version Intense est particulièrement pertinente pour une soirée d'été, un date ou des vacances premium.|sit=été;date;vacances|st=juste
+Jo Malone|Ginger Beer|desc=Épicé, pétillant, énergique.|sit=cocktail bar;soirée casual|mood=jeune adulte|st=juste
+Jo Malone|Amber & Lavender|desc=Fraîcheur aromatique et chaleur ambrée, dans l'Archive Collection, épuisé sur le site.|dispo=restreint|st=sous|prix=152
+Jo Malone|Jasmine Sambac & Marigold|desc=Floral jasmin sambac et souci : solaire et lumineux.|st=juste
+Jo Malone|Hinoki & Cedarwood|desc=Boisé aromatique, plus sec et contemplatif. Spa japonais, manteau en laine, architecture brutaliste.|pour=homme ou femme minimaliste, architecture, design, vêtements monochromes|st=sous
+Jo Malone|Amber Labdanum|desc=Cologne Intense 2025 : référence plus chaude et ambrée.|sit=automne, hiver;soirée;luxe;tenue sombre|pour=utilisateurs qui trouvent Myrrh & Tonka trop gourmand|st=new|prix=205
+Jo Malone|Rose & Oud Leather|an=2026|desc=Cologne Intense : rose, oud et cuir, un profil beaucoup plus affirmé que la majorité des Colognes Jo Malone.|pour=30 à 55 ans, très à l'aise avec les parfums puissants|sit=soirée;gala;date;smoking;manteau noir;hiver|st=new|prix=205
+Jo Malone|Taif Rose|desc=Cologne Intense : rose opulente, plus riche que Red Roses.|sit=soirée;mariage;dîner;tenue habillée|pour=amateurs de rose sophistiquée|st=sous|prix=205
+Jo Malone|Gardenia & Oud Absolu|desc=Cologne Absolu : fleur blanche crémeuse et oud sombre. Presque deux fois le prix d'une Cologne classique.|sit=luxe;soirée;événement|eviter=parfum quotidien à 150 euros|st=juste|prix=301
+Jo Malone|Violet & Amber Absolu|desc=Cologne Absolu : parfum de soirée, automne-hiver, luxe, tenue habillée, pour une personne expérimentée. Collectionneur plutôt que premier achat.|st=juste|prix=301
+Jo Malone|Rose & White Musk Absolu|desc=Cologne Absolu : plus doux et propre, luxe discret.|sit=mariage;dîner;chambre d'hôtel;printemps|st=juste|prix=301
+Jo Malone|Bitter Mandarin|desc=Un agrume plus amer et sophistiqué. Sicile, terrasse, chemise blanche, cocktail.|st=sous
+Jo Malone|Sea Salt & Bergamot|an=2026|desc=Minéral, agrume, marin : plus lumineux et frais que Wood Sage & Sea Salt.|sit=été;vacances;journée;resort;chemise en lin|st=new|prix=152
+Jo Malone|Sea Daffodil|desc=Floral marin.|sit=été;vacances;bord de mer;journée|st=juste
+Jo Malone|Silk Blossom|desc=Floral léger, délicat et aérien, très printemps-été.|faibles=performance et impact|st=juste
+Jo Malone|Ginger Biscuit|desc=Gourmand hivernal : biscuit épicé, chaleur, douceur.|sit=Noël;hiver;date;maison;pull en maille|faibles=pas polyvalent|st=juste
+Jo Malone|Green Almond & Redcurrant|desc=Fruité, acidulé, légèrement vert.|sit=printemps;journée;casual|st=sous
+Jo Malone|Nutmeg & Ginger|desc=Épicé, chaleureux, historique : plus adulte et moins sucré.|sit=automne, hiver;laine;journée|st=juste
+Jo Malone|Blue Agava & Cacao|desc=Archive : plus exotique, légèrement gourmand.|dispo=restreint|prix=152|st=juste
+Jo Malone|Vanilla & Anise|desc=Vanillé avec une facette anisée qui évite le simple dessert. Archive, épuisé.|sit=hiver;soirée|dispo=restreint|st=sous
+Jo Malone|White Jasmine & Mint|desc=Contraste entre menthe fraîche et jasmin : floral vert.|sit=printemps, été;journée;tenue blanche|st=juste
+Jo Malone|Green Wheat & Meadowsweet|desc=Collection English Fields : une campagne anglaise sophistiquée. Disponibilité à surveiller.|st=sous|dispo=restreint
+Jo Malone|Honey & Crocus|desc=Plus texturé, floral et miellé.|sit=automne, printemps frais;tenue chic|st=juste
+Jo Malone|Oat & Cornflower|desc=Doux, céréale et floral, champêtre : slow luxury, campagne, calme.|st=juste
+Jo Malone|Primrose & Rye|desc=Pour un profil plus expérimental, qui connaît déjà tous les parfums mainstream.|st=sous
+Jo Malone|Emerald Thyme|desc=Collection Memento : aromatique, vert, contemporain.|pour=créatif, urbain, casual chic|st=sous
+Jo Malone|Musk Memento|desc=Plus propre, musqué, minimaliste.|sit=bureau;layering;tenue monochrome|st=juste
+Jo Malone|Passiflora|desc=Fruité floral exotique.|sit=été;vacances;date;journée|st=juste
+Jo Malone|Darjeeling Tea|desc=Rare Teas : intellectuel, lumineux, matinal.|st=sous
+Jo Malone|Midnight Black Tea|desc=Rare Teas : sombre, mystérieux, soirée.|st=sous
+Jo Malone|Oolong Tea|desc=Rare Teas : contemplatif, minimaliste.|st=sous
+Jo Malone|Silver Needle Tea|desc=Rare Teas : délicat, propre, discret.|st=sous
+Jo Malone|Cade & Cedarwood|desc=Wild Flowers & Weeds : niche, artistique, nature. Pour qui veut quelque chose que personne autour de soi ne porte.|st=sous
+Jo Malone|Hemlock & Bergamot|desc=Wild Flowers & Weeds : niche, artistique, nature.|st=sous
+Jo Malone|Lupin & Patchouli|desc=Wild Flowers & Weeds : niche, artistique, nature.|st=sous
+Jo Malone|Nettle & Wild Achillea|desc=Wild Flowers & Weeds : niche, artistique, nature.|st=sous
+Jo Malone|Willow & Amber|desc=Wild Flowers & Weeds : niche, artistique, nature.|st=sous
+Jo Malone|Highland Heather|desc=The Highlands : nature, paysage, poésie, niche. À recommander pour leur valeur émotionnelle plus que pour leur pyramide.|st=sous
+Jo Malone|Mallow on the Moor|desc=The Highlands : nature, paysage, poésie, niche.|st=sous
+Jo Malone|Melancholy Thistle|desc=The Highlands : nature, paysage, poésie, niche.|st=sous
+Jo Malone|Wild Achillea|desc=The Highlands : nature, paysage, poésie, niche.|st=sous
+Jo Malone|Carrot Blossom|an=2026|desc=Vegetable Cologne : profil conceptuel et botanique. Originalité, curiosité, conversation starter.|st=new|prix=78
+Jo Malone|Scarlet Beetroot|an=2026|desc=Vegetable Cologne : profil conceptuel et botanique. Originalité, curiosité, conversation starter.|st=new|prix=78
+Jo Malone|Velvety Butternut|an=2026|desc=Vegetable Cologne : profil conceptuel et botanique. Originalité, curiosité, conversation starter.|st=new|prix=78
