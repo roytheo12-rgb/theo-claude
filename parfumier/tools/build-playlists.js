@@ -132,6 +132,19 @@ const EDIT_MISS = [], INTROUV = [];
   const expand = (q) => { const s = norm(q.replace(/\s*\([^)]*\)/g, '')); const o = [s]; Object.keys(HOUSE_SYN).forEach((k) => { if (s.startsWith(k + ' ')) o.push(HOUSE_SYN[k] + s.slice(k.length)); }); return o; };
   PLS.forEach((p) => { const keep = []; p.ps.forEach((x, i) => { if (!x.h && expand(x.q).some((e) => gone.has(e))) { if (p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (i < c) { g.n--; break; } } } } else keep.push(x); }); p.ps = keep; });
 })();
+// doublons : un même parfum n'apparaît qu'une fois par playlist (ou une fois par groupe Homme/Femme)
+(function dedupe() {
+  const k = (x) => norm(x.h ? x.h + ' ' + x.n : x.q);
+  PLS.forEach((p) => {
+    const gr = p.grp && p.grp.every((g) => typeof g.n === 'number') ? p.grp : null, out = [];
+    let gi = 0, c = 0, seen = new Set();
+    p.ps.forEach((x, i) => {
+      if (gr) { while (gi < gr.length - 1 && i >= c + gr[gi].n) { c += gr[gi].n; gi++; seen = new Set(); } }
+      const kk = k(x); if (seen.has(kk)) { if (gr) gr[gi].n--; return; } seen.add(kk); out.push(x);
+    });
+    p.ps = out;
+  });
+})();
 const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
 fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
 console.log(PLS.length, 'playlists', PLS.reduce((a, p) => a + p.ps.length, 0), 'parfums', 'hors base:', new Set(miss).size);
