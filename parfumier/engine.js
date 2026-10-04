@@ -707,24 +707,27 @@
       if (p.family) fam[p.family] = (fam[p.family] || 0) + w;
       for (const n of p.notes || []) note[norm(n)] = (note[norm(n)] || 0) + w;
     }
-    for (const n of settings.liked || []) note[norm(n)] = (note[norm(n)] || 0) + 2;
     for (const n of settings.avoid || []) note[norm(n)] = (note[norm(n)] || 0) - 3;
     const mx = (o) => Math.max(1, ...Object.values(o).map(Math.abs));
     const mf = mx(fam), mn = mx(note);
     for (const k in fam) fam[k] /= mf;
     for (const k in note) note[k] /= mn;
-    return { fam, note };
+    return { fam, note, liked: (settings.liked || []).map(norm).filter(Boolean) };
   }
 
   function taste(c, prof) {
     let s = 4 * (prof.fam[c.family] || 0);
     const hits = [];
+    const lk = prof.liked || [];
     for (const n of c.notes || []) {
-      const v = prof.note[norm(n)] || 0;
+      const nn = norm(n), v = prof.note[nn] || 0;
       s += 1.2 * v;
-      if (v > 0.25) hits.push(n);
+      // une note adorée compte aussi dans ses variantes (poivre dans poivre rose, jasmin dans jasmin sambac)
+      const loved = lk.some((l) => nn === l || nn.startsWith(l + ' ') || nn.endsWith(' ' + l));
+      if (loved) s += 1.5;
+      if (v > 0.25 || loved) hits.push(n);
     }
-    return { s: clamp(s, -4, 7), hits: hits.slice(0, 3) };
+    return { s: clamp(s, -4, 8), hits: [...new Set(hits)].slice(0, 3) };
   }
 
   const SCENARIOS = [
@@ -772,13 +775,59 @@
     else if (g === 'm') { add('boise', .6); add('vert', .4); add('fraicheur', .4); add('epice', .3); }
     return v.some((x) => x) ? v : null;
   }
+  // Ce que la personne dit elle-même (ambiances, intensité, occasions) pèse plus que l'âge et le genre.
+  const VIBES = {
+    frais: { fraicheur: 1.4, vert: .5, densite: -.5, douceur: -.3 },
+    sucre: { douceur: 1.5, cremeux: .6, fruite: .4, fraicheur: -.4 },
+    sensuel: { sensualite: 1.4, resine: .5, densite: .6, musque: .4 },
+    elegant: { poudre: 1, formalite: 1.2, floral: .5, originalite: -.2 },
+    naturel: { vert: 1, boise: .8, fume: .3, evolution: .4 },
+    original: { originalite: 1.5, clivage: .6, evolution: .6, formalite: -.3 },
+    classique: { formalite: .8, originalite: -.9, clivage: -.8, boise: .3 },
+  };
+  const POWER = { discret: { densite: -1.2, musque: .7, fraicheur: .5 }, present: {}, fort: { densite: 1.3, epice: .4, resine: .4, sensualite: .3 } };
+  const OCCS = {
+    bureau: { formalite: .8, fraicheur: .6, densite: -.6 }, soiree: { sensualite: .8, densite: .8, originalite: .3 }, rdv: { sensualite: .9, douceur: .5 },
+    quotidien: {}, ete: { fraicheur: 1, densite: -.6 }, hiver: { densite: .9, epice: .5, resine: .4 },
+  };
+  function vibeVec(settings) {
+    const v = new Array(18).fill(0), put = (o, k) => { for (const a in o) v[AXN.indexOf(a)] += o[a] * k; };
+    (settings.vibes || []).forEach((k) => VIBES[k] && put(VIBES[k], 1));
+    if (settings.power && POWER[settings.power]) put(POWER[settings.power], 1);
+    (settings.occ || []).forEach((k) => OCCS[k] && put(OCCS[k], .6));
+    return v.some((x) => x) ? v : null;
+  }
   const hash01 = (s) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10007) / 10007; };
+
+  // Compatibilité réaliste : on part de ce que la personne aime vraiment (affinité des goûts, notes adorées), on retire quand c'est hors saison ou hors budget.
+  function matchPct(af, ts, gapMax, sFit, over, inBud, hf, wished) {
+    const fitA = af != null ? clamp((af + 0.1) / 0.8, 0, 1) : 0.4, fitT = clamp((ts + 1) / 7, 0, 1);
+    let p = 34 + 38 * fitA + 20 * fitT + Math.min(4, gapMax * 1.2) + (sFit >= 0.7 ? 3 : sFit <= -0.7 ? -6 : 0) + (inBud ? 2 : 0) - (over ? 12 : 0) + (hf > 0.3 ? 3 : hf < -0.3 ? -5 : 0) + (wished ? 2 : 0);
+    return clamp(Math.round(p), 4, 96);
+  }
+  // Étale les pourcentages sur la liste et tient compte de la confiance : peu d'infos sur la personne = jamais de 95 %.
+  function calibrate(list, settings, collection) {
+    if (!list.length) return list;
+    const signals = (collection || []).length * 1.5 + (settings.liked || []).length + (settings.avoid || []).length + (settings.vibes || []).length * 2 + ((settings.power ? 1 : 0) + (settings.occ || []).length);
+    const cap = signals < 3 ? 68 : signals < 7 ? 79 : signals < 12 ? 87 : 93, conf = signals < 3 ? 'faible' : signals < 7 ? 'moyenne' : 'bonne';
+    const sorted = list.slice().sort((a, b) => b.total - a.total), n = sorted.length;
+    let prev = 100;
+    sorted.forEach((r, i) => {
+      const rk = i / Math.max(1, n - 1), blend = 0.7 * r.pct + 0.3 * (95 - 55 * Math.pow(rk, 0.6));
+      let v = 30 + (blend - 30) * (cap - 30) / (96 - 30);
+      v = Math.min(v, prev - (i < 14 ? 0.7 : 0.02)); prev = v;
+      r.pct = clamp(Math.round(v), 4, cap); r.conf = conf;
+    });
+    return list;
+  }
 
   function recommend(catalog, collection, wishlist, settings) {
     const sig = wishSignals(wishlist, catalog), col = collection.concat(sig);
     const prof = tasteProfile(col, settings);
     let pref = axisPref(col); const prior = priorVec(settings);
     if (prior) pref = pref ? pref.map((x, i) => x + 0.35 * prior[i]) : prior.map((x) => x * 0.8);
+    const vv = vibeVec(settings);
+    if (vv) pref = pref ? pref.map((x, i) => x + 0.7 * vv[i]) : vv.map((x) => x * 0.9);
     const cov = coverage(collection);
     const owned = new Set(collection.map((p) => norm(p.name)));
     const rejected = new Set(sig.filter((x) => x.verdict === 'no').map((x) => norm(x.name)));
@@ -813,14 +862,14 @@
       const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf;
       out.push({
         c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
-        total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: clamp(Math.round(af != null ? 50 + t.s * 4 + af * 30 : 50 + t.s * 7), 5, 99), overBudget: budget > 0 && c.price > budget,
+        total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
         wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
       });
     }
-    return out;
+    return calibrate(out, settings, collection);
   }
 
-  const api = { wishSignals, priorVec, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

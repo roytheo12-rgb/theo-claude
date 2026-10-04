@@ -3,7 +3,7 @@
 <title>Sillage — ton parfum du jour</title>
 <meta name="description" content="Décris ta journée : Sillage choisit le bon parfum dans ta collection et te montre comment le layerer. 2 essais gratuits.">
 <meta property="og:type" content="website"><meta property="og:title" content="Sillage — ton parfum du jour"><meta property="og:description" content="Météo, mood, tenue, journée : l'IA choisit dans ta collection. 2 essais gratuits.">
-<meta property="og:image" content="https://example.test/og.jpg"><meta property="og:url" content="https://example.test/"><meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://sillage-demo.example.workers.dev/og.jpg"><meta property="og:url" content="https://sillage-demo.example.workers.dev/"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%2308080a'/%3E%3Cg fill='none' stroke='%23efe8dc' stroke-width='16' stroke-linejoin='round'%3E%3Crect x='166' y='220' width='180' height='200' rx='14'/%3E%3Crect x='214' y='150' width='84' height='70' rx='4'/%3E%3C/g%3E%3Ccircle cx='256' cy='322' r='30' fill='%23b4394a'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -659,6 +659,32 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .acitem small{color:var(--muted);font-size:12px}
 .wsense{border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 .wsense summary{cursor:pointer}
+
+/* Forces et limites : de petites pastilles, plus de puces ni de signes */
+.pts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.pt { font-size: 14px; line-height: 1.4; padding: 8px 12px; border-radius: 14px; background: var(--accent-soft); border: 1px solid var(--line); color: var(--ink); }
+.pts.ok .pt { background: rgba(160, 190, 150, .09); border-color: rgba(160, 190, 150, .28); }
+.pts.lim .pt { background: rgba(205, 150, 110, .08); border-color: rgba(205, 150, 110, .26); }
+.rec .pct small { display: block; font: 500 8.5px var(--sf); letter-spacing: .12em; text-transform: uppercase; opacity: .7; margin-top: 1px; }
+
+/* Profil olfactif */
+.chip.nt.on::before { content: "♥ "; color: var(--wine); }
+.chip.nt.no { background: transparent; border-color: rgba(255, 255, 255, .28); color: var(--muted); text-decoration: line-through; }
+.chip.nt.no::before { content: "✕ "; text-decoration: none; display: inline-block; }
+.tprof { display: grid; gap: 18px; }
+.tpart { display: grid; gap: 10px; }
+.tpart .soft { color: var(--muted); font-size: 14px; margin: 0; }
+.tpart .tg { margin-top: 6px; }
+.tsum { display: grid; gap: 10px; }
+.tmeter { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.tmeter i { display: block; height: 100%; width: 0; background: var(--wine); transition: width .35s; }
+#prof .prof-in.wide { padding-top: 56px; }
+
+/* Carte des boutiques */
+.smmap { height: 300px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: #1a181c; }
+.smmap iframe { width: 100%; height: 100%; border: 0; }
+a.chip { text-decoration: none; display: inline-block; }
+.leaflet-container { font: 12px var(--sf); }
 
 </style>
 </head><body>
@@ -2080,24 +2106,27 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
       if (p.family) fam[p.family] = (fam[p.family] || 0) + w;
       for (const n of p.notes || []) note[norm(n)] = (note[norm(n)] || 0) + w;
     }
-    for (const n of settings.liked || []) note[norm(n)] = (note[norm(n)] || 0) + 2;
     for (const n of settings.avoid || []) note[norm(n)] = (note[norm(n)] || 0) - 3;
     const mx = (o) => Math.max(1, ...Object.values(o).map(Math.abs));
     const mf = mx(fam), mn = mx(note);
     for (const k in fam) fam[k] /= mf;
     for (const k in note) note[k] /= mn;
-    return { fam, note };
+    return { fam, note, liked: (settings.liked || []).map(norm).filter(Boolean) };
   }
 
   function taste(c, prof) {
     let s = 4 * (prof.fam[c.family] || 0);
     const hits = [];
+    const lk = prof.liked || [];
     for (const n of c.notes || []) {
-      const v = prof.note[norm(n)] || 0;
+      const nn = norm(n), v = prof.note[nn] || 0;
       s += 1.2 * v;
-      if (v > 0.25) hits.push(n);
+      // une note adorée compte aussi dans ses variantes (poivre dans poivre rose, jasmin dans jasmin sambac)
+      const loved = lk.some((l) => nn === l || nn.startsWith(l + ' ') || nn.endsWith(' ' + l));
+      if (loved) s += 1.5;
+      if (v > 0.25 || loved) hits.push(n);
     }
-    return { s: clamp(s, -4, 7), hits: hits.slice(0, 3) };
+    return { s: clamp(s, -4, 8), hits: [...new Set(hits)].slice(0, 3) };
   }
 
   const SCENARIOS = [
@@ -2145,13 +2174,59 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
     else if (g === 'm') { add('boise', .6); add('vert', .4); add('fraicheur', .4); add('epice', .3); }
     return v.some((x) => x) ? v : null;
   }
+  // Ce que la personne dit elle-même (ambiances, intensité, occasions) pèse plus que l'âge et le genre.
+  const VIBES = {
+    frais: { fraicheur: 1.4, vert: .5, densite: -.5, douceur: -.3 },
+    sucre: { douceur: 1.5, cremeux: .6, fruite: .4, fraicheur: -.4 },
+    sensuel: { sensualite: 1.4, resine: .5, densite: .6, musque: .4 },
+    elegant: { poudre: 1, formalite: 1.2, floral: .5, originalite: -.2 },
+    naturel: { vert: 1, boise: .8, fume: .3, evolution: .4 },
+    original: { originalite: 1.5, clivage: .6, evolution: .6, formalite: -.3 },
+    classique: { formalite: .8, originalite: -.9, clivage: -.8, boise: .3 },
+  };
+  const POWER = { discret: { densite: -1.2, musque: .7, fraicheur: .5 }, present: {}, fort: { densite: 1.3, epice: .4, resine: .4, sensualite: .3 } };
+  const OCCS = {
+    bureau: { formalite: .8, fraicheur: .6, densite: -.6 }, soiree: { sensualite: .8, densite: .8, originalite: .3 }, rdv: { sensualite: .9, douceur: .5 },
+    quotidien: {}, ete: { fraicheur: 1, densite: -.6 }, hiver: { densite: .9, epice: .5, resine: .4 },
+  };
+  function vibeVec(settings) {
+    const v = new Array(18).fill(0), put = (o, k) => { for (const a in o) v[AXN.indexOf(a)] += o[a] * k; };
+    (settings.vibes || []).forEach((k) => VIBES[k] && put(VIBES[k], 1));
+    if (settings.power && POWER[settings.power]) put(POWER[settings.power], 1);
+    (settings.occ || []).forEach((k) => OCCS[k] && put(OCCS[k], .6));
+    return v.some((x) => x) ? v : null;
+  }
   const hash01 = (s) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10007) / 10007; };
+
+  // Compatibilité réaliste : on part de ce que la personne aime vraiment (affinité des goûts, notes adorées), on retire quand c'est hors saison ou hors budget.
+  function matchPct(af, ts, gapMax, sFit, over, inBud, hf, wished) {
+    const fitA = af != null ? clamp((af + 0.1) / 0.8, 0, 1) : 0.4, fitT = clamp((ts + 1) / 7, 0, 1);
+    let p = 34 + 38 * fitA + 20 * fitT + Math.min(4, gapMax * 1.2) + (sFit >= 0.7 ? 3 : sFit <= -0.7 ? -6 : 0) + (inBud ? 2 : 0) - (over ? 12 : 0) + (hf > 0.3 ? 3 : hf < -0.3 ? -5 : 0) + (wished ? 2 : 0);
+    return clamp(Math.round(p), 4, 96);
+  }
+  // Étale les pourcentages sur la liste et tient compte de la confiance : peu d'infos sur la personne = jamais de 95 %.
+  function calibrate(list, settings, collection) {
+    if (!list.length) return list;
+    const signals = (collection || []).length * 1.5 + (settings.liked || []).length + (settings.avoid || []).length + (settings.vibes || []).length * 2 + ((settings.power ? 1 : 0) + (settings.occ || []).length);
+    const cap = signals < 3 ? 68 : signals < 7 ? 79 : signals < 12 ? 87 : 93, conf = signals < 3 ? 'faible' : signals < 7 ? 'moyenne' : 'bonne';
+    const sorted = list.slice().sort((a, b) => b.total - a.total), n = sorted.length;
+    let prev = 100;
+    sorted.forEach((r, i) => {
+      const rk = i / Math.max(1, n - 1), blend = 0.7 * r.pct + 0.3 * (95 - 55 * Math.pow(rk, 0.6));
+      let v = 30 + (blend - 30) * (cap - 30) / (96 - 30);
+      v = Math.min(v, prev - (i < 14 ? 0.7 : 0.02)); prev = v;
+      r.pct = clamp(Math.round(v), 4, cap); r.conf = conf;
+    });
+    return list;
+  }
 
   function recommend(catalog, collection, wishlist, settings) {
     const sig = wishSignals(wishlist, catalog), col = collection.concat(sig);
     const prof = tasteProfile(col, settings);
     let pref = axisPref(col); const prior = priorVec(settings);
     if (prior) pref = pref ? pref.map((x, i) => x + 0.35 * prior[i]) : prior.map((x) => x * 0.8);
+    const vv = vibeVec(settings);
+    if (vv) pref = pref ? pref.map((x, i) => x + 0.7 * vv[i]) : vv.map((x) => x * 0.9);
     const cov = coverage(collection);
     const owned = new Set(collection.map((p) => norm(p.name)));
     const rejected = new Set(sig.filter((x) => x.verdict === 'no').map((x) => norm(x.name)));
@@ -2186,14 +2261,14 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
       const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf;
       out.push({
         c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
-        total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: clamp(Math.round(af != null ? 50 + t.s * 4 + af * 30 : 50 + t.s * 7), 5, 99), overBudget: budget > 0 && c.price > budget,
+        total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
         wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
       });
     }
-    return out;
+    return calibrate(out, settings, collection);
   }
 
-  const api = { wishSignals, priorVec, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -3033,7 +3108,7 @@ ${mist}
     const out = { gaps: [], recs: [], tags: [], tips: [] };
     // Pas 15 versions du même parfum : une seule fiche par famille (maison + premier mot du nom : Sauvage, Sauvage Elixir, Sauvage EDT…).
     const famKey = (c) => { const w = E.norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'un', 'une', 'eau', 'de', 'du', 'd'].includes(x)); return E.norm(c.house) + '|' + (w[0] || E.norm(c.name)); };
-    const fams = new Set(), fresh = (c) => { const k = famKey(c); if (fams.has(k)) return false; fams.add(k); return true; };
+    const fams = new Set(), ownedFam = new Set(P.map(famKey)), fresh = (c) => { const k = famKey(c); if (fams.has(k) || ownedFam.has(k)) return false; fams.add(k); return true; };
     if (P.length) {
       const cov = E.coverage(P).sort((x, y) => x.best - y.best), used = new Set();
       for (const { sc, best, bestP } of cov) {
@@ -3106,10 +3181,12 @@ ${mist}
         ${T.tips.length && S.collection.length ? `<div class="card"><p class="mono">Ta collection en bref</p><ul class="tiplist">${T.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
       </section>
       <section class="sec"><header><h2>Des flacons pour toi</h2><span class="mono">tes goûts</span></header>
+        <div class="card" style="display:grid;gap:8px"><p class="rd" style="margin:0">Le pourcentage dit à quel point un flacon colle à tes goûts, à ta saison et à ton budget. Il ne juge pas sa qualité. Précision actuelle <b>${profPrecision().l}</b>${profPrecision().v < 1 ? ', elle monte quand tu précises ton profil.' : '.'}</p><button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil</button></div>
         ${T.recs.length ? `<div class="snap">${T.recs.slice(0, 6).map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
       </section>
       ${T.tags.length ? `<section class="sec"><header><h2>Par envie</h2><span class="mono">niche, luxe, abordable…</span></header>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</section>` : ''}
       <section class="sec">
+        <div class="card" style="display:grid;gap:8px"><b>Où l'acheter</b><p class="rd" style="margin:0">Une carte des parfumeries et des enseignes beauté autour de toi.</p><button class="ghost" id="tipMap" style="justify-self:start">Ouvrir la carte</button></div>
         <div class="card" style="display:grid;gap:8px"><div class="row" style="justify-content:space-between"><b>Budget par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
           <input type="range" id="budget" min="0" max="500" step="10" value="${s.budget || 0}" aria-label="Budget par flacon"><p class="mono">prix indicatifs · à vérifier chez le vendeur</p></div>
         <div class="card ask-card"><p class="mono">${IC.spark} demande à l'IA</p>
@@ -3119,6 +3196,8 @@ ${mist}
       </section>
       `;
     if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
+    if ($('#tipMap')) $('#tipMap').onclick = openShopMap;
+    if ($('#tipProf')) $('#tipProf').onclick = () => { openProfile(); };
     if ($('#planbox')) bindPlan($('#planbox'));
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
@@ -3139,9 +3218,9 @@ ${mist}
     if (r.inBudget) reasons.push('Dans ton budget');
     if (r.houseLoved) reasons.push('Une maison que tu aimes déjà');
     if (r.mates.length) reasons.push('Se marie avec ' + r.mates.map((m) => m.name).join(', '));
-    return `<article class="rec" style="--tint:${tint(c)}">${fxCanvas(`data-r="${i}"`, .6)}<span class="pct">${r.pct}%</span>${bt(c, { still: false })}
+    return `<article class="rec" style="--tint:${tint(c)}">${fxCanvas(`data-r="${i}"`, .6)}<span class="pct" title="Compatibilité avec tes goûts">${r.pct}%<small>compatible</small></span>${bt(c, { still: false })}
       <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p>${window.DESC && window.DESC[c.name] ? `<p class="rd">${esc(window.DESC[c.name][1])}</p>` : (r.pitch ? `<p class="rd">${tx(r.pitch)}${r.diff ? ' ' + tx(r.diff) + '.' : ''}</p>` : '')}</div>
-      <ul style="margin:0;padding-left:18px;font-size:14px">${reasons.slice(0, 3).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="pts ok">${reasons.slice(0, 4).map((x) => `<span class="pt">${esc(x)}</span>`).join('')}</div>
       <p class="why" id="why${i}"></p>
       <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? 'Dans ma wishlist' : 'Wishlist'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div>${buyLinks(c.name, c.house)}</article>`;
   }
@@ -3183,7 +3262,7 @@ ${mist}
     document.body.style.overflow = 'hidden';
     return $('.panel', sh);
   }
-  function closeSheet() { const sh = $('#sheet'); sh.hidden = true; sh.innerHTML = ''; if ($('#story').hidden) document.body.style.overflow = ''; }
+  function closeSheet() { const sh = $('#sheet'), wasProf = !!$('#tedit', sh); sh.hidden = true; sh.innerHTML = ''; if ($('#story').hidden) document.body.style.overflow = ''; if (wasProf && (tab === 'tips' || tab === 'today')) render(true); }
 
   function openDetail(id) {
     const p = find(id); if (!p) return;
@@ -3559,7 +3638,7 @@ ${mist}
   const edOf = (e) => { const ED = window.EDITORIAL || {}, HA = window.HOUSE_ALIAS || {}; return ED[E.norm((HA[E.norm(e.house)] || e.house)) + '|' + E.norm(e.name)] || ED[E.norm(e.house) + '|' + E.norm(e.name)] || null; };
   const edHtml = (e) => {
     const d = edOf(e); if (!d) return '';
-    const L = (t, a, ic) => (a && a.length ? `<div><p class="mono">${t}</p><ul style="margin:6px 0 0;padding-left:18px">${a.map((x) => `<li style="margin:2px 0">${ic} ${tx(x)}</li>`).join('')}</ul></div>` : '');
+    const L = (t, a, cls) => (a && a.length ? `<div><p class="mono">${t}</p><div class="pts ${cls}">${a.map((x) => `<span class="pt">${tx(x)}</span>`).join('')}</div></div>` : '');
     const TIER = { S: 'Incontournable', A: 'Excellent choix', B: 'Très bon' }, DISPO = { restreint: 'Distribution restreinte', secondaire: 'Plutôt marché secondaire', discontinue: 'Discontinué ou introuvable' };
     const facts = [d.an ? String(d.an) : '', d.coll || '', TIER[d.tier] || '', DISPO[d.dispo] || ''].filter(Boolean).join(' · ');
     const nez = d.nez ? `<button class="chip" data-nz="${esc(d.nez.split(',')[0].trim())}">Nez : ${esc(d.nez)}</button>` : '';
@@ -3568,7 +3647,7 @@ ${mist}
     return `<div class="edfiche">
       ${facts || nez ? `<div class="chips">${facts ? `<span class="mono">${esc(facts)}</span>` : ''}${nez}</div>` : ''}
       ${d.desc ? `<p class="rd">${tx(d.desc)}</p>` : ''}
-      ${L('Ses forces', d.forts, '＋')}${L('Ses limites', d.faibles, '－')}
+      ${L('Ses forces', d.forts, 'ok')}${L('Ses limites', d.faibles, 'lim')}
       ${d.pour ? `<div><p class="mono">Pour qui</p><p class="rd" style="margin-top:6px">${tx(d.pour)}</p></div>` : ''}
       ${d.eviter ? `<div><p class="mono">À éviter</p><p class="rd" style="margin-top:6px">${tx(d.eviter)}</p></div>` : ''}
       ${(d.sit || []).length ? `<div><p class="mono">Situations : toucher pour chercher</p><div class="chips" style="margin-top:8px">${d.sit.map((t) => `<button class="chip" data-gosit="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>` : ''}
@@ -3698,12 +3777,12 @@ ${mist}
   function openProfile() {
     const s = S.settings;
     const pf = hasProfile() ? S.profile : { gender: '', age: null, name: '' };
-    const pn = openSheet(`<div><h2>Profil</h2></div>
+    const pn = openSheet(`<div><h2>Profil</h2><p style="color:var(--muted);margin-top:6px">Plus ton profil est précis, plus mes conseils sont justes.</p></div>
       <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
         <input type="text" id="pname" maxlength="24" value="${esc(pf.name || '')}" placeholder="Mon prénom" aria-label="Mon prénom">
         <input type="text" id="page" inputmode="numeric" maxlength="2" value="${pf.age || ''}" placeholder="Mon âge" aria-label="Mon âge"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour. Ta tenue, je te la demande quand tu cherches ton parfum.</p></div>
       ${window.SillageDemo ? (window.SillageDemo.account.loggedIn() ? `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Connecté : ${esc(window.SillageDemo.account.email())}. Ton profil est sauvegardé automatiquement.</p><div class="row"><button class="ghost" id="alogout">Me déconnecter</button><button class="ghost danger" id="adel">Supprimer mon compte</button></div></div>` : `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Crée un compte pour garder ton profil, ta collection et ta wishlist sur tous tes appareils.</p><button class="cta" id="acreate"><span>Créer un compte ou me connecter</span></button></div>`) : ''}
-      <div class="card" style="display:grid;gap:8px"><b>Notes que j'adore</b><input type="text" id="liked" value="${esc(s.liked.join(', '))}" placeholder="vanille, oud, bergamote"><b style="margin-top:6px">Notes que je fuis</b><input type="text" id="avoid" value="${esc(s.avoid.join(', '))}" placeholder="patchouli, aldéhydes"><button class="ghost" id="savepref" style="justify-self:start">Enregistrer</button></div>
+      <div id="tedit" class="tprof"></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
       <div class="row"><button class="ghost danger" id="reset">Tout vider</button></div>`);
     const pmsg = () => { $('#pmsg', pn).textContent = 'Enregistré ✓'; };
@@ -3713,7 +3792,7 @@ ${mist}
     if ($('#acreate', pn)) $('#acreate', pn).onclick = () => { closeSheet(); showAccount('profile'); };
     if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
-    $('#savepref', pn).onclick = (e) => { const sp = (v) => v.split(',').map((x) => x.trim()).filter(Boolean); S.settings.liked = sp($('#liked', pn).value); S.settings.avoid = sp($('#avoid', pn).value); save(); e.target.textContent = 'Enregistré ✓'; };
+    mountTaste($('#tedit', pn), ['notes', 'vibes', 'occ']);
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
     $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; S.wishlist = []; save(); closeSheet(); render(); };
@@ -3842,6 +3921,62 @@ ${mist}
       $('#ctyMsg', pn).textContent = 'Je cherche…';
       try { const g = await geocodeCity(v); closeSheet(); await fetchWeather(g.lat, g.lon, g.place); } catch (e) { $('#ctyMsg', pn).textContent = 'Ville introuvable, ou pas de connexion à la météo.'; }
     };
+  }
+  // ---------- Où acheter près de moi : carte OpenStreetMap + parfumeries autour de la position ----------
+  let LEAF = null;
+  const loadLeaflet = () => LEAF || (LEAF = new Promise((ok, ko) => {
+    if (window.L && window.L.map) return ok(window.L);
+    const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css'; document.head.appendChild(css);
+    const sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js'; sc.onload = () => (window.L ? ok(window.L) : ko()); sc.onerror = () => { LEAF = null; ko(); }; document.head.appendChild(sc);
+  }));
+  const kmBetween = (a, b, c, d) => { const r = Math.PI / 180, x = (c - a) * r, y = (d - b) * r * Math.cos(((a + c) / 2) * r); return 6371 * Math.sqrt(x * x + y * y); };
+  async function fetchShops(lat, lon, rad) {
+    const q = `[out:json][timeout:20];(nwr["shop"="perfumery"](around:${rad},${lat},${lon});nwr["shop"="cosmetics"]["name"~"Sephora|Nocib|Marionnaud|Douglas|Yves Rocher",i](around:${rad},${lat},${lon});nwr["shop"="department_store"]["name"~"Galeries Lafayette|Printemps|Bon March|Harrods|Selfridges|El Corte|La Rinascente|KaDeWe",i](around:${rad},${lat},${lon}););out center 80;`;
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method: 'POST', body: 'data=' + encodeURIComponent(q), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    if (!r.ok) throw new Error('http');
+    const seen = new Set();
+    return ((await r.json()).elements || []).map((el) => { const t = el.tags || {}, la = el.lat != null ? el.lat : el.center && el.center.lat, lo = el.lon != null ? el.lon : el.center && el.center.lon; if (la == null || !t.name) return null;
+      const kind = t.shop === 'perfumery' ? 'Parfumerie' : t.shop === 'department_store' ? 'Grand magasin' : 'Enseigne beauté', addr = [[t['addr:housenumber'], t['addr:street']].filter(Boolean).join(' '), t['addr:city']].filter(Boolean).join(', ');
+      return { name: t.name, kind, addr, lat: la, lon: lo, site: t.website || t['contact:website'] || '', hours: t.opening_hours || '', km: kmBetween(lat, lon, la, lo) }; })
+      .filter((x) => x && !seen.has(x.name + x.lat.toFixed(4)) && seen.add(x.name + x.lat.toFixed(4))).sort((a, b) => a.km - b.km);
+  }
+  function openShopMap() {
+    let pos = S.settings.geo && S.settings.geo.lat != null ? { lat: S.settings.geo.lat, lon: S.settings.geo.lon, place: S.settings.geo.place || '' } : null, rad = 3000, map = null;
+    const pn = openSheet(`<div><h2>Où acheter près de moi</h2><p style="color:var(--muted);margin-top:6px">Les parfumeries, les enseignes beauté et les grands magasins autour de toi, sur une carte.</p></div>
+      <div class="row"><button class="cta" id="smGeo"><span>Autour de moi</span></button></div>
+      <div class="acwrap"><input type="text" id="smCity" placeholder="Ou une ville, un quartier (Lyon, Marais…)" autocomplete="off" aria-label="Ville"></div>
+      <div class="chips" id="smRad">${[[1000, '1 km'], [3000, '3 km'], [10000, '10 km'], [25000, '25 km']].map(([v, l]) => `<button type="button" class="chip ${v === rad ? 'on' : ''}" data-rad="${v}">${l}</button>`).join('')}</div>
+      <p class="mono" id="smMsg" style="text-transform:none;letter-spacing:0"></p>
+      <div id="smMap" class="smmap" hidden></div><div id="smList" style="display:grid;gap:10px"></div><div id="smLinks"></div>`);
+    const msg = (t) => { $('#smMsg', pn).textContent = t; };
+    const links = () => { if (!pos) { $('#smLinks', pn).innerHTML = ''; return; } const at = `@${pos.lat.toFixed(4)},${pos.lon.toFixed(4)},14z`; $('#smLinks', pn).innerHTML = `<p class="mono">Chercher aussi</p><div class="chips">${[['Parfumerie niche', 'parfumerie+niche'], ['Sephora', 'Sephora'], ['Nocibé', 'Nocib%C3%A9'], ['Marionnaud', 'Marionnaud'], ['Parfumerie', 'parfumerie']].map(([l, q]) => `<a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/search/${q}/${at}">${l}</a>`).join('')}</div>`; };
+    async function go() {
+      if (!pos) return; links(); msg('Je cherche les boutiques autour de toi…'); $('#smList', pn).innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>';
+      let shops = [], failed = false;
+      try { shops = await fetchShops(pos.lat, pos.lon, rad); } catch (e) { failed = true; }
+      if (!$('#smList', pn)) return;
+      msg(failed ? 'La liste n\'a pas pu se charger. Utilise la carte et les recherches ci-dessous.' : shops.length ? `${shops.length} adresse${shops.length > 1 ? 's' : ''} trouvée${shops.length > 1 ? 's' : ''}${pos.place ? ' près de ' + pos.place : ''}. Vérifie les horaires avant de te déplacer.` : 'Rien trouvé dans ce rayon. Élargis-le ou lance une recherche ci-dessous.');
+      const mb = $('#smMap', pn); mb.hidden = false;
+      const dlat = rad / 111000 * 1.1, dlon = dlat / Math.max(.2, Math.cos(pos.lat * Math.PI / 180));
+      const iframe = () => { mb.innerHTML = `<iframe title="Carte" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${pos.lon - dlon},${pos.lat - dlat},${pos.lon + dlon},${pos.lat + dlat}&layer=mapnik&marker=${pos.lat},${pos.lon}"></iframe>`; };
+      try {
+        const L = await loadLeaflet(); mb.innerHTML = ''; if (map) { map.remove(); map = null; }
+        map = L.map(mb, { zoomControl: true, attributionControl: true }).setView([pos.lat, pos.lon], rad <= 1000 ? 16 : rad <= 3000 ? 14 : rad <= 10000 ? 12 : 10);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
+        L.circleMarker([pos.lat, pos.lon], { radius: 8, color: '#fff', weight: 2, fillColor: '#4a8cff', fillOpacity: 1 }).addTo(map).bindPopup('Toi');
+        shops.forEach((x, i) => { x.m = L.circleMarker([x.lat, x.lon], { radius: 8, color: '#fff', weight: 1.5, fillColor: '#b4394a', fillOpacity: 1 }).addTo(map).bindPopup(x.name); });
+        setTimeout(() => map && map.invalidateSize(), 250);
+      } catch (e) { iframe(); }
+      $('#smList', pn).innerHTML = shops.slice(0, 25).map((x, i) => `<article class="card" style="display:grid;gap:6px"><div class="row" style="justify-content:space-between;gap:8px"><b>${esc(x.name)}</b><span class="tag">${x.km < 1 ? Math.round(x.km * 1000) + ' m' : x.km.toFixed(1) + ' km'}</span></div><small style="color:var(--muted)">${esc(x.kind)}${x.addr ? ' · ' + esc(x.addr) : ''}</small>${x.hours ? `<small style="color:var(--muted)">Horaires ${esc(String(x.hours).slice(0, 80))}</small>` : ''}<div class="row"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${x.lat},${x.lon}">Itinéraire</a>${map ? `<button type="button" class="linkbtn" data-sf="${i}" style="background:none">Sur la carte</button>` : ''}${x.site && /^https?:\/\//.test(x.site) ? `<a class="linkbtn" target="_blank" rel="noopener" href="${esc(x.site)}">Site</a>` : ''}</div></article>`).join('');
+      $$('[data-sf]', pn).forEach((b) => (b.onclick = () => { const x = shops[+b.dataset.sf]; if (map && x && x.m) { map.setView([x.lat, x.lon], 17); x.m.openPopup(); $('#smMap', pn).scrollIntoView({ block: 'center', behavior: 'smooth' }); } }));
+    }
+    const setPos = (lat, lon, place) => { pos = { lat, lon, place: place || '' }; S.settings.geo = Object.assign({}, S.settings.geo, { lat, lon, place: place || (S.settings.geo && S.settings.geo.place) || '', ts: Date.now() }); save(); go(); };
+    $('#smGeo', pn).onclick = () => { if (!navigator.geolocation) { msg('Ton appareil ne donne pas sa position. Tape une ville.'); return; } msg('Je cherche ta position…'); navigator.geolocation.getCurrentPosition((p) => setPos(p.coords.latitude, p.coords.longitude, ''), () => msg('Position refusée. Tape une ville ou un quartier juste en dessous.'), { timeout: 10000, maximumAge: 300000 }); };
+    const city = async () => { const v = $('#smCity', pn).value.trim(); if (!v) return; msg('Je cherche ' + v + '…'); try { const g = await geocodeCity(v); setPos(g.lat, g.lon, g.place); } catch (e) { msg('Ville introuvable, ou pas de connexion.'); } };
+    $('#smCity', pn).addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); city(); } });
+    $('#smCity', pn).addEventListener('change', city);
+    $$('[data-rad]', pn).forEach((b) => (b.onclick = () => { rad = +b.dataset.rad; $$('[data-rad]', pn).forEach((x) => x.classList.toggle('on', x === b)); go(); }));
+    if (pos) go(); else msg('Touche « Autour de moi » ou tape ta ville.');
   }
   const wxButtonHtml = () => (WXSTATE === 'blocked' ? '' : WX && WX.k === 'auto' ? `<button class="chip on" id="wxAuto">${esc(AUTOW)}</button><button class="chip" id="wxCity">Changer de ville</button>` : `<button class="chip" id="wxAuto">Météo automatique</button>`);
 
@@ -4197,8 +4332,9 @@ ${mist}
       $('#view').innerHTML = `
         <section class="sec"><header><h2>Balade olfactive</h2></header>
           <p style="color:var(--muted)">Tu testes des parfums en boutique ? Photographie ou note chaque touche : je te donne un symbole à dessiner dessus pour savoir, plus tard, quelle touche est quel parfum.</p>
-          <button class="cta full" id="wNew"><span>Commencer une balade</span></button></section>
+          <button class="cta full" id="wNew"><span>Commencer une balade</span></button><button class="ghost" id="wMap" style="justify-self:start">Où acheter près de moi</button></section>
         ${S.walks.length ? `<section class="sec"><header><h2 style="font-size:20px">Tes balades</h2></header>${[...S.walks].reverse().map((x) => `<button class="wcard" data-w="${x.id}"><span><b>${esc(x.place || 'Balade')}</b><small>${esc(walkDate(x))} · ${x.entries.length} touche${x.entries.length > 1 ? 's' : ''}</small></span><span class="symrow">${x.entries.slice(0, 7).map((e) => symSvg(e.sym, 22)).join('')}</span></button>`).join('')}</section>` : ''}`;
+      $('#wMap').onclick = openShopMap;
       $('#wNew').onclick = () => {
         const pn = openSheet(`<div><h2>Nouvelle balade</h2><p style="color:var(--muted);margin-top:6px">Où testes-tu aujourd'hui ?</p></div><div class="acwrap"><input type="text" id="wplace" placeholder="Rue Saint-Honoré, Sephora, Jovoy… (facultatif)" autocomplete="off"><div class="aclist" id="wplaceac" hidden></div></div><div class="chips">${['Sephora Champs-Élysées, Paris', 'Nose Paris, Paris', 'Jovoy Paris, rue de Castiglione', 'Le Bon Marché, Rive Gauche, Paris'].map((x) => `<button type="button" class="chip" data-wp="${esc(x)}">${esc(x.split(',')[0])}</button>`).join('')}</div><button class="cta full" id="wgo2"><span>C'est parti</span></button>`);
         const pin = $('#wplace', pn), pbox = $('#wplaceac', pn);
@@ -4295,8 +4431,66 @@ ${mist}
     $('#esave', pn).onclick = () => { e.name = $('#en', pn).value.trim() || e.name; e.note = $('#eno', pn).value.trim(); e.rating = rate; save(); closeSheet(); viewWalk(); };
     $('#edel', pn).onclick = (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer'; return; } w.entries = w.entries.filter((x) => x.id !== e.id); save(); closeSheet(); viewWalk(); };
   }
-  async function walkSummary(w) {
-    const out = $('#wsumres'); out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#wSum').disabled = true;
+  // Bilan de balade calculé sur l'appareil : ce que les touches disent des goûts, ce qu'il faut retenir, et la suite.
+  function walkAnalysis(w) {
+    const WT = { love: 2.5, ok: 0.8, no: -2 }, nm = new Map(), fam = new Map(), fl = new Map();
+    const grab = (e, re) => { const m = re.exec(e.note || ''); return m ? m[1].split(',').map((x) => x.trim()).filter(Boolean) : []; };
+    const rows = w.entries.map((e) => { const f = ficheOf(e), notes = [...new Map([...(f.notes || e.notes || []), ...grab(e, /Je sens : ([^.]*)\./)].map((n) => [E.norm(n), n])).values()]; return { e, f, notes, feel: grab(e, /Impression : ([^.]*)\./), v: WT[e.rating] == null ? 0 : WT[e.rating] }; });
+    const bump = (m, key, label, v) => { const o = m.get(key) || { n: label, v: 0, c: 0 }; o.v += v; o.c++; m.set(key, o); };
+    rows.forEach((r) => { r.notes.forEach((n) => bump(nm, E.norm(n), n, r.v)); if (r.f.family) bump(fam, r.f.family, famLabel(r.f.family), r.v); r.feel.forEach((x) => bump(fl, x, x, r.v)); });
+    const top = (m, sign, k) => [...m.values()].filter((o) => (sign > 0 ? o.v >= 2 : o.v <= -2)).sort((a, b) => sign * (b.v - a.v) || b.c - a.c).slice(0, k);
+    const lovedN = top(nm, 1, 5), badN = top(nm, -1, 4), lovedF = top(fam, 1, 2), badF = top(fam, -1, 1), lovedFeel = top(fl, 1, 3);
+    const loved = rows.filter((r) => r.e.rating === 'love'), ok = rows.filter((r) => r.e.rating === 'ok'), no = rows.filter((r) => r.e.rating === 'no');
+    const liked = S.settings.liked || [], avoid = S.settings.avoid || [];
+    const conflict = liked.filter((n) => { const o = nm.get(E.norm(n)); return o && o.v <= -2; });
+    const newLiked = lovedN.filter((o) => noteSt(o.n) !== 1 && !conflict.some((c) => E.norm(c) === E.norm(o.n))).slice(0, 4), newAvoid = badN.filter((o) => noteSt(o.n) === 0).slice(0, 3);
+    const names = new Set(rows.map((r) => E.norm(r.e.name))), famK = (c) => E.norm(c.house) + '|' + (E.norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'eau', 'de', 'du', 'd'].includes(x))[0] || '');
+    const touchedFam = new Set(rows.map((r) => famK(r.f)));
+    const st2 = Object.assign({}, S.settings, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed: PROFILES.active, liked: [...new Set([...liked, ...lovedN.map((o) => o.n)])] });
+    const sig = S.wishlist.concat(rows.map((r) => ({ name: r.e.name, house: r.f.house, family: r.f.family || '', notes: r.notes, st: 'smelled', verdict: r.e.rating })));
+    let recs = []; try { const seen = new Set(); recs = E.recommend(needPool(), S.collection, sig, st2).filter((r) => !names.has(E.norm(r.c.name)) && !touchedFam.has(famK(r.c)) && r.pct >= 55).sort((a, b) => b.total - a.total).filter((r) => { const k = famK(r.c); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 4); } catch (er) { recs = []; }
+    return { rows, loved, ok, no, lovedN, badN, lovedF, badF, lovedFeel, conflict, newLiked, newAvoid, recs };
+  }
+  function walkSummary(w) {
+    const out = $('#wsumres'), A = walkAnalysis(w), n = A.rows.length, nn = (a) => a.map((o) => o.n);
+    const say = [];
+    say.push(A.loved.length ? `Sur ${n} touche${n > 1 ? 's' : ''}, ${A.loved.length === 1 ? 'un seul parfum t\'a vraiment séduit' : A.loved.length + ' t\'ont vraiment séduit'}${A.ok.length ? (A.ok.length === 1 ? ' et un autre t\'a plu sans plus' : ` et ${A.ok.length} t'ont plu sans plus`) : ''}.` : `Sur ${n} touche${n > 1 ? 's' : ''}, aucun coup de cœur pour l'instant${A.ok.length ? `, mais ${A.ok.length} parfum${A.ok.length > 1 ? 's' : ''} correct${A.ok.length > 1 ? 's' : ''}` : ''}.`);
+    if (A.lovedN.length) say.push(`Ce que tu as aimé tourne autour ${A.lovedN.length > 1 ? 'de' : 'de la note'} ${listFr(nn(A.lovedN.slice(0, 4)))}${A.lovedF.length ? `, avec une préférence côté ${listFr(nn(A.lovedF).map((x) => x.toLowerCase()))}` : ''}.`);
+    if (A.badN.length) say.push(`Ce qui t'a freiné ressemble à ${listFr(nn(A.badN.slice(0, 3)))}${A.badF.length ? `, et plutôt côté ${nn(A.badF)[0].toLowerCase()}` : ''}.`);
+    if (A.lovedFeel.length) say.push(`Tu retiens des parfums ${listFr(nn(A.lovedFeel))}.`);
+    if (A.conflict.length) say.push(`Tu dis aimer ${listFr(A.conflict.slice(0, 2))}, pourtant ${A.conflict.length > 1 ? 'ces notes t\'ont gêné' : 'cette note t\'a gêné'} dans cette balade. Ça dépend du parfum, pas seulement de la note.`);
+    const keep = A.loved.concat(A.ok).slice(0, 5), price = (r) => (r.f.price ? ` Compte environ ${r.f.price} euros.` : '');
+    const why = (r) => { const hit = r.notes.filter((x) => A.lovedN.some((o) => E.norm(o.n) === E.norm(x))).slice(0, 3); return (r.e.rating === 'love' ? 'Coup de cœur' : 'Plutôt bien') + (hit.length ? `, tu y retrouves ${listFr(hit)}.` : '.') + price(r); };
+    const bad = (r) => { const hit = r.notes.filter((x) => A.badN.some((o) => E.norm(o.n) === E.norm(x))).slice(0, 2); return hit.length ? `À cause de ${listFr(hit)}.` : 'Il ne t\'a pas parlé.'; };
+    const tip = [];
+    if (A.loved.length >= 2) tip.push('Tu as plusieurs coups de cœur. Teste les deux sur ta peau le même jour, un sur chaque poignet, et garde celui qui tient le mieux.');
+    if (A.loved.length === 1) tip.push(`Reviens avec un échantillon de ${A.loved[0].e.name} et porte-le une journée entière avant de l'acheter.`);
+    if (!A.loved.length) tip.push('Aucun coup de cœur, ce n\'est pas grave. Reviens avec un style précis en tête, par exemple une note que tu adores, et demande-la au vendeur.');
+    const cheap = A.loved.filter((r) => r.f.price).sort((a, b) => a.f.price - b.f.price)[0]; if (cheap && A.loved.length > 1) tip.push(`Le plus doux pour le budget est ${cheap.e.name}, autour de ${cheap.f.price} euros.`);
+    out.innerHTML = `<div class="card tsum"><p class="mono">Ce que ta balade dit de toi</p><p class="rd">${say.map(esc).join(' ')}</p></div>
+      ${A.newLiked.length || A.newAvoid.length ? `<div class="card" style="display:grid;gap:10px"><p class="mono">Mettre ton profil à jour</p><p class="soft" style="color:var(--muted);font-size:14px">Touche pour garder ou écarter, puis valide.</p>
+        ${A.newLiked.length ? `<p class="mono tg">Nouvelles notes que tu aimes</p><div class="chips">${A.newLiked.map((o) => `<button type="button" class="chip nt on" data-wn="1" data-n="${esc(o.n)}">${esc(o.n)}</button>`).join('')}</div>` : ''}
+        ${A.newAvoid.length ? `<p class="mono tg">Notes à fuir</p><div class="chips">${A.newAvoid.map((o) => `<button type="button" class="chip nt no" data-wn="-1" data-n="${esc(o.n)}">${esc(o.n)}</button>`).join('')}</div>` : ''}
+        <button class="cta" id="wUpd" style="justify-self:start"><span>Mettre à jour mon profil</span></button></div>` : ''}
+      ${keep.length ? `<p class="mono">À retenir</p>${keep.map((r) => `<div class="wentry"><div class="wsym">${symSvg(r.e.sym, 32)}</div><div class="wbody"><button type="button" class="lnk" data-wo="${r.e.id}"><b>${esc(r.e.name)}</b></button><small>${esc(why(r))}</small><div class="row" style="margin-top:8px"><button class="ghost" data-kw="${r.e.id}">${hasWish(r.e.name) ? 'Dans la wishlist' : 'Wishlist'}</button><button class="ghost" data-ko="${r.e.id}">Je l'ai</button></div></div></div>`).join('')}` : ''}
+      ${A.no.length ? `<p class="mono">À oublier</p><div class="card" style="display:grid;gap:6px">${A.no.map((r) => `<p class="rd" style="margin:0"><b>${esc(r.e.name)}</b> ${esc(bad(r))}</p>`).join('')}</div>` : ''}
+      ${A.recs.length ? `<p class="mono">Dans la même veine, à sentir ensuite</p>${A.recs.map((r) => `<div class="wentry"><div class="wbody"><button type="button" class="lnk" data-wr="${esc(r.c.name)}"><b>${esc(r.c.name)}</b></button><small>${esc(r.c.house)}${r.c.family ? ' · ' + esc(famLabel(r.c.family)) : ''}${r.c.price ? ' · ≈ ' + r.c.price + ' €' : ''} · ${r.pct} % compatible</small><small>${esc((r.hits.length ? 'Tu aimes ' + listFr(r.hits) + '.' : r.axisWhy.length ? 'Dans ta veine ' + listFr(r.axisWhy) + '.' : '') )}</small><div class="row" style="margin-top:8px"><button class="ghost" data-rw2="${esc(r.c.name)}">${hasWish(r.c.name) ? 'Dans la wishlist' : 'Wishlist'}</button></div></div></div>`).join('')}` : ''}
+      ${tip.length ? `<div class="card" style="display:grid;gap:6px"><p class="mono">Pour la suite</p>${tip.map((t) => `<p class="rd" style="margin:0">${esc(t)}</p>`).join('')}</div>` : ''}
+      <div class="row"><button class="ghost" id="wAi">${IC.spark} Avis du nez par l'IA</button><button class="ghost" id="wShops">Où acheter près de moi</button></div><div id="wsumai" style="display:grid;gap:12px"></div>`;
+    $$('[data-wn]', out).forEach((b) => (b.onclick = () => { const on = b.classList.contains('on') || b.classList.contains('no'); b.dataset.off = on ? '1' : ''; b.classList.toggle('on', !on && b.dataset.wn === '1'); b.classList.toggle('no', !on && b.dataset.wn === '-1'); if (on) { b.classList.remove('on', 'no'); b.style.opacity = '.45'; } else b.style.opacity = ''; }));
+    if ($('#wUpd', out)) $('#wUpd', out).onclick = (ev) => { $$('[data-wn]', out).forEach((b) => { if (b.dataset.off) return; setNote(b.dataset.n, +b.dataset.wn); }); ev.currentTarget.querySelector('span').textContent = 'Profil mis à jour ✓'; ev.currentTarget.disabled = true; };
+    $$('[data-kw]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.kw), f = ficheOf(e); const c = CAT.find((x) => E.norm(x.name) === E.norm(e.name)); addWish(c ? wishFromName(c.name) : { name: f.name, house: f.house, family: f.family || '', notes: f.notes || [], price: f.price || 0 }); b.textContent = 'Dans la wishlist'; }));
+    $$('[data-ko]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.ko), f = ficheOf(e); if (S.collection.some((p) => E.norm(p.name) === E.norm(e.name))) { b.textContent = 'Déjà chez toi'; return; } const c = CAT.find((x) => E.norm(x.name) === E.norm(e.name)); S.collection.push(c ? fromCat(c, 4) : fromCat({ name: f.name, house: f.house, family: f.family || 'boisé', notes: f.notes || [], projection: f.projection || 3, longevity: f.longevity || 3, weight: f.weight || 3, price: f.price || 0 }, 4)); rmWish(e.name); save(); b.textContent = 'Ajouté à ma collection ✓'; }));
+    $$('[data-wo]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.wo); if (e) openEntry(ficheOf(e)); }));
+    $$('[data-wr]', out).forEach((b) => (b.onclick = () => { const r = A.recs.find((x) => x.c.name === b.dataset.wr); if (r) openEntry(ficheOf(r.c)); }));
+    $$('[data-rw2]', out).forEach((b) => (b.onclick = () => { const n = b.dataset.rw2; if (hasWish(n)) { rmWish(n); b.textContent = 'Wishlist'; } else { const r = A.recs.find((x) => x.c.name === n); addWish(CAT.find((c) => c.name === n) ? wishFromName(n) : { name: n, house: r.c.house, family: r.c.family || '', notes: r.c.notes || [], price: r.c.price || 0 }); b.textContent = 'Dans la wishlist'; } }));
+    $('#wAi', out).onclick = () => walkSummaryAI(w);
+    $('#wShops', out).onclick = () => openShopMap();
+    out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  const e0 = (er) => (er && er.code === 'not_granted' ? 'Autorise l\'IA pour obtenir cet avis.' : 'L\'IA n\'est pas disponible ici. Le bilan ci-dessus est calculé sur ton appareil.');
+  async function walkSummaryAI(w) {
+    const out = $('#wsumai'); out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; const gb = $('#wAi'); if (gb) gb.disabled = true;
     const lines = w.entries.map((e) => `${e.name} | ${e.house} | ${e.notes.join(', ')} | ${RATE[e.rating]} | ${e.note || ''}`).join('\n');
     try {
       const j = await aiJson(`Tu es un nez de parfumerie. Voici les parfums que j'ai sentis pendant une balade en boutique (nom | maison | notes | mon avis | ma remarque) :\n${lines}\n\nMa collection actuelle :\n${colLines()}\n\nRéponds UNIQUEMENT par un JSON : {"taste":"ce que mes avis révèlent de mes goûts, 2 phrases, tutoiement","keep":[{"name":"nom exact d'une touche à retenir","why":"pourquoi, 10 mots max"}],"skip":"ce que je peux oublier, 1 phrase"}`, { modelTier: 'default' });
@@ -4304,11 +4498,11 @@ ${mist}
       out.innerHTML = `<p style="font-size:17px;font-weight:300">${esc(j.taste || '')}</p>${keep.map((x) => `<div class="wentry"><div class="wsym">${symSvg(x.e.sym, 32)}</div><div class="wbody"><b>${esc(x.e.name)}</b><small>${esc(x.k.why || '')}</small><div class="row" style="margin-top:8px"><button class="ghost" data-kw="${x.e.id}">${hasWish(x.e.name) ? 'Dans la wishlist' : 'Wishlist'}</button></div></div></div>`).join('')}${j.skip ? `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(j.skip)}</p>` : ''}`;
       $$('[data-kw]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.kw); addWish(CAT.find((c) => E.norm(c.name) === E.norm(e.name)) ? wishFromName(CAT.find((c) => E.norm(c.name) === E.norm(e.name)).name) : e); b.textContent = 'Dans la wishlist'; }));
     } catch (er) {
-      const loved = w.entries.filter((e) => e.rating === 'love');
-      out.innerHTML = `<p style="color:var(--muted)">${loved.length ? 'Tes coups de cœur : ' + esc(loved.map((e) => e.name).join(', ')) + '.' : 'Aucun coup de cœur noté pour l\'instant.'}</p>`;
+      out.innerHTML = `<p style="color:var(--muted)">${e0(er)}</p>`;
     }
-    $('#wSum').disabled = false;
+    if (gb) gb.disabled = false;
   }
+
 
 
   // ---------- Profil : genre et façon de s'habiller (sauvegardé, réutilisé chaque jour) ----------
@@ -4380,16 +4574,98 @@ ${mist}
     const close = () => { el.remove(); document.body.style.overflow = ''; };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
   }
-  const TASTES = [['Frais, citronné', ['bergamote', 'citron', 'néroli']], ['Floral', ['rose', 'jasmin', 'iris']], ['Boisé', ['cèdre', 'santal', 'vétiver']], ['Vanillé, gourmand', ['vanille', 'tonka', 'caramel']], ['Épicé, ambré', ['poivre', 'cannelle', 'ambre']], ['Cuir, fumé', ['cuir', 'encens', 'tabac']], ['Musc, peau propre', ['musc']]];
+
+  // ---------- Profil olfactif : notes adorées ou fuies, ambiance, intensité, occasions, budget (un seul éditeur, partout) ----------
+  const NOTE_GROUPS = [
+    ['Frais et agrumes', 'le frais', ['bergamote', 'citron', 'mandarine', 'pamplemousse', 'orange', 'néroli', 'menthe', 'gingembre']],
+    ['Fleurs', 'les fleurs', ['rose', 'jasmin', 'iris', 'fleur d\'oranger', 'tubéreuse', 'violette', 'muguet', 'ylang-ylang', 'pivoine']],
+    ['Bois et verdure', 'les bois', ['cèdre', 'santal', 'vétiver', 'gaïac', 'cyprès', 'mousse de chêne', 'lavande', 'romarin', 'sauge']],
+    ['Gourmand et fruits', 'le gourmand', ['vanille', 'tonka', 'caramel', 'miel', 'cacao', 'café', 'praline', 'amande', 'rhum', 'noix de coco', 'pomme', 'poire', 'pêche', 'framboise', 'figue']],
+    ['Épices et ambre', 'les épices et l\'ambre', ['poivre', 'poivre rose', 'cardamome', 'cannelle', 'safran', 'muscade', 'ambre', 'benjoin', 'labdanum']],
+    ['Résines, cuir et fumé', 'le cuir et le fumé', ['encens', 'myrrhe', 'oud', 'cuir', 'tabac', 'patchouli', 'bouleau', 'daim']],
+    ['Musc et peau', 'le musc', ['musc', 'ambrette', 'ambroxan', 'aldéhydes']],
+  ];
+  const VIBE_L = [['frais', 'Propre et frais'], ['sucre', 'Sucré, doudou'], ['sensuel', 'Sensuel et profond'], ['elegant', 'Élégant et poudré'], ['naturel', 'Naturel et vert'], ['original', 'Original, qui ose'], ['classique', 'Classique et sûr']];
+  const VIBE_ADJ = { frais: 'le propre et frais', sucre: 'le sucré', sensuel: 'le sensuel', elegant: 'l\'élégant', naturel: 'le naturel', original: 'l\'original', classique: 'le classique' };
+  const POWER_L = [['discret', 'Discret, près de la peau'], ['present', 'Présent sans en faire trop'], ['fort', 'Un vrai sillage']];
+  const OCC_L = [['quotidien', 'Tous les jours'], ['bureau', 'Bureau'], ['soiree', 'Soirée'], ['rdv', 'Rendez-vous'], ['ete', 'Été'], ['hiver', 'Hiver']];
+  const OCC_ADJ = { quotidien: 'tous les jours', bureau: 'le bureau', soiree: 'les soirées', rdv: 'les rendez-vous', ete: 'l\'été', hiver: 'l\'hiver' };
+  const listFr = (a) => (a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' et ' + a[a.length - 1]);
+  let NVOC = null;
+  const noteVocab = () => {
+    if (NVOC) return NVOC; const m = new Map();
+    CAT.forEach((c) => (c.notes || []).forEach((n) => { const k = E.norm(n); if (!k || k.length > 24 || /livrer|afficher|description|ingredient/.test(k)) return; const o = m.get(k) || { n, c: 0 }; o.c++; m.set(k, o); }));
+    NOTE_GROUPS.forEach((g) => g[2].forEach((n) => { const k = E.norm(n); const o = m.get(k) || { n, c: 0 }; o.n = n; o.c += 50; m.set(k, o); }));
+    NVOC = [...m.entries()].map(([k, o]) => ({ k, n: o.n, c: o.c })).sort((a, b) => b.c - a.c); return NVOC;
+  };
+  const noteSt = (n) => { const k = E.norm(n); return (S.settings.liked || []).some((x) => E.norm(x) === k) ? 1 : (S.settings.avoid || []).some((x) => E.norm(x) === k) ? -1 : 0; };
+  function setNote(n, st) {
+    const k = E.norm(n), f = (a) => (a || []).filter((x) => E.norm(x) !== k);
+    S.settings.liked = f(S.settings.liked); S.settings.avoid = f(S.settings.avoid);
+    if (st > 0) S.settings.liked.push(n); else if (st < 0) S.settings.avoid.push(n);
+    save();
+  }
+  function profPrecision() {
+    const s = S.settings, n = (s.liked || []).length + (s.avoid || []).length + (s.vibes || []).length * 2 + (s.power ? 1 : 0) + (s.occ || []).length + S.collection.length * 1.5;
+    return { v: Math.min(1, n / 14), l: n < 3 ? 'faible' : n < 7 ? 'moyenne' : n < 12 ? 'bonne' : 'très bonne' };
+  }
+  function olfSummary() {
+    const s = S.settings, liked = s.liked || [], avoid = s.avoid || [], out = [];
+    if (liked.length) {
+      const gs = NOTE_GROUPS.map((g) => ({ g, hit: liked.filter((n) => g[2].some((x) => E.norm(x) === E.norm(n))) })).filter((o) => o.hit.length).sort((a, b) => b.hit.length - a.hit.length);
+      const other = liked.filter((n) => !NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n))));
+      let t = 'Tu aimes surtout ' + listFr(gs.slice(0, 3).map((o) => `${o.g[1]} (${o.hit.slice(0, 3).join(', ')})`));
+      if (other.length) t += (gs.length ? ', et aussi ' : ' ') + other.slice(0, 3).join(', ');
+      out.push(t + '.');
+    }
+    if (avoid.length) out.push('Tu fuis ' + listFr(avoid.slice(0, 5)) + '.');
+    if ((s.vibes || []).length) out.push('Ton style va vers ' + listFr(s.vibes.slice(0, 3).map((k) => VIBE_ADJ[k]).filter(Boolean)) + '.');
+    if (s.power) out.push(s.power === 'discret' ? 'Tu préfères rester discret.' : s.power === 'fort' ? 'Tu assumes un vrai sillage.' : 'Tu veux un parfum présent sans en faire trop.');
+    if ((s.occ || []).length) out.push('Tu le portes surtout pour ' + listFr(s.occ.slice(0, 4).map((k) => OCC_ADJ[k]).filter(Boolean)) + '.');
+    if (s.budget) out.push('Ton budget tourne autour de ' + s.budget + ' € par flacon.');
+    if (S.collection.length >= 3) { const f = {}; S.collection.forEach((p) => { if (p.family) f[p.family] = (f[p.family] || 0) + 1; }); const top = Object.entries(f).sort((a, b) => b[1] - a[1])[0]; if (top) out.push('Ta collection penche vers le ' + famLabel(top[0]).toLowerCase() + '.'); }
+    return out.length ? out.join(' ') : 'Ton profil est encore vide. Touche quelques notes ci-dessous, je m\'en sers tout de suite pour choisir.';
+  }
+  const pillSet = (key, list, multi, attr) => `<div class="chips">${list.map(([k, l]) => { const on = multi ? (S.settings[key] || []).includes(k) : S.settings[key] === k; return `<button type="button" class="chip ${on ? 'on' : ''}" ${attr}="${k}" aria-pressed="${on}">${esc(l)}</button>`; }).join('')}</div>`;
+  function tasteHtml(parts) {
+    const s = S.settings, cust = [...(s.liked || []), ...(s.avoid || [])].filter((n) => !NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n))));
+    const chip = (n) => { const st = noteSt(n); return `<button type="button" class="chip nt ${st > 0 ? 'on' : st < 0 ? 'no' : ''}" data-nt="${esc(n)}" aria-pressed="${st !== 0}">${esc(n)}</button>`; };
+    let h = `<div class="card tsum"><p class="mono">Ton profil olfactif</p><p class="rd" data-tsum>${esc(olfSummary())}</p><div class="tmeter"><i data-tmi></i></div><p class="mono" data-tml style="text-transform:none;letter-spacing:0"></p></div>`;
+    if (parts.includes('notes')) h += `<div class="tpart"><p class="mono">Les notes</p><p class="soft">Touche une note une fois pour dire que tu l'adores, deux fois pour dire que tu la fuis, trois fois pour l'effacer.</p>
+      ${NOTE_GROUPS.map((g) => `<p class="mono tg">${esc(g[0])}</p><div class="chips">${g[2].map(chip).join('')}</div>`).join('')}
+      <p class="mono tg">Une autre note</p><div class="acwrap"><input type="text" id="tnadd" placeholder="figue, thé, rhum, iris…" autocomplete="off" aria-label="Ajouter une note"><div class="aclist" id="tnac" hidden></div></div><div class="chips" data-tcust>${cust.map(chip).join('')}</div></div>`;
+    if (parts.includes('vibes')) h += `<div class="tpart"><p class="mono">Ton ambiance</p><p class="soft">Choisis tout ce qui te ressemble.</p>${pillSet('vibes', VIBE_L, true, 'data-vb')}<p class="mono tg">Sa présence</p>${pillSet('power', POWER_L, false, 'data-pw')}</div>`;
+    if (parts.includes('occ')) h += `<div class="tpart"><p class="mono">Quand tu le portes</p>${pillSet('occ', OCC_L, true, 'data-oc')}<p class="mono tg">Budget par flacon <b data-bval>${s.budget ? s.budget + ' €' : 'sans limite'}</b></p><input type="range" id="tbud" min="0" max="500" step="10" value="${s.budget || 0}" aria-label="Budget par flacon"></div>`;
+    return h;
+  }
+  function mountTaste(root, parts) {
+    root.innerHTML = tasteHtml(parts);
+    const upd = () => { const el = $('[data-tsum]', root); if (el) el.textContent = olfSummary(); const pr = profPrecision(); const mi = $('[data-tmi]', root); if (mi) mi.style.width = Math.round(pr.v * 100) + '%'; const ml = $('[data-tml]', root); if (ml) ml.textContent = 'Précision de mes conseils : ' + pr.l + (pr.v < 1 ? '. Plus tu en dis, plus c\'est juste.' : '.'); };
+    const cycle = (b) => { const n = b.dataset.nt, st = noteSt(n), nx = st === 0 ? 1 : st === 1 ? -1 : 0; setNote(n, nx); b.classList.toggle('on', nx > 0); b.classList.toggle('no', nx < 0); b.setAttribute('aria-pressed', nx !== 0); if (!NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n))) && nx === 0) b.remove(); upd(); };
+    const bindChips = (r) => $$('[data-nt]', r).forEach((b) => (b.onclick = () => cycle(b)));
+    bindChips(root);
+    const multi = (attr, key, ds) => $$('[' + attr + ']', root).forEach((b) => (b.onclick = () => { const k = b.getAttribute(attr), a = S.settings[key] || []; S.settings[key] = a.includes(k) ? a.filter((x) => x !== k) : [...a, k]; save(); b.classList.toggle('on', S.settings[key].includes(k)); b.setAttribute('aria-pressed', S.settings[key].includes(k)); upd(); }));
+    multi('data-vb', 'vibes'); multi('data-oc', 'occ');
+    $$('[data-pw]', root).forEach((b) => (b.onclick = () => { const k = b.dataset.pw; S.settings.power = S.settings.power === k ? '' : k; save(); $$('[data-pw]', root).forEach((x) => { x.classList.toggle('on', x.dataset.pw === S.settings.power); x.setAttribute('aria-pressed', x.dataset.pw === S.settings.power); }); upd(); }));
+    const bud = $('#tbud', root); if (bud) { bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('[data-bval]', root).textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; upd(); }); bud.addEventListener('change', save); }
+    const inp = $('#tnadd', root), box = $('#tnac', root);
+    if (inp) {
+      const add = (n) => { n = String(n).trim(); if (!n) return; const ex = [...$$('[data-nt]', root)].find((b) => E.norm(b.dataset.nt) === E.norm(n)); if (ex) { if (noteSt(n) !== 1) { setNote(ex.dataset.nt, 1); ex.classList.add('on'); ex.classList.remove('no'); } } else { setNote(n, 1); const cb = $('[data-tcust]', root); cb.insertAdjacentHTML('beforeend', `<button type="button" class="chip nt on" data-nt="${esc(n)}" aria-pressed="true">${esc(n)}</button>`); bindChips(cb); } inp.value = ''; box.hidden = true; upd(); };
+      const show = () => { const q = E.norm(inp.value); const r = q.length < 2 ? [] : noteVocab().filter((o) => o.k.includes(q)).sort((a, b) => (a.k.startsWith(q) ? 0 : 1) - (b.k.startsWith(q) ? 0 : 1) || b.c - a.c).slice(0, 6); box.hidden = !r.length; box.innerHTML = r.map((o) => `<button type="button" class="acitem" data-n="${esc(o.n)}"><b>${esc(o.n)}</b></button>`).join(''); $$('[data-n]', box).forEach((b) => (b.onpointerdown = (ev) => { ev.preventDefault(); add(b.dataset.n); })); };
+      inp.oninput = show; inp.onblur = () => setTimeout(() => { box.hidden = true; }, 120);
+      inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); add(inp.value); } });
+    }
+    upd();
+  }
   // Inscription en 5 temps : prénom, genre, âge, goûts, puis la collection choisie dans la base.
   function showProfile() {
-    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), taste = new Set(), N = 5;
+    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), N = 7;
     const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Faisons connaissance');
     let step = 1;
     const read = () => { if ($('#pName', el)) d.name = $('#pName', el).value.trim().slice(0, 24); if ($('#pAge', el)) d.age = cleanAge($('#pAge', el).value); };
     const draw = () => {
       const head = `<p class="mono">Faisons connaissance · ${step} / ${N}</p>`, back = step > 1 ? '<button class="ghost" id="pBack">Retour</button>' : '';
-      if (step === 5) {
+      if (step === 7) {
         el.innerHTML = '<div class="prof-in wide"><div id="pExp"></div></div>';
         mountExplorer($('#pExp', el), { mode: 'collection', title: d.name ? 'Tes parfums, ' + d.name : 'Tes parfums', sub: 'Choisis ceux que tu as déjà : par maison, style, notes… Tu pourras en ajouter d\'autres à tout moment.', cta: (n) => 'Ajouter ' + n + ' et commencer', skip: 'Je n\'en ai pas encore', onSkip: () => end(false), onSubmit: (list) => { addEntriesToCollection(list); end(false); } });
         return;
@@ -4406,11 +4682,16 @@ ${mist}
             ? `<div class="prof-in">${head}<h2>Quel âge as-tu&nbsp;?</h2><p class="soft">Les goûts et les occasions changent avec l'âge.</p>
               <input type="text" id="pAge" inputmode="numeric" maxlength="2" value="${d.age || ''}" placeholder="Ton âge" aria-label="Ton âge" class="agein">
               <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
-            : `<div class="prof-in">${head}<h2>Qu'est-ce qui te plaît&nbsp;?</h2><p class="soft">Choisis ce que tu aimes sentir, autant que tu veux. Je m'en servirai pour choisir.</p>
-              <div class="chips">${TASTES.map(([l], i) => `<button class="chip ${taste.has(i) ? 'on' : ''}" data-t="${i}">${esc(l)}</button>`).join('')}</div>
-              <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`;
+            : step === 4
+              ? `<div class="prof-in wide">${head}<h2>Quelles notes aimes-tu&nbsp;?</h2><p class="soft">Une touche pour adorer, deux pour fuir. Ne cherche pas à tout remplir : trois ou quatre notes suffisent pour commencer.</p><div id="pTaste" class="tprof"></div>
+                <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
+              : step === 5
+                ? `<div class="prof-in wide">${head}<h2>Quel genre de parfum te ressemble&nbsp;?</h2><p class="soft">Ton ambiance et la présence que tu veux. Tu peux changer d'avis à tout moment.</p><div id="pTaste" class="tprof"></div>
+                  <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
+                : `<div class="prof-in wide">${head}<h2>Quand le portes-tu, et pour combien&nbsp;?</h2><p class="soft">Voilà ton profil, tel que je le comprends. Je m'en sers pour tous mes conseils.</p><div id="pTaste" class="tprof"></div>
+                  <button class="cta full" id="pNext"><span>Choisir mes parfums</span></button>${back}</div>`;
+      if ($('#pTaste', el)) mountTaste($('#pTaste', el), step === 4 ? ['notes'] : step === 5 ? ['vibes'] : ['occ']);
       $$('[data-g]', el).forEach((b) => (b.onclick = () => { d.gender = b.dataset.g; $$('[data-g]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
-      $$('[data-t]', el).forEach((b) => (b.onclick = () => { const i = +b.dataset.t; if (taste.has(i)) taste.delete(i); else taste.add(i); b.classList.toggle('on', taste.has(i)); }));
       if ($('#pNext', el)) $('#pNext', el).onclick = () => { read(); step++; draw(); };
       if ($('#pBack', el)) $('#pBack', el).onclick = () => { read(); step--; draw(); };
       if ($('#pSkip', el)) $('#pSkip', el).onclick = () => end(true);
@@ -4419,7 +4700,7 @@ ${mist}
     const end = (skip) => {
       read();
       if (skip) { S.profile = { skipped: true, ts: Date.now() }; save(); }
-      else { setProfile(d); if (taste.size) { const add = [...taste].flatMap((i) => TASTES[i][1]); S.settings.liked = [...new Set([...(S.settings.liked || []), ...add])]; save(); } }
+      else setProfile(d);
       el.remove(); document.body.style.overflow = ''; tab = 'today'; render();
     };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();

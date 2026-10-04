@@ -47,13 +47,15 @@ await pg.fill('#apw', 'motdepasse1'); await pg.click('#ago'); await pg.waitForSe
 await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok(true, 'inscription : la première question (prénom) s\'affiche après l\'intro');
 await pg.screenshot({ path: OUT + '/e3b_profil1.png' });
 await pg.fill('#pName', 'Léa'); await pg.click('#pNext'); await pg.waitForSelector('#prof .gen'); await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#pAge');
-await pg.fill('#pAge', '27'); await pg.click('#pNext'); await pg.waitForSelector('[data-t]'); await pg.click('[data-t="3"]'); await pg.click('[data-t="2"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
+await pg.fill('#pAge', '27'); await pg.click('#pNext'); await pg.waitForSelector('[data-nt]'); await pg.click('[data-nt="vanille"]'); await pg.click('[data-nt="cèdre"]'); await pg.click('[data-nt="patchouli"]'); await pg.click('[data-nt="patchouli"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
+await pg.waitForSelector('[data-vb]'); await pg.click('[data-vb="sensuel"]'); await pg.click('[data-pw="fort"]'); await pg.click('#pNext');
+await pg.waitForSelector('[data-oc]'); await pg.click('[data-oc="soiree"]'); await pg.click('#pNext');
 await pg.waitForSelector('#xq'); await pg.screenshot({ path: OUT + '/e3d_explorer.png' });
 ok(await pg.locator('.xp').count() >= 10, 'sélection des parfums : une rangée d\'incontournables avec photos');
 for (const q of ['tobacco vanille', 'baccarat rouge', 'thé noir 29']) { await pg.fill('#xq', q); await pg.waitForSelector('.xc'); await pg.locator('.xc').first().click(); }
 ok(/3 choisis/.test(await pg.textContent('.exp-foot')), 'trois parfums choisis dans la base'); await pg.click('#xgo'); await pg.waitForTimeout(700);
 const prof = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')));
-ok(prof.profile.gender === 'f' && prof.profile.age === 27 && prof.profile.name === 'Léa' && prof.settings.liked.includes('vanille') && prof.settings.liked.includes('cèdre'), 'profil sauvegardé : Léa, fille, 27 ans, goûts (vanille, cèdre…)');
+ok(prof.profile.gender === 'f' && prof.profile.age === 27 && prof.profile.name === 'Léa' && prof.settings.liked.includes('vanille') && prof.settings.liked.includes('cèdre') && prof.settings.avoid.includes('patchouli') && prof.settings.vibes.includes('sensuel') && prof.settings.power === 'fort' && prof.settings.occ.includes('soiree'), 'profil sauvegardé : Léa, fille, 27 ans, notes adorées et fuies, ambiance, présence, occasions');
 ok(/(Bonjour|Bon après-midi|Bonsoir), Léa\./.test(await pg.textContent('.hero h1')), 'accueil : « Bonjour, Léa. » selon l\'heure');
 ok(await pg.locator('#dock button').count() === 7 && await pg.locator('[data-tab=play]').count() === 1 && await pg.locator('[data-tab=walk]').count() === 1 && await pg.locator('[data-tab=search]').count() === 1, 'onglets : accueil, étagère, recherche, conseils, playlists, balade, wishlist');
 await pg.click('[data-tab=walk]'); await pg.waitForTimeout(400); ok(await pg.locator('.wcard').count() === 0, 'balade : aucune balade d\'exemple (la fausse « Rue Saint-Honoré » ne s\'affiche chez personne)'); await pg.click('[data-tab=today]'); await pg.waitForTimeout(300);

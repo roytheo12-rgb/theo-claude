@@ -648,3 +648,29 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .acitem small{color:var(--muted);font-size:12px}
 .wsense{border:1px solid var(--line);border-radius:6px;padding:10px 12px}
 .wsense summary{cursor:pointer}
+
+/* Forces et limites : de petites pastilles, plus de puces ni de signes */
+.pts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.pt { font-size: 14px; line-height: 1.4; padding: 8px 12px; border-radius: 14px; background: var(--accent-soft); border: 1px solid var(--line); color: var(--ink); }
+.pts.ok .pt { background: rgba(160, 190, 150, .09); border-color: rgba(160, 190, 150, .28); }
+.pts.lim .pt { background: rgba(205, 150, 110, .08); border-color: rgba(205, 150, 110, .26); }
+.rec .pct small { display: block; font: 500 8.5px var(--sf); letter-spacing: .12em; text-transform: uppercase; opacity: .7; margin-top: 1px; }
+
+/* Profil olfactif */
+.chip.nt.on::before { content: "♥ "; color: var(--wine); }
+.chip.nt.no { background: transparent; border-color: rgba(255, 255, 255, .28); color: var(--muted); text-decoration: line-through; }
+.chip.nt.no::before { content: "✕ "; text-decoration: none; display: inline-block; }
+.tprof { display: grid; gap: 18px; }
+.tpart { display: grid; gap: 10px; }
+.tpart .soft { color: var(--muted); font-size: 14px; margin: 0; }
+.tpart .tg { margin-top: 6px; }
+.tsum { display: grid; gap: 10px; }
+.tmeter { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.tmeter i { display: block; height: 100%; width: 0; background: var(--wine); transition: width .35s; }
+#prof .prof-in.wide { padding-top: 56px; }
+
+/* Carte des boutiques */
+.smmap { height: 300px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: #1a181c; }
+.smmap iframe { width: 100%; height: 100%; border: 0; }
+a.chip { text-decoration: none; display: inline-block; }
+.leaflet-container { font: 12px var(--sf); }
