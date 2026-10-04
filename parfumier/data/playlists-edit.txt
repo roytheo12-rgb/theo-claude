@@ -4337,3 +4337,127 @@ x Parfums de Marly Greenley
 +H Bvlgari Man Wood Essence | Bois, agrumes et benjoin, raffiné pour le cocktail.
 +H Acqua di Parma Colonia | Citron et lavande, l'élégance italienne de la cérémonie.
 +H Dior Dior Homme Parfum | Iris et cuir doux, le costume sombre en parfum.
+
+# Phrases de présentation manquantes
+## Alain Delon
+~ Dior Eau Sauvage | Citron, basilic et mousse de chêne, la fraîcheur élégante des années 60.
+~ Chanel Pour Monsieur | Citron, néroli et cèdre, sec et impeccable, un classique sans fioriture.
+~ Guerlain Vétiver | Vétiver, citron vert et tabac, la sobriété d'un costume bien coupé.
+~ Acqua di Parma Colonia | Citron, orange et lavande, l'élégance méditerranéenne en plein soleil.
+~ Creed Green Irish Tweed | Verveine, iris et violette, un vert net et chic.
+~ Floris No. 89 | Citron, lavande et santal, l'élégance d'un homme qui n'a rien à prouver.
+~ Hermès Terre d'Hermès | Pamplemousse et silex, minéral et sûr de lui.
+~ Roja Parfums Elysium | Citron et lavande sur du musc, une fraîcheur luxueuse.
+~ Dior Dior Homme Original | Iris poudré et cuir doux, le costume sombre en parfum.
+~ Chanel Égoïste Platinum | Un aromatique net et propre, l'élégance sèche.
+## Vincent Vega
+~ Comme des Garçons Wonderwood | Un bois sec et poivré, minimal et un peu décalé comme sa cravate noire.
+~ Nasomatto Duro | Un cuir dur et brut, sans compromis.
+~ Serge Lutens Chergui | Tabac, miel et foin, la chaleur d'une fin de nuit.
+~ Santa Maria Novella Tabacco Toscano | Un tabac toscan sec et noble, le cigare d'après le dîner.
+~ Comme des Garçons Series 6 Synthetic: Tar | Goudron et fumée, à l'opposé du parfum classique.
+~ DS & Durga Bowmakers | Du bois travaillé et du cuir, l'atelier plutôt que le salon.
+~ Memo Paris Irish Leather | Cuir, iris et géranium, un cuir propre et souple.
+~ Tom Ford Tobacco Vanille | Tabac, vanille et cacao, le côté dance floor du costume noir.
+~ Etat Libre d'Orange Rien | Un cuir sec et poivré, nu et sans fioriture.
+~ Naomi Goodsir Bois d'Ascèse | Un bois fumé et austère, presque monastique.
+## Paul Allen
+~ Creed Green Irish Tweed | Verveine, iris et violette, un vert net sorti du pressing.
+~ Chanel Égoïste Platinum | Un aromatique propre et sec, comme une carte de visite.
+~ Tom Ford Grey Vetiver | Pamplemousse, sauge et vétiver, un gris sobre très costume.
+~ Floris No. 89 | Citron, lavande et santal, l'élégance qui date sans vieillir.
+~ Acqua di Parma Colonia Assoluta | Une cologne concentrée, agrumes et bois blanc, discrète et riche.
+~ Penhaligon's Sartorial | Lavande, cire d'abeille et tabac, l'atelier du tailleur.
+~ Roja Parfums Elysium | Citron et lavande sur du musc, la fraîcheur de ceux qui réservent chez Dorsia.
+~ Dior Dior Homme Original | Iris poudré et cuir doux, élégant jusque dans le détail.
+~ Hermès Bel Ami | Cuir clair, poivre et iris, un homme élégant qui sourit peu.
+~ Chanel Pour Monsieur Concentrée | La version plus dense du classique, toujours impeccable.
+## Andy Sachs
+~ Byredo Gypsy Water | Genièvre, encens et pin, la fraîcheur du matin avec un sac sur l'épaule.
+~ Le Labo Another 13 | Un musc minéral et discret, parfait pour passer inaperçue.
+~ Maison Margiela Lazy Sunday Morning | Linge propre, poire et muguet, la douceur de la jeune provinciale.
+~ Prada Infusion d'Iris | Un iris frais et net, sage et propre.
+~ Diptyque Philosykos | Figuier vert et noix de coco, un vert simple et sans artifice.
+~ Glossier You | Une peau propre et légèrement poivrée, sans effort.
+~ Narciso Rodriguez For Her | Un musc doux et sensuel, intime.
+~ Jo Malone Wood Sage & Sea Salt | Sel marin et sauge, aérien et sans prétention.
+~ Frédéric Malle En Passant | Lilas, blé et concombre, une fraîcheur de printemps étonnante.
+~ Chanel Chance Eau Fraîche | Des agrumes et du bois frais, léger et facile.
+~ Chanel Coco Mademoiselle | Orange, rose et patchouli, le chic de la nouvelle Andy.
+~ Dior Miss Dior EDP | Rose, muguet et pivoine, la féminité assumée.
+~ Frédéric Malle Portrait of a Lady | Rose, cassis et épices, le grand parfum qui fait taire une pièce.
+~ Tom Ford Santal Blush | Santal, cannelle et cardamome, une chaleur soyeuse.
+~ Maison Francis Kurkdjian Amyris Femme | Rose, citron et iris, élégant et clair.
+~ Ex Nihilo Fleur Narcotique | Litchi, osmanthus et jasmin, une fleur lumineuse et bavarde.
+~ Maison Crivelli Hibiscus Mahajád | Hibiscus et poivre, une fleur rouge et audacieuse.
+~ Byredo Mojave Ghost | Magnolia, ambrette et santal, aérien et feutré.
+~ Parfums de Marly Delina | Rose, litchi et rhubarbe, la féminité de la rédactrice en chef.
+## La vie de Ronnie
+~ Louis Vuitton Ombre Nomade | Oud, benjoin et framboise, le luxe de la veste Vuitton.
+~ Louis Vuitton Imagination | Bergamote, cédrat et gingembre, la fraîcheur du jour.
+~ Louis Vuitton Matière Noire | Cassis, jasmin sambac et narcisse sur un fond sombre.
+~ Dior Gris Montaigne | Un floral gris et poudré, très parisien.
+~ Dior Oud Ispahan | Oud, rose et patchouli, un classique de la collection privée.
+~ Dior Bois d'Argent | Iris, cyprès et encens, élégant et feutré.
+~ Givenchy Gentleman Parfum | Iris, vanille et bois, un classique qui plaît à tout le monde.
+~ Yves Saint Laurent Tuxedo | Violette, coriandre et rose, le smoking en parfum.
+~ Maison Francis Kurkdjian Baccarat Rouge 540 Extrait | Jasmin, safran et ambre, la signature qui laisse un sillage.
+~ Maison Francis Kurkdjian Grand Soir | Cannelle, ambre et benjoin, le dîner à l'Hôtel Costes.
+~ Byredo Black Saffron | Safran, cuir et violette, sombre et sensuel.
+~ Byredo Bal d'Afrique | Bergamote, néroli et violette, lumineux et chaleureux.
+~ Maison Crivelli Oud Maracujá | Oud et fruit de la passion, un oud solaire.
+~ Maison Crivelli Hibiscus Mahajád | Hibiscus et poivre, l'audace d'une fleur rouge.
+~ Bvlgari Tygar | Pamplemousse, gingembre et ambroxan, un frais très net.
+~ Frédéric Malle Musc Ravageur | Ambre, vanille et musc, charnel et enveloppant.
+~ Initio Side Effect | Rhum, tabac et vanille, la nuit qui continue.
+## Hiver à New York
+~ Maison Margiela By the Fireplace | Marron chaud, girofle et fumée, la cheminée du loft.
+~ Le Labo Thé Noir 29 | Thé noir, figue et laurier, un thé sec et élégant.
+~ Tom Ford Tobacco Vanille | Tabac, vanille et cacao, le lounge privé en parfum.
+~ Maison Francis Kurkdjian Grand Soir | Ambre, cannelle et vanille, chaleureux sous le manteau noir.
+~ Kilian Straight to Heaven | Rhum, muscade et vanille, le cocktail dans le flacon.
+~ Diptyque Eau Duelle | Vanille, encens et cardamome, doux et enveloppant.
+~ Maison Francis Kurkdjian Oud Satin Mood | Oud, rose et vanille, un velours sombre.
+~ Serge Lutens Chergui | Tabac, miel et foin, la chaleur d'un manteau en laine.
+~ Parfums de Marly Herod | Cannelle, tabac et vanille, un gourmand sec et élégant.
+~ Nasomatto Baraonda | Un ambré épicé et dense pour les nuits de neige.
+## Ski Weekend
+~ Maison Margiela By the Fireplace | Marron chaud et fumée de bois, la cheminée du chalet.
+~ Parfums de Marly Herod | Cannelle, tabac et vanille, le vin chaud en parfum.
+~ Tom Ford Tobacco Vanille | Tabac, vanille et cacao, le chalet de luxe.
+~ BDK Parfums Gris Charnel Extrait | Thé noir, figue et cardamome, doux comme un pull en cachemire.
+~ Diptyque Eau Duelle | Vanille et encens, parfait après la neige.
+~ Serge Lutens Chergui | Tabac, miel et foin, comme une couverture en laine.
+~ Parfums de Marly Althaïr | Vanille, cardamome et cannelle, un gourmand rond pour l'hiver.
+~ Maison Francis Kurkdjian Grand Soir | Ambre, cannelle et benjoin, la chaleur du soir.
+~ Kilian Angels' Share | Cognac, cannelle et tonka, le digestif au coin du feu.
+~ Initio Side Effect | Rhum, tabac et vanille, le chalet qui prolonge la soirée.
+## Gameday
+~ Hermès H24 | Sauge sclarée, citron et romarin, un frais net et sportif.
+~ Creed Aventus Cologne | Une version plus fraîche et légère d'Aventus, agrumes et bois.
+~ Prada Luna Rossa Carbon | Bergamote, lavande et menthe, propre et tonique.
+~ Chanel Allure Homme Sport Eau Extrême | Agrumes et poivre, énergique et bien tenu.
+~ Acqua di Parma Colonia | Citron, orange et lavande, une cologne qui réveille.
+~ Creed Original Vetiver | Un vétiver frais et vert, sobre et propre.
+~ Guerlain Guerlain Homme | Lavande, bois et épices douces, simple et rassurant.
+~ Bvlgari Tygar | Pamplemousse, gingembre et ambroxan, le frais de l'après-match.
+## F1
+~ Xerjoff Torino21 | Menthe, citron et basilic, une fraîcheur de paddock.
+~ Creed Aventus | Ananas, bouleau et musc, le parfum de la victoire.
+~ Tom Ford Grey Vetiver | Pamplemousse, sauge et vétiver, sobre sous la chaleur.
+~ Bvlgari Tygar | Pamplemousse, gingembre et ambroxan, frais comme un champagne glacé.
+~ Maison Francis Kurkdjian Gentle Fluidity Silver | Genévrier, muscade et musc, propre et métallique comme une carrosserie.
+~ Maison Crivelli Papyrus Moléculaire | Un bois sec et léger, minimal et moderne.
+~ Parfums de Marly Percival | Bergamote, lavande et mousse, un aromatique net.
+~ Tom Ford Ombré Leather | Cuir, cardamome et ambre, le cuir des baquets et des pneus chauds.
+## Boat Day
+~ Creed Virgin Island Water | Citron vert, coco et touche de rhum, une eau de vacances.
+~ Tom Ford Neroli Portofino | Néroli, bergamote et mandarine, la Riviera sur le pont.
+~ Le Labo Bergamote 22 | Bergamote, pamplemousse et petit grain, vif et propre.
+~ Acqua di Parma Fico di Amalfi | Figue, citron et bergamote, un jardin sur la côte.
+~ Maison Francis Kurkdjian Aqua Universalis | Citron, bergamote et fleur d'oranger, le linge propre au soleil.
+~ Roja Parfums Elysium | Citron et lavande sur du musc, un frais très luxueux.
+~ Eau d'Italie Un Bateau Pour Capri | Des agrumes et de la mer, le départ pour Capri.
+~ Xerjoff 40 Knots | Un frais aquatique, le vent du large.
+~ Diptyque Philosykos | Figuier et noix de coco, le vert des criques.
+~ Byredo Sundazed | Citron, mandarine et noix de coco, léger et solaire.
