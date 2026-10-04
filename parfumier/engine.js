@@ -418,6 +418,11 @@
       const U = pf.derived ? null : { pro: 'bureau', date: 'rdv', event: 'soiree', famille: 'quotidien', amis: 'quotidien' }[C.ctx];
       if (U) { max += 1.5; if (pf.u.includes(U) || (C.ctx === 'event' && pf.u.includes('ceremonie'))) { s += 1.5; why.push('fait pour ' + ({ bureau: 'le bureau', rdv: 'un rendez-vous', soiree: 'une soirée', quotidien: 'le quotidien' }[U])); } else s -= .6; }
       if (C.style === 'sport') { max += 1; if (pf.u.includes('sport')) s += 1; }
+      if (pf.expert) {      // choix d'experts : bonus quand le besoin correspond au thème
+        const T = pf.expert, hot = C.temp != null && C.temp >= 27, cold = C.temp != null && C.temp <= 10;
+        const hit = (hot && T.includes('chaleur')) || (cold && T.includes('automne-hiver')) || (C.ctx === 'date' && T.includes('date')) || (C.ctx === 'event' && (T.includes('occasion') || T.includes('opulent')));
+        max += 1.5; if (hit) { s += 1.5; why.push('choix d\'experts pour ' + (hot ? 'une grosse chaleur' : cold ? 'le froid' : C.ctx === 'date' ? 'un rendez-vous' : 'une grande occasion')); }
+      }
       const words = pf.derived ? [] : norm(need.text).split(' ').filter((w) => w.length >= 4), blob = norm([pf.pitch, pf.dom, pf.diff, ...pf.kw].join(' '));
       const hit = words.filter((w) => blob.includes(w)).length; if (words.length) { max += 1; s += Math.min(1, hit / Math.max(2, words.length * .6)); }
       if (!pf.derived && pf.c <= 1) s -= .4;
@@ -463,7 +468,12 @@
     if (!p || !p.name) return null;
     if (p._pf !== undefined) return p._pf;
     const P = root.PROFILS || {}, HA = root.HOUSE_ALIAS || {}, h = HA[norm(p.house)] || p.house;
-    const q = P[norm(h) + '|' + norm(p.name)] || deriveProfile(p);
+    const key = norm(h) + '|' + norm(p.name), X = (root.EXPERT || {})[key];
+    let q = P[key] || deriveProfile(p);
+    if (X) {      // sélection d'experts : les tags posés à la main passent avant les profils déduits des notes
+      const b = q || { p: new Array(18).fill(2), s: [2, 2, 2, 2], m: [3, 3], u: [], dom: '', diff: '', pitch: '', sim: [], alt: [], pour: '', pas: '', kw: [], pub: [], c: 2 };
+      q = Object.assign({}, b, { derived: false, expert: X.t, u: [...new Set([...(b.u || []), ...X.u])], kw: [...new Set([...(b.kw || []), ...X.kw])], s: X.s ? b.s.map((v, i) => Math.max(v, X.s[i])) : b.s });
+    }
     Object.defineProperty(p, '_pf', { value: q, enumerable: false, configurable: true });
     return q;
   };

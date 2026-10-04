@@ -1,0 +1,80 @@
+# Sélection d'experts (Théo) — elle prime sur les sélections faites par IA. Format : thème|Maison|Parfum (noms de la base)
+chaleur|Guerlain|Cologne Forte
+chaleur|Louis Vuitton|Imagination
+chaleur|Une Nuit Nomade|Nothing but Sea and Sky
+chaleur|Place de la Rêverie|Passion Riviera
+chaleur|Ella K|Poème de Sagano
+chaleur|Parfum d'Empire|Un Bel Amour d'Été
+chaleur|Marc-Antoine Barrois|Tilia
+chaleur|Ex Nihilo|Blue Talisman
+date|Ex Nihilo|Blue Talisman Extrait
+date|Jo Malone|Red Hibiscus
+date|Dior|Gris Dior
+date|Yves Saint Laurent|Muse
+date|Armani|Iris Bleu
+date|Yves Saint Laurent|Tuxedo
+date|Frédéric Malle|Musc Ravageur
+date|BDK Parfums|Tubéreuse Impériale
+date|Louis Vuitton|Les Sables Roses
+date|Initio|Side Effect
+date|Tom Ford|Tobacco Vanille
+date|Kilian|Angels' Share Paradis
+date|Maison Francis Kurkdjian|Oud Satin Mood
+date|Guerlain|Tobacco Honey
+date|Maison Francis Kurkdjian|Grand Soir
+date|Guerlain|Vanille Planifolia
+clean|Une Nuit Nomade|Sun Bleached
+clean|Maison Francis Kurkdjian|724
+clean|Byredo|Blanche
+clean|Byredo|Blanche Absolu
+clean|Les Eaux Primordiales|Couleur Primaire
+clean|Guerlain|Aqua Allegoria Forte Mandarine Basilic
+clean|Goldfield & Banks|Pacific Rock Moss
+clean|Une Nuit Nomade|Jardins de Misfah
+clean|Essential Parfums|Ambre Latte
+clean|Maison Matine|Esprit de Contradiction
+clean|Essential Parfums|The Musc
+clean|Profumo di Firenze|Viandante
+clean|Corner Barcelona|Isla Bohemia
+clean|Majouri|Imperial Vanilla
+niche-petit-prix|The Different Company|Red Burning Night
+niche-petit-prix|Maison Siraj|Élixir d'Amande Extrait
+niche-petit-prix|Une Nuit Nomade|Sugar Leather
+niche-petit-prix|Maison Unika|Oud Osmanthus Tonka Sesame
+niche-petit-prix|Carner Barcelona|Tennis Club
+niche-petit-prix|Carner Barcelona|Tardes
+niche-petit-prix|Carner Barcelona|Cuirs
+niche-petit-prix|Carner Barcelona|El Born
+niche-petit-prix|Carner Barcelona|D600
+niche-petit-prix|Laboratorio Olfattivo|Nirmal
+niche-petit-prix|Laboratorio Olfattivo|Kashnoir
+niche-petit-prix|Laboratorio Olfattivo|Vanagloria
+niche-petit-prix|Laboratorio Olfattivo|Daimiris
+niche-petit-prix|Laboratorio Olfattivo|Baliflora
+niche-petit-prix|Maison Sensara|Souvenir de Oummi
+niche-petit-prix|Une Nuit Nomade|Jardins de Misfah
+niche-petit-prix|Parfum d'Empire|Ambre Russe
+automne-hiver|Place de la Rêverie|Fève Nectar
+automne-hiver|Celine|Réptile
+automne-hiver|Dior|Cuir Saddle
+automne-hiver|Parfum d'Empire|Ambre Russe
+automne-hiver|Parfum d'Empire|Cuir Ottoman
+automne-hiver|Parfum d'Empire|Tabac Tabou
+automne-hiver|Parfum d'Empire|Fougère Bengale
+automne-hiver|Parfum d'Empire|Musc Tonkin
+automne-hiver|Maison Francis Kurkdjian|Oud Satin Mood
+automne-hiver|Ella K|Ghibli
+opulent|Matière Première|Radical Rose
+opulent|Frédéric Malle|The Moon
+occasion|Matière Première|Radical Rose
+daily|Ex Nihilo|Blue Talisman
+daily|Louis Vuitton|L'Immensité
+daily|Louis Vuitton|Meteore
+daily|Place de la Rêverie|Santal de Paris
+daily|Maison Francis Kurkdjian|Gentle Fluidity Gold
+signature|Ex Nihilo|Brompton Immortals
+bateman|Yves Saint Laurent|Pour Homme
+bateman|Caron|Pour un Homme
+bateman|Dior|New Look
+bateman|Comme des Garçons|Zero
+bateman|Chanel|Égoïste Platinum

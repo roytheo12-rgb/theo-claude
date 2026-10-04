@@ -1482,7 +1482,7 @@ pal: f1e7d0,1f3a2e,c9a24a,arches
 - Parfums de Marly Layton Exclusif | Le luxe mainstream qu'il offre à ses associés.
 - Maison Francis Kurkdjian Grand Soir | Soirée, palace, lumières.
 - Abdul Samad Al Qurashi Oud Al Shams | Oud brut, encens, résines : ce qu'il porte vraiment chez lui.
-- Clive Christian No. 1 | Il n'achète pas le parfum, il achète le statut du flacon.
+- Clive Christian No. 1 Masculine | Il n'achète pas le parfum, il achète le statut du flacon.
 
 ## NEW Howard Ratner | Cinéma, séries & livres
 d: Joaillier du Diamond District, New York. Costard cheap, grosse chaîne, opale éthiopienne, pari risqué, téléphone qui sonne : adrénaline permanente.
@@ -1749,7 +1749,7 @@ pal: 2a1a06,d4a72c,fff0c0,rays
 - Xerjoff Alexandria II | L'or de la connaissance accumulée.
 - Roja Parfums Enigma | Le coffre fermé à clé, le portrait doré dans la galerie.
 - Maison Francis Kurkdjian Grand Soir | Le lustre, les bougies, l'or sur les invités.
-- Clive Christian No. 1 | L'or comme matière noble, pas comme ostentation.
+- Clive Christian No. 1 Masculine | L'or comme matière noble, pas comme ostentation.
 - Amouage Jubilation XXV | Les collections de Fabergé : l'or travaillé à la main.
 - Penhaligon's The Tragedy of Lord George | L'or britannique, austère mais indiscutable.
 - Serge Lutens Ambre Sultan | Le bazar d'Istanbul, l'or des épices.
@@ -2140,3 +2140,129 @@ first: 1
 ## Les Globe-trotters
 secs: Destinations
 first: 1
+
+## NEW Sous la chaleur | Moments
+d: Trente-cinq degrés à l'ombre, la peau qui colle, la ville qui fond. Les parfums que les experts portent quand il fait une chaleur énorme.
+pal: ffb400,ff6b35,fff1c8,rays
+- Guerlain Cologne Forte | Choix d'experts pour une chaleur énorme.
+- Louis Vuitton Imagination | Choix d'experts pour une chaleur énorme.
+- Une Nuit Nomade Nothing but Sea and Sky | Choix d'experts pour une chaleur énorme.
+- Place de la Rêverie Passion Riviera | Choix d'experts pour une chaleur énorme.
+- Ella K Poème de Sagano | Choix d'experts pour une chaleur énorme.
+- Parfum d'Empire Un Bel Amour d'Été | Choix d'experts pour une chaleur énorme.
+- Marc-Antoine Barrois Tilia | Choix d'experts pour une chaleur énorme.
+- Ex Nihilo Blue Talisman | Choix d'experts pour une chaleur énorme.
+
+## NEW Niche à petit prix | Spécial
+d: De la niche, de vraies signatures, sans le prix d'une maison de luxe : la sélection des experts.
+pal: 2a3a2a,6a8a5a,efe6cf,dots
+- The Different Company Red Burning Night | Choix d'experts : de la niche à prix doux.
+- Maison Siraj Élixir d'Amande Extrait | Choix d'experts : de la niche à prix doux.
+- Une Nuit Nomade Sugar Leather | Choix d'experts : de la niche à prix doux.
+- Maison Unika Oud Osmanthus Tonka Sesame | Choix d'experts : de la niche à prix doux.
+- Carner Barcelona Tennis Club | Choix d'experts : de la niche à prix doux.
+- Carner Barcelona Tardes | Choix d'experts : de la niche à prix doux.
+- Carner Barcelona Cuirs | Choix d'experts : de la niche à prix doux.
+- Carner Barcelona El Born | Choix d'experts : de la niche à prix doux.
+- Carner Barcelona D600 | Choix d'experts : de la niche à prix doux.
+- Laboratorio Olfattivo Nirmal | Choix d'experts : de la niche à prix doux.
+- Laboratorio Olfattivo Kashnoir | Choix d'experts : de la niche à prix doux.
+- Laboratorio Olfattivo Vanagloria | Choix d'experts : de la niche à prix doux.
+- Laboratorio Olfattivo Daimiris | Choix d'experts : de la niche à prix doux.
+- Laboratorio Olfattivo Baliflora | Choix d'experts : de la niche à prix doux.
+- Maison Sensara Souvenir de Oummi | Choix d'experts : de la niche à prix doux.
+- Une Nuit Nomade Jardins de Misfah | Choix d'experts : de la niche à prix doux.
+- Parfum d'Empire Ambre Russe | Choix d'experts : de la niche à prix doux.
+
+## NEW Je veux sentir opulent | Effets
+d: Riche, ample, généreux : un parfum qui prend la place qu'il mérite.
+pal: 2a0a1a,8a2a4a,e8c8a0,arches
+- Matière Première Radical Rose | Choix d'experts : l'opulence.
+- Frédéric Malle The Moon | Choix d'experts : l'opulence.
+
+## NEW Daily | Moments
+d: Le parfum de tous les jours : simple à porter, jamais ennuyeux.
+pal: e8e4d8,8a9a8a,2a2a2a,grid
+- Ex Nihilo Blue Talisman | Choix d'experts pour tous les jours.
+- Louis Vuitton L'Immensité | Choix d'experts pour tous les jours.
+- Louis Vuitton Meteore | Choix d'experts pour tous les jours.
+- Place de la Rêverie Santal de Paris | Choix d'experts pour tous les jours.
+- Maison Francis Kurkdjian Gentle Fluidity Gold | Choix d'experts pour tous les jours.
+
+## First Date
++ Ex Nihilo Blue Talisman Extrait | Choix d'experts pour un rendez-vous.
++ Jo Malone Red Hibiscus | Choix d'experts pour un rendez-vous.
++ Dior Gris Dior | Choix d'experts pour un rendez-vous.
++ Yves Saint Laurent Muse | Choix d'experts pour un rendez-vous.
++ Armani Iris Bleu | Choix d'experts pour un rendez-vous.
++ Yves Saint Laurent Tuxedo | Choix d'experts pour un rendez-vous.
++ Frédéric Malle Musc Ravageur | Choix d'experts pour un rendez-vous.
++ BDK Parfums Tubéreuse Impériale | Choix d'experts pour un rendez-vous.
++ Louis Vuitton Les Sables Roses | Choix d'experts pour un rendez-vous.
++ Initio Side Effect | Choix d'experts pour un rendez-vous.
++ Tom Ford Tobacco Vanille | Choix d'experts pour un rendez-vous.
++ Kilian Angels' Share Paradis | Choix d'experts pour un rendez-vous.
++ Maison Francis Kurkdjian Oud Satin Mood | Choix d'experts pour un rendez-vous.
++ Guerlain Tobacco Honey | Choix d'experts pour un rendez-vous.
++ Maison Francis Kurkdjian Grand Soir | Choix d'experts pour un rendez-vous.
++ Guerlain Vanille Planifolia | Choix d'experts pour un rendez-vous.
+
+## Je veux sentir propre
++ Une Nuit Nomade Sun Bleached | Choix d'experts : propre et net.
++ Maison Francis Kurkdjian 724 | Choix d'experts : propre et net.
++ Byredo Blanche | Choix d'experts : propre et net.
++ Byredo Blanche Absolu | Choix d'experts : propre et net.
++ Les Eaux Primordiales Couleur Primaire | Choix d'experts : propre et net.
++ Guerlain Aqua Allegoria Forte Mandarine Basilic | Choix d'experts : propre et net.
++ Goldfield & Banks Pacific Rock Moss | Choix d'experts : propre et net.
++ Une Nuit Nomade Jardins de Misfah | Choix d'experts : propre et net.
++ Essential Parfums Ambre Latte | Choix d'experts : propre et net.
++ Maison Matine Esprit de Contradiction | Choix d'experts : propre et net.
++ Essential Parfums The Musc | Choix d'experts : propre et net.
++ Profumo di Firenze Viandante | Choix d'experts : propre et net.
++ Corner Barcelona Isla Bohemia | Choix d'experts : propre et net.
++ Majouri Imperial Vanilla | Choix d'experts : propre et net.
+
+## Je veux sentir solaire
++ Guerlain Cologne Forte | Choix d'experts pour une chaleur énorme.
++ Louis Vuitton Imagination | Choix d'experts pour une chaleur énorme.
++ Une Nuit Nomade Nothing but Sea and Sky | Choix d'experts pour une chaleur énorme.
++ Place de la Rêverie Passion Riviera | Choix d'experts pour une chaleur énorme.
++ Ella K Poème de Sagano | Choix d'experts pour une chaleur énorme.
++ Parfum d'Empire Un Bel Amour d'Été | Choix d'experts pour une chaleur énorme.
++ Marc-Antoine Barrois Tilia | Choix d'experts pour une chaleur énorme.
++ Ex Nihilo Blue Talisman | Choix d'experts pour une chaleur énorme.
+
+## Automne Cozy
++ Place de la Rêverie Fève Nectar | Choix d'experts pour l'automne-hiver.
++ Celine Réptile | Choix d'experts pour l'automne-hiver.
++ Dior Cuir Saddle | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Ambre Russe | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Cuir Ottoman | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Tabac Tabou | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Fougère Bengale | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Musc Tonkin | Choix d'experts pour l'automne-hiver.
++ Maison Francis Kurkdjian Oud Satin Mood | Choix d'experts pour l'automne-hiver.
++ Ella K Ghibli | Choix d'experts pour l'automne-hiver.
+
+## Chic Winter
++ Celine Réptile | Choix d'experts pour l'automne-hiver.
++ Dior Cuir Saddle | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Ambre Russe | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Cuir Ottoman | Choix d'experts pour l'automne-hiver.
++ Parfum d'Empire Tabac Tabou | Choix d'experts pour l'automne-hiver.
++ Maison Francis Kurkdjian Oud Satin Mood | Choix d'experts pour l'automne-hiver.
+
+## Wedding Guest
++ Matière Première Radical Rose | Choix d'experts pour les grandes occasions.
+
+## It Boy
++ Ex Nihilo Brompton Immortals | Choix d'experts : un parfum signature.
+
+## Patrick Bateman
++ Yves Saint Laurent Pour Homme | Le costume bien coupé : choix d'experts.
++ Caron Pour un Homme | Le costume bien coupé : choix d'experts.
++ Dior New Look | Le costume bien coupé : choix d'experts.
++ Comme des Garçons Zero | Le costume bien coupé : choix d'experts.
++ Chanel Égoïste Platinum | Le costume bien coupé : choix d'experts.
+

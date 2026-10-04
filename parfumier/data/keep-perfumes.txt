@@ -125,3 +125,20 @@ Phaedon|Thé Vert|EDP
 Pharrell Williams|Girl|EDP
 Kilian|Sparkling Royal|EDP
 Maison Crivelli|Tobacco Color|EDP
+# Sélection d'experts : fiches à créer (sans notes inventées)
+Guerlain|Cologne Forte|COL
+Ex Nihilo|Blue Talisman Extrait|EXT
+Armani|Iris Bleu|EDP
+Guerlain|Aqua Allegoria Forte Mandarine Basilic|EDT
+Profumo di Firenze|Viandante|EDP
+Corner Barcelona|Isla Bohemia|EDP
+Majouri|Imperial Vanilla|EDP
+The Different Company|Red Burning Night|EDP
+Maison Siraj|Élixir d'Amande Extrait|EXT
+Maison Unika|Oud Osmanthus Tonka Sesame|EDP
+Carner Barcelona|Tardes|EDP
+Carner Barcelona|Cuirs|EDP
+Carner Barcelona|El Born|EDP
+Carner Barcelona|D600|EDP
+Maison Sensara|Souvenir de Oummi|EDP
+Yves Saint Laurent|Pour Homme|EDT
