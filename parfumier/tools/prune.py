@@ -63,7 +63,16 @@ def house_gone(h): return norm(h) in H or canon(h) in H
 def name_gone(h, n):
     k = norm(h) + '|' + norm(n)
     return k in PERF or canon(h) + '|' + norm(n) in PERF or any(p.search(norm(n)) for p in PAT)
-def gone(h, n): return house_gone(h) or name_gone(h, n)
+KEEP = set()
+_kp = root / 'data/keep-perfumes.txt'
+if _kp.exists():
+    for _l in _kp.read_text(encoding='utf-8').splitlines():
+        _l = _l.strip()
+        if _l and not _l.startswith('#') and _l.count('|') >= 2:
+            _h, _n = _l.split('|')[:2]; KEEP.add(norm(_h) + '|' + norm(_n))      # parfums gardés volontairement, même quand leur maison est retirée
+def gone(h, n):
+    if (norm(h) + '|' + norm(n)) in KEEP and not name_gone(h, n): return False      # parfum gardé volontairement
+    return house_gone(h) or name_gone(h, n)
 # --- index.js
 newidx, dead_nose, dead_keys = [], set(), set()
 for h, arr in INDEX:
@@ -86,13 +95,6 @@ def remap(d):
         kk = h2 + '|' + n
         if kk not in out or h2 == h: out[kk] = v
     return out
-KEEP = set()
-_kp = root / 'data/keep-perfumes.txt'
-if _kp.exists():
-    for _l in _kp.read_text(encoding='utf-8').splitlines():
-        _l = _l.strip()
-        if _l and not _l.startswith('#') and _l.count('|') >= 2:
-            _h, _n = _l.split('|')[:2]; KEEP.add(norm(_h) + '|' + norm(_n))      # parfums gardés volontairement, même quand leur maison est retirée
 def key_gone(k):
     h, n = k.split('|', 1)
     if k in KEEP and k not in PERF: return False
