@@ -867,7 +867,7 @@
     const d = edOf(e); if (!d) return '';
     const L = (t, a, ic) => (a && a.length ? `<div><p class="mono">${t}</p><ul style="margin:6px 0 0;padding-left:18px">${a.map((x) => `<li style="margin:2px 0">${ic} ${esc(x)}</li>`).join('')}</ul></div>` : '');
     const TIER = { S: 'Incontournable', A: 'Excellent choix', B: 'Très bon' }, DISPO = { restreint: 'Distribution restreinte', secondaire: 'Plutôt marché secondaire', discontinue: 'Discontinué ou introuvable' };
-    const facts = [d.an ? String(d.an) : '', TIER[d.tier] || '', DISPO[d.dispo] || ''].filter(Boolean).join(' · ');
+    const facts = [d.an ? String(d.an) : '', d.coll || '', TIER[d.tier] || '', DISPO[d.dispo] || ''].filter(Boolean).join(' · ');
     const nez = d.nez ? `<button class="chip" data-nz="${esc(d.nez.split(',')[0].trim())}">Nez : ${esc(d.nez)}</button>` : '';
     const site = siteOf(e);
     const meta = [d.prix ? '≈ ' + d.prix + ' €' : '', d.achat ? 'Où l\'acheter : ' + d.achat : ''].filter(Boolean).join(' · ');
@@ -880,6 +880,9 @@
       ${(d.sit || []).length ? `<div><p class="mono">Situations : toucher pour chercher</p><div class="chips" style="margin-top:8px">${d.sit.map((t) => `<button class="chip" data-gosit="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>` : ''}
       ${d.tenue ? `<div><p class="mono">Tenue</p><p class="rd" style="margin-top:6px">${esc(d.tenue)}</p></div>` : ''}
       ${d.mood ? `<div><p class="mono">Mood</p><p class="rd" style="margin-top:6px">${esc(d.mood)}</p></div>` : ''}
+      ${d.duree ? `<div><p class="mono">Tenue sur peau</p><p class="rd" style="margin-top:6px">${esc(d.duree)}</p></div>` : ''}
+      ${d.stn ? `<div><p class="mono">Notre avis : sous-coté ou surcoté ?</p><p class="rd" style="margin-top:6px">${esc(d.stn)}</p></div>` : ''}
+      ${d.flankers ? `<p style="color:var(--muted);font-size:14px">Variante hors catalogue : ${esc(d.flankers)}</p>` : ''}
       ${meta ? `<p style="color:var(--muted);font-size:14px">${esc(meta)}</p>` : ''}
       ${site ? `<div class="buy"><a class="linkbtn" target="_blank" rel="noopener" href="${site}">Site officiel</a></div>` : ''}
     </div>`;
