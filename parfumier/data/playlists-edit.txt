@@ -2266,3 +2266,51 @@ pal: e8e4d8,8a9a8a,2a2a2a,grid
 + Comme des Garçons Zero | Le costume bien coupé : choix d'experts.
 + Chanel Égoïste Platinum | Le costume bien coupé : choix d'experts.
 
+## Les Petits budgets
+x Essential Parfums Bois Impérial
+x Essential Parfums Orange x Santal
+x Place de la Rêverie Ambre
+x Place de la Rêverie Iris
+x Place de la Rêverie Jasmin
+x Place de la Rêverie Oud
+x Place de la Rêverie Passion Riviera
+x Place de la Rêverie Rose
+x Place de la Rêverie Santal de Paris
+x Place de la Rêverie Tubéreuse
+x Place de la Rêverie Vanille
+x Horace & Horace
+x Horace & Horace Extrait
+x Horace Ibiza '87
+x Horace Mezcal Musc
+x Horace Oud Rose
+x Horace Vetiver Primavera
+x Horace Vintage Vanilla
+x Horace Vintage Vanilla Extrait
+x Essential Parfums The Musc
+x Essential Parfums Rose Magnetic
+x Giardini di Toscana Bianco Latte
+
+## Niche à petit prix
++ Essential Parfums Bois Impérial | Qualité niche à prix honnête.
++ Essential Parfums Orange x Santal | Frais et boisé, très au-dessus de son prix.
++ Place de la Rêverie Ambre | Maison abordable.
++ Place de la Rêverie Iris | Maison abordable.
++ Place de la Rêverie Jasmin | Maison abordable.
++ Place de la Rêverie Oud | Maison abordable.
++ Place de la Rêverie Passion Riviera | Maison abordable.
++ Place de la Rêverie Rose | Maison abordable.
++ Place de la Rêverie Santal de Paris | Maison abordable.
++ Place de la Rêverie Tubéreuse | Maison abordable.
++ Place de la Rêverie Vanille | Maison abordable.
++ Horace & Horace | Maison abordable.
++ Horace & Horace Extrait | Maison abordable.
++ Horace Ibiza '87 | Maison abordable.
++ Horace Mezcal Musc | Maison abordable.
++ Horace Oud Rose | Maison abordable.
++ Horace Vetiver Primavera | Maison abordable.
++ Horace Vintage Vanilla | Maison abordable.
++ Horace Vintage Vanilla Extrait | Maison abordable.
++ Essential Parfums The Musc | Le niche féminin accessible.
++ Essential Parfums Rose Magnetic | La rose moderne à prix accessible.
++ Giardini di Toscana Bianco Latte | Un gourmand lacté et doux, au prix d'un cadeau.
+

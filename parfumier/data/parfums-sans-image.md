@@ -58,15 +58,15 @@ Parfums des listes Inspirations sans image : 73
 - Memo Paris Île de Ré  ← Boat Day
 - Oman Luxury Al Qasaid  ← Dubai
 - Parfum d'Empire Tabac Tabou  ← Automne Cozy, Chic Winter
-- Place de la Rêverie Ambre  ← Les Petits budgets
-- Place de la Rêverie Iris  ← Les Petits budgets
+- Place de la Rêverie Ambre  ← Niche à petit prix
+- Place de la Rêverie Iris  ← Niche à petit prix
 - Place de la Rêverie Jardin de Minuit  ← Garden Party
-- Place de la Rêverie Jasmin  ← Les Petits budgets
-- Place de la Rêverie Oud  ← Les Petits budgets
-- Place de la Rêverie Rose  ← Les Petits budgets
+- Place de la Rêverie Jasmin  ← Niche à petit prix
+- Place de la Rêverie Oud  ← Niche à petit prix
+- Place de la Rêverie Rose  ← Niche à petit prix
 - Place de la Rêverie Trocadéro  ← Paris
-- Place de la Rêverie Tubéreuse  ← Les Petits budgets
-- Place de la Rêverie Vanille  ← Les Petits budgets
+- Place de la Rêverie Tubéreuse  ← Niche à petit prix
+- Place de la Rêverie Vanille  ← Niche à petit prix
 - Profumo di Firenze Viandante  ← Je veux sentir propre
 - The Different Company Red Burning Night  ← Niche à petit prix
 - Yves Rocher Comme une Evidence  ← Les Petits budgets

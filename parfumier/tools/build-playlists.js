@@ -118,7 +118,7 @@ const EDIT_MISS = [], INTROUV = [];
     if ((m = l.match(/^- (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; rep = rep || []; rep.push(o); if (grp) grp[grp.length - 1].n++; continue; }
     if ((m = l.match(/^\+ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = p.ps.find((x) => key(x) === key(o)); if (ex) { if (w) ex.w = w; } else p.ps.push(o); continue; }
     if ((m = l.match(/^~ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = (rep || p.ps).find((x) => key(x) === key(o)); if (ex) ex.w = w; else EDIT_MISS.push(p.t + ' / ' + q); continue; }
-    if ((m = l.match(/^x (.*)$/))) { const o = mk(m[1].trim(), ''); p.ps = p.ps.filter((x) => key(x) !== key(o)); continue; }
+    if ((m = l.match(/^x (.*)$/))) { const o = mk(m[1].trim(), ''); if (!o) continue; const ix = p.ps.findIndex((x) => key(x) === key(o)); if (ix >= 0 && p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (ix < c) { g.n--; break; } } } p.ps = p.ps.filter((x) => key(x) !== key(o)); continue; }
   }
   fin();
   fs.writeFileSync(path.join(root, 'data', 'playlists-introuvables.txt'), [...new Set(INTROUV)].sort().join('\n'));
