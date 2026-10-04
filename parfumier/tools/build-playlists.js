@@ -2,7 +2,7 @@
 // chaque parfum est relié à la base (INDEX / CATALOG) quand il existe, sinon marqué hors base.
 const vm = require('vm'), fs = require('fs'), path = require('path');
 const root = path.join(__dirname, '..');
-const w = { }; w.window = w; vm.createContext(w);
+const w = { }; w.window = w; const w2 = w; vm.createContext(w);
 for (const f of ['data', 'desc', 'index', 'facts']) vm.runInContext(fs.readFileSync(path.join(root, f + '.js'), 'utf8'), w);
 const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/n°|no\.|№/g, 'n ').replace(/&/g, ' and ').replace(/['’`.,–—-]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 const HA = w.HOUSE_ALIAS || {};
@@ -116,7 +116,7 @@ const EDIT_MISS = [], INTROUV = [];
     if ((m = l.match(/^pal: (.*)$/))) { p.pal = m[1].trim(); continue; }
     if ((m = l.match(/^@ (.*)$/))) { const [t0, d0] = split(m[1]); rep = rep || []; grp = grp || []; const old = p.grp && p.grp[grp.length]; grp.push({ t: t0, d: d0 || (old ? old.d : ''), n: 0 }); continue; }
     if ((m = l.match(/^- (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; rep = rep || []; rep.push(o); if (grp) grp[grp.length - 1].n++; continue; }
-    if ((m = l.match(/^\+ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = p.ps.find((x) => key(x) === key(o)); if (ex) { if (w) ex.w = w; } else p.ps.push(o); continue; }
+    if ((m = l.match(/^\+ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = p.ps.find((x) => key(x) === key(o)); if (ex) { if (w) ex.w = w; } else if (p.grp && p.grp.every((g) => typeof g.n === 'number') && p.grp.reduce((a, g) => a + g.n, 0) === p.ps.length && !rep) { const fk = (w2.FACTS || {})[norm(HA[norm(o.h)] || o.h) + '|' + norm(o.n)] || (w2.FACTS || {})[norm(o.h) + '|' + norm(o.n)], g = fk && fk.g; let gi = p.grp.findIndex((x) => (g === 'm' && /homme/i.test(x.t)) || (g === 'f' && /femme/i.test(x.t))); if (gi < 0) gi = p.grp.reduce((b, x, i) => (x.n < p.grp[b].n ? i : b), 0); let at = 0; for (let i = 0; i <= gi; i++) at += p.grp[i].n; p.ps.splice(at, 0, o); p.grp[gi].n++; } else p.ps.push(o); continue; }
     if ((m = l.match(/^~ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = (rep || p.ps).find((x) => key(x) === key(o)); if (ex) ex.w = w; else EDIT_MISS.push(p.t + ' / ' + q); continue; }
     if ((m = l.match(/^x (.*)$/))) { const o = mk(m[1].trim(), ''); if (!o) continue; const ix = p.ps.findIndex((x) => key(x) === key(o)); if (ix >= 0 && p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (ix < c) { g.n--; break; } } } p.ps = p.ps.filter((x) => key(x) !== key(o)); continue; }
   }

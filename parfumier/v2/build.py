@@ -10,6 +10,7 @@ subprocess.run(['node', str(up/'tools/build-playlists.js')], check=True, stdout=
 subprocess.run([sys.executable, str(up/'tools/build-covers.py')], check=True)
 subprocess.run([sys.executable, str(up/'tools/build-intel.py')], check=True, stdout=subprocess.DEVNULL)      # descriptions + playlists -> descintel.js (moteur)
 subprocess.run(['node', str(up/'tools/build-bios.js')], check=True, stdout=subprocess.DEVNULL)      # bio de chaque parfum = fusion de ses phrases de playlists
+subprocess.run(['node', str(up/'tools/build-enrich.js')], check=True, stdout=subprocess.DEVNULL)      # nez, famille, année, prix (estimé si inconnu) -> enrich.js
 subprocess.run(['node', str(up/'tools/build-playlists.js')], check=True, stdout=subprocess.DEVNULL)      # 2e passage : repère les couvertures disponibles      # relie les playlists à la base nettoyée
 
 def js(path):
@@ -84,7 +85,7 @@ def page(scripts, head_extra=""):
 
 mode = sys.argv[1] if len(sys.argv) > 1 else "artifact"
 if mode == "artifact":
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + imgpack_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + imgpack_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'enrich.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
     out = d/'sillage.html'
     out.write_text(page(scripts))
     print(out, out.stat().st_size)
@@ -92,7 +93,7 @@ if mode == "artifact":
 if mode == "public":
     import os, shutil
     site = os.environ.get("SITE_URL", "https://sillage-demo.example.workers.dev").rstrip("/")
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'enrich.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
     html = page(scripts)
     cut = html.index('<div id="app">')
     head_inner, body_inner = html[:cut], html[cut:]

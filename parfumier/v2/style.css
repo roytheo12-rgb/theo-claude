@@ -629,3 +629,22 @@ img.av.ph { object-fit: cover; object-position: 50% 18%; padding: 0; background:
 .card.lex.tt.out { opacity: 0; transform: translateY(6px); }
 @media (prefers-reduced-motion: reduce) { .card.lex.tt { transition: none; } }
 .plwhy { font-style: normal; color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+/* fiches et listes : liens discrets, listes repliées sur trois rangées */
+.lnk{background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;text-decoration:underline;text-decoration-color:var(--line,rgba(127,127,127,.4));text-underline-offset:3px;cursor:pointer;text-transform:inherit;letter-spacing:inherit}
+.lnk:hover,.lnk:focus-visible{text-decoration-color:currentColor}
+.foldbox{display:grid;gap:8px}
+.fold{overflow:hidden}
+.foldbtn{justify-self:start}
+.fold.xpop{flex-wrap:wrap;overflow-x:hidden;scroll-snap-type:none}
+.fold.xg{overflow:hidden}
+.planbar{height:8px;border-radius:99px;background:rgba(127,127,127,.18);display:flex;overflow:hidden}
+.planbar span{background:var(--muted,#8a8a8a)}
+.planbar i{background:var(--wine,#b4394a)}
+/* champs avec suggestions (balade, lieux, parfums) */
+.acwrap{position:relative}
+.aclist{position:absolute;left:0;right:0;top:100%;z-index:30;display:grid;background:var(--bg,#fff);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 30px rgba(0,0,0,.18);max-height:290px;overflow:auto}
+.acitem{display:grid;gap:2px;text-align:left;padding:10px 12px;background:transparent;border:0;border-bottom:1px solid var(--line);color:inherit;font:inherit;cursor:pointer}
+.acitem:last-child{border-bottom:0}
+.acitem small{color:var(--muted);font-size:12px}
+.wsense{border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+.wsense summary{cursor:pointer}

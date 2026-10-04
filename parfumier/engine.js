@@ -785,7 +785,9 @@
     const wishedSet = new Set(sig.map((x) => norm(x.name)));
     const avoid = (settings.avoid || []).map(norm);
     const budget = settings.budget || 0, seed = String(settings.seed || '');
-    const out = [];
+    const out = [], houseAff = {}, hn = {};
+    collection.forEach((p) => { const h = norm(p.house); (hn[h] = hn[h] || []).push(p.rating || 3); });
+    Object.keys(hn).forEach((h) => { const a = hn[h].reduce((x, y) => x + y, 0) / hn[h].length; houseAff[h] = a >= 4 ? 0.5 : a <= 2.5 ? -0.5 : 0; });
     for (let c of catalog) {
       if (owned.has(norm(c.name)) || rejected.has(norm(c.name))) continue;
       if (c.notes && c.notes.length >= 3 && !(c.family && c.weight)) c = derive(c);
@@ -802,11 +804,17 @@
       const af = axisFit(c, pref), why = af != null ? axisWhy(c, pref) : [];
       // La notoriété ne fait plus la loi : elle départage à goûts égaux. Une petite variation propre à chaque profil évite que tout le monde reçoive la même liste.
       const jit = seed ? (hash01(seed + '|' + norm(c.name)) - 0.5) * 1.8 : 0;
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0);
+      // Le moment, le budget et les maisons que la personne aime déjà : un bon conseil est aussi de saison, à son prix, dans ses habitudes.
+      const pf = profOf(c), month = settings.month != null ? settings.month : new Date().getMonth(), si = month >= 2 && month <= 4 ? 0 : month >= 5 && month <= 7 ? 1 : month >= 8 && month <= 10 ? 2 : 3;
+      const sFit = pf && pf.s && !pf.derived ? (pf.s[si] - 3) * 0.4 : 0;
+      const budFit = budget > 0 && c.price > 0 ? (c.price <= budget ? (c.price >= 0.3 * budget ? 0.5 : 0.2) : -2.5) : 0;
+      const tierFit = pf && pf.tier === 'S' ? 0.7 : pf && pf.tier === 'A' ? 0.35 : 0;
+      const hf = houseAff[norm(c.house)] || 0;
+      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf;
       out.push({
         c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: clamp(Math.round(af != null ? 50 + t.s * 4 + af * 30 : 50 + t.s * 7), 5, 99), overBudget: budget > 0 && c.price > budget,
-        wished: wishedSet.has(norm(c.name)),
+        wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
       });
     }
     return out;

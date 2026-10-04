@@ -1,0 +1,166 @@
+# Les très grands succès de la parfumerie, toutes maisons : un parfum par ligne « Maison|Nom ». Ni flankers ni rééditions.
+Chanel|N°5
+Chanel|Coromandel
+Chanel|Sycomore
+Chanel|Pour Monsieur
+Chanel|N°19
+Chanel|Bois des Iles
+Dior|Eau Sauvage
+Dior|Diorissimo
+Dior|Fahrenheit
+Dior|Homme
+Dior|Miss Dior
+Guerlain|Shalimar
+Guerlain|Jicky
+Guerlain|L'Heure Bleue
+Guerlain|Mitsouko
+Guerlain|Vétiver
+Yves Saint Laurent|Opium
+Yves Saint Laurent|Rive Gauche
+Yves Saint Laurent|La Nuit de l'Homme
+Hermès|Terre d'Hermès
+Hermès|Eau d'Orange Verte
+Hermès|Un Jardin sur le Nil
+Hermès|Eau des Merveilles
+Tom Ford|Tobacco Vanille
+Tom Ford|Oud Wood
+Tom Ford|Tuscan Leather
+Tom Ford|Black Orchid
+Tom Ford|Lost Cherry
+Tom Ford|Neroli Portofino
+Tom Ford|Soleil Blanc
+Maison Francis Kurkdjian|Baccarat Rouge 540
+Maison Francis Kurkdjian|Aqua Universalis
+Maison Francis Kurkdjian|Oud Satin Mood
+Maison Francis Kurkdjian|Grand Soir
+Maison Francis Kurkdjian|Gentle Fluidity Gold
+Creed|Aventus
+Creed|Green Irish Tweed
+Creed|Silver Mountain Water
+Creed|Royal Oud
+Creed|Millésime Impérial
+Creed|Viking
+Parfums de Marly|Layton
+Parfums de Marly|Delina
+Parfums de Marly|Herod
+Parfums de Marly|Pegasus
+Parfums de Marly|Percival
+Byredo|Gypsy Water
+Byredo|Mojave Ghost
+Byredo|Bal d'Afrique
+Byredo|Blanche
+Byredo|Sundazed
+Le Labo|Santal 33
+Le Labo|Another 13
+Le Labo|Thé Noir 29
+Le Labo|Rose 31
+Diptyque|Philosykos
+Diptyque|Tam Dao
+Diptyque|Do Son
+Diptyque|Fleur de Peau
+Diptyque|Orphéon
+Diptyque|L'Ombre dans l'Eau
+Serge Lutens|Ambre Sultan
+Serge Lutens|Chergui
+Serge Lutens|Féminité du Bois
+Serge Lutens|La Fille de Berlin
+Serge Lutens|Fleurs d'Oranger
+Frédéric Malle|Portrait of a Lady
+Frédéric Malle|Carnal Flower
+Frédéric Malle|Musc Ravageur
+Frédéric Malle|French Lover
+Frédéric Malle|En Passant
+Amouage|Interlude Man
+Amouage|Reflection Man
+Amouage|Jubilation XXV
+Amouage|Epic Man
+Amouage|Guidance
+Initio|Side Effect
+Initio|Oud for Greatness
+Initio|Atomic Rose
+Initio|Rehab
+Initio|Musk Therapy
+Xerjoff|Naxos
+Xerjoff|Alexandria II
+Xerjoff|Torino21
+Xerjoff|Erba Pura
+Kilian|Angels' Share
+Kilian|Love, Don't Be Shy
+Kilian|Black Phantom
+Kilian|Straight to Heaven
+Kilian|Good Girl Gone Bad
+Nishane|Hacivat
+Nishane|Ani
+Nishane|Wulong Cha
+Nishane|Fan Your Flames
+Nishane|Hundred Silent Ways
+Nasomatto|Black Afgano
+Nasomatto|Baraonda
+Maison Margiela|Jazz Club
+Maison Margiela|By the Fireplace
+Maison Margiela|Lazy Sunday Morning
+Maison Margiela|Beach Walk
+Maison Crivelli|Hibiscus Mahajád
+Maison Crivelli|Oud Maracujá
+Roja Parfums|Elysium Pour Homme
+Roja Parfums|Enigma
+Roja Parfums|Amber Aoud
+Roja Parfums|Burlington 1819
+BDK Parfums|Gris Charnel
+BDK Parfums|Rouge Smoking
+Memo Paris|African Leather
+Memo Paris|Marfa
+Acqua di Parma|Colonia
+Acqua di Parma|Fico di Amalfi
+Penhaligon's|Halfeti
+Penhaligon's|The Tragedy of Lord George
+Penhaligon's|Sartorial
+Penhaligon's|Blenheim Bouquet
+Floris|No. 89
+Floris|Honey Oud
+Comme des Garçons|Wonderwood
+Montale|Roses Musk
+Montale|Arabians Tonka
+Montale|Intense Café
+Montale|Chocolate Greedy
+Mancera|Cedrat Boisé
+Mancera|Roses Vanille
+Escentric Molecules|Molecule 01
+L'Artisan Parfumeur|Mûre et Musc
+L'Artisan Parfumeur|Premier Figuier
+L'Artisan Parfumeur|Passage d'Enfer
+L'Artisan Parfumeur|Timbuktu
+L'Artisan Parfumeur|Tea for Two
+Houbigant|Fougère Royale
+Houbigant|Quelques Fleurs L'Original
+Caron|Pour un Homme
+Annick Goutal|Eau d'Hadrien
+Annick Goutal|Petite Chérie
+Jo Malone|Wood Sage & Sea Salt
+Jo Malone|English Pear & Freesia
+Jo Malone|Peony & Blush Suede
+Aesop|Hwyl
+Ex Nihilo|Fleur Narcotique
+Ex Nihilo|Blue Talisman
+Clive Christian|No. 1 Masculine
+Clive Christian|Blonde Amber
+Bvlgari|Tygar
+Louis Vuitton|Imagination
+Louis Vuitton|Ombre Nomade
+Louis Vuitton|Afternoon Swim
+Matière Première|Crystal Saffron
+Matière Première|Radical Rose
+Essential Parfums|Bois Impérial
+Dries Van Noten|Soie Malaquais
+Marc-Antoine Barrois|Ganymede
+Etat Libre d'Orange|Sécrétions Magnifiques
+Narciso Rodriguez|For Her Musc Noir
+Prada|Infusion d'Iris
+Tiziana Terenzi|Kirke
+Armani|Bois d'Encens
+Cartier|Oud & Oud
+Van Cleef & Arpels|Bois d'Iris
+Atkinsons|24 Old Bond Street
+Sospiro|Erba Pura
+Ormonde Jayne|Ormonde Man
+Trudon|Cyrnos
