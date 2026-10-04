@@ -1,0 +1,68 @@
+Khadlaj|Fursan Brown|desc=Fruité, gourmand, tropical, vanillé : jeune, sexy, fruité, addictif.|sit=date;soirée;quotidien;printemps, été|st=juste|tier=A
+Khadlaj|Fursan White|desc=Plus lumineux, propre et fruité que Brown.|sit=été;quotidien;vacances|st=juste
+Khadlaj|Kayaan Gold|desc=Profil chaud, gourmand, ambré, pour une garde-robe orientale.|sit=hiver;date;soirée|st=juste|tier=A
+Khadlaj|Hareem Al Sultan Gold|desc=Oriental féminin, floral, fruité et musqué : très « princesse orientale ».|forts=féminin;sensuel;prix accessible;très bon parfum de soirée|faibles=plus oriental perfume shop que niche européenne|st=juste|tier=A
+Khadlaj|Hareem Al Sultan Blue|desc=Plus frais, masculin ou unisexe : un oriental facile.
+Khadlaj|Hareem Al Sultan Silver|desc=Plus propre et musqué.|sit=quotidien;printemps;bureau
+Khadlaj|Oud Noir|desc=Oriental sombre : oud, épices, bois.|st=juste
+Khadlaj|Oud Pour Blueberry|desc=Oud et fruit bleu : beaucoup plus fun, night out, streetwear.
+Khadlaj|Cashmere Warm Oud|desc=Oud chaud et enveloppant : très bon parfum d'hiver à prix accessible.|sit=hiver|st=juste
+Khadlaj|Opulence Bleu|desc=Profil bleu aromatique, beaucoup plus facile à porter que les oud : daily masculin.
+Khadlaj|Sensuous Night|desc=Boisé, ambré, épicé : soirée, date, automne-hiver.|sit=soirée;date;automne, hiver
+Khadlaj|The Proposal Date Night|desc=Pensé pour le rendez-vous amoureux : profil sensuel et sucré.|sit=date|st=juste
+Khadlaj|Valor Chivalry|desc=Masculin, élégant, boisé et aromatique : propre, masculin et accessible, sans sentir le parfum de supermarché.|st=juste|tier=A
+Khadlaj|Valor Enigma|desc=Plus mystérieux et nocturne.|sit=soirée
+Khadlaj|Uno Sensuale|desc=Gourmand et sensuel : très bon pour un date.|sit=date
+Khadlaj|Vanilla Kiss|desc=Vanille douce, féminine ou unisexe : simple mais efficace, un gourmand budget.|st=juste
+Khadlaj|Peach Velvet|desc=Pêche, floral, musqué et gourmand : femme jeune, féminine et romantique.|sit=printemps, été|st=juste
+Khadlaj|Rose Couture|desc=Rose féminine, plus habillée.|st=juste|tier=B
+Khadlaj|Rose & Romance|desc=Rose plus romantique et tendre.|sit=date;mariage;printemps
+Khadlaj|Pure Musk|desc=Musc propre : layering, bureau, quotidien, après-douche.|sit=bureau;quotidien|st=juste
+Khadlaj|Pink Musk|desc=Musc plus féminin : clean girl, peau propre, linge frais.
+Khadlaj|Purple Musk|desc=Musc plus floral et poudré.|st=sous
+Khadlaj|Musk Pour Amber|desc=Ambre et musc, plus chaleureux : très bon automne-hiver.|sit=automne, hiver
+Khadlaj|Musk Pour Narcis|desc=Floral et musqué : féminin, propre et élégant.|st=sous
+Khadlaj|Caffe Latte|desc=Café et gourmandise : automne, café, date, cocooning.|sit=automne;date|st=juste
+Khadlaj|Mocha Latte|desc=Encore plus gourmand : coffee shop, pull oversized, dimanche froid.
+Khadlaj|Cloud Candy|desc=Très sucré, fruité, aérien : pour une cible jeune.
+Khadlaj|Cream Velvet|desc=Crémeux, doux, vanillé : un parfum cocooning.
+Khadlaj|Muse|an=2026|desc=Fleur d'oranger, bergamote, amande, jasmin, iris, crème, tonka, musc blanc, vanille, ambre : soft luxury, clean gourmand, féminin sophistiqué. Trop peu de votes pour juger.|st=new|tier=B
+Khadlaj|Karus Gold Absolu|an=2026|desc=Citron confit, cassis, bergamote, praliné, magnolia, violette, musc, vétiver : fruit acidulé, gourmandise, floral et musc.|st=new|tier=B
+Khadlaj|Shiyaaka Sky|an=2026|desc=Bergamote, verveine, mandarine, accord vert, néroli, fleur d'oranger, géranium, musc, ambroxan, vétiver, santal : fresh masculine daily.|sit=bureau;sport léger;journée;été;chemise blanche|st=new|tier=A
+Khadlaj|Intoxicate Mystique|an=2026|desc=Bergamote, musc, géranium, gaïac, vanille, baumes, benjoin : élégant, mystérieux, chaleureux, pour l'automne.|st=new|tier=A
+Khadlaj|Qarar|an=2026|desc=Poivre noir, bergamote, cuir, davana, oud, musc, ambre blanc, vétiver : un parfum masculin sombre. Seulement deux votes pour l'instant.|st=new
+Khadlaj|Island Sun|an=2026|desc=Noix de coco, citron, mangue, citron vert, fleur d'oranger, poivre rose, jasmin, bois, tonka, musc : vacances tropicales.|sit=plage chic;vacances;pool party;été;date estivale|st=new
+Khadlaj|Island Vanilla Dunes|desc=Désert chaud, vanille et plage.
+Khadlaj|Island Dreams|desc=Plus rêveur et tropical.
+Khadlaj|Aura Manga Splash|desc=Fruité, tropical, jeune.
+Khadlaj|Aura Pista Dessert|desc=Gourmand à la pistache.
+Khadlaj|Brown Choco|desc=Chocolat gourmand.
+Khadlaj|Lavish Blush|desc=Féminin et floral.
+Khadlaj|Lavish Luna|desc=Féminin et nocturne.
+Khadlaj|Lavish Rouge|desc=Féminin et sensuel.
+Khadlaj|Opera Noir L'Or|desc=Sombre et habillé.
+Khadlaj|Opera Rose L'Or|desc=Rose et élégant.
+Khadlaj|Opulence Russo|desc=Oriental et puissant.
+Khadlaj|Symbol of Love|desc=Romantique.
+Khadlaj|White Forest Strawberry|desc=Fruité et jeune.
+Khadlaj|Biscotti Caramel Pop|desc=Caramel, gourmand, sucré : date, hiver, cocooning.
+Khadlaj|Biscotti Date Toffee|desc=Datte et toffee : plus oriental et chaleureux.
+Khadlaj|Biscotti Melon Misk|desc=Melon et musc : plus frais et estival.
+Khadlaj|Empire Crown|desc=Ligne masculine habillée : costume, business, soirée.
+Khadlaj|Empire Regent|desc=Ligne masculine habillée : costume, business, soirée.
+Khadlaj|Empire Victor|desc=Ligne masculine habillée : costume, business, soirée.
+Khadlaj|Infini|desc=Ancienne référence Khadlaj.
+Khadlaj|Nafais Sharq|desc=Oriental, chaud, sophistiqué.|st=juste
+Khadlaj|Nafais Magrib|an=2025|desc=Oriental, épices, voyage, soirée.
+Khadlaj|Nuha Bon Bon|desc=Bonbon, sucré, jeune : gourmand féminin.
+Khadlaj|Nuha Cherry Blush|desc=Cerise, féminin, date.
+Khadlaj|Nuha Vanilla Pearl|desc=Vanille, doux, élégant.
+Khadlaj|Onyx Gold|desc=Plus chaud et luxueux.
+Khadlaj|Onyx Silver|an=2026|desc=Probablement plus frais.
+Khadlaj|Shiyaaka Blue|desc=Daily masculin.
+Khadlaj|Shiyaaka Gold|desc=Chaud, oriental.
+Khadlaj|Shiyaaka Rose Gold|desc=Féminin et romantique.
+Khadlaj|Shiyaaka Shadow|desc=Sombre, soirée.
+Khadlaj|Shiyaaka Snow|desc=Frais, propre, hiver léger.
+Khadlaj|Stellar Musk|desc=Musc propre et doux : excellent layering et quotidien.|st=juste
+Khadlaj|Stellar Oud|desc=Plus sombre et oriental : soirée.

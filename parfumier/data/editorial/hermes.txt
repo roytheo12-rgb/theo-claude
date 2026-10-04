@@ -1,0 +1,77 @@
+Hermès|Barénia|an=2024|desc=Chypré fruité, boisé et cuiré : baie miracle, lys, patchouli, chêne, cuir Barénia, muscs. Peau chaude, cuir neuf, forêt sèche, élégance parisienne.|forts=très identifiable sans être agressif;beaucoup plus sophistiqué que la moyenne des parfums féminins designer;fonctionne de jour comme de soir|faibles=peut paraître austère à qui aime les floraux sucrés;moins immédiat qu'un gourmand|pour=femme de 28 à 55 ans, élégante, indépendante (tailleur, cuir, maille premium, trench)|sit=déjeuner professionnel;galerie d'art;rendez-vous chic;dîner;voyage;automne, hiver|mood=je n'ai rien à prouver|st=sous|prix=168|achat=Hermès, grands magasins, parfumeries sélectives|tier=S
+Hermès|Barénia Intense|an=2025|desc=Version plus profonde et plus sombre : ambré, boisé, cuiré, plus dense.|forts=plus sensuel;meilleure option soirée;belle transition automne-hiver|faibles=moins polyvalent;perd de la légèreté de l'original|sit=dîner chic;hôtel;cocktail;date premium|mood=femme mystérieuse, parfaitement maîtrisée|st=sous|prix=176|achat=Hermès
+Hermès|Barénia Pleine Fleur|an=2026|desc=Variation très récente : floral, cuiré, plus lumineux et plus peau.|faibles=trop récent pour être jugé|st=new|prix=168|achat=Hermès
+Hermès|24 Faubourg|an=1995|nez=Maurice Roucel|desc=Floral oriental solaire et chypré : orange, bergamote, hyacinthe, iris, jasmin, ylang-ylang, fleur d'oranger, santal, vanille, ambre. Du grand parfum féminin classique, d'une vraie architecture.|forts=lumineux, opulent, élégant;vraie architecture|faibles=peut paraître « femme sophistiquée de 50 ans »;trop habillé pour du casual;projection formelle|pour=tailleur, robe noire, manteau camel, bijoux|sit=mariage;dîner;opéra;rendez-vous professionnel important|mood=aristocratique, solaire, assuré|st=sous|tier=S
+Hermès|24 Faubourg Eau Délicate|desc=Version plus aérienne : floral frais, lumineux, plus transparent.|sit=printemps;journée;déjeuner|st=sous|prix=153|achat=Hermès
+Hermès|Caleche|an=1961|desc=Premier grand parfum féminin Hermès : aldéhydé, floral, boisé, chypré. La grande dame de la collection.|forts=immense élégance;vraie identité;historique;sophistication|faibles=très classique;aldéhydes déroutants;pas du tout « TikTok friendly »|pour=femmes qui portent Chanel N°5, Miss Dior vintage, vêtements structurés|st=sous|tier=A
+Hermès|Calèche Soie de Parfum|desc=Version plus douce et moderne de Calèche.|sit=journée élégante;printemps;bureau|st=sous
+Hermès|Kelly Calèche|desc=Cuir, rose, mimosa, iris : cuiré mais féminin. Sac Kelly, robe blanche, appartement parisien.|forts=chic;original;élégant sans être vieux;très Hermès|faibles=manque de puissance pour un parfum spectaculaire|st=sous|tier=A
+Hermès|Eau d'Orange Verte|desc=La signature fraîche historique d'Hermès : orange, menthe, mousse.|forts=iconique;extrêmement propre;excellente chaleur estivale|faibles=tenue limitée;pas sexy au sens classique;peut sembler cologne de luxe|sit=après la douche;chemise blanche;vacances;bureau;journée chaude|st=sous|prix=93|achat=Hermès
+Hermès|Concentré d'Orange Verte|desc=Même ADN que l'Eau d'Orange Verte mais plus dense : meilleur choix si l'on veut plus de présence.|st=sous
+Hermès|Eau de Pamplemousse Rose|desc=Agrume rosé, frais, pétillant.|sit=printemps, été;journée;casual chic;terrasse parisienne à 11h|st=sous
+Hermès|Concentré de Pamplemousse Rose|desc=Même ADN que l'Eau de Pamplemousse Rose, plus intense et travaillé, meilleure présence.
+Hermès|Eau de Rhubarbe Écarlate|desc=Rhubarbe croquante, lantana et muscs : fruité et hespéridé, acidulé, très propre et moderne.|forts=original;acidulé;excellent unisexe|faibles=tenue modérée;pas vraiment sexy|sit=journée chaude;tennis;brunch;vacances;vêtements blancs|st=sous|prix=93|achat=Hermès|tier=A
+Hermès|Eau de Citron Noir|desc=Citron, thé noir et gaïac fumé : une matière fraîche avec une dimension sombre.|forts=minimaliste, intellectuel, légèrement mystérieux|sit=chemise noire;soirée d'été;rooftop;restaurant|st=sous|prix=93|achat=Hermès|tier=A
+Hermès|Eau de Gentiane Blanche|desc=Gentiane, muscs et notes poudrées d'iris : très propre, presque savonneux.|faibles=peut paraître trop sage|sit=bureau;journée;minimalisme|st=sous
+Hermès|Eau de Mandarine Ambree|desc=Mandarine lumineuse et accord ambré : la plus chaleureuse des Colognes.|sit=été, soir;vacances;date|st=juste
+Hermès|Eau de Narcisse Bleu|desc=Vert, floral, légèrement poudré : un profil intellectuel et élégant.|sit=printemps;bureau|st=sous
+Hermès|Eau de Néroli Doré|desc=Néroli, agrumes et fleurs blanches : solaire, propre, méditerranéen.|sit=chemise en lin;vacances;terrasse|st=sous
+Hermès|Eau de Basilic Pourpre|desc=Basilic, bergamote, géranium : aromatique, frais et profond.|forts=élégant pour homme ou femme|sit=journée;printemps, été|mood=j'ai ma vie sous contrôle|st=sous|prix=128|achat=Hermès|tier=A
+Hermès|Eau des Merveilles|an=2004|desc=Boisé, ambré, orange, résineux : benjoin, élémi, bigarade. Très différente des floraux féminins classiques.|forts=très élégante;unisexe dans l'esprit;magnifique sur vêtements chauds|faibles=difficile à comprendre sans l'essayer;moins immédiatement féminine|pour=femme en manteau, cuir, cachemire|mood=bohème chic, Paris rive gauche|st=sous|tier=S
+Hermès|Eau des Merveilles Bleue|desc=Genièvre, patchouli et accord minéral salé : plus frais, plus marin mais pas aquatique bleu classique.|sit=été;bord de mer;journée|st=sous
+Hermès|Elixir des Merveilles|desc=Orange confite, chocolat, bois, ambre, résines : le gourmand de la famille, charnel.|forts=extrêmement réconfortant;original;très belle texture|faibles=difficile à porter en plein été;parfois trop gourmand|tenue=pull en cachemire|sit=feu de cheminée;dîner;automne, hiver|st=sous|tier=A
+Hermès|L'Ambre des Merveilles|desc=Ambre, patchouli, vanille.|sit=automne, hiver;soirée;date|st=sous|tier=A
+Hermès|L'Ombre des Merveilles|desc=Tonka, encens et thé noir : probablement le plus intéressant de la collection pour un public masculin ou unisexe.|forts=élégant et mystérieux|tenue=costume noir, bibliothèque, bar à cocktails|sit=soirée élégante;date en hiver|mood=mystérieux, intellectuel|st=sous|tier=S
+Hermès|H24|desc=Sauge, narcisse, bois de rose, sclarène : vert, métallique, propre et moderne. L'homme contemporain, entre nature et technologie.|faibles=peut sembler froid|sit=bureau;costume moderne;coworking;rendez-vous business;printemps|st=juste|tier=B
+Hermès|H24 Herbes Vives|desc=Herbes fraîches, poire granitée et Physcool® : moins parfum masculin classique que nature urbaine après la pluie.|forts=très moderne;frais;original;extrêmement portable|faibles=pas une bombe de projection;manque de sensualité conventionnelle|sit=printemps, été|st=sous|prix=107|achat=Hermès|tier=A
+Hermès|Ambre Narguilé|desc=Ambre, miel, cannelle et fruits confits : chaleureux, gourmand, sophistiqué.|sit=automne, hiver;dîner;date|st=culte|tier=S
+Hermès|Vetiver Tonka|desc=Vétiver et fève tonka : un contraste entre terreux et gourmand, élégant, chaleureux, intellectuel.|sit=bureau premium;costume;automne|st=sous|tier=S
+Hermès|Cuir d'Ange|desc=Cuir extrêmement doux : peau, daim, cuir blanc, iris. Du cuir sans agressivité.|pour=personnes élégantes qui veulent du cuir sans agressivité|st=culte|tier=S
+Hermès|Poivre Samarcande|desc=Poivre et bois : épicé, sec, élégant.|sit=costume;automne;soirée|st=sous
+Hermès|Rose Ikebana|desc=Rose, rhubarbe, bois : très japonais dans l'esprit.|sit=journée;printemps|st=sous
+Hermès|Osmanthe Yunnan|desc=Osmanthe, thé et agrumes : très fin. Jardin japonais, thé blanc, chemise en lin.|st=sous|tier=A
+Hermès|Iris Ukiyoé|desc=Iris aquatique et floral : transparent, poudré, propre.|sit=printemps;journée;minimalisme
+Hermès|Muguet Porcelaine|desc=Un muguet extrêmement délicat : la pureté.|faibles=performance modeste|st=sous
+Hermès|Vanille Galante|desc=Vanille florale très éloignée des vanilles gourmandes modernes : ce n'est pas une vanille dessert.|st=sous
+Hermès|Santal Massoïa|desc=Boisé crémeux, lacté. Pull beige, bois clair, architecture japonaise.|st=sous|tier=A
+Hermès|Brin de Réglisse|desc=Réglisse, lavande et notes boisées : très particulier, pour une personnalité créative.|st=culte
+Hermès|Paprika Brasil|desc=Épicé, chaud, boisé.|pour=personnalité forte|sit=automne;soirée|st=sous
+Hermès|Epice Marine|desc=Épices et facette marine : l'un des Hermessence les plus expérimentaux.|pour=amateurs de parfums conceptuels
+Hermès|Myrrhe Eglantine|desc=Myrrhe et rose églantine : floral sombre, résineux, mystérieux.|st=sous
+Hermès|Cardamusc|desc=Cardamome et muscs : très propre et enveloppant.|sit=quotidien chic|st=sous
+Hermès|Cèdre Sambac|desc=Cèdre et jasmin sambac : boisé floral très élégant.|sit=costume;bureau;printemps
+Hermès|Agar Ébène|desc=Bois sombre, fumé et profond : très chic, beaucoup plus austère.|sit=soirée;hiver;costume noir
+Hermès|Violette Volynka|desc=Cuir Volynka et violette : le contraste entre la puissance du cuir et la douceur poudrée de la violette.|st=sous|tier=A
+Hermès|Oud Alezan|desc=Un oud enveloppant associé à un duo de roses : noble et sophistiqué, bien moins brutal que les interprétations orientales.|forts=noble;sophistiqué;excellent pour collectionneur|faibles=prix|st=sous|prix=350|achat=Hermès
+Hermès|Ginseng Biloba|an=2026|desc=Ginseng et ginkgo biloba : boisé, lumineux, végétal. Un parfum mixte.|st=new|prix=350|achat=Hermès
+Hermès|Musc Pallida|an=2018|desc=Iris pallida et muscs chauds : peau propre, iris, poudre, sensualité discrète. Une nouvelle EDP 2026.|sit=date;proximité physique;dîner;automne|st=sous|prix=350|achat=Hermès|tier=A
+Hermès|Un Jardin sur le Nil|desc=Mangue verte, lotus, sycomore : vert, fruité, aquatique sans être bleu.|sit=été;vacances;journée;chemise blanche|st=culte|tier=S
+Hermès|Un Jardin en Méditerranée|desc=Citron, figuier, laurier-rose, pistachier : Amalfi, Méditerranée, villa.|sit=vacances;chaleur;lin|st=sous
+Hermès|Un Jardin après la Mousson|desc=Épices, gingembre et notes aquatiques : pluie tropicale, voyage, humidité.|st=sous
+Hermès|Un Jardin sur le Toit|desc=Pomme, poire, herbes et fleurs : vert, fruité, jeune.|sit=printemps;journée|st=sous
+Hermès|Le Jardin de Monsieur Li|desc=Kumquat, jasmin, bambou : frais, thé, agrumes, végétal.|sit=bureau;printemps, été|st=sous
+Hermès|Un Jardin sur la Lagune|desc=Floral, boisé, légèrement salin : Venise, jardin abandonné, fin d'après-midi.|st=sous
+Hermès|Un Jardin à Cythère|desc=Végétal et citronné, pistachier et olivier : l'île grecque chic.|st=juste
+Hermès|Un Jardin Sous la Mer|an=2026|nez=Christine Nagel|desc=Tiaré, noix de tamanu et facettes minérales de corail : floral, musqué, minéral.|sit=été;plage chic;vacances|st=new|prix=75|achat=Hermès
+Hermès|Jour d'Hermès|desc=Floral lumineux très féminin : fleurs blanches, agrumes, notes vertes.|sit=bureau;printemps;déjeuner;mariage|st=sous
+Hermès|Jour d'Hermès Absolu|desc=Plus dense et plus floral.|sit=soirée élégante|st=sous
+Hermès|Jour d'Hermès Gardenia|desc=Gardénia dominant : floral blanc, crémeux, élégant.|st=sous
+Hermès|Terre d'Hermès|desc=Orange, pamplemousse, cèdre et silex : une référence de la parfumerie masculine moderne.|forts=identité énorme;extrêmement élégant;masculin sans être agressif;excellent rapport qualité/prix;en costume comme en casual|faibles=très connu|st=juste|prix=93|achat=Hermès|tier=S
+Hermès|Terre d'Hermès Intense|desc=Terre d'Hermès Parfum : plus sombre, plus dense, plus doux (cèdre, pamplemousse, shiso). Le meilleur Terre pour un homme élégant de 30 à 60 ans.|st=sous|prix=158|achat=Hermès|tier=S
+Hermès|Terre d'Hermès Eau Intense Vétiver|desc=Vétiver, bergamote verte et poivre Sichuan : plus sec, plus vert, plus contemporain.|sit=costume;bureau;printemps, automne|st=sous|prix=107|achat=Hermès|tier=A
+Hermès|Terre d'Hermès Eau Givrée|desc=Cédrat, genièvre, poivre Timut : Terre d'Hermès dans un environnement froid, plus frais, incisif et moderne.|sit=été;business casual;voyage;journée|st=sous|prix=107|achat=Hermès|tier=A
+Hermès|Twilly d'Hermès|desc=Gingembre, tubéreuse, santal : floral, épicé et lacté.|pour=jeune femme espiègle et énergique|sit=date;brunch;soirée casual;printemps|st=juste
+Hermès|Twilly d'Hermès Eau Ginger|desc=Gingembre confit, pivoine, cèdre : plus lumineux et joyeux.|sit=printemps, été;journée|st=sous
+Hermès|Twilly d'Hermès Eau Poivrée|desc=Baie rose, rose, patchouli : plus mature et plus épicé.|sit=date;soirée;automne|st=sous|prix=114
+Hermès|Tutti Twilly d'Hermès|desc=Gingembre, litchi, muscs : plus fruité, doux, jeune.|sit=quotidien;printemps, été|st=sous
+Hermès|Voyage d'Hermès|desc=Agrumes, thé, bois, muscs : un parfum de déplacement.|sit=avion;hôtel;business trip;voyage;printemps|st=sous|tier=A
+Hermès|Voyage d'Hermès Parfum|desc=Plus profond et plus sensuel.|sit=voyage professionnel;dîner|st=sous
+Hermès|Galop d'Hermès|desc=Cuir et rose : bottes en cuir, manteau long, appartement parisien.|forts=très Hermès;extrêmement sophistiqué;caractère|faibles=pas du tout consensuel|st=sous|tier=A
+Hermès|Cabriole|an=2022|desc=Floral et fruité doux, plus confidentiel.|pour=femme jeune, romantique|sit=journée|st=sous
+Hermès|Eau d'Hermès|an=1951|desc=Cuir, agrumes, épices.|pour=collectionneurs|st=sous|dispo=restreint
+Hermès|Equipage|an=1970|desc=Boisé, aromatique, épicé : une vraie signature masculine vintage.|pour=hommes élégants 45 ans et plus, amateurs de classiques|st=sous
+Hermès|Bel Ami|an=1986|desc=Cuir, patchouli, épices : cuir sombre, masculin, sophistiqué.|sit=automne, hiver;costume;soirée|st=culte
+Hermès|Bel Ami Vetiver|desc=Plus vert, plus sec.|pour=amateurs de parfums masculins classiques
+Hermès|Hiris|desc=Iris féminin et poudré : élégant, propre, sophistiqué.|st=sous
+Hermès|Rocabar|desc=Boisé, cuiré, résineux : la signature masculine historique d'Hermès.|dispo=restreint
+Hermès|Rouge Hermès|desc=Parfum plus conceptuel et historique, conservé avec un statut heritage.|dispo=restreint

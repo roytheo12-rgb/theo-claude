@@ -72,6 +72,39 @@ for l in (root / 'data/bios-extra.txt').read_text(encoding='utf-8').splitlines()
     if not l.strip() or l.startswith('#') or l.count('|') < 2: continue
     h, n, t = l.split('|', 2)
     out[norm(canon(h)) + '|' + norm(n)] = analyse(t)
+# ----- fiches éditoriales structurées (data/editorial/*.txt -> editorial.js) : signaux précis (situations, tenue, mood, statut, tier)
+try:
+    ED = json.loads(subprocess.check_output(['node', '-e', "global.window={};require('./editorial.js');console.log(JSON.stringify(window.EDITORIAL))"], cwd=root))
+except Exception:
+    ED = {}
+for key, e in ED.items():
+    forts = '. '.join(e.get('forts', [])); pour = e.get('pour', ''); sit = ' ; '.join(e.get('sit', []))
+    a = analyse(' '.join(x for x in [e.get('desc', ''), forts, ('pour ' + pour) if pour else ''] if x))
+    for u, rx in USES.items():
+        if sit and re.search(rx, sit.lower()) and u not in a['u']: a['u'].append(u)
+    s = list(a['s'] or [0, 0, 0, 0]); sl = sit.lower()
+    if re.search(r"printemps", sl): s[0] = max(s[0], 5)
+    if HEAT.search(sl) or re.search(r"\bété\b|vacances|plage", sl): s[1] = max(s[1], 5)
+    if re.search(r"automne", sl): s[2] = max(s[2], 5)
+    if re.search(r"hiver", sl): s[3] = max(s[3], 5)
+    if re.search(r"chaleur|\bété\b|canicule|chaud", ' '.join(e.get('faibles', [])).lower()) and not re.search(r"chaleur|\bété\b", sl): s[1] = -1
+    a['s'] = s if any(s) else None
+    ev = e.get('eviter', '')
+    if ev: a['pas'] = [ev[:120]] + a['pas']
+    for f in e.get('faibles', []):
+        if re.search(r"bureau|espaces? clos|trop (lourd|puissant|riche)|sature|entêtant|écœur", f.lower()) and f[:110] not in a['pas']: a['pas'].append(f[:110])
+    a['pas'] = a['pas'][:3]
+    if pour and not a['pour']: a['pour'] = pour[:170]
+    toks = [t.strip() for t in re.split(r"[,;]", (e.get('tenue', '') + ',' + e.get('mood', ''))) if 2 < len(t.strip()) < 30]
+    a['kw'] = list(dict.fromkeys(a['kw'] + [t.lower() for t in toks]))[:22]
+    if e.get('st'): a['st'] = e['st']
+    if e.get('tier'): a['tier'] = e['tier']
+    if e.get('st') == 'sous' and 'sous-coté' not in a['kw']: a['kw'].append('sous-coté')
+    old = out.get(key)
+    if old:
+        a['u'] = sorted(set(a['u']) | set(old['u'])); a['kw'] = list(dict.fromkeys(a['kw'] + old['kw']))[:24]
+        a['p'] = {**old['p'], **a['p']}
+    out[key] = a
 PLAYTAGS = [(r"job interview|corporate weapons|finance bro|the founder|patrick bateman", {'u': ['bureau'], 'kw': ['bureau', 'costume']}),
             (r"quiet luxury|don draper|mayfair|bookworm", {'kw': ['costume']}),
             (r"first date", {'u': ['rdv'], 'kw': ['rendez-vous']}), (r"night out|je veux qu'on me remarque|l'ivresse|christmas eve|soirée à l'opéra|wedding guest", {'u': ['soiree'], 'kw': ['soirée']}),

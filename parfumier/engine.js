@@ -476,7 +476,7 @@
       const pp = b.p.slice(); Object.keys(DI.p || {}).forEach((i) => { pp[+i] = Math.max(0, Math.min(5, Math.round((pp[+i] + 2 * DI.p[i]) / 3))); });
       const ss = DI.s ? b.s.map((v, i) => (DI.s[i] > 0 ? Math.max(v, DI.s[i]) : DI.s[i] < 0 ? Math.min(v, 1) : v)) : b.s;
       const mm = DI.m ? [Math.max(b.m[0], DI.m[0]), Math.max(b.m[1], DI.m[1])] : b.m;
-      q = Object.assign({}, b, { derived: false, p: pp, s: ss, m: mm, u: [...new Set([...(b.u || []), ...(DI.u || [])])], kw: [...new Set([...(b.kw || []), ...(DI.kw || [])])], st: DI.st || '', pour: b.pour || DI.pour || '', pas: b.pas || (DI.pas || []).join(' ; ') });
+      q = Object.assign({}, b, { derived: false, p: pp, s: ss, m: mm, u: [...new Set([...(b.u || []), ...(DI.u || [])])], kw: [...new Set([...(b.kw || []), ...(DI.kw || [])])], st: DI.st || '', tier: DI.tier || '', pour: b.pour || DI.pour || '', pas: b.pas || (DI.pas || []).join(' ; ') });
     }
     if (X) {      // sélection d'experts : les tags posés à la main passent avant les profils déduits des notes
       const b = q || { p: new Array(18).fill(2), s: [2, 2, 2, 2], m: [3, 3], u: [], dom: '', diff: '', pitch: '', sim: [], alt: [], pour: '', pas: '', kw: [], pub: [], c: 2 };

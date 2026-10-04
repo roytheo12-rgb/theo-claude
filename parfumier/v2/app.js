@@ -858,6 +858,25 @@
   // Fiche d'un parfum de la base : description, tags, notes, et les actions (collection, wishlist)
   // Pyramide olfactive (tête, cœur, fond) quand la fiche est détaillée.
   const pyramidOf = (e) => { const y = (window.PYRAMID || {})[E.norm(e.house) + '|' + E.norm(e.name)]; if (!y) return ''; const col = (l, a) => (a && a.length ? `<div><p class="mono">${l}</p><p class="pyn">${a.map(esc).join(' · ')}</p></div>` : ''); return `<div class="pyr3">${col('Tête', y.t)}${col('Cœur', y.h)}${col('Fond', y.b)}</div>`; };
+  const edOf = (e) => { const ED = window.EDITORIAL || {}, HA = window.HOUSE_ALIAS || {}; return ED[E.norm((HA[E.norm(e.house)] || e.house)) + '|' + E.norm(e.name)] || ED[E.norm(e.house) + '|' + E.norm(e.name)] || null; };
+  const edHtml = (e) => {
+    const d = edOf(e); if (!d) return '';
+    const L = (t, a, ic) => (a && a.length ? `<div><p class="mono">${t}</p><ul style="margin:6px 0 0;padding-left:18px">${a.map((x) => `<li style="margin:2px 0">${ic} ${esc(x)}</li>`).join('')}</ul></div>` : '');
+    const TIER = { S: 'Incontournable', A: 'Excellent choix', B: 'Très bon' }, DISPO = { restreint: 'Distribution restreinte', secondaire: 'Plutôt marché secondaire', discontinue: 'Discontinué ou introuvable' };
+    const chips = [d.an ? String(d.an) : '', d.nez ? 'Nez : ' + d.nez : '', TIER[d.tier] || '', DISPO[d.dispo] || ''].filter(Boolean).map((t) => `<span class="chip">${esc(t)}</span>`).join('');
+    const meta = [d.prix ? '≈ ' + d.prix + ' €' : '', d.achat ? 'Où l\'acheter : ' + d.achat : ''].filter(Boolean).join(' · ');
+    return `<div class="edfiche">
+      ${chips ? `<div class="chips">${chips}</div>` : ''}
+      ${d.desc ? `<p class="rd">${esc(d.desc)}</p>` : ''}
+      ${L('Ses forces', d.forts, '＋')}${L('Ses limites', d.faibles, '－')}
+      ${d.pour ? `<div><p class="mono">Pour qui</p><p class="rd" style="margin-top:6px">${esc(d.pour)}</p></div>` : ''}
+      ${d.eviter ? `<div><p class="mono">À éviter</p><p class="rd" style="margin-top:6px">${esc(d.eviter)}</p></div>` : ''}
+      ${(d.sit || []).length ? `<div><p class="mono">Situations</p><div class="chips" style="margin-top:8px">${d.sit.map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
+      ${d.tenue ? `<div><p class="mono">Tenue</p><p class="rd" style="margin-top:6px">${esc(d.tenue)}</p></div>` : ''}
+      ${d.mood ? `<div><p class="mono">Mood</p><p class="rd" style="margin-top:6px">${esc(d.mood)}</p></div>` : ''}
+      ${meta ? `<p style="color:var(--muted);font-size:14px">${esc(meta)}</p>` : ''}
+    </div>`;
+  };
   let BIOM = null;
   const bioOf = (e) => { if (!BIOM) { BIOM = new Map(); Object.entries(window.BIOS || {}).forEach(([k, v]) => { const [h, n] = k.split('|'); BIOM.set(E.norm(h + ' ' + n), v); const HA = window.HOUSE_ALIAS || {}; BIOM.set(E.norm((HA[E.norm(h)] || h) + ' ' + n), v); }); } const HA = window.HOUSE_ALIAS || {}; return BIOM.get(E.norm(e.house + ' ' + e.name)) || BIOM.get(E.norm((HA[E.norm(e.house)] || e.house) + ' ' + e.name)) || null; };
   function openEntry(e) {
@@ -868,7 +887,8 @@
       ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
       ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
       ${(() => { const q = E.profOf ? E.profOf({ name: e.name, house: e.house, notes: e.notes || [], family: e.family }) : null; if (!q) return ''; const ST = { culte: 'Culte', sous: 'Sous-coté', sur: 'Très hypé', juste: 'À sa juste valeur' }; const bits = [q.st ? `<span class="chip">${ST[q.st]}</span>` : '', q.pas && !q.derived ? `<span class="chip" style="opacity:.85">À éviter : ${esc(String(q.pas).slice(0, 90))}</span>` : ''].filter(Boolean); return bits.length ? `<div class="chips">${bits.join('')}</div>` : ''; })()}
-      ${bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${esc(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
+      ${edOf(e) ? edHtml(e) : ''}
+      ${!edOf(e) && bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${esc(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
       ${pyramidOf(e)}
       ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
       <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>

@@ -1,0 +1,65 @@
+Mancera|Cedrat Boise|an=2011|nez=Pierre Montale|desc=Citron de Sicile, bergamote, cassis, épices, patchouli, jasmin aquatique, cèdre, cuir, santal, vanille, musc, mousse. Le Mancera le plus important : frais, fruité puis boisé, cuiré et musqué, avec une parenté d'idée avec Aventus mais plus dense et crémeux.|forts=extrêmement polyvalent;très bon rapport qualité/prix;facile à complimenter;presque toute l'année;vraie identité Mancera|faibles=devenu très connu;comparaison permanente avec Aventus;performances variables|pour=homme en costume clair, polo, chemise blanche; femme à garde-robe minimaliste ou cuir|sit=travail;networking;date;quotidien;soirée;vacances|mood=je veux sentir bon sans avoir l'air d'avoir essayé trop fort|st=juste|prix=85|achat=Mancera Paris, parfumeries de niche|tier=S
+Mancera|Red Tobacco|an=2017|desc=Cannelle, oud, encens, safran, muscade, pomme, poire, patchouli, jasmin, tabac, vanille, ambre, santal, gaïac. Un tabac épicé, chaud, sombre et massif : la brute de la maison.|forts=performance énorme;très forte identité;excellent pour l'hiver;très séduisant dans le bon contexte;prix compétitif|faibles=ouverture agressive;extrêmement facile à surdoser;peut donner mal au crâne;pas adapté aux espaces fermés|pour=qui veut occuper l'espace : costume noir, manteau long, soirée froide|sit=soirée;date en hiver;club|eviter=bureau open-space;été|mood=dark, dominant, mystérieux, confiant|st=juste|prix=110|achat=Mancera Paris|tier=S
+Mancera|Instant Crush|an=2019|desc=Safran, gingembre, agrumes, amberwood, rose, jasmin, patchouli, vanille, musc, santal, mousse. Un des Mancera les plus « compliment getter », dans un territoire Baccarat Rouge 540-esque mais plus épicé et dense.|forts=très séduisant;excellent sillage;bonne tenue;unisexe;excellent rapport prix/performance|faibles=l'ADN amberwood/safran/vanille est devenu omniprésent|pour=je veux que les gens me demandent ce que je porte|sit=date;soirée;mariage;networking|eviter=bureau|st=juste|tier=S
+Mancera|Amore Caffè|an=2023|desc=Café, amaretto, crème glacée, spéculoos, cassonade, vanille, ambre gris : le dessert italien en parfum.|forts=gourmand exceptionnel;très addictif;excellente signature automne-hiver;plus chaleureux que Red Tobacco;excellent pour un date|faibles=très sucré;pas polyvalent;peut devenir écœurant;mauvais choix en forte chaleur;pas business|pour=personnes chaleureuses, expressives, élégantes mais pas froides|tenue=pull cachemire, col roulé, manteau, cuir, restaurant italien|mood=cozy luxury|st=sous|tier=A
+Mancera|Roses Vanille|an=2011|desc=Une rose loukoum, vanille crémeuse et sucre : une rose très gourmande, presque confiserie.|forts=extrêmement féminin;très reconnaissable;projection;excellent hiver;excellent date|faibles=très sucré;très rose;peut écœurer;pas quiet luxury|pour=femme assumée, glamour, romantique : robe, manteau, soirée|st=juste|prix=85|tier=S
+Mancera|Aoud Lemon Mint|desc=Citron, amande, menthe, oud et bois : l'un des Mancera les plus intéressants pour l'été.|forts=fraîcheur et oud;très performant;plus original que beaucoup de freshies;excellent par temps chaud|faibles=oud potentiellement clivant;peut sembler masculin;moins facile que Cedrat Boise|sit=vacances;resort;chemise blanche;lin;Méditerranée|st=juste|tier=A
+Mancera|Coco Vanille|desc=Noix de coco, vanille, fleurs et solaire.|forts=vacances;plage chic;très féminin;facile à aimer|faibles=assez conventionnel;moins sophistiqué;peut faire crème solaire|st=juste
+Mancera|Aoud Vanille|desc=Vanille orientale, oud et bois : vanille plus sombre, bien plus sophistiquée que Coco Vanille.|forts=excellente performance|faibles=oud;moins polyvalent;assez dense|sit=hiver|st=juste
+Mancera|Aoud Exclusif|desc=Rose, épices, cuir, oud : oriental, luxueux, sombre.|faibles=nettement moins facile que les best-sellers|sit=costume noir;dîner haut de gamme;cérémonie hivernale|st=juste
+Mancera|Aoud Orchid|desc=Oud, fleurs et accord solaire : plus floral, plus lumineux, plus accessible que les ouds agressifs.|pour=femme élégante ou homme assumant les floraux|st=juste
+Mancera|Aoud Violet|desc=Boisé, vert, oud plus frais : il échappe au cliché du gros oud oriental.|st=sous
+Mancera|Aoud Blue Notes|desc=Agrumes, fleurs, bois et oud : un excellent compromis entre fraîcheur et orientalité.|sit=été;voyage;dîner extérieur|st=juste
+Mancera|Aoud Café|desc=Oud et café : plus sombre, plus oriental et nocturne.|forts=personnalité;performance|faibles=difficile à porter|st=juste
+Mancera|Black Gold|desc=Cuir, épices, bois : un Mancera masculin chic.|tenue=veste en cuir, costume sombre|sit=soirée|st=sous
+Mancera|Black Line|desc=Bois fumés, ambre et épices : plus sombre et plus sérieux.|sit=automne, hiver;soirée|st=juste
+Mancera|Black Noir|desc=Oud, tabac, épices : encore plus sombre, en concurrence directe avec Red Tobacco.|st=juste
+Mancera|Black Prestigium|desc=Iris, oud et bois : plus habillé, plus niche.|sit=costume;gala|st=juste
+Mancera|Black Vanilla|desc=Vanille, fleurs et fruits crémeux : très facile à aimer mais moins distinctif.|st=juste
+Mancera|Choco Violette|desc=Chocolat, violette, vanille biscuitée : très gourmand.|forts=excellent automne-hiver;date;maison|faibles=mauvais par chaleur et au bureau|st=juste
+Mancera|Cinque Terre|desc=Aromatique, floral, méditerranéen : le Mancera Italie estivale.|sit=vacances|st=juste
+Mancera|Cosmic Pepper|desc=Poivre, bois, épices : plus masculin, énergique, dynamique.|sit=soirée;automne;veste|st=sous
+Mancera|Crazy For Oud|desc=Oud, bois, vanille : sombre et sensuel, pour un oud sans basculer dans l'oud médical.|st=juste
+Mancera|Eternal Wood|desc=Boisé, chaud, enveloppant : plus luxe discret que certains Mancera historiques.|st=juste
+Mancera|Fabulous Yuzu|desc=Yuzu, vétiver, bois : un agrume sophistiqué, hôtel cinq étoiles en été.|st=sous
+Mancera|Feminity|desc=Mandarine, fleurs, cuir, vanille, café : un mélange de féminin floral et de chaleur.|pour=femme en tailleur|sit=date;soirée|st=juste
+Mancera|Fig Extasy|desc=Figue, cuir, santal, vanille : crémeux, vert, sensuel.|pour=amateurs de parfums sophistiqués mais pas criards|st=sous
+Mancera|Fig Me Up|an=2024|desc=Figue, rhubarbe, violette, tabac, musc, toffee, tonka : une figue moderne à l'évolution intéressante.|forts=vraie personnalité;très bonne tenue rapportée|faibles=la figue reste une note clivante|st=sous
+Mancera|French Riviera|desc=Agrumes, notes marines, fleurs, bois : le Mancera Saint-Tropez, yacht et Riviera.|sit=été;vacances;resort;lin;journée|st=juste|tier=A
+Mancera|Gold Incense|desc=Encens, bois, ambre : très religieux et solennel.|st=juste
+Mancera|Gold Prestigium|desc=Bois, épices, cuir et oud : très habillé.|st=juste
+Mancera|Hindu Kush|desc=Cannabis accordé, épices, résines et bois : extrêmement distinctif, très niche.|forts=aucune impression de parfum générique|faibles=très polarisant;pas bureau;pas premier rendez-vous à l'aveugle|st=juste
+Mancera|Holidays|desc=Solaire, floral, coco, musqué : un parfum de vacances plus élégant qu'une crème solaire.|st=juste
+Mancera|Indian Dream|desc=Floral, doux, exotique : plus romantique et féminin.|st=sous
+Mancera|Jardin Exclusif|desc=Fruité, floral, gourmand : un jardin luxueux et lumineux.|st=juste
+Mancera|Jasmin Exclusif|desc=Jasmin puissant et sensuel, parfois animal et très présent.|st=juste
+Mancera|Kumkat Wood|desc=Agrumes amers, épices et bois : un parfum masculin élégant. Chemise blanche, voiture décapotable, été.|st=sous
+Mancera|Lemon Line|desc=Citron et herbes aromatiques : très frais.|sit=chaleur|st=juste|tier=A
+Mancera|Lovely Garden|desc=Rose, mandarine, musc boisé : très féminin, romantique.|st=sous
+Mancera|Melody Of The Sun|desc=Poire, thé vert, fleurs blanches : très lumineux et élégant.|sit=printemps, été;brunch;déjeuner;robe légère|st=sous
+Mancera|Mochi Musk|an=2026|desc=Poudre de riz, pistache, cassonade, glace pistache et vanille, iris, musc, ambre gris, tonka : pistache crémeuse et musc propre, bien moins lourde qu'Amore Caffè, même en été.|st=new|tier=A
+Mancera|Musky Garden|desc=Agrumes, cranberry, pêche, rose : fruité floral féminin.|st=sous
+Mancera|Of The Wild|desc=Fraise, jasmin, musc : fruité musqué très facile.|st=juste
+Mancera|Ombre Tonka|desc=Tonka veloutée, amande et patchouli sombre : très intéressant en automne-hiver.|st=juste|tier=A
+Mancera|Pearl|desc=Pomme, figue, pêche, rose, violette : très féminin, fruité floral.|st=sous
+Mancera|Precious Oud|desc=Oud, fleurs, cuir et whisky : beaucoup plus sérieux. Smoking, hôtel, lounge.|st=juste
+Mancera|Roses Greedy|desc=Mandarine, rose, jasmin, vanille, musc : plus léger et fruité que Roses Vanille.|st=juste
+Mancera|Royal Vanilla|desc=Ambre, vanille, fleurs poudrées : plus classique.|st=sous
+Mancera|Saharian Wind|an=2020|desc=Épices, vert, cuir et ambre : le Sahara. Beaucoup moins populaire que les best-sellers mais original, de bonne tenue.|forts=originalité;bonne tenue;caractère|pour=personnes sophistiquées qui détestent sentir comme tout le monde|tenue=lin beige, cuir, bijoux dorés, veste saharienne|st=sous|tier=A
+Mancera|Sand Aoud|desc=Oud, bois et chaleur sèche : très oriental.|st=juste
+Mancera|Sicily|desc=Agrumes, fruits, fleurs, gourmandise méditerranéenne.|sit=été|st=juste
+Mancera|Silver Blue|desc=Aromatique, bleu, masculin : plus facile mais moins original.|st=juste
+Mancera|Soleil d'Italie|desc=Agrumes, floral, bois : très lumineux.|sit=printemps, été|st=juste
+Mancera|Tonka Cola|desc=Tonka, cola, épices et gourmandise : l'un des Mancera les plus fun.|forts=original;jeune;addictif;excellent automne|faibles=moins sérieux;peut sembler synthétique|st=sous
+Mancera|Vanille Exclusive|desc=Vanille sombre, bois, épices : une très belle vanille masculine ou unisexe.|st=juste|tier=A
+Mancera|Velvet Vanilla|desc=Vanille, rose, fleurs : plus romantique.|st=juste
+Mancera|Vetiver Sensuel|desc=Agrumes, vétiver terreux et bois doux : très intéressant pour le business casual masculin.|sit=business casual;dîner élégant|st=sous|tier=A
+Mancera|Wave Musk|desc=Musc frais et propre : très facile.|st=juste
+Mancera|Wild Candy|desc=Fruité gourmand : plus fun que sophistiqué.|st=juste
+Mancera|Wild Fruits|desc=Fruité frais : très polyvalent mais peu révolutionnaire.|st=juste
+Mancera|Wild Leather|desc=Cuir : beaucoup plus sérieux et masculin.|st=juste
+Mancera|Wild Python|desc=Floral, fruité, cuiré, sensuel : pour une femme qui veut une présence forte.|st=juste
+Mancera|Wind Wood|desc=Boisé aromatique, masculin : pour qui aime les bois secs.|st=sous
+Mancera|Wood Season|an=2026|desc=Agrumes, épices, bois sombres et truffe : automne, forêt, veste en laine, restaurant étoilé.|st=new
+Mancera|Xplicit Poppy|an=2026|desc=Pavot, accord Sauvignon et bois : un profil contemporain.|st=new
+Mancera|Xplicit Vanilla|desc=Vanille moderne, boisée et gourmande.|st=juste
