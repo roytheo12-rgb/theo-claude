@@ -1910,7 +1910,6 @@ d: Le bouchon qui saute, les bulles qui montent dans la coupe, le plateau d'arge
 pal: 1a1410,d4b45a,f4ecd2,dots
 - Horace Ibiza '87 | Les aldéhydes recréent les bulles, puis le maquis méditerranéen prend le dessus : l'Ibiza d'avant, la première coupe encore froide.
 - Kilian Sparkling Royal | Inspiré du kir royal, champagne et cassis : le début de soirée absolu.
-- Kilian Champagne Rosé | La coupe tendue par quelqu'un qu'on ne connaît pas encore : léger, floral, éphémère comme la mousse.
 - Kilian Roses on Ice | Concombre, genièvre, rose : l'apéritif avant le champagne, glacé comme un verre sorti du seau.
 - Kilian Angels' Share | Cognac, chêne, cannelle, vanille : la part des anges, ce qui reste après la meilleure soirée de ta vie.
 - Kilian Black Phantom | Rhum noir, café, caramel : la soirée qui change de registre à minuit.

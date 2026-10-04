@@ -53,7 +53,6 @@ Creed|Fleurissimo|EDP
 DS & Durga|Debaser|EDP
 DS & Durga|Radio Bombay|EDP
 Etat Libre d'Orange|Fils de Dieu|EDP
-Hermès|Terre d'Hermès Parfum|PAR
 Lacoste|L.12.12 Blanc|EDT
 Maison Tahité|Vanille²|EDP
 Maison Violet|Un Air d'Apogée|EDP
@@ -128,6 +127,5 @@ Louis Vuitton|LVERS|EDP
 Ormonde Jayne|Montabaco|EDP
 Phaedon|Thé Vert|EDP
 Pharrell Williams|Girl|EDP
-Kilian|Champagne Rosé|EDP
 Kilian|Sparkling Royal|EDP
 Maison Crivelli|Tobacco Color|EDP

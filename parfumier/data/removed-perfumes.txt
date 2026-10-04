@@ -24,3 +24,6 @@ Maison Francis Kurkdjian|APOM Pour Homme
 Louis Vuitton|Coeur Battant
 # Doublon : on garde « Oud Satin Mood » (notes réelles) avec la photo la plus récente et la mieux détourée
 Maison Francis Kurkdjian|Oud Satin Mood Extrait
+# Retiré à la demande de Théo : doublon / parfum inexistant
+Hermès|Terre d'Hermès Parfum
+Kilian|Champagne Rosé
