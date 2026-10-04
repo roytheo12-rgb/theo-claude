@@ -91,9 +91,9 @@ gh16|Le Collectionneur
 gh17|-
 gh18|-
 gh19|Égypte
-gh20|Antarctique
+gh20|-
 gh21|Chine ancienne
 gh22|Safari
 gh23|Thaïlande
 gh24|Le train de minerai
-gh25|Méditerranée de nuit
+gh25|Seul face à l'océan

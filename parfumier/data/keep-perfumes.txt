@@ -124,7 +124,6 @@ Ormonde Jayne|Montabaco|EDP
 Phaedon|Thé Vert|EDP
 Pharrell Williams|Girl|EDP
 Kilian|Sparkling Royal|EDP
-Maison Crivelli|Tobacco Color|EDP
 # Sélection d'experts : fiches à créer (sans notes inventées)
 Guerlain|Cologne Forte|COL
 Ex Nihilo|Blue Talisman Extrait|EXT
@@ -142,3 +141,4 @@ Carner Barcelona|El Born|EDP
 Carner Barcelona|D600|EDP
 Maison Sensara|Souvenir de Oummi|EDP
 Yves Saint Laurent|Pour Homme|EDT
+Storie Veneziane|Mica d'Oro I|Extrait

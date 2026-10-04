@@ -858,6 +858,8 @@
   // Fiche d'un parfum de la base : description, tags, notes, et les actions (collection, wishlist)
   // Pyramide olfactive (tête, cœur, fond) quand la fiche est détaillée.
   const pyramidOf = (e) => { const y = (window.PYRAMID || {})[E.norm(e.house) + '|' + E.norm(e.name)]; if (!y) return ''; const col = (l, a) => (a && a.length ? `<div><p class="mono">${l}</p><p class="pyn">${a.map(esc).join(' · ')}</p></div>` : ''); return `<div class="pyr3">${col('Tête', y.t)}${col('Cœur', y.h)}${col('Fond', y.b)}</div>`; };
+  let BIOM = null;
+  const bioOf = (e) => { if (!BIOM) { BIOM = new Map(); Object.entries(window.BIOS || {}).forEach(([k, v]) => { const [h, n] = k.split('|'); BIOM.set(E.norm(h + ' ' + n), v); const HA = window.HOUSE_ALIAS || {}; BIOM.set(E.norm((HA[E.norm(h)] || h) + ' ' + n), v); }); } const HA = window.HOUSE_ALIAS || {}; return BIOM.get(E.norm(e.house + ' ' + e.name)) || BIOM.get(E.norm((HA[E.norm(e.house)] || e.house) + ' ' + e.name)) || null; };
   function openEntry(e) {
     const inCol = S.collection.some((p) => E.norm(p.name) === E.norm(e.name)), inW = hasWish(e.name), d = window.DESC && window.DESC[e.name];
     const pn = openSheet(`
@@ -865,6 +867,7 @@
       <div><h2>${esc(e.name)}</h2><p class="mono" style="margin-top:6px">${esc(e.house)}${e.family ? ' · ' + (e.guess ? '≈ ' : '') + esc(famLabel(e.family)) : ''}${e.conc ? ' · ' + esc(e.conc.split(',').map((x) => CONC_L[x] || x).join(' / ')) : ''}</p></div>
       ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
       ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
+      ${bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${esc(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
       ${pyramidOf(e)}
       ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
       <p style="color:var(--muted);font-size:14px">${[e.price ? '≈ ' + e.price + ' € le flacon' : '', e.guess ? 'Fiche estimée d\'après le nom du parfum.' : ''].filter(Boolean).join(' · ')}</p>
@@ -1299,7 +1302,7 @@
   const PLS = window.PLAYLISTS || [], PL = { id: 0, sec: '' };
   let PLK = null;
   const plLook = () => { const L = dbList(); if (PLK && PLK.l === L) return PLK.m; const m = new Map(); L.forEach((e) => { const k = entryKey(e); if (!m.has(k)) m.set(k, e); }); PLK = { l: L, m }; return m; };
-  const plEntry = (x) => { if (!x.h) return null; const HA = window.HOUSE_ALIAS || {}; return plLook().get(E.norm((HA[E.norm(x.h)] || x.h) + ' ' + x.n)) || null; };
+  const plEntry = (x) => { if (!x.h) return null; const HA = window.HOUSE_ALIAS || {}; const L = plLook(); return L.get(E.norm((HA[E.norm(x.h)] || x.h) + ' ' + x.n)) || L.get(E.norm(x.h + ' ' + x.n)) || null; };
   const plLum = (hex) => { const n = parseInt(hex, 16); return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255; };
   function plMotif(m) {
     const o = [], f = (v) => Math.round(v * 10) / 10; let i;

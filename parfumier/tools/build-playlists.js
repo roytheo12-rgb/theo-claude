@@ -110,7 +110,7 @@ const EDIT_MISS = [], INTROUV = [];
     if (!p) continue;
     if ((m = l.match(/^t: (.*)$/))) { p.t = m[1].trim(); continue; }
     if ((m = l.match(/^secs: (.*)$/))) { p.secs = m[1].split(',').map((x) => x.trim()); continue; }
-    if (/^first: /.test(l)) { p.first = true; continue; }
+    if (/^first: /.test(l)) { p.first = +l.slice(7) || 1; continue; }
     if ((m = l.match(/^d: (.*)$/))) { p.d = m[1]; continue; }
     if ((m = l.match(/^doc: (.*)$/))) { const [a, b, c] = m[1].split(' | '); p.doc2 = (p.doc2 || []).concat([c ? { t: a, s: b, u: c } : { t: a }]); continue; }
     if ((m = l.match(/^pal: (.*)$/))) { p.pal = m[1].trim(); continue; }
@@ -123,7 +123,7 @@ const EDIT_MISS = [], INTROUV = [];
   fin();
   fs.writeFileSync(path.join(root, 'data', 'playlists-introuvables.txt'), [...new Set(INTROUV)].sort().join('\n'));
   for (let i = PLS.length - 1; i >= 0; i--) if (PLS[i].ghost) PLS.splice(i, 1);
-  PLS.sort((a, b) => (b.first ? 1 : 0) - (a.first ? 1 : 0));      // « first: » : en tête de sa section
+  PLS.sort((a, b) => (b.first || 0) - (a.first || 0));      // « first: » : en tête de sa section
 })();
 const miss = []; PLS.forEach((p) => p.ps.forEach((x) => { if (!x.h) miss.push(x.q); }));
 fs.writeFileSync(path.join(root, 'data', 'playlists-hors-base.txt'), [...new Set(miss)].sort().join('\n'));
