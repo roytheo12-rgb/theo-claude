@@ -360,7 +360,6 @@ d: Elle se réveille à 6h30, fait du reformer pilates, boit de l'eau filtrée a
 - Le Labo Another 13 | Skin scent culte : une peau parfaite.
 - Diptyque Fleur de Peau | Le plus doux et intime de la liste.
 - Ex Nihilo Fleur Narcotique | Le floral frais du moment.
-- Ex Nihilo Fleur Narcotique Musc | La version musquée : « je l'ai mis, mais vous n'êtes pas sûrs ».
 - Ex Nihilo Iris Porcelana | Iris aérien, second-skin : le propre sophistiqué.
 - Jo Malone Wood Sage & Sea Salt | L'air marin distillé.
 - Aesop Tacit | L'équivalent parfumé d'un appartement bien rangé.
@@ -455,7 +454,7 @@ d: Elle entre dans la pièce avant son manteau. Le restaurant se retourne. Elle 
 ## Finance Bro
 d: Financial Times sous le bras, terminal Bloomberg ouvert, costume bien coupé et espresso avalé en 30 secondes entre deux calls.
 - Creed Aventus | Le parfum de bureau par excellence.
-- Dior Homme 2020 | Le costume en parfum : net, sans bavure.
+- Dior Homme | Le costume en parfum : net, sans bavure.
 - Chanel Bleu de Chanel Parfum | Dix secondes le matin. Ça fonctionne depuis 2015.
 - Tom Ford Grey Vetiver | Pour les présentations : le parfum de la compétence.
 - Le Labo Santal 33 | Découvert à New York. Il n'en changera plus.
@@ -1026,7 +1025,7 @@ d: Grand Prix, casino, yacht, hôtel et dîner avec vue sur le port.
 - Maison Francis Kurkdjian Gentle Fluidity Gold | L'or discret de Monaco.
 - Xerjoff Torino21 | Le paddock : sport et luxe.
 - Maison Francis Kurkdjian Masculin Pluriel | Du bateau au casino sans changer de parfum.
-- Dior Homme 2020 | Le Monégasque de moins de 40 ans.
+- Dior Homme | Le Monégasque de moins de 40 ans.
 - Bvlgari Tygar | Le casino, les enjeux.
 - Roja Oceania | Le dîner avec vue sur le port.
 - Clive Christian X | La ville la plus chère, le parfum le plus cher.
@@ -1256,7 +1255,7 @@ d: Samba, soleil, peau chaude, plage, citron vert et nuit qui continue jusqu'au 
 x Versace Dylan Blue
 + Parfums de Marly Percival | Un frais aromatique de haute qualité, bien construit pour une journée de stade.
 
-+ Acqua di Parma Colonia Buongiorno Rouge | La nouvelle collection Buongiorno d'ADP revisite les couleurs du matin sous forme olfactive. Le rouge — orange sanguine et cèdre — est le plus énergique, adapté à l'intensité d'un gameday.
++ Acqua di Parma Buongiorno Gioco del Destino | Le jeu du destin : l'énergie d'un jour de match.
 + Marc-Antoine Barrois Ganymede | Vainqueur aux Fragrance Foundation Awards 2020. Un cuir moderne et presque aérien, signé Quentin Bisch.
 
 ## F1
@@ -1688,7 +1687,7 @@ pal: 1a1a1a,e8c02a,c8102e,stripes
 ## NEW Pharrell Williams | Icônes
 d: Virginia Beach, Neptunes, le monde. La bande-son de deux générations, puis la direction artistique de Louis Vuitton Homme. Un parfum qui sent le soleil.
 pal: f2c21a,1a1a1a,f4f0e4,rays
-- Louis Vuitton LVERS | Co-créé avec Jacques Cavallier-Belletrud : le soleil sur le Pont Neuf lors de son premier défilé. La pièce centrale.
+- Louis Vuitton LV Lovers | Co-créé avec Jacques Cavallier-Belletrud : le soleil sur le Pont Neuf lors de son premier défilé. La pièce centrale.
 - Louis Vuitton Nouveau Monde | Cacao, patchouli, musc : les matières premières africaines, le voyage permanent.
 - Pharrell Williams Girl | Poivre rose, fleurs blanches, patchouli, muscs : son premier parfum personnel.
 - Byredo Sundazed | La Californie de N.E.R.D., la chaleur permanente.
@@ -2024,3 +2023,13 @@ pal: 1c1020,6a2f4a,e4b5a0,arches
 
 ## Vito Corleone
 + Maison Crivelli Tobacco Color | Le tabac du bureau sombre.
+
+## Job Interview
+x Essential Parfums Dedication
++ Essential Parfums Bois Imperial | Un boisé précis et sobre : la poignée de main ferme.
++ Dior Bois d'Argent | L'élégance discrète d'un costume bien coupé.
++ Givenchy Gentleman Eau de Parfum Réserve Privée | Le classicisme moderne, sans jamais en faire trop.
++ Marc-Antoine Barrois Ganymede | Le choix de celui qui connaît vraiment la parfumerie.
+
+## Tech Bro
++ Marc-Antoine Barrois Ganymede | Le cuir moderne et discret des fondateurs qui connaissent la parfumerie.

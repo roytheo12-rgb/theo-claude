@@ -27,3 +27,14 @@ Maison Francis Kurkdjian|Oud Satin Mood Extrait
 # Retiré à la demande de Théo : doublon / parfum inexistant
 Hermès|Terre d'Hermès Parfum
 Kilian|Champagne Rosé
+Louis Vuitton|LVERS
+# Doublons retirés à la demande de Théo
+Dior|Homme 2020
+Ex Nihilo|Fleur Narcotique Musc
+Acqua di Parma|Colonia Buongiorno Rouge
+Chanel|N°5 L'Eau
+Dior|Homme Cologne
+Dior|Homme Sport
+Dior|La Collection Privée Dior Bois d'Argent
+Burberry|Her Intense
+Dior|Dior Addict Eau Fraîche

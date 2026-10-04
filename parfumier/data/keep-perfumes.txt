@@ -67,7 +67,6 @@ Diptyque|Eau Papier|EDT
 Diptyque|L'Eau|EDT
 Houbigant|Quelques Fleurs|EDP
 Acqua di Parma|Colonia Buongiorno Soleil|EDP
-Acqua di Parma|Colonia Buongiorno Rouge|EDP
 Armani|La Femme Bleue|EDP
 Atelier des Ors|Rose Oud|EDP
 Boadicea the Victorious|Glorious|EDP
@@ -123,7 +122,6 @@ Dusita|Melodie de l'Amour|EDP
 Demeter|Snow|COL
 Dior|Or Poudré|EDP
 Guerlain|Shalimar Millésime Impérial|EDP
-Louis Vuitton|LVERS|EDP
 Ormonde Jayne|Montabaco|EDP
 Phaedon|Thé Vert|EDP
 Pharrell Williams|Girl|EDP

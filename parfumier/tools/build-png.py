@@ -116,6 +116,7 @@ force = bool(__import__('os').environ.get('FORCE'))   # sans FORCE=1, une photo 
 best = {}      # "maison|nom" -> numéro
 for r in rows:
     if 'house' not in r or r['n'] in REJETS: continue
+    if not (root / f'incoming/{r["n"]}.png').exists(): continue      # ligne sans fichier : elle ne doit pas masquer une photo qui existe
     k = norm(r['house']) + '|' + norm(r['name'])
     pr = lambda n: (1 if n <= 303 else 0, n)      # le lot de 303 photos refaites à la main est le plus récent ; dedans, le numéro le plus haut gagne
     if k not in best or pr(r['n']) > pr(best[k][0]): best[k] = (r['n'], r)

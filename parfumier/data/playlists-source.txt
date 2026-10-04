@@ -164,7 +164,7 @@ Il est déjà au bureau avant tout le monde. Café noir, carnet ouvert, écran a
 2. Maison Francis Kurkdjian Masculin Pluriel
 3. Tom Ford Grey Vetiver
 4. Chanel Platinum Égoïste
-5. Dior Homme 2020
+5. Dior Homme
 6. Prada L'Homme
 7. Creed Aventus
 8. Matière Première Parisian Musc
@@ -181,7 +181,7 @@ Un duc anglais qui découvre qu'il peut être aussi à l'aise dans un domaine an
 3. Floris No. 89
 4. Roja Elysium
 5. Tom Ford Grey Vetiver
-6. Dior Homme 2020
+6. Dior Homme
 7. Creed Royal Oud
 8. Acqua di Parma Colonia
 9. Ormonde Jayne Ormonde Man
@@ -498,7 +498,7 @@ Si ta vie ressemblait à une campagne Ralph Lauren : chevaux, chemise blanche, c
 Terminal ouvert, chemise Oxford, café à emporter, Manhattan et une obsession pour la prochaine transaction.
 
 1. Creed Aventus
-2. Dior Homme 2020
+2. Dior Homme
 3. Bleu de Chanel Parfum
 4. Tom Ford Grey Vetiver
 5. Le Labo Santal 33
@@ -646,7 +646,7 @@ Monte-Carlo, paddock, cuir, architecture blanche et élégance très précise.
 5. MFK Gentle Fluidity Gold
 6. Xerjoff Torino21
 7. Maison Francis Kurkdjian Masculin Pluriel
-8. Dior Homme 2020
+8. Dior Homme
 9. Bvlgari Tygar
 10. Roja Oceania
 
@@ -814,7 +814,7 @@ Salle vitrée, costume impeccable, café noir. Personne ne parle inutilement.
 
 1. Tom Ford Grey Vetiver
 2. Chanel Platinum Égoïste
-3. Dior Homme 2020
+3. Dior Homme
 4. Creed Aventus
 5. MFK Masculin Pluriel
 6. Hermès Terre d'Hermès
@@ -1270,7 +1270,7 @@ Chemise repassée, CV imprimé, cinq minutes d'avance et aucune envie que le par
 2. Terre d'Hermès
 3. Chanel Platinum Égoïste
 4. MFK Masculin Pluriel
-5. Dior Homme 2020
+5. Dior Homme
 6. Chanel Chance Eau Tendre
 7. Narciso Rodriguez Pure Musc
 8. MFK Aqua Universalis
