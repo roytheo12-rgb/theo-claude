@@ -867,6 +867,7 @@
       <div><h2>${esc(e.name)}</h2><p class="mono" style="margin-top:6px">${esc(e.house)}${e.family ? ' · ' + (e.guess ? '≈ ' : '') + esc(famLabel(e.family)) : ''}${e.conc ? ' · ' + esc(e.conc.split(',').map((x) => CONC_L[x] || x).join(' / ')) : ''}</p></div>
       ${(e.tags || []).length ? `<div class="chips">${e.tags.map((t) => `<span class="chip">${esc((window.TAGS || {})[t] || t)}</span>`).join('')}</div>` : ''}
       ${d ? `<p class="rd">${esc(d[1])}</p>` : ''}
+      ${(() => { const q = E.profOf ? E.profOf({ name: e.name, house: e.house, notes: e.notes || [], family: e.family }) : null; if (!q) return ''; const ST = { culte: 'Culte', sous: 'Sous-coté', sur: 'Très hypé', juste: 'À sa juste valeur' }; const bits = [q.st ? `<span class="chip">${ST[q.st]}</span>` : '', q.pas && !q.derived ? `<span class="chip" style="opacity:.85">À éviter : ${esc(String(q.pas).slice(0, 90))}</span>` : ''].filter(Boolean); return bits.length ? `<div class="chips">${bits.join('')}</div>` : ''; })()}
       ${bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${esc(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<span class="chip">${esc(t)}</span>`).join('')}</div></div>` : ''}
       ${pyramidOf(e)}
       ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<span class="chip">${esc(n)}</span>`).join('')}</div>` : ''}
