@@ -2057,7 +2057,7 @@ pal: 1c1020,6a2f4a,e4b5a0,arches
 x Essential Parfums Dedication
 + Essential Parfums Bois Imperial | Un boisé précis et sobre : la poignée de main ferme.
 + Dior Bois d'Argent | L'élégance discrète d'un costume bien coupé.
-+ Givenchy Gentleman Eau de Parfum Réserve Privée | Le classicisme moderne, sans jamais en faire trop.
++ Givenchy Gentleman Réserve Privée | Le classicisme moderne, sans jamais en faire trop.
 + Marc-Antoine Barrois Ganymede | Le choix de celui qui connaît vraiment la parfumerie.
 
 ## Tech Bro
@@ -2314,3 +2314,5 @@ x Giardini di Toscana Bianco Latte
 + Essential Parfums Rose Magnetic | La rose moderne à prix accessible.
 + Giardini di Toscana Bianco Latte | Un gourmand lacté et doux, au prix d'un cadeau.
 
+## Clean Girl
+x Ex Nihilo Fleur Narcotique Blossom
