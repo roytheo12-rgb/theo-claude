@@ -133,6 +133,11 @@ const EDIT_MISS = [], INTROUV = [];
   const expand = (q) => { const s = norm(q.replace(/\s*\([^)]*\)/g, '')); const o = [s]; Object.keys(HOUSE_SYN).forEach((k) => { if (s.startsWith(k + ' ')) o.push(HOUSE_SYN[k] + s.slice(k.length)); }); return o; };
   PLS.forEach((p) => { const keep = []; p.ps.forEach((x, i) => { if (!x.h && expand(x.q).some((e) => gone.has(e))) { if (p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (i < c) { g.n--; break; } } } } else keep.push(x); }); p.ps = keep; });
 })();
+// phrase de présentation : un parfum présent dans les deux groupes (Homme et Femme) garde la même phrase des deux côtés
+(function shareBlurbs() {
+  const k = (x) => norm(x.h ? x.h + ' ' + x.n : x.q);
+  PLS.forEach((p) => { const m = {}; p.ps.forEach((x) => { if (x.w) m[k(x)] = m[k(x)] || x.w; }); p.ps.forEach((x) => { if (!x.w && m[k(x)]) x.w = m[k(x)]; }); });
+})();
 // doublons : un même parfum n'apparaît qu'une fois par playlist (ou une fois par groupe Homme/Femme)
 (function dedupe() {
   const k = (x) => norm(x.h ? x.h + ' ' + x.n : x.q);
