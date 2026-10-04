@@ -108,6 +108,7 @@ const EDIT_MISS = [], INTROUV = [];
       continue;
     }
     if (!p) continue;
+    if ((m = l.match(/^t: (.*)$/))) { p.t = m[1].trim(); continue; }
     if ((m = l.match(/^d: (.*)$/))) { p.d = m[1]; continue; }
     if ((m = l.match(/^doc: (.*)$/))) { const [a, b, c] = m[1].split(' | '); p.doc2 = (p.doc2 || []).concat([c ? { t: a, s: b, u: c } : { t: a }]); continue; }
     if ((m = l.match(/^pal: (.*)$/))) { p.pal = m[1].trim(); continue; }

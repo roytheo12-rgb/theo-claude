@@ -2089,3 +2089,29 @@ x Essential Parfums Dedication
 + Ex Nihilo Lust in Paradise | Floral tropical sensuel.
 
 ## DEL Les fashions du Marais
+
+## Le Bookworm
+t: Bookworm
+d: Librairie le samedi, café le dimanche, notes dans les marges. Elle a lu Proust deux fois, relit des lettres d'amour, écoute Chopin et a toujours des fleurs fraîches chez elle. Il a une opinion sur Bolaño.
++ Guerlain L'Heure Bleue | Créé en 1912 : l'heure bleue de Verlaine.
++ Dior Diorissimo | Christian Dior adorait le muguet.
++ Chanel Gardenia | La fleur préférée de Coco Chanel.
++ Maison Goutal Un Matin d'Orage | Lilas, magnolia : l'orage du matin.
++ Diptyque Eau Rose | Une rose réaliste : elle sent la rose, pas le bonbon.
++ L'Artisan Parfumeur Mûre et Musc Extrême | La maison pionnière du niche français.
++ Hermès Un Jardin en Méditerranée | Le romantisme de la botanique.
++ Frédéric Malle En Passant | Le parfum de ceux qui s'arrêtent pour regarder les fleurs.
++ Penhaligon's The Favourite | Inspiré de Sarah Churchill.
++ Chanel N°5 EDP | Le parfum le plus célèbre du monde.
++ Houbigant Quelques Fleurs | Le premier bouquet floral de l'histoire.
++ Maison Francis Kurkdjian À la rose | La rose ultime, ni sucrée ni criarde.
++ Chanel Chance Eau Tendre | Son parfum des premiers rendez-vous.
++ Dior Miss Dior EDP | L'icône du genre.
++ Guerlain Mon Guerlain | Le romantisme gourmand et poétique.
++ Maison Francis Kurkdjian Amyris Femme | Romantique sans que ça se voie.
++ Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
++ Jo Malone Peony & Blush Suede | Glamour doux, pour le dîner en amoureux.
++ Byredo Rose of No Man's Land | La rose niche accessible.
++ Guerlain Insolence | Poudré et romantique : les années 50.
+
+## DEL La Romantique classique

@@ -57,9 +57,9 @@
 55|Corporate Weapons
 56|Les Petits budgets
 57|Les Fans de design
-58|Le Bookworm
+58|Bookworm
 59|-
-60|La Romantique classique
+60|-
 61|Strange Smells
 62|Layering
 63|La vie de Ronnie
