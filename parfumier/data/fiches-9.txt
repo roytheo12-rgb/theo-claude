@@ -21,3 +21,11 @@ Oman Luxury|Nasaj|floral|u|pamplemousse;mandarine;cardamome;poire;poivre rose|ja
 Oman Luxury|Wasla|floral|u|fleurs|ambre|bois|3|3|3|0
 Oman Luxury|Zafar|oud|u|épices|oud|animal;terre|5|5|5|0
 Guerlain|L'Homme Idéal Cologne Forte|aromatique|m|amande;pamplemousse;bergamote;poivre rose|encens;néroli;bois de gaïac;fruits secs|vétiver;cuir;patchouli;ciste|4|4|4|0
+Ella K|Brumes de Khao-Sok|vert|u|notes vertes;lys|cyprès;gardénia|cèdre|2|2|2|0
+Ella K|Mélodie d'Altaï|cuir|u|whisky;encens;safran|cuir;styrax|benjoin;patchouli|4|4|4|0
+Ella K|Rose de Pushkar|floral|u|eau de rose;litchi;poivre noir|oud;rose|patchouli;cuir;ambre|4|4|4|0
+Maison Crivelli|Osmanthe Kodoshan|floral|u|baies roses;thé|osmanthus|cuir;abricot|2|3|2|0
+Xerjoff|Comandante|ambré|m|tabac|miel;fruits|ambre|4|4|4|0
+Xerjoff|Don|épicé|m|whisky|tabac|cuir;poudre à canon|4|4|4|0
+Xerjoff|Richwood|boisé|u|agrumes|patchouli|santal|3|4|3|0
+Horace|L'Étiquette|aromatique|m|tabac;genévrier;férule|lavande;cyprès|iris;bois de cachemire|3|3|3|0

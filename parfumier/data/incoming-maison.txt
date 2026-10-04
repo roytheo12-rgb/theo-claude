@@ -44,7 +44,6 @@ Vert Malachite|Armani|Vert Malachite
 060_maison_sensara_souvenir_de_oummi|Maison Sensara|Souvenir de Oummi
 062_maison_unika_oud_osmanthus|Maison Unika|Oud Osmanthus
 062_maison_unika_tonka_sesame|Maison Unika|Tonka Sesame
-Fleur Diamantine Maison Crivelli|Maison Crivelli|Fleur Diamantine
 boadicea_wellington|Boadicea the Victorious|Wellington
 dorsay_tilleul_extrait|D'Orsay|Tilleul Extrait
 ella-k-parfums-camelia-k-packshot-front.png|Ella K|Camelia K
@@ -53,5 +52,6 @@ ella-k-parfums-memoire-de-daisen-in-packshot-front.png|Ella K|Mémoire de Daisen
 ella-k-parfums-orchid-k-packshot-front.png|Ella K|Orchid K
 exnihilo_brompton_immortals_eau_de_parfum|Ex Nihilo|Brompton Immortals
 fenty_eau_de_parfum.jpg|Fenty|Eau de Parfum
-giardini_giglio_di_firenze|Giardini di Toscana|Giglio di Firenze
 morning-mist-perfumed-body-mists-874|Floraïku|Morning Mist
+
+exnihilo_brompton_immortals_extrait|Ex Nihilo|Brompton Immortals Extrait

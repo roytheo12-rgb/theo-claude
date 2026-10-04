@@ -74,7 +74,6 @@ Ella K|Sotto la Luna Gardenia|EDP
 Essential Parfums|Dedication|EDP
 Floraïku|Haiku in the Dark|EDP
 Floraïku|The Wandering Minstrel|EDP
-Giardini di Toscana|Giglio di Firenze|EDP
 Houbigant|Fougère Nobile|EDP
 Maison Crivelli|Iris Malhikân|EDP
 Marc-Antoine Barrois|B683 Extrait|EDP
@@ -137,3 +136,20 @@ Oman Luxury|Overdose|EDP
 Oman Luxury|Wasla|EDP
 Oman Luxury|Dejan|EDP
 Oman Luxury|Mariya|EDP
+I Profumi di Firenze|Giglio Fiorentino|EDP
+Ex Nihilo|Brompton Immortals Extrait|PAR
+Ella K|Brumes de Khao-Sok|EDP
+Ella K|Mélodie d'Altaï|EDP
+Ella K|Rose de Pushkar|EDP
+Ella K|Myrrh K|EDP
+Ella K|Harmattan|EDP
+Ella K|Khamsin|EDP
+Maison Crivelli|Osmanthe Kodoshan|EDP
+Maison Crivelli|Ingredients 07/2012|EDP
+Xerjoff|Comandante|EDP
+Xerjoff|Don|EDP
+Xerjoff|Richwood|EDP
+Horace|L'Étiquette|EDP
+Horace|Vetiver Primavera Extrait|PAR
+Parfum d'Empire|Eau de Gloire Cologne|COL
+Xerjoff|Starlight|EDP

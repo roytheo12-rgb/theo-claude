@@ -1059,7 +1059,7 @@ d: Villa italienne, bateau en bois, citronniers, chemise en lin et coucher de so
 @ Femme
 - Acqua di Parma Magnolia Infinita | Le magnolia du jardin de la Villa Carlotta.
 - Acqua di Parma Gelsomino Nobile | Le jasmin de la terrasse, au coucher du soleil.
-- Giardini di Toscana Giglio di Firenze | Le lys du jardin à l'italienne.
+- I Profumi di Firenze Giglio Fiorentino | Le lys du jardin à l'italienne.
 - Bottega Veneta Parco Palladiano IX: Violetta | La violette d'un parc de villa.
 - Xerjoff Dama Bianca | La dame en blanc sur l'embarcadère.
 - Santa Maria Novella Fresia | Le freesia des bouquets de mariage.
@@ -1334,7 +1334,7 @@ x Versace Dylan Blue
 + Une Nuit Nomade Sugar Leather | Caramel, cannelle, cuir, labdanum. Désert sucré.
 
 ## Garden Party
-+ Giardini di Toscana Giglio di Firenze | Lys, iris, bois blancs, musc. Florentin, aérien, précis.
++ I Profumi di Firenze Giglio Fiorentino | Lys, iris, bois blancs, musc. Florentin, aérien, précis.
 + D'Orsay Tilleul | Fleur de tilleul, bois, musc vert. Classique de la parfumerie française.
 + Rosendo Mateu No. 4 | Rose, jasmin, bois de oud, ambre. Floral oriental sophistiqué.
 + Place de la Rêverie Jardin de Minuit | Fleurs nocturnes, jasmin, musc blanc, vétiver.
@@ -2777,7 +2777,6 @@ x Givenchy Malachite
 - Byredo Bal d'Afrique | La Parisienne qui apporte sa lumière.
 - Nishane Wulong Cha | La cérémonie du thé revisitée.
 - Le Labo Thé Matcha 26 | Un salon de thé de Nakameguro.
-- Maison Crivelli Fleur Diamantine | Le contraste d'une ville cosmopolite : un floral lumineux, éclat de verre et de lumière.
 
 ## Dubai
 @ Homme
@@ -2952,3 +2951,72 @@ x Givenchy Malachite
 ## Niche à petit prix
 x Place de la Rêverie Passion Riviera
 x Place de la Rêverie Santal de Paris
+
+## Bookworm
+@ Homme | Il passe le samedi chez le libraire de la rue de Seine, annote ses marges au crayon et lit Borges en laissant refroidir son café. Il a une opinion sur Bolaño, une autre sur Simenon, et une édition de poche cornée dans la poche du manteau.
+- Comme des Garçons Series 3 Incense: Kyoto | La bibliothèque d'un temple : silence, papier, bois.
+- Santa Maria Novella Tabacco Toscano | Fondée en 1221 par des moines : l'odeur d'une vieille pharmacie-bibliothèque et de tabac froid.
+- Serge Lutens Chergui | Serge Lutens est photographe et écrivain autant que parfumeur : du miel, du tabac, un foin sec de fin d'été.
+- Diptyque Tam Dao | Le santal sec d'une bibliothèque boisée, au dos des reliures.
+- Ormonde Jayne Ormonde Man | Une des maisons les plus littéraires du marché : cuir, bois, un salon londonien.
+- Le Labo Thé Noir 29 | Le thé noir du dimanche après-midi, 400 pages devant soi.
+- Hermès Bel Ami | Le roman de Maupassant : pour celui qui lit les classiques.
+- Floris No. 89 | Fondée en 1730, la maison de Jermyn Street : le parfum de Fleming, de Bond et des clubs de lecture.
+- Maison Margiela Jazz Club | Le club de jazz vu par un romancier.
+- Notes de Bas de Page Carambolage | Le nom est la référence littéraire.
+- Parfum d'Empire Corsica Furiosa | Le maquis corse : un roman d'aventures qui sent l'immortelle et le feu de bois.
+- Houbigant Fougère Royale | Le premier fougère de l'histoire (1882), pour qui préfère les classiques.
+- Maison Crivelli Papyrus Moléculaire | Un papyrus sec et poudré : de vieux livres reliés de cuir dans une bibliothèque feutrée.
+@ Femme | Elle a lu Proust deux fois, relit des lettres d'amour en écoutant Chopin et a toujours des fleurs fraîches chez elle. Elle choisit un livre à l'odeur, un parfum à l'histoire.
+- Guerlain L'Heure Bleue | Créé en 1912 : l'heure bleue de Verlaine, entre chien et loup, poudre et mélancolie.
+- Dior Diorissimo | Christian Dior adorait le muguet : le printemps d'un livre de poésie.
+- Chanel Gardenia | La fleur préférée de Coco Chanel : un gardénia blanc, lu à la fenêtre.
+- Maison Goutal Un Matin d'Orage | Lilas, magnolia : l'orage du matin.
+- Diptyque Eau Rose | Une rose réaliste : elle sent la rose, pas le bonbon.
+- L'Artisan Parfumeur Mûre et Musc Extrême | La maison pionnière du niche français.
+- Hermès Un Jardin en Méditerranée | Le romantisme de la botanique.
+- Frédéric Malle En Passant | Le parfum de ceux qui s'arrêtent pour regarder les fleurs.
+- Penhaligon's The Favourite | Inspiré de Sarah Churchill : l'élégance d'une correspondance de l'aristocratie anglaise.
+- Chanel N°5 EDP | Le parfum le plus célèbre du monde : le roman de gare devenu classique.
+- Houbigant Quelques Fleurs | Le premier bouquet floral de l'histoire (1912) : le bouquet d'un recueil de nouvelles.
+- Maison Francis Kurkdjian À la rose | La rose ultime, ni sucrée ni criarde.
+- Chanel Chance Eau Tendre | Son parfum des premiers rendez-vous.
+- Dior Miss Dior EDP | L'icône du genre.
+- Guerlain Mon Guerlain | Le romantisme gourmand et poétique.
+- Maison Francis Kurkdjian Amyris Femme | Romantique sans que ça se voie.
+- Diptyque Do Son | Tubéreuse délicate, floral blanc romantique.
+- Jo Malone Peony & Blush Suede | Glamour doux, pour le dîner en amoureux.
+- Byredo Rose of No Man's Land | La rose niche accessible.
+- Guerlain Insolence | Poudré et romantique : les années 50.
+
+## Seul face à l'océan
++ Parfum d'Empire Acqua di Scandola | Le sel marin séché sur la roche d'une crique déserte, sans effet lessive.
++ Maison Crivelli Rose Saltifolia | Une rose soufflée par les embruns, saline et iodée.
++ Maison Crivelli Lys Solaberg | Un lys marin, fumé et minéral : la tempête sur les côtes de Norvège.
+
+## Sous la chaleur
++ Xerjoff Torino21 | Menthe glaciale, basilic, citron, lavande : l'un des meilleurs parfums d'été.
++ Parfum d'Empire Yuzu Fou | Un yuzu acidulé et givré, désaltérant dans la fournaise.
++ Maison Crivelli Citrus Batikanga | Des agrumes épicés d'Indonésie : le zeste et le piment.
++ Horace Vetiver Primavera | Citron, yuzu, mandarine sur vétiver : un shot de fraîcheur juteuse.
++ Frédéric Malle Outrageous! | Bergamote, pomme verte, menthe : le cocktail pétillant de l'été new-yorkais.
+
+## Automne Cozy
++ Xerjoff Starlight | Cardamome, cannelle, girofle et ambre : une merveille pour l'automne.
++ Maison Crivelli Santal Volcanique | Un santal crémeux au café et au gingembre.
++ Parfum d'Empire Immortelle Corse | Une chaleur miellée d'immortelle, de foin et de réglisse.
+
+## Night Out
++ Horace Mezcal Musc | Piment, cumin, goudron de bouleau et musc : le côté bad boy.
++ Maison Crivelli Cuir InfraRouge | Framboise, cuir et vanille : un sillage XXL pour marquer la soirée.
++ Maison Crivelli Tubéreuse Astrale | Une tubéreuse épicée, cuirée et lactée, théâtrale.
+
+## Les Petits budgets
++ Horace Oud Rose | Une initiation accessible au rose-oud, d'une excellente tenue.
+
+## Chic Winter
++ Parfum d'Empire Ambre Russe | Un ambre liquoreux d'hiver et de soirées habillées.
++ Frédéric Malle Portrait of a Lady | La rose turque ténébreuse et opulente : une légende.
+
+## Funky Chic
++ Maison Crivelli Hibiscus Mahajád | Une bombe de projection à l'hibiscus et à la vanille.
