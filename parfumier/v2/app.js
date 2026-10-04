@@ -1334,6 +1334,7 @@
   function openShopMap() {
     let pos = S.settings.geo && S.settings.geo.lat != null ? { lat: S.settings.geo.lat, lon: S.settings.geo.lon, place: S.settings.geo.place || '' } : null, flt = 'all', rad = 15, lim = 12;
     const pn = openSheet(`<div><h2>Où acheter près de moi</h2><p style="color:var(--muted);margin-top:6px">Choisis ta ville, je te liste les parfumeries autour de toi.</p></div>
+      <div class="card" style="padding:16px 18px"><p class="rd" style="margin:0"><b>Ce n'est pas précis.</b> Les adresses viennent du répertoire officiel des entreprises, qui donne le siège de chaque société et pas toujours la boutique. Il en manque beaucoup, surtout pour la niche et les grandes enseignes. Vérifie toujours l'adresse et les horaires avant de te déplacer.</p></div>
       <div class="sbar"><div class="acwrap"><input type="text" id="smCity" placeholder="Ta ville (Tours, Lyon, Bordeaux…)" autocomplete="off" autocapitalize="words" enterkeyhint="search" aria-label="Ville"><div class="aclist" id="smAc" hidden></div></div><button type="button" class="cta" id="smCityGo"><span>Chercher</span></button></div>
       <div class="row"><button class="ghost" id="smGeo">Autour de moi</button></div>
       <div class="chips" id="smFlt">${SHOP_FILTERS.map(([k, l]) => `<button type="button" class="chip ${k === flt ? 'on' : ''}" data-f="${k}">${l}</button>`).join('')}</div>
@@ -1347,7 +1348,7 @@
       if (!pos) return; const where = pos.place ? ' à ' + pos.place : ' autour de toi', list = $('#smList', pn);
       const all = (window.SHOPS || []).map((r) => ({ r, km: kmBetween(pos.lat, pos.lon, r[4], r[5]) })).filter((o) => o.km <= rad && keep(o.r)).sort((a, b) => a.km - b.km);
       const paris = kmBetween(pos.lat, pos.lon, 48.857, 2.352) < 12 && ['all', 'niche', 'prem', 'gm'].includes(flt);
-      msg(all.length ? `${all.length} adresse${all.length > 1 ? 's' : ''} à moins de ${rad} km${where}. Ces adresses viennent du répertoire officiel des entreprises : vérifie les horaires avant de te déplacer.` : `Aucune adresse enregistrée à moins de ${rad} km${where} pour ce filtre. Élargis le rayon ou cherche directement sur la carte ci-dessous.`);
+      msg(all.length ? `${all.length} adresse${all.length > 1 ? 's' : ''} à moins de ${rad} km${where}. Liste incomplète et approximative, à vérifier avant de te déplacer.` : `Aucune adresse enregistrée à moins de ${rad} km${where} pour ce filtre. Élargis le rayon ou cherche directement sur la carte ci-dessous.`);
       const houses = [...new Set(S.wishlist.concat(S.collection).map((x) => x.house).filter(Boolean))].slice(0, 3);
       list.innerHTML =
         (paris ? `<p class="mono">Les adresses à connaître à Paris</p>${PARIS_SHOPS.map(([n, a, d]) => card(n, d, a, `https://www.google.com/maps/search/${encodeURIComponent(n + ' Paris')}`, 'Voir sur la carte')).join('')}` : '') +
