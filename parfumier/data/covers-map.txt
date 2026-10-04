@@ -72,3 +72,28 @@
 70|Charlotte York
 71|Andy Sachs
 72|Bruce Wayne
+gh1|Rick Owens
+gh2|Virgil Abloh
+gh3|Salvador Dalí
+gh4|Amy Winehouse
+gh5|Jay-Z
+gh6|Kanye West
+gh7|-
+gh8|Howard Ratner
+gh9|Les Affranchis
+gh10|Kendall Roy
+gh11|Logan Roy
+gh12|Intouchables
+gh13|Aurores boréales
+gh14|Le Footeux
+gh15|L'Élégant
+gh16|L'Artiste
+gh17|Neuschwanstein
+gh18|-
+gh19|Égypte
+gh20|Antarctique
+gh21|Chine ancienne
+gh22|Safari
+gh23|Thaïlande
+gh24|Le train de minerai
+gh25|Méditerranée de nuit
