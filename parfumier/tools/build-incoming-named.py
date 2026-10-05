@@ -59,7 +59,7 @@ def cut(im, tol=TOL, corner=60):
     return Image.fromarray(out, 'RGBA')
 sh = root / 'data/imgshots.json'; shots = json.loads(sh.read_text(encoding='utf-8')) if sh.exists() else {}
 done, lost, bad = [], [], []
-for f in sorted((root / 'incoming').iterdir()):
+for f in sorted(x for x in (root / 'incoming').rglob('*') if x.is_file() and 'playlists' not in x.parts):      # sous-dossiers admis (lot-02/...)
     if f.suffix.lower() not in ('.jpg', '.jpeg', '.png', '.webp', '.avif') or re.match(r'^\d+\.', f.name) or f.name.startswith('Capture'): continue
     if sys.argv[1:] and not any(a in f.stem for a in sys.argv[1:]): continue      # lancement partiel : python3 tools/build-incoming-named.py 062_ ella-k
     st = re.sub(r'^\d+-', '', f.stem)      # lots numérotés 001-maison-nom.png
