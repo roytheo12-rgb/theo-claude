@@ -62,9 +62,10 @@ done, lost, bad = [], [], []
 for f in sorted((root / 'incoming').iterdir()):
     if f.suffix.lower() not in ('.jpg', '.jpeg', '.png', '.webp', '.avif') or re.match(r'^\d+\.', f.name) or f.name.startswith('Capture'): continue
     if sys.argv[1:] and not any(a in f.stem for a in sys.argv[1:]): continue      # lancement partiel : python3 tools/build-incoming-named.py 062_ ella-k
-    t = targets.get(asc(MAP[f.stem][0] + ' ' + MAP[f.stem][1])) if f.stem in MAP else targets.get(asc(f.stem))
+    st = re.sub(r'^\d+-', '', f.stem)      # lots numérotés 001-maison-nom.png
+    t = targets.get(asc(MAP[f.stem][0] + ' ' + MAP[f.stem][1])) if f.stem in MAP else (targets.get(asc(st)) or targets.get(asc(st.replace('-et-', '-'))) or targets.get(asc(st.replace('mfk', 'maison francis kurkdjian'))))
     if not t: lost.append(f.name); continue
-    if f.stem in SKIP: bad.append(f.name + ' (blanc sur blanc)'); continue
+    if st in SKIP: bad.append(f.name + ' (blanc sur blanc)'); continue
     try: im = Image.open(f)
     except Exception: bad.append(f.name); continue
     o = OVR.get(f.stem, {})

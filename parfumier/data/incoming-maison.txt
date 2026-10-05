@@ -59,3 +59,10 @@ Roja_Enigma_Pour_Homme|Roja Parfums|Enigma Pour Homme
 replica_bubble_bath|Maison Margiela|Bubble Bath
 replica_on_a_date|Maison Margiela|On a Date
 guerlain_neroli_outre_noir|Guerlain|Néroli Outrenoir
+003-artisan-parfumeur-passage-d-enfer|L'Artisan Parfumeur|Passage d'Enfer
+004-roja-elysium-pour-homme|Roja Parfums|Elysium Pour Homme
+005-roja-burlington-1819|Roja Parfums|Burlington 1819
+006-roja-amber-aoud|Roja Parfums|Amber Aoud
+011-goutal-eau-d-hadrien|Maison Goutal|Eau d'Hadrien
+042-boucheron-jaipur-edt|Boucheron|Jaipur Homme
+069-ysl-rive-gauche|Yves Saint Laurent|Rive Gauche
