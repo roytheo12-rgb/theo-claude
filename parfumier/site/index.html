@@ -115,7 +115,17 @@ footer{padding-block:40px 60px;color:var(--muted);font-size:13px;display:grid;ga
 .note{color:var(--muted);font-size:13px}
 footer .links{display:flex;flex-wrap:wrap;gap:8px 22px}
 footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
-@media(max-width:860px){.big,.pc.wide{grid-template-columns:1fr}}
+.ways{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.way{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:26px 22px;display:grid;gap:10px;align-content:start}
+.way b{font:200 56px/1 var(--sf);letter-spacing:-.04em;color:var(--accent)}
+.way h3{font:300 24px/1.1 var(--sf);letter-spacing:-.02em}
+.way p{color:var(--muted);font-size:15px}
+.way em{font-style:normal;font-size:13px;color:var(--accent);opacity:.85}
+.chk{list-style:none;padding:0;display:grid;gap:12px;margin:0}
+.chk li{color:var(--muted);font-size:15px;padding-left:18px;position:relative}
+.chk li::before{content:"";position:absolute;left:0;top:.8em;width:8px;height:1px;background:var(--wine)}
+.chk b{color:var(--ink);font-weight:500}
+@media(max-width:860px){.ways{grid-template-columns:1fr}.big,.pc.wide{grid-template-columns:1fr}}
 @media(max-width:860px){
 .hero,.feat{grid-template-columns:1fr;gap:36px}.feat.rev .txt{order:0}
 .steps,.plans,.grid3{grid-template-columns:1fr}.step+.step{border-left:0;border-top:1px solid var(--line)}
@@ -155,6 +165,16 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 </div>
 </section>
 
+<section id="balade">
+<div class="feat">
+<div class="txt"><span class="mono">La balade olfactive</span><h2>Testez en boutique, retenez ce qui vous a vraiment touché.</h2>
+<p>Dix touches sur dix bandelettes, et le soir plus personne ne sait lequel était lequel. Pendant la balade olfactive, chaque touche reçoit un symbole à dessiner dessus. Vous notez ce que vous ressentez, vous photographiez le flacon, et Sillage garde la trace.</p>
+<ul class="chk"><li><b>Une touche, un symbole.</b> Retrouvez plus tard quel parfum se cache derrière chaque bandelette.</li><li><b>Votre impression, avec vos mots.</b> L'ouverture, le cœur, ce que ça évoque, et un avis de « j'adore » à « pas pour moi ».</li><li><b>Le bilan de la balade.</b> Ce que vos choix disent de vous, ce qu'il faut retenir, ce qu'il faut oublier, et quoi sentir ensuite dans la même veine.</li><li><b>Un profil qui s'ajuste.</b> Les notes que vous avez aimées ou fuies pendant la balade rejoignent votre profil en un geste.</li></ul>
+<div class="cta"><a class="btn main" href="#offres" data-whop>Faire ma première balade</a></div></div>
+<div class="mini"><img src="img/app-walk.webp" alt="La balade olfactive dans Sillage" width="560" height="1019"></div>
+</div>
+</section>
+
 <section>
 <div class="head"><span class="mono">En trois gestes</span><h2>Du besoin au flacon, en moins d'une minute.</h2></div>
 <div class="steps">
@@ -165,7 +185,7 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 </section>
 
 <section id="univers">
-<div class="head"><span class="mono">Pour s'inspirer</span><h2>Et quand on n'a pas encore d'idée, on entre dans un univers.</h2><p class="lead">Un personnage, une ville, un instant, une envie. 138 univers qui donnent un décor, une culture et des accords, pour savoir quel monde on veut porter.</p></div>
+<div class="head"><span class="mono">Pour voyager</span><h2>Un parfum, c'est un voyage qui se porte sur la peau.</h2><p class="lead">Il fait revenir un souvenir, provoque une émotion, installe une sensation que les mots peinent à dire. Pour la mettre en images, nous avons composé 138 listes. Chacune raconte ce que l'on ressent, et montre quels parfums vous y emmènent.</p></div>
 <div class="covers">
 <a class="cv" href="#offres" data-whop><img src="img/james-bond.webp" alt="" loading="lazy"><span><small>Cinéma</small>James Bond</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/thomas-shelby.webp" alt="" loading="lazy"><span><small>Cinéma</small>Thomas Shelby</span></a>
@@ -180,17 +200,12 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <a class="cv" href="#offres" data-whop><img src="img/don-draper.webp" alt="" loading="lazy"><span><small>Cinéma</small>Don Draper</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/ibiza.webp" alt="" loading="lazy"><span><small>Destinations</small>Ibiza</span></a>
 </div>
-<div class="worlds" style="margin-top:10px">
-<div class="wd"><b>38</b><span>Cinéma, séries et livres</span><em>James Bond, Thomas Shelby, Patrick Bateman</em></div>
-<div class="wd"><b>24</b><span>Destinations</span><em>Paris, New York, Marrakech, Tokyo</em></div>
-<div class="wd"><b>23</b><span>Archétypes</span><em>Quiet Luxury, Clean Girl, Finance Bro</em></div>
-<div class="wd"><b>17</b><span>Icônes</span><em>Alain Delon, Rihanna, Taylor Swift</em></div>
-<div class="wd"><b>15</b><span>Moments</span><em>Premier rendez-vous, Ski Weekend, F1</em></div>
-<div class="wd"><b>10</b><span>Atmosphères</span><em>Soirée à l'opéra, Automne Cozy</em></div>
-<div class="wd"><b>6</b><span>Effets</span><em>Aimant à compliments, Envoûtant</em></div>
-<div class="wd"><b>5</b><span>Spécial</span><em>Niche à petit prix, Layering</em></div>
+<div class="ways">
+<div class="way"><b>24</b><h3>Voyager</h3><p>Paris à quatre heures du matin, un souk à Marrakech, une terrasse à Ibiza. Les destinations donnent une odeur à un lieu.</p><em>Paris, New York, Marrakech, Tokyo</em></div>
+<div class="way"><b>78</b><h3>Incarner</h3><p>Un héros de film, une icône, un style de vie. Les listes vous laissent entrer dans la peau d'un personnage le temps d'un sillage.</p><em>James Bond, Thomas Shelby, Quiet Luxury, Alain Delon</em></div>
+<div class="way"><b>31</b><h3>Ressentir</h3><p>Un premier rendez-vous, une soirée d'opéra, l'envie qu'on vous remarque. Les moments, les atmosphères et les effets traduisent une émotion en parfums.</p><em>Premier rendez-vous, Automne Cozy, Aimant à compliments</em></div>
 </div>
-<p class="note" style="margin-top:14px">4 747 parfums, 215 maisons. Les prix sont indicatifs.</p>
+<p class="note" style="margin-top:14px">Et 5 listes spéciales, dont la niche à petit prix et le layering. 138 univers, 4 747 parfums, 215 maisons. Les prix sont indicatifs.</p>
 </section>
 
 <section>
@@ -204,7 +219,7 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <div class="mini"><img src="img/app-play.webp" alt="La page Inspirations de Sillage" width="560" height="1212"></div>
 </div>
 <div class="grid3">
-<div class="card"><h3>Conseil de balade</h3><p>Vous décrivez votre sortie, Sillage lit le contexte et propose le bon sillage.</p></div>
+<div class="card"><h3>Histoires de matières premières</h3><p>La rose de mai à Grasse, et d'autres récits pour comprendre ce que l'on sent.</p></div>
 <div class="card"><h3>Où acheter près de chez moi</h3><p>Vous choisissez votre ville et voyez les parfumeries de France, de la niche aux grandes enseignes.</p></div>
 <div class="card"><h3>Ma collection et le layering</h3><p>Vous rangez vos flacons. Sillage en tire un choix du jour et des idées de mélange.</p></div>
 </div>
@@ -214,10 +229,10 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <div class="head"><span class="mono">Offres</span><h2>Essayez le parfumier. Gardez-le quand il vous a convaincu.</h2><p class="lead">Le paiement et l'abonnement passent par Whop, une plateforme de paiement sécurisée.</p></div>
 <div class="plans">
 <div class="plan"><h3>Gratuit</h3><div class="price">0 €</div><p class="alt">Pour tester le conseil.</p>
-<ul><li>Quelques conseils du parfumier</li><li>Quelques univers à explorer</li><li>Profil olfactif de base</li><li>Collection limitée</li></ul>
+<ul><li>Quelques conseils du parfumier</li><li>Quelques univers à explorer</li><li>Une balade olfactive pour tester</li><li>Profil olfactif de base</li><li>Collection limitée</li></ul>
 <a class="btn" href="#" data-whop="free">Essayer gratuitement</a></div>
 <div class="plan"><h3>Premium</h3><div class="price">5,99 € <small>par mois</small></div><p class="alt">Ou 49 € par an.</p>
-<ul><li>Parfumier sur mesure en illimité</li><li>Choix selon situation, météo et tenue</li><li>Détection des manques de votre collection</li><li>Recommandations d'achat selon votre budget</li><li>Les 138 univers</li><li>Profil olfactif complet qui évolue</li><li>Layering avancé</li><li>Nouvelles playlists chaque mois</li></ul>
+<ul><li>Parfumier sur mesure en illimité</li><li>Choix selon situation, météo et tenue</li><li>Balades olfactives et bilans</li><li>Détection des manques de votre collection</li><li>Recommandations d'achat selon votre budget</li><li>Les 138 univers</li><li>Profil olfactif complet qui évolue</li><li>Layering avancé</li><li>Nouvelles playlists chaque mois</li></ul>
 <a class="btn main" href="#" data-whop="premium">Choisir Premium</a></div>
 <div class="plan hot"><span class="tag">100 places</span><h3>Membre fondateur</h3><div class="price">79 € <small>à vie</small></div><p class="alt">Un seul paiement, pour toujours.</p>
 <ul><li>Tout le Premium, sans abonnement</li><li>Accès aux futurs univers</li><li>Votre avis pèse sur la suite</li><li>Réservé aux 100 premiers membres</li></ul>
@@ -230,6 +245,7 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <div class="faq">
 <details><summary>En quoi Sillage est-il différent d'une appli de recommandation ?</summary><p>Il ne se contente pas de vos goûts. Il tient compte de la situation, de la météo, de votre tenue et de ce que vous possédez déjà, puis explique son choix.</p></details>
 <details><summary>Le parfumier me conseille-t-il sans que j'aie de collection ?</summary><p>Oui. Sans collection, il recommande des parfums à acheter selon votre profil et votre budget. Avec une collection, il choisit d'abord dedans et repère ce qui manque.</p></details>
+<details><summary>À quoi sert la balade olfactive ?</summary><p>À garder la mémoire de ce que vous testez en boutique. Chaque touche a son symbole, vous notez votre impression, puis le bilan vous dit ce qu'il faut retenir et quoi sentir ensuite.</p></details>
 <details><summary>Puis-je essayer avant de payer ?</summary><p>Oui. L'offre gratuite donne quelques conseils, quelques univers et un profil de base.</p></details>
 <details><summary>Que veut dire membre fondateur ?</summary><p>Les 100 premiers membres paient 79 € une seule fois et gardent l'accès complet tant que le service existe. Quand les places sont prises, l'offre disparaît.</p></details>
 <details><summary>Comment se passe le paiement ?</summary><p>Par Whop, avec les moyens de paiement qu'il propose. L'abonnement se gère depuis votre compte Whop.</p></details>
