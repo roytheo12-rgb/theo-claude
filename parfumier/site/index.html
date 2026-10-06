@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sillage</title>
+<meta name="description" content="Sillage, une nouvelle façon d'explorer la parfumerie. 138 univers, 4 747 parfums, un profil olfactif qui apprend de vous.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap">
+<style>
+/* Vitrine Sillage : même cabinet de parfumeur que l'app. Noir chaud, or champagne, oxblood, traits fins, angles francs. Thème sombre unique. */
+:root{color-scheme:dark;--bg:#08080a;--surface:#131215;--surface2:#1a181c;--ink:#f4f0ea;--muted:#94908a;--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.22);
+--accent:#e9e1d4;--wine:#b4394a;--oxblood:#6f1d29;--cta-bg:#efe8dc;--cta-fg:#0d0b0c;
+--sf:"SF Pro Display","SF Pro Text",-apple-system,BlinkMacSystemFont,"Inter","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sf);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-inline:20px}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(90% 46% at 50% -8%,rgba(122,31,43,.42),transparent 70%),radial-gradient(70% 40% at 100% 100%,rgba(40,50,80,.25),transparent 70%)}
+h1,h2,h3,p,ul{margin:0}
+a{color:inherit}
+:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto}
+.mono{font:500 11px var(--sf);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;align-items:center;justify-content:space-between;padding-block:22px}
+.mark{font:600 14px var(--sf);letter-spacing:.38em;text-transform:uppercase;color:#f6f1e8;text-decoration:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 26px;border-radius:4px;border:1px solid var(--line2);background:transparent;color:var(--ink);font:500 12px var(--sf);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color .3s,background .3s}
+.btn:hover{border-color:var(--accent)}
+.btn.main{background:var(--cta-bg);color:var(--cta-fg);border-color:var(--cta-bg)}
+.btn.main:hover{background:#fff}
+.btn.sm{padding:10px 16px;font-size:11px}
+section{padding-block:72px}
+h2{font:300 clamp(28px,5vw,44px)/1.08 var(--sf);letter-spacing:-.025em;text-wrap:balance}
+.lead{color:var(--muted);font-size:18px;max-width:56ch}
+.head{display:grid;gap:14px;margin-bottom:36px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding-block:40px 72px}
+.hero h1{font:200 clamp(40px,7.4vw,82px)/1.0 var(--sf);letter-spacing:-.04em;text-wrap:balance;margin-block:18px 22px}
+.hero .lead{margin-bottom:30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.fine{margin-top:18px;color:var(--muted);font-size:13px}
+.phone{justify-self:center;width:min(300px,100%);border:1px solid var(--line2);border-radius:34px;padding:10px;background:#050506;box-shadow:0 40px 120px rgba(111,29,41,.35)}
+.phone img,.mini img{display:block;width:100%;height:auto;aspect-ratio:560/1050;object-fit:cover;object-position:top;border-radius:26px}
+/* covers */
+.covers{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cv{position:relative;aspect-ratio:3/4;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.cv img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.cv:hover img{transform:scale(1.05)}
+.cv::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,10,.9),transparent 55%)}
+.cv span{position:absolute;left:12px;bottom:11px;right:10px;z-index:1;font:400 15px/1.15 var(--sf);letter-spacing:-.01em}
+.cv small{display:block;font:500 9px var(--sf);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
+.step{padding:28px 24px;display:grid;gap:12px;align-content:start}
+.step+.step{border-left:1px solid var(--line)}
+.step h3{font:400 22px/1.15 var(--sf);letter-spacing:-.015em}
+.step p{color:var(--muted);font-size:15px}
+/* worlds */
+.worlds{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.wd{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:20px 18px;display:grid;gap:6px}
+.wd b{font:200 44px/1 var(--sf);letter-spacing:-.04em;color:var(--accent)}
+.wd span{font-size:15px}
+.wd em{font-style:normal;color:var(--muted);font-size:13px}
+/* features */
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.feat+.feat{margin-top:72px}
+.feat.rev .txt{order:2}
+.txt{display:grid;gap:16px;align-content:center}
+.txt p{color:var(--muted);max-width:50ch}
+.txt h2{font-size:clamp(26px,4vw,36px)}
+.mini{justify-self:center;width:min(260px,100%);border:1px solid var(--line2);border-radius:30px;padding:8px;background:#050506}
+
+.pill{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.pill span{border:1px solid var(--line);border-radius:4px;padding:8px 14px;font-size:14px}
+.pill span.on{border-color:var(--wine);background:rgba(111,29,41,.35)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:72px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px 20px;display:grid;gap:8px;align-content:start}
+.card h3{font:400 18px/1.2 var(--sf);letter-spacing:-.01em}
+.card p{color:var(--muted);font-size:14.5px}
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:stretch}
+.plan{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:28px 24px;display:flex;flex-direction:column;gap:18px}
+.plan.hot{border-color:var(--wine);background:linear-gradient(180deg,rgba(111,29,41,.32),var(--surface) 60%)}
+.plan h3{font:500 12px var(--sf);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.price{font:200 52px/1 var(--sf);letter-spacing:-.04em}
+.price small{font:300 15px var(--sf);color:var(--muted);letter-spacing:0}
+.alt{color:var(--muted);font-size:14px;margin-top:-8px}
+.plan ul{list-style:none;padding:0;display:grid;gap:9px;font-size:15px}
+.plan li{padding-left:18px;position:relative}
+.plan li::before{content:"";position:absolute;left:0;top:.7em;width:8px;height:1px;background:var(--accent)}
+.tag{justify-self:start;border:1px solid var(--wine);color:#f2c9cf;border-radius:3px;padding:4px 9px;font:500 10px var(--sf);letter-spacing:.14em;text-transform:uppercase}
+.plan .btn{margin-top:auto}
+/* faq */
+.faq{display:grid;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line);padding-block:20px}
+summary{cursor:pointer;font:300 20px/1.3 var(--sf);letter-spacing:-.01em;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted);font-weight:200;font-size:26px;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{color:var(--muted);margin-top:12px;max-width:64ch}
+.final{text-align:center;display:grid;gap:22px;justify-items:center;border:1px solid var(--line);border-radius:6px;padding:72px 24px;background:radial-gradient(70% 90% at 50% 0%,rgba(111,29,41,.45),transparent 70%),var(--surface)}
+.final h2{max-width:20ch}
+footer{padding-block:40px 60px;color:var(--muted);font-size:13px;display:grid;gap:10px;border-top:1px solid var(--line)}
+@media(max-width:860px){
+.hero,.feat{grid-template-columns:1fr;gap:36px}.feat.rev .txt{order:0}
+.steps,.plans,.grid3{grid-template-columns:1fr}.step+.step{border-left:0;border-top:1px solid var(--line)}
+.worlds{grid-template-columns:1fr 1fr}section{padding-block:52px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cv img{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a class="mark" href="#">Sillage</a><a class="btn sm" href="#offres" data-whop>Rejoindre</a></nav>
+
+<header class="hero">
+<div>
+<span class="mono">138 univers · 4 747 parfums · 215 maisons</span>
+<h1>Quel monde voulez&#8209;vous porter aujourd'hui ?</h1>
+<p class="lead">Sillage est une nouvelle façon d'explorer la parfumerie. On entre par un personnage, une ville, un instant ou une envie, et le parfum suit.</p>
+<div class="cta"><a class="btn main" href="#offres" data-whop>Devenir membre fondateur</a><a class="btn" href="#univers">Voir les univers</a></div>
+<p class="fine">Les 100 premiers membres paient une seule fois, pour toujours.</p>
+</div>
+<div class="phone"><img src="img/app-bond.webp" alt="Un univers dans Sillage, avec son ADN olfactif" width="560" height="1212"></div>
+</header>
+
+<section id="univers" style="padding-top:24px">
+<div class="head"><span class="mono">Une sélection</span><h2>Chaque univers a son décor, sa culture et ses accords.</h2></div>
+<div class="covers">
+<a class="cv" href="#offres" data-whop><img src="img/james-bond.webp" alt="" loading="lazy"><span><small>Cinéma</small>James Bond</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/thomas-shelby.webp" alt="" loading="lazy"><span><small>Cinéma</small>Thomas Shelby</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/bruce-wayne.webp" alt="" loading="lazy"><span><small>Cinéma</small>Bruce Wayne</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/patrick-bateman.webp" alt="" loading="lazy"><span><small>Cinéma</small>Patrick Bateman</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/paris.webp" alt="" loading="lazy"><span><small>Destinations</small>Paris</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/tokyo.webp" alt="" loading="lazy"><span><small>Destinations</small>Tokyo</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/marrakech.webp" alt="" loading="lazy"><span><small>Destinations</small>Marrakech</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/monaco.webp" alt="" loading="lazy"><span><small>Destinations</small>Monaco</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/quiet-luxury.webp" alt="" loading="lazy"><span><small>Archétypes</small>Quiet Luxury</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/tuxedo-society.webp" alt="" loading="lazy"><span><small>Archétypes</small>Tuxedo Society</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/don-draper.webp" alt="" loading="lazy"><span><small>Cinéma</small>Don Draper</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/ibiza.webp" alt="" loading="lazy"><span><small>Destinations</small>Ibiza</span></a>
+</div>
+</section>
+
+<section>
+<div class="head"><span class="mono">Comment ça marche</span><h2>On part d'une envie, pas d'une fiche technique.</h2></div>
+<div class="steps">
+<div class="step"><span class="mono">D'abord</span><h3>Vous entrez dans un univers</h3><p>Un personnage, une ville, une soirée, un effet recherché. Chaque univers rassemble ses parfums et dit pourquoi ils vont ensemble.</p></div>
+<div class="step"><span class="mono">Ensuite</span><h3>Le profil apprend vos goûts</h3><p>Vous marquez les notes que vous adorez, tolérez ou évitez. Le résumé olfactif se précise à chaque réponse.</p></div>
+<div class="step"><span class="mono">Enfin</span><h3>Vous voyez ce qui vous va</h3><p>Chaque parfum affiche sa compatibilité avec votre profil, la saison, votre budget et les maisons que vous aimez déjà.</p></div>
+</div>
+</section>
+
+<section>
+<div class="head"><span class="mono">138 univers</span><h2>Huit façons d'entrer dans la parfumerie.</h2></div>
+<div class="worlds">
+<div class="wd"><b>38</b><span>Cinéma, séries et livres</span><em>James Bond, Thomas Shelby, Patrick Bateman</em></div>
+<div class="wd"><b>24</b><span>Destinations</span><em>Paris, New York, Marrakech, Tokyo</em></div>
+<div class="wd"><b>23</b><span>Archétypes</span><em>Quiet Luxury, Clean Girl, Finance Bro</em></div>
+<div class="wd"><b>17</b><span>Icônes</span><em>Alain Delon, Rihanna, Taylor Swift</em></div>
+<div class="wd"><b>15</b><span>Moments</span><em>Premier rendez-vous, Ski Weekend, F1</em></div>
+<div class="wd"><b>10</b><span>Atmosphères</span><em>Soirée à l'opéra, Automne Cozy</em></div>
+<div class="wd"><b>6</b><span>Effets</span><em>Aimant à compliments, Envoûtant</em></div>
+<div class="wd"><b>5</b><span>Spécial</span><em>Niche à petit prix, Layering</em></div>
+</div>
+</section>
+
+<section>
+<div class="feat">
+<div class="txt"><span class="mono">Recherche</span><h2>Un seul champ pour tout chercher.</h2><p>Un parfum, une maison, un nez, une note ou simplement une envie. Le mode découverte propose des pistes quand on ne sait pas encore quoi chercher.</p>
+<div class="pill"><span class="on">Je découvre</span><span>Frais pour le bureau</span><span>Une soirée qui marque</span><span>Premier rendez-vous</span></div></div>
+<div class="mini"><img src="img/app-search.webp" alt="La recherche de Sillage" width="560" height="1212"></div>
+</div>
+<div class="feat rev">
+<div class="txt"><span class="mono">Inspirations</span><h2>Une bibliothèque d'univers, à parcourir comme une playlist.</h2><p>Chaque liste existe en version Homme et Femme quand cela a du sens. Une phrase présente chaque parfum, et on peut en tirer un au hasard ou tout mettre en wishlist.</p></div>
+<div class="mini"><img src="img/app-play.webp" alt="La page Inspirations de Sillage" width="560" height="1212"></div>
+</div>
+<div class="grid3">
+<div class="card"><h3>Conseil de balade</h3><p>Vous décrivez votre journée, l'application lit le contexte et propose le bon sillage.</p></div>
+<div class="card"><h3>Où acheter près de chez moi</h3><p>On choisit sa ville et on voit les parfumeries de France, de la niche aux grandes enseignes.</p></div>
+<div class="card"><h3>Ma collection et le layering</h3><p>On range ses flacons, on obtient un choix du jour selon la météo, la tenue et l'occasion, et des idées de mélange.</p></div>
+</div>
+</section>
+
+<section id="offres">
+<div class="head"><span class="mono">Offres</span><h2>Commencez gratuitement. Passez au complet quand l'envie vient.</h2><p class="lead">Le paiement et l'abonnement passent par Whop, une plateforme de paiement sécurisée.</p></div>
+<div class="plans">
+<div class="plan"><h3>Gratuit</h3><div class="price">0 €</div><p class="alt">Pour pousser la porte.</p>
+<ul><li>Quelques univers à explorer</li><li>Quelques recommandations</li><li>Profil olfactif de base</li><li>Collection limitée</li></ul>
+<a class="btn" href="#" data-whop="free">Essayer gratuitement</a></div>
+<div class="plan"><h3>Premium</h3><div class="price">5,99 € <small>par mois</small></div><p class="alt">Ou 49 € par an.</p>
+<ul><li>Les 138 univers</li><li>Recommandations illimitées</li><li>Profil olfactif complet qui évolue</li><li>Collection illimitée et détection des manques</li><li>Choix selon météo, tenue et occasion</li><li>Layering avancé</li><li>Nouvelles playlists chaque mois</li></ul>
+<a class="btn main" href="#" data-whop="premium">Choisir Premium</a></div>
+<div class="plan hot"><span class="tag">100 places</span><h3>Membre fondateur</h3><div class="price">79 € <small>à vie</small></div><p class="alt">Un seul paiement, pour toujours.</p>
+<ul><li>Tout le Premium, sans abonnement</li><li>Accès aux futurs univers</li><li>Votre avis compte dans la suite</li><li>Réservé aux 100 premiers membres</li></ul>
+<a class="btn main" href="#" data-whop="founder">Devenir membre fondateur</a></div>
+</div>
+</section>
+
+<section>
+<div class="head"><span class="mono">Questions</span><h2>Ce que l'on demande souvent.</h2></div>
+<div class="faq">
+<details><summary>Sillage est-il un moteur de recommandation de plus ?</summary><p>Non. On n'entre pas par un formulaire mais par un univers. Les recommandations viennent ensuite, calibrées sur votre profil olfactif.</p></details>
+<details><summary>Puis-je essayer avant de payer ?</summary><p>Oui. L'offre gratuite donne accès à quelques univers, à des recommandations et à un profil de base.</p></details>
+<details><summary>Que veut dire membre fondateur ?</summary><p>Les 100 premiers membres paient 79 € une seule fois et gardent l'accès complet à vie. Quand les places sont prises, l'offre disparaît.</p></details>
+<details><summary>Comment se passe le paiement ?</summary><p>Par Whop, avec les moyens de paiement qu'il propose. Votre abonnement se gère depuis votre compte Whop.</p></details>
+<details><summary>Les prix des parfums sont-ils exacts ?</summary><p>Ils sont indicatifs. Les points de vente affichés servent de repère et peuvent ne pas être à jour.</p></details>
+<details><summary>Sillage vend-il des parfums ?</summary><p>Non. L'application conseille et vous oriente vers les boutiques.</p></details>
+</div>
+</section>
+
+<section style="padding-top:20px">
+<div class="final"><span class="mono">Sillage</span><h2>Entrez dans un univers.</h2><p class="lead">Cent places à vie, ouvertes aux premiers arrivés.</p><a class="btn main" href="#" data-whop="founder">Devenir membre fondateur</a></div>
+</section>
+
+<footer><span class="mark" style="font-size:12px">Sillage</span><p>Les noms de marques et de parfums cités appartiennent à leurs propriétaires. Sillage n'est affilié à aucune maison. Les prix et les points de vente sont indicatifs.</p></footer>
+</div>
+<script>
+/* Colle ici les trois liens de paiement Whop. Tant qu'un lien est vide, le bouton renvoie vers les offres. */
+var WHOP = { free: "", premium: "", founder: "" };
+document.querySelectorAll("[data-whop]").forEach(function (a) {
+  var k = a.getAttribute("data-whop");
+  if (k && WHOP[k]) { a.href = WHOP[k]; a.target = "_blank"; a.rel = "noopener"; }
+  else if (a.getAttribute("href") === "#") { a.setAttribute("href", "#offres"); }
+});
+</script>
+</body>
+</html>
