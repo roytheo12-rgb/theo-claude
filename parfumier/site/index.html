@@ -55,15 +55,16 @@ h2{font:300 clamp(28px,5vw,44px)/1.08 var(--sf);letter-spacing:-.025em;text-wrap
 .cv::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,10,.9),transparent 55%)}
 .cv span{position:absolute;left:12px;bottom:11px;right:10px;z-index:1;font:400 15px/1.15 var(--sf);letter-spacing:-.01em}
 .cv small{display:block;font:500 9px var(--sf);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.covers{grid-template-columns:repeat(8,1fr)}
-.cv span{font-size:13.5px;left:10px;bottom:9px}
+.covers{display:flex;flex-wrap:wrap;justify-content:center}
+.covers .cv{flex:0 0 calc((100% - 50px)/6)}
+.cv span{font-size:14.5px;left:12px;bottom:10px}
 .extra{display:none!important}
 .open .extra{display:grid!important}
 .open .cv.extra{display:block!important}
 .more{display:flex;justify-content:center;margin-top:22px}
 .more+.worlds{margin-top:40px}
-@media(max-width:1000px){.covers{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:560px){.covers{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1000px){.covers .cv{flex-basis:calc((100% - 30px)/4)}}
+@media(max-width:560px){.covers .cv{flex-basis:calc((100% - 10px)/2)}}
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
 .step{padding:28px 24px;display:grid;gap:12px;align-content:start}
@@ -236,18 +237,16 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <a class="cv" href="#offres" data-whop><img src="img/paris.webp" alt="" loading="lazy"><span><small>Destinations</small>Paris</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/james-bond.webp" alt="" loading="lazy"><span><small>Cinéma</small>James Bond</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/drake.webp" alt="" loading="lazy"><span><small>Icônes</small>Drake</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/amelie-poulain.webp" alt="" loading="lazy"><span><small>Cinéma</small>Amélie Poulain</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/tokyo.webp" alt="" loading="lazy"><span><small>Destinations</small>Tokyo</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/courchevel.webp" alt="" loading="lazy"><span><small>Destinations</small>Courchevel</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/hiver-a-new-york.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Hiver à New York</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/soiree-a-l-opera.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Soirée à l'opéra</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/it-girl.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Girl</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/it-boy.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Boy</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/rio.webp" alt="" loading="lazy"><span><small>Destinations</small>Rio</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/rihanna.webp" alt="" loading="lazy"><span><small>Icônes</small>Rihanna</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/alain-delon.webp" alt="" loading="lazy"><span><small>Icônes</small>Alain Delon</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/saint-tropez.webp" alt="" loading="lazy"><span><small>Destinations</small>Saint-Tropez</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/automne-cozy.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Automne Cozy</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/rio.webp" alt="" loading="lazy"><span><small>Destinations</small>Rio</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/tokyo.webp" alt="" loading="lazy"><span><small>Destinations</small>Tokyo</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/hiver-a-new-york.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Hiver à New York</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/soiree-a-l-opera.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Soirée à l'opéra</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/it-girl.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Girl</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/it-boy.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Boy</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/alain-delon.webp" alt="" loading="lazy"><span><small>Icônes</small>Alain Delon</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/saint-tropez.webp" alt="" loading="lazy"><span><small>Destinations</small>Saint-Tropez</span></a>
+<a class="cv extra" href="#offres" data-whop><img src="img/automne-cozy.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Automne Cozy</span></a>
 <a class="cv extra" href="#offres" data-whop><img src="img/marrakech.webp" alt="" loading="lazy"><span><small>Destinations</small>Marrakech</span></a>
 <a class="cv extra" href="#offres" data-whop><img src="img/quiet-luxury.webp" alt="" loading="lazy"><span><small>Archétypes</small>Quiet Luxury</span></a>
 <a class="cv extra" href="#offres" data-whop><img src="img/taylor-swift.webp" alt="" loading="lazy"><span><small>Icônes</small>Taylor Swift</span></a>
