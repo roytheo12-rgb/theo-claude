@@ -67,7 +67,7 @@ h2{font:300 clamp(28px,5vw,44px)/1.08 var(--sf);letter-spacing:-.025em;text-wrap
 .txt{display:grid;gap:16px;align-content:center}
 .txt p{color:var(--muted);max-width:50ch}
 .txt h2{font-size:clamp(26px,4vw,36px)}
-.mini{justify-self:center;width:min(260px,100%);border:1px solid var(--line2);border-radius:30px;padding:8px;background:#050506}
+.mini{display:block;justify-self:center;width:min(260px,100%);border:1px solid var(--line2);border-radius:30px;padding:8px;background:#050506}
 
 .pill{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .pill span{border:1px solid var(--line);border-radius:4px;padding:8px 14px;font-size:14px}
@@ -130,18 +130,19 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 .mantra p.hl{color:var(--ink)}
 .mantra p.hl::first-letter{color:var(--wine)}
 .sel3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.sc{display:grid;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface);text-decoration:none;color:inherit;transition:border-color .3s}
+.sc{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--surface);text-decoration:none;color:inherit;transition:border-color .3s}
 .sc:hover{border-color:var(--line2)}
-.sc img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
-.sc div{padding:20px 20px 22px;display:grid;gap:8px;align-content:start}
+.sc img{width:96px;height:96px;object-fit:cover;display:block;border-radius:4px}
+.sc div{display:grid;gap:5px;align-content:start;min-width:0}
 .sc small{font:500 10px var(--sf);letter-spacing:.16em;text-transform:uppercase;color:#f2c9cf}
-.sc h3{font:300 24px/1.1 var(--sf);letter-spacing:-.02em}
-.sc p{color:var(--muted);font-size:15px}
+.sc h3{font:300 19px/1.15 var(--sf);letter-spacing:-.02em}
+.sc p{color:var(--muted);font-size:13.5px;line-height:1.45}
 .sc em{font-style:normal;font-size:13px;color:var(--accent)}
 .envies{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
 .ev{border:1px solid var(--line);border-radius:6px;padding:20px;display:grid;gap:6px;background:linear-gradient(160deg,rgba(111,29,41,.22),var(--surface) 70%)}
 .ev b{font:400 18px/1.2 var(--sf);letter-spacing:-.01em}
 .ev span{color:var(--muted);font-size:14.5px}
+.mini.big{display:block;width:min(300px,100%)}
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start}
 .trio figure{margin:0;display:grid;gap:18px;justify-items:center}
 .trio figcaption{color:var(--muted);font-size:15px;max-width:30ch}
@@ -189,14 +190,13 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 </section>
 
 <section id="balade">
-<div class="head"><span class="mono">La balade olfactive</span><h2>Testez en boutique, retenez ce qui vous a vraiment touché.</h2>
-<p class="lead">Dix touches sur dix bandelettes, et le soir plus personne ne sait lequel était lequel. Pendant la balade olfactive, chaque touche reçoit un symbole à dessiner dessus. Vous notez ce que vous ressentez, vous photographiez le flacon, et Sillage garde la trace.</p></div>
-<div class="trio">
-<figure><div class="mini"><img src="img/balade-1.webp" alt="Une touche, un symbole à dessiner" width="560" height="1105"></div><figcaption><b>Une touche, un symbole.</b> On vous dit quoi dessiner au dos de la bandelette, on note le parfum et ce que vous ressentez.</figcaption></figure>
-<figure><div class="mini"><img src="img/balade-2.webp" alt="Mes touches et leurs impressions" width="560" height="1105"></div><figcaption><b>Vos touches, vos impressions.</b> De « j'adore » à « bof », avec les notes reconnues, et de quoi retrouver chaque touche.</figcaption></figure>
-<figure><div class="mini"><img src="img/balade-3.webp" alt="Le bilan de la balade" width="560" height="1105"></div><figcaption><b>Le bilan de la balade.</b> Ce que vos choix disent de vous, les notes à garder ou à fuir, et ce qu'il faut retenir.</figcaption></figure>
+<div class="feat">
+<div class="txt"><span class="mono">La balade olfactive</span><h2>Testez en boutique, retenez ce qui vous a vraiment touché.</h2>
+<p>Dix touches sur dix bandelettes, et le soir plus personne ne sait lequel était lequel. Pendant la balade olfactive, chaque touche reçoit un symbole à dessiner dessus. Vous notez ce que vous ressentez, vous photographiez le flacon, et Sillage garde la trace.</p>
+<ul class="chk"><li><b>Une touche, un symbole.</b> Retrouvez plus tard quel parfum se cache derrière chaque bandelette.</li><li><b>Votre impression, avec vos mots.</b> De « j'adore » à « bof », avec les notes que vous reconnaissez.</li><li><b>Le bilan de la balade.</b> Ce que vos choix disent de vous, ce qu'il faut retenir, et quoi sentir ensuite dans la même veine.</li><li><b>Un profil qui s'ajuste.</b> Les notes aimées ou fuies pendant la balade rejoignent votre profil en un geste.</li></ul>
+<div class="cta"><a class="btn main" href="#offres" data-whop>Faire ma première balade</a></div></div>
+<div class="mini big"><img src="img/balade.webp" alt="Les touches d'une balade olfactive avec leurs symboles et leurs impressions" width="560" height="1052"></div>
 </div>
-<div class="cta" style="margin-top:34px"><a class="btn main" href="#offres" data-whop>Faire ma première balade</a></div>
 </section>
 
 <section>
@@ -221,21 +221,21 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <a class="cv" href="#offres" data-whop><img src="img/sunday-morning.webp" alt="" loading="lazy"><span><small>Moments</small>Sunday Morning</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/jane-birkin.webp" alt="" loading="lazy"><span><small>Icônes</small>Jane Birkin</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/tokyo.webp" alt="" loading="lazy"><span><small>Destinations</small>Tokyo</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/basquiat.webp" alt="" loading="lazy"><span><small>Icônes</small>Basquiat</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/mykonos.webp" alt="" loading="lazy"><span><small>Destinations</small>Mykonos</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/montagne-arc-en-ciel.webp" alt="" loading="lazy"><span><small>Destinations</small>Montagne arc-en-ciel</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/hiver-a-new-york.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Hiver à New York</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/soiree-a-l-opera.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Soirée à l'opéra</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/it-girl.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Girl</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/it-boy.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Boy</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/rio.webp" alt="" loading="lazy"><span><small>Destinations</small>Rio</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/alain-delon.webp" alt="" loading="lazy"><span><small>Icônes</small>Alain Delon</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/salvador-dali.webp" alt="" loading="lazy"><span><small>Icônes</small>Salvador Dalí</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/amy-winehouse.webp" alt="" loading="lazy"><span><small>Icônes</small>Amy Winehouse</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/aurores-boreales.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Aurores boréales</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/rihanna.webp" alt="" loading="lazy"><span><small>Icônes</small>Rihanna</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/automne-cozy.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Automne Cozy</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/marrakech.webp" alt="" loading="lazy"><span><small>Destinations</small>Marrakech</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/quiet-luxury.webp" alt="" loading="lazy"><span><small>Archétypes</small>Quiet Luxury</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/taylor-swift.webp" alt="" loading="lazy"><span><small>Icônes</small>Taylor Swift</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/virgil-abloh.webp" alt="" loading="lazy"><span><small>Icônes</small>Virgil Abloh</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/thailande.webp" alt="" loading="lazy"><span><small>Destinations</small>Thaïlande</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/egypte.webp" alt="" loading="lazy"><span><small>Destinations</small>Égypte</span></a>
 </div>
 <div class="worlds" style="margin-top:10px">
 <div class="wd"><b>38</b><span>Cinéma, séries et livres</span><em>James Bond, Amélie Poulain, Vivian Ward</em></div>
