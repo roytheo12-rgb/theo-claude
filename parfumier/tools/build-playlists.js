@@ -35,6 +35,9 @@ function resolve(line) {
 }
 const raw = fs.readFileSync(path.join(root, 'data', 'playlists-source.txt'), 'utf8').split('\n');
 const SECS = [], PLS = [];
+const REMOVED_H = fs.readFileSync(path.join(root, 'data', 'removed-houses.txt'), 'utf8').split('\n').map((x) => norm(x)).filter(Boolean);      // maisons retirées de l'app : leurs lignes sont ignorées (sans décaler la numérotation de la source)
+const KEEP_P = new Set(fs.readFileSync(path.join(root, 'data', 'keep-perfumes.txt'), 'utf8').split('\n').filter((l) => l.trim() && !l.startsWith('#') && l.split('|').length >= 2).map((l) => { const [h, n] = l.split('|'); return norm(h + ' ' + n); }));      // parfums gardés volontairement malgré leur maison retirée
+const isRemoved = (q) => { const n = norm(q); if ([...KEEP_P].some((k) => n === k || n.startsWith(k + ' ') || k.startsWith(n + ' '))) return false; return REMOVED_H.some((h) => n === h || n.startsWith(h + ' ')); };
 let sec = '', cur = null, pend = [];
 const flush = () => { if (cur) { PLS.push(cur); cur = null; } };
 const SECMAP = { 'PERSONNAGES ICONIQUES': 'Personnages', 'THE GENTLEMEN': 'Personnages', 'DRAKE & CULTURE MUSICALE': 'Icônes', 'ICÔNES CULTURELLES': 'Icônes', 'CULTURE / INTERNET': 'Culture', 'VILLES / DESTINATIONS': 'Destinations', 'SAISONS / ATMOSPHÈRES': 'Atmosphères', 'LIFESTYLE': 'Moments', 'UNIVERS OLFACTIFS': 'Effets', 'LE WOLF OF WALL STREET / MONDE FINANCIER': 'Cinéma, séries & livres', 'ART / ÉLÉGANCE / IMAGINAIRE': 'Atmosphères', 'HISTORICAL SCENTS': 'Atmosphères', "L'UNIQUE PLAYLIST ODEURS BIZARRES": 'Spécial', 'LAYERING': 'Spécial' };
@@ -43,9 +46,9 @@ for (let i = 0; i < raw.length; i++) {
   if (/^Les univers qui restent/.test(l)) break;
   let m;
   if ((m = l.match(/^\d\d — (.+)$/))) { flush(); sec = SECMAP[m[1].trim()] || m[1]; continue; }
-  if ((m = l.match(/^(\d{2,3})\. (.+)$/)) && (!cur || cur.ps.length >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — .*$/, ''), d: '', ps: [], note: [] }; continue; }
+  if ((m = l.match(/^(\d{2,3})\. (.+)$/)) && (!cur || cur.ps.length + (cur.dropped || 0) >= 10)) { flush(); cur = { id: +m[1], sec, t: m[2].replace(/ — .*$/, ''), d: '', ps: [], note: [] }; continue; }
   if (!cur) continue;
-  if ((m = l.match(/^(\d+)\. (.+)$/))) { const hist = cur.id === 79; const q = hist ? m[2].replace(/\s+—\s+.*$/, '') : m[2].replace(/\s+—\s+/, ' '); const hit = resolve(q); cur.ps.push({ q: q.replace(/\s*\([^)]*\)/g, ''), h: hit ? hit.h : '', n: hit ? hit.n : '' }); continue; }
+  if ((m = l.match(/^(\d+)\. (.+)$/))) { if (isRemoved(m[2])) { cur.dropped = (cur.dropped || 0) + 1; continue; } const hist = cur.id === 79; const q = hist ? m[2].replace(/\s+—\s+.*$/, '') : m[2].replace(/\s+—\s+/, ' '); const hit = resolve(q); cur.ps.push({ q: q.replace(/\s*\([^)]*\)/g, ''), h: hit ? hit.h : '', n: hit ? hit.n : '' }); continue; }
   if (!cur.d && !cur.ps.length) { cur.d = l; continue; }
   if (/^\*|^Exemples de combinaisons/.test(l)) { cur.note.push(l); continue; }
   cur.note.push(l);

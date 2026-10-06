@@ -8,7 +8,7 @@ Généré en analysant la photo réellement utilisée par l'app pour chaque parf
 
 Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au moins 600 px de haut, déposé dans `parfumier/incoming/` sous la forme `Maison_Nom.jpg`.
 
-**Sur les 951 parfums uniques des playlists : 25 sans photo, 100 à refaire, 141 à améliorer, 685 corrects.**
+**Sur les 950 parfums uniques des playlists : 24 sans photo, 100 à refaire, 141 à améliorer, 685 corrects.**
 
 
 ## Cinéma, séries & livres
@@ -1393,10 +1393,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Le Labo Thé Noir 29 (contour légèrement irrégulier)
 
 
-### Les Petits budgets (7 à améliorer, 2 à refaire, 1 sans photo)
-
-**Sans photo**
-- Zara Gourmand Oud
+### Les Petits budgets (7 à améliorer, 2 à refaire)
 
 **À refaire**
 - Chloé Chloé (format large ou coffret, flacon pas isolé; bords blancs ou irréguliers très visibles)
