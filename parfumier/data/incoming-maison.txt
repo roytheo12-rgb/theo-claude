@@ -66,3 +66,5 @@ guerlain_neroli_outre_noir|Guerlain|Néroli Outrenoir
 011-goutal-eau-d-hadrien|Maison Goutal|Eau d'Hadrien
 042-boucheron-jaipur-edt|Boucheron|Jaipur Homme
 069-ysl-rive-gauche|Yves Saint Laurent|Rive Gauche
+110_I-Storie-Veneziane_Mica-d'Oro|Storie Veneziane|Mica d'Oro I
+148_Fendi_Life-Essence|Fendi|Fendi Life Essence
