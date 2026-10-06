@@ -1,0 +1,12 @@
+{
+  "id": "060",
+  "status": "found",
+  "source_url": "https://zhor.com/en/products/boszporusz",
+  "source_name": "Zhor Parfums",
+  "local_path": "/home/ubuntu/perfume_packshots/images/060__nishane__boszporusz.jpg",
+  "width": 1200,
+  "height": 1200,
+  "format_ml": 50,
+  "background": "white",
+  "notes": "Packshot réel du flacon Nishane Boszporusz, un seul flacon quasi frontal, sans boîte ni décor, téléchargé depuis le CDN de la fiche Zhor Parfums. La fiche indique le format 50 ml (seul format disponible sur la page). JPEG valide vérifié visuellement et avec Pillow."
+}

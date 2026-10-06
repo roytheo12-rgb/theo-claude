@@ -1,0 +1,12 @@
+{
+  "id": "001",
+  "status": "found",
+  "source_url": "https://comptoir-sud-pacifique.com/en/products/vanille-abricot",
+  "source_name": "Comptoir Sud Pacifique (site officiel)",
+  "local_path": "/home/ubuntu/perfume_packshots/images/001__comptoir-sud-pacifique__vanille-abricot.jpg",
+  "width": 800,
+  "height": 1000,
+  "format_ml": 100,
+  "background": "uni gris très clair",
+  "notes": "Packshot officiel vérifié visuellement : un seul flacon Vanille Abricot, droit/quasi frontal, sans boîte ni éléments décoratifs. La fiche officielle propose 100 ml (ainsi que 30 ml) ; le format 100 ml a été retenu. Image téléchargée depuis le CDN associé au résultat officiel puis ré-encodée en JPEG RGB sans retouche sémantique."
+}
