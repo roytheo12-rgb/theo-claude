@@ -125,6 +125,29 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 .chk li{color:var(--muted);font-size:15px;padding-left:18px;position:relative}
 .chk li::before{content:"";position:absolute;left:0;top:.8em;width:8px;height:1px;background:var(--wine)}
 .chk b{color:var(--ink);font-weight:500}
+.mantra{display:grid;gap:4px;margin:6px 0 34px}
+.mantra p{font:200 clamp(24px,4.4vw,44px)/1.12 var(--sf);letter-spacing:-.03em;color:#cfc9bf}
+.mantra p.hl{color:var(--ink)}
+.mantra p.hl::first-letter{color:var(--wine)}
+.sel3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sc{display:grid;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface);text-decoration:none;color:inherit;transition:border-color .3s}
+.sc:hover{border-color:var(--line2)}
+.sc img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.sc div{padding:20px 20px 22px;display:grid;gap:8px;align-content:start}
+.sc small{font:500 10px var(--sf);letter-spacing:.16em;text-transform:uppercase;color:#f2c9cf}
+.sc h3{font:300 24px/1.1 var(--sf);letter-spacing:-.02em}
+.sc p{color:var(--muted);font-size:15px}
+.sc em{font-style:normal;font-size:13px;color:var(--accent)}
+.envies{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.ev{border:1px solid var(--line);border-radius:6px;padding:20px;display:grid;gap:6px;background:linear-gradient(160deg,rgba(111,29,41,.22),var(--surface) 70%)}
+.ev b{font:400 18px/1.2 var(--sf);letter-spacing:-.01em}
+.ev span{color:var(--muted);font-size:14.5px}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;align-items:start}
+.trio figure{margin:0;display:grid;gap:18px;justify-items:center}
+.trio figcaption{color:var(--muted);font-size:15px;max-width:30ch}
+.trio figcaption b{color:var(--ink);font-weight:500}
+.trio .mini{width:min(270px,100%)}
+@media(max-width:860px){.sel3,.envies,.trio{grid-template-columns:1fr}}
 @media(max-width:860px){.ways{grid-template-columns:1fr}.big,.pc.wide{grid-template-columns:1fr}}
 @media(max-width:860px){
 .hero,.feat{grid-template-columns:1fr;gap:36px}.feat.rev .txt{order:0}
@@ -166,13 +189,14 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 </section>
 
 <section id="balade">
-<div class="feat">
-<div class="txt"><span class="mono">La balade olfactive</span><h2>Testez en boutique, retenez ce qui vous a vraiment touché.</h2>
-<p>Dix touches sur dix bandelettes, et le soir plus personne ne sait lequel était lequel. Pendant la balade olfactive, chaque touche reçoit un symbole à dessiner dessus. Vous notez ce que vous ressentez, vous photographiez le flacon, et Sillage garde la trace.</p>
-<ul class="chk"><li><b>Une touche, un symbole.</b> Retrouvez plus tard quel parfum se cache derrière chaque bandelette.</li><li><b>Votre impression, avec vos mots.</b> L'ouverture, le cœur, ce que ça évoque, et un avis de « j'adore » à « pas pour moi ».</li><li><b>Le bilan de la balade.</b> Ce que vos choix disent de vous, ce qu'il faut retenir, ce qu'il faut oublier, et quoi sentir ensuite dans la même veine.</li><li><b>Un profil qui s'ajuste.</b> Les notes que vous avez aimées ou fuies pendant la balade rejoignent votre profil en un geste.</li></ul>
-<div class="cta"><a class="btn main" href="#offres" data-whop>Faire ma première balade</a></div></div>
-<div class="mini"><img src="img/app-walk.webp" alt="La balade olfactive dans Sillage" width="560" height="1019"></div>
+<div class="head"><span class="mono">La balade olfactive</span><h2>Testez en boutique, retenez ce qui vous a vraiment touché.</h2>
+<p class="lead">Dix touches sur dix bandelettes, et le soir plus personne ne sait lequel était lequel. Pendant la balade olfactive, chaque touche reçoit un symbole à dessiner dessus. Vous notez ce que vous ressentez, vous photographiez le flacon, et Sillage garde la trace.</p></div>
+<div class="trio">
+<figure><div class="mini"><img src="img/balade-1.webp" alt="Une touche, un symbole à dessiner" width="560" height="1105"></div><figcaption><b>Une touche, un symbole.</b> On vous dit quoi dessiner au dos de la bandelette, on note le parfum et ce que vous ressentez.</figcaption></figure>
+<figure><div class="mini"><img src="img/balade-2.webp" alt="Mes touches et leurs impressions" width="560" height="1105"></div><figcaption><b>Vos touches, vos impressions.</b> De « j'adore » à « bof », avec les notes reconnues, et de quoi retrouver chaque touche.</figcaption></figure>
+<figure><div class="mini"><img src="img/balade-3.webp" alt="Le bilan de la balade" width="560" height="1105"></div><figcaption><b>Le bilan de la balade.</b> Ce que vos choix disent de vous, les notes à garder ou à fuir, et ce qu'il faut retenir.</figcaption></figure>
 </div>
+<div class="cta" style="margin-top:34px"><a class="btn main" href="#offres" data-whop>Faire ma première balade</a></div>
 </section>
 
 <section>
@@ -186,28 +210,35 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 
 <section id="univers">
 <div class="head"><span class="mono">Pour voyager</span><h2>Un parfum, c'est un voyage qui se porte sur la peau.</h2><p class="lead">Il fait revenir un souvenir, provoque une émotion, installe une sensation que les mots peinent à dire. Pour la mettre en images, nous avons composé 138 listes. Chacune raconte ce que l'on ressent, et montre quels parfums vous y emmènent.</p></div>
+<div class="mantra"><p>Entrez dans un univers.</p><p>Glissez-vous dans la peau d'un personnage.</p><p class="hl">Sachez enfin quel monde vous voulez porter.</p></div>
 <div class="covers">
 <a class="cv" href="#offres" data-whop><img src="img/brigitte-bardot.webp" alt="" loading="lazy"><span><small>Icônes</small>Brigitte Bardot</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/paris.webp" alt="" loading="lazy"><span><small>Destinations</small>Paris</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/james-bond.webp" alt="" loading="lazy"><span><small>Cinéma</small>James Bond</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/marrakech.webp" alt="" loading="lazy"><span><small>Destinations</small>Marrakech</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/drake.webp" alt="" loading="lazy"><span><small>Icônes</small>Drake</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/amelie-poulain.webp" alt="" loading="lazy"><span><small>Cinéma</small>Amélie Poulain</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/lake-como.webp" alt="" loading="lazy"><span><small>Destinations</small>Lake Como</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/sunday-morning.webp" alt="" loading="lazy"><span><small>Moments</small>Sunday Morning</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/jane-birkin.webp" alt="" loading="lazy"><span><small>Icônes</small>Jane Birkin</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/tokyo.webp" alt="" loading="lazy"><span><small>Destinations</small>Tokyo</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/don-draper.webp" alt="" loading="lazy"><span><small>Cinéma</small>Don Draper</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/basquiat.webp" alt="" loading="lazy"><span><small>Icônes</small>Basquiat</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/mykonos.webp" alt="" loading="lazy"><span><small>Destinations</small>Mykonos</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/soiree-a-l-opera.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Soirée à l'opéra</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/marilyn-monroe.webp" alt="" loading="lazy"><span><small>Icônes</small>Marilyn Monroe</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/automne-cozy.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Automne Cozy</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/it-girl.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Girl</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/it-boy.webp" alt="" loading="lazy"><span><small>Archétypes</small>It Boy</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/rio.webp" alt="" loading="lazy"><span><small>Destinations</small>Rio</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/alain-delon.webp" alt="" loading="lazy"><span><small>Icônes</small>Alain Delon</span></a>
-<a class="cv" href="#offres" data-whop><img src="img/pilates-matcha-girl.webp" alt="" loading="lazy"><span><small>Archétypes</small>Pilates Matcha Girl</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/salvador-dali.webp" alt="" loading="lazy"><span><small>Icônes</small>Salvador Dalí</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/amy-winehouse.webp" alt="" loading="lazy"><span><small>Icônes</small>Amy Winehouse</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/automne-cozy.webp" alt="" loading="lazy"><span><small>Atmosphères</small>Automne Cozy</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/marrakech.webp" alt="" loading="lazy"><span><small>Destinations</small>Marrakech</span></a>
 <a class="cv" href="#offres" data-whop><img src="img/quiet-luxury.webp" alt="" loading="lazy"><span><small>Archétypes</small>Quiet Luxury</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/taylor-swift.webp" alt="" loading="lazy"><span><small>Icônes</small>Taylor Swift</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/virgil-abloh.webp" alt="" loading="lazy"><span><small>Icônes</small>Virgil Abloh</span></a>
+<a class="cv" href="#offres" data-whop><img src="img/thailande.webp" alt="" loading="lazy"><span><small>Destinations</small>Thaïlande</span></a>
 </div>
 <div class="worlds" style="margin-top:10px">
-<div class="wd"><b>38</b><span>Cinéma, séries et livres</span><em>James Bond, Amélie Poulain, Don Draper</em></div>
+<div class="wd"><b>38</b><span>Cinéma, séries et livres</span><em>James Bond, Amélie Poulain, Vivian Ward</em></div>
 <div class="wd"><b>24</b><span>Destinations</span><em>Paris, Marrakech, Tokyo, Lake Como</em></div>
 <div class="wd"><b>23</b><span>Archétypes</span><em>Quiet Luxury, Clean Girl, Effortless Chic</em></div>
 <div class="wd"><b>17</b><span>Icônes</span><em>Alain Delon, Brigitte Bardot, Jane Birkin</em></div>
@@ -217,6 +248,23 @@ footer .links a{text-decoration:none;border-bottom:1px solid var(--line2)}
 <div class="wd"><b>5</b><span>Spécial</span><em>Niche à petit prix, Layering</em></div>
 </div>
 <p class="note" style="margin-top:14px">Et 5 listes spéciales, dont la niche à petit prix et le layering. 138 univers, 4 747 parfums, 215 maisons. Les prix sont indicatifs.</p>
+</section>
+
+<section id="selections">
+<div class="head"><span class="mono">Les sélections qui vont droit au but</span><h2>Un budget, une technique, une envie. Il y a une liste pour ça.</h2><p class="lead">Quand on sait déjà ce qu'on cherche, on entre directement par là.</p></div>
+<div class="sel3">
+<a class="sc" href="#offres" data-whop><img src="img/niche-a-petit-prix.webp" alt="" loading="lazy"><div><small>Petit prix</small><h3>Niche à petit prix</h3><p>De la niche, de vraies signatures, sans le prix d'une maison de luxe. La sélection des experts.</p><em>48 parfums</em></div></a>
+<a class="sc" href="#offres" data-whop><img src="img/les-petits-budgets.webp" alt="" loading="lazy"><div><small>Petit prix</small><h3>Les Petits budgets</h3><p>Des parfums qui comptent, sans vider le compte en banque.</p><em>25 parfums</em></div></a>
+<a class="sc" href="#offres" data-whop><img src="img/layering.webp" alt="" loading="lazy"><div><small>Layering</small><h3>Layering</h3><p>On construit son odeur comme une garde-robe, au lieu de chercher une seule signature. Des parfums à superposer.</p><em>11 parfums</em></div></a>
+</div>
+<div class="envies">
+<div class="ev"><b>Je veux qu'on me remarque</b><span>Pas forcément fort. Juste impossible à oublier.</span></div>
+<div class="ev"><b>Aimant à compliments</b><span>Le but est simple. Entendre « C'est quoi ton parfum ? »</span></div>
+<div class="ev"><b>Je veux être envoûtant</b><span>Peau chaude, lumière basse, distance beaucoup trop courte.</span></div>
+<div class="ev"><b>Je veux sentir unique</b><span>Pas un parfum qu'on croise. Un parfum qu'on te prête.</span></div>
+<div class="ev"><b>Je veux sentir opulent</b><span>Riche, ample, généreux. Un parfum qui prend la place qu'il mérite.</span></div>
+<div class="ev"><b>Je veux sentir propre</b><span>La chemise vient de sortir de la blanchisserie.</span></div>
+</div>
 </section>
 
 <section>
