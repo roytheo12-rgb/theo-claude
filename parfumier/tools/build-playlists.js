@@ -228,7 +228,7 @@ function out() {
   const SEC_ORDER = ['Moments', 'Effets', 'Archétypes', 'Atmosphères', 'Destinations', 'Cinéma, séries & livres', 'Icônes', 'Spécial'];
   const PL_ORDER = {
     'Spécial': ['Niche à petit prix', 'Les valeurs sûres', 'Layering', 'Historical Scents', 'Strange Smells'],
-    'Moments': ['Daily', 'First Date', 'Night Out', 'Occasion spéciale', 'Job Interview', 'Sunday Morning', 'En famille', 'Sous la chaleur', 'Beach Club', 'Boat Day', 'Seul face à l\'océan', 'Ski Weekend', 'Gameday', 'F1', 'Soirée chic'],
+    'Moments': ['Daily', 'Parfums de date', 'Night Out', 'Occasion spéciale', 'Job Interview', 'Sunday Morning', 'En famille', 'Sous la chaleur', 'Beach Club', 'Boat Day', 'Seul face à l\'océan', 'Ski Weekend', 'Gameday', 'F1', 'Soirée chic'],
     'Effets': ['Aimant à compliments', 'Je veux qu\'on me remarque', 'Je veux être envoûtant', 'Je veux sentir propre', 'Je veux sentir opulent', 'Je veux sentir unique'],
     'Archétypes': ['Clean Girl', 'Quiet Luxury', 'It Girl', 'It Boy', 'Finance Bro', 'Tech Bro', 'Fur Coat Energy', 'Funky Chic', 'Effortless Chic', 'Les Branchés', 'La vie de Ronnie', 'Les Artsy', 'Les DJ', 'Corporate Weapons', 'Les Fans de design', 'Les Sportifs stylés', 'Bookworm', 'Mayfair', 'Le Qatari', 'Le Footeux', 'L\'Aventurier', 'L\'Élégant', 'Le Collectionneur'],
     'Atmosphères': ['Automne Cozy', 'Chic Winter', 'Hiver à New York', 'Christmas Eve', 'Garden Party', 'Soirée à l\'opéra', 'L\'Ivresse', 'Jazz', 'L\'Or', 'La Cathédrale'],
