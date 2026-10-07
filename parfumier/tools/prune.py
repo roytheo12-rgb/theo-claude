@@ -70,6 +70,7 @@ if _kp.exists():
         _l = _l.strip()
         if _l and not _l.startswith('#') and _l.count('|') >= 2:
             _h, _n = _l.split('|')[:2]; KEEP.add(norm(_h) + '|' + norm(_n))      # parfums gardés volontairement, même quand leur maison est retirée
+KEEP |= {canon(k.split('|')[0]) + '|' + k.split('|')[1] for k in list(KEEP)}      # un parfum gardé l'est aussi sous le nom canonique de sa maison (DS & Durga = D.S. and Durga)
 def gone(h, n):
     if (norm(h) + '|' + norm(n)) in KEEP and not name_gone(h, n): return False      # parfum gardé volontairement
     return house_gone(h) or name_gone(h, n)

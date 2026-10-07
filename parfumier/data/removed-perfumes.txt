@@ -122,3 +122,9 @@ Les Bains Guerbois|1968 Rhapsody In Paris
 Trudon|Tuileries
 Hermès|Eau de Ginza
 Nissaba|Jardin de Mogador
+# Retirés à la demande de Théo : ces parfums n'existent pas (noms inventés)
+Contes de Parfums|New York
+Ella K|Pluie à Shimonoseki
+Chopard|Miel de Marrakech
+Mizensir|Eau de Kalahari
+Pierre Guillaume Paris|Arabie Persane 29

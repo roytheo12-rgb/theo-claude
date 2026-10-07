@@ -733,3 +733,4 @@
 3107|Comme des Garçons|Floriental|
 3108|Roja Parfums|Haute Luxe|
 3109|Dries Van Noten|Havana Gold|
+3110|Maison Francis Kurkdjian|754|

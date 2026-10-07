@@ -45,7 +45,8 @@
   };
   // Photos de la base (images/db, rattachées par maison + nom) : utilisées quand le parfum n'a pas de photo détourée à la main.
   // Les photos du lot « PNG » (IMGNEW) sont les plus récentes : elles passent avant les anciennes photos.
-  const imgNew = (p) => { const N = window.IMGNEW || {}, HA = window.HOUSE_ALIAS || {}, h = E.norm(p.house || ''), f = N[h + '|' + E.norm(p.name)] || (HA[h] && N[E.norm(HA[h]) + '|' + E.norm(p.name)]); return f ? { s: f, nz: 6 } : null; };
+  let IMGNEW_C = null;      // clés des photos ramenées à la maison canonique (« ds durga » et « d s and durga » sont la même maison)
+  const imgNew = (p) => { const N = window.IMGNEW || {}, HA = window.HOUSE_ALIAS || {}, h = E.norm(p.house || ''), nm = E.norm(p.name), f = N[h + '|' + nm] || (HA[h] && N[E.norm(HA[h]) + '|' + nm]) || (() => { if (!IMGNEW_C) { IMGNEW_C = {}; for (const k in N) { const i = k.indexOf('|'), kh = k.slice(0, i); IMGNEW_C[E.norm(HA[kh] || kh) + k.slice(i)] = N[k]; } } return IMGNEW_C[E.norm(HA[h] || h) + '|' + nm]; })(); return f ? { s: f, nz: 6 } : null; };
   // Photos retrouvées malgré les variantes de nom (« Gentleman Eau de Parfum Réserve Privée » = « Gentleman Réserve Privée », « XJ 1861 Naxos » = « 1861 Naxos »).
   const IMG_STOP = new Set(['eau', 'de', 'du', 'des', 'la', 'le', 'les', 'l', 'd', 'parfum', 'parfums', 'edp', 'edt', 'xj', 'the', 'pour', 'homme', 'femme', 'intense', 'extrait', 'cologne']);
   const imgLoose = (nm) => E.norm(nm).split(' ').filter((t) => t && !IMG_STOP.has(t)).sort().join(' ');

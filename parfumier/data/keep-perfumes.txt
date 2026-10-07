@@ -528,7 +528,6 @@ Argos|Bacio Immortale|EDP
 L'Artisan Parfumeur|Ode à l'Oudh|EDP
 BORNTOSTANDOUT|BORNTOSTANDOUT|EDP
 Clive Christian|Timeless|EDP
-Contes de Parfums|New York|EDP
 Contes de Parfums|Capri|EDP
 Contes de Parfums|Florence|EDP
 Contes de Parfums|London|EDP
@@ -546,7 +545,6 @@ Dries Van Noten|Orange Smoke|EDP
 Ella K|Lettre de Kerman|EDP
 Ella K|Méharées en Pays de Sable|EDP
 Ella K|Poème de Indrachipur|EDP
-Ella K|Pluie à Shimonoseki|EDP
 Floraïku|Floraiku|EDP
 Floraïku|First Fig|EDP
 Floraïku|The Moon and My Heart|EDP

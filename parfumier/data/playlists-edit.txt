@@ -3767,7 +3767,6 @@ x Maison Margiela Coffee Break
 
 ## New York
 + Armani New York | Inspiré par New York.
-+ Contes de Parfums New York | Inspiré par New York.
 + Nicolaï New York | Inspiré par New York.
 + Roja Parfums Manhattan | Inspiré par Manhattan.
 + Carolina Herrera 212 Men NYC | Inspiré par Nyc.
@@ -3795,7 +3794,6 @@ x Maison Margiela Coffee Break
 + Armani Rose d'Arabie | Inspiré par Arabie.
 + Oman Luxury Omani Heritage | Inspiré par Omani.
 + Une Nuit Nomade Ambre Khandjar | Inspiré par Khandjar.
-+ Pierre Guillaume Paris Arabie Persane 29 | Inspiré par Arabie.
 + Une Nuit Nomade Jardins de Misfah | Inspiré par Misfah.
 + Strangers Parfumerie Muscat Jasmine Tea | Inspiré par Muscat.
 
@@ -3810,7 +3808,7 @@ x Maison Margiela Coffee Break
 + Yves Saint Laurent Atlas Garden | Inspiré par Atlas Garden.
 + Byredo Casablanca Lily | Inspiré par Casablanca.
 + Ella K Epice Majorelle | Inspiré par Majorelle.
-+ Chopard Miel de Marrakech | Inspiré par Marrakech.
++ Chopard Miel d'Arabie | Le miel doré de la collection Chopard.
 + Nissaba Jardin de Mogador | Inspiré par Mogador.
 
 ## Aurores boréales
@@ -3847,7 +3845,6 @@ x Maison Margiela Coffee Break
 + Ella K Harmattan | Inspiré par Harmattan.
 + Lattafa Asad Zanzibar | Inspiré par Zanzibar.
 + Nishane Afrika-Olifant | Inspiré par Afrika.
-+ Mizensir Eau de Kalahari | Inspiré par Kalahari.
 + Byredo Bal d'Afrique Absolu | Inspiré par Afrique.
 + Parfum d'Empire Madagascar le Baume Vanille | Inspiré par Madagascar.
 
@@ -3881,7 +3878,7 @@ x Maison Margiela Coffee Break
 + The Different Company Tokyo Bloom | Inspiré par Tokyo.
 + Hermès Eau de Ginza | Inspiré par Ginza.
 + Ella K Poème de Sagano | Inspiré par Sagano.
-+ Ella K Pluie à Shimonoseki | Inspiré par Shimonoseki.
++ Ella K Pluie sur Ha Long | La pluie sur la baie, un floral aérien.
 + Comme des Garçons Series 3 Incense: Kyoto | Inspiré par Kyoto.
 
 ## Mykonos
@@ -4709,3 +4706,6 @@ x Parfums de Marly Greenley
 
 ## Howard Ratner
 + Frédéric Malle Uncut Gem | Le nom du film, un bijou brut, le choix évident pour Howard.
+
+## Historical Scents
++ Maison Francis Kurkdjian Trianon Palace Versailles | Créé pour le palace de Versailles, un parfum de château, entre cour et jardins du Trianon.
