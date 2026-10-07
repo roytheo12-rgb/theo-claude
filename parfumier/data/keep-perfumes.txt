@@ -630,3 +630,5 @@ Baruti|Chai|EDP
 Ex Nihilo|Lust in Paradise Extrait|EXT
 Rabanne|Invictus Elixir|PAR
 Chloé|Atelier des Fleurs|EDP
+Issey Miyake|L'Eau d'Issey Pour Homme Noir Ambré|EDP
+Armani|Acqua di Giò Profondo Eau de Toilette|EDT
