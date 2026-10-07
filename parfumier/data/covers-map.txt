@@ -5,7 +5,7 @@
 3|Pilates Matcha Girl
 4|-
 5|Coquette
-6|Russian Baddie
+6|Fur Coat Energy
 7|Quiet Luxury
 8|Traditions
 9|Tech Bro
@@ -54,7 +54,7 @@
 53|Les fashions du Marais
 54|Les DJ
 55|Corporate Weapons
-56|Dans toutes les parfumeries
+56|Les valeurs sûres
 57|Les Fans de design
 58|Bookworm
 59|-

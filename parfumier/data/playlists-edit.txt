@@ -5267,3 +5267,12 @@ g: Femme | Elle veut un parfum qu'elle connaît, qui plaît et qu'on trouve dans
 
 ## Tuxedo Society
 t: Soirée chic
+
+## Russian Baddie
+t: Fur Coat Energy
+
+## Dans toutes les parfumeries
+t: Les valeurs sûres
+
+## Niche à petit prix
++ Fascent Sel A Vie | Mandarine, orange et jasmin sur une note salée, une niche fraîche et solaire à petit prix.
