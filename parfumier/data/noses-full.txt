@@ -744,7 +744,6 @@ Jean-Claude Ellena|Hermès|Concentré de Pamplemousse Rose|UNKNOWN
 Jean-Claude Ellena|Hermès|Eau Claire des Merveilles|UNKNOWN
 Jean-Claude Ellena|Hermès|Eau d'Orange Verte|UNKNOWN
 Jean-Claude Ellena|Hermès|Eau de Gentiane Blanche|UNKNOWN
-Jean-Claude Ellena|Hermès|Eau de Ginza|UNKNOWN
 Jean-Claude Ellena|Hermès|Eau de Mandarine Ambrée|UNKNOWN
 Jean-Claude Ellena|Hermès|Eau de Néroli Doré|UNKNOWN
 Jean-Claude Ellena|Hermès|Eau de Pamplemousse Rose|UNKNOWN

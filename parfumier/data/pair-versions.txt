@@ -1,0 +1,4 @@
+# Versions jumelées : quand l'une des deux est dans une playlist, l'autre y figure juste après. Maison|Version de base|Version extrait|Phrase de présentation de l'extrait
+Maison Francis Kurkdjian|Baccarat Rouge 540|Baccarat Rouge 540 Extrait|La même ambre-cristal en extrait, plus profonde et plus longue.|Le classique, ambre-cristal et sillage immense.
+Maison Francis Kurkdjian|Oud Satin Mood|Oud Satin Mood Extrait|Le même oud satiné en extrait, plus dense et plus tenace.|Le classique, un oud satiné à la rose et à la vanille.
+Maison Francis Kurkdjian|Oud Velvet Mood|Oud Velvet Mood Extrait|Le même oud velours en extrait, plus riche et plus durable.|Le classique, un oud velours doux et enveloppant.

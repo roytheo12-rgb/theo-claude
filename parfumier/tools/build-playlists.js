@@ -136,6 +136,29 @@ const EDIT_MISS = [], INTROUV = [];
   const expand = (q) => { const s = norm(q.replace(/\s*\([^)]*\)/g, '')); const o = [s]; Object.keys(HOUSE_SYN).forEach((k) => { if (s.startsWith(k + ' ')) o.push(HOUSE_SYN[k] + s.slice(k.length)); }); return o; };
   PLS.forEach((p) => { const keep = []; p.ps.forEach((x, i) => { if (!x.h && expand(x.q).some((e) => gone.has(e))) { if (p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (i < c) { g.n--; break; } } } } else keep.push(x); }); p.ps = keep; });
 })();
+// versions jumelées (data/pair-versions.txt) : quand la version de base ou l'extrait est dans une playlist (ou un groupe Homme / Femme), l'autre y figure juste après
+(function pairVersions() {
+  const f = path.join(root, 'data', 'pair-versions.txt'); if (!fs.existsSync(f)) return;
+  const rows = fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim() && !l.startsWith('#')).map((l) => l.split('|'));
+  const kk = (x) => norm(x.h ? x.h + ' ' + x.n : x.q);
+  rows.forEach(([house, base, ext, w, wb]) => {
+    const hb = resolve(house + ' ' + base), he = resolve(house + ' ' + ext); if (!hb || !he) return;
+    const kb = norm(hb.h + ' ' + hb.n), ke = norm(he.h + ' ' + he.n);
+    const mkE = (hit, blurb) => { const o = { q: hit.h + ' ' + hit.n, h: hit.h, n: hit.n }; if (blurb) o.w = blurb; return o; };
+    PLS.forEach((p) => {
+      if (!p.ps) return;
+      const gr = p.grp && p.grp.every((g) => typeof g.n === 'number') ? p.grp : null;
+      const bounds = () => { let c = 0; return (gr || [{ n: p.ps.length }]).map((g) => { const a = c; c += g.n; return [a, c]; }); };
+      for (let gi = 0; gi < (gr ? gr.length : 1); gi++) {
+        const [a, b] = bounds()[gi]; const part = p.ps.slice(a, b), keys = part.map(kk);
+        const ib = keys.indexOf(kb), ie = keys.indexOf(ke);
+        if (ib < 0 && ie < 0) continue;
+        if (ib >= 0 && ie < 0) { p.ps.splice(a + ib + 1, 0, mkE(he, w)); if (gr) gr[gi].n++; }
+        else if (ie >= 0 && ib < 0) { p.ps.splice(a + ie, 0, mkE(hb, wb)); if (gr) gr[gi].n++; }
+      }
+    });
+  });
+})();
 // phrase de présentation : un parfum présent dans les deux groupes (Homme et Femme) garde la même phrase des deux côtés
 (function shareBlurbs() {
   const k = (x) => norm(x.h ? x.h + ' ' + x.n : x.q);

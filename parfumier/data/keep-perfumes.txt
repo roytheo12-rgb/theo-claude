@@ -531,8 +531,6 @@ Clive Christian|Timeless|EDP
 Contes de Parfums|New York|EDP
 Contes de Parfums|Capri|EDP
 Contes de Parfums|Florence|EDP
-Contes de Parfums|Rio de Janeiro|EDP
-Contes de Parfums|Miami|EDP
 Contes de Parfums|London|EDP
 Contes de Parfums|Paris|EDP
 Contes de Parfums|Venice|EDP
@@ -546,8 +544,6 @@ D'Orsay|P.S.|EDP
 D'Orsay|R.B.|EDP
 Dries Van Noten|Orange Smoke|EDP
 Ella K|Lettre de Kerman|EDP
-Ella K|Epice Majorelle|EDP
-Ella K|Khmer Orris|EDP
 Ella K|Méharées en Pays de Sable|EDP
 Ella K|Poème de Indrachipur|EDP
 Ella K|Pluie à Shimonoseki|EDP

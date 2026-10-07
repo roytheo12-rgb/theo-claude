@@ -45,7 +45,6 @@ Lanvin|Mon Sin|
 Lanvin|Varens|
 Lanvin|For Men|
 Lanvin|L'Âme de Lanvin|
-Lanvin|Spanish Town|
 Lanvin|Epilogue|
 Lanvin|Monsignor|
 Lanvin|Précense|
@@ -155,7 +154,6 @@ Giardini di Toscana|Amaro Giusto|
 Ella K|Pluie sur Ha Long|
 Ella K|Lettre de Pushkar|
 Ella K|Reflet sur l'Okavango|
-Ella K|Epilogue de Sylt|
 Ella K|Baiser de Florence|
 Ella K|Mémoire de Daisen In|
 Ella K|Crépuscule en Entebbe|
@@ -275,7 +273,6 @@ Les Bains Guerbois|2013 Résurgence|
 Les Bains Guerbois|1900 L'Heure de Proust|
 Les Bains Guerbois|1992 Purple Night|
 Les Bains Guerbois|2015 Le Muguet de Mademoiselle|
-Les Bains Guerbois|1968 Rhapsody In Paris|
 Les Bains Guerbois|1984 Extasy|
 Les Bains Guerbois|2018 Roxo Tonic|
 Les Bains Guerbois|1979 New Wave|
@@ -540,7 +537,6 @@ Trudon|Abd el Kader|
 Trudon|Ernesto|
 Trudon|Salamanca|
 Trudon|Olim|
-Trudon|Tuileries|
 Al Haramain|Amber Oud|
 Al Haramain|L'Aventure|
 Swiss Arabian|Shaghaf Oud|
