@@ -1,0 +1,118 @@
+# Prix indicatifs (en euros, flacon de 100 ml en eau de parfum, ordre de grandeur) pour les maisons dont aucun prix n'est connu.
+# Utilisés seulement quand ni la collection, ni la ligne, ni la maison n'ont de prix connu. À vérifier chez le vendeur.
+Khadlaj | 30
+Comme des Garçons | 100
+Comme des Garcons: Incense | 100
+Comme des Garcons: Accident | 100
+Comme des Garcons: PLAY | 70
+Comme des Garcons: Cologne | 90
+Mizensir | 140
+Zoologist | 110
+Atelier des Ors | 270
+Nicolaï | 130
+The Different Company | 150
+Parle Moi de Parfum | 95
+Les Bains Guerbois | 120
+Elie Saab | 95
+Maison Crivelli | 195
+Le Couvent Maison de Parfum | 150
+Strangers Parfumerie | 150
+Laboratorio Olfattivo | 180
+Fragonard | 60
+Theodoros Kalotinis | 190
+Bortnikoff | 230
+Pierre Guillaume Paris, Parfumerie Generale | 125
+Pierre Guillaume Paris | 125
+Loewe | 100
+Bottega Veneta | 140
+Fendi | 120
+Fragrance du Bois | 230
+Francesca Bianchi | 240
+Les Indémodables | 190
+Filippo Sorcinelli | 190
+Goldfield & Banks | 210
+Régime des Fleurs | 230
+Boucheron | 90
+Jeroboam | 130
+Trudon | 200
+Cacharel | 60
+Officine Universelle Buly | 190
+Eau d'Italie | 170
+Universal Flowering | 150
+Zadig & Voltaire | 80
+Antonio Banderas | 45
+Federico Cantelli | 170
+Aesop | 120
+Orto Parisi | 210
+La Via Del Profumo | 140
+Rania J | 170
+Horace | 95
+Maison Matine | 110
+Nissaba | 150
+Fascent | 70
+Sospiro | 240
+Maison Matahá | 160
+Carner Barcelona | 150
+Roger & Gallet | 50
+DS & Durga | 170
+Profumo di Firenze | 120
+Sultan Pasha Perfumes | 230
+Better World Fragrance House | 120
+Demeter | 40
+Maison Unika | 180
+Etat Libre d'Orange | 120
+Ormonde Jayne | 190
+Balmain | 90
+Christian Louboutin | 190
+Coelia | 140
+Rick Owens | 200
+Rosendo Mateu | 190
+Beyoncé | 55
+Boadicea the Victorious | 200
+Maison Violet | 130
+Profumum Roma | 190
+Vilhelm Parfumerie | 160
+4711 | 20
+Abdul Samad Al Qurashi | 130
+Agonist | 160
+Al Majed Oud | 50
+Al Rehab | 15
+Alain Delon | 40
+AlBidaa | 40
+Attar Al Has | 60
+Baruti | 130
+CB I Hate Perfume | 160
+Charlotte Tilbury | 95
+Maison Sensara | 150
+Maison Siraj | 45
+Noème Paris | 140
+Notes de Bas de Page | 130
+Pharrell Williams | 150
+The Spirit of Dubai | 40
+Vivamor Parfums | 150
+Guy Laroche | 50
+Jean Patou | 190
+Kayali | 120
+Majouri | 60
+Storie Veneziane | 200
+I Profumi di Firenze | 100
+Atkinsons | 130
+Bond No. 9 | 250
+Comptoir Sud Pacifique | 80
+Fenty | 120
+Robert Piguet | 100
+Glossier | 70
+Heeley | 160
+Indult | 190
+Liis | 130
+Miller Harris | 150
+Naomi Goodsir | 190
+Phlur | 70
+Ralph Lauren | 90
+Tiziana Terenzi | 230
+Maison Tahité | 120
+Yves Rocher | 35
+Off-White | 150
+Dusita | 180
+Phaedon | 190
+Widian | 60

@@ -740,8 +740,9 @@
     setTimeout(() => {
       if (!$('#bsn') || BSEL.i !== +key.split('|')[0]) return;
       const need = E.parseNeed(q), lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
-      const res = need.empty ? [] : E.searchNeed(chatPool(), need, chatState(), 3);
-      const html = res.length ? `<div class="rail">${res.map((r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); }).join('')}</div><ul class="bwhy">${res.map((r) => `<li><b>${esc(r.c.name)}</b> ${esc((r.m.why || []).slice(0, 2).join(', ').toLowerCase())}</li>`).join('')}</ul>` : '<p class="soft2">Rien de convaincant sous ce prix pour ce besoin. Monte un peu le plafond.</p>';
+      const res = need.empty ? [] : E.searchNeed(chatPool(), need, chatState(), 20);
+      const card = (r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); };
+      const html = res.length ? `<p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${res.length} idées, de la plus juste à la plus audacieuse</p><div class="rail brail2">${res.map(card).join('')}</div><ul class="bwhy">${res.slice(0, 3).map((r) => `<li><b>${esc(r.c.name)}</b> ${esc((r.m.why || []).slice(0, 2).join(', ').toLowerCase())}</li>`).join('')}</ul>` : '<p class="soft2">Rien de convaincant sous ce prix pour ce besoin. Monte un peu le plafond.</p>';
       BCACHE[key] = html; paint(html);
     }, 20);
   }
@@ -763,7 +764,7 @@
         ${profPrecision().v < 1 ? `<button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil pour de meilleurs conseils</button>` : ''}
       </section>
       ${PLN ? (() => { const pl = PLN; return `<section class="sec" id="planbox"><header><h2>Stratégies pour ta collection</h2><span class="mono">${pl.strategies.length} pistes</span></header><p class="soft2" style="margin:0">Tes ${pl.n} parfums couvrent moins bien ${pl.weak.map(esc).join(' et ')}. Voilà ce que donneraient quelques ajouts.</p>${carousel(planCards(pl), 'Stratégies de collection')}</section>`; })() : ''}
-      <section class="sec"><header><h2>Selon le besoin</h2><span class="mono">trois idées chacun</span></header>
+      <section class="sec"><header><h2>Selon le besoin</h2><span class="mono">tout un choix pour chacun</span></header>
         ${hasProfile ? `<div class="rail brail" id="bsel" role="tablist">${BESOINS.map(([l], bi) => `<button type="button" class="chip ${bi === BSEL.i ? 'on' : ''}" role="tab" data-bi="${bi}">${esc(l)}</button>`).join('')}</div><div id="bsn" class="bsn"></div>` : '<p class="soft2">Renseigne tes goûts ou ajoute quelques parfums, et je te propose trois conseils pour chaque besoin.</p>'}
       </section>
       ${S.collection.length || T.tags.length ? `<section class="sec"><details class="more big"><summary>Ta collection et d'autres idées</summary><div class="stack">

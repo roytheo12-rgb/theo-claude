@@ -52,11 +52,14 @@ Object.keys(E).forEach((k) => { const o = E[k]; if (!o.p) return; const i = k.in
 const med = (a) => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
 const round5 = (x) => Math.round(x / 5) * 5;
 let est = 0, cnt = 0;
+// Prix indicatifs par maison quand rien d'autre n'est connu (data/prix-maisons.txt)
+const HP = {}; fs.readFileSync(path.join(root, 'data', 'prix-maisons.txt'), 'utf8').split('\n').forEach((l) => { if (!l.includes('|') || l.startsWith('#')) return; const [h, p] = l.split('|'); HP[norm(ch(h.trim()))] = +p; });
 all.forEach(([h, n]) => {
   const k = norm(ch(h)) + '|' + norm(n), o = E[k] || (E[k] = {});
   if (!o.p) {
     const hn = norm(ch(h)), lk = lineKey(hn, n), LL = lk && byLine[lk] && byLine[lk].length >= 2 ? byLine[lk] : null, L = (o.c && byColl[hn + '|' + o.c]) || LL || byHouse[hn];
     if (L && L.length) { o.p = round5(med(L)); o.pe = 1; est++; }
+    else if (HP[hn]) { const nn = norm(n), f = /extrait|elixir|absolu|parfum$|intense/.test(nn) && HP[hn] >= 100 ? 1.25 : /cologne|edt|eau fraiche/.test(nn) ? .8 : 1; o.p = round5(HP[hn] * f); o.pe = 1; est++; }
   }
   cnt++;
 });

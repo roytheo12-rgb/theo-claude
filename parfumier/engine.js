@@ -503,8 +503,16 @@
     res.sort((a, b) => b.m.pct - a.m.pct || b.m.s - a.m.s);
     const seen = new Set(), out = [];
     const fk = (c) => { const w = norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'un', 'une', 'eau', 'de', 'du', 'd'].includes(x)); return norm(c.house) + '|' + (w[0] || norm(c.name)); };
-    for (const r of res) { const k = fk(r.c); if (seen.has(k)) continue; seen.add(k); out.push(r); if (out.length >= (n || 12)) break; }
-    return out;
+    const WIN = 24;
+    for (const r of res) { const k = fk(r.c); if (seen.has(k)) continue; seen.add(k); out.push(r); if (out.length >= Math.max(n || 12, WIN)) break; }
+    // Les pourcentages doivent départager : écarts amplifiés, courbe douce sur les 24 premiers, jamais deux fois le même score. Fenêtre fixe : un parfum garde son % quand on demande plus de résultats.
+    { const top = out.length ? out[0].m.pct : 0; let prev = 100;
+      out.slice(0, WIN).forEach((r, i) => {
+        const amp = top - (top - r.m.pct) * 1.5, curve = top - Math.min(top - 38, 120) * Math.pow(i / (WIN - 1), .8);
+        const v = Math.max(1, Math.min(Math.round(.5 * amp + .5 * curve), prev - 1, 99)); prev = v; r.m = Object.assign({}, r.m, { pct: v });
+      });
+      out.slice(WIN).forEach((r) => { prev = Math.max(1, prev - 1); r.m = Object.assign({}, r.m, { pct: prev }); }); }
+    return out.slice(0, n || 12);
   }
 
 
