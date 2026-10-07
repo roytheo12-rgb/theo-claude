@@ -921,3 +921,20 @@ a.chip { text-decoration: none; display: inline-block; }
 .crow .cb { max-width: none; flex: 1; min-width: 0; }
 .sit .sit-img { flex: none; width: 52px; height: 52px; border-radius: 8px; object-fit: cover; opacity: .9; }
 .sit span { flex: 1; }
+
+/* Voyage en dix étapes : scène, situations, question */
+.vhero { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--line); padding: 28px 22px 26px; min-height: 190px; display: flex; align-items: flex-end; background: #17110f; }
+.vhero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .55; animation: vzoom 14s ease-in-out infinite alternate; }
+@keyframes vzoom { to { transform: scale(1.08); } }
+.vhero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(10, 7, 6, .94) 8%, rgba(10, 7, 6, .25)); }
+.vhero > div { position: relative; z-index: 2; display: grid; gap: 10px; }
+.vhero h2 { margin: 0; }
+.vscene { margin: 0; font: italic 400 17px/1.6 var(--f-display, serif); color: rgba(242, 235, 224, .9); }
+.vq { display: grid; gap: 14px; padding: 24px 20px; border: 1px solid var(--line); border-radius: 12px; background: rgba(180, 57, 74, .08); }
+.vq h3 { margin: 0; font: 400 22px/1.3 var(--f-display, serif); }
+.vopts { display: grid; gap: 10px; }
+.vopt { text-align: left; padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: rgba(242, 235, 224, .05); color: var(--ink); font-size: 15.5px; cursor: pointer; transition: all .2s; }
+.vopt:hover { transform: translateY(-1px); }
+.vopt.on { border-color: var(--wine); background: rgba(180, 57, 74, .22); }
+.route { gap: 0; }
+.route i { width: 10px; height: 10px; }

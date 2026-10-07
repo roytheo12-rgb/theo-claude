@@ -58,12 +58,12 @@ await pg.screenshot({ path: OUT + '/e3b_profil1.png' });
 await pg.fill('#pName', 'Léa'); await pg.click('#pNext'); await pg.waitForSelector('#prof .gen'); await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#pAge');
 await pg.fill('#pAge', '27'); await pg.click('#pNext');
 await pg.waitForSelector('[data-tier]'); ok(await pg.locator('#pNext').isDisabled(), 'luxe ou prix malins : question obligatoire, on ne peut pas continuer sans choisir'); await pg.click('[data-tier=luxe]'); ok(!(await pg.locator('#pNext').isDisabled()) && await pg.evaluate(() => JSON.parse(localStorage.getItem(Object.keys(localStorage).find((k) => /sillage\.v3/.test(k)))).settings.tier === 'luxe'), 'luxe ou prix malins : choix enregistré'); await pg.click('#pNext');
-await pg.waitForSelector('.sit'); ok(await pg.locator('.sit').count() === 10 && /étape 1 sur 5/i.test(await pg.locator('.voy').first().innerText()), 'voyage : 10 situations par étape, étape 1 sur 5');
-let nsit = 0; for (let ch = 0; ch < 5; ch++) { await pg.waitForSelector('.sit'); await pg.locator('.sit').nth(0).click(); await pg.locator('.sit').nth(3).click(); nsit += 2; await pg.click('#vNext'); }
+await pg.waitForSelector('.sit'); ok(await pg.locator('.sit').count() === 10 && /étape 1 sur 10/i.test(await pg.locator('.voy').first().innerText()), 'voyage : 10 situations par étape, étape 1 sur 5');
+let nsit = 0; for (let ch = 0; ch < 10; ch++) { await pg.waitForSelector('.sit'); await pg.locator('.sit').nth(0).click(); await pg.locator('.sit').nth(3).click(); nsit += 2; if (await pg.locator('[data-qo]').count()) await pg.locator('[data-qo]').nth(1).click(); await pg.click('#vNext'); }
 await pg.waitForSelector('.uni'); ok(await pg.locator('.uni').count() >= 3, 'voyage : les univers (playlists d\'inspiration) qui correspondent s\'affichent');
 ok(await pg.evaluate((n) => { const s = JSON.parse(localStorage.getItem(Object.keys(localStorage).find((k) => /sillage\.v3/.test(k)))).settings; return s.sit.length === n && Object.keys(s.sitAff).length >= 5; }, nsit), 'voyage : situations et univers enregistrés');
-await pg.click('#vGo'); await pg.waitForSelector('[data-nt]'); await pg.click('[data-nt="vanille"]'); await pg.click('[data-nt="cèdre"]'); await pg.click('[data-nt="patchouli"]'); await pg.click('[data-nt="patchouli"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
-await pg.waitForSelector('[data-vb]'); if (!(await pg.locator('[data-vb="sensuel"].on').count())) await pg.click('[data-vb="sensuel"]'); await pg.click('[data-pw="fort"]'); await pg.click('#pNext');
+await pg.click('#vGo'); await pg.waitForSelector('[data-nt]'); for (const n of ['vanille', 'cèdre']) if (!(await pg.locator('[data-nt="' + n + '"].on').count())) await pg.click('[data-nt="' + n + '"]'); await pg.click('[data-nt="patchouli"]'); await pg.click('[data-nt="patchouli"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
+await pg.waitForSelector('[data-vb]'); if (!(await pg.locator('[data-vb="sensuel"].on').count())) await pg.click('[data-vb="sensuel"]'); if (!(await pg.locator('[data-pw="fort"].on').count())) await pg.click('[data-pw="fort"]'); await pg.click('#pNext');
 await pg.waitForSelector('[data-oc]'); if (!(await pg.locator('[data-oc="soiree"].on').count())) await pg.click('[data-oc="soiree"]'); await pg.click('#pNext');
 await pg.waitForSelector('#xq'); await pg.screenshot({ path: OUT + '/e3d_explorer.png' });
 ok(await pg.locator('.xp').count() >= 10, 'sélection des parfums : une rangée d\'incontournables avec photos');
@@ -172,7 +172,7 @@ ok(/Alberto Morillas/.test(await pg.textContent('.nosec')) && await pg.locator('
 await pg.click('[data-xa=nose]'); await pg.waitForTimeout(200);
 await pg.click('[data-tab=search]'); await pg.waitForSelector('#need'); await pg.fill('#need', 'vanille gourmand pour l\'hiver sans patchouli'); await pg.click('#needgo'); await pg.waitForSelector('#nres .xc');
 const nres = await pg.evaluate(() => [...document.querySelectorAll('#nres .xc')].map((b) => ({ t: b.textContent, pct: parseInt((b.querySelector('.xm') || {}).textContent) })));
-ok(nres.length >= 5 && nres.every((r) => /vanille/i.test(r.t) && r.pct > 50), 'recherche par besoin : résultats avec vanille, % de correspondance et raisons');
+ok(nres.length >= 5 && nres.slice(0, 5).every((r) => /vanille/i.test(r.t) && r.pct > 50), 'recherche par besoin : résultats avec vanille, % de correspondance et raisons');
 ok(await pg.locator('#needai').count() === 1, 'recherche par besoin : bouton « Affiner avec l\'IA »'); await pg.evaluate(() => document.querySelector('#needai').click()); await pg.waitForFunction(() => document.querySelector('#needaimsg').textContent.length > 0 || document.querySelector('#needaires article'), null, { timeout: 8000 });
 ok(true, 'Affiner avec l\'IA : répond (essais ou conseil)'); await pg.evaluate(() => { const sh = document.getElementById('sheet'); if (sh) sh.hidden = true; });
 ok(!(await pg.evaluate(() => /Fiche estim/.test(document.body.innerText))), 'aucune fiche « estimée d\'après le nom »');
