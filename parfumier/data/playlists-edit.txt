@@ -5276,3 +5276,13 @@ t: Les valeurs sûres
 
 ## Niche à petit prix
 + Fascent Sel A Vie | Mandarine, orange et jasmin sur une note salée, une niche fraîche et solaire à petit prix.
+
+## Je veux sentir propre
+x Chloé Atelier des Fleurs
++ Chloé Atelier des Fleurs Cedrus | Choix d'experts : propre et net.
+~ Chloé Atelier des Fleurs Cedrus | Un cèdre sec qui s'adoucit, net et sobre, comme une chemise de lin qui sort du placard.
+
+## Les valeurs sûres
+x Rabanne Invictus Victory Elixir
++H Rabanne Invictus Elixir | Choix d'experts : facile à trouver partout.
+~ Rabanne Invictus Elixir | Une version Parfum Elixir d'Invictus, salée et vanillée, un masculin bien connu qu'on trouve partout.

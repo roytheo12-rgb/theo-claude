@@ -620,7 +620,7 @@ Nicolas de Barry|L'eau de George Sand|EDP
 Nicolas de Barry|L'eau de l'impératrice Sissi|EDP
 The Spirit of Dubai|Turath|EDP
 Attar Al Has|Skin Musk|EDP
-Chloé|Atelier des Fleurs|EDP
+Chloé|Atelier des Fleurs Cedrus|EDP
 Widian|Hili|EDP
 Balmain|Carbone|EDP
 Jean Paul Gaultier|Le Beau Narcisse|EDP
@@ -628,3 +628,5 @@ Maison Unika|Vanille Réglisse|EDP
 Coelia|Dinajpur|EDP
 Baruti|Chai|EDP
 Ex Nihilo|Lust in Paradise Extrait|EXT
+Rabanne|Invictus Elixir|PAR
+Chloé|Atelier des Fleurs|EDP

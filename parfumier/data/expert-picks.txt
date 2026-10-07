@@ -110,7 +110,7 @@ date|Dior|Tobacolor
 date|Maison Crivelli|Oud Stallion
 date|Nishane|Ani
 date|Guerlain|Spiritueuse Double Vanille
-clean|Chloé|Atelier des Fleurs
+clean|Chloé|Atelier des Fleurs Cedrus
 clean|Une Nuit Nomade|Nothing but Sea and Sky
 clean|Matière Première|French Flower
 clean|Diptyque|Orphéon EDT

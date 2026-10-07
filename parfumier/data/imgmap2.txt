@@ -789,3 +789,18 @@
 3313|Nicolas de Barry|L'eau de Shah Jahan|
 3314|Nicolas de Barry|Wu Zetian|
 3400|Floraïku|In the Dark|
+3417|The Spirit of Dubai|Turath|
+3418|Widian|Hili|
+3419|Fascent|Sel A Vie|
+3420|Armani|Bleu Turquoise|
+3421|Masque Milano|Tango|
+3422|Bvlgari|Orom|
+3423|Maison Unika|Vanille Réglisse|
+3424|Coelia|Dinajpur|
+3425|Baruti|Chai|
+3426|Attar Al Has|Skin Musk|
+3427|Jeroboam|Gozo|
+3428|Chloé|Atelier des Fleurs Cedrus|
+3429|Balmain|Carbone|
+3430|Jean Paul Gaultier|Le Beau Narcisse|
+3431|Rabanne|Invictus Elixir|
