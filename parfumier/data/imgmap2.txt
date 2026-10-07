@@ -734,3 +734,9 @@
 3108|Roja Parfums|Haute Luxe|
 3109|Dries Van Noten|Havana Gold|
 3110|Maison Francis Kurkdjian|754|
+3111|Contes de Parfums|Angkor|
+3112|Xerjoff|40 Knots|
+3113|Maison Francis Kurkdjian|Trianon Palace Versailles|
+3114|Noème Paris|Kalahari|
+3115|BDK Parfums|Bouquet de Hongrie|
+3116|Matière Première|Cologne Cédrat|
