@@ -224,7 +224,34 @@ function out() {
     if (p.id === 81) o.combos = p.note.filter((l) => /^\* /.test(l)).map((l) => l.replace(/^\* /, '').split(' + '));
     return o;
   });
-  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(['Cinéma, séries & livres', 'Icônes', 'Archétypes', 'Destinations', 'Moments', 'Atmosphères', 'Effets', 'Spécial']) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
+  // ── ordre d'affichage : sections, playlists dans chaque section, parfums dans chaque playlist ──
+  const SEC_ORDER = ['Moments', 'Effets', 'Archétypes', 'Atmosphères', 'Destinations', 'Cinéma, séries & livres', 'Icônes', 'Spécial'];
+  const PL_ORDER = {
+    'Spécial': ['Niche à petit prix', 'Dans toutes les parfumeries', 'Layering', 'Historical Scents', 'Strange Smells'],
+    'Moments': ['Daily', 'First Date', 'Night Out', 'Occasion spéciale', 'Job Interview', 'Sunday Morning', 'En famille', 'Sous la chaleur', 'Beach Club', 'Boat Day', 'Seul face à l\'océan', 'Ski Weekend', 'Gameday', 'F1', 'Tuxedo Society'],
+    'Effets': ['Aimant à compliments', 'Je veux qu\'on me remarque', 'Je veux être envoûtant', 'Je veux sentir propre', 'Je veux sentir opulent', 'Je veux sentir unique'],
+    'Archétypes': ['Clean Girl', 'Quiet Luxury', 'It Girl', 'It Boy', 'Finance Bro', 'Tech Bro', 'Russian Baddie', 'Funky Chic', 'Effortless Chic', 'Les Branchés', 'La vie de Ronnie', 'Les Artsy', 'Les DJ', 'Corporate Weapons', 'Les Fans de design', 'Les Sportifs stylés', 'Bookworm', 'Mayfair', 'Le Qatari', 'Le Footeux', 'L\'Aventurier', 'L\'Élégant', 'Le Collectionneur'],
+    'Atmosphères': ['Automne Cozy', 'Chic Winter', 'Hiver à New York', 'Christmas Eve', 'Garden Party', 'Soirée à l\'opéra', 'L\'Ivresse', 'Jazz', 'L\'Or', 'La Cathédrale'],
+    'Destinations': ['Les Globe-trotters', 'Paris', 'New York', 'London', 'Milan', 'Rome', 'Côte d\'Azur', 'Saint-Tropez', 'Monaco', 'Lake Como', 'Dubai', 'Tokyo', 'Ibiza', 'Mykonos', 'Marrakech', 'Rio', 'Courchevel', 'Égypte', 'Chine ancienne', 'Safari', 'Thaïlande', 'Aurores boréales', 'Montagne arc-en-ciel', 'Le train de minerai'],
+    'Cinéma, séries & livres': ['James Bond', 'Thomas Shelby', 'Tony Montana', 'Michael Corleone', 'Vito Corleone', 'Patrick Bateman', 'Tyler Durden', 'Jordan Belfort', 'Don Draper', 'Tom Ripley', 'John Wick', 'Hannibal Lecter', 'Jay Gatsby', 'Bruce Wayne', 'Arthur Fleck', 'Travis Bickle', 'Léon', 'Vincent Vega', 'Les Affranchis', 'Howard Ratner', 'Kendall Roy', 'Logan Roy', 'The Founder', 'Paul Allen', 'Edmond Dantès', 'Arsène Lupin', 'Intouchables', 'Eddie Horniman', 'Freddy Horniman', 'Bobby Glass', 'Suzie Glass', 'Amélie Poulain', 'Vivian Ward', 'Andy Sachs', 'Samantha Jones', 'Charlotte York', 'Naomi', 'Denise Baudu'],
+    'Icônes': ['Rihanna', 'Drake', 'Beyoncé', 'Taylor Swift', 'Bad Bunny', 'Kanye West', 'Jay-Z', 'Pharrell Williams', 'Virgil Abloh', 'Rick Owens', 'Basquiat', 'Salvador Dalí', 'Amy Winehouse', 'Alain Delon', 'Brigitte Bardot', 'Jane Birkin', 'Marilyn Monroe'],
+  };
+  const flat = []; SEC_ORDER.forEach((s) => (PL_ORDER[s] || []).forEach((t) => flat.push(norm(t))));
+  const rank = (o) => { const i = flat.indexOf(norm(o.t)); return i < 0 ? 9999 + o.id : i; };
+  res.sort((x, y) => rank(x) - rank(y));
+  // parfums : les choix d'experts d'abord, la version extrait juste après sa version de base
+  const PAIR_ROWS = fs.existsSync(path.join(root, 'data', 'pair-versions.txt')) ? fs.readFileSync(path.join(root, 'data', 'pair-versions.txt'), 'utf8').split('\n').filter((l) => l && l[0] !== '#' && l.split('|').length >= 3).map((l) => { const c = l.split('|'); return [norm(c[0] + ' ' + c[1]), norm(c[0] + ' ' + c[2])]; }) : [];
+  const pk = (x) => norm((x.h || '') + ' ' + (x.n || x.q));
+  res.forEach((o) => {
+    if (o.id === 79 || o.id === 81) return;
+    const segs = []; if (o.grp) { let a = 0; o.grp.forEach((g) => { segs.push(o.ps.slice(a, a + g.n)); a += g.n; }); } else segs.push(o.ps.slice());
+    const done = segs.map((L) => { const top = L.filter((x) => /^Choix d.experts/.test(x.w || '')), rest = L.filter((x) => !/^Choix d.experts/.test(x.w || '')), M = o.id === 340 || /^(Je veux|Aimant)/.test(o.t) ? top.concat(rest) : top.concat(rest);
+      PAIR_ROWS.forEach(([bs, ex]) => { const ie = M.findIndex((x) => pk(x) === ex), ib = M.findIndex((x) => pk(x) === bs); if (ie >= 0 && ib >= 0 && ie !== ib + 1) { const [e] = M.splice(ie, 1); M.splice(M.findIndex((x) => pk(x) === bs) + 1, 0, e); } });
+      return M; });
+    o.ps = [].concat(...done);
+  });
+  res.forEach((o) => o.ps.forEach((x) => { if (x.w) x.w = x.w.replace(/\s+[—–]\s+/g, ', '); }));      // pas de tirets cadratins dans les phrases
+  fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(SEC_ORDER) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
   console.log('playlists.js', res.length);
 }
 if (require.main === module) out();
