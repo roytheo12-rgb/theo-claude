@@ -555,6 +555,21 @@
   }
   new MutationObserver(ttMount).observe($('#view'), { childList: true });
   setInterval(() => { const el = $('#tt .tt'); if (el && !document.hidden) ttAdvance(el); }, TT_MS);
+  const BESOINS = [['Au bureau', 'pour le bureau'], ['Premier rendez-vous', 'premier rendez-vous'], ['Soirée', 'soirée'], ['Tous les jours', 'tous les jours, discret'], ['Grosse chaleur', 'forte chaleur été'], ['Grand froid', 'hiver froid'], ['Cérémonie', 'mariage cérémonie'], ['Compliments', 'compliments'], ['Sport', 'sport']];
+  // Trois conseils par besoin, calculés sur le profil (goûts, collection, notes, retours, budget) : un seul parfum n'apparaît pas deux fois.
+  function fillBesoins() {
+    const box = $('#bsn'); if (!box || !box.querySelector('.shim')) return;
+    const g = S.profile && S.profile.gender, st = Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, fb: S.feedback || [], month: new Date().getMonth() });
+    const lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
+    const used = new Set(), pool = needPool();
+    const rows = BESOINS.map(([l, q]) => {
+      const need = E.parseNeed(q); if (need.empty) return '';
+      const res = E.searchNeed(pool, need, st, 12).filter((r) => { const k = E.norm(r.c.house + ' ' + r.c.name); if (used.has(k)) return false; used.add(k); return true; }).slice(0, 3);
+      return res.length ? `<div class="dsec"><p class="mono">${esc(l)}</p><div class="pgrid">${res.map((r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); }).join('')}</div><p class="soft2" style="margin:4px 0 0;font-size:13px">${esc((res[0].m.why || []).slice(0, 2).join(' · ').replace(/^./, (x) => x.toUpperCase()))}</p></div>` : '';
+    });
+    box.innerHTML = rows.join('');
+    $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
+  }
   function viewTips() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
@@ -569,6 +584,10 @@
         <div class="card" style="display:grid;gap:8px"><p class="rd" style="margin:0">Le pourcentage dit à quel point un flacon colle à tes goûts, à ta saison et à ton budget. Il ne juge pas sa qualité. Précision actuelle <b>${profPrecision().l}</b>${profPrecision().v < 1 ? ', elle monte quand tu précises ton profil.' : '.'}</p><button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil</button></div>
         ${T.recs.length ? `<div class="snap">${T.recs.slice(0, 6).map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
       </section>
+      <section class="sec" id="besoins"><header><h2>Par besoin</h2><span class="mono">3 conseils pour chacun</span></header>
+        <div class="card" style="display:grid;gap:8px"><p class="rd" style="margin:0">Pour chaque situation, les trois parfums qui te vont le mieux d'après ton profil, tes goûts, ta collection et ce que tu as noté.</p></div>
+        <div id="bsn" class="bsn">${S.collection.length || (S.settings.liked || []).length || (S.settings.vibes || []).length ? BESOINS.map(([l]) => `<div class="dsec"><p class="mono">${esc(l)}</p><div class="pgrid"><span class="shim" style="display:block;height:120px"></span></div></div>`).join('') : '<p class="soft2">Renseigne tes goûts ou ajoute quelques parfums, et je te propose trois conseils pour chaque besoin.</p>'}</div>
+      </section>
       ${T.tags.length ? `<section class="sec"><header><h2>Par envie</h2><span class="mono">niche, luxe, abordable…</span></header>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</section>` : ''}
       <section class="sec">
         <div class="card" style="display:grid;gap:8px"><b>Où l'acheter</b><p class="rd" style="margin:0">Une carte des parfumeries et des enseignes beauté autour de toi.</p><button class="ghost" id="tipMap" style="justify-self:start">Ouvrir la carte</button></div>
@@ -580,6 +599,7 @@
           <button class="cta" id="askgo">${IC.spark}<span>Me conseiller</span></button><div id="askres" class="aires"></div></div>
       </section>
       `;
+    setTimeout(fillBesoins, 30);
     if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
     if ($('#tipMap')) $('#tipMap').onclick = openShopMap;
     if ($('#tipProf')) $('#tipProf').onclick = () => { openProfile(); };

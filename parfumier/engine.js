@@ -846,14 +846,17 @@
     parts.fiche = ff ? ff.v : 0;
     let tbd = null;
     if (!st.noTheme) { const ck = JSON.stringify(cond); if (!score._tc || score._tc.k !== ck) score._tc = { k: ck, v: themesFor('', cond, [], {}) }; tbd = themeBonus(p, score._tc.v, 1.6); parts.theme = tbd.v; }
+    // un parfum d'inspiration cité dans beaucoup de playlists a fait ses preuves : léger coup de pouce
+    if (!st.noTheme) { const pv = provenOf(p); parts.proven = 0.8 * pv.v; }
     const total = Object.values(parts).reduce((a, b) => a + b, 0);
-    return { total, parts, fiche: ff, theme: tbd };
+    return { total, parts, fiche: ff, theme: tbd, proven: provenOf(p).n };
   }
 
-  function reasons(p, cond, parts, fiche, theme) {
+  function reasons(p, cond, parts, fiche, theme, proven) {
     const r = [];
     if (theme && theme.why && theme.v >= .5) r.push(theme.why.charAt(0).toUpperCase() + theme.why.slice(1));
     if (fiche) { fiche.why.slice(0, 1).forEach((x) => r.push(x.charAt(0).toUpperCase() + x.slice(1))); fiche.warn.slice(0, 1).forEach((x) => r.push('⚠ ' + x.charAt(0).toUpperCase() + x.slice(1))); }
+    if (proven >= 5 && !(theme && theme.v >= .5)) r.push(`Un valeur sûre : cité dans ${proven} playlists d'inspiration`);
     if (parts.weather >= 1) r.push(`Météo : ${weatherLabel(cond)}`);
     if (parts.ctx >= 1.5) r.push(`Colle à ta journée (${CONTEXTS[cond.ctx].toLowerCase()} · ${WITHS[cond.with].toLowerCase()})`);
     if (parts.mood >= 1) r.push(`Épouse ton mood (${MOODS[cond.mood].toLowerCase()})`);
@@ -877,7 +880,7 @@
 
   function rank(collection, cond, st) {
     return collection
-      .map((p) => { const s = score(p, cond, st); return { p, total: s.total, parts: s.parts, reasons: reasons(p, cond, s.parts, s.fiche, s.theme) }; })
+      .map((p) => { const s = score(p, cond, st); return { p, total: s.total, parts: s.parts, reasons: reasons(p, cond, s.parts, s.fiche, s.theme, s.proven) }; })
       .sort((a, b) => b.total - a.total);
   }
 
