@@ -71,7 +71,6 @@ D'Orsay|Tilleul|EDP
 D'Orsay|Tilleul Extrait|EDP
 Ella K|Sotto la Luna Gardenia|EDP
 Essential Parfums|Dedication|EDP
-Floraïku|Haiku in the Dark|EDP
 Floraïku|The Wandering Minstrel|EDP
 Houbigant|Fougère Nobile|EDP
 Maison Crivelli|Iris Malhikân|EDP
@@ -545,7 +544,6 @@ Dries Van Noten|Orange Smoke|EDP
 Ella K|Lettre de Kerman|EDP
 Ella K|Méharées en Pays de Sable|EDP
 Ella K|Poème de Indrachipur|EDP
-Floraïku|Floraiku|EDP
 Floraïku|First Fig|EDP
 Floraïku|The Moon and My Heart|EDP
 Floraïku|In the Mood for Oud|EDP
@@ -629,3 +627,4 @@ Jean Paul Gaultier|Le Beau Narcisse|EDP
 Maison Unika|Vanille Réglisse|EDP
 Coelia|Dinajpur|EDP
 Baruti|Chai|EDP
+Ex Nihilo|Lust in Paradise Extrait|EXT

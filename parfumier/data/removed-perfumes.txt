@@ -149,3 +149,7 @@ Dior|Miss Dior Originale Harrods 175 Anniversary Edition Amphora
 Dior|Miss Dior Essence by Maison Février
 # Parfum inexistant
 Stéphane Humbert Lucas 777|Cacao Aztèque
+# Doublons Floraïku, Chanel N°5 L'Eau (retiré)
+Floraïku|Haiku in the Dark
+Floraïku|Floraiku
+Chanel|No. 5 L'Eau

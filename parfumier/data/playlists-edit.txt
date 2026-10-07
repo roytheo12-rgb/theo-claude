@@ -4960,3 +4960,66 @@ t: Le meilleur du Mainstream ou à trouver partout
 x Jean Paul Gaultier Le Beau Paradise Garden
 +H Jean Paul Gaultier Le Beau Paradise Garden | Choix d'experts : facile à trouver partout.
 t: Dans toutes les parfumeries
+
+## Chic Winter
++ Floraïku In the Dark | Menthe, rose de Turquie et encens, une nuit d'hiver fumée et minimaliste.
+
+## Soirée à l'opéra
+x Floraïku Haiku in the Dark
+x D'Orsay Tilleul Extrait
+
+## Quiet Luxury
+x Parfums de Marly Valaya
+
+## Finance Bro
+x Initio Oud for Greatness
+x Roja Elysium
+~ Essential Parfums Bois Impérial | Boisé épicé qui impose, avec une qualité très au-dessus de son prix.
+
+## Jazz
+x Robert Piguet Fracas
+
+## Ski Weekend
+x Houbigant Fougère Nobile
+
+## Je veux sentir unique
+x Maison Crivelli Hibiscus Mahajád
+
+## La Cathédrale
+x Etat Libre d'Orange Rien
+
+## Clean Girl
+x Ex Nihilo Fleur Narcotique
+x Phlur Matcha Milk
+
+## It Girl
++ Phlur Matcha Milk | Un matcha au lait, le réconfort tiède d'un après-midi sans programme.
+
+## It Boy
+x Ex Nihilo Lust in Paradise
++ Ex Nihilo Lust in Paradise Extrait | Choix d'experts : un parfum signature.
+
+## Dans toutes les parfumeries
+x Givenchy Gentleman Réserve Privée
++H Givenchy Gentleman Réserve Privée | Choix d'experts : facile à trouver partout.
+
+## Je veux sentir propre
+x Chanel No. 5 L'Eau
+
+## Occasion spéciale
+g: Homme | Élégant sans voler la vedette aux hôtes, du costume de la cérémonie jusqu'à la piste de danse.
+~ Maison Francis Kurkdjian Aqua Universalis | Citron et fleur d'oranger, le linge propre des grands jours.
+~ Atelier des Ors Pink Me Up | Vibrant, floral et printanier. Pour une fête en jardin ou à la campagne.
+~ Guerlain Eau de Tulle | Un voile de tulle en parfum, léger et aérien pour les grands moments.
+~ Yves Saint Laurent Capeline | Un floral blanc solaire et opulent pour une fête d'été.
+~ Penhaligon's The Bewitching Yasmine | Un jasmin élégant et ensorcelant, pour briller sans en faire trop.
+~ L'Artisan Parfumeur La Chasse aux Papillons | Fleurs blanches aériennes, le parfum d'un grand jour de printemps.
+~ Van Cleef & Arpels Gardenia Petale | Un gardénia blanc, lumineux et crémeux, pour une soirée de gala.
+
+## Bookworm
+~ Dior Miss Dior EDP | Rose, muguet et pivoine, l'héroïne de roman qui attend la lettre qui n'arrive pas, le romantisme tel qu'on le rêve.
+~ Chanel Chance Eau Tendre | Coing, pamplemousse et jasmin, le premier émoi d'un roman d'apprentissage, tendre et un peu idéalisé.
+~ Jo Malone Peony & Blush Suede | Pivoine et daim rosé, la douceur d'une héroïne de Jane Austen, un amour de papier qu'on relit sous la lampe.
+~ Guerlain Mon Guerlain | Lavande, vanille et jasmin, l'amant rêvé des romans à la lueur d'une bougie, un romantisme poétique.
+~ Chanel N°5 EDP | Aldéhydes et fleurs blanches, la grande dame des correspondances d'autrefois, un classique de la littérature mondaine.
+~ Byredo Rose of No Man's Land | Une rose inspirée des infirmières de la Grande Guerre, lyrique et mélancolique comme une héroïne de roman.
