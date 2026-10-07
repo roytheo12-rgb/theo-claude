@@ -775,6 +775,60 @@ a.chip { text-decoration: none; display: inline-block; }
 .rate .stars button { font-size: 28px; padding: 4px 6px; }
 .rate .rlist { max-height: 52vh; overflow-y: auto; }
 
+/* Feuille « Ta note pour chaque parfum » : de l'air partout */
+.rate { display: grid; gap: 28px; padding-bottom: 12px; }
+.rate > div:first-child { display: grid; gap: 14px; }
+.rate h2 { margin: 0; line-height: 1.15; }
+.rate .soft { margin: 0; line-height: 1.7; }
+.rate #rprog { margin: 0; padding: 12px 0 0; border-top: 1px solid var(--line); }
+.rate .rlist { gap: 18px !important; padding: 2px 2px 8px; }
+.rate .rlist .card { gap: 16px !important; padding: 24px 22px 20px; }
+.rate .rlist .card b { font-size: 17px; }
+.rate .rlist .card small { display: inline-block; margin-top: 6px; }
+.rate .rst { display: flex; justify-content: space-between; gap: 4px; padding: 6px 4px 2px; }
+.rate .rst button { font-size: 32px; padding: 6px 8px; line-height: 1; }
+.rate .rlab { min-height: 1.4em; text-align: center; }
+.rate #rdone { margin-top: 6px; }
+
+/* ---------- Le parfumier privé : flottant, en bas à droite, sur chaque page ---------- */
+.pfab { position: fixed; right: 16px; bottom: 96px; z-index: 35; width: 58px; height: 58px; border-radius: 50%; border: 1px solid rgba(242, 235, 224, .3); background: radial-gradient(circle at 30% 25%, #b4394a, #6e1d2b 70%); color: #fff; box-shadow: 0 10px 30px rgba(0, 0, 0, .55), 0 0 0 6px rgba(180, 57, 74, .12); display: grid; place-items: center; cursor: pointer; transition: transform .25s cubic-bezier(.2, .9, .25, 1), box-shadow .25s; }
+.pfab:hover { transform: scale(1.06); }
+.pfab.on { transform: scale(.94); box-shadow: 0 6px 20px rgba(0, 0, 0, .5); }
+.pfab .pfa { font-size: 24px; line-height: 1; }
+.pfab .pfdot { position: absolute; top: 4px; right: 4px; width: 13px; height: 13px; border-radius: 50%; background: #f2ebe0; border: 2px solid #6e1d2b; animation: pfpulse 1.6s ease-in-out infinite; }
+@keyframes pfpulse { 50% { transform: scale(1.35); } }
+.pbub { position: fixed; right: 16px; bottom: 166px; z-index: 35; width: min(300px, calc(100vw - 32px)); padding: 18px 20px 16px; border-radius: 16px 16px 4px 16px; background: #1a1514; border: 1px solid rgba(242, 235, 224, .22); box-shadow: 0 16px 40px rgba(0, 0, 0, .6); font-size: 15px; line-height: 1.55; animation: pfin .45s cubic-bezier(.2, .9, .25, 1) both; }
+.pbub p { margin: 0; }
+.pbub .pbr { margin-top: 14px; display: flex; gap: 8px; }
+.pbub .pbx { position: absolute; top: 6px; right: 10px; border: 0; background: none; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; padding: 4px; }
+.ppanel { position: fixed; right: 12px; bottom: 96px; z-index: 36; width: min(400px, calc(100vw - 24px)); height: min(600px, calc(100dvh - 150px)); display: grid; grid-template-rows: auto 1fr auto auto; gap: 14px; padding: 18px; border-radius: 18px; background: #110e0d; border: 1px solid rgba(242, 235, 224, .2); box-shadow: 0 24px 60px rgba(0, 0, 0, .7); animation: pfin .4s cubic-bezier(.2, .9, .25, 1) both; transform-origin: bottom right; }
+.ppanel[hidden], .pbub[hidden], .pfab .pfdot[hidden] { display: none; }
+.ppanel > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.ppanel > header b { display: block; font: 400 19px var(--f-display, serif); }
+.ppanel > header small { color: var(--muted); font-size: 12.5px; }
+.ppanel > header button { border: 0; background: none; color: var(--muted); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 4px; }
+.ppanel .cmsgs { max-height: none; min-height: 0; }
+.ppanel .cform input { padding: 13px 16px; }
+.ppanel #cchips:empty { display: none; }
+@keyframes pfin { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+.pfcard { display: grid; gap: 16px; padding: 28px 24px; }
+.pfcard h2 { margin: 0; }
+.pfcard p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+/* Conseils : plus d'air, rien ne se touche */
+#view[data-v=tips] > .sec { margin-top: 88px; gap: 32px; }
+#view[data-v=tips] > .sec:first-child { margin-top: 28px; }
+#view[data-v=tips] .tp .pricecard { padding: 24px 24px 22px; gap: 16px; }
+#view[data-v=tips] .stack { gap: 40px; }
+#view[data-v=tips] .rec { padding: 26px 22px 24px; gap: 20px; }
+#view[data-v=tips] .brail { gap: 12px; padding: 6px 0 20px; }
+#view[data-v=tips] .bsn { gap: 24px; }
+#view[data-v=tips] .bwhy { gap: 14px; line-height: 1.7; }
+#view[data-v=tips] .more > summary { padding: 20px 0; }
+#view[data-v=tips] .more.big > summary { padding: 22px 24px; }
+#view[data-v=tips] .tipc { margin-top: 18px; }
+@media (max-width: 480px) { .ppanel { right: 8px; width: calc(100vw - 16px); height: calc(100dvh - 130px); bottom: 90px; } }
+
 </style>
 <div id="app">
   <header class="bar"><div class="mark">sillage</div><button class="iconbtn" id="profileBtn" aria-label="Profil et sauvegarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.8-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></button></header>
@@ -3258,7 +3312,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     $('#view').dataset.v = tab;
     ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
-    setTimeout(ensureRatings, 0);
+    setTimeout(ensureRatings, 0); pfSchedule();
   }
 
   const keepText0 = () => { const t = $('#say'); if (t) SAY = t.value; };
@@ -3535,11 +3589,97 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     box.innerHTML = `<div class="cb ca"><p>${esc(chatGreeting())}</p></div>` + CHAT.msgs.map(bubHtml).join('') + (CHAT.busy ? '<div class="cb ca"><span class="shim" style="display:block;width:120px;height:14px"></span></div>' : '');
     const lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
     $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
-    fbBind(box); box.scrollTop = box.scrollHeight;
+    fbBind(box); box.scrollTop = box.scrollHeight; if ($('#cchips') && CHAT.msgs.length) $('#cchips').innerHTML = '';
   }
+  // Phrases du parfumier quand l'IA n'est pas là : une vraie petite recommandation écrite avec la fiche, les notes, le profil et le prix.
+  const hz = (s, n) => { s = String(s || '').replace(/[:;—–]/g, ',').replace(/\s+/g, ' ').replace(/[ ,.]+$/, '').trim(); return n && s.length > n ? s.slice(0, n).replace(/\s\S*$/, '') : s; };
+  const cap1 = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const list3 = (a) => (a.length > 1 ? a.slice(0, -1).join(', ') + ' et ' + a[a.length - 1] : a[0] || '');
+  const pickH = (arr, seed) => arr[Math.abs([...String(seed)].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7)) % arr.length];
+  function humanLine(r, rank, e, q) {
+    const c = r.c, notes = (c.notes || (e && e.notes) || []).slice(0, 3), why = r.m.why || [], ed = edOf({ name: c.name, house: c.house }) || {}, bits = [];
+    const open = [['Je commencerais par', 'Mon premier choix, c\'est'], ['Ensuite, il y a', 'Juste derrière, je mettrais'], ['Et si tu veux oser, essaie', 'Pour sortir un peu du cadre, tente']][rank] || ['Pense aussi à'];
+    bits.push(pickH(open, q + c.name) + ' ' + c.name + '.');
+    if (notes.length >= 2) bits.push(pickH(['On y sent surtout ', 'Au nez, ce sont surtout ', 'Il joue sur '], c.name) + list3(notes.map((n) => n.toLowerCase())) + '.');
+    if (r.m.diff || r.m.pitch) bits.push(cap1(hz(r.m.diff || r.m.pitch, 140)) + '.');
+    const hit = why.find((w) => /tu aimes déjà/.test(w)), near = why.find((w) => /proche de/.test(w)), taste = why.find((w) => /dans ton goût/.test(w)), top = why.find((w) => /tout en haut de/.test(w)), uni = why.find((w) => /dans l'univers/.test(w)), fiche = why.find((w) => /colle au contexte/.test(w));
+    if (hit) bits.push('Ça parle à ce que tu aimes déjà, ' + hz(hit.replace(/tu aimes déjà/, '')) + '.');
+    else if (near) bits.push(cap1(hz(near)) + '.');
+    else if (taste) bits.push('C\'est ' + hz(taste.replace(/^dans ton goût/, 'dans ton goût')) + '.');
+    if (top || uni) { const t = (top || uni).match(/« (.+?) »/); if (t) bits.push((top ? 'Il fait partie des tout premiers de la playlist « ' : 'Il a sa place dans la playlist « ') + t[1] + ' ».'); }
+    const long = (x) => (x && String(x).length >= 22 ? x : ''), f1 = long((ed.forts || [])[0]), w1 = long((ed.faibles || [])[0]), sit = (ed.sit || [])[0];
+    if (f1) bits.push('Sa force, ' + hz(f1.charAt(0).toLowerCase() + f1.slice(1), 110) + '.');
+    if (w1) bits.push(pickH(['Un point à savoir, ', 'Petite réserve, ', 'Ce qui peut gêner, '], c.name + 'w') + hz(w1.charAt(0).toLowerCase() + w1.slice(1), 110) + '.');
+    else if (sit && !f1) bits.push('On le sort volontiers ' + hz(sit.charAt(0).toLowerCase() + sit.slice(1), 70) + '.');
+    if (!hit && !near && !taste && fiche && !top && !uni) bits.push('Il colle bien à ce que tu décris.');
+    const p = estPrice(c); if (p) bits.push('Compte environ ' + p + ' €' + ((S.settings.budget || 0) && p <= S.settings.budget ? ', dans ton plafond' : '') + '.');
+    return bits.join(' ');
+  }
+  // ---------- Le parfumier privé : présent sur toutes les pages, en bas à droite, avec des bulles qui proposent des conseils ----------
+  const PF = { open: false, shown: 0, last: 0, t: 0, hide: 0, kind: 0 };
+  const PF_HINT = {
+    today: ['Une idée pour ta journée ? Dis-moi ce que tu fais et je te dis lequel porter.', 'Tu ne sais pas lequel mettre aujourd\'hui ? Je te guide.'],
+    shelf: ['Je peux te dire ce qui manque à ta collection, ou lequel tu portes trop peu.', 'Un parfum à ajouter ? Décris-moi tes envies.'],
+    search: ['Tu ne trouves pas ? Décris-moi ce que tu veux avec tes mots.', 'Dis-moi une occasion ou une note, je te sors trois parfums.'],
+    tips: ['Tu veux que je compare deux parfums pour toi ?', 'Dis-moi ton budget et l\'occasion, je choisis pour toi.'],
+    play: ['Cette playlist te parle ? Je peux en tirer les trois parfums qui te vont le mieux.', 'Dis-moi laquelle t\'inspire et je te dis par où commencer.'],
+    walk: ['Un parfum senti en boutique ? Raconte, je t\'aide à décider.', 'Tu hésites après une balade ? Je te donne mon avis.'],
+    wish: ['Tu as plusieurs parfums en attente. Je te dis lequel acheter en premier.', 'Un budget en tête ? Je classe ta wishlist pour toi.'],
+  };
+  const PF_CHIPS = {
+    today: ['Lequel porter aujourd\'hui ?', 'Un parfum pour ce soir', 'Quelque chose de discret'],
+    shelf: ['Que me manque-t-il ?', 'Un parfum pour l\'hiver', 'Un coup de cœur à ajouter'],
+    search: ['Frais pour le bureau', 'Premier rendez-vous', 'Un niche qui se remarque'],
+    tips: ['Un parfum pour un premier rendez-vous', 'Quelque chose de frais pour le bureau', 'Un niche qui se remarque'],
+    play: ['Trois parfums de cette ambiance', 'Le plus sûr pour commencer'],
+    walk: ['Je l\'ai senti, il m\'a plu', 'Aide-moi à choisir'],
+    wish: ['Lequel acheter en premier ?', 'Moins cher que Baccarat Rouge 540'],
+  };
+  function mountParfumier() {
+    if ($('#pfab')) return;
+    document.body.insertAdjacentHTML('beforeend', `<button id="pfab" class="pfab" type="button" aria-label="Ouvrir ton parfumier privé"><span class="pfa">✦</span><i class="pfdot" hidden></i></button>
+      <div id="pbub" class="pbub" role="status" hidden><button type="button" class="pbx" aria-label="Fermer">×</button><p class="mono" style="text-transform:none;letter-spacing:0;margin:0 0 6px">Ton parfumier privé</p><p id="pbt"></p><div class="pbr"><button type="button" class="chip" id="pbgo"></button></div></div>
+      <aside id="ppanel" class="ppanel" role="dialog" aria-label="Ton parfumier privé" hidden><header><div><b>Ton parfumier privé</b><small>Il connaît toute la base et tes goûts</small></div><button type="button" id="ppx" aria-label="Fermer">×</button></header>
+        <div id="cmsgs" class="cmsgs" aria-live="polite"></div><div class="chips" id="cchips"></div>
+        <form id="cform" class="cform"><input type="text" id="cin" autocomplete="off" placeholder="Décris ce que tu cherches…" aria-label="Ta question au parfumier privé" maxlength="300"><button class="cta" type="submit" aria-label="Envoyer"><span>→</span></button></form></aside>`);
+    $('#pfab').onclick = () => (PF.open ? pfClose() : pfOpen());
+    $('#ppx').onclick = pfClose;
+    $('.pbx', $('#pbub')).onclick = () => { pfHide(); PF.shown += 1; };
+    $('#cform').onsubmit = (e) => { e.preventDefault(); const v = $('#cin').value; $('#cin').value = ''; chatSend(v); };
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && PF.open) pfClose(); });
+  }
+  function pfChips() {
+    const ch = $('#cchips'); if (!ch) return;
+    ch.innerHTML = CHAT.msgs.length ? '' : (PF_CHIPS[tab] || CHAT_CHIPS).map((t) => `<button type="button" class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('');
+    $$('[data-q]', ch).forEach((b) => (b.onclick = () => chatSend(b.dataset.q)));
+  }
+  function pfOpen(msg) {
+    mountParfumier(); pfHide(); PF.open = true;
+    $('#ppanel').hidden = false; $('#pfab').classList.add('on'); $('.pfdot', $('#pfab')).hidden = true;
+    drawChat(); pfChips();
+    if (msg) chatSend(msg); else if (!matchMedia('(pointer: coarse)').matches) setTimeout(() => $('#cin') && $('#cin').focus(), 50);
+  }
+  function pfClose() { PF.open = false; const p = $('#ppanel'); if (p) p.hidden = true; const f = $('#pfab'); if (f) f.classList.remove('on'); }
+  function pfHide() { clearTimeout(PF.hide); const b = $('#pbub'); if (b) b.hidden = true; }
+  // Bulle proactive : un conseil de la page, puis une vraie recommandation tirée du profil. Jamais plus de quatre par visite, jamais quand une feuille est ouverte.
+  function pfTick() {
+    mountParfumier();
+    if (PF.open || document.hidden || !$('#sheet').hidden || !$('#story').hidden || PF.shown >= 4 || Date.now() - PF.last < 20000) return;
+    let m = null;
+    if (PF.kind % 2 === 1 && (S.collection.length || (S.settings.liked || []).length)) {
+      try { const r = tipsData().recs[0]; if (r) m = { t: `Pour toi en ce moment, je pense à ${r.c.name} (${r.c.house}). Il est compatible à ${r.pct} % avec tes goûts.`, b: 'Pourquoi lui ?', q: 'Pourquoi ' + r.c.name + ' pour moi ?' }; } catch (e) { /* on retombe sur le conseil de la page */ }
+    }
+    if (!m) { const h = PF_HINT[tab] || PF_HINT.tips; m = { t: h[PF.shown % h.length], b: 'Lui demander', q: '' }; }
+    PF.kind += 1; PF.shown += 1; PF.last = Date.now();
+    $('#pbt').textContent = m.t; $('#pbgo').textContent = m.b; $('#pbub').hidden = false; $('.pfdot', $('#pfab')).hidden = false;
+    $('#pbgo').onclick = () => pfOpen(m.q || undefined);
+    PF.hide = setTimeout(pfHide, 16000);
+  }
+  function pfSchedule() { mountParfumier(); clearTimeout(PF.t); pfHide(); PF.t = setTimeout(pfTick, PF.shown ? 9000 : 6500); }
   async function chatSend(q) {
     q = (q || '').trim(); if (!q || CHAT.busy) return;
     CHAT.msgs.push({ r: 'u', t: q }); CHAT.busy = true; drawChat();
+    { const ex = q.match(/^Pourquoi (.+) pour moi \?$/); if (ex) { const rec = (() => { try { return tipsData().recs.find((x) => x.c.name === ex[1]); } catch (e) { return null; } })(); if (rec) { const why = [].concat(rec.hits.length ? ['tu aimes déjà ' + rec.hits.slice(0, 2).join(' et ')] : [], (rec.axisWhy || []).length ? ['dans ton goût ' + rec.axisWhy[0]] : [], rec.proven >= 4 ? ['dans l\'univers « ' + (E.themesOf(rec.c, 1)[0] || { t: 'des playlists' }).t + ' »'] : []); const r2 = { c: rec.c, m: { why, pct: rec.pct, diff: rec.diff, pitch: rec.pitch } }; CHAT.msgs.push({ r: 'a', t: 'Bonne question. Voilà pourquoi je te le propose.', picks: [{ name: rec.c.name, house: rec.c.house, e: dbList().find((x) => E.norm(x.name) === E.norm(rec.c.name) && E.norm(x.house) === E.norm(rec.c.house)) || null, line: humanLine(r2, 0, null, q) }], fb: { name: rec.c.name, house: rec.c.house } }); CHAT.busy = false; drawChat(); return; } } }
     const prev = CHAT.msgs.filter((m) => m.r === 'u').slice(-3, -1).map((m) => m.t);
     const text = (prev.length ? prev.join('. ') + '. Et maintenant : ' : '') + q;
     let need = E.parseNeed(text.slice(0, 480)); if (need.empty) need = E.parseNeed(q);
@@ -3548,8 +3688,10 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     const entryOf = (name, house) => lk[E.norm(house + ' ' + name)] || dbList().find((e) => E.norm(e.name) === E.norm(name) && (!house || E.norm(e.house) === E.norm(house))) || null;
     const local = () => {
       if (!res.length) return { t: 'Je n\'ai pas bien compris. Dis-moi plutôt une occasion (bureau, rendez-vous), une saison, une note (vanille, rose) ou un parfum que tu aimes.', picks: [] };
-      const top = res.slice(0, 3);
-      return { t: 'Voilà ce que je mettrais en premier pour toi.', picks: top.map((r) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || entryOf(r.c.name, r.c.house), line: (r.m.why || []).slice(0, 2).join(', ').replace(/^./, (x) => x.toUpperCase()) + (r.m.diff ? '. ' + r.m.diff : '') })), fb: { name: top[0].c.name, house: top[0].c.house } };
+      const top = res.slice(0, 3), lab = (E.needLabel(need) || '').toLowerCase();
+      const intro = pickH([lab ? `D'accord, pour ${lab} je te vois bien avec trois parfums.` : 'D\'accord, voilà ce que je te conseille.', lab ? `Pour ${lab}, voilà mes trois idées.` : 'Voilà mes trois idées.', 'Je regarde ce qui te correspond vraiment, et je te propose ceci.'], q);
+      const conf = top[0].m.pct >= 75 ? 'Le premier me paraît très juste pour toi.' : top[0].m.pct >= 55 ? 'Ils collent bien, même si le premier se détache un peu des autres.' : 'Ce n\'est pas une évidence, alors précise-moi un peu plus et je viserai plus juste.';
+      return { t: intro + ' ' + conf, picks: top.map((r, i2) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || entryOf(r.c.name, r.c.house), line: humanLine(r, i2, null, q) })), note: pickH(['Dis-moi si tu les veux plus frais, plus doux, plus discrets ou moins chers et je réajuste. Teste toujours sur ta peau avant d\'acheter.', 'Tu peux me demander une variante, par exemple moins sucré ou moins cher. Un conseil, teste sur ta peau pendant une heure avant de te décider.', 'Si l\'un d\'eux ne te parle pas, dis-le moi et je cherche dans une autre direction.'], q + 'n'), fb: { name: top[0].c.name, house: top[0].c.house } };
     };
     let msg = local();
     if (res.length && (window.SillageDemo || window.SillagePrompts)) {
@@ -3589,11 +3731,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
           <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">Aucun conseil ne dépasse ce prix${s.budget ? '' : ' · glisse pour fixer un plafond'}</p></div>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Tes notes disent ce que tu aimes : mes conseils en deviennent bien plus justes.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
       </section>
-      <section class="sec chat"><header><h2>Ton parfumier privé</h2></header>
-        <div class="card cbox"><div id="cmsgs" class="cmsgs" aria-live="polite"></div>
-          ${CHAT.msgs.length ? '' : `<div class="chips" id="cchips">${CHAT_CHIPS.map((t) => `<button type="button" class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>`}
-          <form id="cform" class="cform"><input type="text" id="cin" autocomplete="off" placeholder="Décris ce que tu cherches…" aria-label="Ta question au parfumier privé" maxlength="300"><button class="cta" type="submit" aria-label="Envoyer"><span>→</span></button></form></div>
-      </section>
+      <section class="sec"><div class="card pfcard"><p class="mono">Ton parfumier privé</p><h2>Une question ? Demande-lui.</h2><p>Il connaît toute la base et ton profil. Il est aussi là, en bas à droite, sur chaque page.</p><button class="cta full" id="pfopen"><span>Discuter avec lui</span></button></div></section>
       <section class="sec"><header><h2>Pour toi</h2><span class="mono">${profPrecision().l}</span></header>
         ${T.recs.length ? `<div class="stack">${T.recs.slice(0, 3).map((r, i) => recCard(r, i)).join('')}</div>${T.recs.length > 3 ? `<details class="more"><summary>Voir ${T.recs.length - 3} autre${T.recs.length > 4 ? 's' : ''} conseil${T.recs.length > 4 ? 's' : ''}</summary><div class="stack">${T.recs.slice(3).map((r, i) => recCard(r, i + 3)).join('')}</div></details>` : ''}` : '<div class="empty">Rien sous ce prix. Monte un peu le plafond.</div>'}
         ${profPrecision().v < 1 ? `<button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil pour de meilleurs conseils</button>` : ''}
@@ -3609,7 +3747,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
       </div></details></section>` : ''}
       <section class="sec"><button class="ghost" id="tipMap" style="justify-self:start">Où l'acheter : la carte des parfumeries</button></section>
       `;
-    drawChat(); drawBesoin();
+    drawBesoin();
     if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
     if ($('#tipMap')) $('#tipMap').onclick = openShopMap;
     if ($('#tipProf')) $('#tipProf').onclick = () => { openProfile(); };
@@ -3617,8 +3755,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
     bud.addEventListener('change', () => { save(); viewTips(); });
-    $('#cform').onsubmit = (e) => { e.preventDefault(); const v = $('#cin').value; $('#cin').value = ''; const ch = $('#cchips'); if (ch) ch.remove(); chatSend(v); };
-    $$('#cchips [data-q]').forEach((b) => (b.onclick = () => { const ch = $('#cchips'); if (ch) ch.remove(); chatSend(b.dataset.q); }));
+    if ($('#pfopen')) $('#pfopen').onclick = () => pfOpen();
     $$('#bsel [data-bi]').forEach((b) => (b.onclick = () => { BSEL.i = +b.dataset.bi; drawBesoin(); }));
     $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); viewTips(); }));
     $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c)); rmWish(c.name); save(); viewTips(); setTimeout(ensureRatings, 0); } }));
@@ -5265,6 +5402,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   // ---------- Démarrage ----------
   $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { if (b.dataset.tab === 'play' && tab === 'play') PL.id = 0; tab = b.dataset.tab; render(); } });
   $('#profileBtn').onclick = openProfile;
+  mountParfumier();
   render();
   initStore();
   initAI();

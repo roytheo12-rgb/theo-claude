@@ -770,3 +770,57 @@ a.chip { text-decoration: none; display: inline-block; }
 .stack .rec { margin: 0; }
 .rate .stars button { font-size: 28px; padding: 4px 6px; }
 .rate .rlist { max-height: 52vh; overflow-y: auto; }
+
+/* Feuille « Ta note pour chaque parfum » : de l'air partout */
+.rate { display: grid; gap: 28px; padding-bottom: 12px; }
+.rate > div:first-child { display: grid; gap: 14px; }
+.rate h2 { margin: 0; line-height: 1.15; }
+.rate .soft { margin: 0; line-height: 1.7; }
+.rate #rprog { margin: 0; padding: 12px 0 0; border-top: 1px solid var(--line); }
+.rate .rlist { gap: 18px !important; padding: 2px 2px 8px; }
+.rate .rlist .card { gap: 16px !important; padding: 24px 22px 20px; }
+.rate .rlist .card b { font-size: 17px; }
+.rate .rlist .card small { display: inline-block; margin-top: 6px; }
+.rate .rst { display: flex; justify-content: space-between; gap: 4px; padding: 6px 4px 2px; }
+.rate .rst button { font-size: 32px; padding: 6px 8px; line-height: 1; }
+.rate .rlab { min-height: 1.4em; text-align: center; }
+.rate #rdone { margin-top: 6px; }
+
+/* ---------- Le parfumier privé : flottant, en bas à droite, sur chaque page ---------- */
+.pfab { position: fixed; right: 16px; bottom: 96px; z-index: 35; width: 58px; height: 58px; border-radius: 50%; border: 1px solid rgba(242, 235, 224, .3); background: radial-gradient(circle at 30% 25%, #b4394a, #6e1d2b 70%); color: #fff; box-shadow: 0 10px 30px rgba(0, 0, 0, .55), 0 0 0 6px rgba(180, 57, 74, .12); display: grid; place-items: center; cursor: pointer; transition: transform .25s cubic-bezier(.2, .9, .25, 1), box-shadow .25s; }
+.pfab:hover { transform: scale(1.06); }
+.pfab.on { transform: scale(.94); box-shadow: 0 6px 20px rgba(0, 0, 0, .5); }
+.pfab .pfa { font-size: 24px; line-height: 1; }
+.pfab .pfdot { position: absolute; top: 4px; right: 4px; width: 13px; height: 13px; border-radius: 50%; background: #f2ebe0; border: 2px solid #6e1d2b; animation: pfpulse 1.6s ease-in-out infinite; }
+@keyframes pfpulse { 50% { transform: scale(1.35); } }
+.pbub { position: fixed; right: 16px; bottom: 166px; z-index: 35; width: min(300px, calc(100vw - 32px)); padding: 18px 20px 16px; border-radius: 16px 16px 4px 16px; background: #1a1514; border: 1px solid rgba(242, 235, 224, .22); box-shadow: 0 16px 40px rgba(0, 0, 0, .6); font-size: 15px; line-height: 1.55; animation: pfin .45s cubic-bezier(.2, .9, .25, 1) both; }
+.pbub p { margin: 0; }
+.pbub .pbr { margin-top: 14px; display: flex; gap: 8px; }
+.pbub .pbx { position: absolute; top: 6px; right: 10px; border: 0; background: none; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; padding: 4px; }
+.ppanel { position: fixed; right: 12px; bottom: 96px; z-index: 36; width: min(400px, calc(100vw - 24px)); height: min(600px, calc(100dvh - 150px)); display: grid; grid-template-rows: auto 1fr auto auto; gap: 14px; padding: 18px; border-radius: 18px; background: #110e0d; border: 1px solid rgba(242, 235, 224, .2); box-shadow: 0 24px 60px rgba(0, 0, 0, .7); animation: pfin .4s cubic-bezier(.2, .9, .25, 1) both; transform-origin: bottom right; }
+.ppanel[hidden], .pbub[hidden], .pfab .pfdot[hidden] { display: none; }
+.ppanel > header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.ppanel > header b { display: block; font: 400 19px var(--f-display, serif); }
+.ppanel > header small { color: var(--muted); font-size: 12.5px; }
+.ppanel > header button { border: 0; background: none; color: var(--muted); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 4px; }
+.ppanel .cmsgs { max-height: none; min-height: 0; }
+.ppanel .cform input { padding: 13px 16px; }
+.ppanel #cchips:empty { display: none; }
+@keyframes pfin { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+.pfcard { display: grid; gap: 16px; padding: 28px 24px; }
+.pfcard h2 { margin: 0; }
+.pfcard p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+/* Conseils : plus d'air, rien ne se touche */
+#view[data-v=tips] > .sec { margin-top: 88px; gap: 32px; }
+#view[data-v=tips] > .sec:first-child { margin-top: 28px; }
+#view[data-v=tips] .tp .pricecard { padding: 24px 24px 22px; gap: 16px; }
+#view[data-v=tips] .stack { gap: 40px; }
+#view[data-v=tips] .rec { padding: 26px 22px 24px; gap: 20px; }
+#view[data-v=tips] .brail { gap: 12px; padding: 6px 0 20px; }
+#view[data-v=tips] .bsn { gap: 24px; }
+#view[data-v=tips] .bwhy { gap: 14px; line-height: 1.7; }
+#view[data-v=tips] .more > summary { padding: 20px 0; }
+#view[data-v=tips] .more.big > summary { padding: 22px 24px; }
+#view[data-v=tips] .tipc { margin-top: 18px; }
+@media (max-width: 480px) { .ppanel { right: 8px; width: calc(100vw - 16px); height: calc(100dvh - 130px); bottom: 90px; } }

@@ -94,7 +94,9 @@ await pg.fill('#su-mail', 'test@exemple.fr'); await pg.click('#su-ok'); await pg
 ok(store.has('email:test@exemple.fr'), 'email enregistré');
 // 5. fonction verrouillée
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
-await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); await pg.fill('#cin', 'un frais pour le bureau'); await pg.press('#cin', 'Enter'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
+await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); { let all = true; for (const t of ['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish']) { await pg.click('[data-tab=' + t + ']'); all = all && (await pg.locator('#pfab').isVisible()); } ok(all, 'parfumier privé : présent en bas à droite sur les 7 pages'); await pg.click('[data-tab=tips]'); }
+await pg.click('#pfab'); ok(await pg.locator('#ppanel').isVisible(), 'parfumier privé : la fenêtre de discussion s\'ouvre');
+await pg.fill('#cin', 'un frais pour le bureau'); await pg.press('#cin', 'Enter'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût'); await pg.evaluate(() => { document.getElementById('sheet').hidden = true; }); if (await pg.locator('#ppx').isVisible()) await pg.click('#ppx');
 // 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.click('[data-add=text]'); await pg.waitForSelector('#addtxt');
 await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
