@@ -47,7 +47,7 @@ def imgpack_artifact(pack_mb=5):
         if len(cur) + len(data) > pack_mb * 1024 * 1024: flush()
         idx[v] = [n, len(cur), len(data)]; cur += data
     flush()
-    fixed = set(v for v in new.values() if not v.startswith('img/p/')) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp')) | set('img/pl/' + f.name for f in (d/'img'/'pl').glob('*.webp'))
+    fixed = set(v for v in new.values() if not v.startswith('img/p/')) | set(re.findall(r'img/nose/[a-z0-9\-]+\.webp', (up/'imgnew.js').read_text())) | set('img/' + f.name for f in (d/'img').glob('*.webp')) | set('img/pl/' + f.name for f in (d/'img'/'pl').glob('*.webp')) | set('img/matieres/' + f.name for f in (d/'img'/'matieres').glob('*.webp'))
     files = sorted(fixed | {f'pk/{nm}.wasm' for nm in names})
     idx = {v: [names[a], b, c] for v, (a, b, c) in idx.items()}
     (d/'artifact-files.json').write_text(json.dumps(files), encoding='utf-8')

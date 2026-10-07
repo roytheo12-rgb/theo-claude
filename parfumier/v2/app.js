@@ -449,9 +449,11 @@
     const pool = needPool().filter((c) => !((g0 === 'm' && gd(c) === 'f') || (g0 === 'f' && gd(c) === 'm')) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!budget || (estPrice(c) > 0 && estPrice(c) <= budget)) && !(S.settings.tier && E.tierAdj(c, S.settings.tier, estPrice(c)).drop) && !(c.entry && c.entry.ed));
     const cov = E.coverage(P), pct = (v) => Math.max(0, Math.min(1, (v - 2) / 12));
     const base = cov.map((x) => x.best), avg = (a) => Math.round(100 * a.reduce((t, v) => t + pct(v), 0) / a.length);
-    const rows = pool.map((c) => ({ c, v: cov.map((x) => E.score(c, x.sc.c).total) }));
+    const rows = pool.filter((c) => !E.usHype(c)).map((c) => ({ c, v: cov.map((x) => E.score(c, x.sc.c).total) }));
     const pref = E.axisPref(P), famOwn = new Set(P.map((p) => p.family));
     const fk = (c) => { const w = E.norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'un', 'une', 'eau', 'de', 'du', 'd'].includes(x)); return E.norm(c.house) + '|' + (w[0] || E.norm(c.name)); };
+    // Les icônes des playlists d'inspiration et les grandes maisons d'abord, les marques surtout populaires aux États-Unis en retrait.
+    const houseWeight = (c) => 5 * E.provenOf(c).v + (E.nicheTop(c) ? 2.5 : 0) - (E.usHype(c) ? 6 : 0);
     const gain = (r, cur) => r.v.reduce((t, v, i) => t + Math.max(0, pct(v) - pct(cur[i])), 0) * 10;
     const fit = (c) => { const f = pref ? E.axisFit(c, pref) : 0; return f == null ? 0 : f; };
     const STRATS = [
@@ -464,8 +466,8 @@
     for (const [id, label, sub, f, keep] of STRATS) {
       const cur = base.slice(), fams = new Set(), houses = new Set(), items = [];
       for (let k = 0; k < 3; k++) {
-        const cand = rows.filter((r) => keep(r) && !fams.has(fk(r.c)) && !houses.has(E.norm(r.c.house)) && !items.some((i) => i.r === r)).map((r) => ({ r, sc: f(r, cur) - (usedG.has(r.c.name) ? 4 : 0) })).sort((a, b) => b.sc - a.sc)[0];
-        if (!cand || cand.sc <= 0) break;
+        const cand = rows.filter((r) => keep(r) && !fams.has(fk(r.c)) && !houses.has(E.norm(r.c.house)) && !items.some((i) => i.r === r)).map((r) => ({ r, raw: f(r, cur), sc: f(r, cur) + houseWeight(r.c) - (usedG.has(r.c.name) ? 4 : 0) })).filter((x) => x.raw > 0).sort((a, b) => b.sc - a.sc)[0];
+        if (!cand) break;
         const r = cand.r, ups = r.v.map((v, i) => ({ i, d: pct(v) - pct(cur[i]) })).filter((o) => o.d > 0.04).sort((a, b) => b.d - a.d).slice(0, 2).map((o) => cov[o.i].sc.label);
         r.v.forEach((v, i) => { cur[i] = Math.max(cur[i], v); });
         fams.add(fk(r.c)); houses.add(E.norm(r.c.house)); usedG.add(r.c.name);
