@@ -123,7 +123,7 @@ const EDIT_MISS = [], INTROUV = [];
     if ((m = l.match(/^\+([HF])? (.*)$/))) { const forced = m[1] === 'H' ? 'm' : m[1] === 'F' ? 'f' : null; m[1] = m[2]; const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const okGrp = p.grp && p.grp.every((g) => typeof g.n === 'number') && p.grp.reduce((a, g) => a + g.n, 0) === p.ps.length && !rep; let ex; if (forced && okGrp) { const gi0 = p.grp.findIndex((x) => (forced === 'm' && /homme/i.test(x.t)) || (forced === 'f' && /femme/i.test(x.t))); if (gi0 >= 0) { let a0 = 0; for (let i = 0; i < gi0; i++) a0 += p.grp[i].n; ex = p.ps.slice(a0, a0 + p.grp[gi0].n).find((x) => key(x) === key(o)); } else ex = p.ps.find((x) => key(x) === key(o)); } else ex = p.ps.find((x) => key(x) === key(o)); if (ex) { if (w) ex.w = w; } else if (okGrp) { const fk = (w2.FACTS || {})[norm(HA[norm(o.h)] || o.h) + '|' + norm(o.n)] || (w2.FACTS || {})[norm(o.h) + '|' + norm(o.n)], g = forced || (fk && fk.g); let gi = p.grp.findIndex((x) => (g === 'm' && /homme/i.test(x.t)) || (g === 'f' && /femme/i.test(x.t))); if (gi < 0) gi = p.grp.reduce((b, x, i) => (x.n < p.grp[b].n ? i : b), 0); let at = 0; for (let i = 0; i <= gi; i++) at += p.grp[i].n; p.ps.splice(at, 0, o); p.grp[gi].n++; } else p.ps.push(o); continue; }
     if ((m = l.match(/^g: ([^|]+) \| (.*)$/))) { const g0 = (p.grp || []).find((x) => norm(x.t) === norm(m[1])); if (g0) g0.d = m[2].trim(); continue; }      // « g: Homme | texte » : description d'un groupe
     if ((m = l.match(/^\^ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; p.ps = p.ps.filter((x) => key(x) !== key(o)); p.ps.unshift(o); continue; }      // « ^ » : en tête de liste (playlists sans groupes)
-    if ((m = l.match(/^~ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const ex = (rep || p.ps).find((x) => key(x) === key(o)); if (ex) ex.w = w; else EDIT_MISS.push(p.t + ' / ' + q); continue; }
+    if ((m = l.match(/^~ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const exs = (rep || p.ps).filter((x) => key(x) === key(o)); if (exs.length) exs.forEach((ex) => { if (/^Choix d.experts/.test(ex.w || '')) ex.pick = 1; ex.w = w; }); else EDIT_MISS.push(p.t + ' / ' + q); continue; }
     if ((m = l.match(/^x (.*)$/))) { const o = mk(m[1].trim(), ''); if (!o) continue; if (p.grp && p.grp.every((g) => typeof g.n === 'number') && p.grp.reduce((a, g) => a + g.n, 0) === p.ps.length) { for (let ix = p.ps.length - 1; ix >= 0; ix--) { if (key(p.ps[ix]) !== key(o)) continue; let c = 0; for (const g of p.grp) { c += g.n; if (ix < c) { g.n--; break; } } p.ps.splice(ix, 1); } } else p.ps = p.ps.filter((x) => key(x) !== key(o)); continue; }
   }
   fin();
@@ -216,7 +216,7 @@ function out() {
       if (txt) doc.push(ln ? { t: txt, s: ln[1], u: ln[2] } : { t: txt });
     });
     const sl = slug(p.t); if (p.grp) { p.grp.forEach((g, gi) => { if (!g.n) g.n = gi === p.grp.length - 1 ? p.ps.length - (gi * 10) : 10; }); }
-    const o = { id: p.id, s: sl, top: p.top ? 1 : undefined, grp: p.grp, secs: p.secs || SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.w) r.w = x.w; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
+    const o = { id: p.id, s: sl, top: p.top ? 1 : undefined, grp: p.grp, secs: p.secs || SECS_OF(p), t: p.t, d: p.d, c: [a, b, c], m, ps: p.ps.map((x) => { const key = norm(x.h + ' ' + x.n); const hs = p.id === 79 ? HIST[norm(x.q)] : null; const r = { q: x.q }; if (x.w) r.w = x.w; if (x.pick || /^Choix d.experts/.test(x.w || '')) r.pk = 1; if (x.h) { r.h = x.h; r.n = x.n; } if (hs) r.lab = hs; return r; }) };
     if (p.id === 79) { doc.length = 0; doc.push({ t: 'La maison Atkinsons et le 24 Old Bond Street sont historiquement documentés ; le flacon d\'aujourd\'hui est une réinterprétation moderne de cet héritage, pas un flacon inchangé depuis le XIXe siècle.', s: 'Atkinsons 1799', u: 'https://www.atkinsons1799.com/pages/history' }); }
     if (fs.existsSync(path.join(root, 'v2', 'img', 'pl', sl + '.webp'))) o.img = 'img/pl/' + sl + '.webp';
     if (p.doc2) p.doc2.forEach((d) => doc.push(d));
@@ -245,12 +245,12 @@ function out() {
   res.forEach((o) => {
     if (o.id === 79 || o.id === 81) return;
     const segs = []; if (o.grp) { let a = 0; o.grp.forEach((g) => { segs.push(o.ps.slice(a, a + g.n)); a += g.n; }); } else segs.push(o.ps.slice());
-    const done = segs.map((L) => { const top = L.filter((x) => /^Choix d.experts/.test(x.w || '')), rest = L.filter((x) => !/^Choix d.experts/.test(x.w || '')), M = o.id === 340 || /^(Je veux|Aimant)/.test(o.t) ? top.concat(rest) : top.concat(rest);
+    const done = segs.map((L) => { const top = L.filter((x) => x.pk), rest = L.filter((x) => !x.pk), M = o.id === 340 || /^(Je veux|Aimant)/.test(o.t) ? top.concat(rest) : top.concat(rest);
       PAIR_ROWS.forEach(([bs, ex]) => { const ie = M.findIndex((x) => pk(x) === ex), ib = M.findIndex((x) => pk(x) === bs); if (ie >= 0 && ib >= 0 && ie !== ib + 1) { const [e] = M.splice(ie, 1); M.splice(M.findIndex((x) => pk(x) === bs) + 1, 0, e); } });
       return M; });
     o.ps = [].concat(...done);
   });
-  res.forEach((o) => o.ps.forEach((x) => { if (x.w) x.w = x.w.replace(/\s+[—–]\s+/g, ', '); }));      // pas de tirets cadratins dans les phrases
+  res.forEach((o) => o.ps.forEach((x) => { delete x.pk; if (x.w) x.w = x.w.replace(/\s+[—–]\s+/g, ', '); }));      // pas de tirets cadratins dans les phrases
   fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(SEC_ORDER) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
   console.log('playlists.js', res.length);
 }
