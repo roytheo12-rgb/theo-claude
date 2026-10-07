@@ -139,6 +139,7 @@ const EDIT_MISS = [], INTROUV = [];
   PLS.forEach((p) => { const keep = []; p.ps.forEach((x, i) => { if (!x.h && expand(x.q).some((e) => gone.has(e))) { if (p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (i < c) { g.n--; break; } } } } else keep.push(x); }); p.ps = keep; });
 })();
 // versions jumelées (data/pair-versions.txt) : quand la version de base ou l'extrait est dans une playlist (ou un groupe Homme / Femme), l'autre y figure juste après
+const PAIR_NO_ADD = { 'Aimant à compliments': ['maison francis kurkdjian oud satin mood extrait', 'maison francis kurkdjian baccarat rouge 540'] };      // versions qu'on ne rajoute pas automatiquement dans ces playlists
 const PAIR_EXT_ONLY = { 'It Boy': ['maison francis kurkdjian oud satin mood', 'bdk parfums gris charnel'] };      // playlists où seule la version extrait est gardée
 (function pairVersions() {
   const f = path.join(root, 'data', 'pair-versions.txt'); if (!fs.existsSync(f)) return;
@@ -156,8 +157,8 @@ const PAIR_EXT_ONLY = { 'It Boy': ['maison francis kurkdjian oud satin mood', 'b
         const [a, b] = bounds()[gi]; const part = p.ps.slice(a, b), keys = part.map(kk);
         const ib = keys.indexOf(kb), ie = keys.indexOf(ke);
         if (ib < 0 && ie < 0) continue;
-        if (ib >= 0 && ie < 0) { p.ps.splice(a + ib + 1, 0, mkE(he, w)); if (gr) gr[gi].n++; }
-        else if (ie >= 0 && ib < 0 && !((PAIR_EXT_ONLY[p.t] || []).includes(kb))) { p.ps.splice(a + ie, 0, mkE(hb, wb)); if (gr) gr[gi].n++; }
+        if (ib >= 0 && ie < 0 && !((PAIR_NO_ADD[p.t] || []).includes(ke))) { p.ps.splice(a + ib + 1, 0, mkE(he, w)); if (gr) gr[gi].n++; }
+        else if (ie >= 0 && ib < 0 && !((PAIR_EXT_ONLY[p.t] || []).includes(kb)) && !((PAIR_NO_ADD[p.t] || []).includes(kb))) { p.ps.splice(a + ie, 0, mkE(hb, wb)); if (gr) gr[gi].n++; }
       }
     });
   });

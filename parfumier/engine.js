@@ -431,6 +431,23 @@
     if (st.liked && st.liked.length) { const h = st.liked.filter((l) => l && nt.some((n) => n.includes(norm(l)))).length; s += Math.min(1.2, h * .6); if (h) why.push('une note que tu aimes'); }
     if (st.avoid && st.avoid.length && st.avoid.some((a) => a && nt.some((n) => n.includes(norm(a))))) return null;
     if (need.cheap || need.flags.cheap) { max += 1; if (c.price && c.price <= 100) s += 1; }
+    // 6c) fiche éditoriale : situations, mood et faiblesses cités par sa propre fiche
+    const ff = ficheFit(c, Object.assign({}, cond, { tags: need.tags, want: need.cond.want }), need.text, st);
+    if (ff) { max += 2; s += ff.v; ff.why.slice(0, 1).forEach((w2) => why.unshift(w2)); ff.warn.slice(0, 1).forEach((w2) => why.push('⚠ ' + w2)); }
+    // 6d) ce qu'on sait de la personne : goûts calculés sur sa collection, maisons aimées, budget, saison
+    const U = userCtx(st);
+    if (U) {
+      const tt = taste(c, U.prof); max += 1.5; s += clamp(tt.s * .3, -1.2, 1.5);
+      if (tt.hits.length) why.unshift('tu aimes déjà ' + tt.hits.slice(0, 2).join(' et '));
+      const af = axisFit(c, U.pref);
+      if (af != null) { max += 1.8; s += 1.8 * clamp(af, -1, 1); if (af > .35) { const aw = axisWhy(c, U.pref); if (aw.length) why.push('dans ton goût ' + aw[0]); } }
+      const hf = U.houseAff[norm(c.house)] || 0; if (hf) { s += .5 * hf; if (hf > 0) why.push('une maison que tu aimes'); }
+      let best = null, bs = 0; for (const lv of U.loved) { let sh = 0; nt.forEach((n) => { if (lv.notes.some((m) => m === n || m.includes(n) || n.includes(m))) sh++; }); if (sh >= 2 && sh > bs) { bs = sh; best = lv; } }
+      if (best) { s += .4; why.push('proche de ' + best.name + ', que tu aimes'); }
+      if (U.owned.has(norm(c.name))) { s -= 1.8; why.unshift('tu l\'as déjà dans ta collection'); }
+      if (st.budget > 0 && c.price > st.budget * 1.2 && !need.maxPrice) s -= 1;
+      if (pf && pf.s && !pf.derived && need.cond.temp == null) { const mo = st.month != null ? st.month : new Date().getMonth(), si = mo >= 2 && mo <= 4 ? 0 : mo >= 5 && mo <= 7 ? 1 : mo >= 8 && mo <= 10 ? 2 : 3; max += .8; s += clamp((pf.s[si] - 3) * .3, -.8, .8); }
+    }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
@@ -509,7 +526,7 @@
   // Pourquoi ce parfum colle (ou pas) aux goûts : les axes qui comptent le plus.
   function axisWhy(c, pref) {
     const q = profOf(c); if (!q || !pref) return [];
-    return q.p.map((x, i) => ({ a: AXN[i], v: pref[i] * (x - 2.5) })).filter((o) => o.v > 1.1).sort((a, b) => b.v - a.v).slice(0, 2).map((o) => AXL[o.a]);
+    return q.p.map((x, i) => ({ a: AXN[i], v: pref[i] * (x - 2.5), hi: x >= 3.5 && pref[i] > 0.25 })).filter((o) => o.v > 1.1 && o.hi).sort((a, b) => b.v - a.v).slice(0, 2).map((o) => AXL[o.a]);
   }
   // Compare des parfums du même accord entre eux pour une personne : classement + ce qui les départage.
   function rankByFit(list, pref) {
@@ -564,6 +581,67 @@
     if (k.use === 'daily' && k.ml >= 30) v += 0.5;
     return v;
   }
+
+  // ---------- Fiche éditoriale : ce que la fiche dit du moment, du caractère et des faiblesses ----------
+  const edOf = (c) => { const ED = root.EDITORIAL; if (!ED || !c) return null; const HA = root.HOUSE_ALIAS || {}, h = norm(c.house), n = norm(c.name); return ED[norm(HA[h] || c.house) + '|' + n] || ED[h + '|' + n] || null; };
+  const CTXSYN = { pro: ['bureau', 'travail', 'reunion', 'professionnel', 'entretien', 'collegues'], perso: ['quotidien', 'tous les jours', 'ville', 'balade'], date: ['rendez', 'diner', 'amoureux', 'romantique', 'seduction', 'date', 'premier verre'], event: ['mariage', 'ceremonie', 'gala', 'fete', 'evenement', 'reception', 'occasion'], famille: ['famille', 'dimanche', 'dejeuner', 'repas'], amis: ['amis', 'sortie', 'bar', 'apero', 'concert', 'fete'] };
+  const MOMSYN = { jour: ['matin', 'journee', 'apres midi', 'dejeuner', 'soleil'], soir: ['soir', 'diner', 'soiree'], nuit: ['nuit', 'boite', 'after', 'minuit', 'club'] };
+  const VENSYN = { resto: ['restaurant', 'diner', 'table', 'repas'], bar: ['bar', 'cocktail', 'apero'], boite: ['boite', 'club', 'nuit', 'danse'], musee: ['musee', 'expo', 'galerie'], concert: ['concert', 'festival', 'musique'], theatre: ['theatre', 'opera', 'spectacle'], bureau: ['bureau', 'travail'], maison: ['cocooning', 'canape', 'lecture', 'maison'], dehors: ['balade', 'plein air', 'nature', 'marche'] };
+  const MOODSYN = { confiant: ['confiance', 'assure', 'charisme'], calme: ['calme', 'serein', 'apaisant', 'zen'], energique: ['energie', 'tonique', 'dynamique', 'vif', 'sport'], romantique: ['romantique', 'amoureux', 'tendre', 'sensuel'], mysterieux: ['mystere', 'sombre', 'nocturne', 'envoutant'], joyeux: ['joyeux', 'solaire', 'lumineux', 'festif'], fatigue: ['reconfort', 'cocon', 'rassurant'], creatif: ['creatif', 'original', 'artistique'] };
+  const STOPW = new Set(['pour', 'avec', 'sans', 'dans', 'trop', 'plus', 'moins', 'parfum', 'comme', 'tres', 'etre', 'veux', 'quelque', 'chose', 'cette', 'mon', 'mes', 'une', 'des', 'les', 'qui', 'que', 'pas', 'tout', 'fait', 'faire']);
+  function condWords(cond, text) {
+    const w = new Set(), add = (a) => (a || []).forEach((x) => w.add(x));
+    cond = cond || {};
+    add(CTXSYN[cond.ctx]); add(MOMSYN[cond.moment]); add(VENSYN[cond.venue]); add(MOODSYN[cond.mood]);
+    if (cond.temp != null) add(cond.temp >= 24 ? ['ete', 'plage', 'vacances', 'chaleur', 'terrasse', 'piscine', 'farniente'] : cond.temp <= 8 ? ['hiver', 'neige', 'froid', 'cheminee', 'cocooning', 'manteau', 'ski'] : ['printemps', 'automne', 'mi saison']);
+    norm(text || '').split(' ').filter((x) => x.length >= 4 && !STOPW.has(x)).forEach((x) => w.add(x));
+    return [...w];
+  }
+  const blobHas = (blob, t) => t.length >= 5 ? blob.includes(t) : (' ' + blob + ' ').includes(' ' + t + ' ');
+  // Retourne { v, why[], warn[] } : bonus quand la fiche cite la situation, le mood ou la force demandés ; malus quand une faiblesse décrite contredit la demande.
+  function ficheFit(c, cond, text, st) {
+    const ed = edOf(c); if (!ed) return null;
+    cond = cond || {}; st = st || {};
+    const words = condWords(cond, text), out = { v: 0, why: [], warn: [], ed };
+    const strong = condWords({ ctx: cond.ctx, venue: cond.venue }, text), weakOnly = (t) => !strong.includes(t);
+    const sits = (ed.sit || []).map((s) => ({ s, b: norm(s) }));
+    const hitsS = sits.filter((x) => strong.some((t) => blobHas(x.b, t))), hitsW = sits.filter((x) => !hitsS.includes(x) && words.filter(weakOnly).some((t) => blobHas(x.b, t)));
+    const hits = hitsS.concat(hitsW);
+    if (hitsS.length) { out.v += 1.6 + (hits.length > 1 ? 0.4 : 0); out.why.push('sa fiche cite : ' + hitsS[0].s.replace(/^./, (m) => m.toLowerCase()).slice(0, 70)); }
+    else if (hitsW.length) { out.v += 0.6; if (cond.ctx == null && cond.venue == null) out.why.push('sa fiche cite : ' + hitsW[0].s.replace(/^./, (m) => m.toLowerCase()).slice(0, 70)); }
+    if (ed.mood) { const mb = norm(ed.mood); if (words.some((t) => blobHas(mb, t))) { out.v += 0.7; if (!out.why.length) out.why.push('son mood : ' + String(ed.mood).toLowerCase().slice(0, 50)); } }
+    const fb = (ed.forts || []).map(norm).join(' ');
+    if (fb && words.filter((t) => t.length >= 5 && !CTXSYN[t]).some((t) => fb.includes(t))) out.v += 0.5;
+    const fa = (ed.faibles || []).map(norm).join(' ');
+    const warn = (re, msg, pen) => { if (re.test(fa)) { out.v -= pen; out.warn.push(msg); } };
+    const quiet = cond.ctx === 'pro' || ['collegues', 'boss'].includes(cond.with) || ['resto', 'theatre', 'musee', 'bureau'].includes(cond.venue) || (cond.want === 'discret') || (cond.tags || []).includes('discret');
+    if (quiet) warn(/(sillage|projection)[^.]{0,30}(enorme|puissant|important|massif|envahissant|tres present|monstre)|ecrasant|envahissant|tres clivant|polarisant/, 'sa fiche prévient : un sillage qui peut peser dans ce cadre', 1.3);
+    if (cond.temp != null && cond.temp >= 26) warn(/lourd|capiteux|etouffant|ecoeurant|sirupeux/, 'sa fiche prévient : plutôt lourd quand il fait chaud', 1.2);
+    if (cond.temp != null && cond.temp <= 6) warn(/evanescent|fugace|trop leger|s'estompe vite|disparait vite/, 'sa fiche prévient : un peu léger pour le froid', 0.8);
+    if (cond.dur === 'longue') warn(/(tenue|longevite)[^.]{0,20}(courte|moyenne|faible|limitee)|disparait|s'estompe|part vite/, 'sa fiche prévient : une tenue qui ne couvre pas toute la journée', 1.0);
+    if (['statement', 'sent'].includes(cond.want) || (cond.tags || []).includes('statement')) warn(/(sillage|projection)[^.]{0,20}(discret|faible|intime|leger)|passe inaperçu/, 'sa fiche prévient : un sillage discret', 0.9);
+    const age = +st.age || 0, pm = ed.pour ? String(ed.pour).match(/(\d{2})\s*[-–à]\s*(\d{2})/) : null;
+    if (age && pm) { const lo = +pm[1], hi = +pm[2]; if (age >= lo - 2 && age <= hi + 2) { out.v += 0.4; } else if (age < lo - 10 || age > hi + 12) { out.v -= 0.5; out.warn.push('sa fiche vise plutôt ' + lo + ' à ' + hi + ' ans'); } }
+    out.v = clamp(out.v, -2.4, 2.8);
+    return out;
+  }
+  // Contexte personnel mémorisé : goûts calculés sur la collection (notes, familles, axes), maisons aimées, budget, saison.
+  let UCACHE = { k: '', v: null };
+  function userCtx(st) {
+    const col = (st && st.collection) || [];
+    if (!col.length && !(st && ((st.liked || []).length || (st.avoid || []).length || st.vibes && st.vibes.length))) return null;
+    const k = col.map((p) => (p.id || p.name) + ':' + (p.rating || 3)).join(',') + '|' + (st.liked || []).join(',') + '|' + (st.avoid || []).join(',') + '|' + (st.vibes || []).join(',') + (st.power || '') + (st.occ || []).join(',') + (st.age || '') + (st.gender || '');
+    if (UCACHE.k === k && UCACHE.v) return UCACHE.v;
+    const prof = tasteProfile(col, st || {}); let pref = axisPref(col);
+    const prior = priorVec(st || {}); if (prior) pref = pref ? pref.map((x, i) => x + 0.35 * prior[i]) : prior.map((x) => x * 0.8);
+    const vv = vibeVec(st || {}); if (vv) pref = pref ? pref.map((x, i) => x + 0.7 * vv[i]) : vv.map((x) => x * 0.9);
+    const houseAff = {}, hn = {}; col.forEach((p) => { const h = norm(p.house); (hn[h] = hn[h] || []).push(p.rating || 3); });
+    Object.keys(hn).forEach((h) => { const a = hn[h].reduce((x, y) => x + y, 0) / hn[h].length; houseAff[h] = a >= 4 ? 1 : a <= 2.5 ? -1 : 0; });
+    const loved = col.filter((p) => (p.rating || 3) >= 4 && (p.notes || []).length >= 3).map((p) => ({ name: p.name, notes: p.notes.map(norm), r: p.rating }));
+    const v = { prof, pref, houseAff, loved, owned: new Set(col.map((p) => norm(p.name))), n: col.length };
+    UCACHE = { k, v }; return v;
+  }
+
   function score(p, cond, st) {
     st = st || {};
     const tags = perfumeTags(p);
@@ -603,12 +681,15 @@
     const days = st.daysSince ? st.daysSince(p.id) : null;
     if (days != null) parts.perso += days === 0 ? -3 : days === 1 ? -1.5 : days === 2 ? -0.7 : days >= 14 ? 0.5 : 0;
     if (st.daysSince) parts.stock = stockEffect(p, cond); // pas dans le calcul des manques de collection
+    const ff = st.noFiche ? null : ficheFit(p, cond, '', st);
+    parts.fiche = ff ? ff.v : 0;
     const total = Object.values(parts).reduce((a, b) => a + b, 0);
-    return { total, parts };
+    return { total, parts, fiche: ff };
   }
 
-  function reasons(p, cond, parts) {
+  function reasons(p, cond, parts, fiche) {
     const r = [];
+    if (fiche) { fiche.why.slice(0, 1).forEach((x) => r.push(x.charAt(0).toUpperCase() + x.slice(1))); fiche.warn.slice(0, 1).forEach((x) => r.push('⚠ ' + x.charAt(0).toUpperCase() + x.slice(1))); }
     if (parts.weather >= 1) r.push(`Météo : ${weatherLabel(cond)}`);
     if (parts.ctx >= 1.5) r.push(`Colle à ta journée (${CONTEXTS[cond.ctx].toLowerCase()} · ${WITHS[cond.with].toLowerCase()})`);
     if (parts.mood >= 1) r.push(`Épouse ton mood (${MOODS[cond.mood].toLowerCase()})`);
@@ -632,7 +713,7 @@
 
   function rank(collection, cond, st) {
     return collection
-      .map((p) => { const s = score(p, cond, st); return { p, total: s.total, parts: s.parts, reasons: reasons(p, cond, s.parts) }; })
+      .map((p) => { const s = score(p, cond, st); return { p, total: s.total, parts: s.parts, reasons: reasons(p, cond, s.parts, s.fiche) }; })
       .sort((a, b) => b.total - a.total);
   }
 
@@ -859,17 +940,23 @@
       const budFit = budget > 0 && c.price > 0 ? (c.price <= budget ? (c.price >= 0.3 * budget ? 0.5 : 0.2) : -2.5) : 0;
       const tierFit = pf && pf.tier === 'S' ? 0.7 : pf && pf.tier === 'A' ? 0.35 : 0;
       const hf = houseAff[norm(c.house)] || 0;
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf;
+      // La fiche du parfum : occasions que la personne a cochées (bureau, rendez-vous, soirée, été, hiver) et sillage voulu.
+      let fv = 0, fwhy = '';
+      const OCC_C = { bureau: { ctx: 'pro' }, soiree: { ctx: 'event', moment: 'soir' }, rdv: { ctx: 'date' }, quotidien: { ctx: 'perso' }, ete: { temp: 28 }, hiver: { temp: 4 } };
+      for (const o of settings.occ || []) { const cd = OCC_C[o]; if (!cd) continue; const f = ficheFit(c, Object.assign({}, cd, settings.power === 'discret' ? { want: 'discret' } : {}), '', settings); if (f && f.v > fv) { fv = f.v; fwhy = f.why[0] || ''; } }
+      if (settings.power === 'discret' || settings.power === 'fort') { const f = ficheFit(c, { want: settings.power === 'discret' ? 'discret' : 'statement' }, '', settings); if (f && f.warn.length) fv -= 1; }
+      fv = clamp(fv, -1.5, 2) * 0.6;
+      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
         c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
-        wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
+        ficheWhy: fv > .4 ? fwhy : '', wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
       });
     }
     return calibrate(out, settings, collection);
   }
 
-  const api = { wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

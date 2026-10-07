@@ -79,7 +79,7 @@ export function makeWorker(deps = {}) {
         const vid = request.headers.get('x-visitor') || '';
         if (!VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
         let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
-        if (typeof body.collection !== 'string' || body.collection.length < 20 || body.collection.length > 16000) return reply({ code: 'collection' }, 400);
+        if (typeof body.collection !== 'string' || body.collection.length < 20 || body.collection.length > 26000) return reply({ code: 'collection' }, 400);
 
         const used = int(await kv.get(`v:${vid}`), 0), ipUsed = int(await kv.get(ipKey), 0);
         if (used >= max || ipUsed >= ipMax) return reply({ code: 'quota', left: 0 }, 429);
@@ -88,6 +88,7 @@ export function makeWorker(deps = {}) {
 
         const args = {
           collection: body.collection,
+          taste: String(body.taste || '').slice(0, 1800),
           text: String(body.text || '').slice(0, 600),
           explicit: String(body.explicit || '').slice(0, 500),
           wx: body.wx && typeof body.wx === 'object' ? { l: String(body.wx.l || '').slice(0, 30), t: Number(body.wx.t) || 0, rain: !!body.wx.rain } : null,
@@ -138,7 +139,7 @@ export function makeWorker(deps = {}) {
         const capKey = `cap:${today()}`;
         if (int(await kv.get(capKey), 0) >= cap) return reply({ code: 'busy', left: Math.max(0, max - used) }, 429);
         const g = body.profile && typeof body.profile === 'object' ? body.profile : {}, age = Math.round(Number(g.age));
-        const args = { need, shortlist: String(body.shortlist || '').slice(0, 9000), collection: String(body.collection || '').slice(0, 3000), profile: { gender: GENDERS.includes(g.gender) ? g.gender : '', age: age >= 10 && age <= 99 ? age : null } };
+        const args = { need, shortlist: String(body.shortlist || '').slice(0, 14000), collection: String(body.collection || '').slice(0, 4500), taste: String(body.taste || '').slice(0, 1800), profile: { gender: GENDERS.includes(g.gender) ? g.gender : '', age: age >= 10 && age <= 99 ? age : null } };
         let data;
         try {
           const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });

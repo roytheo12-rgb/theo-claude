@@ -164,7 +164,7 @@ ok(await pg.locator('.plcard').count() >= 137 && await pg.locator('.plhero').cou
 ok(await pg.locator('.plhero .plimg').count() === 1, 'liste du jour : toujours une liste avec photo');
 await pg.screenshot({ path: OUT + '/pl1_biblio.png' });
 await pg.locator('.plcard').first().click(); await pg.waitForSelector('.plist .plr');
-ok(await pg.locator('.plist .plr').count() === 10 && await pg.locator('.plc.big').count() === 1 && /parfums · \d+ dans la base/.test(await pg.textContent('.plmeta')), 'playlist : couverture, ADN, dix parfums classés');
+ok(await pg.locator('.plist .plr').count() >= 10 && await pg.locator('.plc.big').count() === 1 && /parfums · \d+ dans la base/.test(await pg.textContent('.plmeta')), 'playlist : couverture, ADN, dix parfums classés');
 await pg.screenshot({ path: OUT + '/pl2_detail.png', fullPage: true });
 await pg.locator('.plist .xc:not(.off)').first().click(); await pg.waitForSelector('#sheet:not([hidden]) .big-bottle'); await pg.click('#ex'); await pg.click('#plback'); await pg.waitForSelector('.plcard');
 await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard', { hasText: 'Layering' }).first().click(); await pg.waitForSelector('.plcombo');

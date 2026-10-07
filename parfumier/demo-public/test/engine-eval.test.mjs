@@ -85,3 +85,19 @@ assert.ok(E.searchNeed(P, E.parseNeed('boisé'), { gender: 'm' }, 30).every((r) 
 }
 console.log(`\n${ok}/${ok + fail} besoins au niveau, pool ${P.length}`);
 assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
+
+// ── Intelligence : la fiche éditoriale et la collection de la personne comptent dans le conseil ──
+{
+  const col = [{ id: 1, name: 'Baccarat Rouge 540', house: 'Maison Francis Kurkdjian', rating: 5, notes: ['jasmin', 'safran', 'ambre', 'cèdre'], family: 'ambré' }, { id: 2, name: 'Aventus', house: 'Creed', rating: 2, notes: ['ananas', 'bouleau', 'musc'], family: 'boisé' }];
+  const need = E.parseNeed('premier rendez-vous, pas trop sucré');
+  const neutral = E.searchNeed(P, need, {}, 8), perso = E.searchNeed(P, need, { collection: col, liked: ['safran'], age: 30 }, 8);
+  assert.ok(neutral.some((r) => r.m.why.some((w) => /sa fiche cite/.test(w))), 'la fiche est citée dans les raisons');
+  assert.ok(perso.some((r) => r.m.why.some((w) => /tu aimes déjà|proche de|dans ton goût/.test(w))), 'les raisons parlent de la personne');
+  assert.notDeepEqual(neutral.map((r) => r.c.name), perso.map((r) => r.c.name), 'deux personnes différentes n\'ont pas la même liste');
+  const own = E.searchNeed(P, E.parseNeed('ambré chaud pour la soirée'), { collection: col }, 30).find((r) => /Baccarat Rouge 540/.test(r.c.name));
+  assert.ok(!own || own.m.why.some((w) => /déjà dans ta collection/.test(w)), 'un parfum déjà possédé est signalé');
+  // une faiblesse écrite dans la fiche pèse dans le contexte (sillage fort au bureau)
+  const warn = P.map((c) => ({ c, f: E.ficheFit(c, { ctx: 'pro' }, '', {}) })).filter((x) => x.f && x.f.warn.length);
+  assert.ok(warn.length > 0, 'des fiches préviennent d\'un sillage qui pèse au bureau');
+  console.log('ok intelligence : fiche citée, goûts de la personne, parfum déjà possédé, mises en garde (' + warn.length + ' fiches)');
+}

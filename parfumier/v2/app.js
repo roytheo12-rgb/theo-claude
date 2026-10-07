@@ -115,7 +115,7 @@
   migrate(); save();
 
   // ---------- Utilitaires métier ----------
-  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [], gender: S.profile && S.profile.gender });
+  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [], gender: S.profile && S.profile.gender, age: S.profile && S.profile.age });
   const find = (id) => S.collection.find((p) => p.id === id);
   const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
   const daysSince = (id) => {
@@ -154,7 +154,33 @@
   const wears = (id) => S.log.filter((l) => l.id === id).length;
   const words = (t, base) => String(t || '').split(/\s+/).filter(Boolean).map((w, i) => `<span class="w" style="--i:${i};--d:${base || 0}">${esc(w)}</span>`).join(' ');
   const dots = (n) => '<span class="dots">' + [1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'f' : ''}"></i>`).join('') + '</span>';
-  const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))} | stock : ${E.stockOf(p).ml} ml sur ${E.stockOf(p).size} ml, usage ${E.STOCK_USES[E.stockOf(p).use].toLowerCase()}`).join('\n');
+  // Ce que dit la fiche éditoriale d'un parfum, en une ligne pour l'IA : force, réserve, public, situations, mood.
+  const cutTx = (s, n) => String(s || '').replace(/\s+/g, ' ').trim().slice(0, n);
+  const ficheBits = (c) => { const d = edOf(c); if (!d) return ''; return [(d.forts || [])[0] ? 'force ' + cutTx(d.forts[0], 80) : '', (d.faibles || [])[0] ? 'réserve ' + cutTx(d.faibles[0], 80) : '', d.pour ? 'pour ' + cutTx(String(d.pour).replace(/\(.*?\)/g, ''), 90) : '', (d.sit || []).length ? 'situations ' + d.sit.slice(0, 3).map((x) => cutTx(x, 40)).join(' / ') : '', d.mood ? 'mood ' + cutTx(d.mood, 40) : ''].filter(Boolean).join(' ; '); };
+  // Résumé de la personne pour l'IA : goûts déclarés, parfums adorés ou refusés, maisons, habitudes de port, budget, saison, wishlist.
+  const VIBE_TX = { frais: 'frais', sucre: 'sucré', sensuel: 'sensuel', elegant: 'élégant', naturel: 'naturel', original: 'original', classique: 'classique' }, POW_TX = { discret: 'discrète', present: 'présente', fort: 'forte' };
+  const tasteLine = () => {
+    const st = S.settings || {}, col = S.collection || [], bits = [];
+    if ((st.liked || []).length) bits.push('Notes que j\'adore : ' + st.liked.join(', ') + '.');
+    if ((st.avoid || []).length) bits.push('Notes que je fuis : ' + st.avoid.join(', ') + '.');
+    if ((st.vibes || []).length) bits.push('Ambiances que je cherche : ' + st.vibes.map((k) => VIBE_TX[k] || k).join(', ') + '.');
+    if (st.power) bits.push('Sillage voulu : ' + (POW_TX[st.power] || st.power) + '.');
+    if ((st.occ || []).length) bits.push('Occasions qui comptent : ' + st.occ.join(', ') + '.');
+    if (st.budget) bits.push('Budget habituel : ' + st.budget + ' €.');
+    const top = col.filter((p) => (p.rating || 3) >= 4).sort((x, y) => (y.rating || 3) - (x.rating || 3)).slice(0, 6), low = col.filter((p) => (p.rating || 3) <= 2).slice(0, 4);
+    if (top.length) bits.push('Mes préférés : ' + top.map((p) => `${p.name} (${p.house}, ${p.rating}/5, ${(p.notes || []).slice(0, 4).join(', ')})`).join(' ; ') + '.');
+    if (low.length) bits.push('Ceux que j\'aime moins : ' + low.map((p) => `${p.name} (${p.rating}/5, ${(p.notes || []).slice(0, 3).join(', ')})`).join(' ; ') + '.');
+    const hs = {}; col.forEach((p) => { (hs[p.house] = hs[p.house] || []).push(p.rating || 3); });
+    const liked = Object.keys(hs).filter((h) => hs[h].length >= 2 && hs[h].reduce((x, y) => x + y, 0) / hs[h].length >= 4);
+    if (liked.length) bits.push('Maisons que j\'aime : ' + liked.slice(0, 5).join(', ') + '.');
+    const cnt = {}; S.log.forEach((l) => { cnt[l.id] = (cnt[l.id] || 0) + 1; });
+    const worn = Object.keys(cnt).sort((x, y) => cnt[y] - cnt[x]).slice(0, 3).map((id) => find(id)).filter(Boolean);
+    if (worn.length) bits.push('Ceux que je porte le plus : ' + worn.map((p) => p.name).join(', ') + '.');
+    const wl = (S.wishlist || []).slice(0, 6).map((w) => w.name).filter(Boolean); if (wl.length) bits.push('Sur ma liste d\'envies : ' + wl.join(', ') + '.');
+    const m = new Date().getMonth(); bits.push('Saison : ' + (m >= 2 && m <= 4 ? 'printemps' : m >= 5 && m <= 7 ? 'été' : m >= 8 && m <= 10 ? 'automne' : 'hiver') + '.');
+    return bits.join('\n');
+  };
+  const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))} | porté ${wears(p.id)} fois | stock : ${E.stockOf(p).ml} ml sur ${E.stockOf(p).size} ml, usage ${E.STOCK_USES[E.stockOf(p).use].toLowerCase()}${ficheBits(p) ? ' | fiche : ' + ficheBits(p) : ''}`).join('\n');
 
   // ---------- IA (sample) ----------
   let CAN_IMG = false, HAS_ASSETS = false, IMG_MAX = 4;
@@ -569,6 +595,7 @@
     const c = r.c, reasons = [];
     if (r.axisWhy && r.axisWhy.length) reasons.push('Dans ta veine : ' + r.axisWhy.join(' et '));
     if (r.hits.length) reasons.push('Tu aimes déjà : ' + r.hits.join(', '));
+    if (r.ficheWhy) reasons.push(r.ficheWhy.charAt(0).toUpperCase() + r.ficheWhy.slice(1));
     if (r.gapLabel) reasons.push('Comble : ' + r.gapLabel);
     if (r.inSeason) reasons.push('De saison en ce moment');
     if (r.inBudget) reasons.push('Dans ton budget');
@@ -908,7 +935,7 @@
     if (PLAN_RX.test(NEED.q) && !/\bfrais|bureau|date|hiver|été|ete\b/i.test(NEED.q.replace(/ma collection|ma collec/gi, ''))) { box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">Compléter ta collection${need.maxPrice ? ' · jusqu\'à ' + need.maxPrice + ' €' : ''}</p>${S.collection.length ? planHtml(collectionPlan(need.maxPrice), true) : planHtml(null)}`; bindPlan(box); return; }
     if (!NEED.q.trim()) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Décris l\'occasion, la saison, les notes que tu veux ou fuis, le budget : je cherche dans toute la base, sur de vraies notes, et je te dis pourquoi.</p>'; return; }
     if (need.empty) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Je n\'ai pas compris le besoin. Essaie avec une occasion (bureau, date), une saison, une note (vanille, rose) ou une famille (boisé, frais).</p>'; return; }
-    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g }), NEED.n);
+    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, month: new Date().getMonth() }), NEED.n);
     const lookup = {}; dbList().forEach((e) => { lookup[entryKey(e)] = e; });
     box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(E.needLabel(need) || 'Besoin compris')} · ${res.length} résultat${res.length > 1 ? 's' : ''}</p>` + (res.length ? `<div class="xgrid">${res.map((r) => { const e = r.c.entry || lookup[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, family: r.c.family, notes: r.c.notes, price: r.c.price, tags: [], cat: r.c }; return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small><em>${esc(r.m.why.join(' · '))}</em>${r.m.pitch ? `<em>${tx(r.m.pitch)}</em>` : ''}</span><i class="xm">${r.m.pct} %</i></button>`; }).join('')}</div>${NEED.n <= res.length ? '<button type="button" class="ghost" id="nmore">Voir plus</button>' : ''}` : '<div class="empty">Rien ne correspond vraiment. Enlève une contrainte (budget, note fuie) ou élargis le besoin.</div>');
     box.insertAdjacentHTML('beforeend', `<div style="display:grid;gap:12px;margin-top:14px"><button type="button" class="cta" id="needai"><span>Affiner avec l'IA</span></button><p class="mono" id="needaimsg" style="text-transform:none;letter-spacing:0">L'IA compare les meilleurs candidats, tranche pour toi et explique pourquoi.</p><div id="needaires" style="display:grid;gap:12px"></div></div>`);
@@ -921,9 +948,9 @@
   async function aiNeed(res, need) {
     const msg = $('#needaimsg'), out = $('#needaires'), btn = $('#needai'); if (!msg) return;
     msg.textContent = 'Je compare…'; btn.disabled = true; out.innerHTML = '';
-    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %'].join(' | ')).join('\n');
-    const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')}`).join('\n');
-    const args = { need: NEED.q, shortlist: short, collection: col, profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
+    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : ''].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
+    const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')} : porté ${wears(p.id)} fois`).join('\n');
+    const args = { need: NEED.q, shortlist: short, collection: col, taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
     try {
       const j = window.SillageDemo ? await window.SillageDemo.need(args) : await aiJson(window.SillagePrompts.need(args), { modelTier: 'default' });
       const picks = (j.picks || []).slice(0, 3);
@@ -1447,7 +1474,7 @@
     return bits.length ? '\nChoix explicites de l\'utilisateur, à respecter : ' + bits.join(' ; ') + '.' : '';
   };
   async function aiDay(text, wx) {
-    const args = { collection: colLines(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), profile: S.profile && !S.profile.skipped ? { gender: S.profile.gender, age: S.profile.age } : null, date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
+    const args = { collection: colLines(), taste: tasteLine(), text, explicit: explicitLine(), wx: wx ? { l: wx.l, t: wx.t, rain: !!wx.rain } : null, hasPhoto: !!(PHOTO && CAN_IMG), profile: S.profile && !S.profile.skipped ? { gender: S.profile.gender, age: S.profile.age } : null, date: new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) };
     const j = window.SillageDemo ? await window.SillageDemo.day(args, PHOTO && CAN_IMG ? PHOTO : null) : await aiJson(window.SillagePrompts.day(args), { modelTier: 'default', images: PHOTO && CAN_IMG ? [PHOTO] : undefined });
     const p = find(j.pick); if (!p) throw { code: 'bad_pick' };
     const cond = normCond(Object.assign({}, j.cond, explicitPreset()), wx);
