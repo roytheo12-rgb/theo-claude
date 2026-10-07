@@ -107,12 +107,12 @@ for key, e in ED.items():
     out[key] = a
 PLAYTAGS = [(r"job interview|corporate weapons|finance bro|the founder|patrick bateman", {'u': ['bureau'], 'kw': ['bureau', 'costume']}),
             (r"quiet luxury|don draper|mayfair|bookworm", {'kw': ['costume']}),
-            (r"first date", {'u': ['rdv'], 'kw': ['rendez-vous']}), (r"night out|je veux qu'on me remarque|l'ivresse|christmas eve|soirée à l'opéra|wedding guest", {'u': ['soiree'], 'kw': ['soirée']}),
-            (r"wedding guest|soirée à l'opéra|christmas eve", {'u': ['ceremonie'], 'kw': []}), (r"daily|sunday morning|clean girl|je veux sentir propre", {'u': ['quotidien'], 'kw': ['sent propre']}),
+            (r"parfums de date|first date", {'u': ['rdv'], 'kw': ['rendez-vous']}), (r"night out|je veux qu'on me remarque|l'ivresse|christmas eve|soirée à l'opéra|wedding guest", {'u': ['soiree'], 'kw': ['soirée']}),
+            (r"occasion spéciale|wedding guest|soirée à l'opéra|christmas eve", {'u': ['ceremonie'], 'kw': []}), (r"daily|sunday morning|clean girl|je veux sentir propre|soirée chic", {'u': ['quotidien'], 'kw': ['sent propre']}),
             (r"sous la chaleur|beach club|boat day|ibiza|mykonos|saint-tropez|côte d'azur|rio|seul face à l'océan|monaco", {'s': [2, 5, 1, 0], 'kw': ['solaire', 'été']}),
             (r"automne cozy|chic winter|hiver à new york|ski weekend|courchevel|christmas eve", {'s': [1, 0, 5, 5], 'kw': ['automne hiver', 'cocooning']}),
             (r"dubai|le qatari|marrakech|je veux sentir opulent", {'u': ['soiree'], 'kw': ['opulent', 'oriental']}), (r"aimant à compliments", {'kw': ['compliments']}),
-            (r"niche à petit prix|les petits budgets", {'kw': ['abordable', 'niche petit prix']})]
+            (r"niche à petit prix|dans toutes les parfumeries|valeurs sûres", {'kw': ['abordable', 'niche petit prix']})]
 pls = json.loads(subprocess.check_output(['node', '-e', "const vm=require('vm'),fs=require('fs');const w={};w.window=w;vm.createContext(w);vm.runInContext(fs.readFileSync('playlists.js','utf8'),w);console.log(JSON.stringify(w.PLAYLISTS.map(p=>({t:p.t,ps:p.ps.filter(x=>x.h).map(x=>[x.h,x.n])}))))"], cwd=root))
 for p in pls:
     tl = p['t'].lower()

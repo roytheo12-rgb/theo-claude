@@ -60,7 +60,7 @@
   const seedWish = () => window.WISH.map(wishFromName);
   const DEMO = /[?&]seed=demo/.test(location.search); // outillage (vidéos, tests) : charge une collection d'exemple
   const DEMO_V = 18;
-  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: [], profile: null, log: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
+  const DEF = () => ({ v: 3, seedV: DEMO_V, collection: DEMO ? seedOwned() : [], wishlist: DEMO ? seedWish() : [], walks: [], profile: null, log: [], feedback: [], settings: { budget: 220, liked: [], avoid: [] }, today: null });
   function migrate() {
     // La balade d'exemple (« Rue Saint-Honoré ») s'affichait chez tout le monde : elle est retirée de tous les comptes.
     S.walks = (S.walks || []).filter((x) => !x.seed && x.id !== 'w-honore');
@@ -115,7 +115,8 @@
   migrate(); save();
 
   // ---------- Utilitaires métier ----------
-  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [], gender: S.profile && S.profile.gender, age: S.profile && S.profile.age });
+  const fbMap = () => { const m = {}; (S.feedback || []).forEach((f) => { if (f.kind === 'day' && f.id) m[f.id] = (m[f.id] || 0) + f.verdict; }); return m; };
+  const stx = () => ({ daysSince, liked: S.settings.liked || [], avoid: S.settings.avoid || [], gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, fbMap: fbMap(), fb: S.feedback || [] });
   const find = (id) => S.collection.find((p) => p.id === id);
   const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
   const daysSince = (id) => {
@@ -177,6 +178,8 @@
     const worn = Object.keys(cnt).sort((x, y) => cnt[y] - cnt[x]).slice(0, 3).map((id) => find(id)).filter(Boolean);
     if (worn.length) bits.push('Ceux que je porte le plus : ' + worn.map((p) => p.name).join(', ') + '.');
     const wl = (S.wishlist || []).slice(0, 6).map((w) => w.name).filter(Boolean); if (wl.length) bits.push('Sur ma liste d\'envies : ' + wl.join(', ') + '.');
+    { const aff = E.themeAffinity ? E.themeAffinity(col) : null, PL = window.PLAYLISTS || []; if (aff) { const u = Object.keys(aff).filter((k) => aff[k] > 0.3).sort((x, y) => aff[y] - aff[x]).slice(0, 4).map((k) => PL[k] && PL[k].t).filter(Boolean); if (u.length) bits.push('Univers qui me parlent (d\'après ma collection) : ' + u.join(', ') + '.'); } }
+    { const fb = (S.feedback || []).slice(-30), no = fb.filter((f) => f.verdict < 0), yes = fb.filter((f) => f.verdict > 0); if (yes.length) bits.push('Conseils qui m\'ont plu : ' + [...new Set(yes.map((f) => f.name))].slice(-5).join(', ') + '.'); if (no.length) bits.push('Conseils qui ne m\'ont pas plu : ' + [...new Set(no.map((f) => f.name + (f.reason ? ' (' + f.reason + ')' : '')))].slice(-5).join(', ') + '.'); }
     const m = new Date().getMonth(); bits.push('Saison : ' + (m >= 2 && m <= 4 ? 'printemps' : m >= 5 && m <= 7 ? 'été' : m >= 8 && m <= 10 ? 'automne' : 'hiver') + '.');
     return bits.join('\n');
   };
@@ -504,7 +507,7 @@
     const seed = PROFILES.active + '|' + ((S.profile && S.profile.name) || '') + '|' + ((S.profile && S.profile.age) || '');
     // Les photos d'abord (classement stable : à goûts égaux, la fiche illustrée passe devant), puis le score propre à ce profil.
     const hasImg = (c) => (imgOf(c) ? 1 : 0);
-    const all = E.recommend(cat, P, S.wishlist, Object.assign({}, st, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed })).sort((x, y) => hasImg(y.c) - hasImg(x.c) || y.total - x.total);
+    const all = E.recommend(cat, P, S.wishlist, Object.assign({}, st, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed, fb: S.feedback || [] })).sort((x, y) => hasImg(y.c) - hasImg(x.c) || y.total - x.total);
     const byHouse = {};
     out.recs = all.filter((r) => (!st.budget || r.c.price <= st.budget) && fresh(r.c)).filter((r) => { const h = E.norm(r.c.house); byHouse[h] = (byHouse[h] || 0) + 1; return byHouse[h] <= 2; }).slice(0, 8);
     const tg = window.tagsOf || (() => []);
@@ -588,7 +591,7 @@
     $('#askgo').onclick = runAsk;
     $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); viewTips(); }));
     $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c, 4)); rmWish(c.name); save(); viewTips(); } }));
-    $$('[data-why]').forEach((b) => (b.onclick = () => explain(b)));
+    $$('[data-why]').forEach((b) => (b.onclick = () => explain(b))); fbBind($('#view'));
     mountFx($('#view'));
   }
   function recCard(r, i) {
@@ -605,7 +608,7 @@
       <div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)} · ${esc(famLabel(c.family))} · ≈ ${c.price} €</p>${window.DESC && window.DESC[c.name] ? `<p class="rd">${esc(window.DESC[c.name][1])}</p>` : (r.pitch ? `<p class="rd">${tx(r.pitch)}${r.diff ? ' ' + tx(r.diff) + '.' : ''}</p>` : '')}</div>
       <div class="pts ok">${reasons.slice(0, 4).map((x) => `<span class="pt">${esc(x)}</span>`).join('')}</div>
       <p class="why" id="why${i}"></p>
-      <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? 'Dans ma wishlist' : 'Wishlist'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div>${buyLinks(c.name, c.house)}</article>`;
+      <div class="row"><button class="ghost" data-why="${i}">${IC.spark} Pourquoi lui ?</button><button class="ghost" data-rw="${esc(c.name)}">${r.wished ? 'Dans ma wishlist' : 'Wishlist'}</button><button class="ghost" data-own="${esc(c.name)}">Je l'ai</button></div>${fbHtml('rec', c)}${buyLinks(c.name, c.house)}</article>`;
   }
   async function explain(btn) {
     const r = RECS[+btn.dataset.why], out = $('#why' + btn.dataset.why);
@@ -919,6 +922,40 @@
     }).filter((r) => r && r.sim > 0.42 && (!need.maxPrice || !r.c.price || r.c.price <= need.maxPrice) && (!cheaper || !ref.price || (r.c.price > 0 && r.c.price < ref.price * 0.8))).sort((x, y) => y.sim - x.sim);
     return { ref, cheaper, res };
   }
+  // Univers (playlists) qui répondent à la demande : leurs premiers parfums, dans l'ordre voulu pour cette playlist (les plus emblématiques en tête).
+  function themeBlock(need) {
+    const ths = (need.themes || []).filter((t) => t.m >= 0.6).sort((x, y) => y.m - x.m).slice(0, 2), PL = window.PLAYLISTS || [];
+    if (!ths.length) return '';
+    return ths.map((t) => {
+      const p = PL[t.pi]; if (!p) return '';
+      const es = p.ps.slice(0, 12).map(plEntry).filter(Boolean).slice(0, 8); if (!es.length) return '';
+      return `<section class="thblk" style="margin:12px 0 4px"><p class="mono" style="text-transform:none;letter-spacing:0">Dans l'univers « ${esc(p.t)} »</p><div class="pgrid">${es.map((e) => pCard(e)).join('')}</div><button type="button" class="ghost" data-gopl="${esc(p.t)}">Voir toute la playlist</button></section>`;
+    }).join('');
+  }
+  // Univers dans lesquels figure un parfum (chips cliquables sur sa fiche).
+  const themeChips = (e) => { const L = E.themesOf({ name: e.name, house: e.house }, 6); return L.length ? `<div><p class="mono">Univers</p><div class="chips" style="margin-top:8px">${L.map((x) => `<button type="button" class="chip" data-gopl="${esc(x.t)}">${esc(x.t)}</button>`).join('')}</div></div>` : ''; };
+  // ---------- Retour sur un conseil : « ce conseil t'a plu ? » nourrit les goûts (notes, familles, univers, densité, douceur) ----------
+  const FB_REASONS = [['lourd', 'Trop lourd'], ['sucre', 'Trop sucré'], ['style', 'Pas mon style'], ['vu', 'Trop vu']];
+  const fbHtml = (kind, p) => `<div class="fbk rise" data-fbk="${esc(kind)}" data-fbn="${esc(p.name)}" data-fbh="${esc(p.house || '')}" data-fbi="${esc(p.id || '')}" style="display:grid;gap:8px;justify-items:center;margin-top:6px"><span class="mono" style="text-transform:none;letter-spacing:0">Ce conseil t'a plu ?</span><span class="fbb" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center"><button type="button" class="chip" data-fbv="1">Oui</button><button type="button" class="chip" data-fbv="0">Bof</button><button type="button" class="chip" data-fbv="-1">Non</button></span><span class="fbm mono" style="text-transform:none;letter-spacing:0"></span></div>`;
+  function fbRecord(box, v, reason) {
+    const name = box.dataset.fbn, house = box.dataset.fbh, kind = box.dataset.fbk, id = box.dataset.fbi;
+    const src = (id && find(id)) || dbList().find((e) => E.norm(e.name) === E.norm(name) && (!house || E.norm(e.house) === E.norm(house))) || {};
+    S.feedback = S.feedback || [];
+    const rec = { date: today(), kind, id, name, house, verdict: v, reason: reason || '', notes: (src.notes || []).slice(0, 8), family: src.family || '' };
+    const i = S.feedback.findIndex((f) => f.kind === kind && f.name === name && f.date === rec.date);
+    if (i >= 0) S.feedback[i] = rec; else S.feedback.push(rec);
+    S.feedback = S.feedback.slice(-80); save(); NPOOL = null;
+  }
+  function fbBind(root) {
+    $$('.fbk', root).forEach((box) => {
+      const msg = $('.fbm', box), bar = $('.fbb', box);
+      $$('[data-fbv]', box).forEach((b) => (b.onclick = (e) => {
+        e.stopPropagation(); const v = +b.dataset.fbv; fbRecord(box, v, '');
+        if (v < 0) { bar.innerHTML = FB_REASONS.map(([k, l]) => `<button type="button" class="chip" data-fbr="${k}">${l}</button>`).join(''); msg.textContent = 'Qu\'est-ce qui n\'allait pas ?'; $$('[data-fbr]', bar).forEach((c) => (c.onclick = (e2) => { e2.stopPropagation(); fbRecord(box, -1, c.dataset.fbr); bar.innerHTML = ''; msg.textContent = 'Merci, j\'en tiens compte pour les prochains conseils.'; })); }
+        else { bar.innerHTML = ''; msg.textContent = v > 0 ? 'Merci, j\'en tiens compte : je te proposerai plus dans cette veine.' : 'Noté, je ferai évoluer mes conseils.'; }
+      }));
+    });
+  }
   const NEED = { q: '', n: 6, mode: 'disc' };
   const NEED_EX = ['un parfum pour compléter ma collection', 'un parfum comme Aventus mais moins cher', 'frais pour le bureau en été', 'vanille sans patchouli pour l\'hiver', 'cuir fumé pour homme', 'rose poudrée', 'premier rendez-vous, pas trop sucré', 'boisé discret moins de 100 €'];
   function drawNeed() {
@@ -935,9 +972,10 @@
     if (PLAN_RX.test(NEED.q) && !/\bfrais|bureau|date|hiver|été|ete\b/i.test(NEED.q.replace(/ma collection|ma collec/gi, ''))) { box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">Compléter ta collection${need.maxPrice ? ' · jusqu\'à ' + need.maxPrice + ' €' : ''}</p>${S.collection.length ? planHtml(collectionPlan(need.maxPrice), true) : planHtml(null)}`; bindPlan(box); return; }
     if (!NEED.q.trim()) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Décris l\'occasion, la saison, les notes que tu veux ou fuis, le budget : je cherche dans toute la base, sur de vraies notes, et je te dis pourquoi.</p>'; return; }
     if (need.empty) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Je n\'ai pas compris le besoin. Essaie avec une occasion (bureau, date), une saison, une note (vanille, rose) ou une famille (boisé, frais).</p>'; return; }
-    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, month: new Date().getMonth() }), NEED.n);
+    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, fb: S.feedback || [], month: new Date().getMonth() }), NEED.n);
     const lookup = {}; dbList().forEach((e) => { lookup[entryKey(e)] = e; });
     box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(E.needLabel(need) || 'Besoin compris')} · ${res.length} résultat${res.length > 1 ? 's' : ''}</p>` + (res.length ? `<div class="xgrid">${res.map((r) => { const e = r.c.entry || lookup[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, family: r.c.family, notes: r.c.notes, price: r.c.price, tags: [], cat: r.c }; return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small><em>${esc(r.m.why.join(' · '))}</em>${r.m.pitch ? `<em>${tx(r.m.pitch)}</em>` : ''}</span><i class="xm">${r.m.pct} %</i></button>`; }).join('')}</div>${NEED.n <= res.length ? '<button type="button" class="ghost" id="nmore">Voir plus</button>' : ''}` : '<div class="empty">Rien ne correspond vraiment. Enlève une contrainte (budget, note fuie) ou élargis le besoin.</div>');
+    { const tb = themeBlock(need); if (tb) box.insertAdjacentHTML('afterbegin', tb); $$('[data-gopl]', box).forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl))); }
     box.insertAdjacentHTML('beforeend', `<div style="display:grid;gap:12px;margin-top:14px"><button type="button" class="cta" id="needai"><span>Affiner avec l'IA</span></button><p class="mono" id="needaimsg" style="text-transform:none;letter-spacing:0">L'IA compare les meilleurs candidats, tranche pour toi et explique pourquoi.</p><div id="needaires" style="display:grid;gap:12px"></div></div>`);
     $('#needai', box).onclick = () => aiNeed(res, need);
     $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lookup[b.dataset.ent]; if (e) openEntry(e); }));
@@ -948,13 +986,14 @@
   async function aiNeed(res, need) {
     const msg = $('#needaimsg'), out = $('#needaires'), btn = $('#needai'); if (!msg) return;
     msg.textContent = 'Je compare…'; btn.disabled = true; out.innerHTML = '';
-    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : ''].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
+    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
     const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')} : porté ${wears(p.id)} fois`).join('\n');
     const args = { need: NEED.q, shortlist: short, collection: col, taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
     try {
       const j = window.SillageDemo ? await window.SillageDemo.need(args) : await aiJson(window.SillagePrompts.need(args), { modelTier: 'default' });
       const picks = (j.picks || []).slice(0, 3);
       out.innerHTML = (j.compris ? `<p class="rd">${esc(j.compris)}</p>` : '') + picks.map((k) => `<article class="card" style="display:grid;gap:8px"><p class="mono">${esc(ROLE_L[k.role] || 'Conseil')} · ${clamp(Math.round(+k.pct || 0), 0, 99)} %${k.hors_liste ? ' · hors de ma liste vérifiée' : ''}</p><b style="font-size:18px">${esc(k.name)}</b><small style="color:var(--muted)">${esc(k.house || '')}</small><p style="font-size:14.5px">${esc(k.pourquoi || '')}</p>${k.tete ? `<p style="font-size:13.5px;color:var(--muted)">Au début : ${esc(k.tete)}</p>` : ''}${k.peau ? `<p style="font-size:13.5px;color:var(--muted)">Sur ta peau, après 3 h : ${esc(k.peau)}</p>` : ''}${k.attention ? `<p style="font-size:13.5px">⚠ ${esc(k.attention)}</p>` : ''}</article>`).join('') + (j.eviter && j.eviter.name ? `<p style="font-size:14px"><b>À éviter pour toi : ${esc(j.eviter.name)}</b>${j.eviter.raison ? ' : ' + esc(j.eviter.raison) : ''}</p>` : '') + (j.test ? `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(j.test)}</p>` : '');
+      if (picks.length) { out.insertAdjacentHTML('beforeend', fbHtml('need', { name: picks[0].name, house: picks[0].house })); fbBind(out); }
       msg.textContent = picks.length ? '' : 'L\'IA n\'a rien trouvé de mieux.'; btn.disabled = false;
     } catch (e) { msg.textContent = e && e.code === 'rate_limited' ? 'Plus d\'essais pour aujourd\'hui.' : 'L\'IA n\'est pas disponible ici. Les résultats ci-dessus restent valables.'; btn.disabled = false; }
   }
@@ -1110,6 +1149,7 @@
       ${d ? `<p class="rd">${tx(d[1])}</p>` : ''}
       ${st.length ? `<p class="mono" style="text-transform:none">${st.map(tx).join(' · ')}</p>` : ''}
       ${edOf(e) ? edHtml(e) : ''}
+      ${edOf(e) ? themeChips(e) : ''}
       ${!edOf(e) && bioOf(e) ? `<div><p class="mono">Son histoire dans les univers Sillage</p><p class="rd" style="margin-top:6px">${tx(bioOf(e)[0])}</p><div class="chips" style="margin-top:8px">${bioOf(e)[1].map((t) => `<button class="chip" data-gopl="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>` : ''}
       ${pyramidOf(e)}
       ${(e.notes || []).length && !pyramidOf(e) ? `<div class="chips">${e.notes.map((n) => `<button type="button" class="chip" data-gonote="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
@@ -1534,7 +1574,7 @@
     } }));
     if (R.alts.length) sc.push({ label: 'autres options', dur: 0, html: () => `<h2 class="rise">Ou plutôt…</h2><div style="display:grid;gap:10px">${R.alts.map((x, i) => `<button class="altrow rise" style="--d:${250 + i * 160}" data-alt="${x.p.id}">${bt(x.p, { still: true })}<span><b>${esc(x.p.name)}</b><small>${esc(x.line)}</small></span><span aria-hidden="true">→</span></button>`).join('')}</div>` });
     const wornNow = S.today && S.today.date === today() && S.today.pickId === p.id;
-    sc.push({ label: 'c\'est parti', dur: 0, hue: p, html: () => `<div class="center" style="display:grid;gap:16px;justify-items:center"><div class="hero-bottle" style="height:200px"><i class="aura"></i>${bt(p, { spray: true, h: 200 })}</div><h2 class="rise">${wornNow ? 'C\'est noté.' : 'On y va&nbsp;?'}</h2><button class="st-btn rise" style="--d:300" id="wear">${wornNow ? 'Porté aujourd\'hui ✓' : 'Je le porte aujourd\'hui'}</button><button class="st-btn line rise" style="--d:450" id="stclose">Fermer</button></div>` });
+    sc.push({ label: 'c\'est parti', dur: 0, hue: p, html: () => `<div class="center" style="display:grid;gap:16px;justify-items:center"><div class="hero-bottle" style="height:200px"><i class="aura"></i>${bt(p, { spray: true, h: 200 })}</div><h2 class="rise">${wornNow ? 'C\'est noté.' : 'On y va&nbsp;?'}</h2><button class="st-btn rise" style="--d:300" id="wear">${wornNow ? 'Porté aujourd\'hui ✓' : 'Je le porte aujourd\'hui'}</button>${fbHtml('day', p)}<button class="st-btn line rise" style="--d:450" id="stclose">Fermer</button></div>` });
     return sc;
   }
   function showStory(R, replay) {
@@ -1561,6 +1601,7 @@
     $$('[data-alt]', st).forEach((b) => (b.onclick = (e) => { e.stopPropagation(); chooseAlt(b.dataset.alt); }));
     const w = $('#wear', st); if (w) w.onclick = (e) => { e.stopPropagation(); wear(w); };
     const c = $('#stclose', st); if (c) c.onclick = (e) => { e.stopPropagation(); closeStory(); };
+    fbBind(st);
   }
   function chooseAlt(id) {
     const R = ST.R, a = R.alts.find((x) => x.p.id === id); if (!a) return;
@@ -1873,7 +1914,7 @@
     const newLiked = lovedN.filter((o) => noteSt(o.n) !== 1 && !conflict.some((c) => E.norm(c) === E.norm(o.n))).slice(0, 4), newAvoid = badN.filter((o) => noteSt(o.n) === 0).slice(0, 3);
     const names = new Set(rows.map((r) => E.norm(r.e.name))), famK = (c) => E.norm(c.house) + '|' + (E.norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'eau', 'de', 'du', 'd'].includes(x))[0] || '');
     const touchedFam = new Set(rows.map((r) => famK(r.f)));
-    const st2 = Object.assign({}, S.settings, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed: PROFILES.active, liked: [...new Set([...liked, ...lovedN.map((o) => o.n)])] });
+    const st2 = Object.assign({}, S.settings, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, fb: S.feedback || [], seed: PROFILES.active, liked: [...new Set([...liked, ...lovedN.map((o) => o.n)])] });
     const sig = S.wishlist.concat(rows.map((r) => ({ name: r.e.name, house: r.f.house, family: r.f.family || '', notes: r.notes, st: 'smelled', verdict: r.e.rating })));
     let recs = []; try { const seen = new Set(); recs = E.recommend(needPool(), S.collection, sig, st2).filter((r) => !names.has(E.norm(r.c.name)) && !touchedFam.has(famK(r.c)) && r.pct >= 55).sort((a, b) => b.total - a.total).filter((r) => { const k = famK(r.c); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 4); } catch (er) { recs = []; }
     return { rows, loved, ok, no, lovedN, badN, lovedF, badF, lovedFeel, conflict, newLiked, newAvoid, recs };
