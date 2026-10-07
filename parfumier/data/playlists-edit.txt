@@ -4711,7 +4711,7 @@ x Parfums de Marly Greenley
 + Noème Paris Kalahari | Le désert du Kalahari, sec et lumineux.
 
 ## Historical Scents
-d: Des parfums qui racontent l'histoire. Chacun porte une époque, un événement ou une rupture dans l'art de faire un parfum, de Cologne aux années 90.
+d: Des parfums qui racontent l'histoire du monde, de l'Antiquité aux années 90. Chacun porte une civilisation, une époque ou une rupture dans l'art de faire un parfum.
 + Guerlain L'Heure Bleue | 1912. Créé à la veille de la Première Guerre mondiale, le dernier soupir de la Belle Époque.
 + Guerlain Mitsouko | 1919. Né après la Grande Guerre, le chypre qui a installé un monde nouveau.
 + Caron Narcisse Noir | 1911. Le parfum sombre et sensuel de la Belle Époque finissante.
@@ -4729,3 +4729,30 @@ d: Des parfums qui racontent l'histoire. Chacun porte une époque, un événemen
 + Dior Poison | 1985. Les années 80, l'ostentation et le flacon violet.
 + Davidoff Cool Water | 1988. Le parfum qui a lancé la vague aquatique.
 + Calvin Klein CK One | 1994. Le premier grand parfum unisexe, l'esprit des années 90.
+
+## Historical Scents
++ Contes de Parfums Atlantis | La cité engloutie décrite par Platon, mise en parfum.
++ Memo Paris Ithaque | L'île d'Ulysse et le long retour de l'Odyssée.
++ Argos Triumph of Bacchus | Le triomphe de Bacchus, le vin et la fête de la Grèce antique.
++ Francesca Bianchi Etruscan Water | Les Étrusques, le peuple qui précéda Rome en Toscane.
++ Contes de Parfums Babylon | Babylone et la Mésopotamie, l'un des berceaux de la civilisation.
++ Sultan Pasha Perfumes Thebes | Thèbes, la capitale des pharaons du Nouvel Empire.
++ Memo Paris Luxor | Louxor, les temples de l'Égypte antique au bord du Nil.
++ Masque Milano Petra | Petra, la cité taillée dans la roche par les Nabatéens.
++ Contes de Parfums Alexandria | Alexandrie, fondée par Alexandre le Grand et célèbre pour sa bibliothèque.
++ Contes de Parfums Pompeii | Pompéi, la ville romaine figée par le Vésuve en l'an 79.
++ Francesca Bianchi Byzantine Amber | Byzance, l'empire d'Orient et ses ambres précieuses.
++ Creed Viking | L'âge des Vikings, leurs drakkars et leurs conquêtes.
++ Contes de Parfums Samarkand | Samarcande, grande étape de la route de la soie.
++ Penhaligon's Constantinople | Constantinople, la capitale entre l'Orient et l'Occident.
++ The Different Company Gothic Incense | L'encens des cathédrales gothiques du Moyen Âge.
++ Francesca Bianchi The Black Knight | Le chevalier noir, la chevalerie médiévale.
++ Kilian Gold Knight | L'armure dorée des chevaliers du Moyen Âge.
++ Memo Paris Granada | Grenade et l'Alhambra, l'Andalousie des califes.
++ Santa Maria Novella Acqua della Regina | 1533. Composée à Florence pour Catherine de Médicis, avant son mariage avec le futur Henri II.
++ Xerjoff Renaissance | La Renaissance italienne, quand l'art et la parfumerie renaissent.
++ Stéphane Humbert Lucas 777 Cacao Aztèque | Le cacao sacré des Aztèques, boisson des dieux et des rois.
++ Burberry Tudor Rose | La rose des Tudor, emblème de l'Angleterre du XVIe siècle.
++ Parfums de Marly Athénaïs | La marquise de Montespan, favorite du Roi-Soleil.
++ Xerjoff Louis XV 1722 | Louis XV et les fastes de la cour de Versailles.
++ BDK Parfums Bouquet de Hongrie | L'eau de la reine de Hongrie, vers 1370, souvent citée comme le premier parfum à base d'alcool.

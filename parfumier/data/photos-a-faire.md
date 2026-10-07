@@ -8,7 +8,7 @@ Généré en analysant la photo réellement utilisée par l'app pour chaque parf
 
 Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au moins 600 px de haut, déposé dans `parfumier/incoming/` sous la forme `Maison_Nom.jpg`.
 
-**Sur les 948 parfums uniques des playlists : 5 sans photo, 91 à refaire, 116 à améliorer, 736 corrects.**
+**Sur les 964 parfums uniques des playlists : 10 sans photo, 94 à refaire, 118 à améliorer, 742 corrects.**
 
 
 ## Cinéma, séries & livres
@@ -1197,9 +1197,14 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ## Spécial
 
 
-### Historical Scents (4 à améliorer, 2 à refaire, 5 sans photo)
+### Historical Scents (8 à refaire, 10 sans photo, 9 à améliorer)
 
 **Sans photo**
+- Contes de Parfums Babylon
+- Masque Milano Petra
+- Contes de Parfums Samarkand
+- Memo Paris Granada
+- Stéphane Humbert Lucas 777 Cacao Aztèque
 - Caron Narcisse Noir
 - Caron Tabac Blond
 - Lanvin Arpège
@@ -1207,12 +1212,23 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Davidoff Cool Water
 
 **À refaire**
+- Contes de Parfums Atlantis (format large ou coffret, flacon pas isolé)
+- Contes de Parfums Alexandria (bords blancs ou irréguliers très visibles)
+- Contes de Parfums Pompeii (format large ou coffret, flacon pas isolé)
+- Francesca Bianchi Byzantine Amber (bords blancs ou irréguliers très visibles)
+- The Different Company Gothic Incense (bords blancs ou irréguliers très visibles)
+- Burberry Tudor Rose (bords blancs ou irréguliers très visibles; contour légèrement irrégulier)
 - Floris 1927 (bords blancs ou irréguliers très visibles)
 - Yves Saint Laurent Opium (format large ou coffret, flacon pas isolé; léger liseré blanc sur les bords; contour légèrement irrégulier)
 
 **À améliorer**
-- Jean Patou Joy (léger liseré blanc sur les bords)
+- Sultan Pasha Perfumes Thebes (léger liseré blanc sur les bords)
+- Memo Paris Luxor (léger liseré blanc sur les bords)
+- Penhaligon's Constantinople (léger liseré blanc sur les bords)
+- Francesca Bianchi The Black Knight (léger liseré blanc sur les bords)
+- Xerjoff Louis XV 1722 (léger liseré blanc sur les bords; contour légèrement irrégulier)
 - Guerlain Mitsouko (léger liseré blanc sur les bords)
+- Jean Patou Joy (léger liseré blanc sur les bords)
 - Dior Miss Dior Original (léger liseré blanc sur les bords)
 - Dior Poison (léger liseré blanc sur les bords)
 
