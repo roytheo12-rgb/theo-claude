@@ -5264,3 +5264,6 @@ g: Femme | Elle veut un parfum qu'elle connaît, qui plaît et qu'on trouve dans
 ~ Yves Rocher Comme une Evidence | Le parfum français discret et juste, facile à trouver partout.
 ~ Khadlaj Hareem Al Sultan Gold | Un oriental féminin sensuel, chaleureux et facile à porter.
 ~ Khadlaj Caffe Latte | Café et gourmandise, un parfum doux et réconfortant.
+
+## Tuxedo Society
+t: Soirée chic
