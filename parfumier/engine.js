@@ -469,7 +469,7 @@
     }
     // 6e) thèmes des playlists : les playlists qui répondent à la demande nourrissent le classement (les premiers sont les plus emblématiques)
     if (need.themes && need.themes.length) { const tb = themeBonus(c, need.themes, 2.4); max += 2.6; s += tb.v; if (tb.why) why.unshift(tb.why); }
-    if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff); max += 1; s += ab.v * .8; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
+    if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff), kw = st.sitAff && st.prestige ? 1.8 : .8; max += st.sitAff && st.prestige ? 2 : 1; s += ab.v * kw; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
     if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; }
@@ -792,6 +792,13 @@
     for (const p of col) { const w = (p.rating || 3) - 3; if (!w) continue; const mem = T.idx.get(thKey(p)); if (!mem) continue; mem.forEach((m) => { aff[m.pi] = (aff[m.pi] || 0) + w * m.wt; any = true; }); }
     if (!any) return null; const mx = Math.max(1, ...Object.values(aff).map(Math.abs)); for (const k in aff) aff[k] /= mx; return aff;
   }
+  // Univers choisis à l'inscription (situations de vie) : { titre de playlist: poids 0..1 } -> { index de playlist: poids }, fusionnés avec ceux de la collection.
+  function sitAffOf(st, base) {
+    const m = st && st.sitAff, PL = root.PLAYLISTS; if (!m || !PL) return base || null;
+    const out = Object.assign({}, base || {}); let any = false;
+    PL.forEach((p, pi) => { const v = m[norm(p.t)]; if (v) { out[pi] = clamp((out[pi] || 0) + 1.1 * v, -1, 1.5); any = true; } });
+    return any || base ? out : null;
+  }
   function themeAffBonus(c, aff) {
     const T = themeIdx(); if (!T || !aff) return { v: 0, why: '' };
     const mem = T.idx.get(thKey(c)); if (!mem) return { v: 0, why: '' };
@@ -815,8 +822,8 @@
   let UCACHE = { k: '', v: null };
   function userCtx(st) {
     const own = (st && st.collection) || [], col = own.concat(fbItems(st));
-    if (!col.length && !(st && ((st.liked || []).length || (st.avoid || []).length || st.vibes && st.vibes.length))) return null;
-    const k = col.map((p) => (p.id || p.name) + ':' + (p.rating || 3)).join(',') + ((st.fb || []).map((f) => f.reason || '').join('')) + '|' + (st.liked || []).join(',') + '|' + (st.avoid || []).join(',') + '|' + (st.vibes || []).join(',') + (st.power || '') + (st.occ || []).join(',') + (st.age || '') + (st.gender || '');
+    if (!col.length && !(st && ((st.liked || []).length || (st.avoid || []).length || st.vibes && st.vibes.length || st.sitAff))) return null;
+    const k = col.map((p) => (p.id || p.name) + ':' + (p.rating || 3)).join(',') + ((st.fb || []).map((f) => f.reason || '').join('')) + '|' + (st.liked || []).join(',') + '|' + (st.avoid || []).join(',') + '|' + (st.vibes || []).join(',') + (st.power || '') + (st.occ || []).join(',') + (st.age || '') + (st.gender || '') + (st.sitAff ? JSON.stringify(st.sitAff) : '');
     if (UCACHE.k === k && UCACHE.v) return UCACHE.v;
     const prof = tasteProfile(col, st || {}); let pref = axisPref(col);
     const prior = priorVec(st || {}); if (prior) pref = pref ? pref.map((x, i) => x + 0.35 * prior[i]) : prior.map((x) => x * 0.8);
@@ -825,7 +832,7 @@
     const houseAff = {}, hn = {}; col.forEach((p) => { const h = norm(p.house); (hn[h] = hn[h] || []).push(p.rating || 3); });
     Object.keys(hn).forEach((h) => { const a = hn[h].reduce((x, y) => x + y, 0) / hn[h].length; houseAff[h] = a >= 4 ? 1 : a <= 2.5 ? -1 : 0; });
     const loved = col.filter((p) => (p.rating || 3) >= 4 && (p.notes || []).length >= 3).map((p) => ({ name: p.name, notes: p.notes.map(norm), r: p.rating }));
-    const v = { prof, pref, houseAff, loved, owned: new Set(own.concat(st.ownedNames || []).map((p) => norm(p.name || p))), n: col.length, posN: col.filter((p) => (p.rating || 3) >= 3.5).length, themeAff: themeAffinity(col) };
+    const v = { prof, pref, houseAff, loved, owned: new Set(own.concat(st.ownedNames || []).map((p) => norm(p.name || p))), n: col.length, posN: col.filter((p) => (p.rating || 3) >= 3.5).length, themeAff: sitAffOf(st.prestige ? st : {}, themeAffinity(col)) };
     UCACHE = { k, v }; return v;
   }
 
@@ -1112,7 +1119,7 @@
     const wishedSet = new Set(sig.map((x) => norm(x.name)));
     const avoid = (settings.avoid || []).map(norm);
     const budget = settings.budget || 0, seed = String(settings.seed || '');
-    const THAFF = themeAffinity(col), OCCTH = [].concat(...(settings.occ || []).map((o) => themesFor('', { quotidien: { ctx: 'perso' }, bureau: { ctx: 'pro' }, soiree: { ctx: 'event', moment: 'soir' }, rdv: { ctx: 'date' }, ete: { temp: 28 }, hiver: { temp: 4 } }[o] || {}, [], {})));
+    const THAFF = sitAffOf(settings, themeAffinity(col)), OCCTH = [].concat(...(settings.occ || []).map((o) => themesFor('', { quotidien: { ctx: 'perso' }, bureau: { ctx: 'pro' }, soiree: { ctx: 'event', moment: 'soir' }, rdv: { ctx: 'date' }, ete: { temp: 28 }, hiver: { temp: 4 } }[o] || {}, [], {})));
     const out = [], houseAff = {}, hn = {};
     collection.forEach((p) => { const h = norm(p.house); (hn[h] = hn[h] || []).push(p.rating || 3); });
     Object.keys(hn).forEach((h) => { const a = hn[h].reduce((x, y) => x + y, 0) / hn[h].length; houseAff[h] = a >= 4 ? 0.5 : a <= 2.5 ? -0.5 : 0; });
@@ -1145,7 +1152,7 @@
       for (const o of settings.occ || []) { const cd = OCC_C[o]; if (!cd) continue; const f = ficheFit(c, Object.assign({}, cd, settings.power === 'discret' ? { want: 'discret' } : {}), '', settings); if (f && f.v > fv) { fv = f.v; fwhy = f.why[0] || ''; } }
       if (settings.power === 'discret' || settings.power === 'fort') { const f = ficheFit(c, { want: settings.power === 'discret' ? 'discret' : 'statement' }, '', settings); if (f && f.warn.length) fv -= 1; }
       fv = clamp(fv, -1.5, 2) * 0.6;
-      const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * .8 + tO.v * .5;
+      const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * (settings.sitAff ? 3 : .8) + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
       const pvn = provenOf(c);
       const tr = tierAdj(c, settings.tier), total = t.s + 2.2 * tr.v + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige && nicheTop(c) ? 1.5 : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
@@ -1158,7 +1165,7 @@
     return calibrate(out, settings, collection);
   }
 
-  const api = { tierAdj, nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { sitAffOf, tierAdj, nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

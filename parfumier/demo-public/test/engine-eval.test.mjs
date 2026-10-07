@@ -137,3 +137,15 @@ assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
   assert.ok(avg(lux) > avg(mal) + 60, 'le luxe est nettement plus cher que le malin (' + Math.round(avg(lux)) + ' contre ' + Math.round(avg(mal)) + ' €)');
   console.log('ok style d\'achat : luxe ' + Math.round(avg(lux)) + ' € en moyenne, malin ' + Math.round(avg(mal)) + ' €');
 }
+
+// ── Voyage : les ambiances choisies à l'inscription orientent les conseils ──
+{
+  const base = { gender: 'm', age: 30, seed: 'v', liked: ['vanille'] };
+  const aff = { 'tony montana': 1, 'michael corleone': 1, 'vito corleone': .9, 'les affranchis': .75 };
+  const top = (st) => E.recommend(P, [], [], Object.assign({ looseColl: true, prestige: true }, base, st)).sort((a, b) => b.total - a.total).slice(0, 12).map((r) => r.c.name);
+  const a = top({}), b = top({ sitAff: aff });
+  const th = new Set(['Naxos', 'Alexandria II', 'Tuscan Leather', 'Monsieur.', 'Side Effect', 'Oud Satin Mood']);
+  assert.ok(b.filter((n) => th.has(n)).length > a.filter((n) => th.has(n)).length, 'les univers mafieux choisis font monter leurs parfums');
+  assert.notDeepEqual(a, b, 'les situations changent la liste');
+  console.log('ok voyage : les ambiances choisies orientent les conseils (' + b.slice(0, 4).join(', ') + ')');
+}

@@ -867,3 +867,31 @@ a.chip { text-decoration: none; display: inline-block; }
 .pbub .pbx { position: static; padding: 8px 12px 8px 4px; font-size: 18px; opacity: .6; }
 .pbub .pbx:hover { opacity: 1; }
 .pfab .pfdot { width: 10px; height: 10px; top: 6px; right: 6px; }
+
+/* ---------- Le voyage : 50 situations, cinq étapes ---------- */
+.voy { display: grid; gap: 22px; }
+.voy h2 { margin: 0; font-size: clamp(30px, 8vw, 40px); line-height: 1.1; }
+.voy .soft { margin: 0; line-height: 1.7; }
+.route { display: flex; align-items: center; gap: 0; padding: 4px 2px; }
+.route i { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(242, 235, 224, .35); background: transparent; flex: none; transition: all .4s; }
+.route i.past { background: var(--wine); border-color: var(--wine); }
+.route i.now { border-color: var(--wine); box-shadow: 0 0 0 5px rgba(180, 57, 74, .22); background: #110e0d; }
+.route b { flex: 1; height: 1.5px; background: rgba(242, 235, 224, .18); }
+.sits { display: grid; gap: 12px; }
+.sit { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 16px; text-align: left; padding: 20px 22px; border: 1px solid var(--line); border-radius: 10px; background: rgba(242, 235, 224, .04); color: var(--ink); font-size: 16px; line-height: 1.45; cursor: pointer; transition: border-color .25s, background .25s, transform .25s; }
+.sit i { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid rgba(242, 235, 224, .3); display: grid; place-items: center; font-style: normal; font-size: 14px; color: transparent; transition: all .25s; }
+.sit:hover { transform: translateY(-1px); }
+.sit.on { border-color: var(--wine); background: rgba(180, 57, 74, .17); }
+.sit.on i { background: var(--wine); border-color: var(--wine); color: #fff; }
+.univ { display: grid; gap: 14px; }
+.uni { position: relative; overflow: hidden; display: flex; align-items: flex-end; min-height: 120px; padding: 20px 22px; border: 1px solid var(--line); border-radius: 12px; background: #17110f; color: var(--ink); text-align: left; }
+.uni-bg { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: .5; }
+.uni::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(10, 7, 6, .92), rgba(10, 7, 6, .15)); }
+.uni > div { position: relative; z-index: 2; display: grid; gap: 4px; }
+.uni h3 { margin: 0; font: 400 24px var(--f-display, serif); }
+.uni-s { margin: 0; font-size: 13.5px; color: rgba(242, 235, 224, .75); }
+.uni.sm { flex: 0 0 210px; min-height: 130px; padding: 16px 18px; cursor: pointer; scroll-snap-align: start; }
+.uni.sm h3 { font-size: 19px; }
+.unirail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 8px; scrollbar-width: none; }
+.unirail::-webkit-scrollbar { display: none; }
+.lnk { border: 0; background: none; color: var(--muted); text-decoration: underline; font: inherit; font-size: 13px; cursor: pointer; }

@@ -183,6 +183,7 @@
     const wl = (S.wishlist || []).slice(0, 6).map((w) => w.name).filter(Boolean); if (wl.length) bits.push('Sur ma liste d\'envies : ' + wl.join(', ') + '.');
     { const aff = E.themeAffinity ? E.themeAffinity(col) : null, PL = window.PLAYLISTS || []; if (aff) { const u = Object.keys(aff).filter((k) => aff[k] > 0.3).sort((x, y) => aff[y] - aff[x]).slice(0, 4).map((k) => PL[k] && PL[k].t).filter(Boolean); if (u.length) bits.push('Univers qui me parlent (d\'après ma collection) : ' + u.join(', ') + '.'); } }
     { const fb = (S.feedback || []).slice(-30), no = fb.filter((f) => f.verdict < 0), yes = fb.filter((f) => f.verdict > 0); if (yes.length) bits.push('Conseils qui m\'ont plu : ' + [...new Set(yes.map((f) => f.name))].slice(-5).join(', ') + '.'); if (no.length) bits.push('Conseils qui ne m\'ont pas plu : ' + [...new Set(no.map((f) => f.name + (f.reason ? ' (' + f.reason + ')' : '')))].slice(-5).join(', ') + '.'); }
+    { const th = sitThemes(5); if (th.length) bits.push('Les ambiances qui me ressemblent (choisies à l\'inscription) : ' + th.map(({ p }) => p.t).join(', ') + '.'); const sl = (st.sit || []).slice(0, 8).map((i) => SITS[i] && SITS[i][1]).filter(Boolean); if (sl.length) bits.push('Mes situations de vie : ' + sl.join(' ; ') + '.'); }
     if (st.tier === 'luxe') bits.push('Je cherche du haut de gamme et du luxe : ne me propose jamais un parfum bon marché ou de grande distribution.'); else if (st.tier === 'malin') bits.push('Je préfère les prix malins : ne me propose pas de parfum hors de prix, cherche le meilleur rapport qualité prix.');
     const m = new Date().getMonth(); bits.push('Saison : ' + (m >= 2 && m <= 4 ? 'printemps' : m >= 5 && m <= 7 ? 'été' : m >= 8 && m <= 10 ? 'automne' : 'hiver') + '.');
     return bits.join('\n');
@@ -762,6 +763,7 @@
           <div class="tiersrow"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.tier ? 'Ton style' : 'Choisis ton style pour des conseils plus justes'}</p><div class="chips" id="tiersel">${TIERS.map(([k, l]) => `<button type="button" class="chip ${s.tier === k ? 'on' : ''}" data-tier="${k}">${l}</button>`).join('')}</div></div></div>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Tes notes disent ce que tu aimes : mes conseils en deviennent bien plus justes.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
       </section>
+      ${(() => { const th = sitThemes(6); return th.length ? `<section class="sec"><header><h2>Tes univers</h2><button type="button" class="lnk" id="vRedo">Refaire mon voyage</button></header><div class="rail unirail">${th.map(({ p }) => `<button type="button" class="uni sm" data-gopl="${esc(p.t)}">${p.img ? `<i class="uni-bg" style="background-image:url('${esc(p.img)}')"></i>` : ''}<div><h3>${esc(p.t)}</h3><p class="uni-s">${esc(themeStars(p).slice(0, 2).join(' · '))}</p></div></button>`).join('')}</div></section>` : `<section class="sec"><div class="card pfcard"><p class="mono">Ton voyage</p><h2>50 situations, ton univers</h2><p>Touche ce qui te ressemble et je mets en avant les ambiances et les parfums qui te correspondent.</p><button class="cta full" id="vRedo"><span>Commencer mon voyage</span></button></div></section>`; })()}
       <section class="sec"><div class="card pfcard"><p class="mono">Ton parfumier privé</p><h2>Une question ? Demande-lui.</h2><p>Il connaît toute la base et ton profil. Il est aussi là, en bas à droite, sur chaque page.</p><button class="cta full" id="pfopen"><span>Discuter avec lui</span></button></div></section>
       <section class="sec"><header><h2>Tes parfums du moment</h2><span class="mono">${profPrecision().l}</span></header>
         ${T.recs.length ? carousel(T.recs.map((r, i) => recCard(r, i)), 'Parfums pour toi') : '<div class="empty">Rien sous ce prix. Monte un peu le plafond.</div>'}
@@ -788,6 +790,8 @@
     bud.addEventListener('input', () => { S.settings.budget = CAPS[+bud.value]; $('#bval').textContent = capLabel(S.settings.budget); });
     bud.addEventListener('change', () => { save(); viewTips(); });
     if ($('#pfopen')) $('#pfopen').onclick = () => pfOpen();
+    if ($('#vRedo')) $('#vRedo').onclick = openVoyage;
+    $$('#view [data-gopl]').forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl)));
     $$('#bsel [data-bi]').forEach((b) => (b.onclick = () => { BSEL.i = +b.dataset.bi; drawBesoin(); }));
     $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); viewTips(); }));
     $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c)); rmWish(c.name); save(); viewTips(); setTimeout(ensureRatings, 0); } }));
@@ -2329,23 +2333,74 @@
     upd();
   }
   // Inscription en 5 temps : prénom, genre, âge, goûts, puis la collection choisie dans la base.
+  // ---------- Le voyage : 50 situations de vie, rangées en 5 étapes, reliées aux playlists d'inspiration ----------
+  const SIT_CH = [['Tes journées', 'Comment se passent tes semaines ?'], ['Tes soirées', 'Quand le soleil se couche…'], ['Tes escapades', 'Où aimerais-tu être, là, maintenant ?'], ['Qui tu es', 'Quelques traits de caractère.'], ['Tes inspirations', 'Ceux et ce qui te font rêver.']];
+  const SITS = [[0,"Tu enchaînes les réunions en costume",["Corporate Weapons","Finance Bro","Job Interview"],["elegant","classique"],["bureau"]],[0,"Tu travailles depuis un café, l'ordi sur les genoux",["Tech Bro","Effortless Chic","Daily"],["frais","naturel"],["quotidien","bureau"]],[0,"Tu as un entretien décisif demain",["Job Interview","Corporate Weapons","Quiet Luxury"],["elegant","classique"],["bureau"]],[0,"Tu lances ta boîte, tout reste à construire",["The Founder","Tech Bro","Kendall Roy"],["original"],["bureau"]],[0,"Tu veux rester discret en open space",["Daily","Clean Girl","Je veux sentir propre"],["frais","naturel"],["bureau","quotidien"]],[0,"Dimanche matin, sans réveil",["Sunday Morning","Clean Girl","Daily"],["naturel","sucre"],["quotidien"]],[0,"Tu cours avant que le soleil se lève",["Les Sportifs stylés","Je veux sentir propre","Sous la chaleur"],["frais"],["quotidien","ete"]],[0,"Tu passes ton temps dans les musées et les librairies",["Bookworm","Les Artsy","Les Fans de design"],["original","elegant"],["quotidien"]],[0,"Déjeuner en famille chez les parents",["En famille","Daily","Garden Party"],["classique","naturel"],["quotidien"]],[0,"Tu travailles dans la mode ou la création",["Les Artsy","Funky Chic","Virgil Abloh"],["original"],["quotidien","soiree"]],[1,"Premier rendez-vous ce soir",["Parfums de date","Je veux être envoûtant","Soirée chic"],["sensuel"],["rdv"]],[1,"Sortie en boîte jusqu'au bout de la nuit",["Night Out","Les DJ","Je veux qu'on me remarque"],["sensuel","original"],["soiree"]],[1,"Dîner aux chandelles",["Soirée chic","Parfums de date","L'Élégant"],["sensuel","elegant"],["rdv","soiree"]],[1,"Tu es invité à un mariage",["Occasion spéciale","Soirée chic","Garden Party"],["elegant","classique"],["soiree"]],[1,"Soirée à l'opéra",["Soirée à l'opéra","L'Élégant","Mayfair"],["elegant","classique"],["soiree"]],[1,"Cocktail sur un rooftop",["Soirée chic","Night Out","Les Branchés"],["elegant","sensuel"],["soiree"]],[1,"Réveillon de Noël",["Christmas Eve","Chic Winter","Occasion spéciale"],["sucre","elegant"],["soiree","hiver"]],[1,"Concert de jazz dans un bar à l'ancienne",["Jazz","L'Ivresse","Don Draper"],["sensuel","classique"],["soiree"]],[1,"Soirée match entre potes",["Gameday","Le Footeux","Les Sportifs stylés"],["frais","original"],["soiree"]],[1,"Fête qui finit à l'aube",["L'Ivresse","Les DJ","Night Out"],["sensuel","original"],["soiree"]],[2,"Plage et bateau tout l'été",["Beach Club","Boat Day","Sous la chaleur"],["frais"],["ete"]],[2,"Week-end au ski",["Ski Weekend","Courchevel","Automne Cozy"],["sucre","naturel"],["hiver"]],[2,"Escapade à Paris",["Paris","Effortless Chic","Les Branchés"],["elegant","original"],["quotidien"]],[2,"New York, la ville qui ne dort jamais",["New York","Hiver à New York","Les DJ"],["original","sensuel"],["soiree","hiver"]],[2,"Côte d'Azur, terrasses et yachts",["Côte d'Azur","Saint-Tropez","Monaco"],["frais","elegant"],["ete"]],[2,"Dubaï, tout est grand et doré",["Dubai","Le Qatari","L'Or"],["sensuel","original"],["soiree"]],[2,"Ruelles et marchés de Marrakech",["Marrakech","Égypte","Thaïlande"],["sensuel","naturel"],["ete"]],[2,"Tokyo, néons et calme zen",["Tokyo","Chine ancienne","Les Fans de design"],["frais","original"],["quotidien"]],[2,"Safari ou randonnée en pleine nature",["Safari","L'Aventurier","Montagne arc-en-ciel"],["naturel"],["quotidien"]],[2,"Ibiza, Mykonos ou Rio, la fête au soleil",["Ibiza","Mykonos","Rio"],["frais","sucre"],["ete","soiree"]],[3,"Tu aimes l'élégance discrète, le luxe qui ne se voit pas",["Quiet Luxury","Mayfair","L'Élégant"],["elegant","classique"],["bureau"]],[3,"Tu aimes qu'on se retourne sur toi",["Je veux qu'on me remarque","Aimant à compliments","It Girl"],["sensuel","original"],["soiree"]],[3,"Tu as un côté mystérieux",["Je veux être envoûtant","Tom Ripley","John Wick"],["sensuel","original"],["soiree"]],[3,"Tu as les manières d'un gentleman, ou d'une lady",["James Bond","Don Draper","Jay Gatsby"],["elegant","classique"],["soiree"]],[3,"Tu assumes un côté charismatique et un peu dangereux",["Tony Montana","Michael Corleone","Vito Corleone"],["sensuel","original"],["soiree"]],[3,"Tu vis streetwear et culture urbaine",["Les Branchés","Virgil Abloh","Kanye West"],["original","frais"],["quotidien"]],[3,"Tu aimes sentir le linge propre et la peau fraîche",["Je veux sentir propre","Clean Girl","Daily"],["frais","naturel"],["quotidien"]],[3,"Tu aimes que tout sente riche et opulent",["Je veux sentir opulent","Le Qatari","L'Or"],["sensuel","sucre"],["soiree","hiver"]],[3,"Tu veux un parfum que personne d'autre n'a",["Je veux sentir unique","Strange Smells","Le Collectionneur"],["original"],["quotidien","soiree"]],[3,"Tu es romantique, tout est poésie",["Amélie Poulain","Charlotte York","Garden Party"],["sucre","naturel"],["rdv"]],[4,"Tu t'inspires du glamour de Beyoncé ou de Rihanna",["Rihanna","Beyoncé","It Girl"],["sensuel","sucre"],["soiree"]],[4,"Tu aimes l'esprit rock et la liberté",["Amy Winehouse","Jane Birkin","Rick Owens"],["original","sensuel"],["soiree"]],[4,"Art et excentricité, Basquiat ou Dalí",["Basquiat","Salvador Dalí","Les Artsy"],["original"],["quotidien"]],[4,"Le charme à la française",["Alain Delon","Brigitte Bardot","Paris"],["elegant","classique"],["rdv"]],[4,"Finance, ambition et réussite",["Jordan Belfort","Patrick Bateman","Logan Roy"],["elegant","original"],["bureau"]],[4,"L'histoire et les parfums d'autrefois te fascinent",["Historical Scents","La Cathédrale","Edmond Dantès"],["classique","original"],["soiree"]],[4,"Tu aimes les bois, l'encens et le silence des églises",["La Cathédrale","Seul face à l'océan","Aurores boréales"],["naturel","original"],["hiver"]],[4,"Tu aimes les odeurs étranges et audacieuses",["Strange Smells","Layering","Les Artsy"],["original"],["soiree"]],[4,"Plaid, cheminée et thé chaud",["Automne Cozy","Chic Winter","Sunday Morning"],["sucre","naturel"],["hiver"]],[4,"Tu veux sentir bon sans te poser de questions",["Daily","Les valeurs sûres","Niche à petit prix"],["classique","frais"],["quotidien"]]];
+  // Calcule les univers (playlists) qui correspondent aux situations choisies, et les goûts qu'on en déduit.
+  function sitProfile(ids) {
+    const aff = {}, vib = {}, occ = {};
+    ids.forEach((i) => { const s = SITS[i]; if (!s) return; s[2].forEach((t, k) => { const key = E.norm(t); aff[key] = (aff[key] || 0) + (k === 0 ? 1 : k === 1 ? .75 : .5); }); s[3].forEach((v) => { vib[v] = (vib[v] || 0) + 1; }); s[4].forEach((o) => { occ[o] = (occ[o] || 0) + 1; }); });
+    const mx = Math.max(1, ...Object.values(aff)); Object.keys(aff).forEach((k) => { aff[k] = Math.round(100 * aff[k] / mx) / 100; });
+    const top = (m, n, min) => Object.entries(m).sort((x, y) => y[1] - x[1]).filter((x) => x[1] >= min).slice(0, n).map((x) => x[0]);
+    return { aff, vibes: top(vib, 3, 2), occ: top(occ, 3, 2) };
+  }
+  function sitThemes(n) {
+    const aff = S.settings.sitAff || {}, PL = window.PLAYLISTS || [];
+    return PL.filter((p) => aff[E.norm(p.t)]).map((p) => ({ p, v: aff[E.norm(p.t)] })).sort((x, y) => y.v - x.v).slice(0, n || 4);
+  }
+  // Un parfum phare par univers : le premier de la playlist.
+  const themeStars = (p) => p.ps.filter((x) => x.h).slice(0, 3).map((x) => x.n);
+  function applySit(ids) {
+    const pr = sitProfile(ids);
+    S.settings.sit = ids; S.settings.sitAff = pr.aff;
+    S.settings.vibes = [...new Set([...(S.settings.vibes || []), ...pr.vibes])]; S.settings.occ = [...new Set([...(S.settings.occ || []), ...pr.occ])];
+    save(); NPOOL = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]);
+  }
+  // Le voyage lui-même : cinq étapes, on touche ce qui nous ressemble, puis on découvre son univers.
+  function mountVoyage(root, done, opts) {
+    opts = opts || {}; const sel = new Set(S.settings.sit || []); let c = 0;
+    const draw = () => {
+      if (c >= SIT_CH.length) {
+        applySit([...sel]); const th = sitThemes(4), PL = window.PLAYLISTS || [];
+        root.innerHTML = `<div class="voy"><p class="mono">Ton voyage · terminé</p><h2>Voilà ton univers</h2><p class="soft">${th.length ? 'Ce que tu as choisi dessine ces ambiances. Ce sont elles que je mets en avant pour toi, avec leurs parfums.' : 'Tu n\'as rien choisi, et c\'est très bien : je te proposerai de tout, et j\'apprendrai avec tes notes.'}</p>
+          <div class="univ">${th.map(({ p }, i) => `<article class="uni rise" style="--d:${i * 120}">${p.img ? `<i class="uni-bg" style="background-image:url('${esc(p.img)}')"></i>` : ''}<div><p class="mono">Univers ${i + 1}</p><h3>${esc(p.t)}</h3><p class="uni-s">${esc(themeStars(p).join(' · '))}</p></div></article>`).join('')}</div>
+          <button class="cta full" id="vGo"><span>${opts.cta || 'Continuer'}</span></button><button class="ghost" id="vAgain">Refaire le voyage</button></div>`;
+        $('#vGo', root).onclick = () => done(); $('#vAgain', root).onclick = () => { c = 0; draw(); };
+        return;
+      }
+      const items = SITS.map((s, i) => [s, i]).filter(([s]) => s[0] === c), n = items.filter(([, i]) => sel.has(i)).length;
+      root.innerHTML = `<div class="voy"><p class="mono">Ton voyage · étape ${c + 1} sur ${SIT_CH.length}</p>
+        <div class="route" aria-hidden="true">${SIT_CH.map((_, k) => `<i class="${k < c ? 'past' : k === c ? 'now' : ''}"></i>`).join('<b></b>')}</div>
+        <h2>${esc(SIT_CH[c][0])}</h2><p class="soft">${esc(SIT_CH[c][1])} Touche ce qui te ressemble, sans réfléchir. Autant que tu veux.</p>
+        <div class="sits">${items.map(([s, i], k) => `<button type="button" class="sit rise ${sel.has(i) ? 'on' : ''}" style="--d:${k * 45}" data-si="${i}" aria-pressed="${sel.has(i)}"><span>${esc(s[1])}</span><i aria-hidden="true">✓</i></button>`).join('')}</div>
+        <p class="mono" id="vCount" style="text-transform:none;letter-spacing:0">${n ? n + ' choisie' + (n > 1 ? 's' : '') : 'Aucune pour l\'instant'}</p>
+        <button class="cta full" id="vNext"><span>${c < SIT_CH.length - 1 ? 'Étape suivante' : 'Voir mon univers'}</span></button>${c > 0 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
+      $$('[data-si]', root).forEach((b) => (b.onclick = () => { const i = +b.dataset.si; if (sel.has(i)) sel.delete(i); else sel.add(i); b.classList.toggle('on', sel.has(i)); b.setAttribute('aria-pressed', sel.has(i)); const k = items.filter(([, j]) => sel.has(j)).length; $('#vCount', root).textContent = k ? k + ' choisie' + (k > 1 ? 's' : '') : 'Aucune pour l\'instant'; }));
+      $('#vNext', root).onclick = () => { c++; draw(); const sc = root.closest('.panel, #prof'); if (sc) sc.scrollTop = 0; window.scrollTo(0, 0); };
+      if ($('#vBack', root)) $('#vBack', root).onclick = () => { c--; draw(); };
+      if ($('#vSkip', root)) $('#vSkip', root).onclick = () => done(true);
+    };
+    draw();
+  }
+  function openVoyage() { const pn = openSheet('<div id="voyroot"></div>'); mountVoyage($('#voyroot', pn), () => { closeSheet(); render(true); }); }
   // Luxe ou prix malins : la première chose à savoir pour ne jamais proposer un parfum qui ne ressemble pas à la personne.
   const TIERS = [['luxe', 'Haut de gamme et luxe', 'Niche, grandes maisons, des flacons qui se remarquent. La qualité passe avant le prix.'], ['malin', 'Prix malins', 'Les meilleurs rapports qualité prix, des parfums accessibles et sans regret.'], ['mix', 'Un peu des deux', 'Du luxe quand il le mérite, du malin le reste du temps.']];
   const tierPick = () => `<div class="tiers" role="radiogroup" aria-label="Luxe ou prix malins">${TIERS.map(([k, l, d]) => `<button type="button" class="tier ${S.settings.tier === k ? 'on' : ''}" role="radio" aria-checked="${S.settings.tier === k}" data-tier="${k}"><b>${l}</b><span>${d}</span></button>`).join('')}</div>`;
   function bindTier(root, cb) { $$('[data-tier]', root).forEach((b) => (b.onclick = () => { S.settings.tier = b.dataset.tier; save(); NPOOL = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]); $$('[data-tier]', root).forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); }); if (cb) cb(); })); }
   function showProfile() {
-    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), N = 8;
+    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), N = 9;
     const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Faisons connaissance');
     let step = 1;
     const read = () => { if ($('#pName', el)) d.name = $('#pName', el).value.trim().slice(0, 24); if ($('#pAge', el)) d.age = cleanAge($('#pAge', el).value); };
     const draw = () => {
       const head = `<p class="mono">Faisons connaissance · ${step} / ${N}</p>`, back = step > 1 ? '<button class="ghost" id="pBack">Retour</button>' : '';
-      if (step === 8) {
+      if (step === 9) {
         el.innerHTML = '<div class="prof-in wide"><div id="pExp"></div></div>';
         mountExplorer($('#pExp', el), { mode: 'collection', title: d.name ? 'Tes parfums, ' + d.name : 'Tes parfums', sub: 'Choisis ceux que tu as déjà : par maison, style, notes… Tu pourras en ajouter d\'autres à tout moment.', cta: (n) => 'Ajouter ' + n + ' et commencer', skip: 'Je n\'en ai pas encore', onSkip: () => end(false), onSubmit: (list) => { addEntriesToCollection(list); end(false); } });
         return;
       }
-      const st2 = step > 4 ? step - 1 : step;
+      const st2 = step > 5 ? step - 2 : step;
+      if (step === 5) { el.innerHTML = '<div class="prof-in wide" id="pVoy"></div>'; mountVoyage($('#pVoy', el), () => { step++; draw(); }, { skip: true, cta: 'Continuer' }); return; }
       if (step === 4) {
         el.innerHTML = `<div class="prof-in">${head}<h2>Plutôt luxe ou prix malins&nbsp;?</h2><p class="soft">C'est ce qui compte le plus pour te conseiller juste : je ne te proposerai jamais un parfum qui ne te ressemble pas.</p>${tierPick()}<button class="cta full" id="pNext" ${S.settings.tier ? '' : 'disabled'}><span>Continuer</span></button>${back}</div>`;
         bindTier(el, () => { $('#pNext', el).disabled = false; });
