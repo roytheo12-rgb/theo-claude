@@ -8,7 +8,7 @@ Généré en analysant la photo réellement utilisée par l'app pour chaque parf
 
 Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au moins 600 px de haut, déposé dans `parfumier/incoming/` sous la forme `Maison_Nom.jpg`.
 
-**Sur les 964 parfums uniques des playlists : 10 sans photo, 94 à refaire, 118 à améliorer, 742 corrects.**
+**Sur les 1011 parfums uniques des playlists : 15 sans photo, 98 à refaire, 116 à améliorer, 782 corrects.**
 
 
 ## Cinéma, séries & livres
@@ -134,7 +134,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ### Paul Allen (1 à améliorer, 2 à refaire)
 
 **À refaire**
-- Dior Dior Homme Original (fond non détouré)
+- Dior Dior Homme (fond non détouré; bords blancs ou irréguliers très visibles)
 - Chanel Pour Monsieur Concentrée (fond non détouré)
 
 **À améliorer**
@@ -279,7 +279,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ### Alain Delon (1 à améliorer, 1 à refaire)
 
 **À refaire**
-- Dior Dior Homme Original (fond non détouré)
+- Dior Dior Homme (fond non détouré; bords blancs ou irréguliers très visibles)
 
 **À améliorer**
 - Acqua di Parma Colonia (léger liseré blanc sur les bords)
@@ -339,6 +339,12 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Creed Royal Oud (léger liseré blanc sur les bords)
 
 
+### Kanye West (1 à refaire)
+
+**À refaire**
+- Dior Dior Homme Intense (fond non détouré)
+
+
 ### Basquiat (2 à améliorer, 1 à refaire)
 
 **À refaire**
@@ -359,7 +365,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ## Archétypes
 
 
-### Clean Girl (3 à refaire, 3 à améliorer)
+### Clean Girl (3 à refaire, 2 à améliorer)
 
 **À refaire**
 - Glossier You (image floue; léger liseré blanc sur les bords)
@@ -369,7 +375,6 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 **À améliorer**
 - Aesop Tacit (léger liseré blanc sur les bords)
 - Juliette Has a Gun Not a Perfume (léger liseré blanc sur les bords)
-- Phlur Matcha Milk (léger liseré blanc sur les bords)
 
 
 ### Russian Baddie (1 à refaire)
@@ -411,11 +416,15 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Marc-Antoine Barrois Ganymede (léger liseré blanc sur les bords)
 
 
-### Funky Chic (2 à refaire)
+### Funky Chic (1 à améliorer, 3 à refaire)
 
 **À refaire**
+- Dries Van Noten Velvet Violet (bords blancs ou irréguliers très visibles)
 - Kilian Angels' Share (fond non détouré)
 - Nishane Hacivat (bords blancs ou irréguliers très visibles)
+
+**À améliorer**
+- Ex Nihilo Scarlet Sands (léger liseré blanc sur les bords)
 
 
 ### Effortless Chic (1 à améliorer, 1 à refaire)
@@ -480,7 +489,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 
 **À refaire**
 - Carner Barcelona Tennis Club (fond non détouré)
-- Dior Dior Homme Sport (contour déchiqueté)
+- Dior Dior Homme Sport (fond non détouré)
 - Creed Aventus for Her (bords blancs ou irréguliers très visibles)
 - Chanel Chance Eau Fraîche (image floue)
 
@@ -502,14 +511,19 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Penhaligon's The Favourite (léger liseré blanc sur les bords)
 
 
-### It Boy (2 à refaire)
+### It Boy (2 à améliorer, 3 à refaire)
 
 **À refaire**
+- Dries Van Noten Velvet Violet (bords blancs ou irréguliers très visibles)
 - Comme des Garçons Wonderwood (image floue)
 - Nishane Hacivat (bords blancs ou irréguliers très visibles)
 
+**À améliorer**
+- Ex Nihilo Scarlet Sands (léger liseré blanc sur les bords)
+- Amouage Reflection Man (résolution moyenne (318 px))
 
-### It Girl (2 à améliorer, 3 à refaire)
+
+### It Girl (3 à améliorer, 3 à refaire)
 
 **À refaire**
 - Glossier You (image floue; léger liseré blanc sur les bords)
@@ -519,9 +533,13 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 **À améliorer**
 - Initio Musk Therapy (léger liseré blanc sur les bords)
 - BDK Parfums Pas Ce Soir (léger liseré blanc sur les bords)
+- Phlur Matcha Milk (léger liseré blanc sur les bords)
 
 
-### Le Qatari (1 à améliorer, 1 à refaire)
+### Le Qatari (1 à améliorer, 1 à refaire, 1 sans photo)
+
+**Sans photo**
+- The Spirit of Dubai Turath
 
 **À refaire**
 - Oman Luxury Dejan (bords blancs ou irréguliers très visibles)
@@ -549,7 +567,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 
 **À refaire**
 - Chanel Pour Monsieur Concentrée (fond non détouré)
-- Dior Dior Homme Original (fond non détouré)
+- Dior Dior Homme (fond non détouré; bords blancs ou irréguliers très visibles)
 - Kilian Old Fashioned (fond non détouré; léger liseré blanc sur les bords)
 - Penhaligon's The Tragedy of Lord George (contour déchiqueté)
 
@@ -700,7 +718,10 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Bottega Veneta Parco Palladiano IX: Violetta (léger liseré blanc sur les bords)
 
 
-### Dubai (2 à améliorer)
+### Dubai (1 sans photo, 2 à améliorer)
+
+**Sans photo**
+- The Spirit of Dubai Turath
 
 **À améliorer**
 - Oman Luxury Mariya (léger liseré blanc sur les bords)
@@ -805,7 +826,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 
 **À refaire**
 - Memo Paris Siwa (bords blancs ou irréguliers très visibles)
-- Contes de Parfums Alexandria (bords blancs ou irréguliers très visibles)
+- Contes de Parfums Alexandria (format large ou coffret, flacon pas isolé)
 - Boucheron Ambre d'Alexandrie (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
@@ -848,17 +869,19 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ## Moments
 
 
-### Ski Weekend (2 à refaire, 1 à améliorer)
+### Ski Weekend (1 à refaire, 1 à améliorer)
 
 **À refaire**
 - Kilian Angels' Share (fond non détouré)
-- Houbigant Fougère Nobile (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
 - Memo Paris Winter Palace (léger liseré blanc sur les bords)
 
 
-### Gameday (3 à améliorer)
+### Gameday (3 à améliorer, 1 à refaire)
+
+**À refaire**
+- Dior Dior Homme Sport (fond non détouré)
 
 **À améliorer**
 - Creed Aventus Cologne (léger liseré blanc sur les bords)
@@ -872,13 +895,17 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Maison Crivelli Papyrus Moléculaire (léger liseré blanc sur les bords)
 
 
-### First Date (7 à améliorer, 2 à refaire)
+### First Date (5 à refaire, 8 à améliorer)
 
 **À refaire**
+- Kilian Angels' Share (fond non détouré)
+- Maison Crivelli Oud Stallion (bords blancs ou irréguliers très visibles)
 - Nishane Meant To Be Seen (image floue)
+- Dior Dior Homme Intense (fond non détouré)
 - Nishane Meant To Be Seen (image floue)
 
 **À améliorer**
+- Marc-Antoine Barrois Ganymede (léger liseré blanc sur les bords)
 - Initio Musk Therapy (léger liseré blanc sur les bords)
 - Maison Crivelli Santal Volcanique (léger liseré blanc sur les bords)
 - BDK Parfums Pas Ce Soir (léger liseré blanc sur les bords)
@@ -904,7 +931,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ### En famille (1 à refaire, 3 à améliorer)
 
 **À refaire**
-- Dior Dior Homme Original (fond non détouré)
+- Dior Dior Homme (fond non détouré; bords blancs ou irréguliers très visibles)
 
 **À améliorer**
 - Acqua di Parma Colonia (léger liseré blanc sur les bords)
@@ -912,9 +939,13 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Acqua di Parma Colonia (léger liseré blanc sur les bords)
 
 
-### Wedding Guest (12 à améliorer, 5 à refaire)
+### Occasion spéciale (1 sans photo, 6 à refaire, 12 à améliorer)
+
+**Sans photo**
+- The Spirit of Dubai Turath
 
 **À refaire**
+- Dior Dior Homme Intense (fond non détouré)
 - Giardini di Toscana Bianco Oro (bords blancs ou irréguliers très visibles)
 - Creed Silver Mountain Water (image floue)
 - Yves Saint Laurent Supreme Bouquet (bords blancs ou irréguliers très visibles; contour légèrement irrégulier)
@@ -952,7 +983,10 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Floris Jermyn Street (résolution moyenne (298 px))
 
 
-### Beach Club (2 à refaire, 1 à améliorer)
+### Beach Club (2 à refaire, 1 à améliorer, 1 sans photo)
+
+**Sans photo**
+- Widian Hili
 
 **À refaire**
 - Memo Paris Siwa (bords blancs ou irréguliers très visibles)
@@ -962,7 +996,10 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Memo Paris Corfu (léger liseré blanc sur les bords)
 
 
-### Night Out (1 à refaire, 1 à améliorer)
+### Night Out (1 à refaire, 1 à améliorer, 1 sans photo)
+
+**Sans photo**
+- Widian Hili
 
 **À refaire**
 - Kilian Angels' Share (fond non détouré)
@@ -988,7 +1025,11 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Contes de Parfums Atlantis (format large ou coffret, flacon pas isolé)
 
 
-### Sous la chaleur (6 à refaire, 5 à améliorer)
+### Sous la chaleur (6 à refaire, 2 sans photo, 5 à améliorer)
+
+**Sans photo**
+- Fascent Sel A Vie
+- Armani Bleu Turquoise
 
 **À refaire**
 - Guerlain L'Homme Idéal Cologne Forte (bords blancs ou irréguliers très visibles)
@@ -1006,28 +1047,33 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Essential Parfums Nice Bergamote (léger liseré blanc sur les bords)
 
 
-### Daily (10 à améliorer, 1 à refaire)
+### Daily (2 à refaire, 9 à améliorer)
 
 **À refaire**
+- Dries Van Noten Camomille Satin (bords blancs ou irréguliers très visibles)
 - Parfums de Marly Greenley (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
+- Ex Nihilo Scarlet Sands (léger liseré blanc sur les bords)
 - Initio Musk Therapy (léger liseré blanc sur les bords)
 - Mancera Cedrat Boise (léger liseré blanc sur les bords)
-- Coelia Cap Spartel (contour légèrement irrégulier)
 - Tom Ford Beau de Jour (léger liseré blanc sur les bords)
 - Initio Rehab (léger liseré blanc sur les bords)
 - Essential Parfums Mon Vetiver (léger liseré blanc sur les bords)
 - Initio Musk Therapy (léger liseré blanc sur les bords)
 - Mancera Cedrat Boise (léger liseré blanc sur les bords)
-- Coelia Cap Spartel (contour légèrement irrégulier)
 - Initio Rehab (léger liseré blanc sur les bords)
 
 
 ## Atmosphères
 
 
-### Hiver à New York (1 à améliorer, 3 à refaire)
+### Hiver à New York (3 sans photo, 2 à améliorer, 3 à refaire)
+
+**Sans photo**
+- Masque Milano Tango
+- Bvlgari Orom
+- Maison Unika Vanille Réglisse
 
 **À refaire**
 - Nasomatto Baraonda (bords blancs ou irréguliers très visibles)
@@ -1035,20 +1081,26 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Giardini di Toscana Bianco Latte (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
+- Oman Luxury Royal Incense (léger liseré blanc sur les bords)
 - Le Labo Thé Noir 29 (contour légèrement irrégulier)
 
 
-### Automne Cozy (6 à refaire, 8 à améliorer)
+### Automne Cozy (6 à refaire, 2 sans photo, 9 à améliorer)
+
+**Sans photo**
+- Coelia Dinajpur
+- Baruti Chai
 
 **À refaire**
+- Parfum d'Empire Musc Tonkin (bords blancs ou irréguliers très visibles)
 - Kilian Angels' Share (fond non détouré)
 - Giardini di Toscana Bianco Latte (bords blancs ou irréguliers très visibles)
-- Parfum d'Empire Musc Tonkin (bords blancs ou irréguliers très visibles)
 - Tom Ford Amber Intrigue (fond non détouré)
 - Memo Paris Sherwood (bords blancs ou irréguliers très visibles)
 - Memo Paris Sintra (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
+- Nicolaï Saint Honore (léger liseré blanc sur les bords)
 - Xerjoff Starlight (léger liseré blanc sur les bords)
 - Maison Crivelli Santal Volcanique (léger liseré blanc sur les bords)
 - Mancera Amore Caffè (léger liseré blanc sur les bords)
@@ -1059,9 +1111,14 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - BDK Parfums Velvet Tonka (léger liseré blanc sur les bords)
 
 
-### Garden Party (2 à refaire, 1 à améliorer)
+### Garden Party (2 sans photo, 3 à refaire, 1 à améliorer)
+
+**Sans photo**
+- Attar Al Has Skin Musk
+- Jeroboam Gozo
 
 **À refaire**
+- Dior Balade Sauvage (bords blancs ou irréguliers très visibles)
 - Rosendo Mateu No. 4 (bords blancs ou irréguliers très visibles)
 - Giardini di Toscana Verde Respiro (bords blancs ou irréguliers très visibles)
 
@@ -1069,13 +1126,12 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Oman Luxury Flowerlush (léger liseré blanc sur les bords)
 
 
-### Soirée à l'opéra (2 à améliorer, 1 à refaire)
+### Soirée à l'opéra (1 à améliorer, 1 à refaire)
 
 **À refaire**
 - Floris 1927 (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
-- D'Orsay Tilleul Extrait (léger liseré blanc sur les bords)
 - Guerlain Oeillet Pourpre (léger liseré blanc sur les bords)
 
 
@@ -1085,13 +1141,19 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Kilian Angels' Share (fond non détouré)
 
 
-### Chic Winter (2 à refaire, 1 à améliorer)
+### Chic Winter (3 sans photo, 2 à améliorer, 2 à refaire)
+
+**Sans photo**
+- Masque Milano Tango
+- Bvlgari Orom
+- Maison Unika Vanille Réglisse
 
 **À refaire**
 - Kilian Angels' Share (fond non détouré)
 - Hermès Barénia (format large ou coffret, flacon pas isolé)
 
 **À améliorer**
+- Oman Luxury Royal Incense (léger liseré blanc sur les bords)
 - Guerlain Bois d'Arménie (léger liseré blanc sur les bords)
 
 
@@ -1111,12 +1173,6 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 
 **À refaire**
 - Penhaligon's The Tragedy of Lord George (contour déchiqueté)
-
-
-### La Cathédrale (1 à améliorer)
-
-**À améliorer**
-- Etat Libre d'Orange Rien (léger liseré blanc sur les bords)
 
 
 ### L'Ivresse (3 à refaire, 1 à améliorer)
@@ -1139,17 +1195,22 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Nishane Hacivat (bords blancs ou irréguliers très visibles)
 
 
-### Je veux sentir propre (5 à refaire, 3 à améliorer)
+### Je veux sentir propre (4 à améliorer, 6 à refaire, 1 sans photo)
+
+**Sans photo**
+- Chloé Atelier des Fleurs
 
 **À refaire**
+- Carner Barcelona Isla Bohemia (fond non détouré)
+- Comme des Garçons Marseille (bords blancs ou irréguliers très visibles)
 - Glossier You (image floue; léger liseré blanc sur les bords)
 - Creed Silver Mountain Water (image floue)
-- Carner Barcelona Isla Bohemia (fond non détouré)
 - Khadlaj Pure Musk (bords blancs ou irréguliers très visibles)
 - Maison Margiela Bubble Bath (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
 - Profumo di Firenze Viandante (léger liseré blanc sur les bords)
+- Amouage Reflection Man (résolution moyenne (318 px))
 - Initio Musk Therapy (léger liseré blanc sur les bords)
 - Memo Paris Flam (léger liseré blanc sur les bords)
 
@@ -1163,7 +1224,13 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Tom Ford Noir Extreme (fond non détouré)
 
 
-### Aimant à compliments (3 à améliorer)
+### Aimant à compliments (1 sans photo, 3 à améliorer, 1 à refaire)
+
+**Sans photo**
+- Balmain Carbone
+
+**À refaire**
+- Dior Dior Homme Intense (fond non détouré)
 
 **À améliorer**
 - Initio Musk Therapy (léger liseré blanc sur les bords)
@@ -1197,40 +1264,25 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ## Spécial
 
 
-### Historical Scents (8 à refaire, 10 sans photo, 9 à améliorer)
-
-**Sans photo**
-- Contes de Parfums Babylon
-- Masque Milano Petra
-- Contes de Parfums Samarkand
-- Memo Paris Granada
-- Stéphane Humbert Lucas 777 Cacao Aztèque
-- Caron Narcisse Noir
-- Caron Tabac Blond
-- Lanvin Arpège
-- Nina Ricci L'Air du Temps
-- Davidoff Cool Water
+### Historical Scents (7 à refaire, 7 à améliorer)
 
 **À refaire**
 - Contes de Parfums Atlantis (format large ou coffret, flacon pas isolé)
-- Contes de Parfums Alexandria (bords blancs ou irréguliers très visibles)
+- Contes de Parfums Babylon (format large ou coffret, flacon pas isolé)
+- Contes de Parfums Alexandria (format large ou coffret, flacon pas isolé)
 - Contes de Parfums Pompeii (format large ou coffret, flacon pas isolé)
-- Francesca Bianchi Byzantine Amber (bords blancs ou irréguliers très visibles)
-- The Different Company Gothic Incense (bords blancs ou irréguliers très visibles)
-- Burberry Tudor Rose (bords blancs ou irréguliers très visibles; contour légèrement irrégulier)
+- Contes de Parfums Samarkand (format large ou coffret, flacon pas isolé)
+- Memo Paris Granada (bords blancs ou irréguliers très visibles)
 - Floris 1927 (bords blancs ou irréguliers très visibles)
-- Yves Saint Laurent Opium (format large ou coffret, flacon pas isolé; léger liseré blanc sur les bords; contour légèrement irrégulier)
 
 **À améliorer**
 - Sultan Pasha Perfumes Thebes (léger liseré blanc sur les bords)
 - Memo Paris Luxor (léger liseré blanc sur les bords)
 - Penhaligon's Constantinople (léger liseré blanc sur les bords)
 - Francesca Bianchi The Black Knight (léger liseré blanc sur les bords)
-- Xerjoff Louis XV 1722 (léger liseré blanc sur les bords; contour légèrement irrégulier)
 - Guerlain Mitsouko (léger liseré blanc sur les bords)
 - Jean Patou Joy (léger liseré blanc sur les bords)
 - Dior Miss Dior Original (léger liseré blanc sur les bords)
-- Dior Poison (léger liseré blanc sur les bords)
 
 
 ### Strange Smells (6 à améliorer, 1 à refaire)
@@ -1256,13 +1308,19 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Le Labo Thé Noir 29 (contour légèrement irrégulier)
 
 
-### Les Petits budgets (7 à améliorer, 2 à refaire)
+### Dans toutes les parfumeries (2 sans photo, 3 à refaire, 8 à améliorer)
+
+**Sans photo**
+- Jean Paul Gaultier Le Beau Narcisse
+- Rabanne Invictus Victory Elixir
 
 **À refaire**
+- Tom Ford Noir Extreme (fond non détouré)
 - Chloé Chloé (format large ou coffret, flacon pas isolé)
 - Yves Saint Laurent Mon Paris (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
+- Jean Paul Gaultier Le Beau Paradise Garden (léger liseré blanc sur les bords)
 - Dior Sauvage EDT (léger liseré blanc sur les bords)
 - Azzaro Wanted (léger liseré blanc sur les bords)
 - Armani Acqua di Giò Profumo (léger liseré blanc sur les bords)
@@ -1272,19 +1330,19 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Azzaro Wanted Girl (léger liseré blanc sur les bords)
 
 
-### Niche à petit prix (8 à améliorer, 7 à refaire)
+### Niche à petit prix (7 à améliorer, 8 à refaire)
 
 **À refaire**
 - Carner Barcelona Tennis Club (fond non détouré)
+- Carner Barcelona Tardes (fond non détouré)
+- Carner Barcelona Cuirs (fond non détouré)
 - Carner Barcelona El Born (fond non détouré; bords blancs ou irréguliers très visibles)
 - Carner Barcelona D600 (fond non détouré; bords blancs ou irréguliers très visibles)
-- Laboratorio Olfattivo Nirmal (format large ou coffret, flacon pas isolé; image floue)
 - Laboratorio Olfattivo Baliflora (bords blancs ou irréguliers très visibles)
 - Giardini di Toscana Bianco Latte (bords blancs ou irréguliers très visibles)
 - Montale Black Aoud (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
-- Maison Siraj Élixir d'Amande Extrait (léger liseré blanc sur les bords)
 - Maison Unika Oud Osmanthus (léger liseré blanc sur les bords)
 - Laboratorio Olfattivo Vanagloria (léger liseré blanc sur les bords)
 - Essential Parfums Orange x Santal (léger liseré blanc sur les bords)

@@ -5236,3 +5236,31 @@ x Roja Parfums Enigma Pour Homme
 ~ Jean Paul Gaultier Le Beau Paradise Garden | Un parfum du Beau de Jean Paul Gaultier, un masculin facile à trouver partout.
 ~ Givenchy Gentleman Réserve Privée | Un classicisme gourmand de chez Givenchy, un parfum masculin disponible dans toutes les parfumeries.
 ~ Rabanne Invictus Victory Elixir | Une version concentrée d'Invictus, un masculin bien connu qu'on trouve partout.
+
+## Dans toutes les parfumeries
+d: Les parfums qu'on croise partout et qu'on trouve sans chercher, en grande parfumerie comme en ligne. Des best-sellers et des classiques modernes, faciles à essayer, à retrouver et à racheter.
+g: Homme | Il veut un parfum fiable, reconnu et facile à retrouver, qu'il peut racheter n'importe où sans y passer une heure.
+g: Femme | Elle veut un parfum qu'elle connaît, qui plaît et qu'on trouve dans toutes les parfumeries, sans mauvaise surprise.
+~ Prada L'Homme | Un iris propre et poli, un classique des grands créateurs qu'on trouve en parfumerie.
+~ Chanel Bleu de Chanel EDT | La référence universelle, présente dans toutes les parfumeries.
+~ Dior Sauvage EDT | Le blockbuster moderne, le plus connu et le plus facile à retrouver.
+~ Yves Saint Laurent Y EDP | Frais et structuré, un incontournable des rayons masculins.
+~ Azzaro Wanted | Masculin et épicé, un best-seller qu'on trouve partout.
+~ Armani Acqua di Giò Profumo | La version profonde d'un grand classique de la parfumerie.
+~ Mugler Cologne | Une cologne fraîche signée Mugler, facile à trouver et à essayer.
+~ Lacoste L.12.12 Blanc | Le polo blanc en parfum, un classique des parfumeries.
+~ Hermès H24 | Un boisé moderne d'Hermès, présent dans toutes les belles parfumeries.
+~ Hugo Boss Boss Bottled Parfum | Le classique moderne, un grand nom des rayons masculins.
+~ Mancera Cedrat Boise | Un agrume boisé frais et polyvalent, la porte d'entrée vers la maison Mancera.
+~ Khadlaj Fursan Brown | Un fruité gourmand tropical, très facile à porter.
+~ Narciso Rodriguez For Her | Le musc féminin de référence.
+~ Chloé Chloé | Un floral pastel et doux, un classique des parfumeries.
+~ Yves Saint Laurent Mon Paris | Romantique et moderne, un best-seller féminin.
+~ Lancôme La Vie est Belle | Le best-seller mondial, un gourmand que tout le monde connaît.
+~ Mugler Angel | A inventé le parfum gourmand en 1992, et on le trouve partout depuis.
+~ Prada Candy | La version sucrée de Prada, un gourmand très populaire.
+~ Cacharel Amor Amor | Fraîcheur et romance, un classique des parfumeries.
+~ Azzaro Wanted Girl | Frais et ambré, un best-seller féminin.
+~ Yves Rocher Comme une Evidence | Le parfum français discret et juste, facile à trouver partout.
+~ Khadlaj Hareem Al Sultan Gold | Un oriental féminin sensuel, chaleureux et facile à porter.
+~ Khadlaj Caffe Latte | Café et gourmandise, un parfum doux et réconfortant.

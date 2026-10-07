@@ -30,7 +30,7 @@ Cinéma, séries & livres;Vincent Vega;DS & Durga;Bowmakers;à améliorer;léger
 Cinéma, séries & livres;Vincent Vega;Etat Libre d'Orange;Rien;à améliorer;léger liseré blanc sur les bords
 Cinéma, séries & livres;Amélie Poulain;Maison Violet;Un Air d'Apogée;à améliorer;léger liseré blanc sur les bords
 Cinéma, séries & livres;Paul Allen;Acqua di Parma;Colonia Assoluta;à améliorer;léger liseré blanc sur les bords
-Cinéma, séries & livres;Paul Allen;Dior;Dior Homme Original;à refaire;fond non détouré
+Cinéma, séries & livres;Paul Allen;Dior;Dior Homme;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
 Cinéma, séries & livres;Paul Allen;Chanel;Pour Monsieur Concentrée;à refaire;fond non détouré
 Cinéma, séries & livres;Charlotte York;Dior;Miss Dior EDP;à refaire;format large ou coffret, flacon pas isolé
 Cinéma, séries & livres;Charlotte York;Penhaligon's;The Favourite;à améliorer;léger liseré blanc sur les bords
@@ -65,7 +65,7 @@ Icônes;Taylor Swift;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré 
 Icônes;Bad Bunny;Nishane;Hacivat;à refaire;bords blancs ou irréguliers très visibles
 Icônes;Bad Bunny;Le Labo;Thé Matcha 26;à refaire;bords blancs ou irréguliers très visibles
 Icônes;Alain Delon;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
-Icônes;Alain Delon;Dior;Dior Homme Original;à refaire;fond non détouré
+Icônes;Alain Delon;Dior;Dior Homme;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
 Icônes;Brigitte Bardot;Guerlain;Mitsouko;à améliorer;léger liseré blanc sur les bords
 Icônes;Brigitte Bardot;Jean Patou;Joy;à améliorer;léger liseré blanc sur les bords
 Icônes;Jane Birkin;Le Labo;Thé Noir 29;à améliorer;contour légèrement irrégulier
@@ -81,6 +81,7 @@ Icônes;Salvador Dalí;Etat Libre d'Orange;Rien;à améliorer;léger liseré bla
 Icônes;Salvador Dalí;Nasomatto;Baraonda;à refaire;bords blancs ou irréguliers très visibles
 Icônes;Salvador Dalí;DS & Durga;Bowmakers;à améliorer;léger liseré blanc sur les bords
 Icônes;Jay-Z;Creed;Royal Oud;à améliorer;léger liseré blanc sur les bords
+Icônes;Kanye West;Dior;Dior Homme Intense;à refaire;fond non détouré
 Icônes;Basquiat;Etat Libre d'Orange;Rien;à améliorer;léger liseré blanc sur les bords
 Icônes;Basquiat;Vilhelm Parfumerie;Basilico & Fellini;à refaire;"format large ou coffret, flacon pas isolé; léger liseré blanc sur les bords"
 Icônes;Basquiat;Zoologist;Bat;à améliorer;léger liseré blanc sur les bords
@@ -90,7 +91,6 @@ Archétypes;Clean Girl;Glossier;You;à refaire;"image floue; léger liseré blan
 Archétypes;Clean Girl;Aesop;Tacit;à améliorer;léger liseré blanc sur les bords
 Archétypes;Clean Girl;Juliette Has a Gun;Not a Perfume;à améliorer;léger liseré blanc sur les bords
 Archétypes;Clean Girl;Le Labo;Thé Matcha 26;à refaire;bords blancs ou irréguliers très visibles
-Archétypes;Clean Girl;Phlur;Matcha Milk;à améliorer;léger liseré blanc sur les bords
 Archétypes;Clean Girl;Maison Margiela;Bubble Bath;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;Russian Baddie;Oman Luxury;Dejan;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;Quiet Luxury;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré blanc sur les bords
@@ -105,6 +105,8 @@ Archétypes;Tech Bro;Comme des Garçons;Wonderwood;à refaire;image floue
 Archétypes;Tech Bro;Juliette Has a Gun;Not a Perfume;à améliorer;léger liseré blanc sur les bords
 Archétypes;Tech Bro;Aesop;Tacit;à améliorer;léger liseré blanc sur les bords
 Archétypes;Tech Bro;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré blanc sur les bords
+Archétypes;Funky Chic;Ex Nihilo;Scarlet Sands;à améliorer;léger liseré blanc sur les bords
+Archétypes;Funky Chic;Dries Van Noten;Velvet Violet;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;Funky Chic;Kilian;Angels' Share;à refaire;fond non détouré
 Archétypes;Funky Chic;Nishane;Hacivat;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;Effortless Chic;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré blanc sur les bords
@@ -131,7 +133,7 @@ Archétypes;Les Fans de design;Marc-Antoine Barrois;Ganymede;à améliorer;lége
 Archétypes;Les Fans de design;Le Labo;Thé Noir 29;à améliorer;contour légèrement irrégulier
 Archétypes;Les Sportifs stylés;Carner Barcelona;Tennis Club;à refaire;fond non détouré
 Archétypes;Les Sportifs stylés;Creed;Aventus Cologne;à améliorer;léger liseré blanc sur les bords
-Archétypes;Les Sportifs stylés;Dior;Dior Homme Sport;à refaire;contour déchiqueté
+Archétypes;Les Sportifs stylés;Dior;Dior Homme Sport;à refaire;fond non détouré
 Archétypes;Les Sportifs stylés;Creed;Aventus for Her;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;Les Sportifs stylés;Chanel;Chance Eau Fraîche;à refaire;image floue
 Archétypes;Les Sportifs stylés;Essential Parfums;Fig Infusion;à améliorer;léger liseré blanc sur les bords
@@ -141,6 +143,9 @@ Archétypes;Bookworm;Parfum d'Empire;Corsica Furiosa;à améliorer;léger liser�
 Archétypes;Bookworm;Maison Crivelli;Papyrus Moléculaire;à améliorer;léger liseré blanc sur les bords
 Archétypes;Bookworm;Penhaligon's;The Favourite;à améliorer;léger liseré blanc sur les bords
 Archétypes;Bookworm;Dior;Miss Dior EDP;à refaire;format large ou coffret, flacon pas isolé
+Archétypes;It Boy;Ex Nihilo;Scarlet Sands;à améliorer;léger liseré blanc sur les bords
+Archétypes;It Boy;Dries Van Noten;Velvet Violet;à refaire;bords blancs ou irréguliers très visibles
+Archétypes;It Boy;Amouage;Reflection Man;à améliorer;résolution moyenne (318 px)
 Archétypes;It Boy;Comme des Garçons;Wonderwood;à refaire;image floue
 Archétypes;It Boy;Nishane;Hacivat;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;It Girl;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
@@ -148,14 +153,16 @@ Archétypes;It Girl;Glossier;You;à refaire;"image floue; léger liseré blanc s
 Archétypes;It Girl;Le Labo;Thé Matcha 26;à refaire;bords blancs ou irréguliers très visibles
 Archétypes;It Girl;BDK Parfums;Pas Ce Soir;à améliorer;léger liseré blanc sur les bords
 Archétypes;It Girl;Prada;Paradoxe;à refaire;format large ou coffret, flacon pas isolé
+Archétypes;It Girl;Phlur;Matcha Milk;à améliorer;léger liseré blanc sur les bords
 Archétypes;Le Qatari;Oman Luxury;Royal Incense;à améliorer;léger liseré blanc sur les bords
 Archétypes;Le Qatari;Oman Luxury;Dejan;à refaire;bords blancs ou irréguliers très visibles
+Archétypes;Le Qatari;The Spirit of Dubai;Turath;sans photo;aucune photo dans la base
 Archétypes;Le Footeux;Penhaligon's;The Tragedy of Lord George;à refaire;contour déchiqueté
 Archétypes;Le Footeux;Amouage;Reflection Man;à améliorer;résolution moyenne (318 px)
 Archétypes;L'Aventurier;Creed;Silver Mountain Water;à refaire;image floue
 Archétypes;L'Élégant;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
 Archétypes;L'Élégant;Chanel;Pour Monsieur Concentrée;à refaire;fond non détouré
-Archétypes;L'Élégant;Dior;Dior Homme Original;à refaire;fond non détouré
+Archétypes;L'Élégant;Dior;Dior Homme;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
 Archétypes;L'Élégant;Kilian;Old Fashioned;à refaire;"fond non détouré; léger liseré blanc sur les bords"
 Archétypes;L'Élégant;Penhaligon's;The Tragedy of Lord George;à refaire;contour déchiqueté
 Archétypes;L'Élégant;Floris;Jermyn Street;à améliorer;résolution moyenne (298 px)
@@ -225,6 +232,7 @@ Destinations;Lake Como;Santa Maria Novella;Angeli di Firenze;à améliorer;lége
 Destinations;Lake Como;Acqua di Parma;Magnolia Infinita;à améliorer;léger liseré blanc sur les bords
 Destinations;Lake Como;Bottega Veneta;Parco Palladiano IX: Violetta;à améliorer;léger liseré blanc sur les bords
 Destinations;Lake Como;Ella K;Baiser de Florence;à refaire;image floue
+Destinations;Dubai;The Spirit of Dubai;Turath;sans photo;aucune photo dans la base
 Destinations;Dubai;Oman Luxury;Mariya;à améliorer;léger liseré blanc sur les bords
 Destinations;Dubai;Strangers Parfumerie;Muscat Jasmine Tea;à améliorer;léger liseré blanc sur les bords
 Destinations;Tokyo;Comme des Garçons;Wonderwood;à refaire;image floue
@@ -271,7 +279,7 @@ Destinations;Égypte;DS & Durga;Bowmakers;à améliorer;léger liseré blanc sur
 Destinations;Égypte;Memo Paris;Siwa;à refaire;bords blancs ou irréguliers très visibles
 Destinations;Égypte;Memo Paris;Luxor;à améliorer;léger liseré blanc sur les bords
 Destinations;Égypte;Sultan Pasha Perfumes;Thebes;à améliorer;léger liseré blanc sur les bords
-Destinations;Égypte;Contes de Parfums;Alexandria;à refaire;bords blancs ou irréguliers très visibles
+Destinations;Égypte;Contes de Parfums;Alexandria;à refaire;format large ou coffret, flacon pas isolé
 Destinations;Égypte;Boucheron;Ambre d'Alexandrie;à refaire;bords blancs ou irréguliers très visibles
 Destinations;Chine ancienne;Comme des Garçons;Wonderwood;à refaire;image floue
 Destinations;Chine ancienne;DS & Durga;Bowmakers;à améliorer;léger liseré blanc sur les bords
@@ -281,16 +289,20 @@ Destinations;Thaïlande;Serge Lutens;Borneo 1834;à améliorer;léger liseré bl
 Destinations;Thaïlande;Boucheron;Patchouli d'Angkor;à refaire;bords blancs ou irréguliers très visibles
 Destinations;Le train de minerai;Etat Libre d'Orange;Rien;à améliorer;léger liseré blanc sur les bords
 Moments;Ski Weekend;Kilian;Angels' Share;à refaire;fond non détouré
-Moments;Ski Weekend;Houbigant;Fougère Nobile;à refaire;bords blancs ou irréguliers très visibles
 Moments;Ski Weekend;Memo Paris;Winter Palace;à améliorer;léger liseré blanc sur les bords
 Moments;Gameday;Creed;Aventus Cologne;à améliorer;léger liseré blanc sur les bords
 Moments;Gameday;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
 Moments;Gameday;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré blanc sur les bords
+Moments;Gameday;Dior;Dior Homme Sport;à refaire;fond non détouré
 Moments;F1;Maison Crivelli;Papyrus Moléculaire;à améliorer;léger liseré blanc sur les bords
+Moments;First Date;Kilian;Angels' Share;à refaire;fond non détouré
+Moments;First Date;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré blanc sur les bords
+Moments;First Date;Maison Crivelli;Oud Stallion;à refaire;bords blancs ou irréguliers très visibles
 Moments;First Date;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
 Moments;First Date;Maison Crivelli;Santal Volcanique;à améliorer;léger liseré blanc sur les bords
 Moments;First Date;BDK Parfums;Pas Ce Soir;à améliorer;léger liseré blanc sur les bords
 Moments;First Date;Nishane;Meant To Be Seen;à refaire;image floue
+Moments;First Date;Dior;Dior Homme Intense;à refaire;fond non détouré
 Moments;First Date;Bvlgari;Man in Black;à améliorer;léger liseré blanc sur les bords
 Moments;First Date;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
 Moments;First Date;Maison Crivelli;Santal Volcanique;à améliorer;léger liseré blanc sur les bords
@@ -302,27 +314,29 @@ Moments;Sunday Morning;Maison Crivelli;Iris Malhikân;à améliorer;léger liser
 Moments;Sunday Morning;BDK Parfums;Citrus Riviera;à améliorer;léger liseré blanc sur les bords
 Moments;Sunday Morning;Essential Parfums;Nice Bergamote;à améliorer;léger liseré blanc sur les bords
 Moments;Sunday Morning;L'Artisan Parfumeur;Tea for Two;à améliorer;léger liseré blanc sur les bords
-Moments;En famille;Dior;Dior Homme Original;à refaire;fond non détouré
+Moments;En famille;Dior;Dior Homme;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
 Moments;En famille;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
 Moments;En famille;Guerlain;L'Homme Idéal;à améliorer;léger liseré blanc sur les bords
 Moments;En famille;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Creed;Aventus Cologne;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Giardini di Toscana;Bianco Oro;à refaire;bords blancs ou irréguliers très visibles
-Moments;Wedding Guest;Memo Paris;Ilha do Mel;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Celine;Un Été Français;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Essential Parfums;Néroli Botanica;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Creed;Silver Mountain Water;à refaire;image floue
-Moments;Wedding Guest;Guerlain;L'Homme Idéal;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Bvlgari;Man Wood Essence;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Oman Luxury;Mariya;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Guerlain;Eau de Tulle;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Yves Saint Laurent;Supreme Bouquet;à refaire;"bords blancs ou irréguliers très visibles; contour légèrement irrégulier"
-Moments;Wedding Guest;Giardini di Toscana;Bianco Oro;à refaire;bords blancs ou irréguliers très visibles
-Moments;Wedding Guest;Penhaligon's;The Bewitching Yasmine;à refaire;"bords blancs ou irréguliers très visibles; contour légèrement irrégulier"
-Moments;Wedding Guest;Memo Paris;Ilha do Mel;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Celine;Un Été Français;à améliorer;léger liseré blanc sur les bords
-Moments;Wedding Guest;Essential Parfums;Néroli Botanica;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;The Spirit of Dubai;Turath;sans photo;aucune photo dans la base
+Moments;Occasion spéciale;Dior;Dior Homme Intense;à refaire;fond non détouré
+Moments;Occasion spéciale;Creed;Aventus Cologne;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Giardini di Toscana;Bianco Oro;à refaire;bords blancs ou irréguliers très visibles
+Moments;Occasion spéciale;Memo Paris;Ilha do Mel;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Celine;Un Été Français;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Essential Parfums;Néroli Botanica;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Creed;Silver Mountain Water;à refaire;image floue
+Moments;Occasion spéciale;Guerlain;L'Homme Idéal;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Bvlgari;Man Wood Essence;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Oman Luxury;Mariya;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Guerlain;Eau de Tulle;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Yves Saint Laurent;Supreme Bouquet;à refaire;"bords blancs ou irréguliers très visibles; contour légèrement irrégulier"
+Moments;Occasion spéciale;Giardini di Toscana;Bianco Oro;à refaire;bords blancs ou irréguliers très visibles
+Moments;Occasion spéciale;Penhaligon's;The Bewitching Yasmine;à refaire;"bords blancs ou irréguliers très visibles; contour légèrement irrégulier"
+Moments;Occasion spéciale;Memo Paris;Ilha do Mel;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Celine;Un Été Français;à améliorer;léger liseré blanc sur les bords
+Moments;Occasion spéciale;Essential Parfums;Néroli Botanica;à améliorer;léger liseré blanc sur les bords
 Moments;Job Interview;Dior;Dior Homme;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
 Moments;Job Interview;Acqua di Parma;Colonia;à améliorer;léger liseré blanc sur les bords
 Moments;Job Interview;Maison Crivelli;Papyrus Moléculaire;à améliorer;léger liseré blanc sur les bords
@@ -335,8 +349,10 @@ Moments;Job Interview;Floris;Jermyn Street;à améliorer;résolution moyenne (29
 Moments;Beach Club;Memo Paris;Siwa;à refaire;bords blancs ou irréguliers très visibles
 Moments;Beach Club;Giardini di Toscana;Borabora;à refaire;bords blancs ou irréguliers très visibles
 Moments;Beach Club;Memo Paris;Corfu;à améliorer;léger liseré blanc sur les bords
+Moments;Beach Club;Widian;Hili;sans photo;aucune photo dans la base
 Moments;Night Out;Kilian;Angels' Share;à refaire;fond non détouré
 Moments;Night Out;BDK Parfums;Velvet Tonka;à améliorer;léger liseré blanc sur les bords
+Moments;Night Out;Widian;Hili;sans photo;aucune photo dans la base
 Moments;Tuxedo Society;Acqua di Parma;Colonia Assoluta;à améliorer;léger liseré blanc sur les bords
 Moments;Tuxedo Society;Tom Ford;Noir Extreme;à refaire;fond non détouré
 Moments;Tuxedo Society;Creed;Royal Oud;à améliorer;léger liseré blanc sur les bords
@@ -344,6 +360,8 @@ Moments;Tuxedo Society;Amouage;Opus XIV Royal Tobacco;à refaire;image floue
 Moments;Seul face à l'océan;Contes de Parfums;Atlantis;à refaire;format large ou coffret, flacon pas isolé
 Moments;Sous la chaleur;Guerlain;L'Homme Idéal Cologne Forte;à refaire;bords blancs ou irréguliers très visibles
 Moments;Sous la chaleur;Ella K;Poème de Sagano;à refaire;"image floue; léger liseré blanc sur les bords"
+Moments;Sous la chaleur;Fascent;Sel A Vie;sans photo;aucune photo dans la base
+Moments;Sous la chaleur;Armani;Bleu Turquoise;sans photo;aucune photo dans la base
 Moments;Sous la chaleur;Parfum d'Empire;Yuzu Fou;à refaire;bords blancs ou irréguliers très visibles
 Moments;Sous la chaleur;Dior;Dioriviera;à améliorer;léger liseré blanc sur les bords
 Moments;Sous la chaleur;Mancera;Aoud Lemon Mint;à améliorer;léger liseré blanc sur les bords
@@ -353,24 +371,31 @@ Moments;Sous la chaleur;Memo Paris;Corfu;à améliorer;léger liseré blanc sur 
 Moments;Sous la chaleur;Creed;Silver Mountain Water;à refaire;image floue
 Moments;Sous la chaleur;BDK Parfums;Citrus Riviera;à améliorer;léger liseré blanc sur les bords
 Moments;Sous la chaleur;Essential Parfums;Nice Bergamote;à améliorer;léger liseré blanc sur les bords
+Moments;Daily;Dries Van Noten;Camomille Satin;à refaire;bords blancs ou irréguliers très visibles
+Moments;Daily;Ex Nihilo;Scarlet Sands;à améliorer;léger liseré blanc sur les bords
 Moments;Daily;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
 Moments;Daily;Mancera;Cedrat Boise;à améliorer;léger liseré blanc sur les bords
-Moments;Daily;Coelia;Cap Spartel;à améliorer;contour légèrement irrégulier
 Moments;Daily;Tom Ford;Beau de Jour;à améliorer;léger liseré blanc sur les bords
 Moments;Daily;Initio;Rehab;à améliorer;léger liseré blanc sur les bords
 Moments;Daily;Essential Parfums;Mon Vetiver;à améliorer;léger liseré blanc sur les bords
 Moments;Daily;Parfums de Marly;Greenley;à refaire;bords blancs ou irréguliers très visibles
 Moments;Daily;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
 Moments;Daily;Mancera;Cedrat Boise;à améliorer;léger liseré blanc sur les bords
-Moments;Daily;Coelia;Cap Spartel;à améliorer;contour légèrement irrégulier
 Moments;Daily;Initio;Rehab;à améliorer;léger liseré blanc sur les bords
+Atmosphères;Hiver à New York;Masque Milano;Tango;sans photo;aucune photo dans la base
+Atmosphères;Hiver à New York;Bvlgari;Orom;sans photo;aucune photo dans la base
+Atmosphères;Hiver à New York;Maison Unika;Vanille Réglisse;sans photo;aucune photo dans la base
+Atmosphères;Hiver à New York;Oman Luxury;Royal Incense;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Hiver à New York;Le Labo;Thé Noir 29;à améliorer;contour légèrement irrégulier
 Atmosphères;Hiver à New York;Nasomatto;Baraonda;à refaire;bords blancs ou irréguliers très visibles
 Atmosphères;Hiver à New York;Marc-Antoine Barrois;B683 Extrait;à refaire;"format large ou coffret, flacon pas isolé; image floue"
 Atmosphères;Hiver à New York;Giardini di Toscana;Bianco Latte;à refaire;bords blancs ou irréguliers très visibles
+Atmosphères;Automne Cozy;Parfum d'Empire;Musc Tonkin;à refaire;bords blancs ou irréguliers très visibles
+Atmosphères;Automne Cozy;Coelia;Dinajpur;sans photo;aucune photo dans la base
+Atmosphères;Automne Cozy;Baruti;Chai;sans photo;aucune photo dans la base
+Atmosphères;Automne Cozy;Nicolaï;Saint Honore;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Automne Cozy;Kilian;Angels' Share;à refaire;fond non détouré
 Atmosphères;Automne Cozy;Giardini di Toscana;Bianco Latte;à refaire;bords blancs ou irréguliers très visibles
-Atmosphères;Automne Cozy;Parfum d'Empire;Musc Tonkin;à refaire;bords blancs ou irréguliers très visibles
 Atmosphères;Automne Cozy;Xerjoff;Starlight;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Automne Cozy;Maison Crivelli;Santal Volcanique;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Automne Cozy;Mancera;Amore Caffè;à améliorer;léger liseré blanc sur les bords
@@ -382,13 +407,19 @@ Atmosphères;Automne Cozy;Memo Paris;Sherwood;à refaire;bords blancs ou irrégu
 Atmosphères;Automne Cozy;L'Artisan Parfumeur;Tea for Two;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Automne Cozy;Memo Paris;Sintra;à refaire;bords blancs ou irréguliers très visibles
 Atmosphères;Automne Cozy;BDK Parfums;Velvet Tonka;à améliorer;léger liseré blanc sur les bords
+Atmosphères;Garden Party;Attar Al Has;Skin Musk;sans photo;aucune photo dans la base
+Atmosphères;Garden Party;Dior;Balade Sauvage;à refaire;bords blancs ou irréguliers très visibles
+Atmosphères;Garden Party;Jeroboam;Gozo;sans photo;aucune photo dans la base
 Atmosphères;Garden Party;Rosendo Mateu;No. 4;à refaire;bords blancs ou irréguliers très visibles
 Atmosphères;Garden Party;Oman Luxury;Flowerlush;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Garden Party;Giardini di Toscana;Verde Respiro;à refaire;bords blancs ou irréguliers très visibles
-Atmosphères;Soirée à l'opéra;D'Orsay;Tilleul Extrait;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Soirée à l'opéra;Guerlain;Oeillet Pourpre;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Soirée à l'opéra;Floris;1927;à refaire;bords blancs ou irréguliers très visibles
 Atmosphères;Christmas Eve;Kilian;Angels' Share;à refaire;fond non détouré
+Atmosphères;Chic Winter;Masque Milano;Tango;sans photo;aucune photo dans la base
+Atmosphères;Chic Winter;Bvlgari;Orom;sans photo;aucune photo dans la base
+Atmosphères;Chic Winter;Maison Unika;Vanille Réglisse;sans photo;aucune photo dans la base
+Atmosphères;Chic Winter;Oman Luxury;Royal Incense;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Chic Winter;Kilian;Angels' Share;à refaire;fond non détouré
 Atmosphères;Chic Winter;Guerlain;Bois d'Arménie;à améliorer;léger liseré blanc sur les bords
 Atmosphères;Chic Winter;Hermès;Barénia;à refaire;format large ou coffret, flacon pas isolé
@@ -398,16 +429,18 @@ Atmosphères;Jazz;Nasomatto;Baraonda;à refaire;bords blancs ou irréguliers tr�
 Atmosphères;Jazz;Kilian;Old Fashioned;à refaire;"fond non détouré; léger liseré blanc sur les bords"
 Atmosphères;Jazz;Liquides Imaginaires;Bello Rabelo;à améliorer;léger liseré blanc sur les bords
 Atmosphères;L'Or;Penhaligon's;The Tragedy of Lord George;à refaire;contour déchiqueté
-Atmosphères;La Cathédrale;Etat Libre d'Orange;Rien;à améliorer;léger liseré blanc sur les bords
 Atmosphères;L'Ivresse;Kilian;Roses on Ice;à refaire;fond non détouré
 Atmosphères;L'Ivresse;Kilian;Angels' Share;à refaire;fond non détouré
 Atmosphères;L'Ivresse;Tom Ford;Noir Extreme;à refaire;fond non détouré
 Atmosphères;L'Ivresse;Maison Margiela;Jazz Club;à améliorer;"léger liseré blanc sur les bords; contour légèrement irrégulier"
 Effets;Je veux qu'on me remarque;Nishane;Hacivat;à refaire;bords blancs ou irréguliers très visibles
-Effets;Je veux sentir propre;Glossier;You;à refaire;"image floue; léger liseré blanc sur les bords"
-Effets;Je veux sentir propre;Creed;Silver Mountain Water;à refaire;image floue
 Effets;Je veux sentir propre;Profumo di Firenze;Viandante;à améliorer;léger liseré blanc sur les bords
 Effets;Je veux sentir propre;Carner Barcelona;Isla Bohemia;à refaire;fond non détouré
+Effets;Je veux sentir propre;Chloé;Atelier des Fleurs;sans photo;aucune photo dans la base
+Effets;Je veux sentir propre;Amouage;Reflection Man;à améliorer;résolution moyenne (318 px)
+Effets;Je veux sentir propre;Comme des Garçons;Marseille;à refaire;bords blancs ou irréguliers très visibles
+Effets;Je veux sentir propre;Glossier;You;à refaire;"image floue; léger liseré blanc sur les bords"
+Effets;Je veux sentir propre;Creed;Silver Mountain Water;à refaire;image floue
 Effets;Je veux sentir propre;Khadlaj;Pure Musk;à refaire;bords blancs ou irréguliers très visibles
 Effets;Je veux sentir propre;Maison Margiela;Bubble Bath;à refaire;bords blancs ou irréguliers très visibles
 Effets;Je veux sentir propre;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
@@ -416,7 +449,9 @@ Effets;Je veux être envoûtant;Nasomatto;Pardon;à refaire;"bords blancs ou irr
 Effets;Je veux être envoûtant;Kilian;Angels' Share Paradis;à refaire;fond non détouré
 Effets;Je veux être envoûtant;Guerlain;Oud Nude;à refaire;bords blancs ou irréguliers très visibles
 Effets;Je veux être envoûtant;Tom Ford;Noir Extreme;à refaire;fond non détouré
+Effets;Aimant à compliments;Balmain;Carbone;sans photo;aucune photo dans la base
 Effets;Aimant à compliments;Initio;Musk Therapy;à améliorer;léger liseré blanc sur les bords
+Effets;Aimant à compliments;Dior;Dior Homme Intense;à refaire;fond non détouré
 Effets;Aimant à compliments;Marc-Antoine Barrois;Ganymede;à améliorer;léger liseré blanc sur les bords
 Effets;Aimant à compliments;Armani;Oud Nacré;à améliorer;léger liseré blanc sur les bords
 Effets;Je veux sentir unique;DS & Durga;Bowmakers;à améliorer;léger liseré blanc sur les bords
@@ -429,32 +464,19 @@ Effets;Je veux sentir opulent;Oman Luxury;Zafar;à améliorer;léger liseré bla
 Effets;Je veux sentir opulent;Amouage;Opus XIV Royal Tobacco;à refaire;image floue
 Effets;Je veux sentir opulent;Louis Vuitton;Pur Oud;à refaire;image floue
 Spécial;Historical Scents;Contes de Parfums;Atlantis;à refaire;format large ou coffret, flacon pas isolé
-Spécial;Historical Scents;Contes de Parfums;Babylon;sans photo;aucune photo dans la base
+Spécial;Historical Scents;Contes de Parfums;Babylon;à refaire;format large ou coffret, flacon pas isolé
 Spécial;Historical Scents;Sultan Pasha Perfumes;Thebes;à améliorer;léger liseré blanc sur les bords
 Spécial;Historical Scents;Memo Paris;Luxor;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;Masque Milano;Petra;sans photo;aucune photo dans la base
-Spécial;Historical Scents;Contes de Parfums;Alexandria;à refaire;bords blancs ou irréguliers très visibles
+Spécial;Historical Scents;Contes de Parfums;Alexandria;à refaire;format large ou coffret, flacon pas isolé
 Spécial;Historical Scents;Contes de Parfums;Pompeii;à refaire;format large ou coffret, flacon pas isolé
-Spécial;Historical Scents;Francesca Bianchi;Byzantine Amber;à refaire;bords blancs ou irréguliers très visibles
-Spécial;Historical Scents;Contes de Parfums;Samarkand;sans photo;aucune photo dans la base
+Spécial;Historical Scents;Contes de Parfums;Samarkand;à refaire;format large ou coffret, flacon pas isolé
 Spécial;Historical Scents;Penhaligon's;Constantinople;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;The Different Company;Gothic Incense;à refaire;bords blancs ou irréguliers très visibles
 Spécial;Historical Scents;Francesca Bianchi;The Black Knight;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;Memo Paris;Granada;sans photo;aucune photo dans la base
-Spécial;Historical Scents;Stéphane Humbert Lucas 777;Cacao Aztèque;sans photo;aucune photo dans la base
-Spécial;Historical Scents;Burberry;Tudor Rose;à refaire;"bords blancs ou irréguliers très visibles; contour légèrement irrégulier"
-Spécial;Historical Scents;Xerjoff;Louis XV 1722;à améliorer;"léger liseré blanc sur les bords; contour légèrement irrégulier"
-Spécial;Historical Scents;Caron;Narcisse Noir;sans photo;aucune photo dans la base
+Spécial;Historical Scents;Memo Paris;Granada;à refaire;bords blancs ou irréguliers très visibles
 Spécial;Historical Scents;Guerlain;Mitsouko;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;Caron;Tabac Blond;sans photo;aucune photo dans la base
 Spécial;Historical Scents;Floris;1927;à refaire;bords blancs ou irréguliers très visibles
 Spécial;Historical Scents;Jean Patou;Joy;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;Lanvin;Arpège;sans photo;aucune photo dans la base
 Spécial;Historical Scents;Dior;Miss Dior Original;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;Nina Ricci;L'Air du Temps;sans photo;aucune photo dans la base
-Spécial;Historical Scents;Yves Saint Laurent;Opium;à refaire;"format large ou coffret, flacon pas isolé; léger liseré blanc sur les bords; contour légèrement irrégulier"
-Spécial;Historical Scents;Dior;Poison;à améliorer;léger liseré blanc sur les bords
-Spécial;Historical Scents;Davidoff;Cool Water;sans photo;aucune photo dans la base
 Spécial;Strange Smells;Comme des Garçons;Garage;à améliorer;léger liseré blanc sur les bords
 Spécial;Strange Smells;Etat Libre d'Orange;Rien;à améliorer;léger liseré blanc sur les bords
 Spécial;Strange Smells;DS & Durga;Bowmakers;à améliorer;léger liseré blanc sur les bords
@@ -464,21 +486,25 @@ Spécial;Strange Smells;Diptyque;L'Eau Trois;à améliorer;"léger liseré blanc
 Spécial;Strange Smells;Nasomatto;Fantomas;à améliorer;léger liseré blanc sur les bords
 Spécial;Layering;Le Labo;Thé Noir 29;à améliorer;contour légèrement irrégulier
 Spécial;Layering;Montale;Vanille Absolu;à refaire;bords blancs ou irréguliers très visibles
-Spécial;Les Petits budgets;Dior;Sauvage EDT;à améliorer;léger liseré blanc sur les bords
-Spécial;Les Petits budgets;Azzaro;Wanted;à améliorer;léger liseré blanc sur les bords
-Spécial;Les Petits budgets;Armani;Acqua di Giò Profumo;à améliorer;léger liseré blanc sur les bords
-Spécial;Les Petits budgets;Hugo Boss;Boss Bottled Parfum;à améliorer;léger liseré blanc sur les bords
-Spécial;Les Petits budgets;Mancera;Cedrat Boise;à améliorer;léger liseré blanc sur les bords
-Spécial;Les Petits budgets;Chloé;Chloé;à refaire;format large ou coffret, flacon pas isolé
-Spécial;Les Petits budgets;Yves Saint Laurent;Mon Paris;à refaire;bords blancs ou irréguliers très visibles
-Spécial;Les Petits budgets;Cacharel;Amor Amor;à améliorer;léger liseré blanc sur les bords
-Spécial;Les Petits budgets;Azzaro;Wanted Girl;à améliorer;léger liseré blanc sur les bords
-Spécial;Niche à petit prix;Maison Siraj;Élixir d'Amande Extrait;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Jean Paul Gaultier;Le Beau Narcisse;sans photo;aucune photo dans la base
+Spécial;Dans toutes les parfumeries;Tom Ford;Noir Extreme;à refaire;fond non détouré
+Spécial;Dans toutes les parfumeries;Jean Paul Gaultier;Le Beau Paradise Garden;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Rabanne;Invictus Victory Elixir;sans photo;aucune photo dans la base
+Spécial;Dans toutes les parfumeries;Dior;Sauvage EDT;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Azzaro;Wanted;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Armani;Acqua di Giò Profumo;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Hugo Boss;Boss Bottled Parfum;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Mancera;Cedrat Boise;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Chloé;Chloé;à refaire;format large ou coffret, flacon pas isolé
+Spécial;Dans toutes les parfumeries;Yves Saint Laurent;Mon Paris;à refaire;bords blancs ou irréguliers très visibles
+Spécial;Dans toutes les parfumeries;Cacharel;Amor Amor;à améliorer;léger liseré blanc sur les bords
+Spécial;Dans toutes les parfumeries;Azzaro;Wanted Girl;à améliorer;léger liseré blanc sur les bords
 Spécial;Niche à petit prix;Maison Unika;Oud Osmanthus;à améliorer;léger liseré blanc sur les bords
 Spécial;Niche à petit prix;Carner Barcelona;Tennis Club;à refaire;fond non détouré
+Spécial;Niche à petit prix;Carner Barcelona;Tardes;à refaire;fond non détouré
+Spécial;Niche à petit prix;Carner Barcelona;Cuirs;à refaire;fond non détouré
 Spécial;Niche à petit prix;Carner Barcelona;El Born;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
 Spécial;Niche à petit prix;Carner Barcelona;D600;à refaire;"fond non détouré; bords blancs ou irréguliers très visibles"
-Spécial;Niche à petit prix;Laboratorio Olfattivo;Nirmal;à refaire;"format large ou coffret, flacon pas isolé; image floue"
 Spécial;Niche à petit prix;Laboratorio Olfattivo;Vanagloria;à améliorer;léger liseré blanc sur les bords
 Spécial;Niche à petit prix;Laboratorio Olfattivo;Baliflora;à refaire;bords blancs ou irréguliers très visibles
 Spécial;Niche à petit prix;Essential Parfums;Orange x Santal;à améliorer;léger liseré blanc sur les bords
