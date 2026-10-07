@@ -576,7 +576,6 @@ Roja Parfums|Manhattan|EDP
 Roja Parfums|Taif Aoud|EDP
 Roja Parfums|Fetish Pour Homme|EDP
 Stéphane Humbert Lucas 777|God of Fire|EDP
-Stéphane Humbert Lucas 777|Cacao Aztèque|EDP
 Santa Maria Novella|Santa Maria Novella|EDP
 Sora Dora|Amilar Poudré|EDP
 Sora Dora|Brocéliande|EDP
@@ -607,3 +606,4 @@ Voyages Imaginaires|L'Échappée Solitaire|EDP
 Montale|White Musk|EDP
 Coelia|Cap Spartel|EDP
 Boucheron|Jaipur Homme|EDP
+Nicolas de Barry|Eau de la Reine de Hongrie|EDP

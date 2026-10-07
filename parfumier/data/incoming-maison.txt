@@ -68,3 +68,4 @@ guerlain_neroli_outre_noir|Guerlain|Néroli Outrenoir
 069-ysl-rive-gauche|Yves Saint Laurent|Rive Gauche
 110_I-Storie-Veneziane_Mica-d'Oro|Storie Veneziane|Mica d'Oro I
 148_Fendi_Life-Essence|Fendi|Fendi Life Essence
+Nicolas-de-Barry_Eau-de-la-Reine-de-Hongrie|Nicolas de Barry|Eau de la Reine de Hongrie

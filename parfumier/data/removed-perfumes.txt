@@ -135,3 +135,17 @@ Dior|Dior Homme Parfum 2025
 Dior|Dior Homme Sport 2021
 Dior|Dior Homme Sport 2022
 Dior|Dior Homme Sport 2025
+# Dior : une seule version par déclinaison (millésimes, éditions collector et doublons retirés)
+Dior|Diorissimo 2024
+Dior|Diorissimo 2026
+Dior|Dolce Vita 2026
+Dior|Dune 2026
+Dior|Dune Pour Homme 2026
+Dior|New Look 2024
+Dior|J'adore L'Or 2023
+Dior|Miss Dior Parfum 2024
+Dior|Miss Dior Eau de Parfum 2026
+Dior|Miss Dior Originale Harrods 175 Anniversary Edition Amphora
+Dior|Miss Dior Essence by Maison Février
+# Parfum inexistant
+Stéphane Humbert Lucas 777|Cacao Aztèque
