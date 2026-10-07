@@ -71,3 +71,8 @@ guerlain_neroli_outre_noir|Guerlain|Néroli Outrenoir
 Nicolas-de-Barry_Eau-de-la-Reine-de-Hongrie|Nicolas de Barry|Eau de la Reine de Hongrie
 Ex-Nihilo_Scarlet-Sands|Ex Nihilo|Scarlet Sands
 Ex-Nihilo_Lust-in-Paradise-Extrait|Ex Nihilo|Lust in Paradise Extrait
+Dior-Homme-Cologne|Dior|Dior Homme Cologne
+Dior-Homme|Dior|Dior Homme
+Armani-Acqua-di-Gio-Profondo-EDT|Armani|Acqua di Giò Profondo Eau de Toilette
+Issey-Miyake-Noir-Ambre|Issey Miyake|L'Eau d'Issey Pour Homme Noir Ambré
+Cartier-Oud-et-Vanille|Cartier|Oud & Vanille
