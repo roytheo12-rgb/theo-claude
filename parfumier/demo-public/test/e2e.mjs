@@ -56,7 +56,8 @@ await pg.fill('#apw', 'motdepasse1'); await pg.click('#ago'); await pg.waitForSe
 await pg.waitForSelector('#prof #pName', { timeout: 5000 }); ok(true, 'inscription : la première question (prénom) s\'affiche après l\'intro');
 await pg.screenshot({ path: OUT + '/e3b_profil1.png' });
 await pg.fill('#pName', 'Léa'); await pg.click('#pNext'); await pg.waitForSelector('#prof .gen'); await pg.click('[data-g=f]'); await pg.click('#pNext'); await pg.waitForSelector('#pAge');
-await pg.fill('#pAge', '27'); await pg.click('#pNext'); await pg.waitForSelector('[data-nt]'); await pg.click('[data-nt="vanille"]'); await pg.click('[data-nt="cèdre"]'); await pg.click('[data-nt="patchouli"]'); await pg.click('[data-nt="patchouli"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
+await pg.fill('#pAge', '27'); await pg.click('#pNext');
+await pg.waitForSelector('[data-tier]'); ok(await pg.locator('#pNext').isDisabled(), 'luxe ou prix malins : question obligatoire, on ne peut pas continuer sans choisir'); await pg.click('[data-tier=luxe]'); ok(!(await pg.locator('#pNext').isDisabled()) && await pg.evaluate(() => JSON.parse(localStorage.getItem(Object.keys(localStorage).find((k) => /sillage\.v3/.test(k)))).settings.tier === 'luxe'), 'luxe ou prix malins : choix enregistré'); await pg.click('#pNext'); await pg.waitForSelector('[data-nt]'); await pg.click('[data-nt="vanille"]'); await pg.click('[data-nt="cèdre"]'); await pg.click('[data-nt="patchouli"]'); await pg.click('[data-nt="patchouli"]'); await pg.screenshot({ path: OUT + '/e3c_profil2.png' }); await pg.click('#pNext');
 await pg.waitForSelector('[data-vb]'); await pg.click('[data-vb="sensuel"]'); await pg.click('[data-pw="fort"]'); await pg.click('#pNext');
 await pg.waitForSelector('[data-oc]'); await pg.click('[data-oc="soiree"]'); await pg.click('#pNext');
 await pg.waitForSelector('#xq'); await pg.screenshot({ path: OUT + '/e3d_explorer.png' });

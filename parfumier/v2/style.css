@@ -824,3 +824,46 @@ a.chip { text-decoration: none; display: inline-block; }
 #view[data-v=tips] .more.big > summary { padding: 22px 24px; }
 #view[data-v=tips] .tipc { margin-top: 18px; }
 @media (max-width: 480px) { .ppanel { right: 8px; width: calc(100vw - 16px); height: calc(100dvh - 130px); bottom: 90px; } }
+
+/* ---------- Carrousel « Pour toi » : on a envie d'aller à droite ---------- */
+.car { position: relative; display: grid; gap: 18px; margin-inline: -20px; }
+.car::after { content: ""; position: absolute; top: 0; right: 0; bottom: 64px; width: 56px; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(8, 6, 6, .85)); transition: opacity .3s; }
+.car.end::after { opacity: 0; }
+.car-track { position: relative; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 6px 20px 18px; scroll-padding-inline: 20px; scrollbar-width: none; overscroll-behavior-x: contain; outline: none; }
+.car-track::-webkit-scrollbar { display: none; }
+.car-item { flex: 0 0 82%; max-width: 420px; scroll-snap-align: center; opacity: .5; transform: scale(.93); transform-origin: center top; transition: opacity .35s, transform .35s cubic-bezier(.2, .9, .25, 1); display: grid; align-content: start; }
+.car-item.on { opacity: 1; transform: none; }
+.car-item > .rec, .car-item > .plan { margin: 0; height: 100%; }
+.car:not(.moved) .car-item:nth-child(2) { animation: carnudge 1.6s ease-in-out 1.4s 2; }
+@keyframes carnudge { 40% { transform: translateX(-18px) scale(.93); } }
+.car-bar { display: flex; align-items: center; gap: 14px; padding-inline: 20px; }
+.car-count { font: 500 12px var(--sf); letter-spacing: .14em; color: var(--muted); }
+.car-count b { color: var(--ink); font-weight: 500; }
+.car-hint { flex: 1; text-align: right; font-size: 12.5px; color: var(--muted); transition: opacity .3s; }
+.car.moved .car-hint { opacity: 0; }
+.car-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: rgba(242, 235, 224, .06); color: var(--ink); font-size: 18px; cursor: pointer; transition: transform .2s, background .2s, opacity .2s; }
+.car-btn:hover:not(:disabled) { background: rgba(242, 235, 224, .14); transform: scale(1.06); }
+.car-btn:disabled { opacity: .25; cursor: default; }
+.car:not(.moved) .car-btn.next { animation: pfpulse 1.6s ease-in-out infinite; border-color: var(--wine); }
+.car-bar .car-btn:first-child { order: 0; }
+.car-bar .car-hint { order: 1; }
+.car-bar .car-count { order: 2; }
+.car-bar .car-btn.next { order: 3; }
+
+/* Luxe ou prix malins */
+.tiers { display: grid; gap: 14px; margin: 6px 0 10px; }
+.tier { text-align: left; display: grid; gap: 8px; padding: 22px 22px 20px; border: 1px solid var(--line); border-radius: 8px; background: rgba(242, 235, 224, .04); color: var(--ink); cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+.tier b { font: 400 20px var(--f-display, serif); }
+.tier span { color: var(--muted); font-size: 14px; line-height: 1.55; }
+.tier:hover { transform: translateY(-1px); }
+.tier.on { border-color: var(--wine); background: rgba(180, 57, 74, .16); }
+.tier.on b::after { content: ' ✓'; color: var(--accent-deep, #e08a96); }
+.tiersrow { display: grid; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line); }
+
+/* Bulles du parfumier : discrètes, courtes, jamais envahissantes */
+.pbub { position: fixed; right: 16px; bottom: 164px; z-index: 35; width: auto; max-width: min(250px, calc(100vw - 96px)); padding: 0; border-radius: 999px; background: rgba(22, 18, 17, .92); backdrop-filter: blur(8px); border: 1px solid rgba(242, 235, 224, .16); box-shadow: 0 8px 24px rgba(0, 0, 0, .4); font-size: 13px; line-height: 1.35; display: flex; align-items: center; animation: pfin .5s cubic-bezier(.2, .9, .25, 1) both; }
+.pbub .pbgo { display: flex; align-items: center; gap: 8px; border: 0; background: none; color: var(--ink); font: inherit; padding: 10px 6px 10px 16px; cursor: pointer; text-align: left; }
+.pbub .pbgo b { color: var(--accent-deep, #e08a96); font-weight: 500; }
+.pbub .pbx { position: static; padding: 8px 12px 8px 4px; font-size: 18px; opacity: .6; }
+.pbub .pbx:hover { opacity: 1; }
+.pfab .pfdot { width: 10px; height: 10px; top: 6px; right: 6px; }

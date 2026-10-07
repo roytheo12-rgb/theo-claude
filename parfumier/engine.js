@@ -362,6 +362,20 @@
   // Maisons de niche reconnues (et grandes maisons de luxe) : à qualité égale, c'est ce qu'un parfumeur privé sort en premier pour un conseil d'achat.
   const NICHE_TOP = new Set(['maison francis kurkdjian', 'xerjoff', 'amouage', 'initio', 'parfums de marly', 'creed', 'byredo', 'le labo', 'frederic malle', 'diptyque', 'serge lutens', 'nishane', 'kilian', 'roja parfums', 'louis vuitton', 'tom ford', 'ex nihilo', 'memo paris', 'penhaligon s', 'matiere premiere', 'bdk parfums', 'maison crivelli', 'nasomatto', 'orto parisi', 'hermes', 'guerlain', 'chanel', 'dior', 'clive christian', 'goldfield banks', 'house of oud', 'marc antoine barrois', 'atelier cologne', 'floraiku', 'carner barcelona'].map(norm));
   const nicheTop = (c) => { const HA = root.HOUSE_ALIAS || {}; return NICHE_TOP.has(norm(HA[norm(c.house)] || c.house)); };
+  // Style d'achat : « luxe » (haut de gamme), « malin » (bons prix) ou rien. Retourne un score de -1 à 1 et si le parfum est à écarter franchement.
+  function tierAdj(c, tier, price) {
+    const p = price != null ? price : (c.price || 0);
+    if (tier === 'luxe') {
+      const top = nicheTop(c);
+      if (!p) return { v: top ? .4 : -.2, drop: !top };
+      return { v: p >= 220 ? 1 : p >= 150 ? .7 : p >= 100 ? (top ? .4 : -.1) : p >= 70 ? -.6 : -1, drop: p < 70 };
+    }
+    if (tier === 'malin') {
+      if (!p) return { v: 0, drop: false };
+      return { v: p <= 80 ? 1 : p <= 120 ? .6 : p <= 170 ? 0 : p <= 250 ? -.7 : -1.2, drop: p > 250 };
+    }
+    return { v: 0, drop: false };
+  }
   // Notoriété : on préfère un parfum qu'on trouve et qu'on connaît à un flacon introuvable, à correspondance égale.
   let FAME = null;
   function fameOf(c) {
@@ -459,6 +473,7 @@
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
     if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; }
+    if (st.prestige && (st.tier === 'luxe' || st.tier === 'malin')) { const ta = tierAdj(c, st.tier); max += 1.6; s += 1.6 * Math.max(ta.v, -1) + (ta.v < 0 ? 0 : 0); }
     { const pv = provenOf(c); if (pv.v) { max += 0.8; s += 0.8 * pv.v; if (pv.n >= 4 && !why.some((x) => /univers|tout en haut/.test(x))) why.push('cité dans ' + pv.n + ' playlists d\'inspiration'); } }
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
     if (asked.size) { max += 2; const sh = [...asked].reduce((a, f) => a + (o.acc[f] || 0), 0) / o.tot; s += 2 * clamp(sh / Math.min(.7, .35 * asked.size + .15), 0, 1); }
@@ -1098,6 +1113,7 @@
       if (c.notes && c.notes.length >= 3 && !(c.family && c.weight)) c = derive(c);
       if (settings.gender && root.genderOf) { const g = root.genderOf(c.name, c.house); if ((settings.gender === 'm' && g === 'f') || (settings.gender === 'f' && g === 'm')) continue; }
       if ((c.notes || []).some((n) => avoid.some((a) => a && norm(n).includes(a)))) continue;
+      if (settings.tier && tierAdj(c, settings.tier).drop) continue;
       const t = taste(c, prof);
       let gap = 0, gapLabel = null, gapMax = 0;
       for (const { sc, best } of cov) {
@@ -1124,7 +1140,7 @@
       const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * .8 + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
       const pvn = provenOf(c);
-      const total = t.s + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige && nicheTop(c) ? 1.5 : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
+      const tr = tierAdj(c, settings.tier), total = t.s + 2.2 * tr.v + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige && nicheTop(c) ? 1.5 : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
         c, proven: pvn.n, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
@@ -1134,7 +1150,7 @@
     return calibrate(out, settings, collection);
   }
 
-  const api = { nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { tierAdj, nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -125,3 +125,15 @@ assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
   assert.ok(withC.filter((n) => without.includes(n)).length >= 9, 'deux parfums non notés ne changent presque pas les conseils');
   console.log('ok conseils : maisons de niche reconnues devant, collection non notée sans emprise');
 }
+
+// ── Style d'achat : le luxe n'est jamais conseillé au rabais, les prix malins jamais au prix fort ──
+{
+  const base = { gender: 'm', age: 30, seed: 'q', liked: ['vanille'], vibes: ['sensuel'] };
+  const top = (tier) => E.recommend(P, [], [], Object.assign({ tier, looseColl: true, prestige: tier === 'luxe' }, base)).sort((a, b) => b.total - a.total).slice(0, 14).map((r) => r.c);
+  const lux = top('luxe'), mal = top('malin');
+  assert.ok(lux.every((c) => !c.price || c.price >= 70), 'luxe : aucun parfum bon marché (' + lux.filter((c) => c.price && c.price < 70).map((c) => c.name) + ')');
+  assert.ok(mal.every((c) => !c.price || c.price <= 250), 'malin : aucun parfum hors de prix');
+  const avg = (l) => l.filter((c) => c.price).reduce((a, c) => a + c.price, 0) / Math.max(1, l.filter((c) => c.price).length);
+  assert.ok(avg(lux) > avg(mal) + 60, 'le luxe est nettement plus cher que le malin (' + Math.round(avg(lux)) + ' contre ' + Math.round(avg(mal)) + ' €)');
+  console.log('ok style d\'achat : luxe ' + Math.round(avg(lux)) + ' € en moyenne, malin ' + Math.round(avg(mal)) + ' €');
+}

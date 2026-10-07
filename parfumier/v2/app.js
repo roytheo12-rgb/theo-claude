@@ -143,6 +143,7 @@
   let RECS = [], ASK = [], ASKI = 0;
   function mountFx(root) {
     $$('canvas.fx[data-p], canvas.fx[data-r]', root).forEach((cv) => {
+      { const it = cv.closest('.car-item'); if (it && !it.dataset.fx) return; }
       const p = cv.dataset.p ? find(cv.dataset.p) : (RECS[+cv.dataset.r] || {}).c;
       if (p) FX.attach(cv, p, { dark: false, density: +cv.dataset.d || .5 });
     });
@@ -182,6 +183,7 @@
     const wl = (S.wishlist || []).slice(0, 6).map((w) => w.name).filter(Boolean); if (wl.length) bits.push('Sur ma liste d\'envies : ' + wl.join(', ') + '.');
     { const aff = E.themeAffinity ? E.themeAffinity(col) : null, PL = window.PLAYLISTS || []; if (aff) { const u = Object.keys(aff).filter((k) => aff[k] > 0.3).sort((x, y) => aff[y] - aff[x]).slice(0, 4).map((k) => PL[k] && PL[k].t).filter(Boolean); if (u.length) bits.push('Univers qui me parlent (d\'après ma collection) : ' + u.join(', ') + '.'); } }
     { const fb = (S.feedback || []).slice(-30), no = fb.filter((f) => f.verdict < 0), yes = fb.filter((f) => f.verdict > 0); if (yes.length) bits.push('Conseils qui m\'ont plu : ' + [...new Set(yes.map((f) => f.name))].slice(-5).join(', ') + '.'); if (no.length) bits.push('Conseils qui ne m\'ont pas plu : ' + [...new Set(no.map((f) => f.name + (f.reason ? ' (' + f.reason + ')' : '')))].slice(-5).join(', ') + '.'); }
+    if (st.tier === 'luxe') bits.push('Je cherche du haut de gamme et du luxe : ne me propose jamais un parfum bon marché ou de grande distribution.'); else if (st.tier === 'malin') bits.push('Je préfère les prix malins : ne me propose pas de parfum hors de prix, cherche le meilleur rapport qualité prix.');
     const m = new Date().getMonth(); bits.push('Saison : ' + (m >= 2 && m <= 4 ? 'printemps' : m >= 5 && m <= 7 ? 'été' : m >= 8 && m <= 10 ? 'automne' : 'hiver') + '.');
     return bits.join('\n');
   };
@@ -443,7 +445,7 @@
     const st = S.settings, avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
     const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), g0 = S.profile && S.profile.gender;
     const budget = maxPrice || st.budget || 0;
-    const pool = needPool().filter((c) => !((g0 === 'm' && gd(c) === 'f') || (g0 === 'f' && gd(c) === 'm')) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!budget || (estPrice(c) > 0 && estPrice(c) <= budget)) && !(c.entry && c.entry.ed));
+    const pool = needPool().filter((c) => !((g0 === 'm' && gd(c) === 'f') || (g0 === 'f' && gd(c) === 'm')) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!budget || (estPrice(c) > 0 && estPrice(c) <= budget)) && !(S.settings.tier && E.tierAdj(c, S.settings.tier, estPrice(c)).drop) && !(c.entry && c.entry.ed));
     const cov = E.coverage(P), pct = (v) => Math.max(0, Math.min(1, (v - 2) / 12));
     const base = cov.map((x) => x.best), avg = (a) => Math.round(100 * a.reduce((t, v) => t + pct(v), 0) / a.length);
     const rows = pool.map((c) => ({ c, v: cov.map((x) => E.score(c, x.sc.c).total) }));
@@ -476,12 +478,16 @@
     if (!plan) return '<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Je construis des stratégies de collection à partir de ce que tu as déjà.</p><button class="cta full" id="planAdd"><span>Ajouter mes parfums</span></button></div>';
     if (!plan.strategies.length) return '<div class="empty">Ta collection couvre déjà bien tous les moments. Élargis le budget ou retire une note fuie pour voir d\'autres pistes.</div>';
     const names = (it) => it.map((i) => esc(i.c.name)).join(' + ');
-    return (withHead ? `<p style="font-size:14px;color:var(--muted)">Tes ${plan.n} parfums couvrent moins bien : ${plan.weak.map(esc).join(' et ')}. Voici ce que donnerait ta collection avec quelques ajouts, selon la stratégie.</p>` : '') + plan.strategies.map((s) => `<article class="card plan" style="display:grid;gap:10px">
+    return (withHead ? `<p style="font-size:14px;color:var(--muted)">Tes ${plan.n} parfums couvrent moins bien : ${plan.weak.map(esc).join(' et ')}. Voici ce que donnerait ta collection avec quelques ajouts, selon la stratégie.</p>` : '') + planCards(plan).join('');
+  }
+  function planCards(plan) {
+    const names = (it) => it.map((i) => esc(i.c.name)).join(' + ');
+    return plan.strategies.map((s) => `<article class="card plan" style="display:grid;gap:10px">
         <div><p class="mono">Stratégie</p><h3 style="margin-top:4px">${esc(s.label)}</h3><p style="color:var(--muted);font-size:14px;margin-top:4px">${esc(s.sub)}</p></div>
         <div class="planbar" role="img" aria-label="Couverture de ta collection : ${s.before} % puis ${s.after} %"><span style="width:${s.before}%"></span><i style="width:${Math.max(0, s.after - s.before)}%"></i></div>
         <p class="mono" style="text-transform:none;letter-spacing:0">Moments couverts : ${s.before} % aujourd'hui, ${s.after} % avec ${s.items.length} ajout${s.items.length > 1 ? 's' : ''}. Ta collection + ${names(s.items)}.</p>
         <div style="display:grid;gap:8px">${s.items.map((i) => `<div class="row" style="justify-content:space-between;gap:10px;align-items:flex-start"><div><button type="button" class="lnk" data-plan-open="${esc(entryKey(i.r.c.entry || { house: i.c.house, name: i.c.name }))}"><b>${esc(i.c.name)}</b></button><small style="display:block;color:var(--muted)">${esc(i.c.house)}${i.c.price ? ' · ≈ ' + i.c.price + ' €' : ''}${i.ups.length ? ' · couvre : ' + i.ups.map(esc).join(', ') : ''}</small></div><button type="button" class="ghost" data-plan-wish="${esc(i.c.name)}">${hasWish(i.c.name) ? 'Dans ma wishlist' : 'Wishlist'}</button></div>`).join('')}</div>
-      </article>`).join('');
+      </article>`);
   }
   function bindPlan(root) {
     const look = {}; dbList().forEach((e) => { look[entryKey(e)] = e; });
@@ -499,7 +505,7 @@
     if (!HMED) { const by = {}; needPool().forEach((x) => { if (x.price) (by[E.norm(x.house)] = by[E.norm(x.house)] || []).push(x.price); }); HMED = {}; Object.keys(by).forEach((h) => { const l = by[h].sort((x, y) => x - y); HMED[h] = l[l.length >> 1]; }); }
     return HMED[E.norm(c.house)] || 0;
   }
-  const underCap = (c) => { const cap = S.settings.budget || 0; if (!cap) return true; const p = estPrice(c); return p > 0 && p <= cap; };
+  const underCap = (c) => { const cap = S.settings.budget || 0, t = S.settings.tier, p = estPrice(c); if (t && E.tierAdj(c, t, p).drop) return false; if (!cap) return true; return p > 0 && p <= cap; };
   function tipsData() {
     const P = S.collection, st = S.settings, cat = needPool(), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
     const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), wrong = (c) => { const g = S.profile && S.profile.gender; return (g === 'm' && gd(c) === 'f') || (g === 'f' && gd(c) === 'm'); };
@@ -523,7 +529,7 @@
     const hasImg = (c) => (imgOf(c) ? 1 : 0);
     const all = E.recommend(cat, P, S.wishlist, Object.assign({}, st, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed, fb: S.feedback || [], looseColl: true, prestige: true })).sort((x, y) => (y.total + .4 * hasImg(y.c)) - (x.total + .4 * hasImg(x.c)));
     const byHouse = {};
-    out.recs = all.filter((r) => underCap(r.c) && fresh(r.c)).filter((r) => { const h = E.norm(r.c.house); byHouse[h] = (byHouse[h] || 0) + 1; return byHouse[h] <= 2; }).slice(0, 8);
+    out.recs = all.filter((r) => underCap(r.c) && fresh(r.c)).filter((r) => { const h = E.norm(r.c.house); byHouse[h] = (byHouse[h] || 0) + 1; return byHouse[h] <= 2; }).slice(0, 14);
     const tg = window.tagsOf || (() => []);
     // « Par envie » : jamais un parfum déjà montré plus haut, ni une autre version du même parfum.
     [['niche', 'Un niche pour toi'], ['abordable', 'Un abordable qui te va'], ['luxe', 'Un coup de luxe'], ['prive', 'Une collection privée']].forEach(([t, label]) => { const r = all.find((x) => underCap(x.c) && tg(x.c.name, x.c.house, x.c.price, '').includes(t) && !out.recs.some((y) => y.c === x.c) && fresh(x.c)); if (r) out.tags.push({ label, r }); });
@@ -570,7 +576,26 @@
   new MutationObserver(ttMount).observe($('#view'), { childList: true });
   setInterval(() => { const el = $('#tt .tt'); if (el && !document.hidden) ttAdvance(el); }, TT_MS);
   const BESOINS = [['Au bureau', 'pour le bureau'], ['Entretien d\'embauche', 'entretien d\'embauche'], ['Premier rendez-vous', 'premier rendez-vous'], ['Séduire', 'séduire sensuel'], ['Soirée', 'soirée'], ['Boîte de nuit', 'boîte de nuit'], ['Cérémonie', 'mariage cérémonie'], ['Tous les jours', 'tous les jours, discret'], ['Élégance', 'élégant raffiné classe'], ['Frais et propre', 'sentir propre, frais'], ['Grosse chaleur', 'forte chaleur été'], ['Voyage et vacances', 'vacances voyage'], ['Grand froid', 'hiver froid'], ['Gourmand', 'gourmand vanille'], ['Mystérieux', 'mystérieux fumé'], ['Compliments', 'compliments'], ['Signature', 'parfum signature, se démarquer'], ['Luxe et opulence', 'luxe opulent'], ['Sport', 'sport']];
-  // ---------- Conseils : prix, parfumier privé (chat), trois conseils pour toi, un besoin à la fois, le reste replié ----------
+  // ---------- Carrousel : on glisse vers la droite, la carte suivante dépasse toujours un peu ----------
+  const carousel = (items, label) => `<div class="car" role="region" aria-roledescription="carrousel" aria-label="${esc(label)}"><div class="car-track" tabindex="0">${items.map((h, i) => `<div class="car-item${i === 0 ? ' on' : ''}" data-ci="${i}" role="group" aria-label="${i + 1} sur ${items.length}">${h}</div>`).join('')}</div>
+    <div class="car-bar"><button type="button" class="car-btn" data-cd="-1" aria-label="Précédent" disabled>←</button><span class="car-count"><b>1</b> / ${items.length}</span><span class="car-hint">glisse pour voir la suite</span><button type="button" class="car-btn next" data-cd="1" aria-label="Suivant">→</button></div></div>`;
+  function bindCarousel(root) {
+    $$('.car', root).forEach((car) => {
+      const tr = $('.car-track', car), its = $$('.car-item', car), cnt = $('.car-count b', car), hint = $('.car-hint', car); let raf = 0;
+      const cur = () => { const c = tr.scrollLeft + tr.clientWidth / 2; let bi = 0, bd = 1e9; its.forEach((el, i) => { const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (d < bd) { bd = d; bi = i; } }); return bi; };
+      const go = (i) => { i = Math.max(0, Math.min(its.length - 1, i)); tr.scrollTo({ left: its[i].offsetLeft - (tr.clientWidth - its[i].offsetWidth) / 2, behavior: 'smooth' }); };
+      const upd = () => {
+        const i = cur(); its.forEach((el, k) => { el.classList.toggle('on', k === i); if (Math.abs(k - i) <= 1 && !el.dataset.fx) { el.dataset.fx = '1'; mountFx(el); } });
+        cnt.textContent = i + 1; $$('[data-cd]', car).forEach((b) => { b.disabled = (+b.dataset.cd < 0 && i === 0) || (+b.dataset.cd > 0 && i === its.length - 1); });
+        car.classList.toggle('end', i === its.length - 1); if (i > 0 && hint) car.classList.add('moved');
+      };
+      tr.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(upd); }, { passive: true });
+      tr.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(cur() + 1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur() - 1); } });
+      $$('[data-cd]', car).forEach((b) => (b.onclick = () => go(cur() + +b.dataset.cd)));
+      upd();
+    });
+  }
+  // ---------- Pour toi : prix, parfumier privé (chat), trois conseils pour toi, un besoin à la fois, le reste replié ----------
   const CHAT = { msgs: [], busy: false };
   const CHAT_CHIPS = ['Un parfum pour un premier rendez-vous', 'Quelque chose de frais pour le bureau', 'Un niche qui se remarque', 'Moins cher que Baccarat Rouge 540'];
   const BSEL = { i: 0 };
@@ -613,15 +638,16 @@
     return bits.join(' ');
   }
   // ---------- Le parfumier privé : présent sur toutes les pages, en bas à droite, avec des bulles qui proposent des conseils ----------
-  const PF = { open: false, shown: 0, last: 0, t: 0, hide: 0, kind: 0 };
+  const PF = { open: false, shown: 0, last: 0, t: 0, hide: 0, kind: 0, scroll: 0 };
+  addEventListener('scroll', () => { PF.scroll = Date.now(); }, { passive: true });
   const PF_HINT = {
-    today: ['Une idée pour ta journée ? Dis-moi ce que tu fais et je te dis lequel porter.', 'Tu ne sais pas lequel mettre aujourd\'hui ? Je te guide.'],
-    shelf: ['Je peux te dire ce qui manque à ta collection, ou lequel tu portes trop peu.', 'Un parfum à ajouter ? Décris-moi tes envies.'],
-    search: ['Tu ne trouves pas ? Décris-moi ce que tu veux avec tes mots.', 'Dis-moi une occasion ou une note, je te sors trois parfums.'],
-    tips: ['Tu veux que je compare deux parfums pour toi ?', 'Dis-moi ton budget et l\'occasion, je choisis pour toi.'],
-    play: ['Cette playlist te parle ? Je peux en tirer les trois parfums qui te vont le mieux.', 'Dis-moi laquelle t\'inspire et je te dis par où commencer.'],
-    walk: ['Un parfum senti en boutique ? Raconte, je t\'aide à décider.', 'Tu hésites après une balade ? Je te donne mon avis.'],
-    wish: ['Tu as plusieurs parfums en attente. Je te dis lequel acheter en premier.', 'Un budget en tête ? Je classe ta wishlist pour toi.'],
+    today: ['Lequel porter aujourd\'hui ?', 'Une idée pour ta journée ?'],
+    shelf: ['Que manque-t-il à ta collection ?', 'Un parfum à ajouter ?'],
+    search: ['Tu ne trouves pas ? Décris-moi.', 'Dis-moi une occasion ou une note'],
+    tips: ['Je compare deux parfums pour toi ?', 'Ton budget ? Je choisis'],
+    play: ['Cette ambiance te parle ?', 'Par où commencer ?'],
+    walk: ['Senti en boutique ? Raconte', 'Tu hésites ? Mon avis'],
+    wish: ['Lequel acheter en premier ?', 'Je classe ta wishlist ?'],
   };
   const PF_CHIPS = {
     today: ['Lequel porter aujourd\'hui ?', 'Un parfum pour ce soir', 'Quelque chose de discret'],
@@ -635,7 +661,7 @@
   function mountParfumier() {
     if ($('#pfab')) return;
     document.body.insertAdjacentHTML('beforeend', `<button id="pfab" class="pfab" type="button" aria-label="Ouvrir ton parfumier privé"><span class="pfa">✦</span><i class="pfdot" hidden></i></button>
-      <div id="pbub" class="pbub" role="status" hidden><button type="button" class="pbx" aria-label="Fermer">×</button><p class="mono" style="text-transform:none;letter-spacing:0;margin:0 0 6px">Ton parfumier privé</p><p id="pbt"></p><div class="pbr"><button type="button" class="chip" id="pbgo"></button></div></div>
+      <div id="pbub" class="pbub" role="status" hidden><button type="button" class="pbgo" id="pbgo"><span id="pbt"></span><b>→</b></button><button type="button" class="pbx" aria-label="Fermer">×</button></div>
       <aside id="ppanel" class="ppanel" role="dialog" aria-label="Ton parfumier privé" hidden><header><div><b>Ton parfumier privé</b><small>Il connaît toute la base et tes goûts</small></div><button type="button" id="ppx" aria-label="Fermer">×</button></header>
         <div id="cmsgs" class="cmsgs" aria-live="polite"></div><div class="chips" id="cchips"></div>
         <form id="cform" class="cform"><input type="text" id="cin" autocomplete="off" placeholder="Décris ce que tu cherches…" aria-label="Ta question au parfumier privé" maxlength="300"><button class="cta" type="submit" aria-label="Envoyer"><span>→</span></button></form></aside>`);
@@ -661,18 +687,19 @@
   // Bulle proactive : un conseil de la page, puis une vraie recommandation tirée du profil. Jamais plus de quatre par visite, jamais quand une feuille est ouverte.
   function pfTick() {
     mountParfumier();
-    if (PF.open || document.hidden || !$('#sheet').hidden || !$('#story').hidden || PF.shown >= 4 || Date.now() - PF.last < 20000) return;
+    if (PF.open || document.hidden || !$('#sheet').hidden || !$('#story').hidden || PF.shown >= 2 || Date.now() - PF.last < 60000) return;
+    if (Date.now() - PF.scroll < 2500) { PF.t = setTimeout(pfTick, 4000); return; }
     let m = null;
     if (PF.kind % 2 === 1 && (S.collection.length || (S.settings.liked || []).length)) {
-      try { const r = tipsData().recs[0]; if (r) m = { t: `Pour toi en ce moment, je pense à ${r.c.name} (${r.c.house}). Il est compatible à ${r.pct} % avec tes goûts.`, b: 'Pourquoi lui ?', q: 'Pourquoi ' + r.c.name + ' pour moi ?' }; } catch (e) { /* on retombe sur le conseil de la page */ }
+      try { const r = tipsData().recs[0]; if (r) m = { t: `${r.c.name} te irait bien, ${r.pct} % compatible`, q: 'Pourquoi ' + r.c.name + ' pour moi ?' }; } catch (e) { /* on retombe sur le conseil de la page */ }
     }
-    if (!m) { const h = PF_HINT[tab] || PF_HINT.tips; m = { t: h[PF.shown % h.length], b: 'Lui demander', q: '' }; }
+    if (!m) { const h = PF_HINT[tab] || PF_HINT.tips; m = { t: h[PF.shown % h.length], q: '' }; }
     PF.kind += 1; PF.shown += 1; PF.last = Date.now();
-    $('#pbt').textContent = m.t; $('#pbgo').textContent = m.b; $('#pbub').hidden = false; $('.pfdot', $('#pfab')).hidden = false;
+    $('#pbt').textContent = m.t; $('#pbub').hidden = false; $('.pfdot', $('#pfab')).hidden = false;
     $('#pbgo').onclick = () => pfOpen(m.q || undefined);
-    PF.hide = setTimeout(pfHide, 16000);
+    PF.hide = setTimeout(pfHide, 8000);
   }
-  function pfSchedule() { mountParfumier(); clearTimeout(PF.t); pfHide(); PF.t = setTimeout(pfTick, PF.shown ? 9000 : 6500); }
+  function pfSchedule() { mountParfumier(); clearTimeout(PF.t); pfHide(); PF.t = setTimeout(pfTick, PF.shown ? 30000 : 14000); }
   async function chatSend(q) {
     q = (q || '').trim(); if (!q || CHAT.busy) return;
     CHAT.msgs.push({ r: 'u', t: q }); CHAT.busy = true; drawChat();
@@ -721,23 +748,25 @@
   function viewTips() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
+    let PLN = null; try { const pl = S.collection.length ? collectionPlan() : null; PLN = pl && pl.strategies.length ? pl : null; } catch (e) { PLN = null; }
     const hasProfile = S.collection.length || (s.liked || []).length || (s.vibes || []).length;
     $('#view').innerHTML = `
-      <section class="sec tp"><header><h2>Conseils</h2><span class="mono">ton parfumier privé</span></header>
+      <section class="sec tp"><header><h2>Pour toi</h2><span class="mono">ton parfumier privé</span></header>
         <div class="card pricecard"><div class="row" style="justify-content:space-between;align-items:baseline"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
-          <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">Aucun conseil ne dépasse ce prix${s.budget ? '' : ' · glisse pour fixer un plafond'}</p></div>
+          <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">Aucun conseil ne dépasse ce prix${s.budget ? '' : ' · glisse pour fixer un plafond'}</p>
+          <div class="tiersrow"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.tier ? 'Ton style' : 'Choisis ton style pour des conseils plus justes'}</p><div class="chips" id="tiersel">${TIERS.map(([k, l]) => `<button type="button" class="chip ${s.tier === k ? 'on' : ''}" data-tier="${k}">${l}</button>`).join('')}</div></div></div>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Tes notes disent ce que tu aimes : mes conseils en deviennent bien plus justes.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
       </section>
       <section class="sec"><div class="card pfcard"><p class="mono">Ton parfumier privé</p><h2>Une question ? Demande-lui.</h2><p>Il connaît toute la base et ton profil. Il est aussi là, en bas à droite, sur chaque page.</p><button class="cta full" id="pfopen"><span>Discuter avec lui</span></button></div></section>
-      <section class="sec"><header><h2>Pour toi</h2><span class="mono">${profPrecision().l}</span></header>
-        ${T.recs.length ? `<div class="stack">${T.recs.slice(0, 3).map((r, i) => recCard(r, i)).join('')}</div>${T.recs.length > 3 ? `<details class="more"><summary>Voir ${T.recs.length - 3} autre${T.recs.length > 4 ? 's' : ''} conseil${T.recs.length > 4 ? 's' : ''}</summary><div class="stack">${T.recs.slice(3).map((r, i) => recCard(r, i + 3)).join('')}</div></details>` : ''}` : '<div class="empty">Rien sous ce prix. Monte un peu le plafond.</div>'}
+      <section class="sec"><header><h2>Tes parfums du moment</h2><span class="mono">${profPrecision().l}</span></header>
+        ${T.recs.length ? carousel(T.recs.map((r, i) => recCard(r, i)), 'Parfums pour toi') : '<div class="empty">Rien sous ce prix. Monte un peu le plafond.</div>'}
         ${profPrecision().v < 1 ? `<button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil pour de meilleurs conseils</button>` : ''}
       </section>
+      ${PLN ? (() => { const pl = PLN; return `<section class="sec" id="planbox"><header><h2>Stratégies pour ta collection</h2><span class="mono">${pl.strategies.length} pistes</span></header><p class="soft2" style="margin:0">Tes ${pl.n} parfums couvrent moins bien ${pl.weak.map(esc).join(' et ')}. Voilà ce que donneraient quelques ajouts.</p>${carousel(planCards(pl), 'Stratégies de collection')}</section>`; })() : ''}
       <section class="sec"><header><h2>Selon le besoin</h2><span class="mono">trois idées chacun</span></header>
         ${hasProfile ? `<div class="rail brail" id="bsel" role="tablist">${BESOINS.map(([l], bi) => `<button type="button" class="chip ${bi === BSEL.i ? 'on' : ''}" role="tab" data-bi="${bi}">${esc(l)}</button>`).join('')}</div><div id="bsn" class="bsn"></div>` : '<p class="soft2">Renseigne tes goûts ou ajoute quelques parfums, et je te propose trois conseils pour chaque besoin.</p>'}
       </section>
       ${S.collection.length || T.tags.length ? `<section class="sec"><details class="more big"><summary>Ta collection et d'autres idées</summary><div class="stack">
-        ${S.collection.length ? `<div><p class="mono">Stratégies de collection</p><div id="planbox">${planHtml(collectionPlan(), true)}</div></div>` : ''}
         ${T.gaps.length ? `<div><p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}</div>` : ''}
         ${T.tips.length && S.collection.length ? `<div class="card"><p class="mono">Ta collection en bref</p><ul class="tiplist">${T.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
         ${T.tags.length ? `<div><p class="mono">Par envie</p>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</div>` : ''}
@@ -749,6 +778,7 @@
     if ($('#tipMap')) $('#tipMap').onclick = openShopMap;
     if ($('#tipProf')) $('#tipProf').onclick = () => { openProfile(); };
     if ($('#planbox')) bindPlan($('#planbox'));
+    bindCarousel($('#view')); if ($('#tiersel')) bindTier($('#tiersel'), () => viewTips());
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
     bud.addEventListener('change', () => { save(); viewTips(); });
@@ -1417,6 +1447,7 @@
       <div class="card" style="display:grid;gap:10px"><b>Moi</b><div class="chips" id="pgen">${GEN.map(([k, l]) => `<button class="chip ${pf.gender === k ? 'on' : ''}" data-pg="${k}">${l}</button>`).join('')}</div>
         <input type="text" id="pname" maxlength="24" value="${esc(pf.name || '')}" placeholder="Mon prénom" aria-label="Mon prénom">
         <input type="text" id="page" inputmode="numeric" maxlength="2" value="${pf.age || ''}" placeholder="Mon âge" aria-label="Mon âge"><p class="mono" id="pmsg" style="text-transform:none;letter-spacing:0">Enregistré automatiquement, utilisé chaque jour. Ta tenue, je te la demande quand tu cherches ton parfum.</p></div>
+      <div class="card" style="display:grid;gap:14px"><b>Mon style d'achat</b>${tierPick()}</div>
       ${window.SillageDemo ? (window.SillageDemo.account.loggedIn() ? `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Connecté : ${esc(window.SillageDemo.account.email())}. Ton profil est sauvegardé automatiquement.</p><div class="row"><button class="ghost" id="alogout">Me déconnecter</button><button class="ghost danger" id="adel">Supprimer mon compte</button></div></div>` : `<div class="card" style="display:grid;gap:10px"><b>Mon compte</b><p class="mono" style="text-transform:none;letter-spacing:0">Crée un compte pour garder ton profil, ta collection et ta wishlist sur tous tes appareils.</p><button class="cta" id="acreate"><span>Créer un compte ou me connecter</span></button></div>`) : ''}
       <div id="tedit" class="tprof"></div>
       <div class="card" style="display:grid;gap:10px"><b>Sauvegarde</b><div class="row"><button class="ghost" id="exp">Exporter en texte</button><button class="ghost" id="imp">Importer</button></div><textarea id="io" rows="3" placeholder="Le texte de sauvegarde apparaît ici, ou colle-le pour importer"></textarea><p class="mono" id="iomsg" style="text-transform:none"></p></div>
@@ -1425,6 +1456,7 @@
     $$('[data-pg]', pn).forEach((b) => (b.onclick = () => { setProfile({ gender: b.dataset.pg }); $$('[data-pg]', pn).forEach((x) => x.classList.toggle('on', x === b)); pmsg(); }));
     $('#page', pn).onchange = () => { setProfile({ age: cleanAge($('#page', pn).value) }); pmsg(); };
     $('#pname', pn).onchange = () => { setProfile({ name: $('#pname', pn).value.trim().slice(0, 24) }); pmsg(); };
+    bindTier(pn, () => { const m = $('#pmsg', pn); if (m) m.textContent = 'Enregistré ✓'; });
     if ($('#acreate', pn)) $('#acreate', pn).onclick = () => { closeSheet(); showAccount('profile'); };
     if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
@@ -2292,39 +2324,50 @@
     upd();
   }
   // Inscription en 5 temps : prénom, genre, âge, goûts, puis la collection choisie dans la base.
+  // Luxe ou prix malins : la première chose à savoir pour ne jamais proposer un parfum qui ne ressemble pas à la personne.
+  const TIERS = [['luxe', 'Haut de gamme et luxe', 'Niche, grandes maisons, des flacons qui se remarquent. La qualité passe avant le prix.'], ['malin', 'Prix malins', 'Les meilleurs rapports qualité prix, des parfums accessibles et sans regret.'], ['mix', 'Un peu des deux', 'Du luxe quand il le mérite, du malin le reste du temps.']];
+  const tierPick = () => `<div class="tiers" role="radiogroup" aria-label="Luxe ou prix malins">${TIERS.map(([k, l, d]) => `<button type="button" class="tier ${S.settings.tier === k ? 'on' : ''}" role="radio" aria-checked="${S.settings.tier === k}" data-tier="${k}"><b>${l}</b><span>${d}</span></button>`).join('')}</div>`;
+  function bindTier(root, cb) { $$('[data-tier]', root).forEach((b) => (b.onclick = () => { S.settings.tier = b.dataset.tier; save(); NPOOL = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]); $$('[data-tier]', root).forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-checked', x === b); }); if (cb) cb(); })); }
   function showProfile() {
-    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), N = 7;
+    const d = Object.assign({ gender: '', age: null, name: '' }, hasProfile() ? S.profile : {}), N = 8;
     const el = document.createElement('div'); el.id = 'prof'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Faisons connaissance');
     let step = 1;
     const read = () => { if ($('#pName', el)) d.name = $('#pName', el).value.trim().slice(0, 24); if ($('#pAge', el)) d.age = cleanAge($('#pAge', el).value); };
     const draw = () => {
       const head = `<p class="mono">Faisons connaissance · ${step} / ${N}</p>`, back = step > 1 ? '<button class="ghost" id="pBack">Retour</button>' : '';
-      if (step === 7) {
+      if (step === 8) {
         el.innerHTML = '<div class="prof-in wide"><div id="pExp"></div></div>';
         mountExplorer($('#pExp', el), { mode: 'collection', title: d.name ? 'Tes parfums, ' + d.name : 'Tes parfums', sub: 'Choisis ceux que tu as déjà : par maison, style, notes… Tu pourras en ajouter d\'autres à tout moment.', cta: (n) => 'Ajouter ' + n + ' et commencer', skip: 'Je n\'en ai pas encore', onSkip: () => end(false), onSubmit: (list) => { addEntriesToCollection(list); end(false); } });
+        return;
+      }
+      const st2 = step > 4 ? step - 1 : step;
+      if (step === 4) {
+        el.innerHTML = `<div class="prof-in">${head}<h2>Plutôt luxe ou prix malins&nbsp;?</h2><p class="soft">C'est ce qui compte le plus pour te conseiller juste : je ne te proposerai jamais un parfum qui ne te ressemble pas.</p>${tierPick()}<button class="cta full" id="pNext" ${S.settings.tier ? '' : 'disabled'}><span>Continuer</span></button>${back}</div>`;
+        bindTier(el, () => { $('#pNext', el).disabled = false; });
+        $('#pNext', el).onclick = () => { read(); step++; draw(); }; if ($('#pBack', el)) $('#pBack', el).onclick = () => { read(); step--; draw(); };
         return;
       }
       el.innerHTML = step === 1
         ? `<div class="prof-in">${head}<h2>Enchanté. Comment tu t'appelles&nbsp;?</h2><p class="soft">Juste ton prénom : je m'en sers pour te dire bonjour. Ça reste sur ton appareil.</p>
           <input type="text" id="pName" maxlength="24" value="${esc(d.name || '')}" placeholder="Ton prénom" aria-label="Ton prénom" autocomplete="given-name" class="agein">
           <button class="cta full" id="pNext"><span>Continuer</span></button><button class="ghost" id="pSkip">Plus tard</button></div>`
-        : step === 2
+        : st2 === 2
           ? `<div class="prof-in">${head}<h2>Tu es…</h2><p class="soft">Pour choisir un parfum qui te va, pas pour t'enfermer dans une case.</p>
             <div class="gen">${GEN.map(([k, l]) => `<button class="chip ${d.gender === k ? 'on' : ''}" data-g="${k}">${l}</button>`).join('')}</div>
             <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
-          : step === 3
+          : st2 === 3
             ? `<div class="prof-in">${head}<h2>Quel âge as-tu&nbsp;?</h2><p class="soft">Les goûts et les occasions changent avec l'âge.</p>
               <input type="text" id="pAge" inputmode="numeric" maxlength="2" value="${d.age || ''}" placeholder="Ton âge" aria-label="Ton âge" class="agein">
               <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
-            : step === 4
+            : st2 === 4
               ? `<div class="prof-in wide">${head}<h2>Quelles notes aimes-tu&nbsp;?</h2><p class="soft">Une touche pour adorer, deux pour fuir. Ne cherche pas à tout remplir : trois ou quatre notes suffisent pour commencer.</p><div id="pTaste" class="tprof"></div>
                 <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
-              : step === 5
+              : st2 === 5
                 ? `<div class="prof-in wide">${head}<h2>Quel genre de parfum te ressemble&nbsp;?</h2><p class="soft">Ton ambiance et la présence que tu veux. Tu peux changer d'avis à tout moment.</p><div id="pTaste" class="tprof"></div>
                   <button class="cta full" id="pNext"><span>Continuer</span></button>${back}</div>`
                 : `<div class="prof-in wide">${head}<h2>Quand le portes-tu, et pour combien&nbsp;?</h2><p class="soft">Voilà ton profil, tel que je le comprends. Je m'en sers pour tous mes conseils.</p><div id="pTaste" class="tprof"></div>
                   <button class="cta full" id="pNext"><span>Choisir mes parfums</span></button>${back}</div>`;
-      if ($('#pTaste', el)) mountTaste($('#pTaste', el), step === 4 ? ['notes'] : step === 5 ? ['vibes'] : ['occ']);
+      if ($('#pTaste', el)) mountTaste($('#pTaste', el), st2 === 4 ? ['notes'] : st2 === 5 ? ['vibes'] : ['occ']);
       $$('[data-g]', el).forEach((b) => (b.onclick = () => { d.gender = b.dataset.g; $$('[data-g]', el).forEach((x) => x.classList.toggle('on', x === b)); }));
       if ($('#pNext', el)) $('#pNext', el).onclick = () => { read(); step++; draw(); };
       if ($('#pBack', el)) $('#pBack', el).onclick = () => { read(); step--; draw(); };
