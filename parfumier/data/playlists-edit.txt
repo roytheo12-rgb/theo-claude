@@ -4436,6 +4436,7 @@ x Parfums de Marly Greenley
 ~ Guerlain Guerlain Homme | Lavande, bois et épices douces, simple et rassurant.
 ~ Bvlgari Tygar | Pamplemousse, gingembre et ambroxan, le frais de l'après-match.
 + Dior Dior Homme Sport | Le Dior Homme version sport, frais et énergique pour l'avant-match.
++ Perris Monte Carlo Encens Sacré | L'encens pour se concentrer, le calme et la tête dans le match avant le coup d'envoi.
 ## F1
 ~ Xerjoff Torino21 | Menthe, citron et basilic, une fraîcheur de paddock.
 ~ Creed Aventus | Ananas, bouleau et musc, le parfum de la victoire.
