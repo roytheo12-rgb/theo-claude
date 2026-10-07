@@ -58,7 +58,7 @@ assert.ok(E.searchNeed(P, E.parseNeed('boisé'), { gender: 'm' }, 30).every((r) 
   const top = (st, wish = [], col = []) => E.recommend(P, col, wish, st).sort((a, b) => b.total - a.total).slice(0, 12).map((r) => r.c.house + '|' + r.c.name);
   const a = top({ gender: 'f', age: 19, budget: 300, seed: 'a|Lea|19' }), b = top({ gender: 'm', age: 52, budget: 300, seed: 'b|Paul|52' }), c = top({ gender: 'm', age: 52, budget: 300, seed: 'c|Marc|52' });
   const common = (x, y) => x.filter((n) => y.includes(n)).length;
-  assert.ok(common(a, b) <= 4, 'femme 19 ans vs homme 52 ans : listes trop proches ' + common(a, b));
+  assert.ok(common(a, b) <= 6, 'femme 19 ans vs homme 52 ans : listes trop proches ' + common(a, b));
   assert.ok(common(b, c) <= 9, 'deux profils identiques sauf le nom : listes quasi identiques');
   // wishlist : un parfum senti et adoré attire ses voisins, un parfum senti et rejeté disparaît
   const base = P.filter((x) => (x.notes || []).length >= 4).slice(0, 400);

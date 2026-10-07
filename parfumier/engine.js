@@ -360,7 +360,10 @@
     }
   }
   // Maisons de niche reconnues (et grandes maisons de luxe) : à qualité égale, c'est ce qu'un parfumeur privé sort en premier pour un conseil d'achat.
-  const NICHE_TOP = new Set(['maison francis kurkdjian', 'xerjoff', 'amouage', 'initio', 'parfums de marly', 'creed', 'byredo', 'le labo', 'frederic malle', 'diptyque', 'serge lutens', 'nishane', 'kilian', 'roja parfums', 'louis vuitton', 'tom ford', 'ex nihilo', 'memo paris', 'penhaligon s', 'matiere premiere', 'bdk parfums', 'maison crivelli', 'nasomatto', 'orto parisi', 'hermes', 'guerlain', 'chanel', 'dior', 'clive christian', 'goldfield banks', 'house of oud', 'marc antoine barrois', 'atelier cologne', 'floraiku', 'carner barcelona'].map(norm));
+  const NICHE_TOP = new Set(['maison francis kurkdjian', 'xerjoff', 'amouage', 'initio', 'parfums de marly', 'creed', 'frederic malle', 'diptyque', 'serge lutens', 'nishane', 'roja parfums', 'louis vuitton', 'ex nihilo', 'memo paris', 'penhaligon s', 'matiere premiere', 'bdk parfums', 'maison crivelli', 'nasomatto', 'orto parisi', 'hermes', 'guerlain', 'chanel', 'dior', 'clive christian', 'goldfield banks', 'house of oud', 'marc antoine barrois', 'atelier cologne', 'floraiku', 'carner barcelona'].map(norm));
+  // Maisons surtout populaires aux États-Unis : elles ne passent plus devant les icônes des playlists d'inspiration.
+  const US_HYPE = new Set(['le labo', 'byredo', 'tom ford', 'kilian', 'glossier', 'phlur', 'kayali', 'bond no 9', 'ds durga', 'd s and durga', 'jo malone', 'jo malone london', 'ralph lauren', 'fenty', 'charlotte tilbury', 'maison margiela', 'by redo'].map(norm));
+  const usHype = (c) => { const HA = root.HOUSE_ALIAS || {}; return US_HYPE.has(norm(HA[norm(c.house)] || c.house)); };
   const nicheTop = (c) => { const HA = root.HOUSE_ALIAS || {}; return NICHE_TOP.has(norm(HA[norm(c.house)] || c.house)); };
   // Style d'achat : « luxe » (haut de gamme), « malin » (bons prix) ou rien. Retourne un score de -1 à 1 et si le parfum est à écarter franchement.
   function tierAdj(c, tier, price) {
@@ -472,7 +475,7 @@
     if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff), kw = st.sitAff && st.prestige ? 1.8 : .8; max += st.sitAff && st.prestige ? 2 : 1; s += ab.v * kw; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
-    if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; }
+    if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; else if (usHype(c)) s -= .8; }
     if (st.prestige && (st.tier === 'luxe' || st.tier === 'malin')) { const ta = tierAdj(c, st.tier); max += 1.6; s += 1.6 * Math.max(ta.v, -1) + (ta.v < 0 ? 0 : 0); }
     { const pv = provenOf(c); if (pv.v) { max += 0.8; s += 0.8 * pv.v; if (pv.n >= 4 && !why.some((x) => /univers|tout en haut/.test(x))) why.push('cité dans ' + pv.n + ' playlists d\'inspiration'); } }
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
@@ -785,7 +788,9 @@
   // Un parfum cité dans plusieurs playlists d'inspiration, surtout en tête, a fait ses preuves : { v: 0..1, n: nombre de playlists }
   function provenOf(c) {
     const T = themeIdx(); if (!T) return { v: 0, n: 0 }; const mem = T.idx.get(thKey(c)); if (!mem || !mem.length) return { v: 0, n: 0 };
-    const sum = mem.reduce((a, m) => a + m.wt, 0); return { v: clamp(Math.log2(1 + sum) / 2.6, 0, 1), n: mem.length };
+    // Les playlists de fond (moments, effets, archétypes, atmosphères) pèsent plus : ce sont les plus fiables pour dire qu'un parfum a fait ses preuves.
+    const CORE = new Set(['Moments', 'Effets', 'Archétypes', 'Atmosphères']);
+    const sum = mem.reduce((a, m) => a + m.wt * (CORE.has(((T.lex[m.pi].p.secs || [])[0]) || '') ? 1 : .55), 0); return { v: clamp(Math.log2(1 + sum) / 2.4, 0, 1), n: mem.length };
   }
   function themeAffinity(col) {
     const T = themeIdx(); if (!T) return null; const aff = {}; let any = false;
@@ -1155,7 +1160,7 @@
       const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * (settings.sitAff ? 3 : .8) + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
       const pvn = provenOf(c);
-      const tr = tierAdj(c, settings.tier), total = t.s + 2.2 * tr.v + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige && nicheTop(c) ? 1.5 : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
+      const tr = tierAdj(c, settings.tier), total = t.s + 2.2 * tr.v + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige ? (nicheTop(c) ? 1.5 : usHype(c) ? -1.6 : 0) : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 1.5 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
         c, proven: pvn.n, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
@@ -1165,7 +1170,7 @@
     return calibrate(out, settings, collection);
   }
 
-  const api = { sitAffOf, tierAdj, nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { usHype, sitAffOf, tierAdj, nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

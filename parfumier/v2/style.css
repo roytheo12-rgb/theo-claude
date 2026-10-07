@@ -895,3 +895,29 @@ a.chip { text-decoration: none; display: inline-block; }
 .unirail { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 8px; scrollbar-width: none; }
 .unirail::-webkit-scrollbar { display: none; }
 .lnk { border: 0; background: none; color: var(--muted); text-decoration: underline; font: inherit; font-size: 13px; cursor: pointer; }
+
+/* ---------- Parfumier privé : photo, en ligne, messages ---------- */
+.pfab { overflow: visible; padding: 0; background: #1a1514; border: 2px solid rgba(242, 235, 224, .55); box-shadow: 0 10px 30px rgba(0, 0, 0, .55); }
+.pfab .pfimg { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.pfon { position: absolute; right: 1px; bottom: 1px; width: 15px; height: 15px; border-radius: 50%; background: #34c759; border: 2.5px solid #110e0d; animation: pfonline 2.2s ease-in-out infinite; }
+.pfon.inl { position: static; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border: 0; vertical-align: 1px; }
+@keyframes pfonline { 0%, 100% { box-shadow: 0 0 0 0 rgba(52, 199, 89, .65); opacity: 1; } 50% { box-shadow: 0 0 0 7px rgba(52, 199, 89, 0); opacity: .55; } }
+.pbub { border-radius: 18px 18px 4px 18px; padding: 8px 6px 8px 8px; gap: 10px; align-items: flex-start; max-width: min(270px, calc(100vw - 96px)); }
+.pbub .pbav { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex: none; margin-top: 2px; }
+.pbub .pbgo { padding: 8px 4px 8px 0; font-size: 13.5px; line-height: 1.4; min-height: 20px; }
+.pbub .pbx { padding: 6px 8px; }
+.typing { display: inline-flex; gap: 4px; align-items: center; height: 18px; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: rgba(242, 235, 224, .6); animation: ty 1.1s ease-in-out infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; }
+.typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes ty { 0%, 60%, 100% { transform: translateY(0); opacity: .4; } 30% { transform: translateY(-4px); opacity: 1; } }
+.ppanel > header { align-items: center; justify-content: flex-start; }
+.ppanel > header > div { flex: 1; }
+.ppanel > header #ppx { margin-left: auto; }
+.pfimg.sm { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex: none; }
+.ppanel > header small { display: block; color: #6fd48a; }
+.crow { display: flex; gap: 10px; align-items: flex-end; max-width: 96%; }
+.crow .cav { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; flex: none; }
+.crow .cb { max-width: none; flex: 1; min-width: 0; }
+.sit .sit-img { flex: none; width: 52px; height: 52px; border-radius: 8px; object-fit: cover; opacity: .9; }
+.sit span { flex: 1; }
