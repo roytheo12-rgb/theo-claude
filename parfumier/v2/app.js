@@ -600,6 +600,7 @@
     if (r.hits.length) reasons.push('Tu aimes déjà : ' + r.hits.join(', '));
     if (r.ficheWhy) reasons.push(r.ficheWhy.charAt(0).toUpperCase() + r.ficheWhy.slice(1));
     if (r.gapLabel) reasons.push('Comble : ' + r.gapLabel);
+    if (r.proven >= 3) reasons.splice(Math.min(1, reasons.length), 0, 'A fait ses preuves : cité dans ' + r.proven + ' playlists d\'inspiration');
     if (r.inSeason) reasons.push('De saison en ce moment');
     if (r.inBudget) reasons.push('Dans ton budget');
     if (r.houseLoved) reasons.push('Une maison que tu aimes déjà');
@@ -989,7 +990,7 @@
   async function aiNeed(res, need) {
     const msg = $('#needaimsg'), out = $('#needaires'), btn = $('#needai'); if (!msg) return;
     msg.textContent = 'Je compare…'; btn.disabled = true; out.innerHTML = '';
-    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
+    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') + ' (' + E.provenOf(r.c).n + ' playlists d\'inspiration)' : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
     const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')} : porté ${wears(p.id)} fois`).join('\n');
     const args = { need: NEED.q, shortlist: short, collection: col, taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
     try {

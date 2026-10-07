@@ -455,6 +455,7 @@
     if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff); max += 1; s += ab.v * .8; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
+    { const pv = provenOf(c); if (pv.v) { max += 0.8; s += 0.8 * pv.v; if (pv.n >= 4 && !why.some((x) => /univers|tout en haut/.test(x))) why.push('cité dans ' + pv.n + ' playlists d\'inspiration'); } }
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
     if (asked.size) { max += 2; const sh = [...asked].reduce((a, f) => a + (o.acc[f] || 0), 0) / o.tot; s += 2 * clamp(sh / Math.min(.7, .35 * asked.size + .15), 0, 1); }
     const ratio = clamp(s / max, 0, 1);
@@ -753,6 +754,11 @@
   function themesOf(c, n) {
     const T = themeIdx(); if (!T) return []; const mem = T.idx.get(thKey(c)); if (!mem) return [];
     return mem.slice().sort((a, b) => b.wt - a.wt).slice(0, n || 5).map((m) => ({ id: T.lex[m.pi].p.id, t: T.lex[m.pi].p.t, sec: (T.lex[m.pi].p.secs || [])[0] || '', pos: m.pos }));
+  }
+  // Un parfum cité dans plusieurs playlists d'inspiration, surtout en tête, a fait ses preuves : { v: 0..1, n: nombre de playlists }
+  function provenOf(c) {
+    const T = themeIdx(); if (!T) return { v: 0, n: 0 }; const mem = T.idx.get(thKey(c)); if (!mem || !mem.length) return { v: 0, n: 0 };
+    const sum = mem.reduce((a, m) => a + m.wt, 0); return { v: clamp(Math.log2(1 + sum) / 2.6, 0, 1), n: mem.length };
   }
   function themeAffinity(col) {
     const T = themeIdx(); if (!T) return null; const aff = {}; let any = false;
@@ -1108,9 +1114,10 @@
       fv = clamp(fv, -1.5, 2) * 0.6;
       const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * .8 + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
+      const pvn = provenOf(c);
+      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
-        c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
+        c, proven: pvn.n, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
         ficheWhy: fv > .4 ? fwhy : '', wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
       });
@@ -1118,7 +1125,7 @@
     return calibrate(out, settings, collection);
   }
 
-  const api = { themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -1935,6 +1935,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
     if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff); max += 1; s += ab.v * .8; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
+    { const pv = provenOf(c); if (pv.v) { max += 0.8; s += 0.8 * pv.v; if (pv.n >= 4 && !why.some((x) => /univers|tout en haut/.test(x))) why.push('cité dans ' + pv.n + ' playlists d\'inspiration'); } }
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
     if (asked.size) { max += 2; const sh = [...asked].reduce((a, f) => a + (o.acc[f] || 0), 0) / o.tot; s += 2 * clamp(sh / Math.min(.7, .35 * asked.size + .15), 0, 1); }
     const ratio = clamp(s / max, 0, 1);
@@ -2233,6 +2234,11 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
   function themesOf(c, n) {
     const T = themeIdx(); if (!T) return []; const mem = T.idx.get(thKey(c)); if (!mem) return [];
     return mem.slice().sort((a, b) => b.wt - a.wt).slice(0, n || 5).map((m) => ({ id: T.lex[m.pi].p.id, t: T.lex[m.pi].p.t, sec: (T.lex[m.pi].p.secs || [])[0] || '', pos: m.pos }));
+  }
+  // Un parfum cité dans plusieurs playlists d'inspiration, surtout en tête, a fait ses preuves : { v: 0..1, n: nombre de playlists }
+  function provenOf(c) {
+    const T = themeIdx(); if (!T) return { v: 0, n: 0 }; const mem = T.idx.get(thKey(c)); if (!mem || !mem.length) return { v: 0, n: 0 };
+    const sum = mem.reduce((a, m) => a + m.wt, 0); return { v: clamp(Math.log2(1 + sum) / 2.6, 0, 1), n: mem.length };
   }
   function themeAffinity(col) {
     const T = themeIdx(); if (!T) return null; const aff = {}; let any = false;
@@ -2588,9 +2594,10 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
       fv = clamp(fv, -1.5, 2) * 0.6;
       const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * .8 + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
+      const pvn = provenOf(c);
+      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
-        c, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
+        c, proven: pvn.n, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
         ficheWhy: fv > .4 ? fwhy : '', wished: wishedSet.has(norm(c.name)), inSeason: sFit >= 0.7, inBudget: budget > 0 && c.price > 0 && c.price <= budget, houseLoved: hf > 0.3,
       });
@@ -2598,7 +2605,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
     return calibrate(out, settings, collection);
   }
 
-  const api = { themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -2886,7 +2893,7 @@ CANDIDATS vérifiés par l'application (maison | parfum | famille | notes réell
 ${list || '(aucun candidat : propose uniquement des parfums que tu connais avec certitude)'}
 
 Méthode : 1) comprends ce qu'elle veut et ce qu'elle fuit, en croisant sa demande avec ses goûts, ses parfums préférés et ceux qu'elle porte vraiment ;  2) élimine tout parfum contenant une note qu'elle refuse, et ceux qu'elle possède déjà sauf si elle en demande un ;  3) compare les finalistes sur ce qui les distingue vraiment (texture, douceur, fumé, fraîcheur, densité, projection) ; 4) tranche : trois recommandations (le choix le plus juste, le choix sûr, la petite audace), puis un parfum « à éviter pour toi » qui paraît logique mais ne lui irait pas.
-Règles : choisis dans la liste des CANDIDATS. N'ajoute un parfum hors liste que s'il manque clairement un excellent choix et que tu en connais l'existence et les notes avec certitude (alors "hors_liste": true). N'invente aucune note, aucun prix. Chaque raison s'accroche à SES mots, à SES parfums (cite celui de sa collection dont il se rapproche ou se distingue) ou à la réserve de la fiche, jamais à des généralités. Les « % » du moteur te guident mais tu peux t'en écarter si la fiche et ses goûts disent autre chose. Pourcentage de justesse calibré (90 et plus seulement si presque sûr).
+Règles : choisis dans la liste des CANDIDATS. N'ajoute un parfum hors liste que s'il manque clairement un excellent choix et que tu en connais l'existence et les notes avec certitude (alors "hors_liste": true). N'invente aucune note, aucun prix. Chaque raison s'accroche à SES mots, à SES parfums (cite celui de sa collection dont il se rapproche ou se distingue) ou à la réserve de la fiche, jamais à des généralités. À valeur égale, préfère un parfum cité dans plusieurs playlists d'inspiration (indiqué « univers » dans la liste) : ce sont des succès qui ont fait leurs preuves, on sait mieux qu'ils plaisent. Les « % » du moteur te guident mais tu peux t'en écarter si la fiche et ses goûts disent autre chose. Pourcentage de justesse calibré (90 et plus seulement si presque sûr).
 Format : {"compris":"1 à 2 phrases","picks":[{"role":"choix|sur|audace","name":"","house":"","pct":0-100,"pourquoi":"2 à 3 phrases","tete":"ce qu'on sent au début","peau":"ce qu'on sent après 3 h","attention":"un point d'attention","hors_liste":false}],"eviter":{"name":"","house":"","raison":""},"test":"conseil de test en une phrase"}`;
 }
 
@@ -3495,6 +3502,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     if (r.hits.length) reasons.push('Tu aimes déjà : ' + r.hits.join(', '));
     if (r.ficheWhy) reasons.push(r.ficheWhy.charAt(0).toUpperCase() + r.ficheWhy.slice(1));
     if (r.gapLabel) reasons.push('Comble : ' + r.gapLabel);
+    if (r.proven >= 3) reasons.splice(Math.min(1, reasons.length), 0, 'A fait ses preuves : cité dans ' + r.proven + ' playlists d\'inspiration');
     if (r.inSeason) reasons.push('De saison en ce moment');
     if (r.inBudget) reasons.push('Dans ton budget');
     if (r.houseLoved) reasons.push('Une maison que tu aimes déjà');
@@ -3884,7 +3892,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   async function aiNeed(res, need) {
     const msg = $('#needaimsg'), out = $('#needaires'), btn = $('#needai'); if (!msg) return;
     msg.textContent = 'Je compare…'; btn.disabled = true; out.innerHTML = '';
-    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
+    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') + ' (' + E.provenOf(r.c).n + ' playlists d\'inspiration)' : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
     const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')} : porté ${wears(p.id)} fois`).join('\n');
     const args = { need: NEED.q, shortlist: short, collection: col, taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
     try {
