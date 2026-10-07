@@ -35,7 +35,7 @@ clean|Essential Parfums|Ambre Latte
 clean|Maison Matine|Esprit de Contradiction
 clean|Essential Parfums|The Musc
 clean|Profumo di Firenze|Viandante
-clean|Corner Barcelona|Isla Bohemia
+clean|Carner Barcelona|Isla Bohemia
 clean|Majouri|Imperial Vanilla
 niche-petit-prix|The Different Company|Red Burning Night
 niche-petit-prix|Maison Siraj|Élixir d'Amande Extrait

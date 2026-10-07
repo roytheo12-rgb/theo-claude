@@ -2206,7 +2206,7 @@ pal: e8e4d8,8a9a8a,2a2a2a,grid
 + Maison Matine Esprit de Contradiction | Choix d'experts : propre et net.
 + Essential Parfums The Musc | Choix d'experts : propre et net.
 + Profumo di Firenze Viandante | Choix d'experts : propre et net.
-+ Corner Barcelona Isla Bohemia | Choix d'experts : propre et net.
++ Carner Barcelona Isla Bohemia | Choix d'experts : propre et net.
 + Majouri Imperial Vanilla | Choix d'experts : propre et net.
 
 ## Automne Cozy

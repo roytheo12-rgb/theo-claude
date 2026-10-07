@@ -740,3 +740,6 @@
 3114|Noème Paris|Kalahari|
 3115|BDK Parfums|Bouquet de Hongrie|
 3116|Matière Première|Cologne Cédrat|
+3117|Glossier|You|
+3118|Maison Crivelli|Cuir InfraRouge|
+3119|Carner Barcelona|Isla Bohemia|
