@@ -607,3 +607,16 @@ Montale|White Musk|EDP
 Coelia|Cap Spartel|EDP
 Boucheron|Jaipur Homme|EDP
 Nicolas de Barry|Eau de la Reine de Hongrie|EDP
+Nicolas de Barry|Eau du Prince Igor|EDP
+Nicolas de Barry|L'eau de la Marquise de Pompadour|EDP
+Nicolas de Barry|Wu Zetian|EDP
+Nicolas de Barry|L'eau de la Reine Margot|EDP
+Nicolas de Barry|Eau de Nostradamus|EDP
+Nicolas de Barry|Eau du Cardinal|EDP
+Nicolas de Barry|L'eau de Mumtaz-i Mahal|EDP
+Nicolas de Barry|L'eau de Shah Jahan|EDP
+Nicolas de Barry|Eau du Vizir|EDP
+Nicolas de Barry|L'eau de Louis XV|EDP
+Nicolas de Barry|Casanova|EDP
+Nicolas de Barry|L'eau de George Sand|EDP
+Nicolas de Barry|L'eau de l'impératrice Sissi|EDP
