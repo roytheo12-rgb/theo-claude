@@ -5434,3 +5434,9 @@ t: Parfums de date
 - Yves Saint Laurent Libre | Lavande et fleur d'oranger, un parfum affirmé et facile à trouver pour un rendez-vous où l'on se sent libre.
 - Lancôme La Vie est Belle | Un gourmand que tout le monde connaît, rassurant et séduisant pour un premier dîner.
 - Prada Paradoxe | Un floral moderne et lumineux, facile à trouver et très séduisant au rendez-vous.
+
+## Parfums de date
+x Le Labo Another 13
+x BDK Parfums Pas Ce Soir
+x BDK Parfums Crème de Cuir
+x Hermès L'Ombre des Merveilles
