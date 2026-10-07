@@ -122,7 +122,7 @@ const EDIT_MISS = [], INTROUV = [];
     if ((m = l.match(/^- (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; rep = rep || []; rep.push(o); if (grp) grp[grp.length - 1].n++; continue; }
     if ((m = l.match(/^\+([HF])? (.*)$/))) { const forced = m[1] === 'H' ? 'm' : m[1] === 'F' ? 'f' : null; m[1] = m[2]; const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const okGrp = p.grp && p.grp.every((g) => typeof g.n === 'number') && p.grp.reduce((a, g) => a + g.n, 0) === p.ps.length && !rep; let ex; if (forced && okGrp) { const gi0 = p.grp.findIndex((x) => (forced === 'm' && /homme/i.test(x.t)) || (forced === 'f' && /femme/i.test(x.t))); if (gi0 >= 0) { let a0 = 0; for (let i = 0; i < gi0; i++) a0 += p.grp[i].n; ex = p.ps.slice(a0, a0 + p.grp[gi0].n).find((x) => key(x) === key(o)); } else ex = p.ps.find((x) => key(x) === key(o)); } else ex = p.ps.find((x) => key(x) === key(o)); if (ex) { if (w) ex.w = w; } else if (okGrp) { const fk = (w2.FACTS || {})[norm(HA[norm(o.h)] || o.h) + '|' + norm(o.n)] || (w2.FACTS || {})[norm(o.h) + '|' + norm(o.n)], g = forced || (fk && fk.g); let gi = p.grp.findIndex((x) => (g === 'm' && /homme/i.test(x.t)) || (g === 'f' && /femme/i.test(x.t))); if (gi < 0) gi = p.grp.reduce((b, x, i) => (x.n < p.grp[b].n ? i : b), 0); let at = 0; for (let i = 0; i <= gi; i++) at += p.grp[i].n; p.ps.splice(at, 0, o); p.grp[gi].n++; } else p.ps.push(o); continue; }
     if ((m = l.match(/^g: ([^|]+) \| (.*)$/))) { const g0 = (p.grp || []).find((x) => norm(x.t) === norm(m[1])); if (g0) g0.d = m[2].trim(); continue; }      // « g: Homme | texte » : description d'un groupe
-    if ((m = l.match(/^\^ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; p.ps = p.ps.filter((x) => key(x) !== key(o)); p.ps.unshift(o); continue; }      // « ^ » : en tête de liste (playlists sans groupes)
+    if ((m = l.match(/^\^ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; p.ps = p.ps.filter((x) => key(x) !== key(o)); o.pick = 1; p.ps.unshift(o); continue; }      // « ^ » : en tête de liste (playlists sans groupes)
     if ((m = l.match(/^~ (.*)$/))) { const [q, w] = split(m[1]); const o = mk(q, w); if (!o) continue; const exs = (rep || p.ps).filter((x) => key(x) === key(o)); if (exs.length) exs.forEach((ex) => { if (/^Choix d.experts/.test(ex.w || '')) ex.pick = 1; ex.w = w; }); else EDIT_MISS.push(p.t + ' / ' + q); continue; }
     if ((m = l.match(/^x (.*)$/))) { const o = mk(m[1].trim(), ''); if (!o) continue; if (p.grp && p.grp.every((g) => typeof g.n === 'number') && p.grp.reduce((a, g) => a + g.n, 0) === p.ps.length) { for (let ix = p.ps.length - 1; ix >= 0; ix--) { if (key(p.ps[ix]) !== key(o)) continue; let c = 0; for (const g of p.grp) { c += g.n; if (ix < c) { g.n--; break; } } p.ps.splice(ix, 1); } } else p.ps = p.ps.filter((x) => key(x) !== key(o)); continue; }
   }
@@ -139,6 +139,7 @@ const EDIT_MISS = [], INTROUV = [];
   PLS.forEach((p) => { const keep = []; p.ps.forEach((x, i) => { if (!x.h && expand(x.q).some((e) => gone.has(e))) { if (p.grp && p.grp.every((g) => typeof g.n === 'number')) { let c = 0; for (const g of p.grp) { c += g.n; if (i < c) { g.n--; break; } } } } else keep.push(x); }); p.ps = keep; });
 })();
 // versions jumelées (data/pair-versions.txt) : quand la version de base ou l'extrait est dans une playlist (ou un groupe Homme / Femme), l'autre y figure juste après
+const PAIR_EXT_ONLY = { 'It Boy': ['maison francis kurkdjian oud satin mood', 'bdk parfums gris charnel'] };      // playlists où seule la version extrait est gardée
 (function pairVersions() {
   const f = path.join(root, 'data', 'pair-versions.txt'); if (!fs.existsSync(f)) return;
   const rows = fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim() && !l.startsWith('#')).map((l) => l.split('|'));
@@ -156,7 +157,7 @@ const EDIT_MISS = [], INTROUV = [];
         const ib = keys.indexOf(kb), ie = keys.indexOf(ke);
         if (ib < 0 && ie < 0) continue;
         if (ib >= 0 && ie < 0) { p.ps.splice(a + ib + 1, 0, mkE(he, w)); if (gr) gr[gi].n++; }
-        else if (ie >= 0 && ib < 0) { p.ps.splice(a + ie, 0, mkE(hb, wb)); if (gr) gr[gi].n++; }
+        else if (ie >= 0 && ib < 0 && !((PAIR_EXT_ONLY[p.t] || []).includes(kb))) { p.ps.splice(a + ie, 0, mkE(hb, wb)); if (gr) gr[gi].n++; }
       }
     });
   });
