@@ -32,6 +32,15 @@ const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromi
 const ctx = await browser.newContext({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 1.3, geolocation: { latitude: 48.85, longitude: 2.35 }, permissions: ['geolocation'] });
 await ctx.route('https://api.open-meteo.com/**', (route) => route.fulfill({ json: { current: { apparent_temperature: 3.4, relative_humidity_2m: 88, weather_code: 61, wind_speed_10m: 12 } } }));
 const pg = await ctx.newPage(); const errs = []; pg.on('pageerror', (e) => errs.push(e.message));
+// La note de chaque parfum est obligatoire : la feuille de notation bloque tout tant qu'un parfum n'est pas noté.
+let rateSeen = 0;
+await pg.addLocatorHandler(pg.locator('#rdone'), async () => {
+  const rows = await pg.locator('[data-rp]').count(), dis = await pg.locator('#rdone').isDisabled();
+  if (!rateSeen++) { ok(rows >= 1 && dis, 'note obligatoire : la feuille de notation bloque tant que rien n\'est noté'); ok(!(await pg.evaluate(() => /★/.test(document.querySelector('.rlist').innerText))), 'note obligatoire : aucune note attribuée d\'office'); }
+  for (let i = 0; i < rows; i++) await pg.locator('[data-rp] .rst button[data-r="4"]').nth(i).click();
+  ok(!(await pg.locator('#rdone').isDisabled()), 'note obligatoire : Terminer s\'active une fois tout noté');
+  await pg.locator('#rdone').click();
+});
 await pg.goto('http://localhost:' + PORT + '/');
 // 1. onboarding
 await pg.waitForSelector('#onb', { timeout: 8000 }); await pg.waitForTimeout(600); await pg.screenshot({ path: OUT + '/e1_onb1.png' });
@@ -85,7 +94,7 @@ await pg.fill('#su-mail', 'test@exemple.fr'); await pg.click('#su-ok'); await pg
 ok(store.has('email:test@exemple.fr'), 'email enregistré');
 // 5. fonction verrouillée
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
-await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); await pg.fill('#askq', 'un frais'); await pg.click('#askgo'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
+await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); await pg.fill('#cin', 'un frais pour le bureau'); await pg.press('#cin', 'Enter'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût');
 // 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.click('[data-add=text]'); await pg.waitForSelector('#addtxt');
 await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
@@ -169,7 +178,7 @@ await pg.screenshot({ path: OUT + '/pl2_detail.png', fullPage: true });
 await pg.locator('.plist .xc:not(.off)').first().click(); await pg.waitForSelector('#sheet:not([hidden]) .big-bottle'); await pg.click('#ex'); await pg.click('#plback'); await pg.waitForSelector('.plcard');
 await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard', { hasText: 'Layering' }).first().click(); await pg.waitForSelector('.plcombo');
 ok(await pg.locator('.plcombo').count() === 5, 'layering : cinq combinaisons proposées');
-await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist'); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
+await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist', { state: 'attached' }); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });
 { ok(await pg.locator('.tipk, .disc').count() === 0 && !(await pg.evaluate(() => /À découvrir/.test(document.body.innerText))), 'conseils : la rubrique « À découvrir » n\'existe plus');
   const tabs = ['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish']; let okAll = true;
@@ -182,7 +191,7 @@ ok(await pg.locator('[data-want]').count() === 5, 'accueil : effet recherché (c
 await pg.click('[data-cat=mouvement]'); ok(await pg.locator('[data-sc=match]').count() === 1 && await pg.locator('[data-sc=zone]').count() === 1, 'sport & voyage : jour de match et dans la zone');
 if (!(await pg.locator('[data-mood=stresse]').count())) { await pg.click('[data-refine]'); await pg.waitForTimeout(200); }
 ok(await pg.locator('[data-mood=stresse]').count() === 1 && await pg.locator('[data-mood=blues]').count() === 1 && await pg.locator('[data-mood=focus]').count() === 1, 'mood : stressé, pas au top, focus');
-await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist, .tipc');
+await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist, .tipc', { state: 'attached' });
 { const names = await pg.$$eval('.tipc b', (els) => els.map((e) => e.textContent.trim().toLowerCase())); ok(new Set(names).size === names.length, 'conseils : jamais deux fois le même parfum (' + names.length + ' fiches)'); const fam = await pg.$$eval('.tipc', (els) => els.map((e) => (e.querySelector('small') || {}).textContent.split('·')[0].trim() + '|' + e.querySelector('b').textContent.trim().split(/\s+/)[0].toLowerCase())); ok(new Set(fam).size === fam.length, 'conseils : jamais deux versions du même parfum (Haltane…)'); }
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);

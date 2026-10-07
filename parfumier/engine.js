@@ -955,6 +955,7 @@
   function tasteProfile(collection, settings) {
     const fam = {}, note = {};
     for (const p of collection) {
+      if (p.rating === 0 || p.rated === false) continue; // une note jamais choisie ne compte pas
       const w = (p.rating || 3) - 2.5;
       if (p.family) fam[p.family] = (fam[p.family] || 0) + w;
       for (const n of p.notes || []) note[norm(n)] = (note[norm(n)] || 0) + w;

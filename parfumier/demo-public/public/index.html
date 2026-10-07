@@ -744,6 +744,44 @@ a.chip { text-decoration: none; display: inline-block; }
 .shopc b { font: 400 18px var(--sf); }
 .shopc small { color: var(--muted); }
 
+/* ---------- Conseils : lisible, aéré, un bloc à la fois ---------- */
+.tp .pricecard { display: grid; gap: 10px; padding: 18px 20px; }
+.tp .pricecard input[type=range] { width: 100%; }
+.stack { display: grid; gap: 22px; }
+.more > summary { cursor: pointer; list-style: none; padding: 14px 0; color: var(--muted); font-size: 14px; letter-spacing: .02em; }
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::after { content: ' +'; }
+.more[open] > summary::after { content: ' −'; }
+.more.big > summary { border: 1px solid var(--line); border-radius: 6px; padding: 16px 20px; color: var(--ink); font-size: 15px; }
+.more[open] .stack { margin-top: 18px; }
+.brail { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 14px; margin: 0 -4px; scrollbar-width: none; }
+.brail::-webkit-scrollbar { display: none; }
+.brail .chip { flex: 0 0 auto; white-space: nowrap; }
+.bsn { display: grid; gap: 14px; }
+.bwhy { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: 14px; color: var(--muted); line-height: 1.55; }
+.bwhy b { color: var(--ink); font-weight: 500; }
+.chat .cbox { display: grid; gap: 14px; padding: 18px; }
+.cmsgs { display: grid; gap: 12px; max-height: 460px; overflow-y: auto; padding-right: 2px; scroll-behavior: smooth; }
+.cb { max-width: 92%; padding: 12px 15px; border-radius: 14px; font-size: 15px; line-height: 1.6; display: grid; gap: 10px; }
+.cb p { margin: 0; }
+.ca { justify-self: start; background: rgba(242, 235, 224, .06); border: 1px solid var(--line); border-top-left-radius: 4px; }
+.cu { justify-self: end; background: var(--accent, #8f2a3a); color: #fff; border-top-right-radius: 4px; }
+.cpk { display: grid; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+.cpk:first-of-type { border-top: 0; padding-top: 0; }
+.cpk p { font-size: 14px; color: var(--muted); }
+.cpc { flex: none; width: 100%; display: grid; grid-template-columns: 56px 1fr; gap: 2px 12px; align-items: center; text-align: left; }
+.cpc .xth { grid-row: span 3; width: 56px; height: 64px; margin: 0; }
+.cpc b, .cpc small, .cpc em { grid-column: 2; }
+.cn { font-size: 13.5px; color: var(--muted); }
+.cform { display: grid; grid-template-columns: 1fr 52px; gap: 10px; }
+.cform input { min-width: 0; padding: 14px 16px; border-radius: 999px; border: 1px solid var(--line); background: rgba(0, 0, 0, .25); color: var(--ink); font: inherit; }
+.cform .cta { padding: 0; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-size: 20px; letter-spacing: 0; }
+#cchips .chip { font-size: 13px; padding: 9px 14px; }
+.tp ~ .sec, .chat { margin-top: 8px; }
+.stack .rec { margin: 0; }
+.rate .stars button { font-size: 28px; padding: 4px 6px; }
+.rate .rlist { max-height: 52vh; overflow-y: auto; }
+
 </style>
 </head><body>
 <div id="app">
@@ -2418,6 +2456,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
   function tasteProfile(collection, settings) {
     const fam = {}, note = {};
     for (const p of collection) {
+      if (p.rating === 0 || p.rated === false) continue; // une note jamais choisie ne compte pas
       const w = (p.rating || 3) - 2.5;
       if (p.family) fam[p.family] = (fam[p.family] || 0) + w;
       for (const n of p.notes || []) note[norm(n)] = (note[norm(n)] || 0) + w;
@@ -3033,8 +3072,8 @@ ${mist}
   const imgLooseMap = () => { if (IMGL) return IMGL; IMGL = {}; for (const src of [window.IMGDB || {}, window.IMGWEB || {}]) for (const k in src) { const i = k.indexOf('|'), lk = k.slice(0, i) + '|' + imgLoose(k.slice(i + 1)); if (!(lk in IMGL)) IMGL[lk] = src[k]; } return IMGL; };
   const imgOf = (p) => { const nw = imgNew(p); if (nw) return nw; if (IMG[p.name]) { const ch = CAT.find((c) => c.name === p.name), HA = window.HOUSE_ALIAS || {}, cn = (h) => E.norm(HA[E.norm(h)] || h); if (ch && (!p.house || cn(p.house) === cn(ch.house))) return IMG[p.name]; }      // une photo à la main n'est valable que pour la maison de la fiche, pas pour un parfum de même nom ailleurs
     const D = window.IMGDB || {}, W = window.IMGWEB || {}, HA2 = window.HOUSE_ALIAS || {}, h0 = E.norm(p.house || ''), k = h0 + '|' + E.norm(p.name), k2 = E.norm(HA2[h0] || p.house || '') + '|' + E.norm(p.name), f0 = D[k] || W[k] || D[k2] || W[k2]; let f = f0; if (!f) { const L = imgLooseMap(); f = L[h0 + '|' + imgLoose(p.name)] || L[E.norm(HA2[h0] || p.house || '') + '|' + imgLoose(p.name)]; } return f ? { s: f, nz: 6 } : null; };
-  const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 4, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
-  const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { occ: [...occ] }, stk || {}));
+  const fromCat = (c, rating) => ({ id: uid(), name: c.name, house: c.house, family: c.family, notes: [...c.notes], projection: c.projection, longevity: c.longevity, weight: c.weight, price: c.price, rating: rating || 0, rated: rating ? true : undefined, occ: [], src: (IMG[c.name] || {}).s, nz: (IMG[c.name] || {}).nz, incomplete: !c.notes.length || undefined });
+  const seedOwned = () => window.OWNED.map(([n, r, occ, stk]) => Object.assign(fromCat(CAT.find((c) => c.name === n), r), { rated: true, occ: [...occ] }, stk || {}));
   const wishFromName = (n) => { const c = CAT.find((x) => x.name === n); return c ? { name: c.name, house: c.house, family: c.family, notes: [...c.notes], price: c.price } : { name: n, house: '', family: '', notes: [], price: 0 }; };
   const seedWish = () => window.WISH.map(wishFromName);
   const DEMO = /[?&]seed=demo/.test(location.search); // outillage (vidéos, tests) : charge une collection d'exemple
@@ -3056,6 +3095,8 @@ ${mist}
     S.wishlist = (S.wishlist || []).map((w) => (typeof w === 'string' ? wishFromName(w) : w));
     // Une seule écriture par maison (« Jo Malone London » et « Jo Malone » ne font qu'une)
     const HA = window.HOUSE_ALIAS || {}, canonHouse = (h) => (h && HA[E.norm(h)]) || h;
+    // Une note n'est jamais attribuée d'office : tout parfum dont la note n'a pas été choisie par la personne repart à zéro et sera demandé.
+    S.collection.forEach((p) => { if (p.rated === undefined) { p.rated = false; p.rating = 0; } else if (p.rated && !(p.rating > 0)) p.rated = false; });
     S.collection.forEach((p) => { p.house = canonHouse(p.house); }); S.wishlist.forEach((w) => { w.house = canonHouse(w.house); });
     S.collection.forEach((p) => { if (!p.src && IMG[p.name]) { p.src = IMG[p.name].s; p.nz = IMG[p.name].nz; } });
     // Stock : les flacons de démo déjà présents reçoivent leur taille et leur usage, sans toucher à ceux que la personne a réglés.
@@ -3129,7 +3170,7 @@ ${mist}
   const hasWish = (name) => S.wishlist.some((w) => E.norm(w.name) === E.norm(name));
   const addWish = (o) => { if (!hasWish(o.name)) { S.wishlist.push({ st: o.st || 'smell',  name: o.name, house: o.house || '', family: o.family || '', notes: o.notes || [], price: o.price || 0 }); save(); } };
   const rmWish = (name) => { S.wishlist = S.wishlist.filter((w) => E.norm(w.name) !== E.norm(name)); save(); };
-  const wishToOwned = (w) => { const c = CAT.find((x) => E.norm(x.name) === E.norm(w.name)); if (c) return fromCat(c, 4); return { id: uid(), name: w.name, house: w.house, family: w.family || 'boisé', notes: [...(w.notes || [])], projection: 3, longevity: 3, weight: 3, price: w.price || 0, rating: 4, occ: [] }; };
+  const wishToOwned = (w) => { const c = CAT.find((x) => E.norm(x.name) === E.norm(w.name)); if (c) return fromCat(c); return { id: uid(), name: w.name, house: w.house, family: w.family || 'boisé', notes: [...(w.notes || [])], projection: 3, longevity: 3, weight: 3, price: w.price || 0, rating: 0, occ: [] }; };
   const buyLinks = (name, house) => { const q = encodeURIComponent(name + ' ' + house); return `<div class="buy"><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}+parfum+acheter">Où l'acheter</a><a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/search?q=${q}+site%3Afragrantica.com">Fragrantica</a></div>`; };
   const wears = (id) => S.log.filter((l) => l.id === id).length;
   const words = (t, base) => String(t || '').split(/\s+/).filter(Boolean).map((w, i) => `<span class="w" style="--i:${i};--d:${base || 0}">${esc(w)}</span>`).join(' ');
@@ -3162,7 +3203,7 @@ ${mist}
     const m = new Date().getMonth(); bits.push('Saison : ' + (m >= 2 && m <= 4 ? 'printemps' : m >= 5 && m <= 7 ? 'été' : m >= 8 && m <= 10 ? 'automne' : 'hiver') + '.');
     return bits.join('\n');
   };
-  const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating}/5 | ${ago(daysSince(p.id))} | porté ${wears(p.id)} fois | stock : ${E.stockOf(p).ml} ml sur ${E.stockOf(p).size} ml, usage ${E.STOCK_USES[E.stockOf(p).use].toLowerCase()}${ficheBits(p) ? ' | fiche : ' + ficheBits(p) : ''}`).join('\n');
+  const colLines = () => S.collection.map((p) => `${p.id} | ${p.name} | ${p.house} | ${p.family} | ${(p.notes || []).join(', ')} | proj ${p.projection}/5 | tenue ${p.longevity}/5 | poids ${p.weight}/5 (1 léger, 5 dense) | ma note ${p.rating > 0 ? p.rating + '/5' : 'pas notée'} | ${ago(daysSince(p.id))} | porté ${wears(p.id)} fois | stock : ${E.stockOf(p).ml} ml sur ${E.stockOf(p).size} ml, usage ${E.STOCK_USES[E.stockOf(p).use].toLowerCase()}${ficheBits(p) ? ' | fiche : ' + ficheBits(p) : ''}`).join('\n');
 
   // ---------- IA (sample) ----------
   let CAN_IMG = false, HAS_ASSETS = false, IMG_MAX = 4;
@@ -3286,6 +3327,7 @@ ${mist}
     $('#view').dataset.v = tab;
     ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
+    setTimeout(ensureRatings, 0);
   }
 
   const keepText0 = () => { const t = $('#say'); if (t) SAY = t.value; };
@@ -3546,61 +3588,97 @@ ${mist}
   new MutationObserver(ttMount).observe($('#view'), { childList: true });
   setInterval(() => { const el = $('#tt .tt'); if (el && !document.hidden) ttAdvance(el); }, TT_MS);
   const BESOINS = [['Au bureau', 'pour le bureau'], ['Entretien d\'embauche', 'entretien d\'embauche'], ['Premier rendez-vous', 'premier rendez-vous'], ['Séduire', 'séduire sensuel'], ['Soirée', 'soirée'], ['Boîte de nuit', 'boîte de nuit'], ['Cérémonie', 'mariage cérémonie'], ['Tous les jours', 'tous les jours, discret'], ['Élégance', 'élégant raffiné classe'], ['Frais et propre', 'sentir propre, frais'], ['Grosse chaleur', 'forte chaleur été'], ['Voyage et vacances', 'vacances voyage'], ['Grand froid', 'hiver froid'], ['Gourmand', 'gourmand vanille'], ['Mystérieux', 'mystérieux fumé'], ['Compliments', 'compliments'], ['Signature', 'parfum signature, se démarquer'], ['Luxe et opulence', 'luxe opulent'], ['Sport', 'sport']];
-  // Trois conseils par besoin, calculés sur le profil d'abord (goûts déclarés, âge, genre, saison, retours), la collection n'étant qu'un indice : un parfumier privé ne se limite pas à ce qu'on possède déjà.
-  // Les maisons de niche reconnues passent devant, le plafond de prix est respecté, et un parfum n'apparaît que dans un seul besoin.
-  function fillBesoins() {
-    const box = $('#bsn'); if (!box || !box.querySelector('.shim')) return;
+  // ---------- Conseils : prix, parfumier privé (chat), trois conseils pour toi, un besoin à la fois, le reste replié ----------
+  const CHAT = { msgs: [], busy: false };
+  const CHAT_CHIPS = ['Un parfum pour un premier rendez-vous', 'Quelque chose de frais pour le bureau', 'Un niche qui se remarque', 'Moins cher que Baccarat Rouge 540'];
+  const BSEL = { i: 0 };
+  const chatState = () => {
     const g = S.profile && S.profile.gender, rated = S.collection.filter((p) => (p.rating || 3) >= 4 || (p.rating || 3) <= 2);
-    const st = Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: rated, ownedNames: S.collection.map((p) => p.name), fb: S.feedback || [], month: new Date().getMonth(), prestige: true });
+    return Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: rated, ownedNames: S.collection.map((p) => p.name), fb: S.feedback || [], month: new Date().getMonth(), prestige: true });
+  };
+  const chatPool = () => { const owned = new Set(S.collection.map((p) => E.norm(p.name))); return needPool().filter((c) => underCap(c) && !owned.has(E.norm(c.name))); };
+  const bubHtml = (m) => m.r === 'u' ? `<div class="cb cu">${esc(m.t)}</div>` : `<div class="cb ca">${m.t ? `<p>${esc(m.t)}</p>` : ''}${(m.picks || []).map((k) => `<div class="cpk">${k.e ? `<button type="button" class="pc cpc" data-ent="${esc(entryKey(k.e))}">${xThumb(k.e)}<b>${esc(k.name)}</b><small>${esc(k.house)}</small>${k.e.price ? `<em>≈ ${k.e.price} €</em>` : ''}</button>` : `<div class="cpc"><b>${esc(k.name)}</b><small>${esc(k.house)}</small></div>`}<p>${esc(k.line || '')}</p></div>`).join('')}${m.note ? `<p class="cn">${esc(m.note)}</p>` : ''}${m.fb ? fbHtml('chat', m.fb) : ''}</div>`;
+  function chatGreeting() { const n = S.profile && S.profile.name; return `${n ? 'Salut ' + n + ', ' : 'Salut, '}dis-moi ce que tu cherches : une occasion, une ambiance, une note, ou un parfum que tu aimes. Je te propose trois idées, puis on affine ensemble.`; }
+  function drawChat() {
+    const box = $('#cmsgs'); if (!box) return;
+    box.innerHTML = `<div class="cb ca"><p>${esc(chatGreeting())}</p></div>` + CHAT.msgs.map(bubHtml).join('') + (CHAT.busy ? '<div class="cb ca"><span class="shim" style="display:block;width:120px;height:14px"></span></div>' : '');
     const lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
-    const owned = new Set(S.collection.map((p) => E.norm(p.name))), used = new Set(), pool = needPool().filter((c) => underCap(c) && !owned.has(E.norm(c.name)));
-    let i = 0;
-    const next = () => {
-      if (!$('#bsn') || i >= BESOINS.length) { if ($('#bsn')) { $$('#bsn .shim').forEach((x) => x.closest('.dsec') && x.closest('.dsec').remove()); $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); })); } return; }
-      const [l, q] = BESOINS[i], cell = box.children[i]; i++;
-      const need = E.parseNeed(q); let html = '';
-      if (!need.empty) {
-        const all = E.searchNeed(pool, need, st, 16), fresh = all.filter((r) => !used.has(E.norm(r.c.house + ' ' + r.c.name))).slice(0, 3);
-        const res = fresh.length >= 3 ? fresh : fresh.concat(all.filter((r) => !fresh.includes(r))).slice(0, 3);
-        res.forEach((r) => used.add(E.norm(r.c.house + ' ' + r.c.name)));
-        if (res.length) html = `<p class="mono">${esc(l)}</p><div class="pgrid">${res.map((r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); }).join('')}</div><p class="soft2" style="margin:4px 0 0;font-size:13px">${esc((res[0].m.why || []).slice(0, 2).join(' · ').replace(/^./, (x) => x.toUpperCase()))}</p>`;
-      }
-      if (cell) { if (html) cell.innerHTML = html; else cell.innerHTML = ''; }
-      $$('[data-ent]', cell).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
-      setTimeout(next, 15);
+    $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
+    fbBind(box); box.scrollTop = box.scrollHeight;
+  }
+  async function chatSend(q) {
+    q = (q || '').trim(); if (!q || CHAT.busy) return;
+    CHAT.msgs.push({ r: 'u', t: q }); CHAT.busy = true; drawChat();
+    const prev = CHAT.msgs.filter((m) => m.r === 'u').slice(-3, -1).map((m) => m.t);
+    const text = (prev.length ? prev.join('. ') + '. Et maintenant : ' : '') + q;
+    let need = E.parseNeed(text.slice(0, 480)); if (need.empty) need = E.parseNeed(q);
+    const st = chatState(), lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
+    const res = need.empty ? [] : E.searchNeed(chatPool(), need, st, 14);
+    const entryOf = (name, house) => lk[E.norm(house + ' ' + name)] || dbList().find((e) => E.norm(e.name) === E.norm(name) && (!house || E.norm(e.house) === E.norm(house))) || null;
+    const local = () => {
+      if (!res.length) return { t: 'Je n\'ai pas bien compris. Dis-moi plutôt une occasion (bureau, rendez-vous), une saison, une note (vanille, rose) ou un parfum que tu aimes.', picks: [] };
+      const top = res.slice(0, 3);
+      return { t: 'Voilà ce que je mettrais en premier pour toi.', picks: top.map((r) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || entryOf(r.c.name, r.c.house), line: (r.m.why || []).slice(0, 2).join(', ').replace(/^./, (x) => x.toUpperCase()) + (r.m.diff ? '. ' + r.m.diff : '') })), fb: { name: top[0].c.name, house: top[0].c.house } };
     };
-    next();
+    let msg = local();
+    if (res.length && (window.SillageDemo || window.SillagePrompts)) {
+      try {
+        const args = { need: text.slice(0, 480), shortlist: shortOf(res), collection: colShort(), taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
+        const j = window.SillageDemo ? await window.SillageDemo.need(args) : await aiJson(window.SillagePrompts.need(args), { modelTier: 'default' });
+        const picks = (j.picks || []).slice(0, 3);
+        if (picks.length) msg = { t: j.compris || '', picks: picks.map((k) => ({ name: k.name, house: k.house || '', e: entryOf(k.name, k.house), line: [k.pourquoi, k.peau ? 'Après 3 h : ' + k.peau : '', k.attention ? 'Attention : ' + k.attention : ''].filter(Boolean).join(' ') })), note: [j.eviter && j.eviter.name ? 'À éviter pour toi : ' + j.eviter.name + (j.eviter.raison ? ', ' + j.eviter.raison : '') + '.' : '', j.test || ''].filter(Boolean).join(' '), fb: { name: picks[0].name, house: picks[0].house } };
+      } catch (e) { if (e && e.code === 'rate_limited') msg.note = 'Plus d\'essais IA pour aujourd\'hui : voici la sélection calculée sur ton profil.'; }
+    }
+    CHAT.msgs.push(Object.assign({ r: 'a' }, msg)); CHAT.busy = false; drawChat();
+  }
+  // Trois conseils pour un besoin donné, calculés sur le profil d'abord (goûts, âge, genre, saison, retours) : la collection n'est qu'un indice.
+  const BCACHE = {};
+  function drawBesoin() {
+    const box = $('#bsn'); if (!box) return;
+    const [l, q] = BESOINS[BSEL.i], key = [BSEL.i, S.settings.budget || 0, S.collection.length, (S.feedback || []).length, S.collection.map((p) => p.rating).join('')].join('|');
+    $$('#bsel .chip').forEach((b) => b.classList.toggle('on', +b.dataset.bi === BSEL.i));
+    const paint = (html) => { box.innerHTML = html; const lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; }); $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); })); };
+    if (BCACHE[key]) return paint(BCACHE[key]);
+    box.innerHTML = '<span class="shim" style="display:block;height:150px"></span>';
+    setTimeout(() => {
+      if (!$('#bsn') || BSEL.i !== +key.split('|')[0]) return;
+      const need = E.parseNeed(q), lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
+      const res = need.empty ? [] : E.searchNeed(chatPool(), need, chatState(), 3);
+      const html = res.length ? `<div class="rail">${res.map((r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); }).join('')}</div><ul class="bwhy">${res.map((r) => `<li><b>${esc(r.c.name)}</b> ${esc((r.m.why || []).slice(0, 2).join(', ').toLowerCase())}</li>`).join('')}</ul>` : '<p class="soft2">Rien de convaincant sous ce prix pour ce besoin. Monte un peu le plafond.</p>';
+      BCACHE[key] = html; paint(html);
+    }, 20);
   }
   function viewTips() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
+    const hasProfile = S.collection.length || (s.liked || []).length || (s.vibes || []).length;
     $('#view').innerHTML = `
-      <section class="sec"><header><h2>Conseils</h2><span class="mono">pour toi</span></header>
-        <div class="card" style="display:grid;gap:8px;position:sticky;top:6px;z-index:5"><div class="row" style="justify-content:space-between"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
-          <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0">Aucun conseil ne dépasse ce prix. Prix indicatifs, à vérifier chez le vendeur${s.budget ? '' : ' · glisse pour fixer un plafond'}.</p></div>
-        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Mes conseils partent de ce que tu as déjà : ce qui te manque, ce qui te plaît.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
-        ${S.collection.length ? `<p class="mono">Stratégies de collection</p><div id="planbox">${planHtml(collectionPlan(), true)}</div>` : ''}
-        ${T.gaps.length ? `<p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}` : ''}
+      <section class="sec tp"><header><h2>Conseils</h2><span class="mono">ton parfumier privé</span></header>
+        <div class="card pricecard"><div class="row" style="justify-content:space-between;align-items:baseline"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
+          <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">Aucun conseil ne dépasse ce prix${s.budget ? '' : ' · glisse pour fixer un plafond'}</p></div>
+        ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Tes notes disent ce que tu aimes : mes conseils en deviennent bien plus justes.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
+      </section>
+      <section class="sec chat"><header><h2>Ton parfumier privé</h2></header>
+        <div class="card cbox"><div id="cmsgs" class="cmsgs" aria-live="polite"></div>
+          ${CHAT.msgs.length ? '' : `<div class="chips" id="cchips">${CHAT_CHIPS.map((t) => `<button type="button" class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>`}
+          <form id="cform" class="cform"><input type="text" id="cin" autocomplete="off" placeholder="Décris ce que tu cherches…" aria-label="Ta question au parfumier privé" maxlength="300"><button class="cta" type="submit" aria-label="Envoyer"><span>→</span></button></form></div>
+      </section>
+      <section class="sec"><header><h2>Pour toi</h2><span class="mono">${profPrecision().l}</span></header>
+        ${T.recs.length ? `<div class="stack">${T.recs.slice(0, 3).map((r, i) => recCard(r, i)).join('')}</div>${T.recs.length > 3 ? `<details class="more"><summary>Voir ${T.recs.length - 3} autre${T.recs.length > 4 ? 's' : ''} conseil${T.recs.length > 4 ? 's' : ''}</summary><div class="stack">${T.recs.slice(3).map((r, i) => recCard(r, i + 3)).join('')}</div></details>` : ''}` : '<div class="empty">Rien sous ce prix. Monte un peu le plafond.</div>'}
+        ${profPrecision().v < 1 ? `<button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil pour de meilleurs conseils</button>` : ''}
+      </section>
+      <section class="sec"><header><h2>Selon le besoin</h2><span class="mono">trois idées chacun</span></header>
+        ${hasProfile ? `<div class="rail brail" id="bsel" role="tablist">${BESOINS.map(([l], bi) => `<button type="button" class="chip ${bi === BSEL.i ? 'on' : ''}" role="tab" data-bi="${bi}">${esc(l)}</button>`).join('')}</div><div id="bsn" class="bsn"></div>` : '<p class="soft2">Renseigne tes goûts ou ajoute quelques parfums, et je te propose trois conseils pour chaque besoin.</p>'}
+      </section>
+      ${S.collection.length || T.tags.length ? `<section class="sec"><details class="more big"><summary>Ta collection et d'autres idées</summary><div class="stack">
+        ${S.collection.length ? `<div><p class="mono">Stratégies de collection</p><div id="planbox">${planHtml(collectionPlan(), true)}</div></div>` : ''}
+        ${T.gaps.length ? `<div><p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}</div>` : ''}
         ${T.tips.length && S.collection.length ? `<div class="card"><p class="mono">Ta collection en bref</p><ul class="tiplist">${T.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
-      </section>
-      <section class="sec"><header><h2>Des flacons pour toi</h2><span class="mono">tes goûts</span></header>
-        <div class="card" style="display:grid;gap:8px"><p class="rd" style="margin:0">Le pourcentage dit à quel point un flacon colle à tes goûts, à ta saison et à ton budget. Il ne juge pas sa qualité. Précision actuelle <b>${profPrecision().l}</b>${profPrecision().v < 1 ? ', elle monte quand tu précises ton profil.' : '.'}</p><button class="ghost" id="tipProf" style="justify-self:start">Affiner mon profil</button></div>
-        ${T.recs.length ? `<div class="snap">${T.recs.slice(0, 6).map((r, i) => recCard(r, i)).join('')}</div>` : '<div class="empty">Rien dans ce budget. Augmente-le un peu.</div>'}
-      </section>
-      <section class="sec" id="besoins"><header><h2>Par besoin</h2><span class="mono">3 conseils pour chacun</span></header>
-        <div class="card" style="display:grid;gap:8px"><p class="rd" style="margin:0">Pour chaque situation, les trois parfums qui te vont le mieux d'après ton profil, tes goûts, ta collection et ce que tu as noté.</p></div>
-        <div id="bsn" class="bsn">${S.collection.length || (S.settings.liked || []).length || (S.settings.vibes || []).length ? BESOINS.map(([l]) => `<div class="dsec"><p class="mono">${esc(l)}</p><div class="pgrid"><span class="shim" style="display:block;height:120px"></span></div></div>`).join('') : '<p class="soft2">Renseigne tes goûts ou ajoute quelques parfums, et je te propose trois conseils pour chaque besoin.</p>'}</div>
-      </section>
-      ${T.tags.length ? `<section class="sec"><header><h2>Par envie</h2><span class="mono">niche, luxe, abordable…</span></header>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</section>` : ''}
-      <section class="sec">
-        <div class="card" style="display:grid;gap:8px"><b>Où l'acheter</b><p class="rd" style="margin:0">Une carte des parfumeries et des enseignes beauté autour de toi.</p><button class="ghost" id="tipMap" style="justify-self:start">Ouvrir la carte</button></div>
-        <div class="card ask-card"><p class="mono">${IC.spark} demande à l'IA</p>
-          <textarea id="askq" rows="2" placeholder="Un niche qui sent le thé fumé et le bois, max 200 €…" aria-label="Ce que tu cherches"></textarea>
-          <div class="chips" id="askchips">${['un frais niche pour le bureau', 'quelque chose de très enveloppant pour l\'hiver', 'un layering pour Baccarat Rouge'].map((t) => `<button class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>
-          <button class="cta" id="askgo">${IC.spark}<span>Me conseiller</span></button><div id="askres" class="aires"></div></div>
-      </section>
+        ${T.tags.length ? `<div><p class="mono">Par envie</p>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</div>` : ''}
+      </div></details></section>` : ''}
+      <section class="sec"><button class="ghost" id="tipMap" style="justify-self:start">Où l'acheter : la carte des parfumeries</button></section>
       `;
-    setTimeout(fillBesoins, 30);
+    drawChat(); drawBesoin();
     if ($('#tipAdd')) $('#tipAdd').onclick = openAdd;
     if ($('#tipMap')) $('#tipMap').onclick = openShopMap;
     if ($('#tipProf')) $('#tipProf').onclick = () => { openProfile(); };
@@ -3608,10 +3686,11 @@ ${mist}
     const bud = $('#budget');
     bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
     bud.addEventListener('change', () => { save(); viewTips(); });
-    $$('[data-q]').forEach((b) => (b.onclick = () => { $('#askq').value = b.dataset.q; }));
-    $('#askgo').onclick = runAsk;
+    $('#cform').onsubmit = (e) => { e.preventDefault(); const v = $('#cin').value; $('#cin').value = ''; const ch = $('#cchips'); if (ch) ch.remove(); chatSend(v); };
+    $$('#cchips [data-q]').forEach((b) => (b.onclick = () => { const ch = $('#cchips'); if (ch) ch.remove(); chatSend(b.dataset.q); }));
+    $$('#bsel [data-bi]').forEach((b) => (b.onclick = () => { BSEL.i = +b.dataset.bi; drawBesoin(); }));
     $$('[data-rw]').forEach((b) => (b.onclick = () => { const n = b.dataset.rw; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); viewTips(); }));
-    $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c, 4)); rmWish(c.name); save(); viewTips(); } }));
+    $$('[data-own]').forEach((b) => (b.onclick = () => { const c = CAT.find((x) => x.name === b.dataset.own); if (c) { S.collection.push(fromCat(c)); rmWish(c.name); save(); viewTips(); setTimeout(ensureRatings, 0); } }));
     $$('[data-why]').forEach((b) => (b.onclick = () => explain(b))); fbBind($('#view'));
     mountFx($('#view'));
   }
@@ -3642,27 +3721,22 @@ ${mist}
     } catch (e) { out.textContent = e && e.code === 'not_granted' ? 'Autorise l\'IA pour obtenir cette explication.' : 'L\'IA n\'est pas disponible ici. Les raisons ci-dessus viennent du calcul local.'; }
     btn.disabled = false;
   }
-  async function runAsk() {
-    const q = $('#askq').value.trim(), out = $('#askres'); if (!q) { $('#askq').focus(); return; }
-    out.innerHTML = '<div class="shim"></div><div class="shim" style="width:70%"></div>'; $('#askgo').disabled = true;
-    const s = S.settings;
-    const prompt = `Tu es un nez de parfumerie très pointu (niche et designer). Réponds UNIQUEMENT par un JSON. Propose des parfums différents entre eux, jamais plusieurs versions du même (pas de flankers, rééditions, éditions limitées ni concentrations multiples).\nMa collection :\n${colLines()}\nBudget max par flacon : ${s.budget || 'aucun'} €. Notes aimées : ${(s.liked || []).join(', ') || '—'}. Notes à éviter : ${(s.avoid || []).join(', ') || '—'}.\nMa demande : "${q}"\n\nPropose 3 parfums qui existent vraiment et que je ne possède pas déjà, adaptés à ma demande, à mes goûts déduits de ma collection et à mon budget. Format : {"items":[{"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["5 notes en français"],"price":nombre en euros (indicatif),"why":"2 phrases, tutoiement, concrètes","adds":"ce que ça apporte à ma collection, 8 mots max","layer_with":"id d'un parfum de ma collection ou null"}]}`;
-    try {
-      const j = await aiJson(prompt, { modelTier: 'default' });
-      const items = (j.items || []).slice(0, 3); ASK = []; ASKI = 0;
-      out.innerHTML = items.map((it) => {
-        const c = { name: String(it.name || '?'), house: String(it.house || ''), family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: (it.notes || []).map(String).slice(0, 5) };
-        const mate = find(it.layer_with); ASK.push({ name: c.name, house: c.house, family: c.family, notes: c.notes, price: Math.round(+it.price) || 0 });
-        return `<article class="rec" style="--tint:${tint(c)}">${bt(c, {})}<div><h3>${esc(c.name)}</h3><p style="color:var(--muted);font-size:14px">${esc(c.house)}${it.price ? ' · ≈ ' + Math.round(+it.price) + ' €' : ''}</p><p style="margin-top:6px;font-size:14px">${esc(it.why || '')}</p><p class="mono" style="margin-top:6px;text-transform:none">${esc(it.adds || '')}${mate ? ' · avec ' + esc(mate.name) : ''}</p><button class="ghost" style="margin-top:8px" data-ra="${ASKI++}">Wishlist</button></div>${buyLinks(c.name, c.house)}</article>`;
-      }).join('') || '<div class="empty">Pas de résultat, reformule.</div>';
-      $$('[data-ra]', out).forEach((b) => (b.onclick = () => { addWish(ASK[+b.dataset.ra]); b.textContent = 'Ajouté'; }));
-    } catch (e) {
-      out.innerHTML = `<div class="empty">${e && e.code === 'not_granted' ? 'Autorise l\'IA pour cette recherche.' : 'L\'IA n\'est pas disponible dans cette vue. La sélection ci-dessous reste calculée pour toi.'}</div>`;
-    }
-    $('#askgo').disabled = false;
-  }
-
   // ---------- Feuilles ----------
+  // Chaque parfum de la collection doit avoir une note choisie par la personne : c'est ce qui permet de bien la conseiller. Rien n'est noté d'office.
+  const RATE_L = ['', 'Bof', 'Moyen', 'J\'aime bien', 'J\'adore', 'Coup de cœur'];
+  function ensureRatings() {
+    const un = (S.collection || []).filter((p) => !(p.rating > 0));
+    if (!un.length || !$('#sheet').hidden || !$('#story').hidden || $('#onb') || $('#prof') || $('#acct')) return;
+    const total = S.collection.length;
+    const pn = openSheet(`<div class="rate"><div><p class="mono">Une dernière chose</p><h2>Ta note pour chaque parfum</h2><p class="soft">C'est ce qui me permet de te conseiller juste. Choisis une note pour chacun, rien n'est noté à ta place.</p></div>
+      <p class="mono" id="rprog" style="text-transform:none;letter-spacing:0"></p><div class="rlist" style="display:grid;gap:10px">${un.map((p) => `<div class="card" data-rp="${esc(p.id)}" style="display:grid;gap:8px"><div><b>${esc(p.name)}</b><br><small style="color:var(--muted)">${esc(p.house)}</small></div><div class="stars rst">${[1, 2, 3, 4, 5].map((i) => `<button type="button" data-r="${i}" aria-label="${i} sur 5 : ${RATE_L[i]}">☆</button>`).join('')}</div><span class="mono rlab" style="text-transform:none;letter-spacing:0;min-height:1.2em"></span></div>`).join('')}</div>
+      <button class="cta full" id="rdone" disabled><span>Terminer</span></button></div>`);
+    $('.veil', $('#sheet')).onclick = null;
+    const upd = () => { const left = S.collection.filter((p) => !(p.rating > 0)).length; $('#rprog', pn).textContent = (total - left) + ' notés sur ' + total; $('#rdone', pn).disabled = left > 0; };
+    $$('[data-rp]', pn).forEach((row) => { const p = find(row.dataset.rp); $$('.rst button', row).forEach((b) => (b.onclick = () => { p.rating = +b.dataset.r; p.rated = true; save(); NPOOL = null; $$('.rst button', row).forEach((x) => { x.textContent = +x.dataset.r <= p.rating ? '★' : '☆'; }); $('.rlab', row).textContent = RATE_L[p.rating]; upd(); })); });
+    upd();
+    $('#rdone', pn).onclick = () => { closeSheet(); render(true); };
+  }
   function openSheet(html) {
     const sh = $('#sheet'); sh.hidden = false;
     sh.innerHTML = `<div class="veil"></div><div class="panel" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div>`;
@@ -3670,7 +3744,7 @@ ${mist}
     document.body.style.overflow = 'hidden';
     return $('.panel', sh);
   }
-  function closeSheet() { const sh = $('#sheet'), wasProf = !!$('#tedit', sh); sh.hidden = true; sh.innerHTML = ''; if ($('#story').hidden) document.body.style.overflow = ''; if (wasProf && (tab === 'tips' || tab === 'today')) render(true); }
+  function closeSheet() { const sh = $('#sheet'), wasProf = !!$('#tedit', sh); sh.hidden = true; sh.innerHTML = ''; if ($('#story').hidden) document.body.style.overflow = ''; if (wasProf && (tab === 'tips' || tab === 'today')) render(true);  setTimeout(ensureRatings, 0); }
 
   function openDetail(id) {
     const p = find(id); if (!p) return;
@@ -3700,7 +3774,7 @@ ${mist}
     }
     bindStock(pn, () => p, () => { save(); const m = $('#stkmsg', pn); if (m) m.textContent = 'Enregistré ✓'; });
     $('#sx', pn).onclick = closeSheet;
-    $$('#stars button', pn).forEach((b) => (b.onclick = () => { p.rating = +b.dataset.r; save(); $$('#stars button', pn).forEach((x) => { x.textContent = +x.dataset.r <= p.rating ? '★' : '☆'; }); }));
+    $$('#stars button', pn).forEach((b) => (b.onclick = () => { p.rating = +b.dataset.r; p.rated = true; save(); $$('#stars button', pn).forEach((x) => { x.textContent = +x.dataset.r <= p.rating ? '★' : '☆'; }); }));
     $('#sdel', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer'; return; } S.collection = S.collection.filter((x) => x.id !== id); save(); closeSheet(); render(true); };
   }
 
@@ -3821,9 +3895,9 @@ ${mist}
   }
   const entryKey = (e) => E.norm(e.house + ' ' + e.name);
   function entryToOwned(e) {
-    if (e.cat) return Object.assign(fromCat(e.cat, 4), { size: 100, left: 100, use: 'free' });
+    if (e.cat) return Object.assign(fromCat(e.cat), { size: 100, left: 100, use: 'free' });
     // Jamais de notes devinées : si la base n'a pas les vraies notes, la fiche reste vide et l'IA la remplit dès l'ajout.
-    const base = { id: uid(), name: e.name, house: e.house, price: 0, rating: 4, occ: [], size: 100, left: 100, use: 'free' };
+    const base = { id: uid(), name: e.name, house: e.house, price: 0, rating: 0, occ: [], size: 100, left: 100, use: 'free' };
     if (e.real && (e.notes || []).length >= 3) return Object.assign(base, { family: e.family, notes: e.notes.slice(), projection: e.projection || 3, longevity: e.longevity || 3, weight: e.weight || 3 });
     return Object.assign(base, { family: '', notes: [], projection: 3, longevity: 3, weight: 3, incomplete: true });
   }
@@ -4008,11 +4082,13 @@ ${mist}
   }
   // Conseil sur mesure : l'IA tranche parmi les candidats vérifiés par le moteur (tout est calculé sur de vraies notes).
   const ROLE_L = { choix: 'Le choix', sur: 'Le sûr', audace: 'La petite audace' };
+  const shortOf = (res) => res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') + ' (' + E.provenOf(r.c).n + ' playlists d\'inspiration)' : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
+  const colShort = () => S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating > 0 ? p.rating + '/5' : 'pas notée'} : ${(p.notes || []).slice(0, 5).join(', ')} : porté ${wears(p.id)} fois`).join('\n');
   async function aiNeed(res, need) {
     const msg = $('#needaimsg'), out = $('#needaires'), btn = $('#needai'); if (!msg) return;
     msg.textContent = 'Je compare…'; btn.disabled = true; out.innerHTML = '';
-    const short = res.slice(0, 25).map((r) => [r.c.house, r.c.name, famLabel(r.c.family), (r.c.notes || []).slice(0, 8).join(', '), r.m.diff || r.m.pitch || '', r.m.pct + ' %', r.c.price ? '≈ ' + r.c.price + ' €' : '', ficheBits(r.c) ? 'fiche : ' + ficheBits(r.c) : '', r.m.why && r.m.why.length ? 'calculé pour lui/elle : ' + r.m.why.join(', ') : '', (() => { const t = E.themesOf(r.c, 4).map((x) => x.t); return t.length ? 'univers : ' + t.join(', ') + ' (' + E.provenOf(r.c).n + ' playlists d\'inspiration)' : ''; })()].filter((x, i) => i < 6 || x).join(' | ')).join('\n');
-    const col = S.collection.slice(0, 25).map((p) => `${p.name} (${p.house}) : ${p.rating}/5 : ${(p.notes || []).slice(0, 5).join(', ')} : porté ${wears(p.id)} fois`).join('\n');
+    const short = shortOf(res);
+    const col = colShort();
     const args = { need: NEED.q, shortlist: short, collection: col, taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
     try {
       const j = window.SillageDemo ? await window.SillageDemo.need(args) : await aiJson(window.SillagePrompts.need(args), { modelTier: 'default' });
@@ -4218,7 +4294,7 @@ ${mist}
     if (imgUrl && !/^https:\/\/\S{4,}$/i.test(imgUrl)) { out.innerHTML = '<div class="empty">L\'adresse de l\'image doit commencer par https://</div>'; return; }
     // Les parfums déjà connus (catalogue de l'app, enrichi par les ajouts confirmés) n'ont pas besoin d'IA : zéro coût, zéro erreur.
     const localHits = [], restLines = [];
-    txt0.split(txt0.includes('\n') ? /\n/ : /,/).map((x) => x.trim()).filter(Boolean).forEach((l) => { const nm = l.includes(' — ') ? l.split(' — ').slice(1).join(' ') : l; const c = CAT.find((x) => E.norm(x.name) === E.norm(nm)); if (c) localHits.push(Object.assign(fromCat(c, 4), { conf: 0.95 })); else restLines.push(l); });
+    txt0.split(txt0.includes('\n') ? /\n/ : /,/).map((x) => x.trim()).filter(Boolean).forEach((l) => { const nm = l.includes(' — ') ? l.split(' — ').slice(1).join(' ') : l; const c = CAT.find((x) => E.norm(x.name) === E.norm(nm)); if (c) localHits.push(Object.assign(fromCat(c), { conf: 0.95 })); else restLines.push(l); });
     const txt = restLines.join('\n');
     out.innerHTML = '<div class="shim"></div><div class="shim" style="width:80%"></div><div class="shim" style="width:60%"></div>'; $('#addgo', pn).disabled = true;
     let items = null;
@@ -4226,13 +4302,13 @@ ${mist}
       if (!txt && !SHELF_FILES.length && !imgUrl) throw { code: 'local_only' };
       const prompt = `Tu es un expert en parfumerie (niche et designer). L'utilisateur ajoute des parfums à sa collection, en vrac${SHELF_FILES.length ? ' et via photo(s) de flacons ou d\'étagère' : ''}. Texte saisi : """${txt || '(aucun)'}"""\nIdentifie chaque parfum (corrige les fautes, complète la maison). Réponds UNIQUEMENT par un JSON : {"items":[{"name":"nom officiel","house":"maison","family":"${FAMS}","notes":["5 notes en français, de l'ouverture au fond"],"projection":1-5,"longevity":1-5,"weight":1-5 (1 frais et léger, 5 chaud et dense),"price":nombre en euros indicatif,"confidence":0 à 1}]}. Si tu ne reconnais pas un parfum, mets confidence sous 0.4 et ta meilleure estimation.`;
       const j = demo ? await demo.identify({ text: txt, url: imgUrl, file: SHELF_FILES[0] }) : await aiJson(prompt, { modelTier: 'quick', images: SHELF_FILES.length && CAN_IMG ? SHELF_FILES : undefined });
-      items = (j.items || []).map((it) => ({ ai: true, id: uid(), name: String(it.name || '').trim(), house: String(it.house || '').trim(), family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: (it.notes || []).map(String).slice(0, 6), projection: clamp(Math.round(+it.projection || 3), 1, 5), longevity: clamp(Math.round(+it.longevity || 3), 1, 5), weight: clamp(Math.round(+it.weight || 3), 1, 5), price: Math.round(+it.price) || 0, rating: 4, occ: [], conf: +it.confidence || 0.7 })).filter((it) => it.name);
+      items = (j.items || []).map((it) => ({ ai: true, id: uid(), name: String(it.name || '').trim(), house: String(it.house || '').trim(), family: E.FAMILIES[it.family] ? it.family : 'boisé', notes: (it.notes || []).map(String).slice(0, 6), projection: clamp(Math.round(+it.projection || 3), 1, 5), longevity: clamp(Math.round(+it.longevity || 3), 1, 5), weight: clamp(Math.round(+it.weight || 3), 1, 5), price: Math.round(+it.price) || 0, rating: 0, occ: [], conf: +it.confidence || 0.7 })).filter((it) => it.name);
       items = localHits.concat(items);
       if (items.length && items.filter((it) => it.ai).length === 1 && (SHELF_FILES[0] || imgUrl)) { try { const th = await cutout(SHELF_FILES[0] || imgUrl); if (th) items.find((it) => it.ai).src = th; } catch (er) { /* image protégée : flacon dessiné */ } }
     } catch (e) {
       items = restLines.map((l) => {
         const n = E.norm(l); const c = CAT.find((x) => n.length >= 4 && (E.norm(x.name).includes(n) || n.includes(E.norm(x.name))));
-        return c ? Object.assign(fromCat(c, 4), { conf: 0.9 }) : null;
+        return c ? Object.assign(fromCat(c), { conf: 0.9 }) : null;
       }).filter(Boolean);
       items = localHits.concat(items);
       if (e && e.code !== 'local_only') out.insertAdjacentHTML('beforebegin', e.code === 'rate_limited' ? '<p class="mono" style="text-transform:none">Les analyses de démo sont épuisées : seuls les parfums du catalogue sont reconnus. <button class="linkbtn" data-sell>Version complète</button></p>' : '<p class="mono" style="text-transform:none">L\'IA n\'est pas disponible pour l\'instant : seuls les parfums du catalogue sont reconnus.</p>');
@@ -4973,7 +5049,7 @@ ${mist}
     $$('[data-wn]', out).forEach((b) => (b.onclick = () => { const on = b.classList.contains('on') || b.classList.contains('no'); b.dataset.off = on ? '1' : ''; b.classList.toggle('on', !on && b.dataset.wn === '1'); b.classList.toggle('no', !on && b.dataset.wn === '-1'); if (on) { b.classList.remove('on', 'no'); b.style.opacity = '.45'; } else b.style.opacity = ''; }));
     if ($('#wUpd', out)) $('#wUpd', out).onclick = (ev) => { $$('[data-wn]', out).forEach((b) => { if (b.dataset.off) return; setNote(b.dataset.n, +b.dataset.wn); }); ev.currentTarget.querySelector('span').textContent = 'Profil mis à jour ✓'; ev.currentTarget.disabled = true; };
     $$('[data-kw]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.kw), f = ficheOf(e); const c = CAT.find((x) => E.norm(x.name) === E.norm(e.name)); addWish(c ? wishFromName(c.name) : { name: f.name, house: f.house, family: f.family || '', notes: f.notes || [], price: f.price || 0 }); b.textContent = 'Dans la wishlist'; }));
-    $$('[data-ko]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.ko), f = ficheOf(e); if (S.collection.some((p) => E.norm(p.name) === E.norm(e.name))) { b.textContent = 'Déjà chez toi'; return; } const c = CAT.find((x) => E.norm(x.name) === E.norm(e.name)); S.collection.push(c ? fromCat(c, 4) : fromCat({ name: f.name, house: f.house, family: f.family || 'boisé', notes: f.notes || [], projection: f.projection || 3, longevity: f.longevity || 3, weight: f.weight || 3, price: f.price || 0 }, 4)); rmWish(e.name); save(); b.textContent = 'Ajouté à ma collection ✓'; }));
+    $$('[data-ko]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.ko), f = ficheOf(e); if (S.collection.some((p) => E.norm(p.name) === E.norm(e.name))) { b.textContent = 'Déjà chez toi'; return; } const c = CAT.find((x) => E.norm(x.name) === E.norm(e.name)); S.collection.push(c ? fromCat(c) : fromCat({ name: f.name, house: f.house, family: f.family || 'boisé', notes: f.notes || [], projection: f.projection || 3, longevity: f.longevity || 3, weight: f.weight || 3, price: f.price || 0 }, 4)); rmWish(e.name); save(); b.textContent = 'Ajouté à ma collection ✓'; }));
     $$('[data-wo]', out).forEach((b) => (b.onclick = () => { const e = w.entries.find((x) => x.id === b.dataset.wo); if (e) openEntry(ficheOf(e)); }));
     $$('[data-wr]', out).forEach((b) => (b.onclick = () => { const r = A.recs.find((x) => x.c.name === b.dataset.wr); if (r) openEntry(ficheOf(r.c)); }));
     $$('[data-rw2]', out).forEach((b) => (b.onclick = () => { const n = b.dataset.rw2; if (hasWish(n)) { rmWish(n); b.textContent = 'Wishlist'; } else { const r = A.recs.find((x) => x.c.name === n); addWish(CAT.find((c) => c.name === n) ? wishFromName(n) : { name: n, house: r.c.house, family: r.c.family || '', notes: r.c.notes || [], price: r.c.price || 0 }); b.textContent = 'Dans la wishlist'; } }));
@@ -5221,7 +5297,7 @@ ${mist}
   function showOnboarding() {
     try { if (localStorage.getItem('sillage.onb')) { maybeProfile(); return; } } catch (e) { /* on affiche quand même */ }
     if (S.log.length) { maybeProfile(); return; }
-    const pick = (n) => { const c = CAT.find((x) => x.name === n); return c ? fromCat(c, 4) : null; };
+    const pick = (n) => { const c = CAT.find((x) => x.name === n); return c ? fromCat(c) : null; };
     const A = pick('Baccarat Rouge 540'), B = pick('Fève Nectar'), C = pick('Naxos'), D = pick('Tobacco Vanille');
     if (!A || !B || !C || !D) return;
     const TXT = 'Sortie entre amis en ville, 18°, chemise noire';
