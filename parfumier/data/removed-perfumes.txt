@@ -128,3 +128,10 @@ Ella K|Pluie à Shimonoseki
 Chopard|Miel de Marrakech
 Mizensir|Eau de Kalahari
 Pierre Guillaume Paris|Arabie Persane 29
+# Dior Homme : une seule version par déclinaison (Dior Homme, Intense, Parfum, Cologne, Sport), les millésimes sont retirés
+Dior|Homme Original
+Dior|Dior Homme Original
+Dior|Dior Homme Parfum 2025
+Dior|Dior Homme Sport 2021
+Dior|Dior Homme Sport 2022
+Dior|Dior Homme Sport 2025

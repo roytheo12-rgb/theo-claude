@@ -1791,7 +1791,7 @@ pal: e8e4da,1c2a4a,8a7a5a,stripes
 - Chanel Pour Monsieur Concentrée | Continué par loyauté.
 - Hermès Bel Ami | Acheté lors d'un voyage à Paris en 1985.
 - Floris Santal | La maison royale britannique qu'il respecte profondément.
-- Dior Homme Original | La sophistication poudrée de l'homme cultivé.
+- Dior Homme | La sophistication poudrée de l'homme cultivé.
 - Penhaligon's Blenheim Bouquet | Classique, british, impeccable : son cadeau de Noël depuis 30 ans.
 - Atkinsons 24 Old Bond Street | Il aime l'histoire des maisons.
 - Profumum Roma Acqua di Sale | Le week-end en mer Tyrrhénienne avec le chien : le seul moment où il se détend.
@@ -4031,7 +4031,7 @@ x Maison Margiela Coffee Break
 @ Homme | Des parfums rassurants et propres pour un repas de famille, qui plaisent à tout le monde autour de la table.
 - Hermès Un Jardin sur le Nil
 - Diptyque Eau Rose
-- Dior Homme Original
+- Dior Homme
 - Acqua di Parma Colonia
 - Prada L'Homme
 - Byredo Bal d'Afrique
@@ -4342,7 +4342,7 @@ x Parfums de Marly Greenley
 ~ Floris No. 89 | Citron, lavande et santal, l'élégance d'un homme qui n'a rien à prouver.
 ~ Hermès Terre d'Hermès | Pamplemousse et silex, minéral et sûr de lui.
 ~ Roja Parfums Elysium | Citron et lavande sur du musc, une fraîcheur luxueuse.
-~ Dior Dior Homme Original | Iris poudré et cuir doux, le costume sombre en parfum.
+~ Dior Dior Homme | Iris poudré et cuir doux, le costume sombre en parfum.
 ~ Chanel Égoïste Platinum | Un aromatique net et propre, l'élégance sèche.
 ## Vincent Vega
 ~ Comme des Garçons Wonderwood | Un bois sec et poivré, minimal et un peu décalé comme sa cravate noire.
@@ -4363,7 +4363,7 @@ x Parfums de Marly Greenley
 ~ Acqua di Parma Colonia Assoluta | Une cologne concentrée, agrumes et bois blanc, discrète et riche.
 ~ Penhaligon's Sartorial | Lavande, cire d'abeille et tabac, l'atelier du tailleur.
 ~ Roja Parfums Elysium | Citron et lavande sur du musc, la fraîcheur de ceux qui réservent chez Dorsia.
-~ Dior Dior Homme Original | Iris poudré et cuir doux, élégant jusque dans le détail.
+~ Dior Dior Homme | Iris poudré et cuir doux, élégant jusque dans le détail.
 ~ Hermès Bel Ami | Cuir clair, poivre et iris, un homme élégant qui sourit peu.
 ~ Chanel Pour Monsieur Concentrée | La version plus dense du classique, toujours impeccable.
 ## Andy Sachs
@@ -4470,7 +4470,7 @@ x Parfums de Marly Greenley
 ## En famille
 ~ Hermès Un Jardin Sur Le Nil | Mangue verte et lotus, frais et facile à partager.
 ~ Diptyque Eau Rose | Une rose fraîche et poivrée, jamais lourde à table.
-~ Dior Dior Homme Original | Iris poudré et cuir doux, rassurant et élégant.
+~ Dior Dior Homme | Iris poudré et cuir doux, rassurant et élégant.
 ~ Acqua di Parma Colonia | Citron, orange et lavande, une cologne qui plaît à toutes les générations.
 ~ Prada L'Homme | Iris, néroli et ambre, propre et poli pour le repas du dimanche.
 ~ Byredo Bal d'Afrique | Bergamote, néroli et violette, lumineux et chaleureux.
