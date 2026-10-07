@@ -252,6 +252,12 @@ function out() {
       return M; });
     o.ps = [].concat(...done);
   });
+  // Positions imposées (1 = premier), appliquées après tous les tris.
+  res.forEach((o) => {
+    const FIX = { 'aimant a compliments': [['yves saint laurent babycat', 9], ['yves saint laurent tuxedo', 10]] }[norm(o.t)]; if (!FIX) return;
+    const out = FIX.map(([key, pos]) => { const i = o.ps.findIndex((x) => norm(x.h + ' ' + x.n) === key); return i < 0 ? null : [o.ps.splice(i, 1)[0], pos]; }).filter(Boolean).sort((x, y) => x[1] - y[1]);
+    out.forEach(([x, pos]) => o.ps.splice(Math.min(pos - 1, o.ps.length), 0, x));
+  });
   res.forEach((o) => o.ps.forEach((x) => { delete x.pk; if (x.w) x.w = x.w.replace(/\s+[—–]\s+/g, ', '); }));      // pas de tirets cadratins dans les phrases
   fs.writeFileSync(path.join(root, 'playlists.js'), '// Généré par tools/build-playlists.js depuis data/playlists-source.txt\nwindow.PL_SECTIONS = ' + JSON.stringify(SEC_ORDER) + ';\nwindow.PLAYLISTS = ' + JSON.stringify(res) + ';\n');
   console.log('playlists.js', res.length);

@@ -439,10 +439,10 @@
     // 6d) ce qu'on sait de la personne : goûts calculés sur sa collection, maisons aimées, budget, saison
     const U = userCtx(st);
     if (U) {
-      const tt = taste(c, U.prof); max += 1.5; s += clamp(tt.s * .3, -1.2, 1.5);
+      const dmp = U.posN ? 1 : .3, tt = taste(c, U.prof); if (U.posN) max += 1.5; s += clamp(tt.s * .3, -1.2 * dmp, 1.5);
       if (tt.hits.length) why.unshift('tu aimes déjà ' + tt.hits.slice(0, 2).join(' et '));
       const af = axisFit(c, U.pref);
-      if (af != null) { max += 1.8; s += 1.8 * clamp(af, -1, 1); if (af > .35) { const aw = axisWhy(c, U.pref); if (aw.length) why.push('dans ton goût ' + aw[0]); } }
+      if (af != null) { if (U.posN) max += 1.8; s += 1.8 * clamp(af, -dmp, 1); if (af > .35) { const aw = axisWhy(c, U.pref); if (aw.length) why.push('dans ton goût ' + aw[0]); } }
       const hf = U.houseAff[norm(c.house)] || 0; if (hf) { s += .5 * hf; if (hf > 0) why.push('une maison que tu aimes'); }
       let best = null, bs = 0; for (const lv of U.loved) { let sh = 0; nt.forEach((n) => { if (lv.notes.some((m) => m === n || m.includes(n) || n.includes(m))) sh++; }); if (sh >= 2 && sh > bs) { bs = sh; best = lv; } }
       if (best) { s += .4; why.push('proche de ' + best.name + ', que tu aimes'); }
@@ -466,16 +466,17 @@
     const res = [];
     for (const c of pool) { const m = matchNeed(c, need, st); if (m && m.pct >= 35) res.push({ c, m }); }
     // Les parfums en tête d'une playlist qui correspond clairement à la demande, même sans liste de notes vérifiée : ils sont dans la base, ils doivent ressortir, dans l'ordre de la playlist.
+    const free = !(need.tags || []).length && !(need.fams || []).length && !(need.like || []).length && !(need.not || []).length && !need.maxPrice && !need.minPrice && !Object.keys(need.flags || {}).length && !need.gender && !need.proj;
     const T = need.themes && need.themes.length ? themeIdx() : null;
     if (T) {
-      const have = new Map(res.map((r) => [thKey(r.c), r])), HA = root.HOUSE_ALIAS || {}, pk = new Set(pool.map(thKey));
+      const have = new Map(res.map((r) => [thKey(r.c), r])), HA = root.HOUSE_ALIAS || {}, pk = new Map(pool.map((c) => [thKey(c), c]));
       need.themes.filter((th) => th.m >= .9).forEach((th) => {
         const L = T.lex[th.pi]; if (!L) return; let pos = -1;
-        for (const x of L.p.ps) { if (!x || !x.h) continue; if (++pos >= 5) break;
-          const c = { name: x.n, house: HA[norm(x.h)] || x.h, notes: [], price: 0, themeOnly: true }, key = thKey(c), top = 74 - 5 * pos, ex = have.get(key);
+        for (const x of L.p.ps) { if (!x || !x.h) continue; if (++pos >= 12) break;
+          const c = { name: x.n, house: HA[norm(x.h)] || x.h, notes: [], price: 0, themeOnly: true }, key = thKey(c), top = pos < 5 ? 74 - 5 * pos : Math.max(38, 52 - 2 * (pos - 5)), ex = have.get(key);
           if (ex) { if (ex.m.pct < top) ex.m.pct = top; continue; }
-          if (pk.has(key)) continue;
-          const r = { c, m: { pct: top, s: 0, why: ['tout en haut de « ' + L.p.t + ' »'], pitch: '', diff: '' } }; res.push(r); have.set(key, r);
+          if (!free) continue;
+          const r = { c: pk.get(key) || c, m: { pct: top, s: 0, why: ['tout en haut de « ' + L.p.t + ' »'], pitch: '', diff: '' } }; res.push(r); have.set(key, r);
         }
       });
     }
@@ -791,7 +792,7 @@
     const houseAff = {}, hn = {}; col.forEach((p) => { const h = norm(p.house); (hn[h] = hn[h] || []).push(p.rating || 3); });
     Object.keys(hn).forEach((h) => { const a = hn[h].reduce((x, y) => x + y, 0) / hn[h].length; houseAff[h] = a >= 4 ? 1 : a <= 2.5 ? -1 : 0; });
     const loved = col.filter((p) => (p.rating || 3) >= 4 && (p.notes || []).length >= 3).map((p) => ({ name: p.name, notes: p.notes.map(norm), r: p.rating }));
-    const v = { prof, pref, houseAff, loved, owned: new Set(own.map((p) => norm(p.name))), n: col.length, themeAff: themeAffinity(col) };
+    const v = { prof, pref, houseAff, loved, owned: new Set(own.map((p) => norm(p.name))), n: col.length, posN: col.filter((p) => (p.rating || 3) >= 3.5).length, themeAff: themeAffinity(col) };
     UCACHE = { k, v }; return v;
   }
 

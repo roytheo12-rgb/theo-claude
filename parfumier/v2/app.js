@@ -923,12 +923,14 @@
     return { ref, cheaper, res };
   }
   // Univers (playlists) qui répondent à la demande : leurs premiers parfums, dans l'ordre voulu pour cette playlist (les plus emblématiques en tête).
+  let TBK = new Set();
   function themeBlock(need) {
+    TBK = new Set();
     const ths = (need.themes || []).filter((t) => t.m >= 0.6).sort((x, y) => y.m - x.m).slice(0, 2), PL = window.PLAYLISTS || [];
     if (!ths.length) return '';
     return ths.map((t) => {
       const p = PL[t.pi]; if (!p) return '';
-      const es = p.ps.slice(0, 12).map(plEntry).filter(Boolean).slice(0, 8); if (!es.length) return '';
+      const es = p.ps.slice(0, 12).map(plEntry).filter(Boolean).filter((e) => !TBK.has(entryKey(e))).slice(0, 8); if (!es.length) return ''; es.forEach((e) => TBK.add(entryKey(e)));
       return `<section class="thblk" style="margin:12px 0 4px"><p class="mono" style="text-transform:none;letter-spacing:0">Dans l'univers « ${esc(p.t)} »</p><div class="pgrid">${es.map((e) => pCard(e)).join('')}</div><button type="button" class="ghost" data-gopl="${esc(p.t)}">Voir toute la playlist</button></section>`;
     }).join('');
   }
@@ -972,10 +974,11 @@
     if (PLAN_RX.test(NEED.q) && !/\bfrais|bureau|date|hiver|été|ete\b/i.test(NEED.q.replace(/ma collection|ma collec/gi, ''))) { box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">Compléter ta collection${need.maxPrice ? ' · jusqu\'à ' + need.maxPrice + ' €' : ''}</p>${S.collection.length ? planHtml(collectionPlan(need.maxPrice), true) : planHtml(null)}`; bindPlan(box); return; }
     if (!NEED.q.trim()) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Décris l\'occasion, la saison, les notes que tu veux ou fuis, le budget : je cherche dans toute la base, sur de vraies notes, et je te dis pourquoi.</p>'; return; }
     if (need.empty) { box.innerHTML = '<p style="font-size:14px;color:var(--muted)">Je n\'ai pas compris le besoin. Essaie avec une occasion (bureau, date), une saison, une note (vanille, rose) ou une famille (boisé, frais).</p>'; return; }
-    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, fb: S.feedback || [], month: new Date().getMonth() }), NEED.n);
+    const tbHtml = themeBlock(need), nTb = TBK.size;
+    const g = S.profile && S.profile.gender, res = E.searchNeed(needPool(), need, Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, fb: S.feedback || [], month: new Date().getMonth() }), NEED.n + nTb).filter((r) => !TBK.has(entryKey(r.entry || r.c.entry || { house: r.c.house, name: r.c.name }))).slice(0, NEED.n);
     const lookup = {}; dbList().forEach((e) => { lookup[entryKey(e)] = e; });
     box.innerHTML = `<p class="mono" style="text-transform:none;letter-spacing:0">${esc(E.needLabel(need) || 'Besoin compris')} · ${res.length} résultat${res.length > 1 ? 's' : ''}</p>` + (res.length ? `<div class="xgrid">${res.map((r) => { const e = r.c.entry || lookup[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, family: r.c.family, notes: r.c.notes, price: r.c.price, tags: [], cat: r.c }; return `<button type="button" class="xc" data-ent="${esc(entryKey(e))}">${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc([e.house, e.family ? famLabel(e.family) : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · '))}</small><em>${esc(r.m.why.join(' · '))}</em>${r.m.pitch ? `<em>${tx(r.m.pitch)}</em>` : ''}</span><i class="xm">${r.m.pct} %</i></button>`; }).join('')}</div>${NEED.n <= res.length ? '<button type="button" class="ghost" id="nmore">Voir plus</button>' : ''}` : '<div class="empty">Rien ne correspond vraiment. Enlève une contrainte (budget, note fuie) ou élargis le besoin.</div>');
-    { const tb = themeBlock(need); if (tb) box.insertAdjacentHTML('afterbegin', tb); $$('[data-gopl]', box).forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl))); }
+    { const tb = tbHtml; if (tb) box.insertAdjacentHTML('afterbegin', tb); $$('[data-gopl]', box).forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl))); }
     box.insertAdjacentHTML('beforeend', `<div style="display:grid;gap:12px;margin-top:14px"><button type="button" class="cta" id="needai"><span>Affiner avec l'IA</span></button><p class="mono" id="needaimsg" style="text-transform:none;letter-spacing:0">L'IA compare les meilleurs candidats, tranche pour toi et explique pourquoi.</p><div id="needaires" style="display:grid;gap:12px"></div></div>`);
     $('#needai', box).onclick = () => aiNeed(res, need);
     $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lookup[b.dataset.ent]; if (e) openEntry(e); }));

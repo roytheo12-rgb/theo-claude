@@ -104,10 +104,12 @@ assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
 
 // ── Univers des playlists : l'ordre d'une playlist nourrit la recherche, et les retours « ce conseil t'a plu ? » comptent ──
 {
-  const top = E.searchNeed(P, E.parseNeed('compliments'), {}, 4).map((r) => r.c.name);
-  assert.ok(top[0] === 'Babycat' && top[1] === 'Tuxedo', 'Babycat puis Tuxedo en tête de « compliments » (' + top.join(', ') + ')');
+  const top = E.searchNeed(P, E.parseNeed('compliments'), {}, 14).map((r) => r.c.name);
+  assert.equal(top[0], 'Guidance', 'la recherche suit l\'ordre de la playlist (' + top.join(', ') + ')');
+  assert.ok(top.indexOf('Babycat') > 4 && top.indexOf('Tuxedo') > top.indexOf('Babycat'), 'Babycat puis Tuxedo viennent après la tête de liste');
+  assert.equal(new Set(top).size, top.length, 'aucun doublon dans les résultats');
   const need = E.parseNeed('premier rendez-vous, pas trop sucré');
   const base = E.searchNeed(P, need, {}, 8), fb = E.searchNeed(P, need, { fb: base.slice(0, 3).map((r) => ({ name: r.c.name, house: r.c.house, verdict: -1, reason: 'sucre', notes: r.c.notes, family: r.c.family })) }, 8);
   assert.ok(base.length && fb.length, 'la recherche fonctionne avec des retours');
-  console.log('ok univers des playlists : Babycat, Tuxedo en tête de « compliments », retours pris en compte');
+  console.log('ok univers des playlists : ordre de la playlist suivi, sans doublon, retours pris en compte');
 }
