@@ -3868,7 +3868,6 @@ x Maison Margiela Coffee Break
 + Celine Saint-Germain-Des-Prés | Inspiré par Saint Germain.
 + Les Bains Guerbois 1968 Rhapsody In Paris | Inspiré par Paris.
 + Hermès 24 Faubourg Eau Délicate | Inspiré par Faubourg.
-+ Maison Francis Kurkdjian Trianon Palace Versailles | Inspiré par Versailles.
 + Diptyque 34 Boulevard Saint Germain | Inspiré par Saint Germain.
 
 ## Tokyo
@@ -4695,8 +4694,6 @@ x Parfums de Marly Greenley
 +H Maison Francis Kurkdjian 754 | Un parfum parisien aldéhydé et lumineux, propre comme une heure du matin.
 +F Maison Francis Kurkdjian 754 | Un parfum parisien aldéhydé et lumineux, propre comme une heure du matin.
 +F Maison Francis Kurkdjian Grand Soir | Ambre, cannelle et benjoin, le dîner parisien qui se prolonge.
-+H Maison Francis Kurkdjian Trianon Palace Versailles | Une fleur d'oranger royale, Versailles aux portes de Paris.
-+F Maison Francis Kurkdjian Trianon Palace Versailles | Une fleur d'oranger royale, Versailles aux portes de Paris.
 
 ## Tokyo
 +F Hermès Le Jardin de Monsieur Li | Le jardin chinois imaginé par Jean-Claude Ellena, frais et lumineux.

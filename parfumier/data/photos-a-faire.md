@@ -8,7 +8,7 @@ Généré en analysant la photo réellement utilisée par l'app pour chaque parf
 
 Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au moins 600 px de haut, déposé dans `parfumier/incoming/` sous la forme `Maison_Nom.jpg`.
 
-**Sur les 940 parfums uniques des playlists : 8 sans photo, 91 à refaire, 116 à améliorer, 725 corrects.**
+**Sur les 937 parfums uniques des playlists : 0 sans photo, 90 à refaire, 116 à améliorer, 731 corrects.**
 
 
 ## Cinéma, séries & livres
@@ -590,17 +590,13 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ## Destinations
 
 
-### Paris (6 à améliorer, 4 à refaire, 2 sans photo)
-
-**Sans photo**
-- Maison Francis Kurkdjian 754
-- Maison Francis Kurkdjian 754
+### Paris (6 à améliorer, 4 à refaire)
 
 **À refaire**
 - Yves Saint Laurent Paris (bords blancs ou irréguliers très visibles)
 - Nina Ricci Love in Paris (format large ou coffret, flacon pas isolé)
-- Diptyque 34 Boulevard Saint Germain (bords blancs ou irréguliers très visibles)
 - Yves Saint Laurent Mon Paris (bords blancs ou irréguliers très visibles)
+- Diptyque 34 Boulevard Saint Germain (bords blancs ou irréguliers très visibles)
 
 **À améliorer**
 - Le Labo Thé Noir 29 (contour légèrement irrégulier)
@@ -611,10 +607,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Memo Paris Lalibela (léger liseré blanc sur les bords)
 
 
-### New York (3 à améliorer, 1 sans photo)
-
-**Sans photo**
-- Contes de Parfums New York
+### New York (3 à améliorer)
 
 **À améliorer**
 - Maison Margiela Jazz Club (léger liseré blanc sur les bords; contour légèrement irrégulier)
@@ -707,20 +700,14 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Bottega Veneta Parco Palladiano IX: Violetta (léger liseré blanc sur les bords)
 
 
-### Dubai (1 sans photo, 2 à améliorer)
-
-**Sans photo**
-- Pierre Guillaume Paris Arabie Persane 29
+### Dubai (2 à améliorer)
 
 **À améliorer**
-- Strangers Parfumerie Muscat Jasmine Tea (léger liseré blanc sur les bords)
 - Oman Luxury Mariya (léger liseré blanc sur les bords)
+- Strangers Parfumerie Muscat Jasmine Tea (léger liseré blanc sur les bords)
 
 
-### Tokyo (3 à refaire, 1 sans photo, 1 à améliorer)
-
-**Sans photo**
-- Ella K Pluie à Shimonoseki
+### Tokyo (3 à refaire, 1 à améliorer)
 
 **À refaire**
 - Comme des Garçons Wonderwood (image floue)
@@ -765,10 +752,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Xerjoff 1861 - Naxos (léger liseré blanc sur les bords)
 
 
-### Marrakech (2 à refaire, 2 à améliorer, 1 sans photo)
-
-**Sans photo**
-- Chopard Miel de Marrakech
+### Marrakech (2 à refaire, 2 à améliorer)
 
 **À refaire**
 - Contes de Parfums Marrakesh (format large ou coffret, flacon pas isolé)
@@ -790,7 +774,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Memo Paris Ilha do Mel (léger liseré blanc sur les bords)
 
 
-### Les Globe-trotters (3 à améliorer, 8 à refaire)
+### Les Globe-trotters (3 à améliorer, 7 à refaire)
 
 **À refaire**
 - Creed Silver Mountain Water (image floue)
@@ -800,7 +784,6 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Contes de Parfums Agra (format large ou coffret, flacon pas isolé)
 - Memo Paris Sintra (bords blancs ou irréguliers très visibles)
 - Byredo Mumbai Noise (bords blancs ou irréguliers très visibles)
-- BDK Parfums Bouquet de Hongrie (bords blancs ou irréguliers très visibles; contour légèrement irrégulier)
 
 **À améliorer**
 - Parfum d'Empire Wazamba (léger liseré blanc sur les bords)
@@ -840,20 +823,14 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - DS & Durga Bowmakers (léger liseré blanc sur les bords)
 
 
-### Safari (2 à améliorer, 1 sans photo)
-
-**Sans photo**
-- Mizensir Eau de Kalahari
+### Safari (2 à améliorer)
 
 **À améliorer**
 - Memo Paris Lalibela (léger liseré blanc sur les bords)
 - Lattafa Asad Zanzibar (léger liseré blanc sur les bords)
 
 
-### Thaïlande (1 sans photo, 1 à améliorer, 1 à refaire)
-
-**Sans photo**
-- Contes de Parfums Angkor
+### Thaïlande (1 à améliorer, 1 à refaire)
 
 **À refaire**
 - Boucheron Patchouli d'Angkor (bords blancs ou irréguliers très visibles)
@@ -1012,10 +989,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Contes de Parfums Atlantis (format large ou coffret, flacon pas isolé)
 
 
-### Sous la chaleur (6 à refaire, 5 à améliorer, 1 sans photo)
-
-**Sans photo**
-- Matière Première Cologne Cédrat
+### Sous la chaleur (6 à refaire, 5 à améliorer)
 
 **À refaire**
 - Guerlain L'Homme Idéal Cologne Forte (bords blancs ou irréguliers très visibles)
