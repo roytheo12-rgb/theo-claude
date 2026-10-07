@@ -774,3 +774,17 @@
 3229|Carner Barcelona|Isla Bohemia|
 3235|Carner Barcelona|Tardes|
 3236|Carner Barcelona|Cuirs|
+3301|Nicolas de Barry|Casanova|
+3302|Nicolas de Barry|Eau de la Reine de Hongrie|
+3303|Nicolas de Barry|Eau de Nostradamus|
+3304|Nicolas de Barry|Eau du Cardinal|
+3305|Nicolas de Barry|Eau du Prince Igor|
+3306|Nicolas de Barry|Eau du Vizir|
+3307|Nicolas de Barry|L'eau de George Sand|
+3308|Nicolas de Barry|L'eau de l'impératrice Sissi|
+3309|Nicolas de Barry|L'eau de la Marquise de Pompadour|
+3310|Nicolas de Barry|L'eau de la Reine Margot|
+3311|Nicolas de Barry|L'eau de Louis XV|
+3312|Nicolas de Barry|L'eau de Mumtaz-i Mahal|
+3313|Nicolas de Barry|L'eau de Shah Jahan|
+3314|Nicolas de Barry|Wu Zetian|
