@@ -36,7 +36,7 @@
 34|-
 35|Sunday Morning
 36|En famille
-37|Wedding Guest
+37|Occasion spéciale
 38|Job Interview
 39|Beach Club
 40|Boat Day
@@ -54,7 +54,7 @@
 53|Les fashions du Marais
 54|Les DJ
 55|Corporate Weapons
-56|Les Petits budgets
+56|Le meilleur du Mainstream ou à trouver partout
 57|Les Fans de design
 58|Bookworm
 59|-

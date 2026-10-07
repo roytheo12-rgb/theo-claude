@@ -111,3 +111,35 @@ date|Maison Crivelli|Oud Stallion
 date|Nishane|Ani
 date|Guerlain|Spiritueuse Double Vanille
 clean|Chloé|Atelier des Fleurs
+clean|Une Nuit Nomade|Nothing but Sea and Sky
+clean|Matière Première|French Flower
+clean|Diptyque|Orphéon EDT
+clean|Byredo|Bal d'Afrique Absolu
+clean|Amouage|Reflection Man
+clean|Comme des Garçons|Marseille
+signature|Place de la Rêverie|Santal de Paris
+signature|Louis Vuitton|Imagination
+signature|Louis Vuitton|Stellar Times
+signature|Ex Nihilo|Scarlet Sands
+signature|Dries Van Noten|Velvet Violet
+automne-hiver|Guerlain|Cuir Béluga
+automne-hiver|Maison Unika|Vanille Réglisse
+automne-hiver|Les Indémodables|Vanille Havane
+automne-hiver|Oman Luxury|Royal Incense
+automne-hiver|Mizensir|Ambre Magique
+compliments|Maison Francis Kurkdjian|Baccarat Rouge 540 Extrait
+compliments|Armani|Vert Malachite
+compliments|Frédéric Malle|Contre-Jour
+compliments|Byredo|Blanche
+compliments|Place de la Rêverie|Santal de Paris
+compliments|Parfums de Marly|Layton
+compliments|Gucci|Osmanthus Nectar
+compliments|Celine|Parade
+compliments|Balmain|Carbone
+compliments|Dior|Cuir Saddle
+occasion|Amouage|Guidance 46
+opulent|Amouage|Guidance 46
+daily|Dries Van Noten|Camomille Satin
+daily|Ex Nihilo|Scarlet Sands
+chaleur|Goldfield & Banks|Ingenious Ginger
+date|Place de la Rêverie|Santal de Paris

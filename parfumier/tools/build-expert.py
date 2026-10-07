@@ -10,6 +10,7 @@ THEMES = {
   'clean': {'lab': 'sentir propre', 's': None, 'u': ['quotidien', 'bureau'], 'kw': ['sent propre', 'linge propre', 'peau propre', 'clean']},
   'niche-petit-prix': {'lab': 'de la niche à petit prix', 's': None, 'u': [], 'kw': ['niche petit prix', 'bon rapport qualité prix', 'abordable']},
   'printemps': {'lab': 'le printemps', 's': [5, 3, 1, 0], 'u': [], 'kw': ['parfum de printemps', 'frais et floral', 'léger']},
+  'compliments': {'lab': 'des compliments dans la rue', 's': None, 'u': ['soiree', 'rdv'], 'kw': ['parfum à compliments', 'se faire remarquer', 'sillage qui fait se retourner']},
   'automne-hiver': {'lab': "l'automne-hiver", 's': [1, 0, 5, 5], 'u': [], 'kw': ['automne hiver', 'chaud et enveloppant', 'cosy']},
   'opulent': {'lab': 'un parfum opulent', 's': None, 'u': ['soiree', 'ceremonie'], 'kw': ['opulent', 'luxueux', 'riche']},
   'occasion': {'lab': 'une grande occasion', 's': None, 'u': ['ceremonie', 'soiree'], 'kw': ["parfum d'occasion", 'grande occasion']},
