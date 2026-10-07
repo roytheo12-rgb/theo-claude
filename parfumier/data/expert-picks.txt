@@ -79,3 +79,35 @@ bateman|Caron|Pour un Homme
 bateman|Dior|New Look
 bateman|Comme des Garçons|Zero
 bateman|Chanel|Égoïste Platinum
+daily|Byredo|Mojave Ghost
+daily|Essential Parfums|Bois Impérial
+occasion|Maison Francis Kurkdjian|Oud Satin Mood
+occasion|Louis Vuitton|Les Sables Roses
+occasion|Dior|Vanilla Diorama
+occasion|The Spirit of Dubai|Turath
+occasion|Guerlain|Vanille Planifolia
+printemps|Attar Al Has|Skin Musk
+printemps|Dior|Balade Sauvage
+printemps|Louis Vuitton|Attrape-Rêves
+printemps|Parfum d'Empire|Un Bel Amour d'Été
+printemps|Jeroboam|Gozo
+chaleur|Stéphane Humbert Lucas 777|God of Fire
+chaleur|Louis Vuitton|Symphony
+chaleur|Fascent|Sel A Vie
+chaleur|Armani|Bleu Turquoise
+automne-hiver|Dior|Oud Ispahan
+automne-hiver|Yves Saint Laurent|Babycat
+automne-hiver|Masque Milano|Tango
+automne-hiver|Louis Vuitton|Nuit de Feu
+automne-hiver|Bvlgari|Orom
+date|Cartier|Oud & Vanille
+date|Kilian|Angels' Share
+date|Marc-Antoine Barrois|Ganymede
+date|Oman Luxury|Caden
+date|Ex Nihilo|Brompton Immortals
+date|Matière Première|Vanilla Powder
+date|Dior|Tobacolor
+date|Maison Crivelli|Oud Stallion
+date|Nishane|Ani
+date|Guerlain|Spiritueuse Double Vanille
+clean|Chloé|Atelier des Fleurs
