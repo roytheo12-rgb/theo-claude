@@ -8,7 +8,7 @@ Généré en analysant la photo réellement utilisée par l'app pour chaque parf
 
 Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au moins 600 px de haut, déposé dans `parfumier/incoming/` sous la forme `Maison_Nom.jpg`.
 
-**Sur les 937 parfums uniques des playlists : 0 sans photo, 90 à refaire, 116 à améliorer, 731 corrects.**
+**Sur les 948 parfums uniques des playlists : 5 sans photo, 91 à refaire, 116 à améliorer, 736 corrects.**
 
 
 ## Cinéma, séries & livres
@@ -962,14 +962,13 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 - Memo Paris Corfu (léger liseré blanc sur les bords)
 
 
-### Night Out (1 à refaire, 2 à améliorer)
+### Night Out (1 à refaire, 1 à améliorer)
 
 **À refaire**
 - Kilian Angels' Share (fond non détouré)
 
 **À améliorer**
 - BDK Parfums Velvet Tonka (léger liseré blanc sur les bords)
-- Maison Crivelli Cuir InfraRouge (léger liseré blanc sur les bords)
 
 
 ### Tuxedo Society (2 à améliorer, 2 à refaire)
@@ -1145,7 +1144,7 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 **À refaire**
 - Glossier You (image floue; léger liseré blanc sur les bords)
 - Creed Silver Mountain Water (image floue)
-- Corner Barcelona Isla Bohemia (format large ou coffret, flacon pas isolé; résolution moyenne (272 px))
+- Carner Barcelona Isla Bohemia (fond non détouré)
 - Khadlaj Pure Musk (bords blancs ou irréguliers très visibles)
 - Maison Margiela Bubble Bath (bords blancs ou irréguliers très visibles)
 
@@ -1198,13 +1197,24 @@ Pour un détourage propre : un packshot du flacon seul, fond blanc ou uni, au mo
 ## Spécial
 
 
-### Historical Scents (1 à améliorer, 1 à refaire)
+### Historical Scents (4 à améliorer, 2 à refaire, 5 sans photo)
+
+**Sans photo**
+- Caron Narcisse Noir
+- Caron Tabac Blond
+- Lanvin Arpège
+- Nina Ricci L'Air du Temps
+- Davidoff Cool Water
 
 **À refaire**
 - Floris 1927 (bords blancs ou irréguliers très visibles)
+- Yves Saint Laurent Opium (format large ou coffret, flacon pas isolé; léger liseré blanc sur les bords; contour légèrement irrégulier)
 
 **À améliorer**
 - Jean Patou Joy (léger liseré blanc sur les bords)
+- Guerlain Mitsouko (léger liseré blanc sur les bords)
+- Dior Miss Dior Original (léger liseré blanc sur les bords)
+- Dior Poison (léger liseré blanc sur les bords)
 
 
 ### Strange Smells (6 à améliorer, 1 à refaire)
