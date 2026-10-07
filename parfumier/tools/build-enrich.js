@@ -39,6 +39,8 @@ bioLines.forEach((l) => { const p = l.split('|'); if (p.length >= 3) mine(norm(c
 Object.keys(E).forEach((k) => { if (NB[k] && NB[k].length && !(E[k].n && E[k].n.length)) E[k].n = NB[k].slice(); });
 // 3b) famille : à défaut, lue dans la description rédigée
 bioLines.forEach((l) => { const p = l.split('|'); if (p.length < 3) return; const k = norm(ch(p[0])) + '|' + norm(p[1]); const o = E[k] || (E[k] = {}); if (!o.f) { const f = famOf(p.slice(2).join('|')); if (f) o.f = f; } });
+// 3c) prix relevés (data/prix-connus.txt) : ils remplacent toute estimation
+fs.readFileSync(path.join(root, 'data', 'prix-connus.txt'), 'utf8').split('\n').forEach((l) => { const t = l.split('|').map((x) => x.trim()); if (t.length < 3 || l.startsWith('#')) return; const o = get(t[0], t[1]); o.p = +t[2]; delete o.pe; });
 // 4) prix estimés : médiane de la collection (si connue) puis de la maison
 const all = [];
 (w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => all.push([h, n])));

@@ -495,6 +495,10 @@
     $$('[data-plan-wish]', root).forEach((b) => (b.onclick = () => { const n = b.dataset.planWish; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); b.textContent = hasWish(n) ? 'Dans ma wishlist' : 'Wishlist'; save(); }));
     if ($('#planAdd', root)) $('#planAdd', root).onclick = openAdd;
   }
+  // Curseur de prix sans plafond : précis en bas, large en haut (jusqu'à 2 000 €), et tout à droite « sans limite ».
+  const CAPS = [...Array(26).keys()].map((i) => 50 + i * 10).concat([350, 400, 450, 500, 600, 700, 800, 900, 1000, 1250, 1500, 2000, 0]);
+  const capIdx = (b) => { if (!b) return CAPS.length - 1; let k = 0; CAPS.forEach((v, i) => { if (v && v <= b) k = i; }); return k; };
+  const capLabel = (v) => (v ? v.toLocaleString('fr-FR') + ' €' : 'sans limite');
   // Prix d'un parfum pour le plafond : son prix indicatif, sinon la médiane de sa maison dans la base (0 si on ne peut rien en dire).
   let HMED = null;
   let ENTP = null;
@@ -753,8 +757,8 @@
     const hasProfile = S.collection.length || (s.liked || []).length || (s.vibes || []).length;
     $('#view').innerHTML = `
       <section class="sec tp"><header><h2>Pour toi</h2><span class="mono">ton parfumier privé</span></header>
-        <div class="card pricecard"><div class="row" style="justify-content:space-between;align-items:baseline"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
-          <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">Aucun conseil ne dépasse ce prix${s.budget ? '' : ' · glisse pour fixer un plafond'}</p>
+        <div class="card pricecard"><div class="row" style="justify-content:space-between;align-items:baseline"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${capLabel(s.budget)}</b></div>
+          <input type="range" id="budget" min="0" max="${CAPS.length - 1}" step="1" value="${capIdx(s.budget)}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.budget ? 'Aucun conseil ne dépasse ce prix' : 'Aucun plafond : tous les prix, jusqu\'aux plus grands flacons'}</p>
           <div class="tiersrow"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.tier ? 'Ton style' : 'Choisis ton style pour des conseils plus justes'}</p><div class="chips" id="tiersel">${TIERS.map(([k, l]) => `<button type="button" class="chip ${s.tier === k ? 'on' : ''}" data-tier="${k}">${l}</button>`).join('')}</div></div></div>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Tes notes disent ce que tu aimes : mes conseils en deviennent bien plus justes.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
       </section>
@@ -781,7 +785,7 @@
     if ($('#planbox')) bindPlan($('#planbox'));
     bindCarousel($('#view')); if ($('#tiersel')) bindTier($('#tiersel'), () => viewTips());
     const bud = $('#budget');
-    bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('#bval').textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; });
+    bud.addEventListener('input', () => { S.settings.budget = CAPS[+bud.value]; $('#bval').textContent = capLabel(S.settings.budget); });
     bud.addEventListener('change', () => { save(); viewTips(); });
     if ($('#pfopen')) $('#pfopen').onclick = () => pfOpen();
     $$('#bsel [data-bi]').forEach((b) => (b.onclick = () => { BSEL.i = +b.dataset.bi; drawBesoin(); }));
@@ -2302,7 +2306,7 @@
       ${NOTE_GROUPS.map((g) => `<p class="mono tg">${esc(g[0])}</p><div class="chips">${g[2].map(chip).join('')}</div>`).join('')}
       <p class="mono tg">Une autre note</p><div class="acwrap"><input type="text" id="tnadd" placeholder="figue, thé, rhum, iris…" autocomplete="off" aria-label="Ajouter une note"><div class="aclist" id="tnac" hidden></div></div><div class="chips" data-tcust>${cust.map(chip).join('')}</div></div>`;
     if (parts.includes('vibes')) h += `<div class="tpart"><p class="mono">Ton ambiance</p><p class="soft">Choisis tout ce qui te ressemble.</p>${pillSet('vibes', VIBE_L, true, 'data-vb')}<p class="mono tg">Sa présence</p>${pillSet('power', POWER_L, false, 'data-pw')}</div>`;
-    if (parts.includes('occ')) h += `<div class="tpart"><p class="mono">Quand tu le portes</p>${pillSet('occ', OCC_L, true, 'data-oc')}<p class="mono tg">Budget par flacon <b data-bval>${s.budget ? s.budget + ' €' : 'sans limite'}</b></p><input type="range" id="tbud" min="0" max="500" step="10" value="${s.budget || 0}" aria-label="Budget par flacon"></div>`;
+    if (parts.includes('occ')) h += `<div class="tpart"><p class="mono">Quand tu le portes</p>${pillSet('occ', OCC_L, true, 'data-oc')}<p class="mono tg">Budget par flacon <b data-bval>${capLabel(s.budget)}</b></p><input type="range" id="tbud" min="0" max="${CAPS.length - 1}" step="1" value="${capIdx(s.budget)}" aria-label="Budget par flacon"></div>`;
     return h;
   }
   function mountTaste(root, parts) {
@@ -2314,7 +2318,7 @@
     const multi = (attr, key, ds) => $$('[' + attr + ']', root).forEach((b) => (b.onclick = () => { const k = b.getAttribute(attr), a = S.settings[key] || []; S.settings[key] = a.includes(k) ? a.filter((x) => x !== k) : [...a, k]; save(); b.classList.toggle('on', S.settings[key].includes(k)); b.setAttribute('aria-pressed', S.settings[key].includes(k)); upd(); }));
     multi('data-vb', 'vibes'); multi('data-oc', 'occ');
     $$('[data-pw]', root).forEach((b) => (b.onclick = () => { const k = b.dataset.pw; S.settings.power = S.settings.power === k ? '' : k; save(); $$('[data-pw]', root).forEach((x) => { x.classList.toggle('on', x.dataset.pw === S.settings.power); x.setAttribute('aria-pressed', x.dataset.pw === S.settings.power); }); upd(); }));
-    const bud = $('#tbud', root); if (bud) { bud.addEventListener('input', () => { S.settings.budget = +bud.value; $('[data-bval]', root).textContent = bud.value > 0 ? bud.value + ' €' : 'sans limite'; upd(); }); bud.addEventListener('change', save); }
+    const bud = $('#tbud', root); if (bud) { bud.addEventListener('input', () => { S.settings.budget = CAPS[+bud.value]; $('[data-bval]', root).textContent = capLabel(S.settings.budget); upd(); }); bud.addEventListener('change', save); }
     const inp = $('#tnadd', root), box = $('#tnac', root);
     if (inp) {
       const add = (n) => { n = String(n).trim(); if (!n) return; const ex = [...$$('[data-nt]', root)].find((b) => E.norm(b.dataset.nt) === E.norm(n)); if (ex) { if (noteSt(n) !== 1) { setNote(ex.dataset.nt, 1); ex.classList.add('on'); ex.classList.remove('no'); } } else { setNote(n, 1); const cb = $('[data-tcust]', root); cb.insertAdjacentHTML('beforeend', `<button type="button" class="chip nt on" data-nt="${esc(n)}" aria-pressed="true">${esc(n)}</button>`); bindChips(cb); } inp.value = ''; box.hidden = true; upd(); };
