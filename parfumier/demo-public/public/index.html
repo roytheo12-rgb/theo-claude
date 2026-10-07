@@ -1822,6 +1822,9 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
       default: return tags.includes(t) ? 1 : 0;
     }
   }
+  // Maisons de niche reconnues (et grandes maisons de luxe) : à qualité égale, c'est ce qu'un parfumeur privé sort en premier pour un conseil d'achat.
+  const NICHE_TOP = new Set(['maison francis kurkdjian', 'xerjoff', 'amouage', 'initio', 'parfums de marly', 'creed', 'byredo', 'le labo', 'frederic malle', 'diptyque', 'serge lutens', 'nishane', 'kilian', 'roja parfums', 'louis vuitton', 'tom ford', 'ex nihilo', 'memo paris', 'penhaligon s', 'matiere premiere', 'bdk parfums', 'maison crivelli', 'nasomatto', 'orto parisi', 'hermes', 'guerlain', 'chanel', 'dior', 'clive christian', 'goldfield banks', 'house of oud', 'marc antoine barrois', 'atelier cologne', 'floraiku', 'carner barcelona'].map(norm));
+  const nicheTop = (c) => { const HA = root.HOUSE_ALIAS || {}; return NICHE_TOP.has(norm(HA[norm(c.house)] || c.house)); };
   // Notoriété : on préfère un parfum qu'on trouve et qu'on connaît à un flacon introuvable, à correspondance égale.
   let FAME = null;
   function fameOf(c) {
@@ -1918,6 +1921,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
     if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff); max += 1; s += ab.v * .8; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
+    if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; }
     { const pv = provenOf(c); if (pv.v) { max += 0.8; s += 0.8 * pv.v; if (pv.n >= 4 && !why.some((x) => /univers|tout en haut/.test(x))) why.push('cité dans ' + pv.n + ' playlists d\'inspiration'); } }
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
     if (asked.size) { max += 2; const sh = [...asked].reduce((a, f) => a + (o.acc[f] || 0), 0) / o.tot; s += 2 * clamp(sh / Math.min(.7, .35 * asked.size + .15), 0, 1); }
@@ -2261,7 +2265,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
     const houseAff = {}, hn = {}; col.forEach((p) => { const h = norm(p.house); (hn[h] = hn[h] || []).push(p.rating || 3); });
     Object.keys(hn).forEach((h) => { const a = hn[h].reduce((x, y) => x + y, 0) / hn[h].length; houseAff[h] = a >= 4 ? 1 : a <= 2.5 ? -1 : 0; });
     const loved = col.filter((p) => (p.rating || 3) >= 4 && (p.notes || []).length >= 3).map((p) => ({ name: p.name, notes: p.notes.map(norm), r: p.rating }));
-    const v = { prof, pref, houseAff, loved, owned: new Set(own.map((p) => norm(p.name))), n: col.length, posN: col.filter((p) => (p.rating || 3) >= 3.5).length, themeAff: themeAffinity(col) };
+    const v = { prof, pref, houseAff, loved, owned: new Set(own.concat(st.ownedNames || []).map((p) => norm(p.name || p))), n: col.length, posN: col.filter((p) => (p.rating || 3) >= 3.5).length, themeAff: themeAffinity(col) };
     UCACHE = { k, v }; return v;
   }
 
@@ -2533,7 +2537,8 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
   }
 
   function recommend(catalog, collection, wishlist, settings) {
-    const sig = wishSignals(wishlist, catalog), col = collection.concat(sig, fbItems(settings));
+    const tcol = settings.looseColl ? collection.filter((p) => (p.rating || 3) >= 4 || (p.rating || 3) <= 2) : collection;
+    const sig = wishSignals(wishlist, catalog), col = tcol.concat(sig, fbItems(settings));
     const prof = tasteProfile(col, settings);
     let pref = axisPref(col); const prior = priorVec(settings);
     if (prior) pref = pref ? pref.map((x, i) => x + 0.35 * prior[i]) : prior.map((x) => x * 0.8);
@@ -2581,7 +2586,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
       const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * .8 + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
       const pvn = provenOf(c);
-      const total = t.s + 1.2 * gap + Math.min(3, mates.length) * 0.4 + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
+      const total = t.s + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige && nicheTop(c) ? 1.5 : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 0.6 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
         c, proven: pvn.n, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,
@@ -2591,7 +2596,7 @@ window.EXPERT = {"guerlain|l homme ideal cologne forte":{"t":["chaleur"],"u":["q
     return calibrate(out, settings, collection);
   }
 
-  const api = { provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
+  const api = { nicheTop, provenOf, themesOf, themesFor, themeBonus, themeAffinity, edOf, ficheFit, userCtx, wishSignals, priorVec, vibeVec, VIBES, POWER, OCCS, deriveProfile, axisPref, axisFit, axisWhy, rankByFit, profOf, AXN, AXL, olfactive, derive, parseNeed, needLabel, matchNeed, searchNeed, VENUES, STOCK_USES, STOCK_LEFT, stockOf, stockEffect, norm, FAMILIES, CONTEXTS, WANTS, WITHS, MOMENTS, MOODS, PLACES, DURS, STYLES, COLORS, FABRICS, SCENARIOS, perfumeTags, score, rank, layering, pairScore, tasteProfile, coverage, recommend, weatherLabel };
   if (typeof module !== 'undefined') module.exports = api;
   else root.Engine = api;
 })(typeof window !== 'undefined' ? window : globalThis);
@@ -3414,7 +3419,7 @@ ${mist}
     const st = S.settings, avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
     const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), g0 = S.profile && S.profile.gender;
     const budget = maxPrice || st.budget || 0;
-    const pool = needPool().filter((c) => !((g0 === 'm' && gd(c) === 'f') || (g0 === 'f' && gd(c) === 'm')) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!budget || !c.price || c.price <= budget) && !(c.entry && c.entry.ed));
+    const pool = needPool().filter((c) => !((g0 === 'm' && gd(c) === 'f') || (g0 === 'f' && gd(c) === 'm')) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!budget || (estPrice(c) > 0 && estPrice(c) <= budget)) && !(c.entry && c.entry.ed));
     const cov = E.coverage(P), pct = (v) => Math.max(0, Math.min(1, (v - 2) / 12));
     const base = cov.map((x) => x.best), avg = (a) => Math.round(100 * a.reduce((t, v) => t + pct(v), 0) / a.length);
     const rows = pool.map((c) => ({ c, v: cov.map((x) => E.score(c, x.sc.c).total) }));
@@ -3460,10 +3465,21 @@ ${mist}
     $$('[data-plan-wish]', root).forEach((b) => (b.onclick = () => { const n = b.dataset.planWish; if (hasWish(n)) rmWish(n); else addWish(wishFromName(n)); b.textContent = hasWish(n) ? 'Dans ma wishlist' : 'Wishlist'; save(); }));
     if ($('#planAdd', root)) $('#planAdd', root).onclick = openAdd;
   }
+  // Prix d'un parfum pour le plafond : son prix indicatif, sinon la médiane de sa maison dans la base (0 si on ne peut rien en dire).
+  let HMED = null;
+  let ENTP = null;
+  function estPrice(c) {
+    if (c.price) return c.price;
+    if (!ENTP) { ENTP = {}; dbList().forEach((e) => { if (e.price) ENTP[entryKey(e)] = e.price; }); }
+    const ep = ENTP[E.norm(c.house + ' ' + c.name)]; if (ep) return ep;
+    if (!HMED) { const by = {}; needPool().forEach((x) => { if (x.price) (by[E.norm(x.house)] = by[E.norm(x.house)] || []).push(x.price); }); HMED = {}; Object.keys(by).forEach((h) => { const l = by[h].sort((x, y) => x - y); HMED[h] = l[l.length >> 1]; }); }
+    return HMED[E.norm(c.house)] || 0;
+  }
+  const underCap = (c) => { const cap = S.settings.budget || 0; if (!cap) return true; const p = estPrice(c); return p > 0 && p <= cap; };
   function tipsData() {
     const P = S.collection, st = S.settings, cat = needPool(), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
     const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), wrong = (c) => { const g = S.profile && S.profile.gender; return (g === 'm' && gd(c) === 'f') || (g === 'f' && gd(c) === 'm'); };
-    const ok = (c) => !wrong(c) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && (!st.budget || !c.price || c.price <= st.budget);
+    const ok = (c) => !wrong(c) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && underCap(c);
     const out = { gaps: [], recs: [], tags: [], tips: [] };
     // Pas 15 versions du même parfum : une seule fiche par famille (maison + premier mot du nom : Sauvage, Sauvage Elixir, Sauvage EDT…).
     const famKey = (c) => { const w = E.norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'un', 'une', 'eau', 'de', 'du', 'd'].includes(x)); return E.norm(c.house) + '|' + (w[0] || E.norm(c.name)); };
@@ -3481,12 +3497,12 @@ ${mist}
     const seed = PROFILES.active + '|' + ((S.profile && S.profile.name) || '') + '|' + ((S.profile && S.profile.age) || '');
     // Les photos d'abord (classement stable : à goûts égaux, la fiche illustrée passe devant), puis le score propre à ce profil.
     const hasImg = (c) => (imgOf(c) ? 1 : 0);
-    const all = E.recommend(cat, P, S.wishlist, Object.assign({}, st, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed, fb: S.feedback || [] })).sort((x, y) => hasImg(y.c) - hasImg(x.c) || y.total - x.total);
+    const all = E.recommend(cat, P, S.wishlist, Object.assign({}, st, { gender: S.profile && S.profile.gender, age: S.profile && S.profile.age, seed, fb: S.feedback || [], looseColl: true, prestige: true })).sort((x, y) => (y.total + .4 * hasImg(y.c)) - (x.total + .4 * hasImg(x.c)));
     const byHouse = {};
-    out.recs = all.filter((r) => (!st.budget || r.c.price <= st.budget) && fresh(r.c)).filter((r) => { const h = E.norm(r.c.house); byHouse[h] = (byHouse[h] || 0) + 1; return byHouse[h] <= 2; }).slice(0, 8);
+    out.recs = all.filter((r) => underCap(r.c) && fresh(r.c)).filter((r) => { const h = E.norm(r.c.house); byHouse[h] = (byHouse[h] || 0) + 1; return byHouse[h] <= 2; }).slice(0, 8);
     const tg = window.tagsOf || (() => []);
     // « Par envie » : jamais un parfum déjà montré plus haut, ni une autre version du même parfum.
-    [['niche', 'Un niche pour toi'], ['abordable', 'Un abordable qui te va'], ['luxe', 'Un coup de luxe'], ['prive', 'Une collection privée']].forEach(([t, label]) => { const r = all.find((x) => tg(x.c.name, x.c.house, x.c.price, '').includes(t) && !out.recs.some((y) => y.c === x.c) && fresh(x.c)); if (r) out.tags.push({ label, r }); });
+    [['niche', 'Un niche pour toi'], ['abordable', 'Un abordable qui te va'], ['luxe', 'Un coup de luxe'], ['prive', 'Une collection privée']].forEach(([t, label]) => { const r = all.find((x) => underCap(x.c) && tg(x.c.name, x.c.house, x.c.price, '').includes(t) && !out.recs.some((y) => y.c === x.c) && fresh(x.c)); if (r) out.tags.push({ label, r }); });
     if (P.length >= 3) {
       const fam = {}; P.forEach((p) => { fam[p.family] = (fam[p.family] || 0) + 1; });
       const top = Object.entries(fam).sort((x, y) => y[1] - x[1])[0];
@@ -3529,26 +3545,39 @@ ${mist}
   }
   new MutationObserver(ttMount).observe($('#view'), { childList: true });
   setInterval(() => { const el = $('#tt .tt'); if (el && !document.hidden) ttAdvance(el); }, TT_MS);
-  const BESOINS = [['Au bureau', 'pour le bureau'], ['Premier rendez-vous', 'premier rendez-vous'], ['Soirée', 'soirée'], ['Tous les jours', 'tous les jours, discret'], ['Grosse chaleur', 'forte chaleur été'], ['Grand froid', 'hiver froid'], ['Cérémonie', 'mariage cérémonie'], ['Compliments', 'compliments'], ['Sport', 'sport']];
-  // Trois conseils par besoin, calculés sur le profil (goûts, collection, notes, retours, budget) : un seul parfum n'apparaît pas deux fois.
+  const BESOINS = [['Au bureau', 'pour le bureau'], ['Entretien d\'embauche', 'entretien d\'embauche'], ['Premier rendez-vous', 'premier rendez-vous'], ['Séduire', 'séduire sensuel'], ['Soirée', 'soirée'], ['Boîte de nuit', 'boîte de nuit'], ['Cérémonie', 'mariage cérémonie'], ['Tous les jours', 'tous les jours, discret'], ['Élégance', 'élégant raffiné classe'], ['Frais et propre', 'sentir propre, frais'], ['Grosse chaleur', 'forte chaleur été'], ['Voyage et vacances', 'vacances voyage'], ['Grand froid', 'hiver froid'], ['Gourmand', 'gourmand vanille'], ['Mystérieux', 'mystérieux fumé'], ['Compliments', 'compliments'], ['Signature', 'parfum signature, se démarquer'], ['Luxe et opulence', 'luxe opulent'], ['Sport', 'sport']];
+  // Trois conseils par besoin, calculés sur le profil d'abord (goûts déclarés, âge, genre, saison, retours), la collection n'étant qu'un indice : un parfumier privé ne se limite pas à ce qu'on possède déjà.
+  // Les maisons de niche reconnues passent devant, le plafond de prix est respecté, et un parfum n'apparaît que dans un seul besoin.
   function fillBesoins() {
     const box = $('#bsn'); if (!box || !box.querySelector('.shim')) return;
-    const g = S.profile && S.profile.gender, st = Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: S.collection, fb: S.feedback || [], month: new Date().getMonth() });
+    const g = S.profile && S.profile.gender, rated = S.collection.filter((p) => (p.rating || 3) >= 4 || (p.rating || 3) <= 2);
+    const st = Object.assign({}, S.settings, { gender: g, age: S.profile && S.profile.age, collection: rated, ownedNames: S.collection.map((p) => p.name), fb: S.feedback || [], month: new Date().getMonth(), prestige: true });
     const lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
-    const used = new Set(), pool = needPool();
-    const rows = BESOINS.map(([l, q]) => {
-      const need = E.parseNeed(q); if (need.empty) return '';
-      const res = E.searchNeed(pool, need, st, 12).filter((r) => { const k = E.norm(r.c.house + ' ' + r.c.name); if (used.has(k)) return false; used.add(k); return true; }).slice(0, 3);
-      return res.length ? `<div class="dsec"><p class="mono">${esc(l)}</p><div class="pgrid">${res.map((r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); }).join('')}</div><p class="soft2" style="margin:4px 0 0;font-size:13px">${esc((res[0].m.why || []).slice(0, 2).join(' · ').replace(/^./, (x) => x.toUpperCase()))}</p></div>` : '';
-    });
-    box.innerHTML = rows.join('');
-    $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
+    const owned = new Set(S.collection.map((p) => E.norm(p.name))), used = new Set(), pool = needPool().filter((c) => underCap(c) && !owned.has(E.norm(c.name)));
+    let i = 0;
+    const next = () => {
+      if (!$('#bsn') || i >= BESOINS.length) { if ($('#bsn')) { $$('#bsn .shim').forEach((x) => x.closest('.dsec') && x.closest('.dsec').remove()); $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); })); } return; }
+      const [l, q] = BESOINS[i], cell = box.children[i]; i++;
+      const need = E.parseNeed(q); let html = '';
+      if (!need.empty) {
+        const all = E.searchNeed(pool, need, st, 16), fresh = all.filter((r) => !used.has(E.norm(r.c.house + ' ' + r.c.name))).slice(0, 3);
+        const res = fresh.length >= 3 ? fresh : fresh.concat(all.filter((r) => !fresh.includes(r))).slice(0, 3);
+        res.forEach((r) => used.add(E.norm(r.c.house + ' ' + r.c.name)));
+        if (res.length) html = `<p class="mono">${esc(l)}</p><div class="pgrid">${res.map((r) => { const e = r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }; return pCard(e, r.m.pct + ' %'); }).join('')}</div><p class="soft2" style="margin:4px 0 0;font-size:13px">${esc((res[0].m.why || []).slice(0, 2).join(' · ').replace(/^./, (x) => x.toUpperCase()))}</p>`;
+      }
+      if (cell) { if (html) cell.innerHTML = html; else cell.innerHTML = ''; }
+      $$('[data-ent]', cell).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
+      setTimeout(next, 15);
+    };
+    next();
   }
   function viewTips() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
     $('#view').innerHTML = `
       <section class="sec"><header><h2>Conseils</h2><span class="mono">pour toi</span></header>
+        <div class="card" style="display:grid;gap:8px;position:sticky;top:6px;z-index:5"><div class="row" style="justify-content:space-between"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
+          <input type="range" id="budget" min="0" max="600" step="10" value="${s.budget || 0}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0">Aucun conseil ne dépasse ce prix. Prix indicatifs, à vérifier chez le vendeur${s.budget ? '' : ' · glisse pour fixer un plafond'}.</p></div>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Pour commencer</p><h2>Ajoute tes parfums</h2><p>Mes conseils partent de ce que tu as déjà : ce qui te manque, ce qui te plaît.</p><button class="cta full" id="tipAdd"><span>Ajouter mes parfums</span></button></div>`}
         ${S.collection.length ? `<p class="mono">Stratégies de collection</p><div id="planbox">${planHtml(collectionPlan(), true)}</div>` : ''}
         ${T.gaps.length ? `<p class="mono">Pour compléter ta collection</p>${T.gaps.map((g) => tipCard(g.c, g.sc.label, `Pour <b>${esc(g.sc.label)}</b>, rien de vraiment adapté chez toi (ton meilleur : ${esc(g.bestP.name)}). ${esc(dsc(g.c))}`)).join('')}` : ''}
@@ -3565,8 +3594,6 @@ ${mist}
       ${T.tags.length ? `<section class="sec"><header><h2>Par envie</h2><span class="mono">niche, luxe, abordable…</span></header>${T.tags.map((t) => tipCard(t.r.c, t.label, esc(dsc(t.r.c)) + (t.r.hits.length ? ' Tu aimes déjà : ' + esc(t.r.hits.join(', ')) + '.' : ''))).join('')}</section>` : ''}
       <section class="sec">
         <div class="card" style="display:grid;gap:8px"><b>Où l'acheter</b><p class="rd" style="margin:0">Une carte des parfumeries et des enseignes beauté autour de toi.</p><button class="ghost" id="tipMap" style="justify-self:start">Ouvrir la carte</button></div>
-        <div class="card" style="display:grid;gap:8px"><div class="row" style="justify-content:space-between"><b>Budget par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${s.budget ? s.budget + ' €' : 'sans limite'}</b></div>
-          <input type="range" id="budget" min="0" max="500" step="10" value="${s.budget || 0}" aria-label="Budget par flacon"><p class="mono">prix indicatifs · à vérifier chez le vendeur</p></div>
         <div class="card ask-card"><p class="mono">${IC.spark} demande à l'IA</p>
           <textarea id="askq" rows="2" placeholder="Un niche qui sent le thé fumé et le bois, max 200 €…" aria-label="Ce que tu cherches"></textarea>
           <div class="chips" id="askchips">${['un frais niche pour le bureau', 'quelque chose de très enveloppant pour l\'hiver', 'un layering pour Baccarat Rouge'].map((t) => `<button class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join('')}</div>

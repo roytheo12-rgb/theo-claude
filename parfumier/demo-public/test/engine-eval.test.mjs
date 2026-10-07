@@ -113,3 +113,15 @@ assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
   assert.ok(base.length && fb.length, 'la recherche fonctionne avec des retours');
   console.log('ok univers des playlists : ordre de la playlist suivi, sans doublon, retours pris en compte');
 }
+
+// ── Conseils : plus de grandes maisons de niche, et une collection mal assortie ne dicte pas les goûts ──
+{
+  const base = { gender: 'm', age: 30, seed: 'z', liked: ['vanille'], vibes: ['sensuel'] };
+  const share = (st, col = []) => { const r = E.recommend(P, col, [], st).sort((a, b) => b.total - a.total).slice(0, 12); return r.filter((x) => E.nicheTop(x.c)).length; };
+  assert.ok(share(Object.assign({ prestige: true }, base)) >= share(base), 'le mode conseil met plus de maisons de niche reconnues');
+  const odd = [{ id: 'a', name: 'Light Blue', house: 'Dolce & Gabbana', rating: 3, notes: ['citron', 'pomme', 'cèdre', 'musc'], family: 'agrumes' }, { id: 'b', name: 'Cool Water', house: 'Davidoff', rating: 3, notes: ['menthe', 'lavande', 'sel', 'musc'], family: 'aquatique' }];
+  const withC = E.recommend(P, odd, [], Object.assign({ looseColl: true, prestige: true }, base)).sort((a, b) => b.total - a.total).slice(0, 12).map((r) => r.c.name);
+  const without = E.recommend(P, [], [], Object.assign({ looseColl: true, prestige: true }, base)).sort((a, b) => b.total - a.total).slice(0, 12).map((r) => r.c.name);
+  assert.ok(withC.filter((n) => without.includes(n)).length >= 9, 'deux parfums non notés ne changent presque pas les conseils');
+  console.log('ok conseils : maisons de niche reconnues devant, collection non notée sans emprise');
+}
