@@ -627,3 +627,5 @@ Widian|Hili|EDP
 Balmain|Carbone|EDP
 Jean Paul Gaultier|Le Beau Narcisse|EDP
 Maison Unika|Vanille Réglisse|EDP
+Coelia|Dinajpur|EDP
+Baruti|Chai|EDP
