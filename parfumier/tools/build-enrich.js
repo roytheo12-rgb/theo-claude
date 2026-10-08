@@ -41,6 +41,12 @@ Object.keys(E).forEach((k) => { if (NB[k] && NB[k].length && !(E[k].n && E[k].n.
 bioLines.forEach((l) => { const p = l.split('|'); if (p.length < 3) return; const k = norm(ch(p[0])) + '|' + norm(p[1]); const o = E[k] || (E[k] = {}); if (!o.f) { const f = famOf(p.slice(2).join('|')); if (f) o.f = f; } });
 // 3c) prix relevés (data/prix-connus.txt) : ils remplacent toute estimation
 fs.readFileSync(path.join(root, 'data', 'prix-connus.txt'), 'utf8').split('\n').forEach((l) => { const t = l.split('|').map((x) => x.trim()); if (t.length < 3 || l.startsWith('#')) return; const o = get(t[0], t[1]); o.p = +t[2]; delete o.pe; });
+// 3d) barème officiel par maison et concentration (tools/prix-officiels.cjs), sauf parfum au prix déjà relevé
+const KN = new Set(); fs.readFileSync(path.join(root, 'data', 'prix-connus.txt'), 'utf8').split('\n').forEach((l) => { const t = l.split('|').map((x) => x.trim()); if (t.length >= 3 && !l.startsWith('#')) KN.add(norm(ch(t[0])) + '|' + norm(t[1])); });
+const official = require('./prix-officiels.cjs'); let offN = 0;
+const allNames = []; (w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => allNames.push([h, n]))); (w.CATALOG || []).forEach((c) => c.name && c.house && allNames.push([c.house, c.name]));
+allNames.forEach(([h, n]) => { const hn = norm(ch(h)), k = hn + '|' + norm(n); if (KN.has(k)) return; const o = get(h, n), r = official(hn, norm(n), o.c); if (r) { o.p = r.p; delete o.pe; offN++; } });
+console.log(offN, 'prix du barème officiel appliqués');
 // 4) prix estimés : médiane de la collection (si connue) puis de la maison
 const all = [];
 (w.INDEX || []).forEach(([h, arr]) => arr.forEach(([n]) => all.push([h, n])));
