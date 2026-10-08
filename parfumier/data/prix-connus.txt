@@ -1,5 +1,4 @@
 # Prix relevés qui remplacent toute estimation : Maison | Parfum | prix en euros
-Frédéric Malle | The Night | 1430
 Maison Francis Kurkdjian | Grand Soir | 205 | 70 ml | https://www.franciskurkdjian.com/eu-en/p/grand-soir-eau-de-parfum-RA122511.html
 Byredo | Bal d'Afrique | 245 | 100 ml | https://www.byredo.com/eu_en/p/bal-d-afrique-eau-de-parfum?sku=0065204863
 Maison Crivelli | Hibiscus Mahajád | 350 | 100 ml | https://maisoncrivelli.com/en-fr/products/hibiscus-mahajad
@@ -11,3 +10,40 @@ Marc-Antoine Barrois | Ganymede | 200 | 100 ml | https://marcantoinebarrois.com/
 Initio | Side Effect | 280 | 90 ml | https://initioparfums.com/products/side-effect
 Maison Francis Kurkdjian | Baccarat Rouge 540 Extrait | 375 | 70 ml | https://www.franciskurkdjian.com/int-fr/p/baccarat-rouge-540-extrait-de-parfum-RA142321.html
 Maison Francis Kurkdjian | Oud Satin Mood | 255 | 70 ml | https://www.franciskurkdjian.com/eu-en/p/oud-satin-mood-eau-de-parfum-RA122221.html
+Frédéric Malle | Northern Love | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Contre-Jour | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Portrait of a Lady | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Promise | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Musc Ravageur | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Acne Studios | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Carnal Flower | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Vétiver Extraordinaire | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Angéliques Sous La Pluie | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Bigarade Concentrée | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Cologne Bigarade | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Dans Tes Bras | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Dawn | 1430 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Eau de Magnolia | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | En Passant | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | French Lover | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Heaven Can Wait | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Hope | 850 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Iris Poudre | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | L'Eau d'Hiver | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Lipstick Rose | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Monsieur. | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Music for a While | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Outrageous! | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Rose & Cuir | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Rose Tonnerre | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Synthetic Nature | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | The Moon | 850 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | The Night | 1430 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Uncut Gem | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Cologne Indélébile | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Geranium Pour Monsieur | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Le Parfum de Thérèse | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Lys Méditerranée | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Noir Epices | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Sale Gosse | 320 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
+Frédéric Malle | Une Fleur de Cassie | 350 | 100 ml | https://www.fredericmalle.eu (relevé sur capture, oct. 2026)
