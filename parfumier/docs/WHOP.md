@@ -66,3 +66,9 @@ Installation sur iPhone et Android, ouverture hors ligne, réception de l'email 
 - **Sauvegardes** : bouton « Télécharger une sauvegarde » (fichier JSON, à garder hors du téléphone). Pour une copie automatique chaque nuit : crée un dépôt R2 (`npx wrangler r2 bucket create sillage-backups`) puis décommente les lignes `r2_buckets` et `triggers` de `wrangler.toml`. Les 14 dernières copies sont gardées.
 - **Chiffres** : « Voir les chiffres » donne les comptes, les offres, la consommation IA et son coût estimé, et 4 compteurs par jour sur 14 jours (inscrits, confirmés, activés, voyages terminés).
 - **Version claude.ai** : le profil, « Mes inspirations », « Communauté » et le mode éditeur y fonctionnent aussi, avec la base de l'artefact. Pas d'offres ni de Whop là-bas. Le mode éditeur y est réservé au propriétaire de l'artefact.
+
+## Créateurs, partage et retours
+
+- **Créateurs** (Premium et fondateur) : une liste publique peut porter un lien de vidéo ou de post (https), une case « partenariat ou publicité », et un lien officiel ou d'affiliation par parfum. Les lecteurs voient la mention de partenariat, et les liens s'ouvrent avec `rel="sponsored nofollow noopener"`. Pas d'API vidéo : un simple lien suffit tant que l'audience est petite.
+- **Profil public** : pseudo, photo, bio, jusqu'à 3 liens. Le bouton « Voir mon profil public » montre l'aperçu exact. « Partager » envoie `/?u=…` (profil) ou `/?c=…` (une liste publique), lisibles sans compte.
+- **Retours** : le bloc « Aide et retours » du profil classe les messages en problème, idée ou question ; tu les lis dans « Suivi de l'éditeur ».

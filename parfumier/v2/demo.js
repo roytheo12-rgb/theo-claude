@@ -112,7 +112,7 @@
     activate: async (license) => { const j = await call('activate', 'POST', { license }); ME = j.me; try { window.dispatchEvent(new Event('sillage:me')); } catch (e) { /* ok */ } await refresh(); return j; },
     saveProfile: async (p) => { const j = await call('profile', 'PUT', p); ME = j.me; return j; },
     avatar: (file) => squareJpeg(file, 160),
-    community: { list: () => api('/api/community'), publish: (rec) => api('/api/community', 'POST', rec), remove: (id) => api('/api/community/' + id, 'DELETE'), like: (id) => api('/api/community/' + id + '/like', 'POST', {}), report: (id) => api('/api/community/' + id + '/report', 'POST', {}) },
+    community: { creator: (by) => fetch('/api/share/u/' + by).then((r) => { if (!r.ok) throw { code: 'server' }; return r.json(); }), list: () => api('/api/community'), publish: (rec) => api('/api/community', 'POST', rec), remove: (id) => api('/api/community/' + id, 'DELETE'), like: (id) => api('/api/community/' + id + '/like', 'POST', {}), report: (id) => api('/api/community/' + id + '/report', 'POST', {}) },
     admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats'), support: () => api('/api/admin/support'), supportDone: (id) => api('/api/admin/support/' + id, 'DELETE'), moderation: () => api('/api/admin/moderation'), moderate: (id, action) => api('/api/admin/moderation/' + id, 'POST', { action }),
       backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
     verified: () => !ME || ME.verified !== false, resend: () => call('resend', 'POST', {}),

@@ -6,7 +6,7 @@ const store = new Map();
 const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); }, async list({ prefix, cursor }) { return { keys: [...store.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
 let aiCalls = 0;
 const client = { messages: { async create(req) { aiCalls++; const t = JSON.stringify(req.messages); if (t.includes('CANDIDATS')) return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"compris":"ok","picks":[{"name":"A","house":"B"}]}' }] }; if (req.model.includes('haiku')) return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"reply":"Bonjour"}' }] }; return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"pick":"p1","reason":"x"}' }] }; } } };
-const memberships = { LIC_PREMIUM_OK: { id: 'mem_1', status: 'active', product_id: 'prod_PREMIUM', current_period_end: '2099-01-01' }, LIC_FOUNDER_OK: { id: 'mem_2', status: 'completed', product_id: 'prod_FOUNDER' }, LIC_PREMIUM_3: { id: 'mem_6', status: 'active', product_id: 'prod_PREMIUM' }, LIC_PREMIUM_2: { id: 'mem_5', status: 'active', product_id: 'prod_PREMIUM' }, LIC_CANCELED: { id: 'mem_3', status: 'canceled', product_id: 'prod_PREMIUM' }, LIC_UNKNOWN_PRODUCT: { id: 'mem_4', status: 'active', product_id: 'prod_OTHER' } };
+const memberships = { LIC_PREMIUM_OK: { id: 'mem_1', status: 'active', product_id: 'prod_PREMIUM', current_period_end: '2099-01-01' }, LIC_FOUNDER_OK: { id: 'mem_2', status: 'completed', product_id: 'prod_FOUNDER' }, LIC_FOUNDER_OK2: { id: 'mem_7', status: 'completed', product_id: 'prod_FOUNDER' }, LIC_PREMIUM_3: { id: 'mem_6', status: 'active', product_id: 'prod_PREMIUM' }, LIC_PREMIUM_2: { id: 'mem_5', status: 'active', product_id: 'prod_PREMIUM' }, LIC_CANCELED: { id: 'mem_3', status: 'canceled', product_id: 'prod_PREMIUM' }, LIC_UNKNOWN_PRODUCT: { id: 'mem_4', status: 'active', product_id: 'prod_OTHER' } };
 let whopDown = false;
 const fetchMock = async (url, init) => {
   assert.match(init.headers.authorization, /^Bearer WHOP_KEY$/);
@@ -167,5 +167,15 @@ await t('sauvegarde : export éditeur, copie R2 quotidienne, purge après 14 jou
   const bucket = { async put(k, v) { r2.set(k, v); }, async delete(k) { r2.delete(k); }, async list() { return { objects: [...r2.keys()].map((key) => ({ key })) }; } };
   assert.equal((await runBackup({ SILLAGE: kv })).ok, false);
   const res = await runBackup({ SILLAGE: kv, BACKUPS: bucket }); assert.equal(res.ok, true); assert.ok(r2.has(`sillage-${res.day}.json`)); assert.equal(r2.has(old), false);
+});
+await t('créateurs : liens https seulement, vidéo, mention partenaire, partage public sans compte', async () => {
+  const cr = await signup('creator@example.com'); await call('/api/account/activate', { method: 'POST', body: { license: 'LIC_FOUNDER_OK2' }, token: cr });
+  const pr = await call('/api/account/profile', { method: 'PUT', body: { pseudo: 'Studio Ambre', bio: 'Parfums du soir', links: ['https://youtube.com/@studioambre', 'javascript:alert(1)', 'http://pas-https.fr'] }, token: cr }); const pj = await pr.json();
+  assert.equal(pr.status, 200); assert.deepEqual(pj.me.profile.links, ['https://youtube.com/@studioambre']);
+  const r = await call('/api/community', { method: 'POST', body: { title: 'Mes boisés du soir', desc: 'Cèdre et vétiver', video: 'https://youtu.be/abc123', ad: true, items: [{ n: 'Santal 33', h: 'Le Labo', u: 'https://marque.example/santal?aff=studio' }, { n: 'Tam Dao', h: 'Diptyque', u: 'javascript:alert(1)' }] }, token: cr }); const j = await r.json(); assert.equal(r.status, 200);
+  const sh = await (await call('/api/share/c/' + j.id)).json(); assert.equal(sh.item.video, 'https://youtu.be/abc123'); assert.equal(sh.item.ad, true); assert.equal(sh.item.items[0].u, 'https://marque.example/santal?aff=studio'); assert.equal(sh.item.items[1].u, undefined); assert.equal(sh.item.pseudo, 'Studio Ambre');
+  const up = await (await call('/api/share/u/' + sh.item.by)).json(); assert.equal(up.profile.pseudo, 'Studio Ambre'); assert.equal(up.items.length, 1); assert.equal(up.profile.links.length, 1);
+  assert.equal((await call('/api/share/c/inconnu1')).status, 404); assert.equal((await call('/api/share/u/aaaaaaaaaaaa')).status, 404);
+  const l = (await (await call('/api/community', { token: alice })).json()).items.find((x) => x.id === j.id); assert.equal(l.by, sh.item.by); assert.equal(l.avatar, '');
 });
 console.log(ok, 'tests réussis');

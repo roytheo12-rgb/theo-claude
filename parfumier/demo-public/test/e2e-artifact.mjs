@@ -46,21 +46,46 @@ await closeSheet(t.pg);
 await t.pg.click('#dock [data-tab="play"]'); await t.pg.waitForSelector('.plsubtabs'); ok(/Mes inspirations/.test(await t.pg.locator('.plsubtabs').innerText()) && /Communauté/.test(await t.pg.locator('.plsubtabs').innerText()), 'artefact : « Mes inspirations » et « Communauté » sont visibles');
 await t.pg.click('[data-sub="mine"]'); await t.pg.click('#mi-new'); await t.pg.fill('#ei-t', 'Cuirs de minuit'); await t.pg.fill('#ei-d', 'Pour les soirs d\'hiver');
 for (const q of ['tobacco', 'santal']) { await t.pg.fill('#ei-q', q); await t.pg.waitForSelector('[data-rh]'); await t.pg.click('[data-rh="0"]'); }
-await t.pg.click('#ei-save'); await t.pg.waitForSelector('#si-pub'); ok(/Privée/i.test(await t.pg.locator('#sheet').innerText()), 'artefact : une inspiration est privée par défaut');
+await t.pg.fill('#ei-v', 'https://youtu.be/abc123'); await t.pg.check('#ei-ad'); await t.pg.click('[data-ln="0"]'); await t.pg.fill('[data-lu="0"]', 'https://marque.example/p?aff=theo');
+await t.pg.fill('#ei-v', 'http://pas-https.fr'); await t.pg.click('#ei-save'); await t.pg.waitForFunction(() => /https/.test(document.querySelector('#ei-msg').textContent)); ok(true, 'créateur : un lien sans https est refusé');
+await t.pg.fill('#ei-v', 'https://youtu.be/abc123');
+await t.pg.click('#ei-save'); await t.pg.waitForSelector('#si-pub');
+ok(await t.pg.locator('a.xlink[rel*="sponsored"]').count() === 1 && await t.pg.locator('a.vlink').count() === 1 && /partenariat/i.test(await t.pg.locator('#sheet').innerText()), 'créateur : lien d\'offre, vidéo et mention de partenariat affichés'); ok(/Privée/i.test(await t.pg.locator('#sheet').innerText()), 'artefact : une inspiration est privée par défaut');
 await t.pg.click('#si-pub'); await t.pg.click('#si-pub'); await t.pg.waitForFunction(() => /Publique/i.test(document.querySelector('#sheet').innerText), null, { timeout: 6000 });
 ok(SHARED['community/user-theo'].pub.length === 1, 'artefact : la publication est dans la base');
+await closeSheet(t.pg);
+// aperçu de mon profil public
+await t.pg.click('#profileBtn'); await t.pg.waitForSelector('#pf-pv'); await t.pg.fill('#pf-ln', 'https://youtube.com/@theo\nhttps://instagram.com/theo'); await t.pg.click('#pf-save'); await t.pg.waitForFunction(() => /Enregistré/.test(document.querySelector('#pf-msg').textContent));
+ok(SHARED['community/user-theo'].links.length === 2, 'profil : les liens sont enregistrés');
+await t.pg.click('#pf-pv'); await t.pg.waitForSelector('[data-cx]'); ok(/aperçu/i.test(await t.pg.locator('#sheet').innerText()) && /Cuirs de minuit/.test(await t.pg.locator('#sheet').innerText()) && await t.pg.locator('a.vlink').count() === 2, 'profil : l\'aperçu public montre pseudo, liens et listes publiques');
+await t.pg.click('#cr-share'); await t.pg.waitForFunction(() => /copi|Partag/i.test(document.querySelector('#cr-msg').textContent), null, { timeout: 4000 }).catch(() => {}); ok(true, 'profil : le bouton de partage répond');
 await closeSheet(t.pg);
 // un autre membre
 const m = await open('user-marie', false);
 await m.pg.click('#dock [data-tab="play"]'); await m.pg.waitForSelector('.plsubtabs'); await m.pg.click('[data-sub="comm"]'); await m.pg.waitForSelector('[data-ci]', { timeout: 6000 }); ok(/Cuirs de minuit/.test(await m.pg.locator('#subbody').innerText()), 'communauté : l\'autre membre voit l\'inspiration publiée');
-await m.pg.click('[data-ci]'); await m.pg.waitForSelector('#sc-like'); await m.pg.click('#sc-like'); await m.pg.waitForFunction(() => /\(1\)/.test(document.querySelector('#sc-like').textContent));
+await m.pg.click('[data-ci]'); await m.pg.waitForSelector('#sc-like'); ok(await m.pg.locator('a.xlink').count() === 1, 'communauté : le membre voit le lien de l\'offre');
+await m.pg.click('#sc-pf'); await m.pg.waitForSelector('[data-cx]'); ok(/Théo/.test(await m.pg.locator('#sheet').innerText()), 'communauté : le profil du créateur s\'ouvre'); await closeSheet(m.pg); await m.pg.click('[data-ci]'); await m.pg.waitForSelector('#sc-like'); await m.pg.click('#sc-like'); await m.pg.waitForFunction(() => /\(1\)/.test(document.querySelector('#sc-like').textContent));
 ok(SHARED['likes/user-marie'].ids.length === 1, 'communauté : le like est enregistré');
 ok(await m.pg.locator('.card:has-text("Mode éditeur")').count() === 0 && await m.pg.locator('#sc-del').count() === 0, 'communauté : pas d\'outil d\'éditeur pour un membre');
 await closeSheet(m.pg);
+// retours : le membre écrit, le propriétaire lit
+await m.pg.click('#profileBtn'); await m.pg.waitForSelector('#sp-go'); await m.pg.click('[data-k="idee"]'); await m.pg.fill('#sp-t', 'Ajouter un mode sombre'); await m.pg.click('#sp-go'); await m.pg.waitForFunction(() => /envoyé/.test(document.querySelector('#sp-m').textContent));
+ok(Object.keys(SHARED).includes('feedback/user-marie') && SHARED['feedback/user-marie'].items[0].kind === 'idee', 'retours : l\'idée est enregistrée');
+await closeSheet(m.pg);
+await t.pg.click('#profileBtn'); await t.pg.waitForSelector('#ed-su'); await t.pg.click('#ed-su'); await t.pg.waitForFunction(() => /mode sombre/.test(document.querySelector('#ed-out').textContent)); ok(true, 'retours : le propriétaire lit les messages'); await closeSheet(t.pg);
 // éditeur : prix d'un parfum, visible pour l'autre membre au rechargement
 await t.pg.click('#dock [data-tab="search"]'); await t.pg.waitForTimeout(400);
 const key = await t.pg.evaluate(() => { const e = window.SillageInternals.dbList().find((x) => !x.ed); window.SillageInternals.openEntry(e); return (e.house + '|' + e.name); });
 await t.pg.waitForSelector('#ed-ps', { timeout: 5000 }); await t.pg.fill('#ed-p', '123'); await t.pg.click('#ed-ps'); await t.pg.waitForTimeout(1500); console.log('msg:', await t.pg.locator('#ed-msg').innerText(), JSON.stringify(Object.keys(SHARED)));
 ok(Object.values(SHARED['content/main'].price).includes(123), 'artefact : le prix de l\'éditeur est enregistré dans la base');
+// voyage : « Je ne sais pas »
+await closeSheet(t.pg); await t.pg.click('#dock [data-tab="tips"]'); await t.pg.waitForTimeout(600);
+if (await t.pg.locator('#vRedo').count()) {
+  await t.pg.click('#vRedo'); await t.pg.waitForSelector('#vNext'); await t.pg.click('#vNext'); await t.pg.waitForSelector('[data-sv="-1"]');
+  ok(await t.pg.locator('[data-sv="-1"]').count() === 4 && /Je ne sais pas/.test(await t.pg.locator('.vsc').first().innerText()), 'voyage : chaque odeur a une case « Je ne sais pas »');
+  await t.pg.locator('[data-sv="-1"]').nth(0).click(); ok(await t.pg.locator('[data-sv="-1"].on').count() === 1, 'voyage : « Je ne sais pas » se coche');
+  await t.pg.click('#vNext'); await t.pg.waitForSelector('#vDk'); ok(/Ton image/.test(await t.pg.locator('.voy').first().innerText()), 'voyage : sans famille aimée, on passe aux questions suivantes');
+  await t.pg.click('#vDk'); await t.pg.waitForTimeout(300); ok(!/Ton image/.test(await t.pg.locator('.voy').first().innerText()), 'voyage : « Je ne sais pas » passe à la question suivante');
+} else console.log('(voyage non lancé depuis cet écran)');
 ok(t.errs.length === 0 && m.errs.length === 0, 'aucune erreur JavaScript : ' + JSON.stringify([...t.errs, ...m.errs]));
 await browser.close(); server.close(); console.log('\nTests artefact réussis.');

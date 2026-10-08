@@ -1019,3 +1019,19 @@ a.chip { text-decoration: none; display: inline-block; }
 .usebar i { display: block; height: 100%; background: var(--wine); }
 .inst { margin: 14px 0; padding-left: 22px; display: grid; gap: 10px; line-height: 1.5; }
 .inst li::marker { color: var(--wine); font-weight: 600; }
+
+.vscb { grid-template-columns: repeat(4, 1fr) !important; }
+.vscb .vsb[data-sv="-1"] { grid-column: 1 / -1; padding: 10px 4px; font-size: 13px; color: var(--muted); }
+.vdk { justify-self: center; background: none; border: 0; border-bottom: 1px dashed rgba(242, 235, 224, .35); color: var(--muted); font-size: 14px; padding: 6px 2px; margin: 4px auto 0; cursor: pointer; }
+.vdk:hover { color: var(--ink); }
+.xrow { display: grid; gap: 4px; }
+.xlink { justify-self: start; margin: 0 0 6px 14px; font-size: 13px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.xlink:hover { color: var(--ink); }
+.vlink { display: inline-grid; place-items: center; text-decoration: none; }
+.eiu { margin-top: 6px; width: 100%; }
+.eir { flex-wrap: wrap; }
+.chk { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--muted); }
+.chk input { width: auto; margin-top: 3px; }
+.crhead { display: flex; gap: 14px; align-items: center; }
+.hav.big { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: none; }
+.hav.ph { display: grid; place-items: center; background: rgba(242, 235, 224, .08); color: var(--muted); font-size: 22px; }

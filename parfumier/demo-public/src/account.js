@@ -75,10 +75,12 @@ export function makeAccount(h) {
     const acct = await acctOf(a.id); if (!acct) return null;
     const p = await planOf(a.id, acct.email), u = await usageOf(a.id), prof = jparse(await kv.get(`prof:${a.id}`), {});
     const L = plans[p.plan];
-    return { email: acct.email, verified: acct.verified !== false, plan: p.plan, label: L.label, status: p.status, until: p.until || null, expired: !!p.expired, admin: p.plan === 'admin', limits: { adv: L.adv, chat: L.chat, ident: L.ident, col: L.col, insp: L.insp, publish: L.publish }, usage: u, profile: { pseudo: prof.pseudo || '', avatar: prof.avatar || '', bio: prof.bio || '' } };
+    return { email: acct.email, verified: acct.verified !== false, plan: p.plan, label: L.label, status: p.status, until: p.until || null, expired: !!p.expired, admin: p.plan === 'admin', limits: { adv: L.adv, chat: L.chat, ident: L.ident, col: L.col, insp: L.insp, publish: L.publish }, usage: u, profile: { pseudo: prof.pseudo || '', avatar: prof.avatar || '', bio: prof.bio || '', links: prof.links || [], by: String(a.id).slice(0, 12) } };
   }
 
-  const cleanItems = (items, max) => (Array.isArray(items) ? items : []).slice(0, max).map((x) => ({ n: clean(x && x.n, 80), h: clean(x && x.h, 60) })).filter((x) => x.n.length >= 2);
+  // Lien https uniquement (vidéo, page de marque, lien d'affiliation) : sans identifiants dans l'adresse, sans espace.
+  const cleanUrl = (u) => { u = String(u == null ? '' : u).trim(); return u.length <= 300 && /^https:\/\/[^\s<>"'\\@\/]+\.[^\s<>"'\\@\/]+(\/[^\s<>"'\\]*)?$/.test(u) ? u : ''; };
+  const cleanItems = (items, max, urls) => (Array.isArray(items) ? items : []).slice(0, max).map((x) => { const o = { n: clean(x && x.n, 80), h: clean(x && x.h, 60) }; if (urls) { const u = cleanUrl(x && x.u); if (u) o.u = u; } return o; }).filter((x) => x.n.length >= 2);
 
   // Contenu public modifié par l'éditeur (toi seul) : prix, parfums masqués, textes, parfums ajoutés ou retirés d'une playlist.
   const CONTENT_MAX = 400000;
@@ -142,6 +144,18 @@ export function makeAccount(h) {
       return reply({ ok: true });
     }
 
+    // ---- Liens à partager : une inspiration publique ou le profil public d'un membre, lisibles sans compte
+    const shc = path.match(/^\/api\/share\/c\/([a-z0-9]{4,24})$/i), shu = path.match(/^\/api\/share\/u\/([a-f0-9]{12})$/i);
+    const pubView = (r, pr) => ({ id: r.id, title: r.title, desc: r.desc, items: r.items, video: r.video || '', ad: !!r.ad, pseudo: r.pseudo, avatar: (pr || {}).avatar || '', links: (pr || {}).links || [], by: r.author.slice(0, 12), likes: r.likes || 0 });
+    if (shc && method === 'GET') { const r = jparse(await kv.get(`comm:${shc[1]}`), null); if (!r || r.hidden) return reply({ code: 'not_found' }, 404); return reply({ item: pubView(r, jparse(await kv.get(`prof:${r.author}`), {})) }); }
+    if (shu && method === 'GET') {
+      const out = []; let author = '', cursor;
+      do { const page = await kv.list({ prefix: 'comm:', cursor }); for (const k of page.keys) { const r = jparse(await kv.get(k.name), null); if (r && !r.hidden && r.author.startsWith(shu[1])) { out.push(r); author = r.author; } } cursor = page.list_complete ? undefined : page.cursor; } while (cursor);
+      if (!out.length) return reply({ code: 'not_found' }, 404);
+      const pr = jparse(await kv.get(`prof:${author}`), {}); out.sort((x, y) => y.ts - x.ts);
+      return reply({ profile: { pseudo: pr.pseudo || out[0].pseudo, avatar: pr.avatar || '', bio: pr.bio || '', links: pr.links || [], by: shu[1] }, items: out.map((r) => pubView(r, pr)) });
+    }
+
     const a = await auth(request);
     if (path === '/api/track' && method === 'POST') { if (!a) return reply({ code: 'auth' }, 401); const b = await body(); if (b && ['voyage'].includes(b.e)) await track(b.e); return reply({ ok: true }); }
     if (path === '/api/account/resend' && method === 'POST') {
@@ -173,7 +187,8 @@ export function makeAccount(h) {
       if (pseudo && !PSEUDO_RE.test(pseudo)) return reply({ code: 'pseudo' }, 400);
       let avatar = prev.avatar || '';
       if (b.avatar !== undefined) { if (b.avatar === '') avatar = ''; else if (typeof b.avatar === 'string' && b.avatar.length <= 70000 && AVATAR_RE.test(b.avatar)) avatar = b.avatar; else return reply({ code: 'avatar' }, 400); }
-      await kv.put(`prof:${a.id}`, JSON.stringify({ pseudo, avatar, bio: b.bio === undefined ? prev.bio || '' : clean(b.bio, 140) }));
+      const links = b.links === undefined ? prev.links || [] : (Array.isArray(b.links) ? b.links : []).slice(0, 3).map(cleanUrl).filter(Boolean);
+      await kv.put(`prof:${a.id}`, JSON.stringify({ pseudo, avatar, bio: b.bio === undefined ? prev.bio || '' : clean(b.bio, 140), links }));
       return reply({ ok: true, me: await me(a) });
     }
 
@@ -183,7 +198,8 @@ export function makeAccount(h) {
       const list = []; let cursor;
       do { const page = await kv.list({ prefix: 'comm:', cursor }); for (const k of page.keys) { const r = jparse(await kv.get(k.name), null); if (r && !r.hidden) list.push(r); } cursor = page.list_complete || list.length >= 300 ? undefined : page.cursor; } while (cursor);
       list.sort((x, y) => y.ts - x.ts);
-      return reply({ items: list.slice(0, 200).map((r) => ({ id: r.id, title: r.title, desc: r.desc, items: r.items, pseudo: r.pseudo, ts: r.ts, likes: r.likes || 0, mine: r.author === a.id })) });
+      const pc = {}; for (const r of list) if (!pc[r.author]) pc[r.author] = jparse(await kv.get(`prof:${r.author}`), {});
+      return reply({ items: list.slice(0, 200).map((r) => ({ id: r.id, title: r.title, desc: r.desc, items: r.items, video: r.video || '', ad: !!r.ad, pseudo: r.pseudo, avatar: (pc[r.author] || {}).avatar || '', links: (pc[r.author] || {}).links || [], by: r.author.slice(0, 12), ts: r.ts, likes: r.likes || 0, mine: r.author === a.id })) });
     }
     if (path === '/api/community' && method === 'POST') {
       if (!a) return reply({ code: 'auth' }, 401);
@@ -191,13 +207,13 @@ export function makeAccount(h) {
       if (!L.publish) return reply({ code: 'plan' }, 403);
       const prof = jparse(await kv.get(`prof:${a.id}`), {}); if (!prof.pseudo) return reply({ code: 'pseudo' }, 400);
       const b = await body(); if (!b) return reply({ code: 'json' }, 400);
-      const title = clean(b.title, 60), items = cleanItems(b.items, 30); if (title.length < 3 || items.length < 2) return reply({ code: 'content' }, 400);
+      const title = clean(b.title, 60), items = cleanItems(b.items, 30, true); if (title.length < 3 || items.length < 2) return reply({ code: 'content' }, 400);
       if (breaksRules(title, b.desc)) return reply({ code: 'rules' }, 400);
       if (!(await rate(a.id, 'pub', 12))) return reply({ code: 'rate' }, 429);
       const id = clean(b.id, 24).replace(/[^a-z0-9]/gi, '') || randHex(8), prev = jparse(await kv.get(`comm:${id}`), null);
       if (prev && prev.author !== a.id) return reply({ code: 'taken' }, 409);
       if (!prev) { let n = 0, cursor; do { const page = await kv.list({ prefix: 'comm:', cursor }); for (const k of page.keys) { const r = jparse(await kv.get(k.name), null); if (r && r.author === a.id) n++; } cursor = page.list_complete ? undefined : page.cursor; } while (cursor); if (n >= 10) return reply({ code: 'limit' }, 409); }
-      const rec = { id, author: a.id, pseudo: prof.pseudo, title, desc: clean(b.desc, 240), items, ts: prev ? prev.ts : Date.now(), likes: prev ? prev.likes || 0 : 0, reports: prev ? prev.reports || 0 : 0 };
+      const rec = { id, author: a.id, pseudo: prof.pseudo, title, desc: clean(b.desc, 240), items, video: cleanUrl(b.video), ad: !!b.ad, ts: prev ? prev.ts : Date.now(), likes: prev ? prev.likes || 0 : 0, reports: prev ? prev.reports || 0 : 0 };
       await kv.put(`comm:${id}`, JSON.stringify(rec));
       return reply({ ok: true, id });
     }

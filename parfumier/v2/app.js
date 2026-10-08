@@ -2614,7 +2614,7 @@
     const aff = {}, vib = {}, occ = {}, liked = {}, avoid = {}, ax = new Array(18).fill(0); let power = '', skin = '';
     const addAx = (m, w) => Object.keys(m || {}).forEach((a) => { const i = AXI(a); if (i >= 0) ax[i] += m[a] * w; });
     const eff = (fx, w) => { if (!fx) return; addAx(fx.ax, w); (fx.vibes || []).forEach((v) => { vib[v] = (vib[v] || 0) + 3 * w; }); (fx.liked || []).forEach((n) => { liked[n] = Math.max(liked[n] || 0, w); }); (fx.avoid || []).forEach((n) => { avoid[n] = 1; }); (fx.themes || []).forEach((t) => { const k = E.norm(t); aff[k] = (aff[k] || 0) + 1.6 * w; }); if (fx.power && !power) power = fx.power; if (fx.skin) skin = fx.skin; };
-    Object.keys(R.scales).forEach((k) => { const v = R.scales[k], F = VFAM[k]; if (!F) return; addAx(F.ax, SC_W[v] * 1.1); if (v === 0) F.no.forEach((n) => { avoid[n] = 1; }); if (v === 3) vib[k === 'sucre' ? 'sucre' : k === 'frais' ? 'frais' : k === 'boise' ? 'naturel' : k === 'floral' ? 'elegant' : k === 'fume' ? 'sensuel' : 'classique'] = (vib[k === 'sucre' ? 'sucre' : k === 'frais' ? 'frais' : k === 'boise' ? 'naturel' : k === 'floral' ? 'elegant' : k === 'fume' ? 'sensuel' : 'classique'] || 0) + 1.2; });
+    Object.keys(R.scales).forEach((k) => { const v = R.scales[k], F = VFAM[k]; if (!F || !(v >= 0)) return; addAx(F.ax, SC_W[v] * 1.1); if (v === 0) F.no.forEach((n) => { avoid[n] = 1; }); if (v === 3) vib[k === 'sucre' ? 'sucre' : k === 'frais' ? 'frais' : k === 'boise' ? 'naturel' : k === 'floral' ? 'elegant' : k === 'fume' ? 'sensuel' : 'classique'] = (vib[k === 'sucre' ? 'sucre' : k === 'frais' ? 'frais' : k === 'boise' ? 'naturel' : k === 'floral' ? 'elegant' : k === 'fume' ? 'sensuel' : 'classique'] || 0) + 1.2; });
     Object.keys(R.follow).forEach((k) => (R.follow[k] || []).forEach((i, r) => { const o = ((VFAM[k] || {}).f || [])[i]; if (!o) return; const w = rkW(r); o[1].forEach((n) => { liked[n] = Math.max(liked[n] || 0, w + .3); }); addAx(VFAM[k].ax, .35 * w); }));
     Object.keys(R.taps).forEach((k) => { const o = (TAPS[k] || {}).o, i = R.taps[k]; if (o && o[i]) eff(o[i][1], 1); });
     const ids = [];
@@ -2650,7 +2650,7 @@
     const R = { scales: {}, follow: {}, taps: {}, ranks: {}, opts: { trace: [], power: [], seasons: [], mats: [], flee: [] }, refs: [] }; let c = 0, dir = 1, busy = false;
     const NC = PLAN.length;
     const go = (d) => { dir = d; c = Math.max(0, Math.min(NC - 1, c + d)); draw(); };
-    const shell = (inner, o) => `<div class="voy"><div class="vbar" aria-hidden="true"><i style="width:${Math.round(100 * c / (NC - 1))}%"></i></div>${inner}${(o && o.nonext) ? '' : `<button class="cta full" id="vNext"><span>${(o && o.next) || VQ_NEXT[c % VQ_NEXT.length]}</span></button>`}${c > 1 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip && c < NC - 1 ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
+    const shell = (inner, o) => `<div class="voy"><div class="vbar" aria-hidden="true"><i style="width:${Math.round(100 * c / (NC - 1))}%"></i></div>${inner}${/^(follow|rank|opts):/.test(PLAN[c]) ? '<button type="button" class="vdk" id="vDk">Je ne sais pas</button>' : ''}${(o && o.nonext) ? '' : `<button class="cta full" id="vNext"><span>${(o && o.next) || VQ_NEXT[c % VQ_NEXT.length]}</span></button>`}${c > 1 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip && c < NC - 1 ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
     const rk = (list, v) => { const r = list.indexOf(v); return r < 0 ? '' : r + 1; };
     const draw = () => {
       const sc = root.closest('.panel, #prof'); if (sc) sc.scrollTop = 0; window.scrollTo(0, 0); busy = false;
@@ -2661,7 +2661,7 @@
         html = `<div class="voy"><div class="vbar" aria-hidden="true"><i style="width:0"></i></div><p class="mono">Ton voyage</p><header class="vhero"><div><h2>Faisons connaissance</h2><p class="vscene">Je suis ton parfumier. Je vais te poser des questions simples, une par une, sur ce que tu aimes et ce que tu fuis, sur ta vie et tes envies. Il n'y a pas de bonne réponse. À la fin, je te montre ce que j'ai compris de toi et je choisis tes premiers parfums.</p></div></header><p class="soft">Environ deux minutes. Tu peux revenir en arrière à tout moment.</p><button class="cta full" id="vNext"><span>Commencer</span></button>${opts.skip ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
       } else if (step.startsWith('scales:')) {
         const g = SCALES[+step.slice(7)];
-        html = shell(`<header class="vhero"><div><h2>${step === 'scales:0' ? 'Ce qui te parle' : ''}</h2><p class="vscene">${step === 'scales:0' ? 'Je commence par des odeurs de tous les jours, pas besoin de connaître le vocabulaire des parfumeurs. Pour chacune, dis-moi si tu aimes.' : 'Quatre autres odeurs, même principe.'}</p></div></header><div class="vscales">${g.map((k) => `<div class="vsc" data-fam="${k}"><p>${esc(VFAM[k].q)}</p><div class="vscb">${SC_L.map((l, v) => `<button type="button" class="vsb ${R.scales[k] === v ? 'on' : ''}" data-sv="${v}">${esc(l)}</button>`).join('')}</div></div>`).join('')}</div>`, { next: 'Continuer' });
+        html = shell(`<header class="vhero"><div><h2>${step === 'scales:0' ? 'Ce qui te parle' : ''}</h2><p class="vscene">${step === 'scales:0' ? 'Je commence par des odeurs de tous les jours, pas besoin de connaître le vocabulaire des parfumeurs. Pour chacune, dis-moi si tu aimes.' : 'Quatre autres odeurs, même principe.'}</p></div></header><div class="vscales">${g.map((k) => `<div class="vsc" data-fam="${k}"><p>${esc(VFAM[k].q)}</p><div class="vscb">${SC_L.concat('Je ne sais pas').map((l, v) => { v = v > 3 ? -1 : v; return `<button type="button" class="vsb ${R.scales[k] === v ? 'on' : ''}" data-sv="${v}">${esc(l)}</button>`; }).join('')}</div></div>`).join('')}</div>`, { next: 'Continuer' });
         after = () => $$('.vsc', root).forEach((row) => $$('[data-sv]', row).forEach((b) => (b.onclick = () => { R.scales[row.dataset.fam] = +b.dataset.sv; $$('[data-sv]', row).forEach((x) => x.classList.toggle('on', x === b)); })));
       } else if (step.startsWith('follow:')) {
         const fam = topFams(R)[+step.slice(7)];
@@ -2694,6 +2694,7 @@
       if (after) after();
       const nx = $('#vNext', root); if (nx) nx.onclick = () => go(1);
       if ($('#vBack', root)) $('#vBack', root).onclick = () => go(-1);
+      if ($('#vDk', root)) $('#vDk', root).onclick = () => { const [t, k] = step.split(':'); if (t === 'follow') R.follow[topFams(R)[+k]] = []; else if (t === 'rank') R.ranks[k] = []; else R.opts[k] = []; go(1); };
       if ($('#vSkip', root)) $('#vSkip', root).onclick = () => done(true);
     };
     const drawEnd = () => {
