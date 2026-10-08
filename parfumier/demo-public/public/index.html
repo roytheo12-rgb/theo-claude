@@ -1116,6 +1116,7 @@ a.chip { text-decoration: none; display: inline-block; }
 .row3 .ghost { padding: 12px 4px; font-size: 11px; letter-spacing: .08em; }
 .mrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
 .mrow .soft { text-align: right; white-space: nowrap; }
+.cmbox[hidden], .linkbtn[hidden], .empty[hidden], .notif[hidden] { display: none !important; }
 
 </style>
 </head><body>
@@ -6791,7 +6792,7 @@ ${mist}
     $('#na-go', body).onclick = () => I.showAccount('force');
   };
   function pourToi() {
-    $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2><span class="mono">l\'activité de tes abonnements</span></header><div id="pt"></div></section>';
+    $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2><span class="mono">tes abonnements</span></header><div id="pt"></div></section>';
     const body = $('#pt'); if (!logged()) return needAccount(body, 'Le fil de tes amis');
     feed(body);
   }

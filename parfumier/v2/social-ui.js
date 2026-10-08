@@ -58,7 +58,7 @@
     $('#na-go', body).onclick = () => I.showAccount('force');
   };
   function pourToi() {
-    $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2><span class="mono">l\'activité de tes abonnements</span></header><div id="pt"></div></section>';
+    $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2><span class="mono">tes abonnements</span></header><div id="pt"></div></section>';
     const body = $('#pt'); if (!logged()) return needAccount(body, 'Le fil de tes amis');
     feed(body);
   }
