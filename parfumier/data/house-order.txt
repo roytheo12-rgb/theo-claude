@@ -2,6 +2,7 @@
 # Un « ## Maison » puis un parfum par ligne, du plus important au moins important. Les parfums de la maison non cités viennent ensuite dans l'ordre habituel.
 # Les maisons citées passent aussi en tête de « Toutes les maisons », dans cet ordre.
 ## Chanel
+Gardénia
 Coromandel
 Le Lion de Chanel
 Sycomore

@@ -1,5 +1,6 @@
 # Les incontournables d'« Ajoute tes parfums » et de la recherche : ces parfums passent en premier, dans cet ordre. Une ligne = Maison | Parfum (=> nom dans la base si différent).
 Chanel | Coromandel
+Chanel | Gardénia
 Maison Francis Kurkdjian | Baccarat Rouge 540
 Guerlain | Spiritueuse Double Vanille
 Hermès | Ambre Narguilé

@@ -618,7 +618,7 @@
     box.innerHTML = `<div class="crow"><img class="cav" src="${PF_AV}" alt=""><div class="cb ca"><p>${esc(chatGreeting())}</p></div></div>` + CHAT.msgs.map(bubHtml).join('') + (CHAT.busy ? `<div class="crow"><img class="cav" src="${PF_AV}" alt=""><div class="cb ca"><span class="typing"><i></i><i></i><i></i></span></div></div>` : '');
     const lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
     $$('[data-ent]', box).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
-    fbBind(box); box.scrollTop = box.scrollHeight; if ($('#cchips') && CHAT.msgs.length) $('#cchips').innerHTML = '';
+    fbBind(box); box.scrollTop = box.scrollHeight; chatChips();
   }
   // Phrases du parfumier quand l'IA n'est pas là : une vraie petite recommandation écrite avec la fiche, les notes, le profil et le prix.
   const hz = (s, n) => { s = String(s || '').replace(/[:;—–]/g, ',').replace(/\s+/g, ' ').replace(/[ ,.]+$/, '').trim(); return (n && s.length > n ? s.slice(0, n).replace(/\s\S*$/, '') : s).replace(/[ ,.;:]+$/, ''); };
@@ -701,7 +701,7 @@
   // Bulle proactive : un conseil de la page, puis une vraie recommandation tirée du profil. Jamais plus de quatre par visite, jamais quand une feuille est ouverte.
   function pfTick() {
     mountParfumier();
-    if (PF.open || document.hidden || !$('#sheet').hidden || !$('#story').hidden || PF.shown >= 2 || Date.now() - PF.last < 60000) return;
+    if (PF.open || document.hidden || !$('#sheet').hidden || !$('#story').hidden || PF.shown >= 4 || Date.now() - PF.last < 20000) return;
     if (Date.now() - PF.scroll < 2500) { PF.t = setTimeout(pfTick, 4000); return; }
     let m = null;
     if (PF.kind % 2 === 1 && (S.collection.length || (S.settings.liked || []).length)) {
@@ -714,7 +714,7 @@
     setTimeout(() => { if (!$('#pbub').hidden) $('#pbt').textContent = m.t; }, 1100);
     PF.hide = setTimeout(pfHide, 9500);
   }
-  function pfSchedule() { mountParfumier(); clearTimeout(PF.t); pfHide(); PF.t = setTimeout(pfTick, PF.shown ? 30000 : 14000); }
+  function pfSchedule() { mountParfumier(); clearTimeout(PF.t); pfHide(); PF.t = setTimeout(pfTick, PF.shown ? 9000 : 6500); }
   // ---------- Le parfumier répond à tout : sa collection, un parfum, une comparaison, le vocabulaire du métier ----------
   const PF_KB = [
     [/concentration|eau de parfum|eau de toilette|extrait|\bedp\b|\bedt\b|difference entre.*(parfum|toilette|cologne)/, 'Une histoire de dosage du jus. L\'eau de cologne tourne autour de 3 à 5 % d\'huiles parfumées, l\'eau de toilette autour de 8 %, l\'eau de parfum de 12 à 18 %, l\'extrait au delà de 20 %. Plus le jus est concentré, plus la tenue et le fond s\'installent, mais ce n\'est pas toujours plus fort au départ. Une eau de toilette bien faite peut être lumineuse là où un extrait sera plus dense et plus intime. Si tu hésites, prends l\'eau de parfum, c\'est le bon compromis, et garde l\'extrait pour les soirées ou l\'hiver.'],
@@ -769,8 +769,37 @@
     } catch (e) { /* IA indisponible : la sélection calculée */ }
     return local;
   }
+  // Quand le parfumier pose une question, il propose aussi des réponses rapides.
+  function chatChips() {
+    const ch = $('#cchips'); if (!ch) return; const last = CHAT.msgs[CHAT.msgs.length - 1];
+    if (last && last.r === 'a' && (last.chips || []).length && !CHAT.busy) { ch.innerHTML = last.chips.map((t) => `<button type="button" class="chip" data-q="${esc(t)}">${esc(t)}</button>`).join(''); $$('[data-q]', ch).forEach((b) => (b.onclick = () => chatSend(b.dataset.q))); }
+    else if (CHAT.msgs.length) ch.innerHTML = '';
+  }
+  const noDash = (t) => String(t || '').replace(/\s*[—–]\s*/g, ', ').replace(/\s+/g, ' ').trim();
+  const chatHist = () => CHAT.msgs.slice(-7, -1).map((m) => (m.r === 'u' ? 'Moi : ' : 'Toi : ') + String(m.t || '').slice(0, 260)).join('\n');
+  // Le regard de l'IA sur une réponse calculée : plus humain, relié à la conversation, et une question quand il manque une information.
+  async function aiPolish(q, ia) {
+    if (window.SillageDemo || !window.SillagePrompts || ia.chips || ia.raw) return;
+    try {
+      const sample = await getSample(); if (!sample) return;
+      const base = [ia.t, (ia.picks || []).map((k) => k.name + ' (' + k.house + ')' + (k.line ? ' : ' + k.line : '')).join('\n')].filter(Boolean).join('\n').slice(0, 2600);
+      const prompt = `Tu es le parfumier privé d'une application de parfums. ${VOIX_TX} Réponds en français.\n${chatHist() ? 'Conversation récente :\n' + chatHist() + '\n' : ''}Question de la personne : """${q.slice(0, 400)}"""\nFaits vérifiés calculés par l'application (appuie-toi dessus, ne les contredis pas, n'invente ni parfum, ni note, ni prix) :\n"""${base}"""\n${tasteLine() ? 'Ses goûts : ' + tasteLine().slice(0, 700) + '\n' : ''}${S.collection.length ? 'Sa collection :\n' + colShort().slice(0, 1200) + '\n' : ''}Écris une réponse de 3 à 5 phrases, chaleureuse, précise et reliée à ce qu'elle a dit. Si tu manques d'une information essentielle pour bien la conseiller (occasion, saison, budget, notes aimées ou fuies, pour elle ou pour offrir), pose UNE seule question courte dans "ask" et donne 3 réponses rapides dans "chips" ; sinon laisse "ask" vide. Réponds UNIQUEMENT par un JSON : {"reply":"","ask":"","chips":[""]}`;
+      const j = await aiJson(prompt, { modelTier: 'default' });
+      if (j && j.reply) { ia.t = noDash(j.reply).slice(0, 1100); if (j.ask) { ia.t += ' ' + noDash(j.ask); ia.chips = (j.chips || []).map((x) => noDash(x).slice(0, 48)).filter(Boolean).slice(0, 4); } }
+    } catch (e) { /* on garde la réponse calculée */ }
+  }
+  // Une demande trop vague : le parfumier pose la bonne question au lieu de deviner.
+  function clarifyAsk(q, need) {
+    const qn = E.norm(q), words = qn.split(' ').filter(Boolean).length;
+    if (words > 7 || !/parfum|conseil|idee|cadeau|offrir|recommande|propose|aide|cherche|envie|quelque chose/.test(qn)) return null;
+    if (!need.empty && (need.tags.length || need.fams.length || need.like.length || need.maxPrice)) return null;
+    const prev = CHAT.msgs.filter((m) => m.r === 'u').length > 1; if (prev) return null;
+    if (/cadeau|offrir/.test(qn)) return { t: 'Avec plaisir. Pour bien viser, c\'est pour qui, et tu veux mettre combien à peu près ?', chips: ['Pour ma compagne, vers 100 €', 'Pour mon père, vers 150 €', 'Pour un ami, moins de 80 €', 'Je veux vraiment me faire plaisir'] };
+    return { t: 'Volontiers. Pour que je ne te dise pas n\'importe quoi, c\'est pour quelle occasion, et plutôt quelle ambiance ?', chips: ['Un premier rendez-vous', 'Tous les jours au bureau', 'Une soirée qui compte', 'Quelque chose de doux et réconfortant'] };
+  }
   async function pfIntent(q) {
     const qn = E.norm(q), pref = (t, extra) => Object.assign({ t }, extra || {});
+    { const cl = clarifyAsk(q, E.parseNeed(q)); if (cl) return pref(cl.t, { chips: cl.chips }); }
     const lkE = (e) => ({ name: e.name, house: e.house, e });
     // ce qui manque à la collection
     if (/manque|trou|completer ma collection|que (dois|devrais) (je )?(acheter|ajouter)|quoi (acheter|ajouter)/.test(qn) && !/pas de manque/.test(qn)) {
@@ -831,8 +860,8 @@
     try {
       const sample = await getSample();
       if (sample) {
-        const prompt = `Tu es le parfumier privé d'une application de parfums. ${VOIX_TX} Réponds en français, en 4 phrases maximum, à la question de la personne, en t'appuyant sur ses goûts et sa collection quand c'est utile. Si la question n'a rien à voir avec les parfums, dis-le gentiment et ramène la conversation vers les parfums. N'invente jamais de note, de prix ni de parfum.\nSes goûts :\n${tasteLine()}\nSa collection :\n${colShort() || '(vide)'}\nHistorique récent : ${CHAT.msgs.slice(-6).map((m) => (m.r === 'u' ? 'Elle ou lui : ' : 'Toi : ') + (m.t || '')).join(' | ')}\nQuestion : """${q}"""\nRéponds UNIQUEMENT par un JSON {"reply":"..."}.`;
-        const j = await aiJson(prompt, { modelTier: 'default' }); if (j && j.reply) return { t: String(j.reply).slice(0, 900) };
+        const prompt = `Tu es le parfumier privé d'une application de parfums. ${VOIX_TX} Réponds en français, en 4 phrases maximum, à la question de la personne, en t'appuyant sur ses goûts et sa collection quand c'est utile. Si la question n'a rien à voir avec les parfums, dis-le gentiment et ramène la conversation vers les parfums. N'invente jamais de note, de prix ni de parfum.\nSes goûts :\n${tasteLine()}\nSa collection :\n${colShort() || '(vide)'}\nHistorique récent : ${CHAT.msgs.slice(-6).map((m) => (m.r === 'u' ? 'Elle ou lui : ' : 'Toi : ') + (m.t || '')).join(' | ')}\nQuestion : """${q}"""\nSi pour bien répondre il te manque une information (occasion, saison, budget, notes aimées ou fuies, pour qui), pose UNE question courte dans "ask" avec 3 réponses rapides dans "chips". Réponds UNIQUEMENT par un JSON {"reply":"...","ask":"","chips":[""]}.`;
+        const j = await aiJson(prompt, { modelTier: 'default' }); if (j && j.reply) { const o = { t: noDash(j.reply).slice(0, 900) }; if (j.ask) { o.t += ' ' + noDash(j.ask); o.chips = (j.chips || []).map((x) => noDash(x).slice(0, 48)).filter(Boolean).slice(0, 4); } return o; }
       }
     } catch (e) { /* retombe sur la réponse locale */ }
     return { t: 'Sur celle-là, je préfère ne pas t\'inventer une réponse. Ce que je fais le mieux, c\'est te parler d\'un parfum précis, comparer deux flacons, regarder ce qui manque à ta collection, te dire lequel porter aujourd\'hui, ou te proposer trois idées pour une occasion. Dis-moi par où tu veux commencer.' };
@@ -842,7 +871,7 @@
     q = (q || '').trim(); if (!q || CHAT.busy) return;
     CHAT.msgs.push({ r: 'u', t: q }); CHAT.busy = true; drawChat();
     { const ex = q.match(/^Pourquoi (.+) pour moi \?$/); if (ex) { const rec = (() => { try { return tipsData().recs.find((x) => x.c.name === ex[1]); } catch (e) { return null; } })(); if (rec) { const why = [].concat(rec.hits.length ? ['tu aimes déjà ' + rec.hits.slice(0, 2).join(' et ')] : [], (rec.axisWhy || []).length ? ['dans ton goût ' + rec.axisWhy[0]] : [], rec.proven >= 4 ? ['dans l\'univers « ' + (E.themesOf(rec.c, 1)[0] || { t: 'des playlists' }).t + ' »'] : []); const r2 = { c: rec.c, m: { why, pct: rec.pct, diff: rec.diff, pitch: rec.pitch } }; CHAT.msgs.push({ r: 'a', t: 'Bonne question. Voilà pourquoi je te le propose.', picks: [{ name: rec.c.name, house: rec.c.house, e: dbList().find((x) => E.norm(x.name) === E.norm(rec.c.name) && E.norm(x.house) === E.norm(rec.c.house)) || null, line: humanLine(r2, 0, null, q) }], fb: { name: rec.c.name, house: rec.c.house } }); CHAT.busy = false; drawChat(); return; } } }
-    { const ia = await pfIntent(q); if (ia) { CHAT.msgs.push(Object.assign({ r: 'a' }, ia)); CHAT.busy = false; drawChat(); return; } }
+    { const ia = await pfIntent(q); if (ia) { await aiPolish(q, ia); CHAT.msgs.push(Object.assign({ r: 'a' }, ia)); CHAT.busy = false; drawChat(); return; } }
     const prev = CHAT.msgs.filter((m) => m.r === 'u').slice(-3, -1).map((m) => m.t);
     const text = (prev.length ? prev.join('. ') + '. Et maintenant : ' : '') + q;
     let need = E.parseNeed(text.slice(0, 480)); if (need.empty) need = E.parseNeed(q);
@@ -856,7 +885,7 @@
       const top = res.slice(0, 3), lab0 = (E.needLabel(need) || '').toLowerCase(), lab = lab0.length > 5 && !/^(pro|perso|date|event)\b/.test(lab0) ? lab0 : '';
       const intro = pickH([lab ? `Ah, ${lab}. Je vois très bien ce qu'il te faut, voilà trois idées.` : 'Je vois très bien ce qu\'il te faut, laisse-moi te raconter trois flacons.', lab ? `Pour ${lab}, voilà ce que je sortirais de l'armoire.` : 'Voilà ce que je sortirais de l\'armoire.', 'Bonne demande. Je prends mes mouillettes et je te dis tout.'], q);
       const conf = top[0].m.pct >= 75 ? 'Le premier, je le mettrais sur ta peau les yeux fermés.' : top[0].m.pct >= 55 ? 'Ils tiennent la route tous les trois, le premier a juste un cran d\'avance.' : 'Ce n\'est pas une évidence, alors dis-moi en plus et je viserai plus juste.';
-      return { t: intro + ' ' + conf, picks: top.map((r, i2) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || entryOf(r.c.name, r.c.house), line: humanLine(r, i2, null, q) })), note: pickH(['Un conseil de parfumier, laisse-le vivre une heure sur la peau, la tête ment toujours un peu avant que le cœur parle. Dis-moi si tu les veux plus frais, plus doux ou moins chers.', 'Teste sur la peau, pas sur la mouillette, et attends que le fond arrive avant de te décider. Je peux aussi te proposer une version plus discrète ou moins sucrée.', 'Si l\'un d\'eux ne te parle pas, dis-le moi simplement. On cherchera dans une autre direction, c\'est comme ça qu\'on trouve son jus.'], q + 'n'), fb: { name: top[0].c.name, house: top[0].c.house } };
+      return { t: intro + ' ' + conf, picks: top.map((r, i2) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || entryOf(r.c.name, r.c.house), line: humanLine(r, i2, null, q) })), note: pickH(['Un conseil de parfumier, laisse-le vivre une heure sur la peau, la tête ment toujours un peu avant que le cœur parle. Dis-moi si tu les veux plus frais, plus doux ou moins chers.', 'Teste sur la peau, pas sur la mouillette, et attends que le fond arrive avant de te décider. Je peux aussi te proposer une version plus discrète ou moins sucrée.', 'Si l\'un d\'eux ne te parle pas, dis-le moi simplement. On cherchera dans une autre direction, c\'est comme ça qu\'on trouve son jus.'], q + 'n'), fb: { name: top[0].c.name, house: top[0].c.house }, chips: top[0].m.pct < 55 ? ['Plutôt frais', 'Plutôt doux et enveloppant', 'Pour le soir', 'Avec un budget plus serré'] : undefined };
     };
     let msg = local();
     if (res.length && (window.SillageDemo || window.SillagePrompts)) {
@@ -2519,6 +2548,8 @@
   }
   const plImg = (t) => { const p = (window.PLAYLISTS || []).find((x) => x.t === t); return p && p.img ? p.img : ''; };
   // Le voyage : onze étapes mises en scène. Chaque étape raconte une scène, propose des situations à toucher, puis une question. Une image seulement en tête des escapades et des inspirations, et sur les matières.
+  const VQ_LBL = ['Et toi, au fond ?', 'Entre deux scènes', 'Dis-moi juste', 'Une confidence', 'Ton instinct', 'Sans y penser', 'Entre nous', 'Un détail encore'];
+  const VQ_NEXT = ['On continue', 'Plus loin', 'La suite', 'Un pas de plus', 'Allons voir', 'Et après ?'];
   function mountVoyage(root, done, opts) {
     opts = opts || {}; const sel = new Set(S.settings.sit || []), qa = Object.assign({}, S.settings.qa || {}); let c = 0; const NC = SIT_CH.length;
     const draw = () => {
@@ -2542,9 +2573,9 @@
         ${items.length ? `<p class="soft">Touche les situations qui te ressemblent, sans réfléchir. Autant que tu veux.</p>
         <div class="sits">${items.map(([s, i], k) => `<button type="button" class="sit rise ${sel.has(i) ? 'on' : ''}" style="--d:${k * 45}" data-si="${i}" aria-pressed="${sel.has(i)}"><span>${esc(s[1])}</span><i aria-hidden="true">✓</i></button>`).join('')}</div>
         <p class="mono" id="vCount" style="text-transform:none;letter-spacing:0"></p>` : ''}
-        ${q ? `<div class="vq"><p class="mono">Une question pour toi</p><h3>${esc(q[1])}</h3>${opts2}</div>` : ''}
-        <button class="cta full" id="vNext"><span>${c < NC - 1 ? 'Étape suivante' : 'Voir mon univers'}</span></button>${c > 0 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
-      const upd = () => { const v = $('#vCount', root); if (!v) return; const k = cnt(); v.textContent = k ? k + ' choisie' + (k > 1 ? 's' : '') + ' dans cette étape' : 'Aucune pour l\'instant'; }; upd();
+        ${q ? `<div class="vq rise" style="--d:260"><p class="mono">${VQ_LBL[c % VQ_LBL.length]}</p><h3>${esc(q[1])}</h3>${opts2}</div>` : ''}
+        <button class="cta full" id="vNext"><span>${c < NC - 1 ? VQ_NEXT[c % VQ_NEXT.length] : 'Voir mon univers'}</span></button>${c > 0 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
+      const upd = () => { const v = $('#vCount', root); if (!v) return; const k = cnt(); v.textContent = k ? k + ' retenue' + (k > 1 ? 's' : '') : ''; }; upd();
       $$('.mat-img img', root).forEach((im) => { im.addEventListener('error', () => im.remove()); im.addEventListener('load', () => im.parentNode && im.parentNode.classList.add('has')); });
       $$('[data-si]', root).forEach((b) => (b.onclick = () => { const i = +b.dataset.si; if (sel.has(i)) sel.delete(i); else sel.add(i); b.classList.toggle('on', sel.has(i)); b.setAttribute('aria-pressed', sel.has(i)); upd(); }));
       $$('[data-qo]', root).forEach((b) => (b.onclick = () => {

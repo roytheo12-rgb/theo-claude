@@ -75,6 +75,7 @@ const PRIV = {
   'jean paul gaultier': re('^(ambre tatouage|cuir 1976|french oud|rose palace|santal de paname|musc terrible)'),
 };
 const YSLV = re('^(babycat|blouse|caban|caftan|capeline|coeur fetish|cuir sublime|gold supreme|grain de poudre|jumpsuit|lavalliere|muse|rouge velours|saharienne|trench|tuxedo|velours|24 rue|37 rue|6 place|vinyle|atlas garden|exquisite embroidery|magnificent gold|sleek suede|splendid wood|supreme bouquet|wild leather|cuir$|manifesto)');
+const HERMESSENCE = re('^(ambre narguile|vetiver tonka|cuir d ange|poivre samarcande|rose ikebana|osmanthe yunnan|iris ukiyoe|muguet porcelaine|vanille galante|santal massoia|brin de reglisse|paprika brasil|epice marine|myrrhe eglantine|cardamusc|cedre sambac|agar ebene|violette volynka|oud alezan|ginseng biloba|musc pallida)');
 const PRICEOF = (T0, k) => T0[k] || null;
 module.exports = function official(house, name, coll) {
   const t = T[house]; if (!t) return null;
@@ -82,6 +83,14 @@ module.exports = function official(house, name, coll) {
   if (house === 'yves saint laurent' && YSLV.test(name)) return /extrait/.test(name) ? { p: 495, v: 50 } : /^(24 rue|37 rue|6 place)/.test(name) ? { p: 370, v: 125 } : { p: 320, v: 125 };
   // Armani Privé, Les Terres Précieuses
   if (house === 'armani' && /^(bleu lazuli|bleu turquoise|rouge malachite|vert malachite|indigo tanzanite|magenta tanzanite|blanc kogane|noir kogane|armani prive)/.test(name)) return { p: 265, v: 50 };
+  if (house === 'chanel') {
+    if (/extrait/.test(name) && /^n 5|n 5 /.test(name)) return { p: 475, v: 30 };
+    if (/extrait/.test(name) && /gardenia|beige|n 22|1932/.test(name)) return { p: 440, v: 30 };
+    if (/^paris /.test(name)) return { p: 165, v: 125 };
+    if (PRIV.chanel.test(name)) return { p: 260, v: 75 };
+  }
+  if (house === 'hermes' && HERMESSENCE.test(name)) return /^(oud alezan|ginseng biloba|musc pallida)/.test(name) ? { p: 350, v: 100 } : { p: 310, v: 100 };
+  if (house === 'dior' && PRIV.dior.test(name)) return /esprit de parfum/.test(name) ? { p: 440, v: 80 } : { p: 300, v: 100 };
   if (PRIV[house] && PRIV[house].test(name)) return null;
   if (house === 'louis vuitton' && (coll === 'Les Extraits' || /^(ink mark|fantasmagory|symphony|stellar times|dancing blossom|cosmic cloud|myriad)/.test(name))) return { p: 575, v: 100 };
   if (house === 'jo malone') { const r = /intense|absolu/.test(name) ? t.intense : t.cologne; return { p: r[0], v: r[1] }; }
