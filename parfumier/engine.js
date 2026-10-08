@@ -1086,6 +1086,7 @@
     (settings.vibes || []).forEach((k) => VIBES[k] && put(VIBES[k], 1));
     if (settings.power && POWER[settings.power]) put(POWER[settings.power], 1);
     (settings.occ || []).forEach((k) => OCCS[k] && put(OCCS[k], .6));
+    if (Array.isArray(settings.axisV) && settings.axisV.length === 18) settings.axisV.forEach((x, i) => { v[i] += x * .8; });      // vecteur de goûts appris par le voyage
     return v.some((x) => x) ? v : null;
   }
   const hash01 = (s) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 10007) / 10007; };
