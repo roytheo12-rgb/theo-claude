@@ -987,3 +987,10 @@ a.chip { text-decoration: none; display: inline-block; }
 .vsb { padding: 14px 4px; border: 1px solid var(--line); border-radius: 10px; background: rgba(242, 235, 224, .05); color: var(--ink); font-size: 13.5px; line-height: 1.2; cursor: pointer; transition: all .2s; }
 .vsb:hover { border-color: rgba(242, 235, 224, .4); }
 .vsb.on { border-color: var(--wine); background: rgba(180, 57, 74, .3); color: #fff; }
+.vgrp { margin: 18px 0 8px; font: 400 15px var(--f-display, serif); letter-spacing: .04em; color: rgba(242, 235, 224, .6); text-transform: uppercase; }
+.vgrp:first-of-type { margin-top: 4px; }
+/* voyage : le bas de la fenêtre reste atteignable (pastille du parfumier, barre du téléphone) et le défilement ne rebondit pas */
+.panel { overscroll-behavior: contain; scroll-behavior: auto; }
+.voy { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); overflow-anchor: none; }
+.mats, .vopts, .sits { overflow-anchor: none; }
+.mat-img img { content-visibility: auto; }
