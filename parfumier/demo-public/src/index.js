@@ -2,6 +2,7 @@
 // limite chaque visiteur à MAX_TRIES essais et récolte les inscriptions.
 import Anthropic from '@anthropic-ai/sdk';
 import { dayPrompt, identifyPrompt, needPrompt } from './prompt.mjs';
+import { makeAccount } from './account.js';
 
 const JSON_H = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
 const reply = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: JSON_H });
@@ -65,6 +66,28 @@ export function makeWorker(deps = {}) {
       const ipHash = await sha(ip + (env.SALT || 'sillage'));
       const ipKey = `ip:${ipHash}:${today()}`, ipIdentKey = `ipi:${ipHash}:${today()}`;
 
+      // ---- Comptes, offres Whop, profil, communauté, éditeur
+      const acc = makeAccount({ kv, env, reply, clean, hex, fullSha, randHex, int, deps });
+      { const r = await acc.handle(request, url); if (r) return r; }
+
+      // ---- Parfumier en conversation (modèle léger) : réservé aux comptes, compté par offre
+      if (url.pathname === '/api/chat' && request.method === 'POST') {
+        const M = await acc.meter(request, 'chat'); if (!M) return reply({ code: 'auth' }, 401);
+        if (!M.ok) return reply({ code: 'quota', plan: M.plan, left: 0 }, 429);
+        let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
+        const prompt = typeof body.prompt === 'string' ? body.prompt : ''; if (prompt.length < 10 || prompt.length > 12000) return reply({ code: 'prompt' }, 400);
+        let text;
+        try {
+          const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+          const res = await client.messages.create({ model: env.CHAT_MODEL || 'claude-haiku-5-5', max_tokens: 900, system: 'Tu es le parfumier privé de l\'application Sillage. Tu ne réponds qu\'à des questions de parfumerie, de goût et de style, en français, par un JSON comme demandé. Tu n\'inventes ni parfum, ni note, ni prix.', messages: [{ role: 'user', content: prompt }] });
+          if (res.stop_reason === 'refusal') return reply({ code: 'refusal' }, 502);
+          text = (res.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
+        } catch (e) { return reply({ code: 'upstream' }, 502); }
+        const data = extractJson(text); if (!data) return reply({ code: 'parse' }, 502);
+        await M.commit();
+        return reply({ data, left: M.left - 1 });
+      }
+
       // ---- Essais restants
       if (url.pathname === '/api/quota' && request.method === 'GET') {
         const vid = request.headers.get('x-visitor') || '';
@@ -76,13 +99,14 @@ export function makeWorker(deps = {}) {
 
       // ---- Conseil du jour (le seul appel IA de la démo)
       if (url.pathname === '/api/day' && request.method === 'POST') {
+        const M = await acc.meter(request, 'adv');
         const vid = request.headers.get('x-visitor') || '';
-        if (!VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
+        if (!M && !VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
         let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
         if (typeof body.collection !== 'string' || body.collection.length < 20 || body.collection.length > 26000) return reply({ code: 'collection' }, 400);
 
         const used = int(await kv.get(`v:${vid}`), 0), ipUsed = int(await kv.get(ipKey), 0);
-        if (used >= max || ipUsed >= ipMax) return reply({ code: 'quota', left: 0 }, 429);
+        if (M ? !M.ok : (used >= max || ipUsed >= ipMax)) return reply({ code: 'quota', left: 0, plan: M && M.plan }, 429);
         const capKey = `cap:${today()}`;
         if (int(await kv.get(capKey), 0) >= cap) return reply({ code: 'busy', left: Math.max(0, max - used) }, 429);
 
@@ -122,6 +146,7 @@ export function makeWorker(deps = {}) {
         if (!data) return reply({ code: 'parse' }, 502);
 
         // Le compteur n'avance qu'après une réponse réussie.
+        if (M) { await M.commit(); await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 }); return reply({ data, left: M.left - 1, plan: M.plan }); }
         await kv.put(`v:${vid}`, String(used + 1));
         await kv.put(ipKey, String(ipUsed + 1), { expirationTtl: 172800 });
         await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 });
@@ -130,12 +155,13 @@ export function makeWorker(deps = {}) {
 
       // ---- Conseil sur mesure (« Je cherche… ») : l'IA tranche parmi les candidats vérifiés par le moteur ; recherche web si WEB_SEARCH=1
       if (url.pathname === '/api/need' && request.method === 'POST') {
+        const M = await acc.meter(request, 'adv');
         const vid = request.headers.get('x-visitor') || '';
-        if (!VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
+        if (!M && !VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
         let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
         const need = clean(body.need, 500); if (need.length < 3) return reply({ code: 'need' }, 400);
         const used = int(await kv.get(`v:${vid}`), 0), ipUsed = int(await kv.get(ipKey), 0);
-        if (used >= max || ipUsed >= ipMax) return reply({ code: 'quota', left: 0 }, 429);
+        if (M ? !M.ok : (used >= max || ipUsed >= ipMax)) return reply({ code: 'quota', left: 0, plan: M && M.plan }, 429);
         const capKey = `cap:${today()}`;
         if (int(await kv.get(capKey), 0) >= cap) return reply({ code: 'busy', left: Math.max(0, max - used) }, 429);
         const g = body.profile && typeof body.profile === 'object' ? body.profile : {}, age = Math.round(Number(g.age));
@@ -150,6 +176,7 @@ export function makeWorker(deps = {}) {
           data = extractJson((res.content || []).filter((b) => b.type === 'text').map((b) => b.text).join(''));
         } catch (e) { return reply({ code: 'upstream' }, 502); }
         if (!data || !Array.isArray(data.picks)) return reply({ code: 'parse' }, 502);
+        if (M) { await M.commit(); await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 }); return reply({ data, left: M.left - 1, plan: M.plan }); }
         await kv.put(`v:${vid}`, String(used + 1));
         await kv.put(ipKey, String(ipUsed + 1), { expirationTtl: 172800 });
         await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 });
@@ -158,8 +185,9 @@ export function makeWorker(deps = {}) {
 
       // ---- Identifier un parfum (nom, image ou lien) avec un modèle léger : quasi gratuit
       if (url.pathname === '/api/identify' && request.method === 'POST') {
+        const M = await acc.meter(request, 'ident');
         const vid = request.headers.get('x-visitor') || '';
-        if (!VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
+        if (!M && !VISITOR_RE.test(vid)) return reply({ code: 'visitor' }, 400);
         let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
         const text = clean(body.text, 600), imgUrl = typeof body.url === 'string' ? body.url.trim() : '', img = body.image;
         const hasImg = img && ['image/jpeg', 'image/png', 'image/webp'].includes(img.media_type) && typeof img.data === 'string' && img.data.length < 1_800_000;
@@ -171,7 +199,7 @@ export function makeWorker(deps = {}) {
         for (const l of lines) { const raw = await kv.get(`ent:${normName(l)}`); if (raw) hits.push(JSON.parse(raw)); else misses.push(l); }
         if (lines.length && !misses.length) return reply({ data: { items: hits }, cached: hits.length, identLeft: undefined });
         const used = int(await kv.get(`iv:${vid}`), 0), ipUsed = int(await kv.get(ipIdentKey), 0), capKey = `icap:${today()}`;
-        if (used >= identMax || ipUsed >= ipIdentMax) return reply({ code: 'quota', identLeft: 0 }, 429);
+        if (M ? !M.ok : (used >= identMax || ipUsed >= ipIdentMax)) return reply({ code: 'quota', identLeft: 0, plan: M && M.plan }, 429);
         if (int(await kv.get(capKey), 0) >= identCap) return reply({ code: 'busy' }, 429);
         const content = [];
         if (hasImg) content.push({ type: 'image', source: { type: 'base64', media_type: img.media_type, data: img.data } });
@@ -180,7 +208,7 @@ export function makeWorker(deps = {}) {
         let items;
         try {
           const client = deps.client || new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
-          const res = await client.messages.create({ model: env.HAIKU_MODEL || 'claude-haiku-4-5-20251001', max_tokens: 900, messages: [{ role: 'user', content }] });
+          const res = await client.messages.create({ model: env.HAIKU_MODEL || 'claude-haiku-5-5', max_tokens: 900, messages: [{ role: 'user', content }] });
           const data = extractJson((res.content || []).filter((b) => b.type === 'text').map((b) => b.text).join(''));
           if (!data || !Array.isArray(data.items)) return reply({ code: 'parse' }, 502);
           items = data.items.map(sanitizeItem).filter(Boolean).slice(0, 4);
@@ -188,6 +216,7 @@ export function makeWorker(deps = {}) {
         if (misses.length === 1 && items.length === 1) await kv.put(`ent:${normName(misses[0])}`, JSON.stringify(items[0]));
         items = hits.concat(items);
         for (const it of items) { const k = `cand:${normName(it.name)}`; if (!(await kv.get(k))) await kv.put(k, JSON.stringify({ d: it, v: [], p: false })); }
+        if (M) { await M.commit(); await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 }); return reply({ data: { items }, identLeft: M.left - 1 }); }
         await kv.put(`iv:${vid}`, String(used + 1)); await kv.put(ipIdentKey, String(ipUsed + 1), { expirationTtl: 172800 }); await kv.put(capKey, String(int(await kv.get(capKey), 0) + 1), { expirationTtl: 172800 });
         return reply({ data: { items }, identLeft: Math.max(0, Math.min(identMax - used - 1, ipIdentMax - ipUsed - 1)) });
       }

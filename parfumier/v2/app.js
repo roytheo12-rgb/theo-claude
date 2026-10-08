@@ -2554,8 +2554,6 @@
   const SCALES = [['frais', 'sucre', 'boise', 'floral']];
   const SC_L = ['Pas du tout', 'Un peu', 'J\'aime', 'J\'adore'], SC_W = [-1, .2, 1, 1.9];
   const TAPS = {
-    trace: { n: "Un parfum, c'est aussi une première impression.", h: "Quelle image veux-tu donner de toi ?", o: [["Quelqu'un d'élégant, qui a du goût", { ax: { formalite: .8, poudre: .3 }, vibes: ['elegant'] }], ["Quelqu'un de mystérieux, qu'on a envie de découvrir", { ax: { fume: .5, resine: .5, originalite: .4, sensualite: .3 }, vibes: ['original', 'sensuel'] }], ["Quelqu'un de lumineux et de joyeux", { ax: { fraicheur: .8, fruite: .4, douceur: .3 }, vibes: ['frais'] }], ["Quelqu'un de doux et de rassurant", { ax: { douceur: .8, cremeux: .6, musque: .4 }, vibes: ['sucre', 'naturel'] }], ["Quelqu'un de séduisant, de magnétique", { ax: { sensualite: 1, densite: .5 }, vibes: ['sensuel'] }], ["Quelqu'un d'original, qui ne ressemble à personne", { ax: { originalite: 1.2, clivage: .5 }, vibes: ['original'] }]] },
-    power: { n: "Un parfum a une voix, qui porte plus ou moins loin.", h: "À quelle distance veux-tu qu'on te sente ?", o: [["À peine, tout contre la peau", { power: 'discret', ax: { densite: -1, musque: .5 } }], ["À bout de bras", { power: 'discret', ax: { densite: -.3 } }], ["Dans toute la pièce", { power: 'present', ax: { densite: .4 } }], ["Dans tout l'ascenseur, sans hésiter", { power: 'fort', ax: { densite: 1.2, epice: .3, resine: .3 } }]] },
   };
   const RANKS = {
     vie: { t: "Ton style de vie", n: "Ta vie de tous les jours, c'est plutôt quoi ? Touche tout ce qui te correspond, dans l'ordre : le premier, c'est le plus toi.", items: [115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126] },
@@ -2565,6 +2563,8 @@
     monde: { t: "Ton monde", n: "Les visages et les univers qui te font rêver. Touche ce qui te ressemble, dans l'ordre.", items: [112, 113, 111, 80, 82, 81], hero: 'Basquiat' },
   };
   const OPTS = {
+    trace: { t: "Ton image", n: "Un parfum, c'est aussi une première impression.".replace(/\.$/, '') + ". Quelle image veux-tu donner de toi ? Touche tout ce qui te correspond, dans l'ordre : le premier, c'est le plus toi.", o: [["Quelqu'un d'élégant, qui a du goût", { ax: { formalite: .8, poudre: .3 }, vibes: ['elegant'] }], ["Quelqu'un de mystérieux, qu'on a envie de découvrir", { ax: { fume: .5, resine: .5, originalite: .4, sensualite: .3 }, vibes: ['original', 'sensuel'] }], ["Quelqu'un de lumineux et de joyeux", { ax: { fraicheur: .8, fruite: .4, douceur: .3 }, vibes: ['frais'] }], ["Quelqu'un de doux et de rassurant", { ax: { douceur: .8, cremeux: .6, musque: .4 }, vibes: ['sucre', 'naturel'] }], ["Quelqu'un de séduisant, de magnétique", { ax: { sensualite: 1, densite: .5 }, vibes: ['sensuel'] }], ["Quelqu'un d'original, qui ne ressemble à personne", { ax: { originalite: 1.2, clivage: .5 }, vibes: ['original'] }]], w: 1 },
+    power: { t: "Ta présence", n: "Un parfum a une voix, qui porte plus ou moins loin. À quelle distance veux-tu qu'on te sente ? Touche ce qui te convient, dans l'ordre.", o: [["À peine, tout contre la peau", { power: 'discret', ax: { densite: -1, musque: .5 } }], ["À bout de bras", { power: 'discret', ax: { densite: -.3 } }], ["Dans toute la pièce", { power: 'present', ax: { densite: .4 } }], ["Dans tout l'ascenseur, sans hésiter", { power: 'fort', ax: { densite: 1.2, epice: .3, resine: .3 } }]], w: 1 },
     seasons: { t: "Tes saisons", n: "La terre mouillée, les toits chauds, le bois qui crépite. Chaque saison a son accord. Classe-les de ta préférée à celle que tu aimes le moins.", o: SEASONS, w: .7 },
     mats: { t: "Tes matières", n: "Imagine la table d'un parfumier, des petits flacons alignés, la rose à côté de l'oud, la vanille près du cuir. Touche-les dans l'ordre, de celle qui t'attire le plus à celle qui t'attire le moins, et arrête-toi quand tu veux.", o: MATS, w: .9, mats: 1 },
     flee: { t: "Ce que tu fuis", n: "Un bon conseil, c'est aussi savoir ce qu'on ne te proposera jamais. Touche ce que tu supportes le moins.", o: [["Le sucré écœurant", { avoid: ['praline', 'caramel'] }], ["Le fumé qui brûle", { avoid: ['bouleau'] }], ["Le poudré à l'ancienne", { avoid: ['violette', 'aldéhydes'] }], ["Le floral capiteux", { avoid: ['tubéreuse', 'ylang'] }], ["Le cuir lourd et animal", { avoid: ['civette', 'cuir'] }], ["Le très frais, façon lessive", { avoid: ['lessive'], ax: { fraicheur: -.5 } }]], w: 1, plain: 1 },
@@ -2607,10 +2607,10 @@
   const plImg = (t) => { const p = (window.PLAYLISTS || []).find((x) => x.t === t); return p && p.img ? p.img : ''; };
   const VQ_NEXT = ['Continuer', 'Suivant', 'La suite', 'On avance'];
   // Le plan : on commence par ce que tu aimes (précis, en échelle), on creuse tes familles préférées, puis ton style, ta présence, tes moments et tes envies.
-  const PLAN = ['intro', 'scales:0', 'follow:0', 'follow:1', 'tap:trace', 'tap:power', 'rank:vie', 'opts:seasons', 'rank:escapades', 'opts:mats', 'rank:style', 'rank:caractere', 'rank:monde', 'opts:flee', 'refs', 'end'];
+  const PLAN = ['intro', 'scales:0', 'follow:0', 'follow:1', 'opts:trace', 'opts:power', 'rank:vie', 'opts:seasons', 'rank:escapades', 'opts:mats', 'rank:style', 'rank:caractere', 'rank:monde', 'opts:flee', 'refs', 'end'];
   function mountVoyage(root, done, opts) {
     opts = opts || {};
-    const R = { scales: {}, follow: {}, taps: {}, ranks: {}, opts: { seasons: [], mats: [], flee: [] }, refs: [] }; let c = 0, dir = 1, busy = false;
+    const R = { scales: {}, follow: {}, taps: {}, ranks: {}, opts: { trace: [], power: [], seasons: [], mats: [], flee: [] }, refs: [] }; let c = 0, dir = 1, busy = false;
     const NC = PLAN.length;
     const go = (d) => { dir = d; c = Math.max(0, Math.min(NC - 1, c + d)); draw(); };
     const shell = (inner, o) => `<div class="voy"><div class="vbar" aria-hidden="true"><i style="width:${Math.round(100 * c / (NC - 1))}%"></i></div>${inner}${(o && o.nonext) ? '' : `<button class="cta full" id="vNext"><span>${(o && o.next) || VQ_NEXT[c % VQ_NEXT.length]}</span></button>`}${c > 1 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip && c < NC - 1 ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
@@ -2671,7 +2671,7 @@
         ${recs.length ? `<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:20px">Mes trois premiers choix pour toi</p><div class="rail brail2">${recs.map((r) => pCard(r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }, r.pct + ' %')).join('')}</div>` : ''}
         <button class="cta full" id="vGo"><span>${opts.cta || 'Continuer'}</span></button><button class="ghost" id="vAgain">Refaire le voyage</button></div>`;
       $$('[data-ent]', root).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
-      $('#vGo', root).onclick = () => done(); $('#vAgain', root).onclick = () => { R.scales = {}; R.follow = {}; R.taps = {}; R.ranks = {}; R.opts = { seasons: [], mats: [], flee: [] }; R.refs = []; c = 0; draw(); };
+      $('#vGo', root).onclick = () => done(); $('#vAgain', root).onclick = () => { R.scales = {}; R.follow = {}; R.taps = {}; R.ranks = {}; R.opts = { trace: [], power: [], seasons: [], mats: [], flee: [] }; R.refs = []; c = 0; draw(); };
     };
     draw();
   }

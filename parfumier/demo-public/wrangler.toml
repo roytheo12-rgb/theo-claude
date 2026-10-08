@@ -16,7 +16,7 @@ id = "COLLE_ICI_L_ID_DU_KV"
 [vars]
 MODEL = "claude-sonnet-5-5"   # pour plus de qualité (2× plus cher) : "claude-opus-5-5"
 EFFORT = "low"
-HAIKU_MODEL = "claude-haiku-4-5-20251001"  # identification des parfums (quasi gratuit)
+HAIKU_MODEL = "claude-haiku-5-5"  # identification des parfums (quasi gratuit)
 IDENT_MAX = "15"            # analyses de parfum par visiteur (un parfum déjà connu ne compte pas)
 IDENT_IP_MAX_PER_DAY = "40" # analyses par adresse IP et par jour
 IDENT_DAILY_CAP = "600"     # analyses au total par jour
@@ -27,3 +27,10 @@ DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confond
 #   npx wrangler secret put ANTHROPIC_API_KEY
 #   npx wrangler secret put ADMIN_KEY
 #   npx wrangler secret put SALT
+
+# --- Whop, comptes, éditeur (voir docs/WHOP.md) ---
+# WHOP_PRODUCTS fait le lien entre tes produits Whop et les offres de l'appli. Remplace par tes identifiants (commencent par prod_ ou plan_) :
+# WHOP_PRODUCTS = '{"prod_PREMIUM":"premium","prod_FONDATEUR":"founder"}'
+# Secrets à définir en ligne de commande :
+#   npx wrangler secret put WHOP_API_KEY      (clé API Whop, droit member:basic:read)
+#   npx wrangler secret put ADMIN_EMAILS      (ton email : ce compte devient « éditeur »)
