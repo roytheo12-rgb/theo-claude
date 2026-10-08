@@ -1,2 +1,13 @@
 # Prix relevés qui remplacent toute estimation : Maison | Parfum | prix en euros
 Frédéric Malle | The Night | 1430
+Maison Francis Kurkdjian | Grand Soir | 205 | 70 ml | https://www.franciskurkdjian.com/eu-en/p/grand-soir-eau-de-parfum-RA122511.html
+Byredo | Bal d'Afrique | 245 | 100 ml | https://www.byredo.com/eu_en/p/bal-d-afrique-eau-de-parfum?sku=0065204863
+Maison Crivelli | Hibiscus Mahajád | 350 | 100 ml | https://maisoncrivelli.com/en-fr/products/hibiscus-mahajad
+Aesop | Hwyl | 290 | 100 ml | https://www.aesop.ie/fragrance/silently%2C-hwyl-eau-de-parfum/FR43.html?dwvar_FR43_size=100%20mL%20%5E%203.4%20fl
+Diptyque | Philosykos | 155 | 100 ml | https://diptyqueparis.com/fr-fr/products/eau-de-toilette-philosykos-philo100v2
+Xerjoff | Naxos | 245 | 100 ml | https://www.xerjoff.com/en-fr/products/naxos-eau-de-parfum
+Maison Francis Kurkdjian | Gentle Fluidity Gold | 205 | 70 ml | https://www.franciskurkdjian.com/eu-en/p/gentle-fluidity-gold-edition---eau-de-parfum-RA122821.html
+Marc-Antoine Barrois | Ganymede | 200 | 100 ml | https://marcantoinebarrois.com/en/products/ganymede?variant=45521387094298
+Initio | Side Effect | 280 | 90 ml | https://initioparfums.com/products/side-effect
+Maison Francis Kurkdjian | Baccarat Rouge 540 Extrait | 375 | 70 ml | https://www.franciskurkdjian.com/int-fr/p/baccarat-rouge-540-extrait-de-parfum-RA142321.html
+Maison Francis Kurkdjian | Oud Satin Mood | 255 | 70 ml | https://www.franciskurkdjian.com/eu-en/p/oud-satin-mood-eau-de-parfum-RA122221.html
