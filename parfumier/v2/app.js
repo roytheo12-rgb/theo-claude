@@ -327,7 +327,7 @@
     $('#view').innerHTML = `
       <section class="hero">
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
-        ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
+        ${window.SillageDemo && !PRESENT ? (window.SillageDemo.plan.me() ? `<button class="demo-pill" data-sell>${esc(window.SillageDemo.plan.me().label)} · ${window.SillageDemo.left() > 9999 ? 'conseils IA illimités' : window.SillageDemo.left() + ' conseil' + (window.SillageDemo.left() > 1 ? 's' : '') + ' IA'}</button>` : `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>`) : ''}
         <h1>${hello}</h1>
         <p class="q">Où te mène ta journée&nbsp;?</p>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Choisis tes parfums dans la base (par maison, style, notes…), écris-les, ou prends-les en photo.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
@@ -790,9 +790,9 @@
   const chatHist = () => CHAT.msgs.slice(-7, -1).map((m) => (m.r === 'u' ? 'Moi : ' : 'Toi : ') + String(m.t || '').slice(0, 260)).join('\n');
   // Le regard de l'IA sur une réponse calculée : plus humain, relié à la conversation, et une question quand il manque une information.
   async function aiPolish(q, ia) {
-    if (window.SillageDemo || !window.SillagePrompts || ia.chips || ia.raw) return;
+    if (ia.chips || ia.raw) return;
     try {
-      const sample = await getSample(); if (!sample) return;
+      const sample = await getSample(); if (!sample || sample.isLocked) return;
       const base = [ia.t, (ia.picks || []).map((k) => k.name + ' (' + k.house + ')' + (k.line ? ' : ' + k.line : '')).join('\n')].filter(Boolean).join('\n').slice(0, 2600);
       const prompt = `Tu es le parfumier privé d'une application de parfums. ${VOIX_TX} Réponds en français.\n${chatHist() ? 'Conversation récente :\n' + chatHist() + '\n' : ''}Question de la personne : """${q.slice(0, 400)}"""\nFaits vérifiés calculés par l'application (appuie-toi dessus, ne les contredis pas, n'invente ni parfum, ni note, ni prix) :\n"""${base}"""\n${tasteFor() ? 'Ses goûts : ' + tasteFor().slice(0, 700) + '\n' : ''}${colFor() ? 'Sa collection :\n' + colFor().slice(0, 1200) + '\n' : ''}Écris une réponse de 3 à 5 phrases, chaleureuse, précise et reliée à ce qu'elle a dit. Si tu manques d'une information essentielle pour bien la conseiller (occasion, saison, budget, notes aimées ou fuies, pour elle ou pour offrir), pose UNE seule question courte dans "ask" et donne 3 réponses rapides dans "chips" ; sinon laisse "ask" vide. Réponds UNIQUEMENT par un JSON : {"reply":"","ask":"","chips":[""]}`;
       const j = await aiJson(prompt, { modelTier: 'default' });
@@ -1152,6 +1152,7 @@
       if (x.p && (!e.price || !x.pe)) { e.price = x.p; if (x.pe) e.pe = true; else delete e.pe; if (e.cat) e.cat.price = x.p; }
       if (x.y) e.year = x.y; if (x.c) e.coll = x.c; });
     (S.customDb || []).forEach((c) => { const k = E.norm(c.house + ' ' + c.name); if (seen.has(k)) return; seen.add(k); out.push({ g: gdOf(c.name, c.house), ed: false, name: c.name, house: c.house || 'Autre', conc: '', cat: null, family: c.family || null, notes: c.notes || [], price: c.price || 0, noses: [], guess: false, tags: [], custom: true }); });
+    const HIDE = window.SILLAGE_HIDE; if (HIDE && HIDE.size) for (let i = out.length - 1; i >= 0; i--) if (HIDE.has(E.norm(out[i].house) + '|' + E.norm(out[i].name))) out.splice(i, 1);     // parfums masqués par l'éditeur
     DBL = { n: CAT.length + nCustom, l: out }; return out;
   }
   // Pool des conseils et de la recherche par besoin : le catalogue détaillé + toute la base dont les notes sont réelles (jamais de devinette).
@@ -1581,10 +1582,11 @@
       ${buyLinks(e.name, e.house)}`);
     $('#ex', pn).onclick = closeSheet;
     bindFiche(pn);
+    if (window.SillageProduct) window.SillageProduct.entry(pn, e);
     if ($('#eown', pn)) $('#eown', pn).onclick = () => { addEntriesToCollection([e]); closeSheet(); render(true); };
     if ($('#ewish', pn)) $('#ewish', pn).onclick = () => { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); save(); closeSheet(); render(true); };
   }
-  function addEntriesToCollection(list) { list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); autoFill(); }
+  function addEntriesToCollection(list) { if (window.SillageProduct) list = window.SillageProduct.limitAdd(list); list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); autoFill(); }
   function openExplore(mode) {
     const pn = openSheet('<div id="exh"></div>');
     mountExplorer($('#exh', pn), mode === 'wish'
@@ -1669,6 +1671,7 @@
     if ($('#acreate', pn)) $('#acreate', pn).onclick = () => { closeSheet(); showAccount('profile'); };
     if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
+    if (window.SillageProduct) window.SillageProduct.profile(pn);
     mountTaste($('#tedit', pn), ['notes', 'vibes', 'occ']);
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
@@ -2060,7 +2063,7 @@
   }
 
   // ---------- Playlists : une bibliothèque d'univers ----------
-  const PLS = window.PLAYLISTS || [], PL = { id: 0, sec: '' };
+  const PLS = window.PLAYLISTS || [], PL = { id: 0, sec: '', sub: '' };
   let PLK = null;
   const plLook = () => { const L = dbList(); if (PLK && PLK.l === L) return PLK.m; const m = new Map(); L.forEach((e) => { const k = entryKey(e); if (!m.has(k)) m.set(k, e); }); PLK = { l: L, m }; return m; };
   const plEntry = (x) => { if (!x.h) return null; const HA = window.HOUSE_ALIAS || {}; const L = plLook(); return L.get(E.norm((HA[E.norm(x.h)] || x.h) + ' ' + x.n)) || L.get(E.norm(x.h + ' ' + x.n)) || null; };
@@ -2084,7 +2087,7 @@
   const plNum = (p, i) => { if (!p.grp) return i + 1; let s = 0; for (const g of p.grp) { const n = g.n || 10; if (i < s + n) return i - s + 1; s += n; } return i + 1; };
   const plDesc = (p) => p.d || (p.grp ? p.grp.map((g) => g.d).join(' ') : '');
   const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(), L = PLS.filter((p) => p.img); return (L.length ? L : PLS)[k % (L.length || PLS.length)]; };      // jamais une liste sans photo
-  function viewPlay() { PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
+  function viewPlay() { if (PL.sub && window.SillageProduct) { PL.id = 0; return window.SillageProduct.playSub(PL.sub); } PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
   function viewPlayLib() {
     const secs = (window.PL_SECTIONS || []).filter((s) => !PL.sec || s === PL.sec), day = plDay();
     $('#view').innerHTML = `
@@ -2096,6 +2099,7 @@
       ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)).sort((a, b) => (b.top ? 1 : 0) - (a.top ? 1 : 0)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
     $$('[data-pl]').forEach((b) => (b.onclick = () => { PL.id = +b.dataset.pl; render(); }));
     $$('[data-psec]').forEach((b) => (b.onclick = () => { PL.sec = b.dataset.psec; viewPlayLib(); }));
+    if (window.SillageProduct) window.SillageProduct.subtabs($('#view'));
   }
   function viewPlaylist(p) {
     if (!p) { PL.id = 0; return viewPlayLib(); }
@@ -2130,6 +2134,7 @@
       </section>`;
     $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; render(); } else goNeedText(v); }));
     $('#plback').onclick = () => { PL.id = 0; render(); };
+    if (window.SillageProduct) window.SillageProduct.playlist(p, $('#view'));
     const open = (i) => { const e = st.es[i], x = p.ps[i]; if (e) return openEntry(e); const pn = openSheet(`<div><h2>${esc(x.q)}</h2><p class="mono" style="margin-top:6px">Pas encore dans la base de Sillage</p></div><p style="color:var(--muted);font-size:14px">Ce parfum fait partie de la liste « ${esc(p.t)} », mais je n'ai pas encore sa fiche. Tu peux le garder en wishlist pour le sentir.</p><div class="row">${hasWish(x.q) ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="cta" id="plw"><span>À sentir</span></button>'}<button class="ghost" id="ex">Fermer</button></div>`); $('#ex', pn).onclick = closeSheet; if ($('#plw', pn)) $('#plw', pn).onclick = () => { addWish({ name: x.q, house: '', family: '', notes: [], price: 0, st: 'smell' }); save(); closeSheet(); viewPlaylist(p); }; };
     $$('[data-pe]').forEach((b) => (b.onclick = () => open(+b.dataset.pe)));
     $('#plshuf').onclick = () => { const L = p.ps.map((x, i) => i).filter((i) => st.es[i]); if (L.length) open(L[Math.floor(Math.random() * L.length)]); };
@@ -2412,36 +2417,48 @@
   }
   // Déconnexion ou suppression : on efface les données de cet appareil (téléphone partagé) et on redemande un compte.
   const afterLeave = () => { S = DEF(); S.collection = []; S.wishlist = []; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ok */ } closeSheet(); tab = 'today'; render(true); gate(); };
-  window.addEventListener('sillage:expired', () => { if (needAcct()) afterLeave(); });
+  // Session expirée : on ne vide rien, on propose de se reconnecter (les données de l'appareil sont gardées).
+  window.addEventListener('sillage:expired', () => { if (needAcct() && !$('#acct')) { closeSheet(); $$('#onb, #prof').forEach((x) => x.remove()); showAccount('expired'); } });
   // Compte : créer (puis les questions d'inscription) ou se connecter (le profil complet revient), ou continuer sans compte.
-  function showAccount(from) {
+  function showAccount(from, opt) {
+    opt = opt || {};
     const A = window.SillageDemo.account;
     const el = document.createElement('div'); el.id = 'acct'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Compte');
-    let mode = 'signup';
-    const MSG = { email: 'Cet email semble incomplet.', password: 'Choisis un mot de passe de 8 caractères minimum.', exists: 'Un compte existe déjà avec cet email : connecte-toi.', credentials: 'Email ou mot de passe incorrect.', rate: 'Trop d\'essais pour l\'instant. Réessaie un peu plus tard.', network: 'Pas de connexion. Réessaie dans un instant.', server: 'Un souci de notre côté. Réessaie dans un instant.' };
+    let mode = opt.reset ? 'reset' : from === 'expired' ? 'login' : 'signup', email0 = opt.email || '';
+    const MSG = { email: 'Cet email semble incomplet.', password: 'Choisis un mot de passe de 8 caractères minimum.', exists: 'Un compte existe déjà avec cet email : connecte-toi.', credentials: 'Email ou mot de passe incorrect.', rate: 'Trop d\'essais pour l\'instant. Réessaie un peu plus tard.', network: 'Pas de connexion. Réessaie dans un instant.', server: 'Un souci de notre côté. Réessaie dans un instant.', token: 'Ce lien a expiré ou a déjà servi. Demande-en un nouveau.' };
     const draw = () => {
-      el.innerHTML = `<div class="prof-in"><p class="mono">Ton compte</p><h2>${mode === 'signup' ? 'Garde ton profil' : 'Content de te revoir'}</h2>
-        <p class="soft">${mode === 'signup' ? 'Un compte sauvegarde tout : tes parfums, ta wishlist, tes goûts. Tu les retrouves sur tous tes appareils.' : 'Connecte-toi pour retrouver ton profil, ta collection et ta wishlist.'}</p>
-        <div class="chips acct-tabs"><button class="chip ${mode === 'signup' ? 'on' : ''}" data-m="signup">Créer un compte</button><button class="chip ${mode === 'login' ? 'on' : ''}" data-m="login">J'ai déjà un compte</button></div>
-        <form id="acf" class="acf" novalidate><input type="email" id="aem" autocomplete="email" inputmode="email" placeholder="Ton email" aria-label="Ton email"><input type="password" id="apw" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}" placeholder="${mode === 'signup' ? 'Mot de passe (8 caractères minimum)' : 'Mot de passe'}" aria-label="Mot de passe">
+      const T2 = { signup: ['Garde ton profil', 'Un compte sauvegarde tout : tes parfums, ta wishlist, tes goûts. Tu les retrouves sur tous tes appareils.'], login: [from === 'expired' ? 'Reconnecte-toi' : 'Content de te revoir', from === 'expired' ? 'Ta session a expiré, ça arrive. Reconnecte-toi : tout ce que tu as sur cet appareil est gardé.' : 'Connecte-toi pour retrouver ton profil, ta collection et ta wishlist.'], forgot: ['Mot de passe oublié', 'Donne-moi ton email. Si un compte existe, je t\'envoie un lien pour choisir un nouveau mot de passe.'], reset: ['Nouveau mot de passe', 'Choisis-en un nouveau (8 caractères minimum). Ensuite tu es connecté.'] }[mode];
+      const isPw = mode !== 'forgot', isEm = mode !== 'reset';
+      el.innerHTML = `<div class="prof-in"><p class="mono">Ton compte</p><h2>${T2[0]}</h2>
+        <p class="soft">${T2[1]}</p>
+        ${mode === 'signup' || mode === 'login' ? `<div class="chips acct-tabs"><button class="chip ${mode === 'signup' ? 'on' : ''}" data-m="signup">Créer un compte</button><button class="chip ${mode === 'login' ? 'on' : ''}" data-m="login">J'ai déjà un compte</button></div>` : ''}
+        <form id="acf" class="acf" novalidate>${isEm ? `<input type="email" id="aem" autocomplete="email" inputmode="email" placeholder="Ton email" aria-label="Ton email" value="${esc(email0)}">` : ''}${isPw ? `<input type="password" id="apw" autocomplete="${mode === 'login' ? 'current-password' : 'new-password'}" placeholder="${mode === 'login' ? 'Mot de passe' : 'Mot de passe (8 caractères minimum)'}" aria-label="Mot de passe">` : ''}
           <p class="mono" id="amsg" role="alert" style="text-transform:none;letter-spacing:0;min-height:18px"></p>
-          <button class="cta full" id="ago"><span>${mode === 'signup' ? 'Créer mon compte' : 'Me connecter'}</span></button></form>
+          <button class="cta full" id="ago"><span>${{ signup: 'Créer mon compte', login: 'Me connecter', forgot: 'Recevoir le lien', reset: 'Enregistrer et entrer' }[mode]}</span></button></form>
+        ${mode === 'login' ? '<button class="ghost" id="aforgot" type="button">Mot de passe oublié ?</button>' : ''}${mode === 'forgot' ? '<button class="ghost" id="aback" type="button">Retour</button>' : ''}
         <p class="soft small">Ton email sert uniquement à te reconnecter. Tu peux supprimer ton compte à tout moment dans Profil.</p>
         ${from === 'profile' ? '<button class="ghost" id="askip">Fermer</button>' : ''}</div>`;
-      $$('[data-m]', el).forEach((b) => (b.onclick = () => { mode = b.dataset.m; draw(); }));
+      $$('[data-m]', el).forEach((b) => (b.onclick = () => { email0 = $('#aem', el) ? $('#aem', el).value : email0; mode = b.dataset.m; draw(); }));
+      if ($('#aforgot', el)) $('#aforgot', el).onclick = () => { email0 = $('#aem', el).value; mode = 'forgot'; draw(); };
+      if ($('#aback', el)) $('#aback', el).onclick = () => { mode = 'login'; draw(); };
       if ($('#askip', el)) $('#askip', el).onclick = close;
       $('#acf', el).onsubmit = async (ev) => {
-        ev.preventDefault(); const em = $('#aem', el).value.trim(), pw = $('#apw', el).value, msg = $('#amsg', el);
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { msg.textContent = MSG.email; return; }
-        if (mode === 'signup' && pw.length < 8) { msg.textContent = MSG.password; return; }
+        ev.preventDefault(); const em = $('#aem', el) ? $('#aem', el).value.trim() : '', pw = $('#apw', el) ? $('#apw', el).value : '', msg = $('#amsg', el);
+        if (isEm && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { msg.textContent = MSG.email; return; }
+        if (isPw && mode !== 'login' && pw.length < 8) { msg.textContent = MSG.password; return; }
         $('#ago', el).disabled = true; msg.textContent = '…';
         try {
-          if (mode === 'signup') { await A.signup(em, pw); close(); if (hasProfile() || from === 'profile') { save(); if (from === 'profile') render(true); } else showProfile(); }
+          if (mode === 'forgot') { await A.forgot(em); msg.textContent = 'C\'est envoyé si un compte existe avec cet email. Regarde ta boîte de réception (et les indésirables).'; $('#ago', el).disabled = false; return; }
+          if (mode === 'reset') { const j = await A.reset(opt.reset, pw); try { history.replaceState(null, '', location.pathname); } catch (e3) { /* ok */ } close(); PULLING = true; const d = await A.pull().catch(() => null); if (d && d.data) { S = Object.assign(DEF(), d.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } } PULLING = false; tab = 'today'; render(); afterLogin(); return; }
+          if (mode === 'signup') { await A.signup(em, pw); close(); if (hasProfile() || from === 'profile') { save(); if (from === 'profile') render(true); } else showProfile(); afterLogin(); }
           else {
             const j = await A.login(em, pw); PULLING = true;
-            if (j.data) { S = Object.assign(DEF(), j.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } }
+            // session expirée : ce que l'appareil a de plus récent reste, on le renvoie au serveur ; sinon le profil du serveur revient
+            if (from === 'expired' && hasProfile()) { PULLING = false; save(); }
+            else if (j.data) { S = Object.assign(DEF(), j.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } }
             PULLING = false; close();
-            if (!hasProfile()) showProfile(); else { tab = 'today'; render(); }
+            if (!hasProfile()) showProfile(); else { if (from !== 'expired') tab = 'today'; render(true); }
+            afterLogin();
           }
         } catch (e) { PULLING = false; msg.textContent = MSG[e.code] || MSG.server; $('#ago', el).disabled = false; }
       };
@@ -2449,6 +2466,8 @@
     const close = () => { el.remove(); document.body.style.overflow = ''; };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
   }
+  // Après une connexion : on charge l'offre, et on propose une fois d'installer l'appli sur l'écran d'accueil.
+  function afterLogin() { const D = window.SillageDemo; if (!D) return; D.plan.load().then(() => { if (window.SillageProduct) window.SillageProduct.onLogin(); }).catch(() => {}); }
 
   // ---------- Profil olfactif : notes adorées ou fuies, ambiance, intensité, occasions, budget (un seul éditeur, partout) ----------
   const NOTE_GROUPS = [
@@ -2790,10 +2809,15 @@
 
   const sellCard = () => (window.SillageDemo && !PRESENT ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine et le voyage.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
   document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('[data-sell]') && window.SillageDemo) window.SillageDemo.upsell('cta'); });
-  window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
+  window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); }, refresh: () => { try { render(true); } catch (e) { /* ok */ } } };
+  // Ce que la couche produit (offres, profil, communauté, éditeur : product.js) a le droit de toucher dans l'appli.
+  window.SillageInternals = {
+    S: () => S, save, dbList: () => dbList(), entryKey, openEntry, openSheet, closeSheet, esc, $, $$, E, xThumb, pCard, famLabel, showAccount: (f, o) => showAccount(f, o), render: (k) => render(k), PLS: () => PLS, PL, tab: () => tab, goTab: (t) => { tab = t; render(); },
+    bust: () => { DBL = null; NPOOL = null; BIOM = null; ENTP = null; HMED = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]); },
+  };
 
   // ---------- Démarrage ----------
-  $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { if (b.dataset.tab === 'play' && tab === 'play') PL.id = 0; tab = b.dataset.tab; render(); } });
+  $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { if (b.dataset.tab === 'play' && tab === 'play') { PL.id = 0; PL.sub = ''; } tab = b.dataset.tab; render(); } });
   $('#profileBtn').onclick = openProfile;
   mountParfumier();
   render();

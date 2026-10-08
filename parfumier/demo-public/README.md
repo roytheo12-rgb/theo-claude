@@ -1,6 +1,6 @@
 # Sillage : démo publique (hébergement gratuit)
 
-Nouveau : lis **TUTO.md** pour tout mettre en ligne pas à pas.
+Nouveau : lis **TUTO.md** pour tout mettre en ligne pas à pas, puis `../docs/WHOP.md` (vente, comptes, éditeur), `../docs/RENTABILITE.md` (coûts et marges) et `../docs/BACKLOG.md` (reste à faire).
 
 Un seul Worker Cloudflare sert le site, garde le prompt du conseil du jour côté serveur, limite chaque visiteur à **2 essais** et récolte les emails.
 

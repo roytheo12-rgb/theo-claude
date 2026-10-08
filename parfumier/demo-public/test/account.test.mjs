@@ -92,4 +92,18 @@ await t('chat : réservé aux comptes, modèle léger, compté par offre', async
   assert.equal((await call('/api/chat', { method: 'POST', body: { prompt: 'x' }, token: u })).status, 400);
 });
 await t('le conseil d\'un compte ne consomme pas les essais visiteurs', async () => { const q = await (await w.fetch(new Request('https://demo.test/api/quota', { headers: { 'x-visitor': 'visitor-000000000001', 'cf-connecting-ip': '8.8.8.8' } }), env)).json(); assert.equal(q.left, 2); });
+await t('mot de passe oublié : lien unique envoyé par email, nouveau mot de passe, ancien refusé', async () => {
+  const mails = []; const w2 = makeWorker({ client, fetch: async (u, init) => { if (String(u).includes('resend')) { mails.push(JSON.parse(init.body)); return new Response('{}'); } return fetchMock(u, init); } });
+  const env2 = { ...env, RESEND_API_KEY: 'k', MAIL_FROM: 'Sillage <noreply@sillage.test>' };
+  const c2 = (path, body) => w2.fetch(new Request('https://demo.test' + path, { method: 'POST', body: JSON.stringify(body), headers: { 'content-type': 'application/json', 'cf-connecting-ip': '7.7.7.' + (++n % 200) } }), env2);
+  await signup('zoe@example.com');
+  assert.equal((await c2('/api/account/forgot', { email: 'inconnu@example.com' })).status, 200); assert.equal(mails.length, 0);
+  assert.equal((await c2('/api/account/forgot', { email: 'zoe@example.com' })).status, 200); assert.equal(mails.length, 1); assert.deepEqual(mails[0].to, ['zoe@example.com']);
+  const tk = mails[0].html.match(/reset=([a-f0-9]{64})/)[1];
+  assert.equal((await c2('/api/account/reset', { token: tk, password: 'court' })).status, 400);
+  const r = await c2('/api/account/reset', { token: tk, password: 'nouveaumdp99' }); assert.equal(r.status, 200); assert.ok((await r.json()).token);
+  assert.equal((await c2('/api/account/reset', { token: tk, password: 'autremdp999' })).status, 400);   // usage unique
+  assert.equal((await c2('/api/account/login', { email: 'zoe@example.com', password: 'motdepasse1' })).status, 401);
+  assert.equal((await c2('/api/account/login', { email: 'zoe@example.com', password: 'nouveaumdp99' })).status, 200);
+});
 console.log(ok, 'tests réussis');

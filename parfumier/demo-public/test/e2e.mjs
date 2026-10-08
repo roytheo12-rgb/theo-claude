@@ -12,6 +12,7 @@ const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async 
 let aiCalls = 0, lastPrompt = '', identCalls = [];
 const idOf = (p, n) => (p.match(new RegExp('^(\\S+) \\| ' + n.replace(/[()]/g, '\\$&') + ' \\|', 'm')) || [])[1];
 const client = { messages: { async create(req) {
+  if (req.system && /parfumier privé de l'application/.test(req.system)) return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"reply":"Réponse du parfumier de test."}' }] };
   if (req.model.includes('haiku')) { identCalls.push(req); const hz = /Moonlight in Heaven/.test(req.messages[0].content.at(-1).text); return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify({ items: [hz ? { name: 'Moonlight in Heaven', house: 'Kilian', family: 'floral', notes: ['jasmin', 'santal'], projection: 3, longevity: 3, weight: 3, price: 290, confidence: 0.8 } : { name: 'Santal 33', house: 'Le Labo', family: 'boisé', notes: ['cardamome', 'iris', 'santal', 'cuir'], projection: 4, longevity: 4, weight: 3, price: 220, confidence: 0.9 }] }) }] }; }
   if (/CANDIDATS vérifiés/.test(req.messages[0].content.at(-1).text)) return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify({ compris: 'Tu veux de la vanille sans patchouli.', picks: [{ role: 'choix', name: 'Un Bois Vanille', house: 'Serge Lutens', pct: 84, pourquoi: 'Vanille boisée sans patchouli.', tete: 'coco', peau: 'vanille boisée' }], eviter: { name: 'Black Opium', house: 'Yves Saint Laurent', raison: 'trop sucré' }, test: 'Teste sur la peau.' }) }] };
   aiCalls++; const p = req.messages[0].content.at(-1).text; lastPrompt = p; await new Promise((r) => setTimeout(r, 500));
@@ -19,7 +20,7 @@ const client = { messages: { async create(req) {
   return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify(j) }] };
 } } };
 const worker = makeWorker({ client });
-const env = { SILLAGE: kv, ADMIN_KEY: 'k', MAX_TRIES: '2', IP_MAX_PER_DAY: '6', DAILY_CAP: '50', ASSETS: { fetch: async (req) => { const u = new URL(req.url); let f = path.join(pub, u.pathname === '/' ? 'index.html' : u.pathname); if (!f.startsWith(pub) || !fs.existsSync(f)) return new Response('nf', { status: 404 }); return new Response(fs.readFileSync(f), { headers: { 'content-type': types[path.extname(f)] || 'application/octet-stream' } }); } } };
+const env = { FREE_ADV: '2', SILLAGE: kv, ADMIN_KEY: 'k', MAX_TRIES: '2', IP_MAX_PER_DAY: '6', DAILY_CAP: '50', ASSETS: { fetch: async (req) => { const u = new URL(req.url); let f = path.join(pub, u.pathname === '/' ? 'index.html' : u.pathname); if (!f.startsWith(pub) || !fs.existsSync(f)) return new Response('nf', { status: 404 }); return new Response(fs.readFileSync(f), { headers: { 'content-type': types[path.extname(f)] || 'application/octet-stream' } }); } } };
 const server = http.createServer(async (rq, rs) => {
   const chunks = []; for await (const c of rq) chunks.push(c);
   const body = chunks.length ? Buffer.concat(chunks) : undefined;
@@ -31,6 +32,7 @@ const ok = (c, m) => { if (!c) throw new Error('ÉCHEC : ' + m); console.log('ok
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const ctx = await browser.newContext({ viewport: { width: 400, height: 860 }, deviceScaleFactor: 1.3, geolocation: { latitude: 48.85, longitude: 2.35 }, permissions: ['geolocation'] });
 await ctx.route('https://api.open-meteo.com/**', (route) => route.fulfill({ json: { current: { apparent_temperature: 3.4, relative_humidity_2m: 88, weather_code: 61, wind_speed_10m: 12 } } }));
+await ctx.addInitScript(() => { try { localStorage.setItem('sillage.install', '1'); } catch (e) { /* ok */ } });
 const pg = await ctx.newPage(); const errs = []; pg.on('pageerror', (e) => errs.push(e.message));
 // La note de chaque parfum est obligatoire : la feuille de notation bloque tout tant qu'un parfum n'est pas noté.
 let rateSeen = 0;
@@ -80,7 +82,7 @@ ok(await pg.locator('#whens .chip').count() === 3 && await pg.locator('#venues .
 await pg.click('[data-venue=resto]'); await pg.click('[data-when=nuit]');
 ok(await pg.locator('.vit button').count() === 3, 'trois parfums ajoutés à la collection');
 ok(await pg.locator('[data-sc=apero].on').count() === 1, 'le clic sur le bouton présélectionne « Apéro entre amis »');
-ok(/Démo · 2 essais/.test(await pg.textContent('.demo-pill')), 'bandeau démo : 2 essais restants');
+ok(/Gratuit · 2 conseils IA/.test(await pg.textContent('.demo-pill')), 'bandeau : offre Gratuit, 2 conseils IA restants');
 // 2. météo automatique
 await pg.click('[data-refine]'); await pg.waitForTimeout(400); await pg.click('#wxAuto'); await pg.waitForTimeout(1200);
 ok(/3° · pluie/.test(await pg.textContent('.hero .mono')), 'météo automatique : 3° · pluie affichée');
@@ -93,17 +95,15 @@ for (let i = 1; i <= 2; i++) {
 }
 ok(aiCalls === 2, 'IA appelée 2 fois'); ok(/humide|humidité|3/.test(lastPrompt) && /pluie/.test(lastPrompt), 'la météo (3°, pluie) part dans le prompt côté serveur');
 ok(/je suis une femme/.test(lastPrompt) && /j'ai 27 ans/.test(lastPrompt) && /tenue : smart casual/.test(lastPrompt) && /stock : /.test(lastPrompt) && /endroit : restaurant/.test(lastPrompt) && /moment : nuit/.test(lastPrompt), 'profil (fille, 27 ans), tenue choisie et stock des flacons partent dans le prompt du jour');
-ok(/0 essai/.test(await pg.textContent('.demo-pill')), 'bandeau : 0 essai restant');
+ok(/Gratuit · 0 conseil/.test(await pg.textContent('.demo-pill')), 'bandeau : 0 conseil restant');
 // 4. 3e essai bloqué -> inscription
-await pg.click('#go'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, '3e essai : aucun appel IA');
+await pg.click('#go'); await pg.waitForSelector('#sheet:not([hidden]) #lic-k', { timeout: 5000 }); ok(aiCalls === 2, '3e conseil : aucun appel IA, les offres s\'affichent');
 await pg.screenshot({ path: OUT + '/e6_upsell.png' });
-await pg.fill('#su-mail', 'test@exemple.fr'); await pg.click('#su-ok'); await pg.click('#su-go'); await pg.waitForTimeout(600);
-ok(store.has('email:test@exemple.fr'), 'email enregistré');
 // 5. fonction verrouillée
 await pg.evaluate(() => document.getElementById('sheet').hidden = true);
 await pg.click('[data-tab=tips]'); await pg.waitForTimeout(400); { let all = true; for (const t of ['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish']) { await pg.click('[data-tab=' + t + ']'); all = all && (await pg.locator('#pfab').isVisible()); } ok(all, 'parfumier privé : présent en bas à droite sur les 7 pages'); await pg.click('[data-tab=tips]'); }
 await pg.click('#pfab'); ok(await pg.locator('#ppanel').isVisible(), 'parfumier privé : la fenêtre de discussion s\'ouvre');
-await pg.fill('#cin', 'un frais pour le bureau'); await pg.press('#cin', 'Enter'); await pg.waitForSelector('#sheet:not([hidden]) #su', { timeout: 5000 }); ok(aiCalls === 2, 'fonction verrouillée : renvoie vers l\'inscription, sans coût'); await pg.evaluate(() => { document.getElementById('sheet').hidden = true; }); if (await pg.locator('#ppx').isVisible()) await pg.click('#ppx');
+await pg.fill('#cin', 'un frais pour le bureau'); await pg.press('#cin', 'Enter'); await pg.waitForSelector('#sheet:not([hidden]) #lic-k', { timeout: 8000 }); ok(aiCalls === 2, 'quota épuisé : le parfumier propose les offres, sans coût'); await pg.evaluate(() => { document.getElementById('sheet').hidden = true; }); if (await pg.locator('#ppx').isVisible()) await pg.click('#ppx');
 // 5b. ajouter un parfum : connu = zéro IA, inconnu = IA légère (Haiku), lien d'image https
 await pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; }); await pg.click('[data-tab=shelf]'); await pg.waitForTimeout(500); await pg.click('#addBtn'); await pg.click('[data-add=text]'); await pg.waitForSelector('#addtxt');
 await pg.fill('#addtxt', 'Tam Dao Eau de Parfum, Parfum Inconnu 77'); await pg.fill('#addurl', 'http://pas-https.test/x.jpg'); await pg.click('#addgo'); await pg.waitForTimeout(400);
@@ -209,7 +209,7 @@ ok(after.prof.age === 27 && after.has && !after.ov, 'après rechargement : profi
 // 5e. le compte sauvegarde tout : un autre appareil retrouve le profil complet
 await pg.waitForTimeout(2200);
 const rec = [...store.entries()].find(([k]) => k.startsWith('data:')); ok(rec && JSON.parse(rec[1]).data.profile.name === 'Léa' && JSON.parse(rec[1]).data.collection.length >= 4, 'compte : profil, goûts et collection sauvegardés côté serveur');
-const ctx2 = await browser.newContext({ viewport: { width: 400, height: 860 } }); const p3 = await ctx2.newPage(); await p3.goto('http://localhost:' + PORT + '/'); await p3.evaluate(() => localStorage.setItem('sillage.onb', '1')); await p3.reload();
+const ctx2 = await browser.newContext({ viewport: { width: 400, height: 860 } }); await ctx2.addInitScript(() => { try { localStorage.setItem('sillage.install', '1'); } catch (e) { /* ok */ } }); const p3 = await ctx2.newPage(); await p3.goto('http://localhost:' + PORT + '/'); await p3.evaluate(() => localStorage.setItem('sillage.onb', '1')); await p3.reload();
 await p3.waitForSelector('#acct #aem', { timeout: 9000 }); await p3.click('[data-m=login]'); await p3.fill('#aem', 'lea@exemple.fr'); await p3.fill('#apw', 'faux-mot-de-passe'); await p3.click('#ago'); await p3.waitForTimeout(600);
 ok(/incorrect/.test(await p3.textContent('#amsg')), 'connexion : mauvais mot de passe refusé');
 await p3.fill('#apw', 'motdepasse1'); await p3.click('#ago'); await p3.waitForTimeout(900);

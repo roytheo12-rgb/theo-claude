@@ -994,3 +994,28 @@ a.chip { text-decoration: none; display: inline-block; }
 .voy { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); overflow-anchor: none; }
 .mats, .vopts, .sits { overflow-anchor: none; }
 .mat-img img { content-visibility: auto; }
+
+/* Version en ligne : sous-onglets des inspirations, profil, offres, installation */
+.plsubtabs { display: flex; gap: 6px; margin: 2px 0 14px; }
+.plsubtabs button { white-space: nowrap; padding: 7px 10px; border: 0; border-bottom: 1.5px solid transparent; background: none; color: rgba(242, 235, 224, .5); font-size: 13.5px; cursor: pointer; }
+.plsubtabs button.on { color: var(--ink); border-bottom-color: var(--wine); }
+.mylist { display: grid; gap: 10px; margin: 14px 0; }
+.myc { display: grid; gap: 4px; text-align: left; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: rgba(242, 235, 224, .04); color: var(--ink); cursor: pointer; }
+.myc b { font: 400 18px/1.3 var(--f-display, serif); }
+.myc small { color: rgba(242, 235, 224, .55); }
+.myc em { font-style: normal; color: rgba(242, 235, 224, .7); font-size: 14px; line-height: 1.45; }
+.xlist { display: grid; gap: 8px; margin: 10px 0; }
+.eir { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.eir small { display: block; opacity: .55; }
+.eib { display: flex; gap: 4px; }
+.eib button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: none; color: var(--ink); cursor: pointer; }
+.avrow { display: flex; gap: 14px; align-items: center; }
+.avbtn { flex: none; width: 76px; height: 76px; border-radius: 50%; border: 1.5px dashed rgba(242, 235, 224, .35); background: rgba(242, 235, 224, .05); color: var(--ink); font-size: 26px; overflow: hidden; cursor: pointer; padding: 0; display: grid; place-items: center; }
+.avbtn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hav { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.use { display: grid; gap: 6px; }
+.usel { display: flex; justify-content: space-between; font-size: 14px; }
+.usebar { height: 6px; border-radius: 6px; background: rgba(242, 235, 224, .12); overflow: hidden; }
+.usebar i { display: block; height: 100%; background: var(--wine); }
+.inst { margin: 14px 0; padding-left: 22px; display: grid; gap: 10px; line-height: 1.5; }
+.inst li::marker { color: var(--wine); font-weight: 600; }

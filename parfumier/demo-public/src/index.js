@@ -271,6 +271,25 @@ export function makeWorker(deps = {}) {
           const d = JSON.parse((await kv.get(`data:${id}`)) || 'null');
           return reply({ ok: true, token: await session(id), data: d ? d.data : null, ts: d ? d.ts : 0 });
         }
+        // Mot de passe oublié : un lien à usage unique (1 h) est envoyé par email (Resend). On répond toujours « ok » pour ne pas révéler quels emails ont un compte.
+        if (sub === 'forgot' && request.method === 'POST') {
+          const email = String(b.email || '').trim().toLowerCase(); if (!EMAIL_RE.test(email)) return reply({ code: 'email' }, 400);
+          const rl = `ac:forgot:${await sha(ip + 'fg')}:${new Date().toISOString().slice(0, 13)}`, nf = int(await kv.get(rl), 0); if (nf >= 5) return reply({ code: 'rate' }, 429); await kv.put(rl, String(nf + 1), { expirationTtl: 7200 });
+          const id = await fullSha(email + salt), rec = JSON.parse((await kv.get(`acct:${id}`)) || 'null');
+          if (rec && env.RESEND_API_KEY && env.MAIL_FROM) {
+            const tk = randHex(32); await kv.put(`rst:${await fullSha(tk)}`, id, { expirationTtl: 3600 });
+            const link = `${url.origin}/?reset=${tk}`, send = deps.fetch || ((...x) => fetch(...x));
+            try { await send('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify({ from: env.MAIL_FROM, to: [email], subject: 'Ton nouveau mot de passe Sillage', html: `<p>Bonjour,</p><p>Pour choisir un nouveau mot de passe, ouvre ce lien dans l'heure : <a href="${link}">${link}</a></p><p>Si tu n'as rien demandé, ignore ce message.</p>` }) }); } catch (e) { /* l'envoi échoue en silence : la personne peut redemander */ }
+          }
+          return reply({ ok: true });
+        }
+        if (sub === 'reset' && request.method === 'POST') {
+          const tk = String(b.token || ''), password = String(b.password || ''); if (!/^[a-f0-9]{64}$/.test(tk) || password.length < 8 || password.length > 100) return reply({ code: 'password' }, 400);
+          const rk = `rst:${await fullSha(tk)}`, id = await kv.get(rk); if (!id) return reply({ code: 'token' }, 400);
+          const rec = JSON.parse((await kv.get(`acct:${id}`)) || 'null'); if (!rec) return reply({ code: 'token' }, 400);
+          const sl = randHex(16); rec.salt = sl; rec.hash = await pbkdf2(password, sl); await kv.put(`acct:${id}`, JSON.stringify(rec)); await kv.delete(rk);
+          return reply({ ok: true, token: await session(id), email: rec.email });
+        }
         const a = await auth(); if (!a) return reply({ code: 'auth' }, 401);
         if (sub === 'data' && request.method === 'GET') { const d = JSON.parse((await kv.get(`data:${a.id}`)) || 'null'); return reply({ data: d ? d.data : null, ts: d ? d.ts : 0 }); }
         if (sub === 'data' && request.method === 'PUT') {

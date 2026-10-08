@@ -7,7 +7,10 @@
   const headers = () => ({ 'content-type': 'application/json', 'x-visitor': vid });
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  async function refresh() { try { const r = await fetch('/api/quota', { headers: headers() }); const j = await r.json(); if (typeof j.left === 'number') left = j.left; if (typeof j.identLeft === 'number') identLeft = j.identLeft; } catch (e) { /* hors ligne : on garde la valeur */ } }
+  async function refresh() {
+    if (token) { try { await loadMe(); if (ME) { left = Math.max(0, ME.limits.adv - ME.usage.adv); identLeft = Math.max(0, ME.limits.ident - ME.usage.ident); return; } } catch (e) { /* hors ligne */ } }
+    try { const r = await fetch('/api/quota', { headers: headers() }); const j = await r.json(); if (typeof j.left === 'number') left = j.left; if (typeof j.identLeft === 'number') identLeft = j.identLeft; } catch (e) { /* hors ligne */ }
+  }
 
   function toBase64(file) {
     return new Promise((resolve, reject) => {
@@ -74,13 +77,46 @@
   const lite = (S) => JSON.parse(JSON.stringify(S, (k, v) => (typeof v === 'string' && v.startsWith('data:') && v.length > 40000 ? undefined : v)));
   const account = {
     loggedIn: () => !!token, email: () => acctEmail,
-    signup: async (email, password) => { const j = await call('signup', 'POST', { email, password }); setSession(j.token, email.trim().toLowerCase()); return j; },
-    login: async (email, password) => { const j = await call('login', 'POST', { email, password }); setSession(j.token, email.trim().toLowerCase()); return j; },
+    signup: async (email, password) => { const j = await call('signup', 'POST', { email, password }); setSession(j.token, email.trim().toLowerCase()); refresh(); return j; },
+    login: async (email, password) => { const j = await call('login', 'POST', { email, password }); setSession(j.token, email.trim().toLowerCase()); refresh(); return j; },
     push: (S) => call('data', 'PUT', { data: lite(S) }),
     pull: () => call('data', 'GET'),
+    forgot: (email) => call('forgot', 'POST', { email }),
+    reset: async (tk, password) => { const j = await call('reset', 'POST', { token: tk, password }); setSession(j.token, j.email); refresh(); return j; },
     logout: async () => { try { await call('logout', 'POST', {}); } catch (e) { /* session déjà expirée */ } setSession(null); },
     remove: async () => { await call('delete', 'POST', {}); setSession(null); },
   };
+
+  // ---- Offre, profil, communauté, éditeur
+  let ME = null;
+  const CFG = window.SILLAGE_CFG || {};
+  const authH = () => Object.assign({ 'content-type': 'application/json' }, token ? { authorization: 'Bearer ' + token } : {});
+  async function loadMe() { if (!token) { ME = null; return null; } ME = await call('me', 'GET'); try { window.dispatchEvent(new Event('sillage:me')); } catch (e) { /* ok */ } return ME; }
+  async function api(path, method, body) {
+    let r; try { r = await fetch(path, { method: method || 'GET', headers: authH(), body: body ? JSON.stringify(body) : undefined }); } catch (e) { throw { code: 'network' }; }
+    const j = await r.json().catch(() => ({}));
+    if (r.status === 401 && token) { setSession(null); try { window.dispatchEvent(new Event('sillage:expired')); } catch (e) { /* ok */ } }
+    if (!r.ok) throw { code: j.code || 'server', status: r.status };
+    return j;
+  }
+  function squareJpeg(file, size) {
+    return new Promise((resolve, reject) => {
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => { const c = document.createElement('canvas'); c.width = c.height = size; const k = Math.max(size / img.width, size / img.height), w = img.width * k, h = img.height * k; c.getContext('2d').drawImage(img, (size - w) / 2, (size - h) / 2, w, h); URL.revokeObjectURL(url); resolve(c.toDataURL('image/jpeg', .8)); };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('img')); };
+      img.src = url;
+    });
+  }
+  const sub = {
+    me: () => ME, load: loadMe, cfg: CFG, isAdmin: () => !!(ME && ME.admin),
+    activate: async (license) => { const j = await call('activate', 'POST', { license }); ME = j.me; try { window.dispatchEvent(new Event('sillage:me')); } catch (e) { /* ok */ } await refresh(); return j; },
+    saveProfile: async (p) => { const j = await call('profile', 'PUT', p); ME = j.me; return j; },
+    avatar: (file) => squareJpeg(file, 160),
+    community: { list: () => api('/api/community'), publish: (rec) => api('/api/community', 'POST', rec), remove: (id) => api('/api/community/' + id, 'DELETE'), like: (id) => api('/api/community/' + id + '/like', 'POST', {}), report: (id) => api('/api/community/' + id + '/report', 'POST', {}) },
+    admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats') },
+    content: () => Promise.race([fetch('/api/content', { cache: 'no-store' }).then((r) => r.json()), new Promise((res) => setTimeout(() => res(null), 2500))]).catch(() => null),
+  };
+  Object.assign(account, { me: () => ME });
 
   const TEXT = {
     quota: ['Tes 2 essais sont utilisés', 'Tu as vu ce que fait Sillage. Laisse ton email : je t\'envoie l\'accès complet, et je peux préparer une version sur mesure pour ta collection ou ton activité.'],
@@ -88,8 +124,31 @@
     cta: ['Ton Sillage, sur mesure', 'Laisse ton email : je te recontacte pour construire la version qui contient ta vraie collection, tes habitudes et l\'IA sans limite d\'essais.'],
     busy: ['La démo fait une pause', 'Elle est très demandée aujourd\'hui et reprend demain. Laisse ton email, je te préviens.'],
   };
+  // ---- Les offres : ce qu'on a, ce qu'on peut avoir, et où entrer sa clé Whop
+  const OFFERS = [
+    ['free', 'Gratuit', '0 €', ['3 conseils IA par mois', '20 échanges avec le parfumier', 'Collection jusqu\'à 12 parfums', '2 inspirations privées']],
+    ['premium', 'Premium', '5,99 € par mois', ['Ou 49 € par an', '60 conseils IA par mois', '300 échanges avec le parfumier', 'Collection illimitée', 'Inspirations privées et publiques']],
+    ['founder', 'Membre fondateur', '79 € à vie', ['Un seul paiement, pour toujours', 'Tout le Premium, sans abonnement', 'Limité aux 100 premiers membres']],
+  ];
+  function plans(reason) {
+    const H = window.SillageHooks; if (!H) return;
+    const m = ME || { plan: 'free', label: 'Gratuit', usage: { adv: 0, chat: 0 }, limits: { adv: 3, chat: 20 } };
+    const why = { quota: 'Tu as utilisé tous tes conseils IA du mois.', busy: 'La démo fait une pause aujourd\'hui.', locked: 'Cette fonction est réservée à une offre payante.', plan: 'Cette fonction est réservée à une offre payante.' }[reason] || '';
+    const link = (k) => (k === 'premium' ? CFG.whopPremium : k === 'founder' ? CFG.whopFounder : '');
+    const pn = H.openSheet(`<div><h2>Ton offre</h2><p style="color:var(--muted);margin-top:8px">${esc(why)} Tu es en <b>${esc(m.label || m.plan)}</b> : ${m.usage.adv} conseil${m.usage.adv > 1 ? 's' : ''} IA utilisé${m.usage.adv > 1 ? 's' : ''} sur ${m.limits.adv} ce mois-ci.</p></div>
+      <div style="display:grid;gap:12px">${OFFERS.map(([k, t, price, li]) => `<div class="card" style="display:grid;gap:8px${m.plan === k ? ';border-color:var(--wine)' : ''}"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>${esc(t)}</b><span class="mono" style="text-transform:none;letter-spacing:0">${esc(price)}</span></div><ul style="margin:0;padding-left:18px;color:var(--muted);font-size:14px;line-height:1.6">${li.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>${k === 'free' ? '' : m.plan === k ? '<p class="mono" style="text-transform:none;letter-spacing:0">Ton offre actuelle</p>' : link(k) ? `<a class="cta full" style="text-align:center" href="${esc(link(k))}" target="_blank" rel="noopener noreferrer"><span>Choisir sur Whop</span></a>` : '<p class="mono" style="text-transform:none;letter-spacing:0">Bientôt disponible</p>'}</div>`).join('')}</div>
+      <form id="lic" class="card" style="display:grid;gap:10px" novalidate><b>J'ai déjà acheté</b><p style="color:var(--muted);font-size:14px;margin:0">Après ton paiement, Whop t'envoie une clé d'accès. Colle-la ici, ton offre s'active tout de suite.</p><input type="text" id="lic-k" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Ta clé d'accès Whop" aria-label="Clé d'accès Whop"><button class="cta full" id="lic-go"><span>Activer mon offre</span></button><p class="mono" id="lic-msg" style="text-transform:none;letter-spacing:0"></p></form>`);
+    pn.querySelector('#lic').onsubmit = async (e) => {
+      e.preventDefault(); const msg = pn.querySelector('#lic-msg'), k = pn.querySelector('#lic-k').value.trim();
+      if (k.length < 8) { msg.textContent = 'Colle la clé complète reçue de Whop.'; return; }
+      pn.querySelector('#lic-go').disabled = true; msg.textContent = 'Vérification chez Whop…';
+      try { const j = await sub.activate(k); msg.textContent = 'C\'est activé : bienvenue en ' + j.me.label + '.'; setTimeout(() => { H.closeSheet(); if (H.refresh) H.refresh(); }, 1400); }
+      catch (er) { pn.querySelector('#lic-go').disabled = false; msg.textContent = { license: 'Cette clé n\'existe pas. Vérifie-la.', inactive: 'Cet abonnement n\'est plus actif.', product: 'Cette clé ne correspond à aucune offre Sillage.', taken: 'Cette clé est déjà utilisée par un autre compte.', rate: 'Trop d\'essais, réessaie dans une heure.', whop_net: 'Whop ne répond pas, réessaie dans un instant.', whop_off: 'L\'activation n\'est pas encore ouverte.' }[er.code] || 'Activation impossible pour l\'instant.'; }
+    };
+  }
   function upsell(reason) {
     const H = window.SillageHooks; if (!H) return;
+    if (token && ['quota', 'locked', 'busy', 'plan', 'cta'].includes(reason)) return plans(reason);
     const [title, text] = TEXT[reason] || TEXT.quota;
     const pn = H.openSheet(`<div><h2>${esc(title)}</h2><p style="color:var(--muted);margin-top:8px">${esc(text)}</p></div>
       <form id="su" style="display:grid;gap:12px" novalidate>
@@ -120,7 +179,21 @@
     json: async () => { upsell('locked'); throw { code: 'locked' }; },
     limits: async () => ({ maxPromptBytes: 100000, images: { maxCount: 1, maxInputBytes: 8000000, mediaTypes: ['image/jpeg', 'image/png', 'image/webp'] } }),
   });
-  window.claude = { use: async (name) => (name === 'sample' ? locked : null) };
-  window.SillageDemo = { account, day, need, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
+  locked.isLocked = true;
+  // Une fois connecté, le parfumier utilise l'IA légère du serveur ; son quota est celui de l'offre.
+  const chatSample = Object.assign(async () => { throw { code: 'unsupported' }; }, {
+    json: async (prompt) => {
+      let r; try { r = await fetch('/api/chat', { method: 'POST', headers: authH(), body: JSON.stringify({ prompt: String(prompt).slice(0, 12000) }) }); } catch (e) { throw { code: 'network' }; }
+      const j = await r.json().catch(() => ({}));
+      if (r.status === 401) { setSession(null); try { window.dispatchEvent(new Event('sillage:expired')); } catch (e) { /* ok */ } throw { code: 'auth' }; }
+      if (r.status === 429) { if (ME) ME.usage.chat = ME.limits.chat; upsell('quota'); throw { code: 'rate_limited' }; }
+      if (!r.ok) throw { code: 'server' };
+      if (ME) ME.usage.chat += 1;
+      return j.data;
+    },
+    limits: async () => ({ maxPromptBytes: 12000, images: { maxCount: 0, maxInputBytes: 0, mediaTypes: [] } }),
+  });
+  window.claude = { use: async (name) => (name === 'sample' ? (token ? chatSample : locked) : null) };
+  window.SillageDemo = { plan: sub, plans, account, day, need, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
   refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
 })();

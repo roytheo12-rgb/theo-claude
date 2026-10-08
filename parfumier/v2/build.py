@@ -57,6 +57,11 @@ def prompt_script():
     src = (d / 'prompt.mjs').read_text().replace('export function', 'function')
     return f"<script>\n{src}\nwindow.SillagePrompts = {{ day: dayPrompt, need: needPrompt }};\n</script>\n"
 
+def cfg_script():
+    import os, json
+    cfg = {"whopPremium": os.environ.get("WHOP_URL_PREMIUM", ""), "whopFounder": os.environ.get("WHOP_URL_FOUNDER", ""), "whopHub": os.environ.get("WHOP_URL_HUB", "https://whop.com/hub"), "support": os.environ.get("SUPPORT_EMAIL", "")}
+    return "<script>window.SILLAGE_CFG = " + json.dumps(cfg) + ";</script>\n"
+
 def page(scripts, head_extra=""):
     return f"""<title>Sillage</title>{head_extra}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,7 +98,7 @@ if mode == "artifact":
 if mode == "public":
     import os, shutil
     site = os.environ.get("SITE_URL", "https://sillage-demo.example.workers.dev").rstrip("/")
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'houseorder.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'enrich.js') + js(up/'shops.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + js(d/'demo.js') + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'houseorder.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'enrich.js') + js(up/'shops.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + cfg_script() + js(d/'demo.js') + js(d/'app.js') + js(d/'product.js')
     html = page(scripts)
     cut = html.index('<div id="app">')
     head_inner, body_inner = html[:cut], html[cut:]
@@ -105,12 +110,13 @@ if mode == "public":
 <meta name="description" content="Décris ta journée : Sillage choisit le bon parfum dans ta collection et te montre comment le layerer. 2 essais gratuits.">
 <meta property="og:type" content="website"><meta property="og:title" content="Sillage — ton parfum du jour"><meta property="og:description" content="Météo, mood, tenue, journée : l'IA choisit dans ta collection. 2 essais gratuits.">
 <meta property="og:image" content="{site}/og.jpg"><meta property="og:url" content="{site}/"><meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="{icon}">
+<link rel="icon" href="{icon}"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Sillage"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 {head_inner}</head><body>
 {body_inner}</body></html>"""
     out_dir = d.parent / 'demo-public' / 'public'
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir/'index.html').write_text(doc)
+    for f in (d/'pwa').iterdir(): shutil.copy(f, out_dir/f.name)          # manifeste, service worker, icônes : l'appli s'installe sur l'écran d'accueil
     if (out_dir/'img').exists(): shutil.rmtree(out_dir/'img')
     shutil.copytree(d/'img', out_dir/'img')
     shutil.copy(d/'prompt.mjs', d.parent/'demo-public'/'src'/'prompt.mjs')

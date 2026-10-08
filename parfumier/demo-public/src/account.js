@@ -18,6 +18,8 @@ const jparse = (s, d) => { try { return s ? JSON.parse(s) : d; } catch (e) { ret
 
 export function makeAccount(h) {
   const { kv, env, reply, clean, hex, fullSha, randHex, int, deps } = h;
+  // Les limites de chaque offre se règlent par variable d'environnement (FREE_ADV, PREMIUM_ADV…), sans toucher au code.
+  const plans = Object.fromEntries(Object.entries(PLANS).map(([k, v]) => [k, Object.assign({}, v, ['adv', 'chat', 'ident', 'col', 'insp'].reduce((o, f) => { const e = env[(k === 'founder' ? 'PREMIUM' : k.toUpperCase()) + '_' + f.toUpperCase()]; if (e !== undefined && k !== 'admin') o[f] = int(e, v[f]); return o; }, {}))]));
   const adminEmails = String(env.ADMIN_EMAILS || '').toLowerCase().split(/[\s,;]+/).filter(Boolean);
   const doFetch = deps.fetch || ((...a) => fetch(...a));
 
@@ -39,7 +41,7 @@ export function makeAccount(h) {
     const m = await r.json().catch(() => null);
     if (!m || typeof m !== 'object') return { ok: false, code: 'whop_net' };
     const map = jparse(env.WHOP_PRODUCTS, {}), plan = map[m.product_id] || map[m.plan_id] || null;
-    if (!plan || !PLANS[plan] || plan === 'free' || plan === 'admin') return { ok: false, code: 'product' };
+    if (!plan || !plans[plan] || plan === 'free' || plan === 'admin') return { ok: false, code: 'product' };
     return { ok: GOOD_STATUS.includes(m.status), status: m.status, plan, until: m.current_period_end || null, membership: m.id || '' };
   }
 
@@ -55,7 +57,7 @@ export function makeAccount(h) {
       await kv.put(`plan:${id}`, JSON.stringify(rec));
     }
     if (rec.valid === false) return { plan: 'free', status: rec.status || 'expired', expired: true };
-    return { plan: rec.plan in PLANS ? rec.plan : 'free', status: rec.status || 'active', until: rec.until || null };
+    return { plan: rec.plan in plans ? rec.plan : 'free', status: rec.status || 'active', until: rec.until || null };
   }
 
   const usageKey = (id) => `u:${id}:${month()}`;
@@ -65,14 +67,14 @@ export function makeAccount(h) {
   async function meter(request, kind) {
     const a = await auth(request); if (!a) return null;
     const acct = await acctOf(a.id); if (!acct) return null;
-    const p = await planOf(a.id, acct.email), lim = PLANS[p.plan][kind], u = await usageOf(a.id);
+    const p = await planOf(a.id, acct.email), lim = plans[p.plan][kind], u = await usageOf(a.id);
     return { ok: u[kind] < lim, plan: p.plan, left: Math.max(0, lim - u[kind]), commit: async () => { u[kind] += 1; await kv.put(usageKey(a.id), JSON.stringify(u), { expirationTtl: 60 * 60 * 24 * 70 }); } };
   }
 
   async function me(a) {
     const acct = await acctOf(a.id); if (!acct) return null;
     const p = await planOf(a.id, acct.email), u = await usageOf(a.id), prof = jparse(await kv.get(`prof:${a.id}`), {});
-    const L = PLANS[p.plan];
+    const L = plans[p.plan];
     return { email: acct.email, plan: p.plan, label: L.label, status: p.status, until: p.until || null, expired: !!p.expired, admin: p.plan === 'admin', limits: { adv: L.adv, chat: L.chat, ident: L.ident, col: L.col, insp: L.insp, publish: L.publish }, usage: u, profile: { pseudo: prof.pseudo || '', avatar: prof.avatar || '', bio: prof.bio || '' } };
   }
 
@@ -104,7 +106,7 @@ export function makeAccount(h) {
     const body = async () => { try { return await request.json(); } catch (e) { return null; } };
     const rate = async (a, name, n, ttl) => { const k = `rl:${name}:${a}:${new Date().toISOString().slice(0, 13)}`, c = int(await kv.get(k), 0); if (c >= n) return false; await kv.put(k, String(c + 1), { expirationTtl: ttl || 7200 }); return true; };
 
-    if (path === '/api/content' && method === 'GET') { const c = await content(); return new Response(JSON.stringify(c), { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'public, max-age=60' } }); }
+    if (path === '/api/content' && method === 'GET') { const c = await content(); return new Response(JSON.stringify(c), { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-cache' } }); }
 
     const a = await auth(request);
     // ---- Compte : profil, offre, licence
@@ -143,7 +145,7 @@ export function makeAccount(h) {
     }
     if (path === '/api/community' && method === 'POST') {
       if (!a) return reply({ code: 'auth' }, 401);
-      const acct = await acctOf(a.id), p = await planOf(a.id, acct && acct.email), L = PLANS[p.plan];
+      const acct = await acctOf(a.id), p = await planOf(a.id, acct && acct.email), L = plans[p.plan];
       if (!L.publish) return reply({ code: 'plan' }, 403);
       const prof = jparse(await kv.get(`prof:${a.id}`), {}); if (!prof.pseudo) return reply({ code: 'pseudo' }, 400);
       const b = await body(); if (!b) return reply({ code: 'json' }, 400);

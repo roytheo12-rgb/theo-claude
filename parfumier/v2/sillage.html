@@ -999,6 +999,31 @@ a.chip { text-decoration: none; display: inline-block; }
 .mats, .vopts, .sits { overflow-anchor: none; }
 .mat-img img { content-visibility: auto; }
 
+/* Version en ligne : sous-onglets des inspirations, profil, offres, installation */
+.plsubtabs { display: flex; gap: 6px; margin: 2px 0 14px; }
+.plsubtabs button { white-space: nowrap; padding: 7px 10px; border: 0; border-bottom: 1.5px solid transparent; background: none; color: rgba(242, 235, 224, .5); font-size: 13.5px; cursor: pointer; }
+.plsubtabs button.on { color: var(--ink); border-bottom-color: var(--wine); }
+.mylist { display: grid; gap: 10px; margin: 14px 0; }
+.myc { display: grid; gap: 4px; text-align: left; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: rgba(242, 235, 224, .04); color: var(--ink); cursor: pointer; }
+.myc b { font: 400 18px/1.3 var(--f-display, serif); }
+.myc small { color: rgba(242, 235, 224, .55); }
+.myc em { font-style: normal; color: rgba(242, 235, 224, .7); font-size: 14px; line-height: 1.45; }
+.xlist { display: grid; gap: 8px; margin: 10px 0; }
+.eir { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+.eir small { display: block; opacity: .55; }
+.eib { display: flex; gap: 4px; }
+.eib button { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--line); background: none; color: var(--ink); cursor: pointer; }
+.avrow { display: flex; gap: 14px; align-items: center; }
+.avbtn { flex: none; width: 76px; height: 76px; border-radius: 50%; border: 1.5px dashed rgba(242, 235, 224, .35); background: rgba(242, 235, 224, .05); color: var(--ink); font-size: 26px; overflow: hidden; cursor: pointer; padding: 0; display: grid; place-items: center; }
+.avbtn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hav { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.use { display: grid; gap: 6px; }
+.usel { display: flex; justify-content: space-between; font-size: 14px; }
+.usebar { height: 6px; border-radius: 6px; background: rgba(242, 235, 224, .12); overflow: hidden; }
+.usebar i { display: block; height: 100%; background: var(--wine); }
+.inst { margin: 14px 0; padding-left: 22px; display: grid; gap: 10px; line-height: 1.5; }
+.inst li::marker { color: var(--wine); font-weight: 600; }
+
 </style>
 <div id="app">
   <header class="bar"><div class="mark">sillage</div><button class="iconbtn" id="profileBtn" aria-label="Profil et sauvegarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.8-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></button></header>
@@ -3546,7 +3571,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     $('#view').innerHTML = `
       <section class="hero">
         <p class="mono">${esc(dt)}${AUTOW ? ' · ' + esc(AUTOW) : ''}</p>
-        ${window.SillageDemo && !PRESENT ? `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>` : ''}
+        ${window.SillageDemo && !PRESENT ? (window.SillageDemo.plan.me() ? `<button class="demo-pill" data-sell>${esc(window.SillageDemo.plan.me().label)} · ${window.SillageDemo.left() > 9999 ? 'conseils IA illimités' : window.SillageDemo.left() + ' conseil' + (window.SillageDemo.left() > 1 ? 's' : '') + ' IA'}</button>` : `<button class="demo-pill" data-sell>Démo · ${window.SillageDemo.left()} essai${window.SillageDemo.left() > 1 ? 's' : ''}</button>`) : ''}
         <h1>${hello}</h1>
         <p class="q">Où te mène ta journée&nbsp;?</p>
         ${S.collection.length ? '' : `<div class="card emptycard"><p class="mono">Première étape</p><h2>Ajoute tes parfums</h2><p>Je choisis toujours dans ta collection. Choisis tes parfums dans la base (par maison, style, notes…), écris-les, ou prends-les en photo.</p><button class="cta full" id="emptyAdd"><span>Ajouter mes parfums</span></button></div>`}
@@ -4009,9 +4034,9 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   const chatHist = () => CHAT.msgs.slice(-7, -1).map((m) => (m.r === 'u' ? 'Moi : ' : 'Toi : ') + String(m.t || '').slice(0, 260)).join('\n');
   // Le regard de l'IA sur une réponse calculée : plus humain, relié à la conversation, et une question quand il manque une information.
   async function aiPolish(q, ia) {
-    if (window.SillageDemo || !window.SillagePrompts || ia.chips || ia.raw) return;
+    if (ia.chips || ia.raw) return;
     try {
-      const sample = await getSample(); if (!sample) return;
+      const sample = await getSample(); if (!sample || sample.isLocked) return;
       const base = [ia.t, (ia.picks || []).map((k) => k.name + ' (' + k.house + ')' + (k.line ? ' : ' + k.line : '')).join('\n')].filter(Boolean).join('\n').slice(0, 2600);
       const prompt = `Tu es le parfumier privé d'une application de parfums. ${VOIX_TX} Réponds en français.\n${chatHist() ? 'Conversation récente :\n' + chatHist() + '\n' : ''}Question de la personne : """${q.slice(0, 400)}"""\nFaits vérifiés calculés par l'application (appuie-toi dessus, ne les contredis pas, n'invente ni parfum, ni note, ni prix) :\n"""${base}"""\n${tasteFor() ? 'Ses goûts : ' + tasteFor().slice(0, 700) + '\n' : ''}${colFor() ? 'Sa collection :\n' + colFor().slice(0, 1200) + '\n' : ''}Écris une réponse de 3 à 5 phrases, chaleureuse, précise et reliée à ce qu'elle a dit. Si tu manques d'une information essentielle pour bien la conseiller (occasion, saison, budget, notes aimées ou fuies, pour elle ou pour offrir), pose UNE seule question courte dans "ask" et donne 3 réponses rapides dans "chips" ; sinon laisse "ask" vide. Réponds UNIQUEMENT par un JSON : {"reply":"","ask":"","chips":[""]}`;
       const j = await aiJson(prompt, { modelTier: 'default' });
@@ -4371,6 +4396,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
       if (x.p && (!e.price || !x.pe)) { e.price = x.p; if (x.pe) e.pe = true; else delete e.pe; if (e.cat) e.cat.price = x.p; }
       if (x.y) e.year = x.y; if (x.c) e.coll = x.c; });
     (S.customDb || []).forEach((c) => { const k = E.norm(c.house + ' ' + c.name); if (seen.has(k)) return; seen.add(k); out.push({ g: gdOf(c.name, c.house), ed: false, name: c.name, house: c.house || 'Autre', conc: '', cat: null, family: c.family || null, notes: c.notes || [], price: c.price || 0, noses: [], guess: false, tags: [], custom: true }); });
+    const HIDE = window.SILLAGE_HIDE; if (HIDE && HIDE.size) for (let i = out.length - 1; i >= 0; i--) if (HIDE.has(E.norm(out[i].house) + '|' + E.norm(out[i].name))) out.splice(i, 1);     // parfums masqués par l'éditeur
     DBL = { n: CAT.length + nCustom, l: out }; return out;
   }
   // Pool des conseils et de la recherche par besoin : le catalogue détaillé + toute la base dont les notes sont réelles (jamais de devinette).
@@ -4800,10 +4826,11 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
       ${buyLinks(e.name, e.house)}`);
     $('#ex', pn).onclick = closeSheet;
     bindFiche(pn);
+    if (window.SillageProduct) window.SillageProduct.entry(pn, e);
     if ($('#eown', pn)) $('#eown', pn).onclick = () => { addEntriesToCollection([e]); closeSheet(); render(true); };
     if ($('#ewish', pn)) $('#ewish', pn).onclick = () => { addWish({ name: e.name, house: e.house, family: e.family || '', notes: e.notes || [], price: e.price || 0, st: 'smell' }); save(); closeSheet(); render(true); };
   }
-  function addEntriesToCollection(list) { list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); autoFill(); }
+  function addEntriesToCollection(list) { if (window.SillageProduct) list = window.SillageProduct.limitAdd(list); list.forEach((e) => { if (!S.collection.some((p) => E.norm(p.name) === E.norm(e.name) && E.norm(p.house) === E.norm(e.house))) S.collection.push(entryToOwned(e)); }); save(); autoFill(); }
   function openExplore(mode) {
     const pn = openSheet('<div id="exh"></div>');
     mountExplorer($('#exh', pn), mode === 'wish'
@@ -4888,6 +4915,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     if ($('#acreate', pn)) $('#acreate', pn).onclick = () => { closeSheet(); showAccount('profile'); };
     if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
+    if (window.SillageProduct) window.SillageProduct.profile(pn);
     mountTaste($('#tedit', pn), ['notes', 'vibes', 'occ']);
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
@@ -5279,7 +5307,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   }
 
   // ---------- Playlists : une bibliothèque d'univers ----------
-  const PLS = window.PLAYLISTS || [], PL = { id: 0, sec: '' };
+  const PLS = window.PLAYLISTS || [], PL = { id: 0, sec: '', sub: '' };
   let PLK = null;
   const plLook = () => { const L = dbList(); if (PLK && PLK.l === L) return PLK.m; const m = new Map(); L.forEach((e) => { const k = entryKey(e); if (!m.has(k)) m.set(k, e); }); PLK = { l: L, m }; return m; };
   const plEntry = (x) => { if (!x.h) return null; const HA = window.HOUSE_ALIAS || {}; const L = plLook(); return L.get(E.norm((HA[E.norm(x.h)] || x.h) + ' ' + x.n)) || L.get(E.norm(x.h + ' ' + x.n)) || null; };
@@ -5303,7 +5331,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   const plNum = (p, i) => { if (!p.grp) return i + 1; let s = 0; for (const g of p.grp) { const n = g.n || 10; if (i < s + n) return i - s + 1; s += n; } return i + 1; };
   const plDesc = (p) => p.d || (p.grp ? p.grp.map((g) => g.d).join(' ') : '');
   const plDay = () => { const d = new Date(), k = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate(), L = PLS.filter((p) => p.img); return (L.length ? L : PLS)[k % (L.length || PLS.length)]; };      // jamais une liste sans photo
-  function viewPlay() { PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
+  function viewPlay() { if (PL.sub && window.SillageProduct) { PL.id = 0; return window.SillageProduct.playSub(PL.sub); } PL.id ? viewPlaylist(PLS.find((x) => x.id === PL.id)) : viewPlayLib(); }
   function viewPlayLib() {
     const secs = (window.PL_SECTIONS || []).filter((s) => !PL.sec || s === PL.sec), day = plDay();
     $('#view').innerHTML = `
@@ -5315,6 +5343,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
       ${secs.map((s) => { const L = PLS.filter((p) => p.secs.includes(s)).sort((a, b) => (b.top ? 1 : 0) - (a.top ? 1 : 0)); return `<section class="sec plsec"><header><h2>${esc(s)}</h2><span class="mono">${L.length}</span></header><div class="${PL.sec ? 'plgrid' : 'plrow'}">${L.map((p) => `<button type="button" class="plcard" data-pl="${p.id}">${plCover(p)}<span class="plsub">${p.ps.length} parfums</span></button>`).join('')}</div></section>`; }).join('')}`;
     $$('[data-pl]').forEach((b) => (b.onclick = () => { PL.id = +b.dataset.pl; render(); }));
     $$('[data-psec]').forEach((b) => (b.onclick = () => { PL.sec = b.dataset.psec; viewPlayLib(); }));
+    if (window.SillageProduct) window.SillageProduct.subtabs($('#view'));
   }
   function viewPlaylist(p) {
     if (!p) { PL.id = 0; return viewPlayLib(); }
@@ -5349,6 +5378,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
       </section>`;
     $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; render(); } else goNeedText(v); }));
     $('#plback').onclick = () => { PL.id = 0; render(); };
+    if (window.SillageProduct) window.SillageProduct.playlist(p, $('#view'));
     const open = (i) => { const e = st.es[i], x = p.ps[i]; if (e) return openEntry(e); const pn = openSheet(`<div><h2>${esc(x.q)}</h2><p class="mono" style="margin-top:6px">Pas encore dans la base de Sillage</p></div><p style="color:var(--muted);font-size:14px">Ce parfum fait partie de la liste « ${esc(p.t)} », mais je n'ai pas encore sa fiche. Tu peux le garder en wishlist pour le sentir.</p><div class="row">${hasWish(x.q) ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="cta" id="plw"><span>À sentir</span></button>'}<button class="ghost" id="ex">Fermer</button></div>`); $('#ex', pn).onclick = closeSheet; if ($('#plw', pn)) $('#plw', pn).onclick = () => { addWish({ name: x.q, house: '', family: '', notes: [], price: 0, st: 'smell' }); save(); closeSheet(); viewPlaylist(p); }; };
     $$('[data-pe]').forEach((b) => (b.onclick = () => open(+b.dataset.pe)));
     $('#plshuf').onclick = () => { const L = p.ps.map((x, i) => i).filter((i) => st.es[i]); if (L.length) open(L[Math.floor(Math.random() * L.length)]); };
@@ -5631,36 +5661,48 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   }
   // Déconnexion ou suppression : on efface les données de cet appareil (téléphone partagé) et on redemande un compte.
   const afterLeave = () => { S = DEF(); S.collection = []; S.wishlist = []; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* ok */ } closeSheet(); tab = 'today'; render(true); gate(); };
-  window.addEventListener('sillage:expired', () => { if (needAcct()) afterLeave(); });
+  // Session expirée : on ne vide rien, on propose de se reconnecter (les données de l'appareil sont gardées).
+  window.addEventListener('sillage:expired', () => { if (needAcct() && !$('#acct')) { closeSheet(); $$('#onb, #prof').forEach((x) => x.remove()); showAccount('expired'); } });
   // Compte : créer (puis les questions d'inscription) ou se connecter (le profil complet revient), ou continuer sans compte.
-  function showAccount(from) {
+  function showAccount(from, opt) {
+    opt = opt || {};
     const A = window.SillageDemo.account;
     const el = document.createElement('div'); el.id = 'acct'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Compte');
-    let mode = 'signup';
-    const MSG = { email: 'Cet email semble incomplet.', password: 'Choisis un mot de passe de 8 caractères minimum.', exists: 'Un compte existe déjà avec cet email : connecte-toi.', credentials: 'Email ou mot de passe incorrect.', rate: 'Trop d\'essais pour l\'instant. Réessaie un peu plus tard.', network: 'Pas de connexion. Réessaie dans un instant.', server: 'Un souci de notre côté. Réessaie dans un instant.' };
+    let mode = opt.reset ? 'reset' : from === 'expired' ? 'login' : 'signup', email0 = opt.email || '';
+    const MSG = { email: 'Cet email semble incomplet.', password: 'Choisis un mot de passe de 8 caractères minimum.', exists: 'Un compte existe déjà avec cet email : connecte-toi.', credentials: 'Email ou mot de passe incorrect.', rate: 'Trop d\'essais pour l\'instant. Réessaie un peu plus tard.', network: 'Pas de connexion. Réessaie dans un instant.', server: 'Un souci de notre côté. Réessaie dans un instant.', token: 'Ce lien a expiré ou a déjà servi. Demande-en un nouveau.' };
     const draw = () => {
-      el.innerHTML = `<div class="prof-in"><p class="mono">Ton compte</p><h2>${mode === 'signup' ? 'Garde ton profil' : 'Content de te revoir'}</h2>
-        <p class="soft">${mode === 'signup' ? 'Un compte sauvegarde tout : tes parfums, ta wishlist, tes goûts. Tu les retrouves sur tous tes appareils.' : 'Connecte-toi pour retrouver ton profil, ta collection et ta wishlist.'}</p>
-        <div class="chips acct-tabs"><button class="chip ${mode === 'signup' ? 'on' : ''}" data-m="signup">Créer un compte</button><button class="chip ${mode === 'login' ? 'on' : ''}" data-m="login">J'ai déjà un compte</button></div>
-        <form id="acf" class="acf" novalidate><input type="email" id="aem" autocomplete="email" inputmode="email" placeholder="Ton email" aria-label="Ton email"><input type="password" id="apw" autocomplete="${mode === 'signup' ? 'new-password' : 'current-password'}" placeholder="${mode === 'signup' ? 'Mot de passe (8 caractères minimum)' : 'Mot de passe'}" aria-label="Mot de passe">
+      const T2 = { signup: ['Garde ton profil', 'Un compte sauvegarde tout : tes parfums, ta wishlist, tes goûts. Tu les retrouves sur tous tes appareils.'], login: [from === 'expired' ? 'Reconnecte-toi' : 'Content de te revoir', from === 'expired' ? 'Ta session a expiré, ça arrive. Reconnecte-toi : tout ce que tu as sur cet appareil est gardé.' : 'Connecte-toi pour retrouver ton profil, ta collection et ta wishlist.'], forgot: ['Mot de passe oublié', 'Donne-moi ton email. Si un compte existe, je t\'envoie un lien pour choisir un nouveau mot de passe.'], reset: ['Nouveau mot de passe', 'Choisis-en un nouveau (8 caractères minimum). Ensuite tu es connecté.'] }[mode];
+      const isPw = mode !== 'forgot', isEm = mode !== 'reset';
+      el.innerHTML = `<div class="prof-in"><p class="mono">Ton compte</p><h2>${T2[0]}</h2>
+        <p class="soft">${T2[1]}</p>
+        ${mode === 'signup' || mode === 'login' ? `<div class="chips acct-tabs"><button class="chip ${mode === 'signup' ? 'on' : ''}" data-m="signup">Créer un compte</button><button class="chip ${mode === 'login' ? 'on' : ''}" data-m="login">J'ai déjà un compte</button></div>` : ''}
+        <form id="acf" class="acf" novalidate>${isEm ? `<input type="email" id="aem" autocomplete="email" inputmode="email" placeholder="Ton email" aria-label="Ton email" value="${esc(email0)}">` : ''}${isPw ? `<input type="password" id="apw" autocomplete="${mode === 'login' ? 'current-password' : 'new-password'}" placeholder="${mode === 'login' ? 'Mot de passe' : 'Mot de passe (8 caractères minimum)'}" aria-label="Mot de passe">` : ''}
           <p class="mono" id="amsg" role="alert" style="text-transform:none;letter-spacing:0;min-height:18px"></p>
-          <button class="cta full" id="ago"><span>${mode === 'signup' ? 'Créer mon compte' : 'Me connecter'}</span></button></form>
+          <button class="cta full" id="ago"><span>${{ signup: 'Créer mon compte', login: 'Me connecter', forgot: 'Recevoir le lien', reset: 'Enregistrer et entrer' }[mode]}</span></button></form>
+        ${mode === 'login' ? '<button class="ghost" id="aforgot" type="button">Mot de passe oublié ?</button>' : ''}${mode === 'forgot' ? '<button class="ghost" id="aback" type="button">Retour</button>' : ''}
         <p class="soft small">Ton email sert uniquement à te reconnecter. Tu peux supprimer ton compte à tout moment dans Profil.</p>
         ${from === 'profile' ? '<button class="ghost" id="askip">Fermer</button>' : ''}</div>`;
-      $$('[data-m]', el).forEach((b) => (b.onclick = () => { mode = b.dataset.m; draw(); }));
+      $$('[data-m]', el).forEach((b) => (b.onclick = () => { email0 = $('#aem', el) ? $('#aem', el).value : email0; mode = b.dataset.m; draw(); }));
+      if ($('#aforgot', el)) $('#aforgot', el).onclick = () => { email0 = $('#aem', el).value; mode = 'forgot'; draw(); };
+      if ($('#aback', el)) $('#aback', el).onclick = () => { mode = 'login'; draw(); };
       if ($('#askip', el)) $('#askip', el).onclick = close;
       $('#acf', el).onsubmit = async (ev) => {
-        ev.preventDefault(); const em = $('#aem', el).value.trim(), pw = $('#apw', el).value, msg = $('#amsg', el);
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { msg.textContent = MSG.email; return; }
-        if (mode === 'signup' && pw.length < 8) { msg.textContent = MSG.password; return; }
+        ev.preventDefault(); const em = $('#aem', el) ? $('#aem', el).value.trim() : '', pw = $('#apw', el) ? $('#apw', el).value : '', msg = $('#amsg', el);
+        if (isEm && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) { msg.textContent = MSG.email; return; }
+        if (isPw && mode !== 'login' && pw.length < 8) { msg.textContent = MSG.password; return; }
         $('#ago', el).disabled = true; msg.textContent = '…';
         try {
-          if (mode === 'signup') { await A.signup(em, pw); close(); if (hasProfile() || from === 'profile') { save(); if (from === 'profile') render(true); } else showProfile(); }
+          if (mode === 'forgot') { await A.forgot(em); msg.textContent = 'C\'est envoyé si un compte existe avec cet email. Regarde ta boîte de réception (et les indésirables).'; $('#ago', el).disabled = false; return; }
+          if (mode === 'reset') { const j = await A.reset(opt.reset, pw); try { history.replaceState(null, '', location.pathname); } catch (e3) { /* ok */ } close(); PULLING = true; const d = await A.pull().catch(() => null); if (d && d.data) { S = Object.assign(DEF(), d.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } } PULLING = false; tab = 'today'; render(); afterLogin(); return; }
+          if (mode === 'signup') { await A.signup(em, pw); close(); if (hasProfile() || from === 'profile') { save(); if (from === 'profile') render(true); } else showProfile(); afterLogin(); }
           else {
             const j = await A.login(em, pw); PULLING = true;
-            if (j.data) { S = Object.assign(DEF(), j.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } }
+            // session expirée : ce que l'appareil a de plus récent reste, on le renvoie au serveur ; sinon le profil du serveur revient
+            if (from === 'expired' && hasProfile()) { PULLING = false; save(); }
+            else if (j.data) { S = Object.assign(DEF(), j.data); S.settings = Object.assign(DEF().settings, S.settings); migrate(); try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e2) { /* ok */ } }
             PULLING = false; close();
-            if (!hasProfile()) showProfile(); else { tab = 'today'; render(); }
+            if (!hasProfile()) showProfile(); else { if (from !== 'expired') tab = 'today'; render(true); }
+            afterLogin();
           }
         } catch (e) { PULLING = false; msg.textContent = MSG[e.code] || MSG.server; $('#ago', el).disabled = false; }
       };
@@ -5668,6 +5710,8 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     const close = () => { el.remove(); document.body.style.overflow = ''; };
     document.body.appendChild(el); document.body.style.overflow = 'hidden'; draw();
   }
+  // Après une connexion : on charge l'offre, et on propose une fois d'installer l'appli sur l'écran d'accueil.
+  function afterLogin() { const D = window.SillageDemo; if (!D) return; D.plan.load().then(() => { if (window.SillageProduct) window.SillageProduct.onLogin(); }).catch(() => {}); }
 
   // ---------- Profil olfactif : notes adorées ou fuies, ambiance, intensité, occasions, budget (un seul éditeur, partout) ----------
   const NOTE_GROUPS = [
@@ -5773,8 +5817,6 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   const SCALES = [['frais', 'sucre', 'boise', 'floral']];
   const SC_L = ['Pas du tout', 'Un peu', 'J\'aime', 'J\'adore'], SC_W = [-1, .2, 1, 1.9];
   const TAPS = {
-    trace: { n: "Un parfum, c'est aussi une première impression.", h: "Quelle image veux-tu donner de toi ?", o: [["Quelqu'un d'élégant, qui a du goût", { ax: { formalite: .8, poudre: .3 }, vibes: ['elegant'] }], ["Quelqu'un de mystérieux, qu'on a envie de découvrir", { ax: { fume: .5, resine: .5, originalite: .4, sensualite: .3 }, vibes: ['original', 'sensuel'] }], ["Quelqu'un de lumineux et de joyeux", { ax: { fraicheur: .8, fruite: .4, douceur: .3 }, vibes: ['frais'] }], ["Quelqu'un de doux et de rassurant", { ax: { douceur: .8, cremeux: .6, musque: .4 }, vibes: ['sucre', 'naturel'] }], ["Quelqu'un de séduisant, de magnétique", { ax: { sensualite: 1, densite: .5 }, vibes: ['sensuel'] }], ["Quelqu'un d'original, qui ne ressemble à personne", { ax: { originalite: 1.2, clivage: .5 }, vibes: ['original'] }]] },
-    power: { n: "Un parfum a une voix, qui porte plus ou moins loin.", h: "À quelle distance veux-tu qu'on te sente ?", o: [["À peine, tout contre la peau", { power: 'discret', ax: { densite: -1, musque: .5 } }], ["À bout de bras", { power: 'discret', ax: { densite: -.3 } }], ["Dans toute la pièce", { power: 'present', ax: { densite: .4 } }], ["Dans tout l'ascenseur, sans hésiter", { power: 'fort', ax: { densite: 1.2, epice: .3, resine: .3 } }]] },
   };
   const RANKS = {
     vie: { t: "Ton style de vie", n: "Ta vie de tous les jours, c'est plutôt quoi ? Touche tout ce qui te correspond, dans l'ordre : le premier, c'est le plus toi.", items: [115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126] },
@@ -5784,6 +5826,8 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
     monde: { t: "Ton monde", n: "Les visages et les univers qui te font rêver. Touche ce qui te ressemble, dans l'ordre.", items: [112, 113, 111, 80, 82, 81], hero: 'Basquiat' },
   };
   const OPTS = {
+    trace: { t: "Ton image", n: "Un parfum, c'est aussi une première impression.".replace(/\.$/, '') + ". Quelle image veux-tu donner de toi ? Touche tout ce qui te correspond, dans l'ordre : le premier, c'est le plus toi.", o: [["Quelqu'un d'élégant, qui a du goût", { ax: { formalite: .8, poudre: .3 }, vibes: ['elegant'] }], ["Quelqu'un de mystérieux, qu'on a envie de découvrir", { ax: { fume: .5, resine: .5, originalite: .4, sensualite: .3 }, vibes: ['original', 'sensuel'] }], ["Quelqu'un de lumineux et de joyeux", { ax: { fraicheur: .8, fruite: .4, douceur: .3 }, vibes: ['frais'] }], ["Quelqu'un de doux et de rassurant", { ax: { douceur: .8, cremeux: .6, musque: .4 }, vibes: ['sucre', 'naturel'] }], ["Quelqu'un de séduisant, de magnétique", { ax: { sensualite: 1, densite: .5 }, vibes: ['sensuel'] }], ["Quelqu'un d'original, qui ne ressemble à personne", { ax: { originalite: 1.2, clivage: .5 }, vibes: ['original'] }]], w: 1 },
+    power: { t: "Ta présence", n: "Un parfum a une voix, qui porte plus ou moins loin. À quelle distance veux-tu qu'on te sente ? Touche ce qui te convient, dans l'ordre.", o: [["À peine, tout contre la peau", { power: 'discret', ax: { densite: -1, musque: .5 } }], ["À bout de bras", { power: 'discret', ax: { densite: -.3 } }], ["Dans toute la pièce", { power: 'present', ax: { densite: .4 } }], ["Dans tout l'ascenseur, sans hésiter", { power: 'fort', ax: { densite: 1.2, epice: .3, resine: .3 } }]], w: 1 },
     seasons: { t: "Tes saisons", n: "La terre mouillée, les toits chauds, le bois qui crépite. Chaque saison a son accord. Classe-les de ta préférée à celle que tu aimes le moins.", o: SEASONS, w: .7 },
     mats: { t: "Tes matières", n: "Imagine la table d'un parfumier, des petits flacons alignés, la rose à côté de l'oud, la vanille près du cuir. Touche-les dans l'ordre, de celle qui t'attire le plus à celle qui t'attire le moins, et arrête-toi quand tu veux.", o: MATS, w: .9, mats: 1 },
     flee: { t: "Ce que tu fuis", n: "Un bon conseil, c'est aussi savoir ce qu'on ne te proposera jamais. Touche ce que tu supportes le moins.", o: [["Le sucré écœurant", { avoid: ['praline', 'caramel'] }], ["Le fumé qui brûle", { avoid: ['bouleau'] }], ["Le poudré à l'ancienne", { avoid: ['violette', 'aldéhydes'] }], ["Le floral capiteux", { avoid: ['tubéreuse', 'ylang'] }], ["Le cuir lourd et animal", { avoid: ['civette', 'cuir'] }], ["Le très frais, façon lessive", { avoid: ['lessive'], ax: { fraicheur: -.5 } }]], w: 1, plain: 1 },
@@ -5826,10 +5870,10 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
   const plImg = (t) => { const p = (window.PLAYLISTS || []).find((x) => x.t === t); return p && p.img ? p.img : ''; };
   const VQ_NEXT = ['Continuer', 'Suivant', 'La suite', 'On avance'];
   // Le plan : on commence par ce que tu aimes (précis, en échelle), on creuse tes familles préférées, puis ton style, ta présence, tes moments et tes envies.
-  const PLAN = ['intro', 'scales:0', 'follow:0', 'follow:1', 'tap:trace', 'tap:power', 'rank:vie', 'opts:seasons', 'rank:escapades', 'opts:mats', 'rank:style', 'rank:caractere', 'rank:monde', 'opts:flee', 'refs', 'end'];
+  const PLAN = ['intro', 'scales:0', 'follow:0', 'follow:1', 'opts:trace', 'opts:power', 'rank:vie', 'opts:seasons', 'rank:escapades', 'opts:mats', 'rank:style', 'rank:caractere', 'rank:monde', 'opts:flee', 'refs', 'end'];
   function mountVoyage(root, done, opts) {
     opts = opts || {};
-    const R = { scales: {}, follow: {}, taps: {}, ranks: {}, opts: { seasons: [], mats: [], flee: [] }, refs: [] }; let c = 0, dir = 1, busy = false;
+    const R = { scales: {}, follow: {}, taps: {}, ranks: {}, opts: { trace: [], power: [], seasons: [], mats: [], flee: [] }, refs: [] }; let c = 0, dir = 1, busy = false;
     const NC = PLAN.length;
     const go = (d) => { dir = d; c = Math.max(0, Math.min(NC - 1, c + d)); draw(); };
     const shell = (inner, o) => `<div class="voy"><div class="vbar" aria-hidden="true"><i style="width:${Math.round(100 * c / (NC - 1))}%"></i></div>${inner}${(o && o.nonext) ? '' : `<button class="cta full" id="vNext"><span>${(o && o.next) || VQ_NEXT[c % VQ_NEXT.length]}</span></button>`}${c > 1 ? '<button class="ghost" id="vBack">Retour</button>' : ''}${opts.skip && c < NC - 1 ? '<button class="ghost" id="vSkip">Passer le voyage</button>' : ''}</div>`;
@@ -5890,7 +5934,7 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
         ${recs.length ? `<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:20px">Mes trois premiers choix pour toi</p><div class="rail brail2">${recs.map((r) => pCard(r.c.entry || lk[E.norm(r.c.house + ' ' + r.c.name)] || { name: r.c.name, house: r.c.house, notes: r.c.notes || [], price: r.c.price }, r.pct + ' %')).join('')}</div>` : ''}
         <button class="cta full" id="vGo"><span>${opts.cta || 'Continuer'}</span></button><button class="ghost" id="vAgain">Refaire le voyage</button></div>`;
       $$('[data-ent]', root).forEach((b) => (b.onclick = () => { const e = lk[b.dataset.ent]; if (e) openEntry(e); }));
-      $('#vGo', root).onclick = () => done(); $('#vAgain', root).onclick = () => { R.scales = {}; R.follow = {}; R.taps = {}; R.ranks = {}; R.opts = { seasons: [], mats: [], flee: [] }; R.refs = []; c = 0; draw(); };
+      $('#vGo', root).onclick = () => done(); $('#vAgain', root).onclick = () => { R.scales = {}; R.follow = {}; R.taps = {}; R.ranks = {}; R.opts = { trace: [], power: [], seasons: [], mats: [], flee: [] }; R.refs = []; c = 0; draw(); };
     };
     draw();
   }
@@ -6009,10 +6053,15 @@ window.SillagePrompts = { day: dayPrompt, need: needPrompt };
 
   const sellCard = () => (window.SillageDemo && !PRESENT ? `<section class="sec"><div class="card sell"><p class="mono">Sillage sur mesure</p><h2>Cette appli, avec ta vraie collection.</h2><p>Tes flacons, tes habitudes, ton style. Je construis la tienne, avec l'IA, la semaine et le voyage.</p><button class="cta full" data-sell><span>Je veux la mienne</span></button></div></section>` : '');
   document.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('[data-sell]') && window.SillageDemo) window.SillageDemo.upsell('cta'); });
-  window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); } };
+  window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); }, refresh: () => { try { render(true); } catch (e) { /* ok */ } } };
+  // Ce que la couche produit (offres, profil, communauté, éditeur : product.js) a le droit de toucher dans l'appli.
+  window.SillageInternals = {
+    S: () => S, save, dbList: () => dbList(), entryKey, openEntry, openSheet, closeSheet, esc, $, $$, E, xThumb, pCard, famLabel, showAccount: (f, o) => showAccount(f, o), render: (k) => render(k), PLS: () => PLS, PL, tab: () => tab, goTab: (t) => { tab = t; render(); },
+    bust: () => { DBL = null; NPOOL = null; BIOM = null; ENTP = null; HMED = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]); },
+  };
 
   // ---------- Démarrage ----------
-  $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { if (b.dataset.tab === 'play' && tab === 'play') PL.id = 0; tab = b.dataset.tab; render(); } });
+  $('#dock').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { if (b.dataset.tab === 'play' && tab === 'play') { PL.id = 0; PL.sub = ''; } tab = b.dataset.tab; render(); } });
   $('#profileBtn').onclick = openProfile;
   mountParfumier();
   render();
