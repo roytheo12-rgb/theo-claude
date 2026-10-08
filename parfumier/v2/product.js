@@ -114,6 +114,7 @@
     wrap.appendChild(sp);
     $$('[data-k]', sp).forEach((b) => (b.onclick = () => { kind = b.dataset.k; $$('[data-k]', sp).forEach((x) => x.classList.toggle('on', x === b)); }));
     $('#sp-go', sp).onclick = async () => { const el = $('#sp-m', sp), t = $('#sp-t', sp).value.trim(); if (t.length < 5) { el.textContent = 'Écris au moins une phrase.'; return; } el.textContent = '…'; try { await D.plan.support(t + '\n\n[' + (ART ? 'claude.ai' : 'web') + ' · ' + (navigator.userAgent || '').slice(0, 90) + ']', '', kind); $('#sp-t', sp).value = ''; el.textContent = 'Message envoyé, merci.'; } catch (e) { el.textContent = e.code === 'rate' ? 'Trop de messages, réessaie plus tard.' : 'Échec, réessaie.'; } };
+    if (window.SillageProduct && window.SillageProduct.social) window.SillageProduct.social.profileCards(wrap, m);
     if (!m.admin) return;
     const ed = document.createElement('div'); ed.className = 'card'; ed.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)';
     ed.innerHTML = '<b>Suivi de l\'éditeur</b><div class="row"><button class="ghost" id="ed-su" type="button">Messages reçus</button>' + (ART ? '' : '<button class="ghost" id="ed-mo" type="button">Inspirations signalées</button><button class="ghost" id="ed-bk" type="button">Télécharger une sauvegarde</button>') + '</div><div id="ed-out" style="display:grid;gap:8px"></div>';
@@ -133,6 +134,14 @@
     bar.innerHTML = [['', 'Univers Sillage'], ['mine', 'Mes inspirations'], ['comm', 'Communauté']].map(([k, l]) => `<button type="button" class="${(I.PL.sub || '') === k ? 'on' : ''}" data-sub="${k}">${l}</button>`).join('');
     head.parentNode.insertBefore(bar, head.nextSibling);
     $$('[data-sub]', bar).forEach((b) => (b.onclick = () => { I.PL.sub = b.dataset.sub; I.PL.id = 0; I.render(); }));
+  }
+  // Photo réduite en JPEG (largeur et hauteur maximales, poids visé en caractères) : couverture de liste, image de publication, logo.
+  function fitJpeg(file, w, h, max) {
+    return new Promise((resolve, reject) => {
+      const img = new Image(), u = URL.createObjectURL(file);
+      img.onload = () => { URL.revokeObjectURL(u); const k = Math.min(1, w / img.width, h / img.height), c = document.createElement('canvas'); c.width = Math.max(1, Math.round(img.width * k)); c.height = Math.max(1, Math.round(img.height * k)); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); let q = .8, out = c.toDataURL('image/jpeg', q); while (out.length > max && q > .3) { q -= .1; out = c.toDataURL('image/jpeg', q); } out.length > max ? reject(new Error('big')) : resolve(out); };
+      img.onerror = () => { URL.revokeObjectURL(u); reject(new Error('img')); }; img.src = u;
+    });
   }
   const safeUrl = (u) => (/^https:\/\/\S+$/.test(u || '') ? u : '');
   const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
@@ -157,15 +166,15 @@
     const L = mine(), m = P.me(), max = m ? m.limits.insp : 2;
     body.innerHTML = `<p class="plintro">Crée tes propres listes : un personnage, une saison, une humeur. Elles restent privées tant que tu ne les publies pas.</p>
       <button class="cta" id="mi-new"><span>Créer une inspiration</span></button>
-      ${L.length ? `<div class="mylist">${L.map((x) => `<button type="button" class="myc" data-mi="${esc(x.id)}"><b>${esc(x.title)}</b><small>${x.items.length} parfum${x.items.length > 1 ? 's' : ''} · ${x.cid ? 'Publique' : 'Privée'}</small>${x.desc ? `<em>${esc(x.desc)}</em>` : ''}</button>`).join('')}</div>` : '<p class="soft">Tu n\'as pas encore d\'inspiration. Commence par la première.</p>'}
+      ${L.length ? `<div class="mylist">${L.map((x) => `<button type="button" class="myc ${x.cover ? 'hascov' : ''}" data-mi="${esc(x.id)}" ${x.cover ? `style="background-image:linear-gradient(90deg,rgba(8,8,10,.92) 35%,rgba(8,8,10,.35)),url('${esc(x.cover)}')"` : ''}><b>${esc(x.title)}</b><small>${x.items.length} parfum${x.items.length > 1 ? 's' : ''} · ${x.cid ? 'Publique' : 'Privée'}</small>${x.desc ? `<em>${esc(x.desc)}</em>` : ''}</button>`).join('')}</div>` : '<p class="soft">Tu n\'as pas encore d\'inspiration. Commence par la première.</p>'}
       <p class="soft small">${L.length} sur ${max > 9999 ? '∞' : max} inspirations</p>`;
     $('#mi-new', body).onclick = () => { if (L.length >= max) return D.plans('plan'); editInsp(null); };
     $$('[data-mi]', body).forEach((b) => (b.onclick = () => showInsp(L.find((x) => x.id === b.dataset.mi))));
   }
-  const pubOf = (r, id) => ({ id, title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
+  const pubOf = (r, id) => ({ id, cover: r.cover || '', title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
   function showInsp(ins) {
     if (!ins) return;
-    const pn = I.openSheet(`<div><p class="mono">${ins.cid ? 'Publique dans la communauté' : 'Privée, toi seul la vois'}</p><h2>${esc(ins.title)}</h2>${ins.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(ins.desc)}</p>` : ''}</div>
+    const pn = I.openSheet(`${ins.cover ? `<img class="covimg" src="${esc(ins.cover)}" alt="">` : ''}<div><p class="mono">${ins.cid ? 'Publique dans la communauté' : 'Privée, toi seul la vois'}</p><h2>${esc(ins.title)}</h2>${ins.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(ins.desc)}</p>` : ''}</div>
       ${videoLink(ins)}<div class="xlist">${itemRows(ins.items)}</div>${adNote(ins)}
       <div class="row"><button class="ghost" id="si-share">Partager</button><button class="ghost" id="si-edit">Modifier</button><button class="ghost" id="si-pub">${ins.cid ? 'Retirer de la communauté' : 'Rendre publique'}</button><button class="ghost danger" id="si-del">Supprimer</button></div><p class="mono" id="si-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p>`);
     bindRows(pn, ins.items);
@@ -186,9 +195,10 @@
     $('#si-del', pn).onclick = async (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer la suppression'; return; } if (ins.cid) { try { await P.community.remove(ins.cid); } catch (e) { /* déjà retirée */ } } const L = mine(); L.splice(L.indexOf(ins), 1); I.save(); I.closeSheet(); I.render(true); };
   }
   function editInsp(ins) {
-    const d = ins ? { id: ins.id, title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), title: '', desc: '', video: '', ad: false, items: [] };
+    const d = ins ? { id: ins.id, cover: ins.cover || '', title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), cover: '', title: '', desc: '', video: '', ad: false, items: [] };
     const pn = I.openSheet(`<div><h2>${ins ? 'Modifier' : 'Nouvelle'} inspiration</h2></div>
       <input type="text" id="ei-t" maxlength="60" placeholder="Son titre (ex. Cuirs de minuit)" value="${esc(d.title)}" aria-label="Titre"><textarea id="ei-d" rows="2" maxlength="240" placeholder="Une phrase pour la décrire" aria-label="Description">${esc(d.desc)}</textarea>
+      <div class="covrow"><button type="button" class="cover-btn" id="ei-cv">${d.cover ? `<img src="${esc(d.cover)}" alt="">` : '<span>＋ Photo de couverture</span>'}</button>${d.cover ? '<button type="button" class="ghost" id="ei-cx">Retirer la photo</button>' : ''}<input type="file" id="ei-cf" accept="image/*" hidden></div>
       <input type="url" id="ei-v" maxlength="300" placeholder="Lien d'une vidéo ou d'un post (https://…), facultatif" value="${esc(d.video)}" aria-label="Lien de la vidéo"><label class="chk"><input type="checkbox" id="ei-ad" ${d.ad ? 'checked' : ''}><span>Cette liste est un partenariat ou une publicité</span></label>
       <div><p class="mono">Ses parfums</p><div id="ei-list" class="xlist"></div></div>
       <input type="search" id="ei-q" placeholder="Chercher un parfum à ajouter…" autocomplete="off" aria-label="Chercher un parfum"><div id="ei-res" class="vrres"></div>
@@ -199,6 +209,9 @@
       $$('[data-up]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.up; if (i > 0) { [d.items[i - 1], d.items[i]] = [d.items[i], d.items[i - 1]]; drawList(); } }));
       $$('[data-dn]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.dn; if (i < d.items.length - 1) { [d.items[i + 1], d.items[i]] = [d.items[i], d.items[i + 1]]; drawList(); } }));
       $$('[data-rm]', pn).forEach((b) => (b.onclick = () => { d.items.splice(+b.dataset.rm, 1); drawList(); })); };
+    $('#ei-cv', pn).onclick = () => $('#ei-cf', pn).click();
+    if ($('#ei-cx', pn)) $('#ei-cx', pn).onclick = () => { d.cover = ''; $('#ei-cv', pn).innerHTML = '<span>＋ Photo de couverture</span>'; $('#ei-cx', pn).remove(); };
+    $('#ei-cf', pn).onchange = async () => { const f = $('#ei-cf', pn).files[0]; if (!f) return; try { d.cover = await fitJpeg(f, 480, 270, 38000); $('#ei-cv', pn).innerHTML = `<img src="${esc(d.cover)}" alt="">`; } catch (e) { $('#ei-msg', pn).textContent = 'Cette photo ne passe pas. Essaie-en une autre.'; } };
     drawList();
     $('#ei-q', pn).oninput = (ev) => { const t = E.norm(ev.target.value), box = $('#ei-res', pn); if (t.length < 2) { box.innerHTML = ''; return; } const hits = I.dbList().filter((e) => !e.ed && E.norm(e.house + ' ' + e.name).includes(t)).slice(0, 8); box.innerHTML = hits.map((e, i) => `<button type="button" class="vrh" data-rh="${i}"><b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`).join(''); $$('[data-rh]', box).forEach((b) => (b.onclick = () => { const e = hits[+b.dataset.rh]; if (d.items.length < 30 && !d.items.some((x) => E.norm(x.n) === E.norm(e.name) && E.norm(x.h) === E.norm(e.house))) d.items.push({ n: e.name, h: e.house, u: '' }); ev.target.value = ''; box.innerHTML = ''; drawList(); })); };
     $('#ei-x', pn).onclick = I.closeSheet;
@@ -206,13 +219,14 @@
       const msg = $('#ei-msg', pn); d.title = $('#ei-t', pn).value.trim(); d.desc = $('#ei-d', pn).value.trim(); d.video = $('#ei-v', pn).value.trim(); d.ad = $('#ei-ad', pn).checked;
       if ((d.video && !safeUrl(d.video)) || d.items.some((x) => x.u && !safeUrl(x.u))) { msg.textContent = 'Les liens doivent commencer par https://'; return; }
       if (d.title.length < 3) { msg.textContent = 'Donne-lui un titre (3 lettres au moins).'; return; } if (d.items.length < 2) { msg.textContent = 'Ajoute au moins 2 parfums.'; return; }
-      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
+      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { cover: d.cover || '', title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
       I.save();
       if (rec.cid) { try { await P.community.publish(pubOf(rec, rec.cid)); } catch (e) { /* la copie publique se mettra à jour à la prochaine publication */ } }
       I.closeSheet(); I.PL.sub = 'mine'; I.goTab('play'); showInsp(rec);
     };
   }
   async function viewComm(body) {
+    if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.feed(body);
     body.innerHTML = '<p class="plintro">Les listes que des membres ont choisi de partager. Elles viennent après celles de Sillage : à toi de voir ce qui t\'inspire.</p><span class="shim" style="display:block;height:120px"></span>';
     let j; try { j = await P.community.list(); } catch (e) { body.innerHTML = '<p class="soft">Impossible de charger pour l\'instant. Réessaie dans un instant.</p>'; return; }
     const L = j.items || [];
@@ -221,12 +235,12 @@
   }
   function showComm(x, o) {
     if (!x) return; const adm = P.isAdmin() && !(o && o.ro), ro = !!(o && o.ro);
-    const pn = I.openSheet(`<div><p class="mono">Inspiration de ${esc(x.pseudo)}</p><h2>${esc(x.title)}</h2>${x.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(x.desc)}</p>` : ''}</div>
+    const pn = I.openSheet(`${x.cover ? `<img class="covimg" src="${esc(x.cover)}" alt="">` : ''}<div><p class="mono">Inspiration de ${esc(x.pseudo)}</p><h2>${esc(x.title)}</h2>${x.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(x.desc)}</p>` : ''}</div>
       ${videoLink(x)}<div class="xlist">${itemRows(x.items)}</div>${adNote(x)}
       <div class="row"><button class="ghost" id="sc-share">Partager</button>${x.by ? '<button class="ghost" id="sc-pf">Voir le profil</button>' : ''}${ro ? '' : `<button class="ghost" id="sc-like">♥ J'aime${x.likes ? ' (' + x.likes + ')' : ''}</button>`}${x.mine || ro ? '' : '<button class="ghost" id="sc-rep">Signaler</button>'}${x.mine || adm ? '<button class="ghost danger" id="sc-del">Supprimer</button>' : ''}</div><p class="mono" id="sc-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p>`);
     bindRows(pn, x.items); const msg = $('#sc-msg', pn);
     $('#sc-share', pn).onclick = async () => { const r = await shareOut(x.title, listText(x, x.pseudo), shareUrl('c', x.id)); if (r) msg.textContent = r; };
-    if ($('#sc-pf', pn)) $('#sc-pf', pn).onclick = async () => { msg.textContent = '…'; try { const j = await P.community.creator(x.by); showCreator(j.profile, j.items); } catch (e) { msg.textContent = 'Profil indisponible.'; } };
+    if ($('#sc-pf', pn)) $('#sc-pf', pn).onclick = async () => { if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.member(x.by); msg.textContent = '…'; try { const j = await P.community.creator(x.by); showCreator(j.profile, j.items); } catch (e) { msg.textContent = 'Profil indisponible.'; } };
     if ($('#sc-like', pn)) $('#sc-like', pn).onclick = async () => { try { const j = await P.community.like(x.id); x.likes = j.likes; $('#sc-like', pn).textContent = '♥ J\'aime (' + j.likes + ')'; } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
     if ($('#sc-rep', pn)) $('#sc-rep', pn).onclick = async () => { try { await P.community.report(x.id); msg.textContent = 'Merci, c\'est signalé.'; } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
     if ($('#sc-del', pn)) $('#sc-del', pn).onclick = async () => { try { await P.community.remove(x.id); I.closeSheet(); I.render(true); } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
@@ -257,12 +271,13 @@
     try { history.replaceState(null, '', location.pathname); } catch (e) { /* ok */ }
     try {
       if (c) { const j = await (await fetch('/api/share/c/' + c)).json(); if (j.item) setTimeout(() => showComm(j.item, { ro: true }), 2800); }
-      else { const j = await (await fetch('/api/share/u/' + u)).json(); if (j.profile) setTimeout(() => showCreator(j.profile, j.items), 2800); }
+      else { const SP = window.SillageProduct; if (SP && SP.social) setTimeout(() => SP.social.member(u), 2800); else { const j = await (await fetch('/api/share/u/' + u)).json(); if (j.profile) setTimeout(() => showCreator(j.profile, j.items), 2800); } }
     } catch (e) { /* hors ligne */ }
   }
 
   // ---------- Éditeur : fiche parfum ----------
   function entry(pn, e) {
+    if (window.SillageProduct && window.SillageProduct.social) window.SillageProduct.social.rating(pn, e);
     if (!P.isAdmin()) return;
     const key = pk(e.house, e.name), hidden = (CONTENT.hide || []).includes(key), card = document.createElement('div');
     card.className = 'card'; card.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)';
@@ -310,7 +325,7 @@
     instT = setInterval(() => { n++; if (n > 40) { clearInterval(instT); instT = null; return; } if (!D.account.loggedIn() || $('#prof') || $('#onb') || $('#acct') || ($('#story') && !$('#story').hidden) || ($('#sheet') && !$('#sheet').hidden)) return; clearInterval(instT); instT = null; installTip(false); }, 4000);
   }
   function onLogin() { paintAvatar(); scheduleInstall(); }
-  window.SillageProduct = { subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
+  window.SillageProduct = { util: { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, showCreator, entryOf, pk, listText, mine, BOX }, subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
   if (!ART) try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
   P.content().then(applyContent).catch(() => {});
   if (!ART) openShared();

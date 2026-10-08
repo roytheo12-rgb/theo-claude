@@ -29,3 +29,9 @@
 
 ## Fait dans cette version
 Comptes, mot de passe oublié par email, reconnexion après expiration sans rien perdre, offres Gratuit / Premium / Fondateur reliées à Whop par clé de licence, quotas par offre côté serveur, profil avec photo et pseudo, inspirations privées et publiques avec communauté, compte éditeur, installation sur l'écran d'accueil.
+
+## Réseau (fait dans cette version)
+- D1, abonnements sans réciprocité, avis par parfum, publications, fil, profils (listes, coups de cœur, wishlist publique), photo de couverture des listes.
+- Liens suivis et statistiques, profils de marques vérifiés avec abonnement marque, étiquette « Contenu de marque », indépendance de l'IA testée.
+- À faire ensuite : notifications d'abonnement, commentaires sous les publications, messages entre membres, recherche de membres, export RGPD des données du réseau, statistiques par période choisie, import de listes depuis une vidéo.
+- Avant d'ouvrir aux marques : mentions légales à jour (nom, statut, SIRET) et une vingtaine de créateurs actifs à leur montrer.

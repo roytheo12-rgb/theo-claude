@@ -1,7 +1,7 @@
 // Test de bout en bout : vrai navigateur + vrai code du Worker + IA simulée. Lance : node test/e2e.mjs
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module'; import { execSync } from 'node:child_process';
-import { makeWorker } from '../src/index.js';
+import { makeWorker } from '../src/index.js'; import { makeD1 } from './d1mock.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url)), pub = path.join(here, '../public');
 const npmRoot = execSync('npm root -g').toString().trim();
 const { chromium } = createRequire(npmRoot + '/')('playwright');
@@ -18,9 +18,9 @@ const client = { messages: { async create(req) {
   const j = { cond: { temp: 3, ctx: 'date', with: 'partenaire', moment: 'soir', mood: 'romantique', style: 'soiree', color: 'sombre', fabric: 'cuir', place: '', dur: '' }, read: 'Dîner à deux ce soir, perfecto noir, il fait froid', pick: idOf(p, 'Tobacco Vanille'), vibe: ['enveloppant', 'fumé', 'magnétique'], story: 'Il fait 3° et ton perfecto sent déjà la nuit : Tobacco Vanille s’y accroche comme une écharpe de fumée douce.', alts: [{ id: idOf(p, 'Baccarat Rouge 540'), line: 'Plus lumineux, très sillage' }], layers: [{ id: idOf(p, 'Thé Noir 29'), effect: 'Le thé noir assèche la douceur et allonge la tenue.', how: '2 sprays de Tobacco Vanille sur la nuque, puis 1 spray de Thé Noir 29 sur les poignets. Évite le cuir du perfecto.', score: 5 }], avoid: '' };
   return { stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify(j) }] };
 } } };
-const whopFetch = async (u) => { const k = decodeURIComponent(String(u).split('/memberships/')[1]); return k === 'LIC_E2E_OK' ? new Response(JSON.stringify({ id: 'mem_e2e', status: 'active', product_id: 'prod_PREMIUM' }), { status: 200 }) : new Response('{}', { status: 404 }); };
+const whopFetch = async (u) => { const k = decodeURIComponent(String(u).split('/memberships/')[1]); return k === 'LIC_E2E_BRAND' ? new Response(JSON.stringify({ id: 'mem_b', status: 'active', product_id: 'prod_BRAND' }), { status: 200 }) : k === 'LIC_E2E_OK' ? new Response(JSON.stringify({ id: 'mem_e2e', status: 'active', product_id: 'prod_PREMIUM' }), { status: 200 }) : new Response('{}', { status: 404 }); };
 const worker = makeWorker({ client, fetch: whopFetch });
-const env = { WHOP_API_KEY: 'k', WHOP_PRODUCTS: JSON.stringify({ prod_PREMIUM: 'premium' }), ADMIN_EMAILS: 'admin@e2e.test', SILLAGE: kv, ADMIN_KEY: 'k', MAX_TRIES: '2', IP_MAX_PER_DAY: '6', DAILY_CAP: '50', ASSETS: { fetch: async (req) => { const u = new URL(req.url); let f = path.join(pub, u.pathname === '/' ? 'index.html' : u.pathname); if (!f.startsWith(pub) || !fs.existsSync(f)) return new Response('nf', { status: 404 }); return new Response(fs.readFileSync(f), { headers: { 'content-type': types[path.extname(f)] || 'application/octet-stream' } }); } } };
+const env = { WHOP_API_KEY: 'k', WHOP_PRODUCTS: JSON.stringify({ prod_PREMIUM: 'premium', prod_BRAND: 'brand' }), DB: makeD1(), ADMIN_EMAILS: 'admin@e2e.test', SILLAGE: kv, ADMIN_KEY: 'k', MAX_TRIES: '2', IP_MAX_PER_DAY: '6', DAILY_CAP: '50', ASSETS: { fetch: async (req) => { const u = new URL(req.url); let f = path.join(pub, u.pathname === '/' ? 'index.html' : u.pathname); if (!f.startsWith(pub) || !fs.existsSync(f)) return new Response('nf', { status: 404 }); return new Response(fs.readFileSync(f), { headers: { 'content-type': types[path.extname(f)] || 'application/octet-stream' } }); } } };
 const server = http.createServer(async (rq, rs) => {
   const chunks = []; for await (const c of rq) chunks.push(c);
   const body = chunks.length ? Buffer.concat(chunks) : undefined;
@@ -70,9 +70,9 @@ ok((await (await fetch(base + '/api/community', { headers: { authorization: 'Bea
 await u.pg.click('#si-pub'); ok(/Touche encore/i.test(await u.pg.locator('#si-msg').innerText()), 'publier : les règles s\'affichent avant la confirmation'); await u.pg.click('#si-pub'); await u.pg.waitForFunction(() => /publique/i.test(document.querySelector('#sheet').innerText), null, { timeout: 8000 });
 const comm = (await (await fetch(base + '/api/community', { headers: { authorization: 'Bearer ' + u.tok } })).json()).items; ok(comm.length === 1 && comm[0].pseudo === 'Léa du 37' && comm[0].items.length === 2, 'inspirations : publique = visible dans la communauté, avec son pseudo');
 await u.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; });
-const v = await open('visiteur@e2e.test'); await v.pg.click('[data-tab=play]'); await v.pg.waitForSelector('.plsubtabs'); await v.pg.click('[data-sub=comm]'); await v.pg.waitForSelector('.myc'); await v.pg.screenshot({ path: OUT + '/p5_comm.png' });
-ok(/Mes boisés du dimanche/.test(await v.pg.locator('.mylist').innerText()) && /Léa du 37/.test(await v.pg.locator('.mylist').innerText()), 'communauté : un autre membre voit l\'inspiration publiée, signée de son pseudo');
-await v.pg.click('.myc'); await v.pg.waitForSelector('#sc-like'); await v.pg.click('#sc-like'); await v.pg.waitForFunction(() => /\(1\)/.test(document.querySelector('#sc-like').textContent)); ok(true, 'communauté : « J\'aime » compté');
+const v = await open('visiteur@e2e.test'); await v.pg.click('[data-tab=play]'); await v.pg.waitForSelector('.plsubtabs'); await v.pg.click('[data-sub=comm]'); await v.pg.waitForSelector('[data-fl]'); await v.pg.screenshot({ path: OUT + '/p5_comm.png' });
+ok(/Mes boisés du dimanche/.test(await v.pg.locator('.flist').innerText()) && /Léa du 37/.test(await v.pg.locator('.flist').innerText()), 'communauté : un autre membre voit l\'inspiration publiée, signée de son pseudo');
+await v.pg.click('[data-fl]'); await v.pg.waitForSelector('#sc-like'); await v.pg.click('#sc-like'); await v.pg.waitForFunction(() => /\(1\)/.test(document.querySelector('#sc-like').textContent)); ok(true, 'communauté : « J\'aime » compté');
 ok(await v.pg.locator('#eown, #si-pub, #ed-ps').count() === 0, 'communauté : pas d\'outil d\'éditeur pour un membre');
 // 4. collection limitée en gratuit
 await v.pg.evaluate(() => { const S = window.SillageInternals.S(); S.collection = []; for (let i = 0; i < 12; i++) S.collection.push({ id: 'x' + i, name: 'Test ' + i, house: 'Maison', family: 'boisé', notes: [], rating: 4 }); window.SillageInternals.save(); });
@@ -90,6 +90,30 @@ await ad.pg.evaluate(() => { const PL = window.SillageInternals.PL; PL.sub = '';
 await ad.pg.waitForSelector('#pe-sel'); const nBefore = await ad.pg.locator('#pe-sel option').count(); await ad.pg.fill('#pe-q', 'Santal 33'); await ad.pg.waitForSelector('#pe-res .vrh'); await ad.pg.locator('#pe-res .vrh').first().click();
 await ad.pg.waitForFunction((n) => document.querySelectorAll('#pe-sel option').length === n + 1, nBefore, { timeout: 8000 }); ok(true, 'éditeur : un parfum ajouté à une inspiration apparaît tout de suite');
 const nonAdmin = await fetch(base + '/api/admin/content', { method: 'PUT', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + v.tok }, body: JSON.stringify({ op: 'price', key: 'a|b', p: 1 }) }); ok(nonAdmin.status === 403, 'éditeur : refusé côté serveur à tout autre compte');
+// 8. réseau : publier, suivre, noter, marque vérifiée
+const goComm = async (c) => { await c.pg.evaluate(() => { const sh = document.getElementById('sheet'); sh.hidden = true; sh.innerHTML = ''; document.body.style.overflow = ''; const PL = window.SillageInternals.PL; PL.sub = 'comm'; PL.id = 0; window.SillageInternals.goTab('play'); }); await c.pg.waitForSelector('#fp', { timeout: 8000 }); };
+await u.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; });
+await goComm(u); await u.pg.click('#fp'); await u.pg.waitForSelector('#po-t'); await u.pg.fill('#po-t', 'Mon avis du soir sur les boisés'); await u.pg.click('#po-go'); await u.pg.waitForSelector('[data-fid]', { timeout: 8000 });
+ok(true, 'réseau : une publication Premium apparaît dans le fil');
+await goComm(v); await v.pg.waitForSelector('[data-fid]', { timeout: 8000 }); await v.pg.evaluate(() => document.querySelector('[data-fid] .fhead').click()); await v.pg.waitForSelector('#mb-fo'); await v.pg.evaluate(() => document.querySelector('#mb-fo').click()); await v.pg.waitForFunction(() => /Abonné/.test(document.querySelector('#mb-fo').textContent), null, { timeout: 6000 });
+ok((await (await fetch(base + '/api/following', { headers: { authorization: 'Bearer ' + v.tok } })).json()).items.length === 1, 'réseau : l\'abonnement est enregistré côté serveur');
+await v.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; });
+// avis : v note un parfum, u (qui ne suit pas v) ne le voit pas ; v voit sa note
+await fetch(base + '/api/account/profile', { method: 'PUT', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + v.tok }, body: JSON.stringify({ pseudo: 'Victor' }) });
+await v.pg.evaluate(() => window.SillageDemo.plan.load()); await v.pg.evaluate(() => { const e = window.SillageInternals.dbList().find((x) => !x.ed); window.SillageInternals.openEntry(e); });
+await v.pg.waitForSelector('[data-st="5"]', { timeout: 8000 }); await v.pg.click('[data-st="5"]'); await v.pg.fill('#rv-t', 'Magnifique'); await v.pg.click('#rv-go'); await v.pg.waitForFunction(() => /enregistré/.test(document.querySelector('#rv-m').textContent), null, { timeout: 6000 });
+ok(/1 avis/.test(await v.pg.locator('#sheet').innerText()), 'réseau : l\'avis est compté sur la fiche');
+// marque vérifiée : demande, validation par l'éditeur, badge dans le fil
+const bt = await mkAccount('maison@e2e.test'); const hj = { 'content-type': 'application/json', authorization: 'Bearer ' + bt };
+await fetch(base + '/api/account/profile', { method: 'PUT', headers: hj, body: JSON.stringify({ pseudo: 'Maison' }) });
+ok((await fetch(base + '/api/brand/apply', { method: 'POST', headers: hj, body: JSON.stringify({ name: 'Maison Aurore', site: 'https://aurore.example', houses: 'Aurore' }) })).status === 200, 'marque : la demande est envoyée');
+await ad.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; });
+await ad.pg.click('#profileBtn'); await ad.pg.waitForSelector('#eb-b'); await ad.pg.click('#eb-b'); await ad.pg.waitForSelector('[data-bv]', { timeout: 6000 }); await ad.pg.click('[data-bv]'); await ad.pg.waitForTimeout(600);
+await fetch(base + '/api/account/activate', { method: 'POST', headers: hj, body: JSON.stringify({ license: 'LIC_E2E_BRAND' }) });
+ok((await fetch(base + '/api/post', { method: 'POST', headers: hj, body: JSON.stringify({ txt: 'Notre nouvelle création', video: 'https://aurore.example/film' }) })).status === 200, 'marque : validée par l\'éditeur depuis son téléphone, elle peut publier');
+await v.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; }); await goComm(v); await v.pg.waitForSelector('.vbadge', { timeout: 8000 });
+ok(/Contenu de marque/.test(await v.pg.locator('.flist').innerText()) && /Marque vérifiée/.test(await v.pg.locator('.flist').innerText()), 'marque : badge et mention « Contenu de marque » dans le fil');
+const sj = await (await fetch(base + '/api/brand/me', { headers: hj })).json(); ok(sj.stats && sj.stats.posts.length === 1, 'marque : ses chiffres sont disponibles');
 // 6. installation sur l'écran d'accueil : un seul tuto, après les questions
 const w = await open('install@e2e.test', { install: false }); await w.pg.waitForSelector('#inst-ok', { timeout: 12000 }); await w.pg.screenshot({ path: OUT + '/p7_install.png' }); ok(/écran d'accueil/.test(await w.pg.locator('.inst').locator('xpath=ancestor::*[@id="sheet"]').innerText()) , 'installation : un tuto d\'installation s\'affiche une fois connecté');
 await w.pg.click('#inst-ok'); ok(await w.pg.evaluate(() => localStorage.getItem('sillage.install') === '1'), 'installation : le tuto ne revient plus après « J\'ai compris »');

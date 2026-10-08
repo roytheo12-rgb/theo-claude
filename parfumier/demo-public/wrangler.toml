@@ -44,3 +44,11 @@ DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confond
 # [triggers]
 # crons = ["17 3 * * *"]
 # Courriel (confirmation d'adresse, mot de passe oublié) : npx wrangler secret put RESEND_API_KEY ; MAIL_FROM = "Sillage <bonjour@ton-domaine.fr>"
+
+# --- Réseau social (abonnements, avis, publications, marques, statistiques) : base D1 ---
+# 1) npx wrangler d1 create sillage    2) colle l'identifiant ci-dessous et décommente
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "sillage"
+# database_id = "COLLE_ICI_L_ID_DE_LA_BASE_D1"
+# Les tables se créent toutes seules au premier appel. Offre marque : ajoute dans WHOP_PRODUCTS un produit "brand".

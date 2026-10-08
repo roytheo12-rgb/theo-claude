@@ -72,3 +72,13 @@ Installation sur iPhone et Android, ouverture hors ligne, réception de l'email 
 - **Créateurs** (Premium et fondateur) : une liste publique peut porter un lien de vidéo ou de post (https), une case « partenariat ou publicité », et un lien officiel ou d'affiliation par parfum. Les lecteurs voient la mention de partenariat, et les liens s'ouvrent avec `rel="sponsored nofollow noopener"`. Pas d'API vidéo : un simple lien suffit tant que l'audience est petite.
 - **Profil public** : pseudo, photo, bio, jusqu'à 3 liens. Le bouton « Voir mon profil public » montre l'aperçu exact. « Partager » envoie `/?u=…` (profil) ou `/?c=…` (une liste publique), lisibles sans compte.
 - **Retours** : le bloc « Aide et retours » du profil classe les messages en problème, idée ou question ; tu les lis dans « Suivi de l'éditeur ».
+
+## Réseau, marques et statistiques (base D1)
+
+1. Crée la base : `npx wrangler d1 create sillage`, colle l'identifiant dans `wrangler.toml` (bloc `d1_databases`, décommenté). Les tables se créent toutes seules. Sans D1, tout le reste de l'appli marche et le réseau répond « pas encore activé ».
+2. **Offre marque** : crée dans Whop un produit mensuel « Marque » et ajoute-le dans `WHOP_PRODUCTS` (`"prod_XXX":"brand"`). Une marque fait sa demande dans son profil (« Espace marque »). Tu la valides depuis ton profil, bloc « Éditeur : marques et publications ». Le badge n'apparaît que si la demande est validée **et** l'abonnement marque est actif. Si l'abonnement s'arrête, le badge disparaît tout seul.
+3. **Indépendance de l'IA** : aucun code du moteur ni des prompts ne lit le réseau. Un test automatique le vérifie. Garde cette règle quand tu ajoutes des fonctions.
+4. **Statistiques** : compteurs par jour (vues de publication, vues de fiche parfum par maison, clics sur liens), sans identifiant de personne. Une marque voit ses maisons ; un créateur voit ses liens.
+5. **Liens suivis** : tout lien publié (vidéo, offre) passe par `/api/go/<code>` qui compte puis redirige. Seuls les liens `https` enregistrés par un membre sont redirigés.
+6. **Sauvegarde** : le fichier de sauvegarde contient aussi les tables D1.
+7. **Version claude.ai** : abonnements, publications, avis et fil marchent avec la base de l'artefact. Pas de marques, de liens suivis ni de statistiques de clics là-bas.

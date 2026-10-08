@@ -1047,6 +1047,31 @@ a.chip { text-decoration: none; display: inline-block; }
 .hav.big { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex: none; }
 .hav.ph { display: grid; place-items: center; background: rgba(242, 235, 224, .08); color: var(--muted); font-size: 22px; }
 
+.flist { display: grid; gap: 14px; }
+.fcard { display: grid; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(242, 235, 224, .03); }
+.fhead { display: flex; gap: 10px; align-items: center; background: none; border: 0; padding: 0; color: inherit; text-align: left; cursor: pointer; }
+.fhead b { display: block; font-size: 15px; } .fhead small { opacity: .55; font-size: 12px; }
+.fhead .hav { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex: none; }
+.ftxt { margin: 0; font-size: 15px; line-height: 1.5; white-space: pre-line; }
+.fimg { width: 100%; max-height: 360px; object-fit: cover; border-radius: 10px; }
+.ptag { justify-self: start; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--ink); font-size: 13px; cursor: pointer; }
+.ptag.off { opacity: .6; cursor: default; }
+.flab { margin: 0; font-size: 12.5px; color: var(--muted); }
+.fact { display: flex; gap: 14px; }
+.linkbtn { background: none; border: 0; padding: 0; color: var(--muted); font-size: 12.5px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.linkbtn.danger { color: #e08a95; }
+.vbadge { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: rgba(180, 57, 74, .3); color: #fff; font-size: 11px; font-weight: 500; vertical-align: 1px; }
+.stars { color: #d9b36a; letter-spacing: 1px; }
+.starpick { display: flex; gap: 4px; }
+.star { background: none; border: 0; font-size: 30px; line-height: 1; color: rgba(242, 235, 224, .25); cursor: pointer; padding: 2px 4px; }
+.star.on { color: #d9b36a; }
+.covrow { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.cover-btn { width: 160px; height: 90px; border: 1px dashed var(--line); border-radius: 10px; background: rgba(242, 235, 224, .04); color: var(--muted); font-size: 13px; cursor: pointer; overflow: hidden; padding: 0; }
+.cover-btn img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.covimg { width: 100%; max-height: 190px; object-fit: cover; border-radius: 12px; }
+.myc.hascov { background-size: cover; background-position: center; }
+.rvrow { display: grid; gap: 4px; }
+
 </style>
 </head><body>
 <div id="app">
@@ -3316,6 +3341,20 @@ ${mist}
     community: { creator: (by) => fetch('/api/share/u/' + by).then((r) => { if (!r.ok) throw { code: 'server' }; return r.json(); }), list: () => api('/api/community'), publish: (rec) => api('/api/community', 'POST', rec), remove: (id) => api('/api/community/' + id, 'DELETE'), like: (id) => api('/api/community/' + id + '/like', 'POST', {}), report: (id) => api('/api/community/' + id + '/report', 'POST', {}) },
     admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats'), support: () => api('/api/admin/support'), supportDone: (id) => api('/api/admin/support/' + id, 'DELETE'), moderation: () => api('/api/admin/moderation'), moderate: (id, action) => api('/api/admin/moderation/' + id, 'POST', { action }),
       backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
+    social: {
+      caps: { brand: true, stats: true },
+      follow: (by, on) => api('/api/follow', 'POST', { by, on }), following: () => api('/api/following'),
+      feed: (scope, before) => api('/api/feed?scope=' + (scope === 'follow' ? 'follow' : 'all') + (before ? '&before=' + before : '')),
+      post: (b) => api('/api/post', 'POST', b), delPost: (id) => api('/api/post/' + id, 'DELETE'), reportPost: (id) => api('/api/post/' + id + '/report', 'POST', {}),
+      profile: (by) => api('/api/u/' + by),
+      rate: (b) => api('/api/rating', 'PUT', b), unrate: (h, n) => api('/api/rating?h=' + encodeURIComponent(h) + '&n=' + encodeURIComponent(n), 'DELETE'),
+      ratings: (h, n) => api('/api/ratings?h=' + encodeURIComponent(h) + '&n=' + encodeURIComponent(n)),
+      wishlist: (pub, items) => api('/api/wishlist', 'PUT', { pub, items }), wishlistPub: () => api('/api/wishlist'),
+      view: (b) => { try { fetch('/api/view', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(b) }).catch(() => {}); } catch (e) { /* mesure facultative */ } },
+      myStats: () => api('/api/my/stats'), brandMe: () => api('/api/brand/me'), brandApply: (b) => api('/api/brand/apply', 'POST', b),
+      adminBrands: () => api('/api/admin/brands'), brandAct: (by, action) => api('/api/admin/brands/' + by, 'POST', { action }),
+      adminPosts: () => api('/api/admin/posts'), postAct: (id, action) => api('/api/admin/posts/' + id, 'POST', { action }),
+    },
     verified: () => !ME || ME.verified !== false, resend: () => call('resend', 'POST', {}),
     support: (message, email, kind) => api('/api/support', 'POST', { message, email, kind }),
     track: (e) => { if (token) fetch('/api/track', { method: 'POST', headers: authH(), body: JSON.stringify({ e }) }).catch(() => {}); },
@@ -6393,6 +6432,7 @@ ${mist}
     wrap.appendChild(sp);
     $$('[data-k]', sp).forEach((b) => (b.onclick = () => { kind = b.dataset.k; $$('[data-k]', sp).forEach((x) => x.classList.toggle('on', x === b)); }));
     $('#sp-go', sp).onclick = async () => { const el = $('#sp-m', sp), t = $('#sp-t', sp).value.trim(); if (t.length < 5) { el.textContent = 'Écris au moins une phrase.'; return; } el.textContent = '…'; try { await D.plan.support(t + '\n\n[' + (ART ? 'claude.ai' : 'web') + ' · ' + (navigator.userAgent || '').slice(0, 90) + ']', '', kind); $('#sp-t', sp).value = ''; el.textContent = 'Message envoyé, merci.'; } catch (e) { el.textContent = e.code === 'rate' ? 'Trop de messages, réessaie plus tard.' : 'Échec, réessaie.'; } };
+    if (window.SillageProduct && window.SillageProduct.social) window.SillageProduct.social.profileCards(wrap, m);
     if (!m.admin) return;
     const ed = document.createElement('div'); ed.className = 'card'; ed.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)';
     ed.innerHTML = '<b>Suivi de l\'éditeur</b><div class="row"><button class="ghost" id="ed-su" type="button">Messages reçus</button>' + (ART ? '' : '<button class="ghost" id="ed-mo" type="button">Inspirations signalées</button><button class="ghost" id="ed-bk" type="button">Télécharger une sauvegarde</button>') + '</div><div id="ed-out" style="display:grid;gap:8px"></div>';
@@ -6412,6 +6452,14 @@ ${mist}
     bar.innerHTML = [['', 'Univers Sillage'], ['mine', 'Mes inspirations'], ['comm', 'Communauté']].map(([k, l]) => `<button type="button" class="${(I.PL.sub || '') === k ? 'on' : ''}" data-sub="${k}">${l}</button>`).join('');
     head.parentNode.insertBefore(bar, head.nextSibling);
     $$('[data-sub]', bar).forEach((b) => (b.onclick = () => { I.PL.sub = b.dataset.sub; I.PL.id = 0; I.render(); }));
+  }
+  // Photo réduite en JPEG (largeur et hauteur maximales, poids visé en caractères) : couverture de liste, image de publication, logo.
+  function fitJpeg(file, w, h, max) {
+    return new Promise((resolve, reject) => {
+      const img = new Image(), u = URL.createObjectURL(file);
+      img.onload = () => { URL.revokeObjectURL(u); const k = Math.min(1, w / img.width, h / img.height), c = document.createElement('canvas'); c.width = Math.max(1, Math.round(img.width * k)); c.height = Math.max(1, Math.round(img.height * k)); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); let q = .8, out = c.toDataURL('image/jpeg', q); while (out.length > max && q > .3) { q -= .1; out = c.toDataURL('image/jpeg', q); } out.length > max ? reject(new Error('big')) : resolve(out); };
+      img.onerror = () => { URL.revokeObjectURL(u); reject(new Error('img')); }; img.src = u;
+    });
   }
   const safeUrl = (u) => (/^https:\/\/\S+$/.test(u || '') ? u : '');
   const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
@@ -6436,15 +6484,15 @@ ${mist}
     const L = mine(), m = P.me(), max = m ? m.limits.insp : 2;
     body.innerHTML = `<p class="plintro">Crée tes propres listes : un personnage, une saison, une humeur. Elles restent privées tant que tu ne les publies pas.</p>
       <button class="cta" id="mi-new"><span>Créer une inspiration</span></button>
-      ${L.length ? `<div class="mylist">${L.map((x) => `<button type="button" class="myc" data-mi="${esc(x.id)}"><b>${esc(x.title)}</b><small>${x.items.length} parfum${x.items.length > 1 ? 's' : ''} · ${x.cid ? 'Publique' : 'Privée'}</small>${x.desc ? `<em>${esc(x.desc)}</em>` : ''}</button>`).join('')}</div>` : '<p class="soft">Tu n\'as pas encore d\'inspiration. Commence par la première.</p>'}
+      ${L.length ? `<div class="mylist">${L.map((x) => `<button type="button" class="myc ${x.cover ? 'hascov' : ''}" data-mi="${esc(x.id)}" ${x.cover ? `style="background-image:linear-gradient(90deg,rgba(8,8,10,.92) 35%,rgba(8,8,10,.35)),url('${esc(x.cover)}')"` : ''}><b>${esc(x.title)}</b><small>${x.items.length} parfum${x.items.length > 1 ? 's' : ''} · ${x.cid ? 'Publique' : 'Privée'}</small>${x.desc ? `<em>${esc(x.desc)}</em>` : ''}</button>`).join('')}</div>` : '<p class="soft">Tu n\'as pas encore d\'inspiration. Commence par la première.</p>'}
       <p class="soft small">${L.length} sur ${max > 9999 ? '∞' : max} inspirations</p>`;
     $('#mi-new', body).onclick = () => { if (L.length >= max) return D.plans('plan'); editInsp(null); };
     $$('[data-mi]', body).forEach((b) => (b.onclick = () => showInsp(L.find((x) => x.id === b.dataset.mi))));
   }
-  const pubOf = (r, id) => ({ id, title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
+  const pubOf = (r, id) => ({ id, cover: r.cover || '', title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
   function showInsp(ins) {
     if (!ins) return;
-    const pn = I.openSheet(`<div><p class="mono">${ins.cid ? 'Publique dans la communauté' : 'Privée, toi seul la vois'}</p><h2>${esc(ins.title)}</h2>${ins.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(ins.desc)}</p>` : ''}</div>
+    const pn = I.openSheet(`${ins.cover ? `<img class="covimg" src="${esc(ins.cover)}" alt="">` : ''}<div><p class="mono">${ins.cid ? 'Publique dans la communauté' : 'Privée, toi seul la vois'}</p><h2>${esc(ins.title)}</h2>${ins.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(ins.desc)}</p>` : ''}</div>
       ${videoLink(ins)}<div class="xlist">${itemRows(ins.items)}</div>${adNote(ins)}
       <div class="row"><button class="ghost" id="si-share">Partager</button><button class="ghost" id="si-edit">Modifier</button><button class="ghost" id="si-pub">${ins.cid ? 'Retirer de la communauté' : 'Rendre publique'}</button><button class="ghost danger" id="si-del">Supprimer</button></div><p class="mono" id="si-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p>`);
     bindRows(pn, ins.items);
@@ -6465,9 +6513,10 @@ ${mist}
     $('#si-del', pn).onclick = async (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer la suppression'; return; } if (ins.cid) { try { await P.community.remove(ins.cid); } catch (e) { /* déjà retirée */ } } const L = mine(); L.splice(L.indexOf(ins), 1); I.save(); I.closeSheet(); I.render(true); };
   }
   function editInsp(ins) {
-    const d = ins ? { id: ins.id, title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), title: '', desc: '', video: '', ad: false, items: [] };
+    const d = ins ? { id: ins.id, cover: ins.cover || '', title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), cover: '', title: '', desc: '', video: '', ad: false, items: [] };
     const pn = I.openSheet(`<div><h2>${ins ? 'Modifier' : 'Nouvelle'} inspiration</h2></div>
       <input type="text" id="ei-t" maxlength="60" placeholder="Son titre (ex. Cuirs de minuit)" value="${esc(d.title)}" aria-label="Titre"><textarea id="ei-d" rows="2" maxlength="240" placeholder="Une phrase pour la décrire" aria-label="Description">${esc(d.desc)}</textarea>
+      <div class="covrow"><button type="button" class="cover-btn" id="ei-cv">${d.cover ? `<img src="${esc(d.cover)}" alt="">` : '<span>＋ Photo de couverture</span>'}</button>${d.cover ? '<button type="button" class="ghost" id="ei-cx">Retirer la photo</button>' : ''}<input type="file" id="ei-cf" accept="image/*" hidden></div>
       <input type="url" id="ei-v" maxlength="300" placeholder="Lien d'une vidéo ou d'un post (https://…), facultatif" value="${esc(d.video)}" aria-label="Lien de la vidéo"><label class="chk"><input type="checkbox" id="ei-ad" ${d.ad ? 'checked' : ''}><span>Cette liste est un partenariat ou une publicité</span></label>
       <div><p class="mono">Ses parfums</p><div id="ei-list" class="xlist"></div></div>
       <input type="search" id="ei-q" placeholder="Chercher un parfum à ajouter…" autocomplete="off" aria-label="Chercher un parfum"><div id="ei-res" class="vrres"></div>
@@ -6478,6 +6527,9 @@ ${mist}
       $$('[data-up]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.up; if (i > 0) { [d.items[i - 1], d.items[i]] = [d.items[i], d.items[i - 1]]; drawList(); } }));
       $$('[data-dn]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.dn; if (i < d.items.length - 1) { [d.items[i + 1], d.items[i]] = [d.items[i], d.items[i + 1]]; drawList(); } }));
       $$('[data-rm]', pn).forEach((b) => (b.onclick = () => { d.items.splice(+b.dataset.rm, 1); drawList(); })); };
+    $('#ei-cv', pn).onclick = () => $('#ei-cf', pn).click();
+    if ($('#ei-cx', pn)) $('#ei-cx', pn).onclick = () => { d.cover = ''; $('#ei-cv', pn).innerHTML = '<span>＋ Photo de couverture</span>'; $('#ei-cx', pn).remove(); };
+    $('#ei-cf', pn).onchange = async () => { const f = $('#ei-cf', pn).files[0]; if (!f) return; try { d.cover = await fitJpeg(f, 480, 270, 38000); $('#ei-cv', pn).innerHTML = `<img src="${esc(d.cover)}" alt="">`; } catch (e) { $('#ei-msg', pn).textContent = 'Cette photo ne passe pas. Essaie-en une autre.'; } };
     drawList();
     $('#ei-q', pn).oninput = (ev) => { const t = E.norm(ev.target.value), box = $('#ei-res', pn); if (t.length < 2) { box.innerHTML = ''; return; } const hits = I.dbList().filter((e) => !e.ed && E.norm(e.house + ' ' + e.name).includes(t)).slice(0, 8); box.innerHTML = hits.map((e, i) => `<button type="button" class="vrh" data-rh="${i}"><b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`).join(''); $$('[data-rh]', box).forEach((b) => (b.onclick = () => { const e = hits[+b.dataset.rh]; if (d.items.length < 30 && !d.items.some((x) => E.norm(x.n) === E.norm(e.name) && E.norm(x.h) === E.norm(e.house))) d.items.push({ n: e.name, h: e.house, u: '' }); ev.target.value = ''; box.innerHTML = ''; drawList(); })); };
     $('#ei-x', pn).onclick = I.closeSheet;
@@ -6485,13 +6537,14 @@ ${mist}
       const msg = $('#ei-msg', pn); d.title = $('#ei-t', pn).value.trim(); d.desc = $('#ei-d', pn).value.trim(); d.video = $('#ei-v', pn).value.trim(); d.ad = $('#ei-ad', pn).checked;
       if ((d.video && !safeUrl(d.video)) || d.items.some((x) => x.u && !safeUrl(x.u))) { msg.textContent = 'Les liens doivent commencer par https://'; return; }
       if (d.title.length < 3) { msg.textContent = 'Donne-lui un titre (3 lettres au moins).'; return; } if (d.items.length < 2) { msg.textContent = 'Ajoute au moins 2 parfums.'; return; }
-      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
+      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { cover: d.cover || '', title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
       I.save();
       if (rec.cid) { try { await P.community.publish(pubOf(rec, rec.cid)); } catch (e) { /* la copie publique se mettra à jour à la prochaine publication */ } }
       I.closeSheet(); I.PL.sub = 'mine'; I.goTab('play'); showInsp(rec);
     };
   }
   async function viewComm(body) {
+    if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.feed(body);
     body.innerHTML = '<p class="plintro">Les listes que des membres ont choisi de partager. Elles viennent après celles de Sillage : à toi de voir ce qui t\'inspire.</p><span class="shim" style="display:block;height:120px"></span>';
     let j; try { j = await P.community.list(); } catch (e) { body.innerHTML = '<p class="soft">Impossible de charger pour l\'instant. Réessaie dans un instant.</p>'; return; }
     const L = j.items || [];
@@ -6500,12 +6553,12 @@ ${mist}
   }
   function showComm(x, o) {
     if (!x) return; const adm = P.isAdmin() && !(o && o.ro), ro = !!(o && o.ro);
-    const pn = I.openSheet(`<div><p class="mono">Inspiration de ${esc(x.pseudo)}</p><h2>${esc(x.title)}</h2>${x.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(x.desc)}</p>` : ''}</div>
+    const pn = I.openSheet(`${x.cover ? `<img class="covimg" src="${esc(x.cover)}" alt="">` : ''}<div><p class="mono">Inspiration de ${esc(x.pseudo)}</p><h2>${esc(x.title)}</h2>${x.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(x.desc)}</p>` : ''}</div>
       ${videoLink(x)}<div class="xlist">${itemRows(x.items)}</div>${adNote(x)}
       <div class="row"><button class="ghost" id="sc-share">Partager</button>${x.by ? '<button class="ghost" id="sc-pf">Voir le profil</button>' : ''}${ro ? '' : `<button class="ghost" id="sc-like">♥ J'aime${x.likes ? ' (' + x.likes + ')' : ''}</button>`}${x.mine || ro ? '' : '<button class="ghost" id="sc-rep">Signaler</button>'}${x.mine || adm ? '<button class="ghost danger" id="sc-del">Supprimer</button>' : ''}</div><p class="mono" id="sc-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p>`);
     bindRows(pn, x.items); const msg = $('#sc-msg', pn);
     $('#sc-share', pn).onclick = async () => { const r = await shareOut(x.title, listText(x, x.pseudo), shareUrl('c', x.id)); if (r) msg.textContent = r; };
-    if ($('#sc-pf', pn)) $('#sc-pf', pn).onclick = async () => { msg.textContent = '…'; try { const j = await P.community.creator(x.by); showCreator(j.profile, j.items); } catch (e) { msg.textContent = 'Profil indisponible.'; } };
+    if ($('#sc-pf', pn)) $('#sc-pf', pn).onclick = async () => { if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.member(x.by); msg.textContent = '…'; try { const j = await P.community.creator(x.by); showCreator(j.profile, j.items); } catch (e) { msg.textContent = 'Profil indisponible.'; } };
     if ($('#sc-like', pn)) $('#sc-like', pn).onclick = async () => { try { const j = await P.community.like(x.id); x.likes = j.likes; $('#sc-like', pn).textContent = '♥ J\'aime (' + j.likes + ')'; } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
     if ($('#sc-rep', pn)) $('#sc-rep', pn).onclick = async () => { try { await P.community.report(x.id); msg.textContent = 'Merci, c\'est signalé.'; } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
     if ($('#sc-del', pn)) $('#sc-del', pn).onclick = async () => { try { await P.community.remove(x.id); I.closeSheet(); I.render(true); } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
@@ -6536,12 +6589,13 @@ ${mist}
     try { history.replaceState(null, '', location.pathname); } catch (e) { /* ok */ }
     try {
       if (c) { const j = await (await fetch('/api/share/c/' + c)).json(); if (j.item) setTimeout(() => showComm(j.item, { ro: true }), 2800); }
-      else { const j = await (await fetch('/api/share/u/' + u)).json(); if (j.profile) setTimeout(() => showCreator(j.profile, j.items), 2800); }
+      else { const SP = window.SillageProduct; if (SP && SP.social) setTimeout(() => SP.social.member(u), 2800); else { const j = await (await fetch('/api/share/u/' + u)).json(); if (j.profile) setTimeout(() => showCreator(j.profile, j.items), 2800); } }
     } catch (e) { /* hors ligne */ }
   }
 
   // ---------- Éditeur : fiche parfum ----------
   function entry(pn, e) {
+    if (window.SillageProduct && window.SillageProduct.social) window.SillageProduct.social.rating(pn, e);
     if (!P.isAdmin()) return;
     const key = pk(e.house, e.name), hidden = (CONTENT.hide || []).includes(key), card = document.createElement('div');
     card.className = 'card'; card.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)';
@@ -6589,13 +6643,193 @@ ${mist}
     instT = setInterval(() => { n++; if (n > 40) { clearInterval(instT); instT = null; return; } if (!D.account.loggedIn() || $('#prof') || $('#onb') || $('#acct') || ($('#story') && !$('#story').hidden) || ($('#sheet') && !$('#sheet').hidden)) return; clearInterval(instT); instT = null; installTip(false); }, 4000);
   }
   function onLogin() { paintAvatar(); scheduleInstall(); }
-  window.SillageProduct = { subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
+  window.SillageProduct = { util: { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, showCreator, entryOf, pk, listText, mine, BOX }, subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
   if (!ART) try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
   P.content().then(applyContent).catch(() => {});
   if (!ART) openShared();
   if (ART) P.load().then(() => paintAvatar()).catch(() => {});
   else if (D.account.loggedIn()) { P.load().then(() => { paintAvatar(); }).catch(() => {}); scheduleInstall(); }
   if (!ART) try { const tk = new URLSearchParams(location.search).get('reset'); if (tk && /^[a-f0-9]{64}$/.test(tk) && !D.account.loggedIn()) setTimeout(() => { if (!$('#acct')) I.showAccount('force', { reset: tk }); }, 1200); } catch (e) { /* ok */ }
+})();
+
+</script>
+<script>
+// Réseau de Sillage : fil de la communauté, publications, abonnements, avis par parfum, profils de membres et de marques, chiffres.
+// Chargé après product.js, qui lui prête ses outils (SillageProduct.util).
+(function () {
+  'use strict';
+  const SP = window.SillageProduct; if (!SP || !SP.util) return;
+  const { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, entryOf, pk, mine, BOX } = SP.util;
+  const N = P.social; if (!N) return;
+  const E = I.E;
+  const logged = () => (ART ? true : D.account.loggedIn());
+  const when = (ts) => { const m = Math.round((Date.now() - ts) / 60000); if (m < 1) return 'à l\'instant'; if (m < 60) return 'il y a ' + m + ' min'; const h = Math.round(m / 60); if (h < 24) return 'il y a ' + h + ' h'; const d = Math.round(h / 24); return d < 30 ? 'il y a ' + d + ' j' : new Date(ts).toLocaleDateString('fr-FR'); };
+  const ERR = { plan: 'Publier est réservé à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', verify: 'Confirme d\'abord ton adresse courriel.', rules: 'Ni lien, ni adresse, ni insulte dans le texte.', image: 'Cette image est trop lourde ou illisible.', content: 'Écris au moins une phrase, ou ajoute une photo ou un lien.', rate: 'Trop d\'actions, réessaie plus tard.', network: 'Pas de connexion.', auth: 'Connecte-toi d\'abord.', social_off: 'Cette partie n\'est pas encore activée.', self: 'Tu ne peux pas te suivre toi-même.', limit: 'Limite atteinte.' };
+  const errT = (e) => ERR[e && e.code] || 'Échec, réessaie.';
+  const stars = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
+  const avatar = (a, cls) => (a.avatar ? `<img class="hav ${cls || ''}" src="${esc(a.avatar)}" alt="">` : `<span class="hav ph ${cls || ''}">${esc((a.pseudo || '?').charAt(0).toUpperCase())}</span>`);
+  const nameOf = (a) => `${esc(a.pseudo || 'Anonyme')}${a.brand ? ' <span class="vbadge" title="Marque vérifiée">✓ Marque vérifiée</span>' : ''}`;
+  const head = (a, ts) => `<button type="button" class="fhead" data-mb="${esc(a.by)}">${avatar(a)}<span><b>${nameOf(a)}</b>${ts ? `<small>${when(ts)}</small>` : ''}</span></button>`;
+  const perfumeTag = (x) => { const e = x.pn ? entryOf(x.ph, x.pn) : null; return x.pn ? (e ? `<button type="button" class="ptag" data-pt="${esc(pk(e.house, e.name))}">${esc(e.name)} · ${esc(e.house)} ›</button>` : `<span class="ptag off">${esc(x.pn)}${x.ph ? ' · ' + esc(x.ph) : ''}</span>`) : ''; };
+  const labels = (x) => (x.brand ? '<p class="flab">Contenu de marque · Les conseils de l\'IA ne sont jamais influencés par les marques</p>' : x.ad ? '<p class="flab">Partenariat ou publicité</p>' : '');
+  const linkOut = (u, txt) => (safeUrl(u) || String(u).startsWith('/api/go/') ? `<a class="ghost vlink" href="${esc(u)}" target="_blank" rel="${REL}">${txt}</a>` : '');
+  const bindCard = (root) => {
+    $$('[data-mb]', root).forEach((b) => (b.onclick = () => member(b.dataset.mb)));
+    $$('[data-pt]', root).forEach((b) => (b.onclick = () => { const e = I.dbList().find((x) => !x.ed && pk(x.house, x.name) === b.dataset.pt); if (e) I.openEntry(e); }));
+  };
+
+  function card(x) {
+    if (x.t === 'post') {
+      return `<article class="fcard" data-fid="${esc(x.id)}">${head(x.author, x.ts)}${x.txt ? `<p class="ftxt">${esc(x.txt)}</p>` : ''}${x.img ? `<img class="fimg" src="${esc(x.img)}" alt="" loading="lazy">` : ''}${perfumeTag(x)}${x.video ? `<div class="row">${linkOut(x.video, '▶ Voir la vidéo ou le lien ↗')}</div>` : ''}${labels(x)}
+        <div class="fact"><button type="button" class="linkbtn" data-pr="${esc(x.id)}">Signaler</button><button type="button" class="linkbtn danger" data-pd="${esc(x.id)}" hidden>Supprimer</button></div></article>`;
+    }
+    if (x.t === 'list') {
+      return `<article class="fcard">${head(x.author, x.ts)}<button type="button" class="myc ${x.cover ? 'hascov' : ''}" data-fl="${esc(x.id)}" ${x.cover ? `style="background-image:linear-gradient(90deg,rgba(8,8,10,.92) 35%,rgba(8,8,10,.3)),url('${esc(x.cover)}')"` : ''}><b>${esc(x.title)}</b><small>${x.items.length} parfums${x.video ? ' · vidéo' : ''}${x.ad ? ' · partenariat' : ''}</small>${x.desc ? `<em>${esc(x.desc)}</em>` : ''}</button></article>`;
+    }
+    return `<article class="fcard">${head(x.author, x.ts)}<p class="ftxt"><span class="stars">${stars(x.stars)}</span> ${esc(x.n)}${x.h ? ' · ' + esc(x.h) : ''}</p><p class="ftxt">${esc(x.txt)}</p><button type="button" class="ptag" data-pt="${esc(pk(x.h, x.n))}">Voir la fiche ›</button></article>`;
+  }
+
+  // ---------- Le fil de la communauté ----------
+  async function feed(body) {
+    let scope = 'all', items = [], next = 0, busy = false;
+    const m = P.me();
+    body.innerHTML = '<p class="plintro">Les publications et les listes des membres. Suis des gens pour retrouver leurs avis et leurs listes dans « Abonnements ».</p><div class="chips" id="fs"><button type="button" class="chip on" data-sc="all">Tout</button><button type="button" class="chip" data-sc="follow">Abonnements</button></div><div class="row"><button class="cta" id="fp"><span>Publier</span></button></div><div id="fl" class="flist"></div><div class="row"><button class="ghost" id="fm" hidden>Voir plus</button></div><p class="mono" id="fmsg" style="' + BOX + '"></p>';
+    const list = $('#fl', body), msg = $('#fmsg', body), more = $('#fm', body);
+    const paint = (fresh) => {
+      list.innerHTML = items.length ? items.map(card).join('') : `<p class="soft">${scope === 'follow' ? 'Rien pour l\'instant. Ouvre un profil depuis « Tout » et touche « Suivre ».' : 'Rien pour l\'instant. Sois le premier à publier.'}</p>`;
+      bindCard(list);
+      $$('[data-fl]', list).forEach((b) => (b.onclick = () => { const x = items.find((i) => i.t === 'list' && i.id === b.dataset.fl); if (x) showComm(Object.assign({ pseudo: x.author.pseudo, by: x.author.by }, x), { ro: !logged() }); }));
+      $$('[data-pr]', list).forEach((b) => (b.onclick = async () => { try { await N.reportPost(b.dataset.pr); b.textContent = 'Signalé, merci'; b.disabled = true; } catch (e) { msg.textContent = errT(e); } }));
+      $$('[data-pd]', list).forEach((b) => { const x = items.find((i) => i.id === b.dataset.pd); if (P.isAdmin() || (m && x && m.profile && x.author.by === m.profile.by)) b.hidden = false; b.onclick = async () => { try { await N.delPost(b.dataset.pd); items = items.filter((i) => i.id !== b.dataset.pd); paint(); } catch (e) { msg.textContent = errT(e); } }; });
+      if (fresh !== false) { const ids = items.filter((i) => i.t === 'post').map((i) => i.id); if (ids.length && N.view) N.view({ posts: ids.slice(0, 30) }); }
+      more.hidden = !next;
+    };
+    const load = async (reset) => {
+      if (busy) return; busy = true; msg.textContent = '…';
+      try { const j = await N.feed(scope, reset ? 0 : next); items = reset ? j.items : items.concat(j.items); next = j.next; msg.textContent = ''; paint(); }
+      catch (e) { msg.textContent = e.code === 'unavailable' ? 'Le fil a besoin de la base de l\'artefact.' : (e.code === 'auth' ? 'Connecte-toi pour voir le fil.' : errT(e)); }
+      busy = false;
+    };
+    $$('[data-sc]', body).forEach((b) => (b.onclick = () => { scope = b.dataset.sc; $$('[data-sc]', body).forEach((x) => x.classList.toggle('on', x === b)); load(true); }));
+    more.onclick = () => load(false);
+    $('#fp', body).onclick = () => { if (!logged()) return D.account && I.showAccount ? I.showAccount('force') : 0; postSheet(() => load(true)); };
+    load(true);
+  }
+
+  // ---------- Publier ----------
+  function postSheet(done) {
+    const d = { img: '', h: '', n: '' };
+    const pn = I.openSheet(`<div><h2>Nouvelle publication</h2><p style="color:var(--muted);margin-top:6px">Un avis, une trouvaille, une vidéo. Pas de lien ni d'adresse dans le texte, les liens vont dans le champ prévu.</p></div>
+      <textarea id="po-t" rows="4" maxlength="600" placeholder="Qu'as-tu à dire sur un parfum ?" aria-label="Texte"></textarea>
+      <div class="covrow"><button type="button" class="cover-btn" id="po-ib"><span>＋ Photo</span></button><input type="file" id="po-if" accept="image/*" hidden></div>
+      <input type="url" id="po-v" maxlength="300" placeholder="Lien d'une vidéo ou d'une boutique (https://…), facultatif" aria-label="Lien">
+      <input type="search" id="po-q" placeholder="Lier un parfum de la base, facultatif" autocomplete="off" aria-label="Parfum"><div id="po-r" class="vrres"></div><p class="soft small" id="po-tag" style="margin:0"></p>
+      <label class="chk"><input type="checkbox" id="po-ad"><span>C'est un partenariat ou une publicité</span></label>
+      <div class="row"><button class="cta" id="po-go"><span>Publier</span></button><button class="ghost" id="po-x">Annuler</button></div><p class="mono" id="po-m" style="${BOX}"></p>`);
+    const msg = $('#po-m', pn);
+    $('#po-ib', pn).onclick = () => $('#po-if', pn).click();
+    $('#po-if', pn).onchange = async () => { const f = $('#po-if', pn).files[0]; if (!f) return; try { d.img = await fitJpeg(f, 720, 720, 44000); $('#po-ib', pn).innerHTML = `<img src="${esc(d.img)}" alt="">`; } catch (e) { msg.textContent = 'Cette photo ne passe pas.'; } };
+    $('#po-q', pn).oninput = (ev) => { const t = E.norm(ev.target.value), box = $('#po-r', pn); if (t.length < 2) { box.innerHTML = ''; return; } const hits = I.dbList().filter((e) => !e.ed && E.norm(e.house + ' ' + e.name).includes(t)).slice(0, 6); box.innerHTML = hits.map((e, i) => `<button type="button" class="vrh" data-rh="${i}"><b>${esc(e.name)}</b><small>${esc(e.house)}</small></button>`).join(''); $$('[data-rh]', box).forEach((b) => (b.onclick = () => { const e = hits[+b.dataset.rh]; d.h = e.house; d.n = e.name; $('#po-tag', pn).textContent = 'Parfum lié : ' + e.name + ' · ' + e.house; box.innerHTML = ''; ev.target.value = ''; })); };
+    $('#po-x', pn).onclick = I.closeSheet;
+    $('#po-go', pn).onclick = async () => {
+      const v = $('#po-v', pn).value.trim(); if (v && !safeUrl(v)) { msg.textContent = 'Le lien doit commencer par https://'; return; }
+      msg.textContent = '…'; $('#po-go', pn).disabled = true;
+      try { await N.post({ txt: $('#po-t', pn).value.trim(), img: d.img, video: v, h: d.h, n: d.n, ad: $('#po-ad', pn).checked }); I.closeSheet(); if (done) done(); }
+      catch (e) { $('#po-go', pn).disabled = false; if (e.code === 'plan') { I.closeSheet(); if (D.plans) D.plans('plan'); return; } msg.textContent = errT(e); }
+    };
+  }
+
+  // ---------- Profil d'un membre ou d'une marque ----------
+  async function member(by) {
+    let j; try { j = await N.profile(by); } catch (e) { const pn = I.openSheet('<div><h2>Profil introuvable</h2><p style="color:var(--muted)">Ce profil n\'existe plus ou n\'est pas public.</p></div>'); return pn; }
+    const pf = j.profile, lk = (pf.links || []).filter(safeUrl).map((u) => `<a class="ghost vlink" href="${esc(u)}" target="_blank" rel="${REL}">${esc(hostOf(u))} ↗</a>`).join('');
+    const pn = I.openSheet(`<div class="crhead">${avatar(pf, 'big')}<div><h2>${nameOf(pf)}</h2>${pf.bio ? `<p class="soft" style="margin:4px 0 0">${esc(pf.bio)}</p>` : ''}<p class="soft small" style="margin:6px 0 0"><b id="mb-fl">${j.followers}</b> abonné${j.followers > 1 ? 's' : ''} · ${j.following} abonnement${j.following > 1 ? 's' : ''}</p></div></div>
+      ${lk ? `<div class="row">${lk}</div>` : ''}
+      <div class="row">${j.mine ? '' : `<button class="cta" id="mb-fo"><span>${j.iFollow ? 'Abonné ✓' : 'Suivre'}</span></button>`}<button class="ghost" id="mb-sh">Partager</button></div><p class="mono" id="mb-m" style="${BOX}"></p>
+      ${j.posts.length ? `<p class="mono">Publications</p><div class="flist">${j.posts.map(card).join('')}</div>` : ''}
+      ${j.lists.length ? `<p class="mono">Listes</p><div class="mylist">${j.lists.map((x, i) => `<button type="button" class="myc ${x.cover ? 'hascov' : ''}" data-ml="${i}" ${x.cover ? `style="background-image:linear-gradient(90deg,rgba(8,8,10,.92) 35%,rgba(8,8,10,.3)),url('${esc(x.cover)}')"` : ''}><b>${esc(x.title)}</b><small>${x.items.length} parfums${x.video ? ' · vidéo' : ''}</small></button>`).join('')}</div>` : ''}
+      ${j.loves.length ? `<p class="mono">Avis et coups de cœur</p><div class="xlist">${j.loves.map((r, i) => `<button type="button" class="xc" data-lv="${i}"><span class="xt"><b>${esc(r.n)}</b><small>${esc(r.h || '')} · <span class="stars">${stars(r.stars)}</span></small>${r.txt ? `<small>${esc(r.txt)}</small>` : ''}</span><i class="xm">›</i></button>`).join('')}</div>` : ''}
+      ${j.wishlist && j.wishlist.length ? `<p class="mono">Wishlist</p><div class="xlist">${itemRows(j.wishlist)}</div>` : ''}
+      ${!j.posts.length && !j.lists.length && !j.loves.length ? '<p class="soft">Rien de public pour l\'instant.</p>' : ''}`);
+    bindCard(pn); const msg = $('#mb-m', pn);
+    if (j.wishlist) bindRows(pn, j.wishlist);
+    $$('[data-ml]', pn).forEach((b) => (b.onclick = () => { const x = j.lists[+b.dataset.ml]; showComm(Object.assign({ pseudo: pf.pseudo, by: '' }, x), { ro: !logged() }); }));
+    $$('[data-lv]', pn).forEach((b) => (b.onclick = () => { const r = j.loves[+b.dataset.lv], e = entryOf(r.h, r.n); if (e) I.openEntry(e); }));
+    $$('[data-pr]', pn).forEach((b) => (b.onclick = async () => { try { await N.reportPost(b.dataset.pr); b.textContent = 'Signalé, merci'; } catch (e) { msg.textContent = errT(e); } }));
+    if ($('#mb-fo', pn)) $('#mb-fo', pn).onclick = async () => {
+      if (!logged()) { msg.textContent = 'Connecte-toi pour suivre ce profil.'; return; }
+      try { const r = await N.follow(by, !j.iFollow); j.iFollow = r.following; $('#mb-fo', pn).firstChild.textContent = r.following ? 'Abonné ✓' : 'Suivre'; $('#mb-fl', pn).textContent = r.followers; } catch (e) { msg.textContent = errT(e); }
+    };
+    $('#mb-sh', pn).onclick = async () => { const t0 = (pf.pseudo || 'Un membre') + ' sur Sillage'; msg.textContent = (await shareOut(t0, t0, shareUrl('u', by))) || ''; };
+    if (N.view && pf.brand) N.view({ posts: j.posts.map((p) => p.id) });
+    return pn;
+  }
+
+  // ---------- Avis par parfum, sur chaque fiche ----------
+  async function rating(pn, e) {
+    if (N.view && !ART) N.view({ h: e.house, n: e.name });
+    if (!logged()) return;
+    const box = document.createElement('div'); box.className = 'card'; box.style.cssText = 'display:grid;gap:10px'; pn.appendChild(box);
+    let j = null; try { j = await N.ratings(e.house, e.name); } catch (er) { box.remove(); return; }
+    let val = j.mine ? j.mine.stars : 0;
+    const draw = () => {
+      box.innerHTML = `<b>Mon avis</b><div class="starpick" role="radiogroup" aria-label="Ma note">${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="star ${n <= val ? 'on' : ''}" data-st="${n}" aria-label="${n} sur 5">★</button>`).join('')}</div>
+        <textarea id="rv-t" rows="2" maxlength="400" placeholder="Un mot sur ce parfum, facultatif" aria-label="Mon commentaire">${esc(j.mine ? j.mine.txt : '')}</textarea>
+        <div class="row"><button class="ghost" id="rv-go" type="button">Enregistrer mon avis</button>${j.mine ? '<button class="ghost danger" id="rv-rm" type="button">Retirer</button>' : ''}</div><p class="mono" id="rv-m" style="${BOX}"></p>
+        ${j.count ? `<p class="soft small" style="margin:0">${j.count} avis · moyenne ${j.avg} sur 5</p>` : '<p class="soft small" style="margin:0">Aucun avis pour l\'instant.</p>'}
+        ${j.friends.length ? `<p class="mono">Chez tes abonnements</p>${j.friends.map((f) => `<div class="rvrow">${head(f.author, f.ts)}<p class="ftxt"><span class="stars">${stars(f.stars)}</span>${f.txt ? ' ' + esc(f.txt) : ''}</p></div>`).join('')}` : ''}`;
+      bindCard(box);
+      $$('[data-st]', box).forEach((b) => (b.onclick = () => { val = +b.dataset.st; $$('[data-st]', box).forEach((x) => x.classList.toggle('on', +x.dataset.st <= val)); }));
+      const m = $('#rv-m', box);
+      $('#rv-go', box).onclick = async () => { if (!val) { m.textContent = 'Choisis une note de 1 à 5.'; return; } m.textContent = '…'; try { await N.rate({ h: e.house, n: e.name, stars: val, txt: $('#rv-t', box).value.trim() }); j = await N.ratings(e.house, e.name); draw(); $('#rv-m', box).textContent = 'Avis enregistré ✓'; } catch (er) { m.textContent = errT(er); } };
+      if ($('#rv-rm', box)) $('#rv-rm', box).onclick = async () => { try { await N.unrate(e.house, e.name); val = 0; j = await N.ratings(e.house, e.name); draw(); } catch (er) { m.textContent = errT(er); } };
+    };
+    draw();
+  }
+
+  // ---------- Dans le profil : wishlist publique, chiffres, espace marque, éditeur ----------
+  function profileCards(wrap, m) {
+    const net = document.createElement('div'); net.className = 'card'; net.style.cssText = 'display:grid;gap:10px'; wrap.insertBefore(net, wrap.firstChild);
+    net.innerHTML = `<b>Mon réseau</b><label class="chk"><input type="checkbox" id="nw-pub"><span>Ma wishlist est publique (les autres la voient sur mon profil)</span></label><div class="row"><button class="ghost" id="nw-st" type="button">${ART ? 'Mes abonnés' : 'Mes chiffres'}</button><button class="ghost" id="nw-fo" type="button">Mes abonnements</button></div><div id="nw-out" style="display:grid;gap:8px"></div><p class="mono" id="nw-m" style="${BOX}"></p>`;
+    const out = $('#nw-out', net), msg = $('#nw-m', net), items = () => (I.S().wishlist || []).map((w) => ({ n: w.name, h: w.house }));
+    N.wishlistPub().then((r) => { $('#nw-pub', net).checked = !!r.pub; }).catch(() => {});
+    $('#nw-pub', net).onchange = async (ev) => { try { await N.wishlist(ev.target.checked, items()); msg.textContent = ev.target.checked ? 'Wishlist publique ✓ (mise à jour à chaque changement de ce réglage)' : 'Wishlist privée ✓'; } catch (e) { ev.target.checked = !ev.target.checked; msg.textContent = errT(e); } };
+    $('#nw-st', net).onclick = async () => { out.textContent = '…'; try { const s = await N.myStats(); out.innerHTML = `<p class="ftxt" style="white-space:pre-line">${s.followers} abonné${s.followers > 1 ? 's' : ''}${ART ? '' : `\n${s.postViews} vues de tes publications (30 jours)`}</p>${(s.links || []).length ? `<p class="mono">Clics sur tes liens (30 jours)</p>${s.links.map((l) => `<div class="eir"><span><b>${esc(hostOf(l.url))}</b><small>${esc(l.url.slice(0, 60))}</small></span><span class="eib"><b>${l.n}</b></span></div>`).join('')}` : ''}`; } catch (e) { out.textContent = errT(e); } };
+    $('#nw-fo', net).onclick = async () => { out.textContent = '…'; try { const j = await N.following(); out.innerHTML = j.items.length ? j.items.map((a) => head(a)).join('') : '<p class="soft small">Tu ne suis personne pour l\'instant.</p>'; $$('[data-mb]', out).forEach((b) => (b.onclick = () => { I.closeSheet(); member(b.dataset.mb); })); } catch (e) { out.textContent = errT(e); } };
+    if (N.caps.brand) brandCard(wrap, m);
+    if (m.admin && N.caps.brand) editorCards(wrap);
+  }
+  function brandCard(wrap, m) {
+    const c = document.createElement('div'); c.className = 'card'; c.style.cssText = 'display:grid;gap:10px'; wrap.appendChild(c);
+    c.innerHTML = '<b>Espace marque</b><p class="soft small" style="margin:0">Marques et maisons : un profil vérifié, des publications étiquetées, des chiffres. Les conseils de l\'IA ne sont jamais influencés par ce contenu.</p><div id="br-in">…</div>';
+    const box = $('#br-in', c);
+    const form = (b) => {
+      box.innerHTML = `<input type="text" id="br-n" maxlength="60" placeholder="Nom de la marque" value="${esc(b ? b.name : '')}" aria-label="Nom"><input type="url" id="br-s" maxlength="300" placeholder="Site officiel (https://…)" value="${esc(b ? b.site : '')}" aria-label="Site"><input type="text" id="br-h" maxlength="200" placeholder="Maisons ou marques, séparées par une virgule" value="${esc(b ? (b.houses || []).join(', ') : '')}" aria-label="Maisons"><textarea id="br-b" rows="2" maxlength="240" placeholder="Une phrase de présentation" aria-label="Présentation">${esc(b ? b.bio : '')}</textarea>
+        <div class="row"><button class="ghost" id="br-go" type="button">${b ? 'Mettre à jour la demande' : 'Demander un profil vérifié'}</button></div><p class="mono" id="br-m" style="${BOX}"></p>`;
+      $('#br-go', box).onclick = async () => { const mm = $('#br-m', box), s = $('#br-s', box).value.trim(); if (!safeUrl(s)) { mm.textContent = 'Le site doit commencer par https://'; return; } mm.textContent = '…'; try { await N.brandApply({ name: $('#br-n', box).value.trim(), site: s, houses: $('#br-h', box).value.split(','), bio: $('#br-b', box).value.trim(), logo: m.profile.avatar && m.profile.avatar.length < 58000 ? m.profile.avatar : '' }); mm.textContent = 'Demande envoyée. Je la valide à la main, tu seras prévenu par le badge sur ton profil.'; } catch (e) { mm.textContent = e.code === 'content' ? 'Nom et site officiel obligatoires.' : errT(e); } };
+    };
+    N.brandMe().then((r) => {
+      const b = r.brand; if (!b) return form(null);
+      if (b.status === 'refused') { box.innerHTML = '<p class="soft small">Ta demande n\'a pas été retenue. Tu peux la mettre à jour.</p>'; return form(b); }
+      if (b.status === 'pending') { box.innerHTML = `<p class="soft small" style="margin:0"><b>${esc(b.name)}</b> : demande en cours de vérification.</p>`; return; }
+      if (!b.badge) { box.innerHTML = `<p class="soft small" style="margin:0"><b>${esc(b.name)}</b> est vérifiée. Il reste à activer l'abonnement marque (clé reçue de Whop) pour afficher le badge et publier.</p><div class="row"><button class="ghost" id="br-pl" type="button">Entrer ma clé</button></div>`; $('#br-pl', box).onclick = () => { I.closeSheet(); D.plans(''); }; return; }
+      const s = r.stats || { posts: [], links: [], perfumeViews: 0, topPerfumes: [] };
+      box.innerHTML = `<p class="ftxt"><span class="vbadge">✓ Marque vérifiée</span> ${esc(b.name)}</p><p class="soft small" style="margin:0">Publie depuis l'onglet Inspirations, Communauté : tes publications sont étiquetées « Contenu de marque ».</p>
+        <p class="mono">30 derniers jours</p><p class="ftxt" style="white-space:pre-line">${s.perfumeViews} vues de fiches de tes parfums\n${s.links.reduce((t, l) => t + l.n, 0)} clics sur tes liens</p>
+        ${s.topPerfumes.length ? `<p class="mono">Fiches les plus vues</p>${s.topPerfumes.map((t) => `<div class="eir"><span><b>${esc(t.k.split('|').reverse().join(' · '))}</b></span><span class="eib"><b>${t.n}</b></span></div>`).join('')}` : ''}
+        ${s.posts.length ? `<p class="mono">Tes publications</p>${s.posts.map((p) => `<div class="eir"><span><b>${esc(p.txt || '(image)')}</b><small>${when(p.ts)}</small></span><span class="eib"><b>${p.views}</b> vues</span></div>`).join('')}` : ''}
+        <p class="soft small" style="margin:0">Les chiffres sont des compteurs, sans aucune donnée sur les personnes.</p>`;
+    }).catch(() => { box.textContent = 'Indisponible pour l\'instant.'; });
+  }
+  function editorCards(wrap) {
+    const c = document.createElement('div'); c.className = 'card'; c.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)'; wrap.appendChild(c);
+    c.innerHTML = '<b>Éditeur : marques et publications</b><div class="row"><button class="ghost" id="eb-b" type="button">Marques à valider</button><button class="ghost" id="eb-p" type="button">Publications signalées</button></div><div id="eb-o" style="display:grid;gap:8px"></div>';
+    const out = $('#eb-o', c), fail = (e) => { out.textContent = errT(e); };
+    $('#eb-b', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminBrands(); out.innerHTML = j.items.length ? j.items.map((b) => `<div class="card" style="display:grid;gap:6px"><b>${esc(b.name)}</b><small class="mono" style="text-transform:none;letter-spacing:0">${esc(b.status)} · ${esc(b.site)}</small><span>${esc((b.houses || []).join(', '))}</span>${b.bio ? `<span>${esc(b.bio)}</span>` : ''}<div class="row"><a class="ghost vlink" href="${esc(b.site)}" target="_blank" rel="noopener noreferrer">Voir le site ↗</a><button class="ghost" data-bv="${esc(b.by)}" type="button">Valider</button><button class="ghost danger" data-br="${esc(b.by)}" type="button">${b.status === 'verified' ? 'Retirer' : 'Refuser'}</button></div></div>`).join('') : '<p class="soft small">Aucune demande.</p>'; const act = (a, v) => $$('[' + a + ']', out).forEach((b) => (b.onclick = async () => { try { await N.brandAct(b.getAttribute(a), v); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-bv', 'verify'); act('data-br', 'revoke'); } catch (e) { fail(e); } };
+    $('#eb-p', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminPosts(); out.innerHTML = j.items.length ? j.items.map((p) => `<div class="card" style="display:grid;gap:6px"><b>${esc(p.author.pseudo)}</b><small class="mono" style="text-transform:none;letter-spacing:0">${p.reports} signalement${p.reports > 1 ? 's' : ''}${p.hidden ? ' · masquée' : ''}</small><span>${esc(p.txt)}</span><div class="row"><button class="ghost" data-pa="${esc(p.id)}" type="button">Rétablir</button><button class="ghost danger" data-pz="${esc(p.id)}" type="button">Supprimer</button></div></div>`).join('') : '<p class="soft small">Aucune publication signalée.</p>'; const act = (a, v) => $$('[' + a + ']', out).forEach((b) => (b.onclick = async () => { try { await N.postAct(b.getAttribute(a), v); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-pa', 'restore'); act('data-pz', 'delete'); } catch (e) { fail(e); } };
+  }
+
+  SP.social = { feed, member, rating, profileCards, postSheet };
 })();
 
 </script>
