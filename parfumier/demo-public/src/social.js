@@ -1,7 +1,7 @@
 // Réseau de Sillage : abonnements, avis par parfum, publications, fil, profils de marques vérifiées, liens suivis et statistiques.
 // Données dans Cloudflare D1 (binding DB). Les statistiques ne contiennent que des compteurs par jour, jamais d'identifiant de lecteur.
 // Les conseils de l'IA ne lisent RIEN de ce module : le contenu de marque ou sponsorisé n'entre jamais dans les recommandations.
-import { outItems, outVideo, goU, cleanUrl } from './pub.js';
+import { outItems, outVideo, goU, cleanUrl, applyAffil } from './pub.js';
 
 const SCHEMA = [
   'CREATE TABLE IF NOT EXISTS follows (a TEXT NOT NULL, b TEXT NOT NULL, ts INTEGER, PRIMARY KEY (a, b))',
@@ -14,6 +14,11 @@ const SCHEMA = [
   'CREATE TABLE IF NOT EXISTS brands (acct TEXT PRIMARY KEY, name TEXT, site TEXT, houses TEXT, logo TEXT, bio TEXT, status TEXT, ts INTEGER)',
   'CREATE TABLE IF NOT EXISTS links (code TEXT PRIMARY KEY, url TEXT, owner TEXT, ts INTEGER)',
   'CREATE TABLE IF NOT EXISTS ev (d TEXT NOT NULL, kind TEXT NOT NULL, target TEXT NOT NULL, owner TEXT, n INTEGER DEFAULT 0, PRIMARY KEY (d, kind, target))',
+  'CREATE TABLE IF NOT EXISTS comments (id TEXT PRIMARY KEY, post TEXT NOT NULL, u TEXT NOT NULL, txt TEXT, ts INTEGER)',
+  'CREATE INDEX IF NOT EXISTS comments_post ON comments (post)',
+  'CREATE TABLE IF NOT EXISTS notifs (id TEXT PRIMARY KEY, u TEXT NOT NULL, kind TEXT, frm TEXT, ref TEXT, txt TEXT, ts INTEGER, seen INTEGER DEFAULT 0)',
+  'CREATE INDEX IF NOT EXISTS notifs_u ON notifs (u, ts)',
+  'CREATE TABLE IF NOT EXISTS sales (id TEXT PRIMARY KEY, code TEXT, owner TEXT, amount INTEGER, commission INTEGER, creator INTEGER, ref TEXT UNIQUE, ts INTEGER, paid INTEGER DEFAULT 0)',
   'CREATE TABLE IF NOT EXISTS wishes (u TEXT PRIMARY KEY, pub INTEGER DEFAULT 0, items TEXT, ts INTEGER)',
 ];
 const READY = new WeakSet();
@@ -32,6 +37,8 @@ export function makeSocial(h) {
   const rate = async (who, name, n) => { const k = `rl:${name}:${who}:${new Date().toISOString().slice(0, 13)}`, c = parseInt(await kv.get(k), 10) || 0; if (c >= n) return false; await kv.put(k, String(c + 1), { expirationTtl: 7200 }); return true; };
   const count = async (id, d) => { const r = await q('INSERT INTO ev (d, kind, target, owner, n) VALUES (?, ?, ?, ?, 1) ON CONFLICT (d, kind, target) DO UPDATE SET n = n + 1', d, ...id).run(); return r; };
 
+  const notify = async (u, kind, frm, ref, txt, id) => { if (!u || u === frm) return; await q('INSERT OR IGNORE INTO notifs (id, u, kind, frm, ref, txt, ts) VALUES (?, ?, ?, ?, ?, ?, ?)', id || randHex(8), u, kind, frm || '', ref || '', txt || '', Date.now()).run(); };
+  const PLATFORM_CUT = Math.min(100, Math.max(0, parseInt(env.PLATFORM_CUT, 10) >= 0 ? parseInt(env.PLATFORM_CUT, 10) : 30));
   // ---- Outils partagés
   const acctOf = (id) => acc.acctOf(id);
   const prof = async (id) => jp(await kv.get(`prof:${id}`), {});
@@ -49,12 +56,12 @@ export function makeSocial(h) {
   }
   const resolve = async (by) => (/^[a-f0-9]{12}$/.test(by || '') ? kv.get('by:' + by) : null);
   async function eachComm(fn) { let cursor, n = 0; do { const page = await kv.list({ prefix: 'comm:', cursor }); for (const k of page.keys) { const r = jp(await kv.get(k.name), null); if (r && !r.hidden) { fn(r); n++; } } cursor = page.list_complete || n >= 300 ? undefined : page.cursor; } while (cursor); }
-  const pubList = (r) => ({ id: r.id, title: r.title, desc: r.desc, cover: r.cover || '', items: outItems(r.items), video: outVideo(r), ad: !!r.ad, likes: r.likes || 0, ts: r.ts });
-  const postView = async (p, cache) => ({ t: 'post', id: p.id, ts: p.ts, author: await author(p.a, cache), txt: p.txt, img: p.img || '', video: goU(p.vc, p.video), ad: !!p.ad, brand: !!p.brand, ph: p.ph || '', pn: p.pn || '' });
+  const pubList = (r) => ({ id: r.id, title: r.title, desc: r.desc, cover: r.cover || '', cat: r.cat || '', items: outItems(r.items), video: outVideo(r), ad: !!r.ad, likes: r.likes || 0, ts: r.ts });
+  const postView = async (p, cache) => ({ cc: (await q('SELECT COUNT(*) AS n FROM comments WHERE post = ?', p.id).first()).n, t: 'post', id: p.id, ts: p.ts, author: await author(p.a, cache), txt: p.txt, img: p.img || '', video: goU(p.vc, p.video), ad: !!p.ad, brand: !!p.brand, ph: p.ph || '', pn: p.pn || '' });
 
   async function handle(request, url) {
     const path = url.pathname, method = request.method;
-    const mine = /^\/api\/(follow|following|feed|post|posts|rating|ratings|u|wishlist|brand|my|view|go|admin\/brands|admin\/posts)(\/|$)/.test(path);
+    const mine = /^\/api\/(follow|following|followers|notifs|comment|conversion|feed|post|posts|rating|ratings|u|wishlist|brand|my|view|go|admin\/brands|admin\/posts|admin\/sales)(\/|$)/.test(path);
     if (!mine) return null;
     if (!db) return reply({ code: 'social_off' }, 503);
     await init();
@@ -67,7 +74,8 @@ export function makeSocial(h) {
     if (m && method === 'GET') {
       const l = await q('SELECT * FROM links WHERE code = ?', m[1]).first(); if (!l) return reply({ code: 'not_found' }, 404);
       if (await rate(ipH, 'go', 120)) await count(['click', 'l:' + l.code, l.owner], day());
-      return new Response(null, { status: 302, headers: { location: l.url, 'cache-control': 'no-store', 'referrer-policy': 'no-referrer' } });
+      const dest = applyAffil(env.AFFIL_RULES, l.url, l.code);
+      return new Response(null, { status: 302, headers: { location: dest.url, 'cache-control': 'no-store', 'referrer-policy': 'no-referrer' } });
     }
     // ---- Vues (sans compte) : un compteur par jour et par cible
     if (path === '/api/view' && method === 'POST') {
@@ -77,6 +85,18 @@ export function makeSocial(h) {
       for (const id of (Array.isArray(b.posts) ? b.posts : []).slice(0, 30)) { if (!/^[a-z0-9]{6,24}$/i.test(id)) continue; const p = await q('SELECT a FROM posts WHERE id = ? AND hidden = 0', id).first(); if (p) await count(['view', 'post:' + id, p.a], d); }
       if (b.h || b.n) { const k = pkey(b.h, b.n); if (k.length > 3 && k.length < 160) await count(['view', 'p:' + k, ''], d); }
       return reply({ ok: true });
+    }
+    // ---- Vente remontée par un réseau d'affiliation (Awin, Impact…) : la commission est partagée entre le créateur et Sillage
+    if (path === '/api/conversion' && (method === 'POST' || method === 'GET')) {
+      if (!env.CONV_SECRET || url.searchParams.get('key') !== env.CONV_SECRET) return reply({ code: 'forbidden' }, 403);
+      const b = method === 'POST' ? (await body()) || {} : Object.fromEntries(url.searchParams);
+      const code = String(b.code || b.sub || '').toLowerCase(), amount = Math.round(parseFloat(String(b.amount || '0').replace(',', '.')) * 100), com = Math.round(parseFloat(String(b.commission || '0').replace(',', '.')) * 100), ref = String(b.ref || b.order || '').slice(0, 80);
+      const l = /^[a-f0-9]{10}$/.test(code) ? await q('SELECT owner FROM links WHERE code = ?', code).first() : null;
+      if (!l || !(com > 0) || !ref) return reply({ code: 'bad_op' }, 400);
+      const creator = Math.floor(com * (100 - PLATFORM_CUT) / 100);
+      const r = await q('INSERT OR IGNORE INTO sales (id, code, owner, amount, commission, creator, ref, ts) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', randHex(8), code, l.owner, amount, com, creator, ref, Date.now()).run();
+      if (r.meta && r.meta.changes) await notify(l.owner, 'sale', '', code, (creator / 100).toFixed(2).replace('.', ',') + ' € de commission');
+      return reply({ ok: true, creator, platform: com - creator });
     }
     // ---- Profil public d'un membre, d'une marque
     m = path.match(/^\/api\/u\/([a-f0-9]{12})$/);
@@ -102,13 +122,44 @@ export function makeSocial(h) {
       if (id === a.id) return reply({ code: 'self' }, 400);
       if (!(await rate(a.id, 'fol', 60))) return reply({ code: 'rate' }, 429);
       if (b.on === false) await q('DELETE FROM follows WHERE a = ? AND b = ?', a.id, id).run();
-      else { const n = await q('SELECT COUNT(*) AS n FROM follows WHERE a = ?', a.id).first(); if (n.n >= 1000) return reply({ code: 'limit' }, 409); await q('INSERT OR IGNORE INTO follows (a, b, ts) VALUES (?, ?, ?)', a.id, id, Date.now()).run(); }
+      else { const n = await q('SELECT COUNT(*) AS n FROM follows WHERE a = ?', a.id).first(); if (n.n >= 1000) return reply({ code: 'limit' }, 409); const fr = await q('INSERT OR IGNORE INTO follows (a, b, ts) VALUES (?, ?, ?)', a.id, id, Date.now()).run(); if (fr.meta && fr.meta.changes) await notify(id, 'follow', a.id, '', '', 'f:' + a.id + ':' + id); }
       const f = await q('SELECT COUNT(*) AS n FROM follows WHERE b = ?', id).first();
       return reply({ ok: true, following: b.on !== false, followers: f.n });
     }
     if (path === '/api/following' && method === 'GET') {
       const cache = {}, out = []; for (const r of (await q('SELECT b FROM follows WHERE a = ? ORDER BY ts DESC LIMIT 200', a.id).all()).results) out.push(await author(r.b, cache));
       return reply({ items: out });
+    }
+    if (path === '/api/followers' && method === 'GET') {
+      const cache = {}, out = []; for (const r of (await q('SELECT a FROM follows WHERE b = ? ORDER BY ts DESC LIMIT 200', a.id).all()).results) out.push(await author(r.a, cache));
+      return reply({ items: out });
+    }
+    // ---- Notifications : nouveaux abonnés, commentaires, ventes
+    if (path === '/api/notifs' && method === 'GET') {
+      const un = (await q('SELECT COUNT(*) AS n FROM notifs WHERE u = ? AND seen = 0', a.id).first()).n;
+      if (url.searchParams.get('count')) return reply({ unread: un });
+      const cache = {}, items = []; for (const r of (await q('SELECT * FROM notifs WHERE u = ? ORDER BY ts DESC LIMIT 40', a.id).all()).results) items.push({ id: r.id, kind: r.kind, ref: r.ref, txt: r.txt, ts: r.ts, seen: !!r.seen, author: r.frm ? await author(r.frm, cache) : null });
+      return reply({ items, unread: un });
+    }
+    if (path === '/api/notifs/read' && method === 'POST') { await q('UPDATE notifs SET seen = 1 WHERE u = ?', a.id).run(); return reply({ ok: true }); }
+    // ---- Commentaires sous une publication
+    m = path.match(/^\/api\/post\/([a-f0-9]{16})\/comments$/);
+    if (m && method === 'GET') {
+      const cache = {}, items = []; for (const r of (await q('SELECT * FROM comments WHERE post = ? ORDER BY ts ASC LIMIT 100', m[1]).all()).results) items.push({ id: r.id, txt: r.txt, ts: r.ts, author: await author(r.u, cache) });
+      return reply({ items });
+    }
+    if (m && method === 'POST') {
+      const p = await q('SELECT a FROM posts WHERE id = ? AND hidden = 0', m[1]).first(); if (!p) return reply({ code: 'not_found' }, 404);
+      const b = await body(), txt = clean(b && b.txt, 300); if (txt.length < 2) return reply({ code: 'content' }, 400);
+      if (!me.pseudo) return reply({ code: 'pseudo' }, 400); if (!verified) return reply({ code: 'verify' }, 403);
+      if (BAD.test(txt)) return reply({ code: 'rules' }, 400); if (!(await rate(a.id, 'cmt', 30))) return reply({ code: 'rate' }, 429);
+      const id = randHex(8); await q('INSERT INTO comments (id, post, u, txt, ts) VALUES (?, ?, ?, ?, ?)', id, m[1], a.id, txt, Date.now()).run();
+      await notify(p.a, 'comment', a.id, m[1], txt.slice(0, 80)); return reply({ ok: true, id });
+    }
+    m = path.match(/^\/api\/comment\/([a-f0-9]{16})$/);
+    if (m && method === 'DELETE') {
+      const c = await q('SELECT c.u AS u, p.a AS pa FROM comments c LEFT JOIN posts p ON p.id = c.post WHERE c.id = ?', m[1]).first(); if (!c) return reply({ code: 'not_found' }, 404);
+      if (c.u !== a.id && c.pa !== a.id && !admin) return reply({ code: 'forbidden' }, 403); await q('DELETE FROM comments WHERE id = ?', m[1]).run(); return reply({ ok: true });
     }
     // ---- Fil : publications, listes publiques et avis commentés, du plus récent au plus ancien
     if (path === '/api/feed' && method === 'GET') {
@@ -141,7 +192,7 @@ export function makeSocial(h) {
     m = path.match(/^\/api\/post\/([a-f0-9]{16})(\/report)?$/);
     if (m) {
       const p = await q('SELECT * FROM posts WHERE id = ?', m[1]).first(); if (!p) return reply({ code: 'not_found' }, 404);
-      if (method === 'DELETE' && !m[2]) { if (p.a !== a.id && !admin) return reply({ code: 'forbidden' }, 403); await q('DELETE FROM posts WHERE id = ?', m[1]).run(); return reply({ ok: true }); }
+      if (method === 'DELETE' && !m[2]) { if (p.a !== a.id && !admin) return reply({ code: 'forbidden' }, 403); await q('DELETE FROM posts WHERE id = ?', m[1]).run(); await q('DELETE FROM comments WHERE post = ?', m[1]).run(); return reply({ ok: true }); }
       if (method === 'POST' && m[2]) {
         const r = await q('INSERT OR IGNORE INTO post_reports (id, u) VALUES (?, ?)', m[1], a.id).run();
         if (r.meta && r.meta.changes) await q('UPDATE posts SET reports = reports + 1, hidden = CASE WHEN reports + 1 >= 3 THEN 1 ELSE hidden END WHERE id = ?', m[1]).run();
@@ -204,7 +255,8 @@ export function makeSocial(h) {
       const links = (await q('SELECT l.url AS url, COALESCE(SUM(e.n), 0) AS n FROM links l LEFT JOIN ev e ON e.target = \'l:\' || l.code AND e.d >= ? WHERE l.owner = ? GROUP BY l.code ORDER BY n DESC LIMIT 30', from, a.id).all()).results;
       const v = await q('SELECT COALESCE(SUM(n), 0) AS n FROM ev WHERE kind = \'view\' AND owner = ? AND d >= ?', a.id, from).first();
       const f = await q('SELECT COUNT(*) AS n FROM follows WHERE b = ?', a.id).first();
-      return reply({ days: 30, links, postViews: v.n, followers: f.n });
+      const sl = await q('SELECT COUNT(*) AS n, COALESCE(SUM(creator), 0) AS c, COALESCE(SUM(CASE WHEN paid = 0 THEN creator ELSE 0 END), 0) AS due FROM sales WHERE owner = ?', a.id).first();
+      return reply({ days: 30, links, postViews: v.n, followers: f.n, sales: { n: sl.n, earned: sl.c / 100, due: sl.due / 100, share: 100 - PLATFORM_CUT } });
     }
     // ---- Éditeur : valider les marques, rétablir ou supprimer les publications signalées
     if (path === '/api/admin/brands' && method === 'GET') {
@@ -216,7 +268,19 @@ export function makeSocial(h) {
     if (m && method === 'POST') {
       if (!admin) return reply({ code: 'forbidden' }, 403);
       const b = await body(), id = await resolve(m[1]); if (!id || !b || !['verify', 'refuse', 'revoke'].includes(b.action)) return reply({ code: 'bad_op' }, 400);
-      await q('UPDATE brands SET status = ? WHERE acct = ?', b.action === 'verify' ? 'verified' : 'refused', id).run(); return reply({ ok: true });
+      await q('UPDATE brands SET status = ? WHERE acct = ?', b.action === 'verify' ? 'verified' : 'refused', id).run(); if (b.action === 'verify') await notify(id, 'brand', '', '', 'Ton profil marque est vérifié.'); return reply({ ok: true });
+    }
+    if (path === '/api/admin/sales' && method === 'GET') {
+      if (!admin) return reply({ code: 'forbidden' }, 403);
+      const tot = await q('SELECT COUNT(*) AS n, COALESCE(SUM(amount), 0) AS amount, COALESCE(SUM(commission), 0) AS com, COALESCE(SUM(creator), 0) AS cr FROM sales').first();
+      const due = (await q('SELECT owner, SUM(creator) AS d FROM sales WHERE paid = 0 GROUP BY owner HAVING d > 0 ORDER BY d DESC LIMIT 50').all()).results, cache = {}, items = [];
+      for (const r of due) items.push({ author: await author(r.owner, cache), due: r.d / 100 });
+      return reply({ sales: tot.n, amount: tot.amount / 100, commission: tot.com / 100, creators: tot.cr / 100, platform: (tot.com - tot.cr) / 100, cut: PLATFORM_CUT, due: items });
+    }
+    m = path.match(/^\/api\/admin\/sales\/pay\/([a-f0-9]{12})$/);
+    if (m && method === 'POST') {
+      if (!admin) return reply({ code: 'forbidden' }, 403); const id = await resolve(m[1]); if (!id) return reply({ code: 'not_found' }, 404);
+      const d = await q('SELECT COALESCE(SUM(creator), 0) AS d FROM sales WHERE owner = ? AND paid = 0', id).first(); await q('UPDATE sales SET paid = 1 WHERE owner = ?', id).run(); return reply({ ok: true, paid: d.d / 100 });
     }
     if (path === '/api/admin/posts' && method === 'GET') {
       if (!admin) return reply({ code: 'forbidden' }, 403);
@@ -241,7 +305,7 @@ export function makeSocial(h) {
   // Effacement du compte : tout ce qui le concerne part (les compteurs de clics restent, ils sont anonymes).
   async function erase(id) {
     if (!db) return; await init();
-    await db.batch([q('DELETE FROM follows WHERE a = ? OR b = ?', id, id), q('DELETE FROM ratings WHERE u = ?', id), q('DELETE FROM posts WHERE a = ?', id), q('DELETE FROM post_reports WHERE u = ?', id), q('DELETE FROM wishes WHERE u = ?', id), q('DELETE FROM brands WHERE acct = ?', id), q('DELETE FROM links WHERE owner = ?', id)]);
+    await db.batch([q('DELETE FROM follows WHERE a = ? OR b = ?', id, id), q('DELETE FROM ratings WHERE u = ?', id), q('DELETE FROM posts WHERE a = ?', id), q('DELETE FROM post_reports WHERE u = ?', id), q('DELETE FROM wishes WHERE u = ?', id), q('DELETE FROM brands WHERE acct = ?', id), q('DELETE FROM links WHERE owner = ?', id), q('DELETE FROM comments WHERE u = ?', id), q('DELETE FROM notifs WHERE u = ? OR frm = ?', id, id), q('DELETE FROM sales WHERE owner = ? AND paid = 1', id)]);
   }
   return { handle, regLink, erase };
 }
@@ -249,6 +313,6 @@ export function makeSocial(h) {
 // Sauvegarde : toutes les tables, en JSON.
 export async function dumpD1(db) {
   if (!db) return null; if (!READY.has(db)) { await db.batch(SCHEMA.map((q) => db.prepare(q))); READY.add(db); }
-  const out = {}; for (const t of ['follows', 'ratings', 'posts', 'brands', 'links', 'ev', 'wishes']) out[t] = (await db.prepare(`SELECT * FROM ${t}`).all()).results;
+  const out = {}; for (const t of ['follows', 'ratings', 'posts', 'brands', 'links', 'ev', 'wishes', 'comments', 'notifs', 'sales']) out[t] = (await db.prepare(`SELECT * FROM ${t}`).all()).results;
   return out;
 }

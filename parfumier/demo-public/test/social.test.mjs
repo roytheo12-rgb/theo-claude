@@ -5,10 +5,10 @@ import { makeWorker } from '../src/index.js'; import { makeD1 } from './d1mock.m
 const store = new Map();
 const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); }, async list({ prefix }) { return { keys: [...store.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
 const D = makeD1();
-const memberships = { LIC_PREM_1: { id: 'm1', status: 'active', product_id: 'prod_PREMIUM' }, LIC_PREM_2: { id: 'm2', status: 'active', product_id: 'prod_PREMIUM' }, LIC_BRAND_1: { id: 'm3', status: 'active', product_id: 'prod_BRAND' } };
+const memberships = { LIC_PREM_1: { id: 'm1', status: 'active', product_id: 'prod_PREMIUM' }, LIC_PREM_2: { id: 'm2', status: 'active', product_id: 'prod_PREMIUM' }, LIC_PREM_3: { id: 'm4', status: 'active', product_id: 'prod_PREMIUM' }, LIC_BRAND_1: { id: 'm3', status: 'active', product_id: 'prod_BRAND' } };
 const fetchMock = async (url) => { const m = memberships[decodeURIComponent(String(url).split('/memberships/')[1])]; return m ? new Response(JSON.stringify(m)) : new Response('{}', { status: 404 }); };
 const w = makeWorker({ client: { messages: { async create() { return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{}' }] }; } } }, fetch: fetchMock });
-const env = { SILLAGE: kv, DB: D, ASSETS: { fetch: async () => new Response('asset') }, SALT: 's', DAILY_CAP: '1000', WHOP_API_KEY: 'k', WHOP_PRODUCTS: JSON.stringify({ prod_PREMIUM: 'premium', prod_BRAND: 'brand' }), ADMIN_EMAILS: 'theo@example.com' };
+const env = { SILLAGE: kv, DB: D, ASSETS: { fetch: async () => new Response('asset') }, SALT: 's', DAILY_CAP: '1000', WHOP_API_KEY: 'k', WHOP_PRODUCTS: JSON.stringify({ prod_PREMIUM: 'premium', prod_BRAND: 'brand' }), ADMIN_EMAILS: 'theo@example.com', CONV_SECRET: 'conv-secret', PLATFORM_CUT: '30', AFFIL_RULES: JSON.stringify([{ host: 'marque.example', param: 'aff', value: 'sillage', sub: 'sub' }, { host: 'shop.example', tpl: 'https://reseau.example/c?u={url}&s={sub}' }]) };
 let n = 0;
 const call = (path, { method = 'GET', body, token, ip = '3.3.3.' + (++n % 250) } = {}) => w.fetch(new Request('https://demo.test' + path, { method, body: body ? JSON.stringify(body) : undefined, headers: { 'content-type': 'application/json', 'cf-connecting-ip': ip, ...(token ? { authorization: 'Bearer ' + token } : {}) } }), env);
 const J = async (r) => r.json();
@@ -63,7 +63,7 @@ await t('publications : offre payante requise, règles, image, fil tous / abonne
 await t('liens suivis : le clic est compté puis redirigé, le créateur voit ses chiffres, aucun identifiant de lecteur', async () => {
   const l = await call('/api/community', { method: 'POST', body: { title: 'Mes boisés du soir', desc: 'Cèdre', cover: 'data:image/jpeg;base64,/9j/4AAQ', items: [{ n: 'Santal 33', h: 'Le Labo', u: 'https://marque.example/santal?aff=alice' }, { n: 'Tam Dao', h: 'Diptyque' }] }, token: alice.token }); assert.equal(l.status, 200);
   const list = (await J(await call('/api/community', { token: carl.token }))).items[0]; assert.match(list.items[0].u, /^\/api\/go\/[a-f0-9]{10}$/); assert.ok(list.cover.startsWith('data:image/jpeg')); assert.equal(list.items[1].u, undefined);
-  const go = await call(list.items[0].u); assert.equal(go.status, 302); assert.equal(go.headers.get('location'), 'https://marque.example/santal?aff=alice');
+  const go = await call(list.items[0].u); assert.equal(go.status, 302); assert.match(go.headers.get('location'), /^https:\/\/marque\.example\/santal\?aff=sillage&sub=[a-f0-9]{10}$/);   // règle de commission de Sillage
   await call(list.items[0].u); assert.equal((await call('/api/go/0000000000')).status, 404);
   const st = await J(await call('/api/my/stats', { token: alice.token })); assert.equal(st.links.find((x) => x.url.includes('santal')).n, 2); assert.equal(st.followers, 1);
   const cols = D._raw.prepare('PRAGMA table_info(ev)').all().map((c) => c.name); assert.deepEqual(cols.sort(), ['d', 'kind', 'n', 'owner', 'target']);
@@ -89,6 +89,52 @@ await t('marques : demande, validation par l\'éditeur, abonnement marque requis
   assert.equal((await J(await call('/api/brand/me', { token: carl.token }))).brand, null);
   await call('/api/admin/brands/' + brand.by, { method: 'POST', body: { action: 'revoke' }, token: theo.token });
   assert.equal((await J(await call('/api/u/' + brand.by))).profile.brand, false);
+});
+await t('commentaires : sous une publication, notification à l\'auteur, suppression par l\'auteur du commentaire ou de la publication', async () => {
+  const pid = (await J(await call('/api/post', { method: 'POST', body: { txt: 'Un avis sur Tam Dao' }, token: alice.token }))).id;
+  assert.equal((await call(`/api/post/${pid}/comments`, { method: 'POST', body: { txt: 'a' }, token: bob.token })).status, 400);
+  assert.equal((await call(`/api/post/${pid}/comments`, { method: 'POST', body: { txt: 'Écris-moi à moi@mail.fr' }, token: bob.token })).status, 400);
+  const c = await J(await call(`/api/post/${pid}/comments`, { method: 'POST', body: { txt: 'Je valide, très beau' }, token: bob.token })); assert.ok(c.id);
+  await call(`/api/post/${pid}/comments`, { method: 'POST', body: { txt: 'Moi aussi' }, token: carl.token });
+  const list = await J(await call(`/api/post/${pid}/comments`, { token: carl.token })); assert.equal(list.items.length, 2); assert.equal(list.items[0].author.pseudo, 'Bob');
+  const feed = (await J(await call('/api/feed', { token: carl.token }))).items.find((x) => x.id === pid); assert.equal(feed.cc, 2);
+  const n = await J(await call('/api/notifs', { token: alice.token })); assert.equal(n.unread >= 3, true); assert.ok(n.items.some((x) => x.kind === 'comment' && x.author.pseudo === 'Bob' && x.txt.includes('très beau'))); assert.ok(n.items.some((x) => x.kind === 'follow' && x.author.pseudo === 'Bob'));
+  assert.equal((await J(await call('/api/notifs?count=1', { token: alice.token }))).unread, n.unread);
+  await call('/api/notifs/read', { method: 'POST', token: alice.token }); assert.equal((await J(await call('/api/notifs?count=1', { token: alice.token }))).unread, 0);
+  assert.equal((await call('/api/comment/' + c.id, { method: 'DELETE', token: carl.token })).status, 403);
+  assert.equal((await call('/api/comment/' + c.id, { method: 'DELETE', token: alice.token })).status, 200);    // l'auteur de la publication modère
+  assert.equal((await J(await call(`/api/post/${pid}/comments`, { token: carl.token }))).items.length, 1);
+  const f = await J(await call('/api/followers', { token: alice.token })); assert.equal(f.items.some((x) => x.pseudo === 'Bob'), true);
+  assert.equal((await call(`/api/post/${pid}`, { method: 'DELETE', token: alice.token })).status, 200); assert.equal(D._raw.prepare('SELECT COUNT(*) AS c FROM comments WHERE post = ?').get(pid).c, 0);
+});
+await t('commission : le lien est réécrit par les règles de Sillage, la vente est partagée, le créateur voit ses gains, l\'éditeur le total', async () => {
+  const cr = await member('creat@example.com', 'Créa', 'LIC_PREM_2');
+  const l = await J(await call('/api/community', { method: 'POST', body: { title: 'Mes boutiques', items: [{ n: 'Santal 33', h: 'Le Labo', u: 'https://www.marque.example/p/santal?x=1' }, { n: 'Tam Dao', h: 'Diptyque', u: 'https://shop.example/tam-dao' }, { n: 'Bois Farine', h: 'Lutens', u: 'https://autre.example/bf' }], cat: 'Soirée' }, token: cr.token }));
+  const pub = (await J(await call('/api/community', { token: carl.token }))).items.find((x) => x.id === l.id); assert.equal(pub.cat, 'Soirée');
+  const hop = async (u) => (await call(u)).headers.get('location');
+  const a1 = await hop(pub.items[0].u); assert.match(a1, /^https:\/\/www\.marque\.example\/p\/santal\?x=1&aff=sillage&sub=[a-f0-9]{10}$/);
+  const a2 = await hop(pub.items[1].u); assert.match(a2, /^https:\/\/reseau\.example\/c\?u=https%3A%2F%2Fshop\.example%2Ftam-dao&s=[a-f0-9]{10}$/);
+  assert.equal(await hop(pub.items[2].u), 'https://autre.example/bf');   // pas de règle : lien tel quel
+  const code = pub.items[0].u.split('/').pop();
+  assert.equal((await call(`/api/conversion?key=mauvais&code=${code}&commission=2&ref=A1`)).status, 403);
+  const v = await J(await call(`/api/conversion?key=conv-secret&code=${code}&amount=80&commission=4,00&ref=CMD1`)); assert.equal(v.creator, 280); assert.equal(v.platform, 120);
+  await call(`/api/conversion?key=conv-secret&code=${code}&amount=80&commission=4&ref=CMD1`);    // même commande : une seule fois
+  assert.equal((await call('/api/conversion?key=conv-secret&code=0000000000&commission=2&ref=B'  )).status, 400);
+  const st = await J(await call('/api/my/stats', { token: cr.token })); assert.equal(st.sales.n, 1); assert.equal(st.sales.earned, 2.8); assert.equal(st.sales.share, 70);
+  assert.ok((await J(await call('/api/notifs', { token: cr.token }))).items.some((x) => x.kind === 'sale' && x.txt.includes('2,80')));
+  assert.equal((await call('/api/admin/sales', { token: cr.token })).status, 403);
+  const ad = await J(await call('/api/admin/sales', { token: theo.token })); assert.equal(ad.commission, 4); assert.equal(ad.platform, 1.2); assert.equal(ad.due[0].due, 2.8);
+  const pay = await J(await call('/api/admin/sales/pay/' + cr.by, { method: 'POST', token: theo.token })); assert.equal(pay.paid, 2.8);
+  assert.equal((await J(await call('/api/my/stats', { token: cr.token }))).sales.due, 0);
+});
+await t('catégories de playlists : définies par l\'éditeur, une catégorie inconnue est ignorée', async () => {
+  assert.equal((await call('/api/admin/content', { method: 'PUT', body: { op: 'cats', list: ['Soirée', 'Rentrée'] }, token: alice.token })).status, 403);
+  assert.equal((await call('/api/admin/content', { method: 'PUT', body: { op: 'cats', list: ['Soirée', 'Rentrée'] }, token: theo.token })).status, 200);
+  assert.deepEqual((await J(await call('/api/content'))).cats, ['Soirée', 'Rentrée']);
+  const cr = await member('creat2@example.com', 'Créa2', 'LIC_PREM_3');
+  const r = await J(await call('/api/community', { method: 'POST', body: { title: 'Rentrée chic', items: [{ n: 'Santal 33', h: 'Le Labo' }, { n: 'Tam Dao', h: 'Diptyque' }], cat: 'Rentrée' }, token: cr.token }));
+  const r2 = await J(await call('/api/community', { method: 'POST', body: { title: 'Hors catégorie', items: [{ n: 'Santal 33', h: 'Le Labo' }, { n: 'Tam Dao', h: 'Diptyque' }], cat: 'Inconnue' }, token: cr.token }));
+  const items = (await J(await call('/api/community', { token: carl.token }))).items; assert.equal(items.find((x) => x.id === r.id).cat, 'Rentrée'); assert.equal(items.find((x) => x.id === r2.id).cat, '');
 });
 await t('wishlist : privée par défaut, publique au choix', async () => {
   await call('/api/wishlist', { method: 'PUT', body: { pub: false, items: [{ n: 'Bois Farine', h: 'Lutens' }] }, token: bob.token });

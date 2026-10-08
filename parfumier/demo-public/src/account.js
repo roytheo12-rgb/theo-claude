@@ -17,7 +17,7 @@ const AVATAR_RE = /^data:image\/(jpeg|webp|png);base64,[A-Za-z0-9+/=]+$/;
 const month = () => new Date().toISOString().slice(0, 7);
 const jparse = (s, d) => { try { return s ? JSON.parse(s) : d; } catch (e) { return d; } };
 
-import { outItems, outVideo, cleanUrl } from './pub.js';
+import { outItems, outVideo, cleanUrl, DEFAULT_CATS } from './pub.js';
 import { dumpD1 } from './social.js';
 const COVER_RE = /^data:image\/(jpeg|webp);base64,[A-Za-z0-9+/=]+$/;
 export function makeAccount(h) {
@@ -98,6 +98,7 @@ export function makeAccount(h) {
       case 'plAdd': { const it = cleanItems([{ n: b.n, h: b.h }], 1)[0]; if (!title || !it) return null; const l = (c.plAdd[title] = (c.plAdd[title] || []).filter((x) => !(x.n === it.n && x.h === it.h))); l.push(it); c.plDel[title] = (c.plDel[title] || []).filter((x) => !(x.n === it.n && x.h === it.h)); break; }
       case 'plDel': { const it = cleanItems([{ n: b.n, h: b.h }], 1)[0]; if (!title || !it) return null; c.plAdd[title] = (c.plAdd[title] || []).filter((x) => !(x.n === it.n && x.h === it.h)); const l = (c.plDel[title] = (c.plDel[title] || []).filter((x) => !(x.n === it.n && x.h === it.h))); l.push(it); break; }
       case 'plPos': { const it = cleanItems([{ n: b.n, h: b.h }], 1)[0]; const pos = Math.round(Number(b.pos)); if (!title || !it || !(pos >= 1 && pos <= 500)) return null; c.plPos = c.plPos || {}; c.plPos[title] = (c.plPos[title] || []).filter((x) => !(x.n === it.n && x.h === it.h)); c.plPos[title].push({ n: it.n, h: it.h, pos }); break; }
+      case 'cats': { const list = (Array.isArray(b.list) ? b.list : []).map((x) => clean(x, 24)).filter(Boolean).slice(0, 12); if (!list.length) return null; c.cats = [...new Set(list)]; break; }
       default: return null;
     }
     c.v = (c.v || 0) + 1; c.ts = Date.now();
@@ -150,7 +151,7 @@ export function makeAccount(h) {
 
     // ---- Liens à partager : une inspiration publique ou le profil public d'un membre, lisibles sans compte
     const shc = path.match(/^\/api\/share\/c\/([a-z0-9]{4,24})$/i), shu = path.match(/^\/api\/share\/u\/([a-f0-9]{12})$/i);
-    const pubView = (r, pr) => ({ id: r.id, title: r.title, desc: r.desc, items: outItems(r.items), video: outVideo(r), ad: !!r.ad, cover: r.cover || '', pseudo: r.pseudo, avatar: (pr || {}).avatar || '', links: (pr || {}).links || [], by: r.author.slice(0, 12), likes: r.likes || 0 });
+    const pubView = (r, pr) => ({ id: r.id, title: r.title, desc: r.desc, items: outItems(r.items), video: outVideo(r), ad: !!r.ad, cover: r.cover || '', cat: r.cat || '', pseudo: r.pseudo, avatar: (pr || {}).avatar || '', links: (pr || {}).links || [], by: r.author.slice(0, 12), likes: r.likes || 0 });
     if (shc && method === 'GET') { const r = jparse(await kv.get(`comm:${shc[1]}`), null); if (!r || r.hidden) return reply({ code: 'not_found' }, 404); return reply({ item: pubView(r, jparse(await kv.get(`prof:${r.author}`), {})) }); }
     if (shu && method === 'GET') {
       const out = []; let author = '', cursor;
@@ -204,7 +205,7 @@ export function makeAccount(h) {
       do { const page = await kv.list({ prefix: 'comm:', cursor }); for (const k of page.keys) { const r = jparse(await kv.get(k.name), null); if (r && !r.hidden) list.push(r); } cursor = page.list_complete || list.length >= 300 ? undefined : page.cursor; } while (cursor);
       list.sort((x, y) => y.ts - x.ts);
       const pc = {}; for (const r of list) if (!pc[r.author]) pc[r.author] = jparse(await kv.get(`prof:${r.author}`), {});
-      return reply({ items: list.slice(0, 200).map((r) => ({ id: r.id, title: r.title, desc: r.desc, items: outItems(r.items), video: outVideo(r), ad: !!r.ad, cover: r.cover || '', pseudo: r.pseudo, avatar: (pc[r.author] || {}).avatar || '', links: (pc[r.author] || {}).links || [], by: r.author.slice(0, 12), ts: r.ts, likes: r.likes || 0, mine: r.author === a.id })) });
+      return reply({ items: list.slice(0, 200).map((r) => ({ id: r.id, title: r.title, desc: r.desc, items: outItems(r.items), video: outVideo(r), ad: !!r.ad, cover: r.cover || '', cat: r.cat || '', pseudo: r.pseudo, avatar: (pc[r.author] || {}).avatar || '', links: (pc[r.author] || {}).links || [], by: r.author.slice(0, 12), ts: r.ts, likes: r.likes || 0, mine: r.author === a.id })) });
     }
     if (path === '/api/community' && method === 'POST') {
       if (!a) return reply({ code: 'auth' }, 401);
@@ -219,10 +220,11 @@ export function makeAccount(h) {
       if (prev && prev.author !== a.id) return reply({ code: 'taken' }, 409);
       if (!prev) { let n = 0, cursor; do { const page = await kv.list({ prefix: 'comm:', cursor }); for (const k of page.keys) { const r = jparse(await kv.get(k.name), null); if (r && r.author === a.id) n++; } cursor = page.list_complete ? undefined : page.cursor; } while (cursor); if (n >= 10) return reply({ code: 'limit' }, 409); }
       const cover = b.cover === undefined ? (prev && prev.cover) || '' : (typeof b.cover === 'string' && b.cover.length <= 45000 && COVER_RE.test(b.cover) ? b.cover : '');
+      const cats = (await content()).cats || DEFAULT_CATS, cc0 = clean(b.cat, 24), cat = b.cat === undefined ? (prev && prev.cat) || '' : (cats.includes(cc0) ? cc0 : '');
       for (const x of items) if (x.u) x.c = await regLink(a.id, x.u);
       const video = cleanUrl(b.video), vc = video ? await regLink(a.id, video) : '';
       await kv.put(`by:${a.id.slice(0, 12)}`, a.id);
-      const rec = { id, author: a.id, pseudo: prof.pseudo, title, desc: clean(b.desc, 240), items, video, vc, cover, ad: !!b.ad, ts: prev ? prev.ts : Date.now(), likes: prev ? prev.likes || 0 : 0, reports: prev ? prev.reports || 0 : 0 };
+      const rec = { id, author: a.id, pseudo: prof.pseudo, title, desc: clean(b.desc, 240), items, video, vc, cover, cat, ad: !!b.ad, ts: prev ? prev.ts : Date.now(), likes: prev ? prev.likes || 0 : 0, reports: prev ? prev.reports || 0 : 0 };
       await kv.put(`comm:${id}`, JSON.stringify(rec));
       return reply({ ok: true, id });
     }
