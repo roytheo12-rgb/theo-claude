@@ -42,6 +42,25 @@ const T = {
   'initio': { edp: [320, 90], extrait: [290, 90] },
   'nishane': { extrait: [345, 100], edp: [345, 100], cologne: [175, 100] },
   'amouage': { edp: [365, 100], extrait: [510, 100] },
+  'frederic malle': { edp: [350, 100], cologne: [320, 100], edt: [320, 100], extrait: [350, 100], parfum: [350, 100], elixir: [350, 100] },
+  'xerjoff': { edp: [245, 100], parfum: [545, 100], extrait: [545, 100], elixir: [545, 100], cologne: [245, 100], edt: [245, 100] },
+  'acqua di parma': { cologne: [165, 100], edp: [235, 100], edt: [165, 100], extrait: [275, 50], parfum: [275, 50] },
+  'penhaligon s': { cologne: [160, 100], edp: [245, 100], edt: [160, 100] },
+  'serge lutens': { edp: [252, 100], parfum: [395, 100], extrait: [395, 100] },
+  'l artisan parfumeur': { edp: [195, 100], edt: [170, 100], cologne: [170, 100] },
+  'maison crivelli': { edp: [190, 100], extrait: [350, 100] },
+  'ex nihilo': { edp: [280, 100], extrait: [390, 100] },
+  'bdk parfums': { edp: [225, 100], extrait: [280, 100] },
+  'marc antoine barrois': { edp: [200, 100], extrait: [275, 50] },
+  'matiere premiere': { edp: [250, 100], extrait: [360, 100] },
+  'memo paris': { edp: [255, 100] },
+  'houbigant': { edp: [200, 100], edt: [140, 120], extrait: [460, 100] },
+  'essential parfums': { edp: [94, 100], extrait: [98, 30] },
+  'parfum d empire': { edp: [190, 100], extrait: [190, 100] },
+  'horace': { edp: [98, 100], extrait: [118, 50] },
+  'une nuit nomade': { edp: [160, 100], extrait: [260, 100] },
+  'floraiku': { edp: [295, 100] },
+  'les indemodables': { cologne: [155, 100], edp: [320, 100], extrait: [320, 100] },
 };
 // Lignes privées : on ne leur applique pas le barème de la maison (elles gardent leur prix relevé ou estimé)
 const PRIV = {
@@ -55,9 +74,14 @@ const PRIV = {
   'parfums de marly': re('exclusif|^(valero|carios|eragon)'),
   'jean paul gaultier': re('^(ambre tatouage|cuir 1976|french oud|rose palace|santal de paname|musc terrible)'),
 };
+const YSLV = re('^(babycat|blouse|caban|caftan|capeline|coeur fetish|cuir sublime|gold supreme|grain de poudre|jumpsuit|lavalliere|muse|rouge velours|saharienne|trench|tuxedo|velours|24 rue|37 rue|6 place|vinyle|atlas garden|exquisite embroidery|magnificent gold|sleek suede|splendid wood|supreme bouquet|wild leather|cuir$|manifesto)');
 const PRICEOF = (T0, k) => T0[k] || null;
 module.exports = function official(house, name, coll) {
   const t = T[house]; if (!t) return null;
+  // Le Vestiaire des Parfums d'Yves Saint Laurent : toute la collection au prix du Vestiaire
+  if (house === 'yves saint laurent' && YSLV.test(name)) return /extrait/.test(name) ? { p: 495, v: 50 } : /^(24 rue|37 rue|6 place)/.test(name) ? { p: 370, v: 125 } : { p: 320, v: 125 };
+  // Armani Privé, Les Terres Précieuses
+  if (house === 'armani' && /^(bleu lazuli|bleu turquoise|rouge malachite|vert malachite|indigo tanzanite|magenta tanzanite|blanc kogane|noir kogane|armani prive)/.test(name)) return { p: 265, v: 50 };
   if (PRIV[house] && PRIV[house].test(name)) return null;
   if (house === 'louis vuitton' && (coll === 'Les Extraits' || /^(ink mark|fantasmagory|symphony|stellar times|dancing blossom|cosmic cloud|myriad)/.test(name))) return { p: 575, v: 100 };
   if (house === 'jo malone') { const r = /intense|absolu/.test(name) ? t.intense : t.cologne; return { p: r[0], v: r[1] }; }

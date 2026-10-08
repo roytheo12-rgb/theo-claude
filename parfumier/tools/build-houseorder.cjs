@@ -22,7 +22,9 @@ fs.readFileSync(path.join(root, 'data', 'incontournables-top.txt'), 'utf8').spli
   let hit = set.find((x) => norm(x) === want); if (!hit && want.length >= 6) hit = set.filter((x) => norm(x).startsWith(want)).sort((a, b) => a.length - b.length)[0];
   if (hit) inc.push([set.length ? (ctx.INDEX.find(([hh]) => norm(hh) === norm(h)) || [h])[0] : h, hit]); else incMiss.push(h + ' : ' + n);
 });
-fs.writeFileSync(path.join(root, 'houseorder.js'), '// Généré par tools/build-houseorder.cjs depuis data/house-order.txt : ordre d\'affichage des parfums par maison.\nwindow.HOUSE_ORDER = ' + JSON.stringify(out) + ';\nwindow.INC_TOP = ' + JSON.stringify(inc) + ';\n');
+// alternatives citées par les passionnés (data/alternatives.txt)
+const ALTS = []; try { fs.readFileSync(path.join(root, 'data', 'alternatives.txt'), 'utf8').split('\n').forEach((l) => { if (l.startsWith('#') || !l.includes('|')) return; const [a, b] = l.split('|'); ALTS.push([norm(a), norm(b)]); }); } catch (e) { /* aucune */ }
+fs.writeFileSync(path.join(root, 'houseorder.js'), '// Généré par tools/build-houseorder.cjs depuis data/house-order.txt : ordre d\'affichage des parfums par maison.\nwindow.HOUSE_ORDER = ' + JSON.stringify(out) + ';\nwindow.INC_TOP = ' + JSON.stringify(inc) + ';\nwindow.ALTS = ' + JSON.stringify(ALTS) + ';\n');
 console.log(Object.keys(out).length + ' maisons, ' + Object.values(out).reduce((a, b) => a + b.length, 0) + ' parfums trouvés.');
 console.log(inc.length + ' incontournables en tête ; absents : ' + incMiss.join(' ; '));
 console.log('Absents de la base (' + miss.length + ') :\n' + miss.join('\n'));

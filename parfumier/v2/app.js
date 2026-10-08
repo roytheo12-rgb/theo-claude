@@ -752,6 +752,23 @@
     const p = estPrice(c) || e.price; if (p) bits.push(`Compte environ ${p} € le flacon, un prix indicatif à vérifier chez le vendeur.`);
     return bits.join(' ');
   }
+  // Alternatives à un parfum : le moteur présélectionne (notes, profil, playlists en commun, preuves), l'IA tranche et raconte.
+  async function altAnswer(q, sim, pref) {
+    const ref = sim.ref, top = sim.res.slice(0, 3);
+    const lkP = (c) => c.entry || dbList().find((x) => E.norm(x.name) === E.norm(c.name) && E.norm(x.house) === E.norm(c.house)) || null;
+    const local = pref(`Dans la veine de ${ref.name}${sim.cheaper ? ', en moins cher' : ''}, voilà ce que je mettrais sur ta peau.`, { picks: top.map((r) => ({ name: r.c.name, house: r.c.house, e: lkP(r.c), line: `${r.shared ? 'Il partage ' + r.shared + ' note' + (r.shared > 1 ? 's' : '') + ' avec ' + ref.name + '. ' : ''}${r.alt ? 'Les passionnés le citent comme l\'alternative accessible' : r.tc ? 'On le retrouve dans ' + r.tc + ' playlist' + (r.tc > 1 ? 's' : '') + ' avec lui' : 'Même famille, même esprit'}${r.c.price ? ', pour environ ' + r.c.price + ' €' : ''}.` })), note: 'Un conseil de parfumier, ce sont des cousins, pas des jumeaux. Teste sur peau avant de décider.', fb: { name: top[0].c.name, house: top[0].c.house } });
+    if (!(window.SillageDemo || window.SillagePrompts)) return local;
+    try {
+      const rs = sim.res.slice(0, 16).map((r) => ({ c: r.c, m: { pct: Math.round(r.sim * 100), diff: '', why: [r.shared ? 'partage ' + r.shared + ' notes avec ' + ref.name : '', r.tc ? r.tc + ' playlists d\'inspiration en commun avec ' + ref.name : ''].filter(Boolean) } }));
+      const refDesc = `${ref.name} (${ref.house}${ref.price ? ', environ ' + ref.price + ' €' : ''}${(ref.notes || []).length ? ', notes ' + ref.notes.slice(0, 7).join(', ') : ''})`;
+      const need = `Je veux un parfum dans la veine de ${refDesc}${sim.cheaper ? ', mais moins cher, avec la même qualité de matières et la même tenue, surtout pas un parfum cheap ou un clone bas de gamme' : ''}. Propose les meilleurs équivalents connus des passionnés, y compris hors liste si tu les connais avec certitude. Ma demande : ${q}`;
+      const args = { need: need.slice(0, 500), shortlist: shortOf(rs), collection: colShort(), taste: tasteLine(), profile: S.profile ? { gender: S.profile.gender, age: S.profile.age } : null };
+      const j = window.SillageDemo ? await window.SillageDemo.need(args) : await aiJson(window.SillagePrompts.need(args), { modelTier: 'default' });
+      const picks = (j.picks || []).slice(0, 3);
+      if (picks.length) return pref(j.compris || `Dans la veine de ${ref.name}, voilà mes choix.`, { picks: picks.map((k) => ({ name: k.name, house: k.house || '', e: dbList().find((x) => E.norm(x.name) === E.norm(k.name) && (!k.house || E.norm(x.house) === E.norm(k.house))) || null, line: [k.pourquoi, k.peau ? 'Après 3 h : ' + k.peau : '', k.attention ? 'Attention : ' + k.attention : ''].filter(Boolean).join(' ') })), note: [j.eviter && j.eviter.name ? 'À éviter pour toi : ' + j.eviter.name + (j.eviter.raison ? ', ' + j.eviter.raison : '') + '.' : '', j.test || 'Ce sont des cousins, pas des jumeaux : teste sur peau avant de décider.'].filter(Boolean).join(' '), fb: { name: picks[0].name, house: picks[0].house } });
+    } catch (e) { /* IA indisponible : la sélection calculée */ }
+    return local;
+  }
   async function pfIntent(q) {
     const qn = E.norm(q), pref = (t, extra) => Object.assign({ t }, extra || {});
     const lkE = (e) => ({ name: e.name, house: e.house, e });
@@ -804,8 +821,8 @@
       if (ans === null) return pref(chatGreeting());
       return pref(ans);
     }
-    // « comme X mais moins cher » : la recherche par proximité de l'application
-    try { const need = E.parseNeed(q), sim = simSearch(q, need); if (sim && sim.res.length) { const top = sim.res.slice(0, 3); return pref(`Dans la veine de ${sim.ref.name}${sim.cheaper ? ', en moins cher' : ''}, voilà ce que je mettrais sur ta peau.`, { picks: top.map((r) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || dbList().find((x) => E.norm(x.name) === E.norm(r.c.name) && E.norm(x.house) === E.norm(r.c.house)) || null, line: `Il partage ${r.shared} note${r.shared > 1 ? 's' : ''} avec ${sim.ref.name}${r.c.price ? ' pour environ ' + r.c.price + ' €' : ''}.` })), note: 'Un conseil de parfumier, ce sont des cousins, pas des jumeaux. Teste sur peau avant de décider.', fb: { name: top[0].c.name, house: top[0].c.house } }); } } catch (e) { /* on passe à la suite */ }
+    // « comme X mais moins cher » : la proximité calculée par l'application, puis le regard de l'IA quand elle est là
+    try { const need = E.parseNeed(q), sim = simSearch(q, need); if (sim && sim.res.length) return await altAnswer(q, sim, pref); } catch (e) { /* on passe à la suite */ }
     return null;
   }
   const dsc0 = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
@@ -1089,7 +1106,7 @@
     out.forEach((e) => { const x = EN[E.norm(e.house) + '|' + E.norm(e.name)]; if (!x) return;
       if (x.n && x.n.length) { const have = new Set((e.noses || []).map(E.norm)); e.noses = (e.noses || []).concat(x.n.filter((n) => !have.has(E.norm(n)))); }
       if (!e.family && x.f) { e.family = x.f; e.guess = false; }
-      if (!e.price && x.p) { e.price = x.p; if (x.pe) e.pe = true; }
+      if (x.p && (!e.price || !x.pe)) { e.price = x.p; if (x.pe) e.pe = true; else delete e.pe; if (e.cat) e.cat.price = x.p; }
       if (x.y) e.year = x.y; if (x.c) e.coll = x.c; });
     (S.customDb || []).forEach((c) => { const k = E.norm(c.house + ' ' + c.name); if (seen.has(k)) return; seen.add(k); out.push({ g: gdOf(c.name, c.house), ed: false, name: c.name, house: c.house || 'Autre', conc: '', cat: null, family: c.family || null, notes: c.notes || [], price: c.price || 0, noses: [], guess: false, tags: [], custom: true }); });
     DBL = { n: CAT.length + nCustom, l: out }; return out;
@@ -1245,14 +1262,20 @@
     const rq = E.profOf({ name: ref.name, house: ref.house, notes: ref.notes || [], family: ref.family }); if (!rq) return null;
     const cheaper = /moins cher|pas cher|abordable|economique|petit budget/.test(E.norm(q)), cen = (v) => v.map((x) => x - 2.5);
     const a = cen(rq.p), na = Math.sqrt(a.reduce((t, x) => t + x * x, 0)) || 1;
+    let RT = new Set(); try { RT = new Set(E.themesOf(ref, 99).map((t) => t.id)); } catch (e) { /* sans playlists */ }
     const rn = new Set((ref.notes || []).map(E.norm).filter(Boolean)), nmin = (a, b) => Math.max(3, Math.min(a, b));
-    const res = needPool().filter((c) => E.norm(c.name) !== E.norm(ref.name) && !(c.entry && c.entry.ed) && E.norm(c.house + c.name) !== E.norm(ref.house + ref.name)).map((c) => {
-      const pq = E.profOf(c); if (!pq) return null; const b = cen(pq.p), nb = Math.sqrt(b.reduce((t, x) => t + x * x, 0)) || 1;
-      const cs = a.reduce((t, x, i) => t + x * b[i], 0) / (na * nb), cn = new Set((c.notes || []).map(E.norm).filter(Boolean));
+    const rk0 = E.norm(ref.house + ' ' + ref.name), pool0 = needPool().slice();
+    (window.ALTS || []).filter((x) => x[0] === rk0).forEach((x) => { if (!pool0.some((c) => E.norm(c.house + ' ' + c.name) === x[1])) { const e = dbList().find((d) => E.norm(d.house + ' ' + d.name) === x[1]); if (e) pool0.push({ name: e.name, house: e.house, notes: e.notes || [], family: e.family, price: e.price || 0, entry: e }); } });
+    const res = pool0.filter((c) => E.norm(c.name) !== E.norm(ref.name) && !(c.entry && c.entry.ed) && E.norm(c.house + c.name) !== E.norm(ref.house + ref.name)).map((c) => {
+      const alt = (window.ALTS || []).some((x) => x[0] === E.norm(ref.house + ' ' + ref.name) && x[1] === E.norm(c.house + ' ' + c.name)) ? .9 : 0;
+      const pq = E.profOf(c); if (!pq && !alt) return null; const b = pq ? cen(pq.p) : a.map(() => 0), nb = Math.sqrt(b.reduce((t, x) => t + x * x, 0)) || 1;
+      const cs = pq ? a.reduce((t, x, i) => t + x * b[i], 0) / (na * nb) : 0.3, cn = new Set((c.notes || []).map(E.norm).filter(Boolean));
       let sh = 0; rn.forEach((n) => { if (cn.has(n) || [...cn].some((m) => m.includes(n) || n.includes(m))) sh++; });
       const ns = rn.size && cn.size ? sh / nmin(rn.size, cn.size) : 0, fm = c.family && c.family === ref.family ? 1 : 0;
-      return { c, sim: Math.min(0.99, 0.45 * cs + 0.4 * Math.min(1, ns) + 0.15 * fm), shared: sh };
-    }).filter((r) => r && r.sim > 0.42 && (!need.maxPrice || !r.c.price || r.c.price <= need.maxPrice) && (!cheaper || !ref.price || (r.c.price > 0 && r.c.price < ref.price * 0.8))).sort((x, y) => y.sim - x.sim);
+      let tc = 0, pv = 0; try { const ct = new Set(E.themesOf(c, 99).map((t) => t.id)); ct.forEach((id) => { if (RT.has(id)) tc++; }); pv = E.provenOf(c).v; } catch (e) { /* sans playlists */ }
+      const ql = alt + (E.nicheTop(c) ? .06 : 0) + .06 * pv - (E.usHype(c) ? .03 : 0);
+      return { c, sim: Math.min(0.99, 0.34 * cs + 0.3 * Math.min(1, ns) + 0.1 * fm + 0.2 * Math.min(1, tc / 3) + ql), shared: sh, tc, alt };
+    }).filter((r) => r && (r.sim > 0.42 || r.alt) && (!need.maxPrice || !r.c.price || r.c.price <= need.maxPrice) && (!cheaper || !ref.price || (r.c.price > 0 && r.c.price < ref.price * 0.8 && r.c.price > ref.price * 0.25))).sort((x, y) => y.sim - x.sim);
     return { ref, cheaper, res };
   }
   // Univers (playlists) qui répondent à la demande : leurs premiers parfums, dans l'ordre voulu pour cette playlist (les plus emblématiques en tête).
