@@ -516,7 +516,7 @@
   function tipsData() {
     const P = S.collection, st = S.settings, cat = needPool(), avoid = (st.avoid || []).map(E.norm), owned = new Set(P.map((p) => E.norm(p.name)));
     const gd = (c) => (window.genderOf ? window.genderOf(c.name, c.house) : 'u'), wrong = (c) => { const g = S.profile && S.profile.gender; return (g === 'm' && gd(c) === 'f') || (g === 'f' && gd(c) === 'm'); };
-    const ok = (c) => !wrong(c) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && underCap(c);
+    const ok = (c) => !wrong(c) && !owned.has(E.norm(c.name)) && !(c.notes || []).some((n) => avoid.some((a) => a && E.norm(n).includes(a))) && underCap(c) && !E.usHype(c);
     const out = { gaps: [], recs: [], tags: [], tips: [] };
     // Pas 15 versions du même parfum : une seule fiche par famille (maison + premier mot du nom : Sauvage, Sauvage Elixir, Sauvage EDT…).
     const famKey = (c) => { const w = E.norm(c.name).split(' ').filter((x) => !['le', 'la', 'les', 'l', 'the', 'un', 'une', 'eau', 'de', 'du', 'd'].includes(x)); return E.norm(c.house) + '|' + (w[0] || E.norm(c.name)); };
@@ -628,7 +628,7 @@
   function humanLine(r, rank, e, q) {
     const c = r.c, notes = (c.notes || (e && e.notes) || []).map((n) => n.toLowerCase()), why = r.m.why || [], ed = edOf({ name: c.name, house: c.house }) || {}, bits = [], seed = q + c.name;
     bits.push(pickH([
-      [`Je commencerais par ${c.name}.`, `Pour toi, je sortirais ${c.name} en premier.`, `${c.name}, sans hésiter.`],
+      [`Je commencerais par ${c.name.replace(/\.$/, '')}.`, `Pour toi, je sortirais ${c.name} en premier.`, `${c.name}, sans hésiter.`],
       [`Juste derrière, ${c.name}.`, `Si tu veux changer de ton, ${c.name} fait très bien l'affaire.`, `Ensuite, regarde ${c.name}.`],
       [`Et pour sortir du cadre, essaie ${c.name}.`, `Un pas de côté avec ${c.name}, tu pourrais être surpris.`, `Garde ${c.name} pour le jour où tu veux t'amuser.`],
     ][Math.min(rank, 2)], seed));
@@ -715,19 +715,128 @@
     PF.hide = setTimeout(pfHide, 9500);
   }
   function pfSchedule() { mountParfumier(); clearTimeout(PF.t); pfHide(); PF.t = setTimeout(pfTick, PF.shown ? 30000 : 14000); }
+  // ---------- Le parfumier répond à tout : sa collection, un parfum, une comparaison, le vocabulaire du métier ----------
+  const PF_KB = [
+    [/concentration|eau de parfum|eau de toilette|extrait|\bedp\b|\bedt\b|difference entre.*(parfum|toilette|cologne)/, 'Une histoire de dosage du jus. L\'eau de cologne tourne autour de 3 à 5 % d\'huiles parfumées, l\'eau de toilette autour de 8 %, l\'eau de parfum de 12 à 18 %, l\'extrait au delà de 20 %. Plus le jus est concentré, plus la tenue et le fond s\'installent, mais ce n\'est pas toujours plus fort au départ. Une eau de toilette bien faite peut être lumineuse là où un extrait sera plus dense et plus intime. Si tu hésites, prends l\'eau de parfum, c\'est le bon compromis, et garde l\'extrait pour les soirées ou l\'hiver.'],
+    [/tient pas|tenue|disparait|dure pas|s en va|fixer|plus longtemps|longevite/, 'Un parfum qui s\'évapore vite, c\'est presque toujours une affaire de peau et de geste. Hydrate la peau avant (une crème neutre ou une noisette de vaseline), vaporise sur les points de chaleur, les poignets, le creux du cou, derrière les oreilles, et ne frotte jamais les poignets, ça casse la tête. Un peu de jus sur les vêtements tient bien plus longtemps. Et si le parfum file quand même, c\'est que les fonds de bois, d\'ambre ou de musc te conviendront mieux que les agrumes, qui s\'envolent par nature.'],
+    [/combien de spray|combien de vaporis|comment (mettre|appliquer|vaporiser|porter)|ou (mettre|vaporiser|appliquer)/, 'Deux à trois sprays pour le quotidien, quatre à cinq pour une soirée ou un parfum doux. Vaporise à une quinzaine de centimètres sur la peau propre et un peu hydratée, au cou, au creux de la poitrine, aux poignets si tu veux. Sur un parfum très concentré, un ou deux sprays suffisent, le sillage fait le reste. En été, on réduit, et on ne vaporise jamais à la dernière minute dans l\'ascenseur.'],
+    [/conserv|ranger|stocker|perime|date limite|garder (mes|mon|un)/, 'Un parfum déteste trois choses, la lumière, la chaleur et les écarts de température. Garde le flacon dans sa boîte, dans un tiroir ou un placard, pas dans la salle de bain ni sur le rebord d\'une fenêtre. Bien rangé, un jus tient facilement trois à cinq ans, parfois bien plus pour les fonds boisés ou ambrés. Les agrumes sont les premiers à tourner, le jus fonce et la tête devient aigre, c\'est le signe.'],
+    [/notes? de (tete|coeur|fond)|pyramide|sillage|facette|\baccord\b|mouillette|\bjus\b|vocabulaire|ca veut dire|c est quoi (un|une|le|la) (sillage|accord|facette)/, 'Un petit lexique de parfumier. La tête, ce sont les premières notes, légères, qu\'on sent dans les dix premières minutes, agrumes, aromatiques. Le cœur arrive ensuite et dure plusieurs heures, c\'est le visage du parfum, fleurs, épices. Le fond s\'installe et reste sur la peau, bois, ambre, musc, vanille. Le sillage, c\'est la trace qu\'on laisse derrière soi. Un accord, c\'est le mariage de plusieurs matières qui fabriquent une impression nouvelle, comme le cuir ou le chypré. Le jus, c\'est simplement le parfum lui même, et la mouillette ce petit bout de papier pour le sentir, avant de le confirmer sur la peau.'],
+    [/peau (seche|grasse|sensible)|transpir|je transpire/, 'La peau change tout. Une peau sèche boit le parfum, il faut l\'hydrater avant et viser des fonds riches, vanille, ambre, bois, pour que le jus s\'accroche. Une peau grasse le garde mieux et le fait chanter plus fort, on peut alléger. Quand on transpire, mieux vaut un jus frais et propre (agrumes, vétiver, musc blanc) qu\'un oriental lourd qui tourne.'],
+    [/tester|echantillon|decouverte|samples?|acheter a l aveugle|avant d acheter/, 'Le bon réflexe d\'un parfumier. Sens d\'abord sur mouillette pour écarter ce qui ne te dit rien, puis un seul parfum sur la peau, et vis avec une demi journée. La tête ment toujours un peu, c\'est le cœur à une heure et le fond à quatre heures qui disent la vérité. Les petits formats de découverte et les échantillons en boutique sont faits pour ça, et je préfère cent fois qu\'on teste que qu\'on achète sur un coup de tête.'],
+    [/cadeau|offrir|offert pour|anniversaire de/, 'Pour offrir un parfum, je pose toujours les mêmes questions. Pour qui, un homme ou une femme, quel âge, quel budget, et surtout ce qu\'il ou elle porte déjà, parce qu\'on offre rarement un parfum très différent de celui qu\'on aime. Dis-moi par exemple « un cadeau pour ma mère, moins de 120 €, elle aime les fleurs » et je te sors trois idées. Si tu hésites, un parfum frais et propre ou une vanille douce font rarement d\'erreur.'],
+    [/tu es (une|un) (ia|robot|humain|vrai|personne)|es tu (une|un) (ia|robot|humain|vrai)|qui es tu|tu es qui|t es qui|t es reel/, 'Je suis l\'assistant virtuel de l\'application, pas une vraie personne. Je me suis construit comme un parfumier de poche, avec toute la base de parfums, les playlists d\'inspiration, tes goûts et ta collection sous les yeux. Je ne vends rien et je dis quand je ne sais pas.'],
+    [/que sais tu faire|que peux tu faire|a quoi tu sers|tu peux m aider|comment (ca marche|tu marches|fonctionne)|aide moi|^aide$/, 'Je peux faire plusieurs choses. Te dire ce qui manque à ta collection, te proposer trois parfums pour une occasion ou une humeur, te raconter un parfum en détail, comparer deux flacons, te dire lequel porter aujourd\'hui, classer ta wishlist, ou t\'expliquer le vocabulaire du métier. Pose ta question comme tu la dirais à un vendeur, je comprends les phrases normales.'],
+    [/^(bonjour|salut|coucou|hello|bonsoir|hey)\b/, null],
+    [/^(merci|super merci|top merci|parfait merci|genial)/, 'Avec plaisir. Et si tu veux creuser un parfum ou en comparer deux, je suis là.'],
+    [/(budget|prix max|plafond|trop cher|moins cher)\b.*(regle|changer|modifier|fixer|ou)|comment (regler|changer|fixer) (le )?(budget|prix)/, 'Le curseur « Prix maximum par flacon » est tout en haut de la page Pour toi. Il va de 50 € jusqu\'à 2 000 €, et tout à droite c\'est sans limite. Aucun conseil de l\'application ne dépasse ce prix.'],
+  ];
+  const nameIn = (qn, e) => { const n = E.norm(e.name); return n.length >= 4 && (' ' + qn + ' ').includes(' ' + n + ' '); };
+  function findPerfumes(q) {
+    const qn = E.norm(q).replace(/ (eau de parfum|extrait|edp|edt)( |$)/g, ' '), out = [];
+    dbList().filter((e) => !e.ed && nameIn(qn, e)).sort((x, y) => E.norm(y.name).length - E.norm(x.name).length).forEach((e) => { if (out.length < 2 && !out.some((o) => E.norm(o.name).includes(E.norm(e.name)) || E.norm(e.name).includes(E.norm(o.name)))) out.push(e); });
+    return out;
+  }
+  function describePerfume(e) {
+    const c = { name: e.name, house: e.house, notes: e.notes || [], family: e.family }, ed = edOf(e) || {}, notes = (e.notes || []).map((n) => n.toLowerCase()), bits = [];
+    bits.push(`${e.name}, c'est ${e.house}${e.family ? ', dans la famille ' + famLabel(e.family).toLowerCase() : ''}.`);
+    if (notes.length >= 4) bits.push(`En tête, ${list3(notes.slice(0, 2))}. Le cœur tourne autour de ${list3(notes.slice(2, Math.max(3, notes.length - 1)).slice(0, 2))}, et ça se pose sur ${notes[notes.length - 1]}.`);
+    else if (notes.length) bits.push(`Dans le jus, on retrouve ${list3(notes)}.`);
+    else bits.push('Je n\'ai pas de liste de notes vérifiée pour celui-ci, donc je préfère ne pas te la raconter.');
+    const pf = E.profOf(c); if (pf && pf.pitch) bits.push(cap1(hz(pf.pitch, 150)) + '.');
+    const f1 = (ed.forts || [])[0], w1 = (ed.faibles || [])[0], pour = ed.pour;
+    if (f1) bits.push('Ce qu\'on lui reconnaît, ' + hz(f1.charAt(0).toLowerCase() + f1.slice(1), 120) + '.');
+    if (w1) bits.push('Petite réserve de parfumier, ' + hz(w1.charAt(0).toLowerCase() + w1.slice(1), 120) + '.');
+    if (pour) bits.push('Il va bien à ' + hz(String(pour).replace(/\(.*?\)/g, '').toLowerCase(), 100) + '.');
+    const th = E.themesOf(c, 3).map((x) => x.t); if (th.length) bits.push(`On le croise dans les univers « ${th.join(' », « ')} ».`);
+    const p = estPrice(c) || e.price; if (p) bits.push(`Compte environ ${p} € le flacon, un prix indicatif à vérifier chez le vendeur.`);
+    return bits.join(' ');
+  }
+  async function pfIntent(q) {
+    const qn = E.norm(q), pref = (t, extra) => Object.assign({ t }, extra || {});
+    const lkE = (e) => ({ name: e.name, house: e.house, e });
+    // ce qui manque à la collection
+    if (/manque|trou|completer ma collection|que (dois|devrais) (je )?(acheter|ajouter)|quoi (acheter|ajouter)/.test(qn) && !/pas de manque/.test(qn)) {
+      if (!S.collection.length) return pref('Ton étagère est vide pour l\'instant, donc tout lui manque. Ajoute les parfums que tu as déjà, même trois ou quatre, et je te dis ce qui te manque vraiment. Tu peux aussi refaire le voyage depuis la page Pour toi, je m\'en servirai pour te guider.');
+      let T = null; try { T = tipsData(); } catch (e) { T = null; }
+      const cov = E.coverage(S.collection).sort((x, y) => x.best - y.best), q2 = (x) => '« ' + x.sc.label + ' »', weak = cov.slice(0, 2).map(q2), strong = cov.slice(-2).reverse().map(q2);
+      const n = S.collection.length, gaps = T ? T.gaps : [];
+      let t = `J'ai regardé ton étagère comme je regarderais celle d'un client. ${n} flacon${n > 1 ? 's' : ''}, et elle tient bien la route côté ${list3(strong)}. Là où elle est la plus fragile, c'est ${list3(weak)}.`;
+      if (n < 4) t += ' Avec si peu de parfums, c\'est normal, on construit.';
+      const picks = gaps.slice(0, 3).map((g) => ({ name: g.c.name, house: g.c.house, e: dbList().find((x) => E.norm(x.name) === E.norm(g.c.name) && E.norm(x.house) === E.norm(g.c.house)) || null, line: `Pour « ${g.sc.label} », ton meilleur est ${g.bestP.name} et il ne suffit pas. ${cap1(hz(dsc0(g.c), 140))}.` }));
+      return pref(t, { picks, note: picks.length ? 'Teste-les sur peau avant d\'acheter, et dis-moi si tu préfères que je cherche dans un autre budget.' : 'Rien de convaincant sous ton plafond de prix pour l\'instant, monte-le un peu et je regarde à nouveau.', fb: picks[0] ? { name: picks[0].name, house: picks[0].house } : undefined });
+    }
+    // lequel porter
+    if (/(lequel|que|quoi) (porter|mettre)|porter aujourd|mettre aujourd|mon parfum du jour|parfum (du jour|pour aujourd)/.test(qn)) {
+      if (!S.collection.length) return pref('Je n\'ai encore aucun flacon à te proposer, ton étagère est vide. Ajoute ce que tu as et je te dirai chaque matin lequel porter, selon la météo, ta journée et ce que tu as mis ces derniers jours.');
+      const cond = keywordCond(q, null), rk = E.rank(S.collection, cond, stx()).slice(0, 3);
+      return pref(`Je te vois bien avec ${rk[0].p.name} aujourd'hui.${rk[1] ? ' Si tu veux changer, ' + rk[1].p.name + ' fait très bien l\'affaire.' : ''} Dis-moi ta journée en une phrase, un rendez-vous, du bureau, une soirée, et j'affine.`, { picks: rk.map((r, i) => ({ name: r.p.name, house: r.p.house, e: dbList().find((x) => E.norm(x.name) === E.norm(r.p.name) && E.norm(x.house) === E.norm(r.p.house)) || null, line: [(r.reasons || [])[0], (r.reasons || [])[1]].filter(Boolean).join('. ') + '.' })), fb: { name: rk[0].p.name, house: rk[0].p.house } });
+    }
+    // wishlist : par quoi commencer
+    if (/(wishlist|liste d envies|mes envies)|(lequel|quoi) (acheter|prendre) en premier/.test(qn)) {
+      const w = (S.wishlist || []).filter((x) => x && x.name); if (!w.length) return pref('Ta wishlist est vide pour le moment. Ajoute les parfums qui te font envie, avec le petit bouton Wishlist sur chaque fiche, et je te dirai par lequel commencer.');
+      const pool = needPool(), cat = w.map((x) => pool.find((c) => E.norm(c.name) === E.norm(x.name))).filter(Boolean);
+      let rec = []; try { rec = cat.length ? E.recommend(cat, S.collection.filter((p) => (p.rating || 3) >= 4 || (p.rating || 3) <= 2), [], Object.assign({}, chatState(), { budget: 0 })).sort((x, y) => y.total - x.total) : []; } catch (e) { rec = []; }
+      if (!rec.length) return pref('Voilà ce que tu as mis de côté : ' + w.slice(0, 6).map((x) => x.name).join(', ') + '. Pour que je les classe, il me faut quelques notes sur ta collection, et si possible tes goûts dans le profil.');
+      return pref(`Sur ta liste, je commencerais par ${rec[0].c.name}.${rec[1] ? ' Ensuite ' + rec[1].c.name + '.' : ''} Ce sont ceux qui collent le mieux à ce que tu aimes.`, { picks: rec.slice(0, 3).map((r) => ({ name: r.c.name, house: r.c.house, e: dbList().find((x) => E.norm(x.name) === E.norm(r.c.name) && E.norm(x.house) === E.norm(r.c.house)) || null, line: [r.hits && r.hits.length ? 'Il parle à ce que tu aimes déjà, ' + r.hits.slice(0, 2).join(' et ') : '', r.axisWhy && r.axisWhy.length ? 'dans ta veine ' + r.axisWhy[0] : ''].filter(Boolean).join(', ') + '.' })), fb: { name: rec[0].c.name, house: rec[0].c.house } });
+    }
+    // layering
+    if (/layering|superpos|melanger|associer|marier|combiner/.test(qn)) {
+      if (S.collection.length < 2) return pref('Le layering, c\'est superposer deux parfums pour fabriquer une signature. Il faut au moins deux flacons dans ta collection pour que je te propose un mariage. Ajoute-en un autre et reviens me voir.');
+      const cond = keywordCond(q, null), top = E.rank(S.collection, cond, stx())[0].p, lay = layerObjs(top, cond, 2);
+      return pref(`Le layering, c'est l'art de superposer deux parfums pour en faire un troisième. On commence par le plus dense sur la peau, on pose le plus léger par dessus, deux sprays chacun, pas plus. Avec ${top.name}, je te vois bien tenter ${lay.map((l) => l.p.name).join(' ou ')}.`, { picks: lay.map((l) => ({ name: l.p.name, house: l.p.house, e: dbList().find((x) => E.norm(x.name) === E.norm(l.p.name) && E.norm(x.house) === E.norm(l.p.house)) || null, line: [l.effect, l.how].filter(Boolean).join(' ') })), note: 'Le Labo d\'accords de l\'application te laisse tester ces mariages sur tes flacons.' });
+    }
+    // comparer deux parfums
+    const two = findPerfumes(q);
+    if (two.length === 2 && /compar|difference|different|versus|\bvs\b|ou|entre|lequel|mieux/.test(qn)) {
+      const [a, b] = two, ca = { name: a.name, house: a.house, notes: a.notes || [], family: a.family }, cb = { name: b.name, house: b.house, notes: b.notes || [], family: b.family };
+      const pa = E.profOf(ca), pb = E.profOf(cb), ix = (n) => E.AXN.indexOf(n), fr = (p) => (p ? p.p[ix('fraicheur')] : 3), de = (p) => (p ? p.p[ix('densite')] : 3), nt = (e) => list3((e.notes || []).slice(0, 3).map((n) => n.toLowerCase()));
+      const bits = [`${E.norm(a.name).includes(E.norm(a.house)) ? a.name : a.name + ' de ' + a.house} et ${E.norm(b.name).includes(E.norm(b.house)) ? b.name : b.name + ' de ' + b.house}, ce n'est pas la même histoire.`, `${a.name}${nt(a) ? ' joue sur ' + nt(a) : ''}.`, `${b.name}${nt(b) ? ' joue sur ' + nt(b) : ''}.`];
+      if (pa && pb) { const lighter = fr(pa) >= fr(pb) ? a : b, denser = de(pa) >= de(pb) ? a : b; if (lighter !== denser) bits.push(`Le plus frais des deux, ${lighter.name}, celui que je sortirais le jour ou au bureau. Le plus dense, ${denser.name}, pour le soir ou le froid.`); else bits.push(`Ils ont un peu le même poids sur la peau, donc le choix se fera sur les notes que tu préfères.`); }
+      const pa2 = estPrice(ca) || a.price, pb2 = estPrice(cb) || b.price; if (pa2 && pb2) bits.push(`Côté prix, environ ${pa2} € contre ${pb2} €.`);
+      return pref(bits.join(' '), { picks: [lkE(a), lkE(b)].map((k) => Object.assign(k, { line: '' })), note: 'Dis-moi pour quelle occasion tu hésites et je te donne mon choix.' });
+    }
+    // parler d'un parfum
+    if (two.length >= 1 && /parle|parler|raconte|dis moi|c est quoi|que penses|ton avis|avis sur|tout sur|connais tu|connais tu|decris|decrire|il sent|ca sent|sent comment|vaut|pour qui|a quoi (il )?ressemble|combien|prix|coute|\?/.test(qn) && qn.split(' ').length <= 14) {
+      const e = two[0]; return pref(describePerfume(e), { picks: [Object.assign(lkE(e), { line: '' })], note: 'Dis-moi si tu veux le comparer à un autre ou savoir avec quoi le superposer.', fb: { name: e.name, house: e.house } });
+    }
+    for (const [rx, ans] of PF_KB) if (rx.test(qn)) {
+      if (ans === null) return pref(chatGreeting());
+      return pref(ans);
+    }
+    // « comme X mais moins cher » : la recherche par proximité de l'application
+    try { const need = E.parseNeed(q), sim = simSearch(q, need); if (sim && sim.res.length) { const top = sim.res.slice(0, 3); return pref(`Dans la veine de ${sim.ref.name}${sim.cheaper ? ', en moins cher' : ''}, voilà ce que je mettrais sur ta peau.`, { picks: top.map((r) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || dbList().find((x) => E.norm(x.name) === E.norm(r.c.name) && E.norm(x.house) === E.norm(r.c.house)) || null, line: `Il partage ${r.shared} note${r.shared > 1 ? 's' : ''} avec ${sim.ref.name}${r.c.price ? ' pour environ ' + r.c.price + ' €' : ''}.` })), note: 'Un conseil de parfumier, ce sont des cousins, pas des jumeaux. Teste sur peau avant de décider.', fb: { name: top[0].c.name, house: top[0].c.house } }); } } catch (e) { /* on passe à la suite */ }
+    return null;
+  }
+  const dsc0 = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
+  // Une question qu'on ne sait pas ranger : l'IA si elle est là, sinon un aveu simple et des pistes.
+  async function pfGeneral(q) {
+    try {
+      const sample = await getSample();
+      if (sample) {
+        const prompt = `Tu es le parfumier privé d'une application de parfums. ${VOIX_TX} Réponds en français, en 4 phrases maximum, à la question de la personne, en t'appuyant sur ses goûts et sa collection quand c'est utile. Si la question n'a rien à voir avec les parfums, dis-le gentiment et ramène la conversation vers les parfums. N'invente jamais de note, de prix ni de parfum.\nSes goûts :\n${tasteLine()}\nSa collection :\n${colShort() || '(vide)'}\nHistorique récent : ${CHAT.msgs.slice(-6).map((m) => (m.r === 'u' ? 'Elle ou lui : ' : 'Toi : ') + (m.t || '')).join(' | ')}\nQuestion : """${q}"""\nRéponds UNIQUEMENT par un JSON {"reply":"..."}.`;
+        const j = await aiJson(prompt, { modelTier: 'default' }); if (j && j.reply) return { t: String(j.reply).slice(0, 900) };
+      }
+    } catch (e) { /* retombe sur la réponse locale */ }
+    return { t: 'Sur celle-là, je préfère ne pas t\'inventer une réponse. Ce que je fais le mieux, c\'est te parler d\'un parfum précis, comparer deux flacons, regarder ce qui manque à ta collection, te dire lequel porter aujourd\'hui, ou te proposer trois idées pour une occasion. Dis-moi par où tu veux commencer.' };
+  }
+  const VOIX_TX = 'Ton chaleureux de parfumier de boutique, tutoiement, phrases courtes, un peu de vocabulaire du métier (tête, cœur, fond, sillage, accord, jus, peau) sans jamais noyer, sans tiret long ni deux-points dans les phrases.';
   async function chatSend(q) {
     q = (q || '').trim(); if (!q || CHAT.busy) return;
     CHAT.msgs.push({ r: 'u', t: q }); CHAT.busy = true; drawChat();
     { const ex = q.match(/^Pourquoi (.+) pour moi \?$/); if (ex) { const rec = (() => { try { return tipsData().recs.find((x) => x.c.name === ex[1]); } catch (e) { return null; } })(); if (rec) { const why = [].concat(rec.hits.length ? ['tu aimes déjà ' + rec.hits.slice(0, 2).join(' et ')] : [], (rec.axisWhy || []).length ? ['dans ton goût ' + rec.axisWhy[0]] : [], rec.proven >= 4 ? ['dans l\'univers « ' + (E.themesOf(rec.c, 1)[0] || { t: 'des playlists' }).t + ' »'] : []); const r2 = { c: rec.c, m: { why, pct: rec.pct, diff: rec.diff, pitch: rec.pitch } }; CHAT.msgs.push({ r: 'a', t: 'Bonne question. Voilà pourquoi je te le propose.', picks: [{ name: rec.c.name, house: rec.c.house, e: dbList().find((x) => E.norm(x.name) === E.norm(rec.c.name) && E.norm(x.house) === E.norm(rec.c.house)) || null, line: humanLine(r2, 0, null, q) }], fb: { name: rec.c.name, house: rec.c.house } }); CHAT.busy = false; drawChat(); return; } } }
+    { const ia = await pfIntent(q); if (ia) { CHAT.msgs.push(Object.assign({ r: 'a' }, ia)); CHAT.busy = false; drawChat(); return; } }
     const prev = CHAT.msgs.filter((m) => m.r === 'u').slice(-3, -1).map((m) => m.t);
     const text = (prev.length ? prev.join('. ') + '. Et maintenant : ' : '') + q;
     let need = E.parseNeed(text.slice(0, 480)); if (need.empty) need = E.parseNeed(q);
     const st = chatState(), lk = {}; dbList().forEach((e) => { lk[entryKey(e)] = e; });
+    const perfumeish = /parfum|odeur|sent|note|flacon|fragrance|cologne|jus|sillage|soir|bureau|date|rendez|mariage|cadeau|ete|hiver|automne|printemps|frais|boise|vanille|rose|cuir|oud|ambre|musc|epice|floral|gourmand|fume|budget|prix|euro|tenue|porter|mettre|collection|recommand|conseil|envie|ambiance|style|journee/.test(E.norm(q));
+    if (need.empty || (!perfumeish && /\?\s*$|^(quel|quelle|quels|qui|combien|pourquoi|comment|que|qu |est ce|c est)\b/.test(E.norm(q)) && !need.tags.length && !need.fams.length && !need.like.length)) { const g = await pfGeneral(q); CHAT.msgs.push(Object.assign({ r: 'a' }, g)); CHAT.busy = false; drawChat(); return; }
     const res = need.empty ? [] : E.searchNeed(chatPool(), need, st, 14);
     const entryOf = (name, house) => lk[E.norm(house + ' ' + name)] || dbList().find((e) => E.norm(e.name) === E.norm(name) && (!house || E.norm(e.house) === E.norm(house))) || null;
     const local = () => {
       if (!res.length) return { t: 'Là, je ne te suis pas tout à fait. Raconte-moi plutôt la scène : une occasion, une saison, une note que tu aimes, ou un parfum que tu portes déjà.', picks: [] };
-      const top = res.slice(0, 3), lab = (E.needLabel(need) || '').toLowerCase();
+      const top = res.slice(0, 3), lab0 = (E.needLabel(need) || '').toLowerCase(), lab = lab0.length > 5 && !/^(pro|perso|date|event)\b/.test(lab0) ? lab0 : '';
       const intro = pickH([lab ? `Ah, ${lab}. Je vois très bien ce qu'il te faut, voilà trois idées.` : 'Je vois très bien ce qu\'il te faut, laisse-moi te raconter trois flacons.', lab ? `Pour ${lab}, voilà ce que je sortirais de l'armoire.` : 'Voilà ce que je sortirais de l\'armoire.', 'Bonne demande. Je prends mes mouillettes et je te dis tout.'], q);
       const conf = top[0].m.pct >= 75 ? 'Le premier, je le mettrais sur ta peau les yeux fermés.' : top[0].m.pct >= 55 ? 'Ils tiennent la route tous les trois, le premier a juste un cran d\'avance.' : 'Ce n\'est pas une évidence, alors dis-moi en plus et je viserai plus juste.';
       return { t: intro + ' ' + conf, picks: top.map((r, i2) => ({ name: r.c.name, house: r.c.house, e: r.c.entry || entryOf(r.c.name, r.c.house), line: humanLine(r, i2, null, q) })), note: pickH(['Un conseil de parfumier, laisse-le vivre une heure sur la peau, la tête ment toujours un peu avant que le cœur parle. Dis-moi si tu les veux plus frais, plus doux ou moins chers.', 'Teste sur la peau, pas sur la mouillette, et attends que le fond arrive avant de te décider. Je peux aussi te proposer une version plus discrète ou moins sucrée.', 'Si l\'un d\'eux ne te parle pas, dis-le moi simplement. On cherchera dans une autre direction, c\'est comme ça qu\'on trouve son jus.'], q + 'n'), fb: { name: top[0].c.name, house: top[0].c.house } };
@@ -1020,6 +1129,7 @@
     return g;
   }
   const entryKey = (e) => E.norm(e.house + ' ' + e.name);
+  if (DEMO) window.__dbg = { imgOf, dbList: () => dbList() };      // outillage d'audit (?seed=demo)
   function entryToOwned(e) {
     if (e.cat) return Object.assign(fromCat(e.cat), { size: 100, left: 100, use: 'free' });
     // Jamais de notes devinées : si la base n'a pas les vraies notes, la fiche reste vide et l'IA la remplit dès l'ajout.
@@ -1068,7 +1178,7 @@
           else inner += `<p class="mono">Les nez les plus connus</p>${noseRow('data-xn', (window.NOSE_TOP || []).filter((n) => gs.some((g) => g.label === n)))}<p class="mono">Tous les parfumeurs · ${gs.length}</p>`;
           inner += foldWrap(gs.map((g) => `<button type="button" class="chip" data-xg="${esc(g.key)}">${esc(g.label)} <small style="color:var(--muted)">${g.items.length}</small></button>`).join('') || '<span class="mono">Rien ici pour l\'instant</span>', 'chips xg');
         } else {
-          const g = gs.find((x) => x.key === group); const items = g ? g.items.slice().sort((a, b) => (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0) || (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || a.name.localeCompare(b.name, 'fr')) : [];
+          const g = gs.find((x) => x.key === group); const items = g ? g.items.slice().sort((a, b) => (facet === 'brand' ? houseRank(a) - houseRank(b) : 0) || (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0) || (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || a.name.localeCompare(b.name, 'fr')) : [];
           inner += `<div class="row xback"><button type="button" class="ghost" id="xback">← ${tabs.find((t) => t[0] === facet)[1]}</button><b>${esc(g ? g.label : '')}</b><span class="mono">${items.length}</span></div>${facet === 'nose' && g ? noseCard(g.label) : ''}<div class="xgrid">${items.slice(0, limit).map(card).join('')}</div>${items.length > limit ? '<button type="button" class="ghost" id="xmore">Voir plus</button>' : ''}`;
         }
       }

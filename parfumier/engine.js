@@ -365,7 +365,7 @@
   const US_HYPE = new Set(['le labo', 'byredo', 'tom ford', 'kilian', 'glossier', 'phlur', 'kayali', 'bond no 9', 'ds durga', 'd s and durga', 'jo malone', 'jo malone london', 'ralph lauren', 'fenty', 'charlotte tilbury', 'maison margiela', 'by redo', 'marc jacobs', 'calvin klein', 'michael kors', 'coach', 'estee lauder', 'clinique', 'tommy hilfiger', 'donna karan', 'dkny', 'victoria s secret', 'bath body works', 'elizabeth arden', 'kenneth cole', 'guess', 'juicy couture', 'anna sui', 'sarah jessica parker', 'ariana grande', 'britney spears', 'skylar', 'sol de janeiro'].map(norm));
   const usHype = (c) => { const HA = root.HOUSE_ALIAS || {}; return US_HYPE.has(norm(HA[norm(c.house)] || c.house)); };
   // Maisons qu'on met franchement en avant : très belle parfumerie. Frédéric Malle d'abord, Amouage ensuite.
-  const HOUSE_BOOST = { 'frederic malle': 2.9, 'amouage': 1.0 };
+  const HOUSE_BOOST = { 'frederic malle': 2.9, 'essential parfums': 1.8, 'amouage': 1.0 };
   const houseBoost = (c) => { const HA = root.HOUSE_ALIAS || {}; return HOUSE_BOOST[norm(HA[norm(c.house)] || c.house)] || 0; };
   const nicheTop = (c) => { const HA = root.HOUSE_ALIAS || {}; return NICHE_TOP.has(norm(HA[norm(c.house)] || c.house)); };
   // Style d'achat : « luxe » (haut de gamme), « malin » (bons prix) ou rien. Retourne un score de -1 à 1 et si le parfum est à écarter franchement.
