@@ -1,5 +1,7 @@
 # Mise en ligne : ce qui reste avant la première vente
 
+Le pas à pas détaillé est dans `docs/GUIDE-DEPLOIEMENT.md`.
+
 Le code est prêt et testé avec des simulations. Ce qui suit se fait chez toi, hors du code.
 
 ## Bloquant (légal)

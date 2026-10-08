@@ -178,4 +178,19 @@ await t('créateurs : liens https seulement, vidéo, mention partenaire, partage
   assert.equal((await call('/api/share/c/inconnu1')).status, 404); assert.equal((await call('/api/share/u/aaaaaaaaaaaa')).status, 404);
   const l = (await (await call('/api/community', { token: alice })).json()).items.find((x) => x.id === j.id); assert.equal(l.by, sh.item.by); assert.equal(l.avatar, '');
 });
+await t('sécurité : un inconnu qui s\'inscrit avec l\'adresse de l\'éditeur n\'obtient rien tant qu\'elle n\'est pas confirmée', async () => {
+  const mails = []; const w4 = makeWorker({ client, fetch: async (u, init) => { if (String(u).includes('resend')) { mails.push(JSON.parse(init.body)); return new Response('{}'); } return fetchMock(u, init); } });
+  const env4 = { ...env, ADMIN_EMAILS: 'boss@example.com', RESEND_API_KEY: 'k', MAIL_FROM: 'Sillage <noreply@sillage.test>' };
+  const c4 = (path, o = {}) => w4.fetch(new Request('https://demo.test' + path, { method: o.method || 'POST', body: o.body ? JSON.stringify(o.body) : undefined, headers: { 'content-type': 'application/json', 'cf-connecting-ip': '5.5.5.' + (++n % 200), ...(o.token ? { authorization: 'Bearer ' + o.token } : {}) } }), env4);
+  const tok = (await (await c4('/api/account/signup', { body: { email: 'boss@example.com', password: 'motdepasse1' } })).json()).token;
+  assert.equal((await (await c4('/api/account/me', { method: 'GET', token: tok })).json()).admin, false);
+  assert.equal((await c4('/api/admin/stats', { method: 'GET', token: tok })).status, 403);
+  await c4('/api/account/verify', { body: { token: mails[0].html.match(/verify=([a-f0-9]{64})/)[1] } });
+  assert.equal((await (await c4('/api/account/me', { method: 'GET', token: tok })).json()).admin, true);
+});
+await t('sécurité : 10 mots de passe faux bloquent le compte une heure, même depuis d\'autres adresses', async () => {
+  await signup('cible@example.com');
+  for (let i = 0; i < 10; i++) assert.equal((await call('/api/account/login', { method: 'POST', body: { email: 'cible@example.com', password: 'faux-mot-de-passe' }, ip: '9.9.' + i + '.1' })).status, 401);
+  assert.equal((await call('/api/account/login', { method: 'POST', body: { email: 'cible@example.com', password: 'motdepasse1' }, ip: '9.9.77.1' })).status, 429);
+});
 console.log(ok, 'tests réussis');

@@ -44,7 +44,7 @@ export function makeSocial(h) {
   // ---- Outils partagés
   const acctOf = (id) => acc.acctOf(id);
   const prof = async (id) => jp(await kv.get(`prof:${id}`), {});
-  const isAdmin = async (id) => { const a = await acctOf(id); return !!a && adminEmails.includes(a.email); };
+  const isAdminAcct = (a) => !!a && adminEmails.includes(a.email) && a.verified !== false;
   async function brandOf(id) {
     const b = await q('SELECT * FROM brands WHERE acct = ?', id).first(); if (!b) return null;
     let ok = false;
@@ -116,7 +116,7 @@ export function makeSocial(h) {
     if (!a) return need();
     const acct = await acctOf(a.id); if (!acct) return need();
     const me = await prof(a.id); await kv.put('by:' + a.id.slice(0, 12), a.id);
-    const admin = adminEmails.includes(acct.email), verified = acct.verified !== false;
+    const admin = isAdminAcct(acct), verified = acct.verified !== false;
 
     // ---- Abonnements
     if (path === '/api/follow' && method === 'POST') {

@@ -26,6 +26,8 @@ export function makeAccount(h) {
   // Les limites de chaque offre se règlent par variable d'environnement (FREE_ADV, PREMIUM_ADV…), sans toucher au code.
   const plans = Object.fromEntries(Object.entries(PLANS).map(([k, v]) => [k, Object.assign({}, v, ['adv', 'chat', 'ident', 'col', 'insp'].reduce((o, f) => { const e = env[(k === 'founder' ? 'PREMIUM' : k.toUpperCase()) + '_' + f.toUpperCase()]; if (e !== undefined && k !== 'admin') o[f] = int(e, v[f]); return o; }, {}))]));
   const adminEmails = String(env.ADMIN_EMAILS || '').toLowerCase().split(/[\s,;]+/).filter(Boolean);
+  // Éditeur = l'adresse est dans ADMIN_EMAILS ET confirmée (quand l'envoi de courriels est actif) : personne ne peut s'inscrire avec ton adresse pour prendre ta place.
+  const isAdminAcct = (acct) => !!acct && adminEmails.includes(acct.email) && acct.verified !== false;
   const doFetch = deps.fetch || ((...a) => fetch(...a));
 
   const auth = async (request) => {
@@ -52,7 +54,7 @@ export function makeAccount(h) {
 
   // L'offre réelle d'un compte, revérifiée auprès de Whop au plus une fois par jour : une résiliation retire l'accès sans que personne n'ait à intervenir.
   async function planOf(id, email) {
-    if (email && adminEmails.includes(email)) return { plan: 'admin', status: 'admin' };
+    if (email && adminEmails.includes(email) && isAdminAcct(await acctOf(id))) return { plan: 'admin', status: 'admin' };
     const rec = jparse(await kv.get(`plan:${id}`), null);
     if (!rec) return { plan: 'free', status: 'free' };
     if (rec.license && Date.now() - (rec.checkedAt || 0) > RECHECK_MS) {
@@ -233,7 +235,7 @@ export function makeAccount(h) {
     if (cm) {
       if (!a) return reply({ code: 'auth' }, 401);
       const id = cm[1], rec = jparse(await kv.get(`comm:${id}`), null); if (!rec) return reply({ code: 'not_found' }, 404);
-      const acct = await acctOf(a.id), isAdmin = !!acct && adminEmails.includes(acct.email);
+      const acct = await acctOf(a.id), isAdmin = isAdminAcct(acct);
       if (method === 'DELETE' && !cm[2]) { if (rec.author !== a.id && !isAdmin) return reply({ code: 'forbidden' }, 403); await kv.delete(`comm:${id}`); return reply({ ok: true }); }
       if (method === 'POST' && cm[3] === 'like') { const lk = `cl:${id}:${a.id}`; if (!(await kv.get(lk))) { await kv.put(lk, '1'); rec.likes = (rec.likes || 0) + 1; await kv.put(`comm:${id}`, JSON.stringify(rec)); } return reply({ ok: true, likes: rec.likes }); }
       if (method === 'POST' && cm[3] === 'report') { const rk = `cr:${id}:${a.id}`; if (!(await kv.get(rk))) { await kv.put(rk, '1'); rec.reports = (rec.reports || 0) + 1; if (rec.reports >= 3) rec.hidden = true; await kv.put(`comm:${id}`, JSON.stringify(rec)); } return reply({ ok: true }); }
@@ -242,12 +244,12 @@ export function makeAccount(h) {
     // ---- Éditeur (toi seul) : tout ce qui est modifié ici change l'appli pour tout le monde
     if (path === '/api/admin/content' && method === 'PUT') {
       if (!a) return reply({ code: 'auth' }, 401);
-      const acct = await acctOf(a.id); if (!acct || !adminEmails.includes(acct.email)) return reply({ code: 'forbidden' }, 403);
+      const acct = await acctOf(a.id); if (!isAdminAcct(acct)) return reply({ code: 'forbidden' }, 403);
       const b = await body(); if (!b) return reply({ code: 'json' }, 400);
       const r = await editContent(b); if (!r) return reply({ code: 'bad_op' }, 400); if (r === 'too_big') return reply({ code: 'too_big' }, 413);
       return reply({ ok: true, v: r.v });
     }
-    const adminOnly = async () => { if (!a) return null; const acct = await acctOf(a.id); return acct && adminEmails.includes(acct.email) ? acct : null; };
+    const adminOnly = async () => { if (!a) return null; const acct = await acctOf(a.id); return isAdminAcct(acct) ? acct : null; };
     if (path === '/api/admin/stats' && method === 'GET') {
       if (!(await adminOnly())) return reply({ code: a ? 'forbidden' : 'auth' }, a ? 403 : 401);
       const out = { accounts: 0, verified: 0, plans: {}, usage: { adv: 0, chat: 0, ident: 0 }, days: [], aiCostUsd: 0 };

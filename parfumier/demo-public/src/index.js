@@ -279,7 +279,9 @@ export function makeWorker(deps = {}) {
             await track('signup'); if (needVerify) await mailVerify(id, email);
             return reply({ ok: true, token: await session(id), verified: !needVerify });
           }
-          if (!rec || !same(rec.hash, await pbkdf2(password, rec.salt))) return reply({ code: 'credentials' }, 401);
+          // Anti-devinette : au plus 10 échecs par heure sur un même compte, d'où qu'ils viennent.
+          const lf = `lf:${id}:${new Date().toISOString().slice(0, 13)}`, fails = int(await kv.get(lf), 0); if (fails >= 10) return reply({ code: 'rate' }, 429);
+          if (!rec || !same(rec.hash, await pbkdf2(password, rec.salt))) { if (rec) await kv.put(lf, String(fails + 1), { expirationTtl: 7200 }); return reply({ code: 'credentials' }, 401); }
           const d = JSON.parse((await kv.get(`data:${id}`)) || 'null');
           return reply({ ok: true, token: await session(id), data: d ? d.data : null, ts: d ? d.ts : 0 });
         }
