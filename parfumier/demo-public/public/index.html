@@ -3216,7 +3216,7 @@ ${mist}
     let r;
     try { r = await fetch('/api/day', { method: 'POST', headers: headers(), body: JSON.stringify(body) }); } catch (e) { throw { code: 'network' }; }
     const j = await r.json().catch(() => ({}));
-    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : 'quota'); throw { code: 'rate_limited' }; }
+    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : j.code === 'verify' ? 'verify' : 'quota'); throw { code: 'rate_limited' }; }
     if (!r.ok) throw { code: 'server' };
     if (typeof j.left === 'number') left = j.left;
     return j.data;
@@ -3226,7 +3226,7 @@ ${mist}
   async function need(args) {
     let r; try { r = await fetch('/api/need', { method: 'POST', headers: headers(), body: JSON.stringify(args) }); } catch (e) { throw { code: 'network' }; }
     const j = await r.json().catch(() => ({}));
-    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : 'quota'); throw { code: 'rate_limited' }; }
+    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : j.code === 'verify' ? 'verify' : 'quota'); throw { code: 'rate_limited' }; }
     if (!r.ok) throw { code: 'server' };
     if (typeof j.left === 'number') left = j.left;
     return j.data;
@@ -3298,7 +3298,11 @@ ${mist}
     saveProfile: async (p) => { const j = await call('profile', 'PUT', p); ME = j.me; return j; },
     avatar: (file) => squareJpeg(file, 160),
     community: { list: () => api('/api/community'), publish: (rec) => api('/api/community', 'POST', rec), remove: (id) => api('/api/community/' + id, 'DELETE'), like: (id) => api('/api/community/' + id + '/like', 'POST', {}), report: (id) => api('/api/community/' + id + '/report', 'POST', {}) },
-    admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats') },
+    admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats'), support: () => api('/api/admin/support'), supportDone: (id) => api('/api/admin/support/' + id, 'DELETE'), moderation: () => api('/api/admin/moderation'), moderate: (id, action) => api('/api/admin/moderation/' + id, 'POST', { action }),
+      backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
+    verified: () => !ME || ME.verified !== false, resend: () => call('resend', 'POST', {}),
+    support: (message, email, kind) => api('/api/support', 'POST', { message, email, kind }),
+    track: (e) => { if (token) fetch('/api/track', { method: 'POST', headers: authH(), body: JSON.stringify({ e }) }).catch(() => {}); },
     content: () => Promise.race([fetch('/api/content', { cache: 'no-store' }).then((r) => r.json()), new Promise((res) => setTimeout(() => res(null), 2500))]).catch(() => null),
   };
   Object.assign(account, { me: () => ME });
@@ -3312,8 +3316,8 @@ ${mist}
   // ---- Les offres : ce qu'on a, ce qu'on peut avoir, et où entrer sa clé Whop
   const OFFERS = [
     ['free', 'Gratuit', '0 €', ['3 conseils IA par mois', '20 échanges avec le parfumier', 'Collection jusqu\'à 12 parfums', '2 inspirations privées']],
-    ['premium', 'Premium', '5,99 € par mois', ['Ou 49 € par an', '60 conseils IA par mois', '300 échanges avec le parfumier', 'Collection illimitée', 'Inspirations privées et publiques']],
-    ['founder', 'Membre fondateur', '79 € à vie', ['Un seul paiement, pour toujours', 'Tout le Premium, sans abonnement', 'Limité aux 100 premiers membres']],
+    ['premium', 'Premium', '5,99 € TTC par mois', ['Ou 49 € TTC par an', '40 conseils IA par mois', '200 échanges avec le parfumier', 'Collection illimitée', 'Inspirations privées et publiques']],
+    ['founder', 'Membre fondateur', '99 € TTC à vie', ['Un seul paiement, pour toujours', 'Tout le Premium, sans abonnement', 'Limité aux 50 premiers membres']],
   ];
   function plans(reason) {
     const H = window.SillageHooks; if (!H) return;
@@ -3331,8 +3335,26 @@ ${mist}
       catch (er) { pn.querySelector('#lic-go').disabled = false; msg.textContent = { license: 'Cette clé n\'existe pas. Vérifie-la.', inactive: 'Cet abonnement n\'est plus actif.', product: 'Cette clé ne correspond à aucune offre Sillage.', taken: 'Cette clé est déjà utilisée par un autre compte.', rate: 'Trop d\'essais, réessaie dans une heure.', whop_net: 'Whop ne répond pas, réessaie dans un instant.', whop_off: 'L\'activation n\'est pas encore ouverte.' }[er.code] || 'Activation impossible pour l\'instant.'; }
     };
   }
+  // Adresse non confirmée : les conseils IA attendent le clic sur le lien reçu par courriel.
+  function verifySheet() {
+    const H = window.SillageHooks; if (!H) return;
+    const pn = H.openSheet(`<div><h2>Confirme ton adresse</h2><p style="color:var(--muted);margin-top:8px">Pour activer les conseils IA, ouvre le lien que je t'ai envoyé par courriel${acctEmail ? ' à ' + esc(acctEmail) : ''}. Pense à regarder tes courriers indésirables. Le reste de l'appli reste utilisable.</p></div>
+      <div class="row"><button class="cta" id="vf-re"><span>Renvoyer le lien</span></button><button class="ghost" id="vf-ok">J'ai confirmé</button></div><p class="mono" id="vf-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p>`);
+    const msg = pn.querySelector('#vf-msg');
+    pn.querySelector('#vf-re').onclick = async () => { msg.textContent = '…'; try { const j = await call('resend', 'POST', {}); msg.textContent = j.verified ? 'Ton adresse est déjà confirmée.' : j.sent ? 'Le lien est reparti. Il peut mettre une minute.' : 'L\'envoi de courriel n\'est pas encore actif. Écris-moi depuis ton profil, je le fais à la main.'; } catch (e) { msg.textContent = e.code === 'rate' ? 'Trop d\'envois, réessaie dans une heure.' : 'Échec, réessaie.'; } };
+    pn.querySelector('#vf-ok').onclick = async () => { msg.textContent = '…'; try { await loadMe(); } catch (e) { /* hors ligne */ } if (ME && ME.verified !== false) { await refresh(); H.closeSheet(); if (H.refresh) H.refresh(); } else msg.textContent = 'Pas encore confirmé. Ouvre le lien du courriel, puis reviens.'; };
+  }
+  // Lien reçu par courriel : /?verify=… confirme l'adresse puis nettoie l'adresse de la page.
+  async function checkVerifyLink() {
+    let tk = null; try { tk = new URLSearchParams(location.search).get('verify'); } catch (e) { /* ok */ }
+    if (!tk || !/^[a-f0-9]{64}$/.test(tk)) return;
+    try { history.replaceState(null, '', location.pathname); } catch (e) { /* ok */ }
+    let ok = false; try { const r = await fetch('/api/account/verify', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ token: tk }) }); ok = r.ok; } catch (e) { /* hors ligne */ }
+    setTimeout(() => { const H = window.SillageHooks; if (!H) return; if (ok && token) refresh(); const pn = H.openSheet(`<div><h2>${ok ? 'Adresse confirmée' : 'Lien invalide'}</h2><p style="color:var(--muted);margin-top:8px">${ok ? 'Tes conseils IA sont activés.' : 'Ce lien a déjà servi ou a expiré. Connecte-toi, puis demande un nouveau lien depuis ton profil.'}</p></div><div class="row"><button class="cta" id="vl-ok"><span>Continuer</span></button></div>`); pn.querySelector('#vl-ok').onclick = H.closeSheet; }, 1500);
+  }
   function upsell(reason) {
     const H = window.SillageHooks; if (!H) return;
+    if (reason === 'verify') return verifySheet();
     if (token && ['quota', 'locked', 'busy', 'plan', 'cta'].includes(reason)) return plans(reason);
     const [title, text] = TEXT[reason] || TEXT.quota;
     const pn = H.openSheet(`<div><h2>${esc(title)}</h2><p style="color:var(--muted);margin-top:8px">${esc(text)}</p></div>
@@ -3371,7 +3393,7 @@ ${mist}
       let r; try { r = await fetch('/api/chat', { method: 'POST', headers: authH(), body: JSON.stringify({ prompt: String(prompt).slice(0, 12000) }) }); } catch (e) { throw { code: 'network' }; }
       const j = await r.json().catch(() => ({}));
       if (r.status === 401) { setSession(null); try { window.dispatchEvent(new Event('sillage:expired')); } catch (e) { /* ok */ } throw { code: 'auth' }; }
-      if (r.status === 429) { if (ME) ME.usage.chat = ME.limits.chat; upsell('quota'); throw { code: 'rate_limited' }; }
+      if (r.status === 429) { if (j.code !== 'verify' && ME) ME.usage.chat = ME.limits.chat; upsell(j.code === 'verify' ? 'verify' : 'quota'); throw { code: 'rate_limited' }; }
       if (!r.ok) throw { code: 'server' };
       if (ME) ME.usage.chat += 1;
       return j.data;
@@ -3381,6 +3403,7 @@ ${mist}
   window.claude = { use: async (name) => (name === 'sample' ? (token ? chatSample : locked) : null) };
   window.SillageDemo = { plan: sub, plans, account, day, need, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
   refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
+  checkVerifyLink();
 })();
 
 </script>
@@ -5059,7 +5082,8 @@ ${mist}
     if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if (window.SillageProduct) window.SillageProduct.profile(pn);
-    mountTaste($('#tedit', pn), ['notes', 'vibes', 'occ']);
+    mountTaste($('#tedit', pn), ['vibes', 'occ']);
+    { const nc = document.createElement('div'); nc.className = 'card'; nc.style.cssText = 'display:grid;gap:10px'; const nl = [...(S.settings.liked || [])].length, na = [...(S.settings.avoid || [])].length; nc.innerHTML = `<b>Mes notes</b><p class="soft small" style="margin:0">${nl} aimée${nl > 1 ? 's' : ''}, ${na} fuie${na > 1 ? 's' : ''}. Elles sont rangées par famille.</p><button class="ghost" id="pnotes" type="button">Ouvrir mes notes</button>`; const ta = $('#tedit', pn); ta.parentNode.insertBefore(nc, ta); $('#pnotes', nc).onclick = openNotes; }
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
     $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; S.wishlist = []; save(); closeSheet(); render(); };
@@ -5912,12 +5936,29 @@ ${mist}
     const s = S.settings, cust = [...(s.liked || []), ...(s.avoid || [])].filter((n) => !NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n))));
     const chip = (n) => { const st = noteSt(n); return `<button type="button" class="chip nt ${st > 0 ? 'on' : st < 0 ? 'no' : ''}" data-nt="${esc(n)}" aria-pressed="${st !== 0}">${esc(n)}</button>`; };
     let h = `<div class="card tsum"><p class="mono">Ton profil olfactif</p><p class="rd" data-tsum>${esc(olfSummary())}</p><div class="tmeter"><i data-tmi></i></div><p class="mono" data-tml style="text-transform:none;letter-spacing:0"></p></div>`;
+    const gp = parts.filter((x) => /^ng\d$/.test(x)).map((x) => NOTE_GROUPS[+x[2]]);
+    if (gp.length) h += `<div class="tpart"><p class="mono">${esc(gp[0][0])}</p><p class="soft">Touche une note une fois pour dire que tu l'adores, deux fois pour dire que tu la fuis, trois fois pour l'effacer.</p><div class="chips">${gp[0][2].map(chip).join('')}</div></div>`;
+    if (parts.includes('ngx')) h += `<div class="tpart"><p class="mono">Une autre note</p><p class="soft">Cherche une note qui n'est dans aucune famille, puis touche-la pour la fuir ou l'effacer.</p><div class="acwrap"><input type="text" id="tnadd" placeholder="figue, thé, rhum, iris…" autocomplete="off" aria-label="Ajouter une note"><div class="aclist" id="tnac" hidden></div></div><div class="chips" data-tcust>${cust.map(chip).join('')}</div></div>`;
     if (parts.includes('notes')) h += `<div class="tpart"><p class="mono">Les notes</p><p class="soft">Touche une note une fois pour dire que tu l'adores, deux fois pour dire que tu la fuis, trois fois pour l'effacer.</p>
       ${NOTE_GROUPS.map((g) => `<p class="mono tg">${esc(g[0])}</p><div class="chips">${g[2].map(chip).join('')}</div>`).join('')}
       <p class="mono tg">Une autre note</p><div class="acwrap"><input type="text" id="tnadd" placeholder="figue, thé, rhum, iris…" autocomplete="off" aria-label="Ajouter une note"><div class="aclist" id="tnac" hidden></div></div><div class="chips" data-tcust>${cust.map(chip).join('')}</div></div>`;
     if (parts.includes('vibes')) h += `<div class="tpart"><p class="mono">Ton ambiance</p><p class="soft">Choisis tout ce qui te ressemble.</p>${pillSet('vibes', VIBE_L, true, 'data-vb')}<p class="mono tg">Sa présence</p>${pillSet('power', POWER_L, false, 'data-pw')}</div>`;
     if (parts.includes('occ')) h += `<div class="tpart"><p class="mono">Quand tu le portes</p>${pillSet('occ', OCC_L, true, 'data-oc')}<p class="mono tg">Budget par flacon <b data-bval>${capLabel(s.budget)}</b></p><input type="range" id="tbud" min="0" max="${CAPS.length - 1}" step="1" value="${capIdx(s.budget)}" aria-label="Budget par flacon"></div>`;
     return h;
+  }
+  // Mes notes : une page par famille de notes, chacune s'ouvre depuis la liste.
+  function openNotes() {
+    const cnt = (g) => { const l = g[2].filter((n) => noteSt(n) > 0).length, a = g[2].filter((n) => noteSt(n) < 0).length; return (l || a) ? `${l} aimée${l > 1 ? 's' : ''}${a ? `, ${a} fuie${a > 1 ? 's' : ''}` : ''}` : 'Rien de choisi'; };
+    const cust = [...(S.settings.liked || []), ...(S.settings.avoid || [])].filter((n) => !NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n)))).length;
+    const pn = openSheet(`<div><h2>Mes notes</h2><p style="color:var(--muted);margin-top:6px">Choisis une famille. Dis ce que tu adores et ce que tu fuis, je m'en sers tout de suite.</p></div>
+      <div class="mylist">${NOTE_GROUPS.map((g, i) => `<button type="button" class="myc" data-ng="${i}"><b>${esc(g[0])}</b><small>${cnt(g)}</small></button>`).join('')}<button type="button" class="myc" data-ng="x"><b>Une autre note</b><small>${cust ? cust + ' ajoutée' + (cust > 1 ? 's' : '') : 'Chercher une note précise'}</small></button></div>
+      <div class="row"><button class="ghost" id="nclose">Fermer</button></div>`);
+    $('#nclose', pn).onclick = closeSheet;
+    $$('[data-ng]', pn).forEach((b) => (b.onclick = () => openNoteGroup(b.dataset.ng)));
+  }
+  function openNoteGroup(k) {
+    const pn = openSheet(`<div class="row"><button class="ghost" id="nback">‹ Mes notes</button></div><div id="ntp" class="tprof"></div>`);
+    mountTaste($('#ntp', pn), [k === 'x' ? 'ngx' : 'ng' + k]); $('#nback', pn).onclick = openNotes;
   }
   function mountTaste(root, parts) {
     root.innerHTML = tasteHtml(parts);
@@ -6066,7 +6107,7 @@ ${mist}
       if ($('#vSkip', root)) $('#vSkip', root).onclick = () => done(true);
     };
     const drawEnd = () => {
-      const pr = applyVoy(R), th = sitThemes(4), ax = pr.axisV.map((v, i) => [E.AXN[i], v]).filter(([a]) => !['originalite', 'clivage', 'formalite', 'evolution', 'densite'].includes(a));
+      const pr = applyVoy(R); try { const PD = window.SillageDemo; if (PD && PD.plan.track) PD.plan.track('voyage'); } catch (e) { /* mesure facultative */ } const th = sitThemes(4), ax = pr.axisV.map((v, i) => [E.AXN[i], v]).filter(([a]) => !['originalite', 'clivage', 'formalite', 'evolution', 'densite'].includes(a));
       const pos = ax.filter(([, v]) => v > .5).sort((x, y) => y[1] - x[1]).slice(0, 4).map(([a]) => E.AXL[a]), neg = ax.filter(([, v]) => v < -.5).sort((x, y) => x[1] - y[1]).slice(0, 3).map(([a]) => E.AXL[a]);
       const dn = pr.axisV[AXI('densite')], tone = dn > .7 ? 'des parfums qui se remarquent' : dn < -.5 ? 'des parfums discrets, près de la peau' : 'une présence mesurée';
       let recs = []; try { recs = tipsData().recs.slice(0, 3); } catch (e) { recs = []; }
@@ -6220,12 +6261,12 @@ ${mist}
 </script>
 <script>
 // Sillage en ligne : offre et profil, inspirations privées et communauté, installation sur l'écran d'accueil, éditeur public.
-// Chargé après l'appli, seulement dans la version connectée au serveur (jamais dans la version claude.ai).
+// Chargé après l'appli. Version publique : le serveur (SillageDemo). Version claude.ai : la base de l'artefact (SillageBackend, artifact-backend.js).
 (function () {
   'use strict';
-  const D = window.SillageDemo, I = window.SillageInternals;
+  const D = window.SillageDemo || window.SillageBackend, I = window.SillageInternals;
   if (!D || !I) return;
-  const { esc, $, $$, E } = I, P = D.plan, S = () => I.S();
+  const { esc, $, $$, E } = I, P = D.plan, S = () => I.S(), ART = !!P.artifact;
   const pk = (h, n) => E.norm(h) + '|' + E.norm(n);
   const list3 = (a) => (a.length > 1 ? a.slice(0, -1).join(', ') + ' et ' + a[a.length - 1] : a[0] || '');
   const entryOf = (h, n) => I.dbList().find((e) => !e.ed && E.norm(e.name) === E.norm(n) && (!h || E.norm(e.house) === E.norm(h))) || null;
@@ -6296,22 +6337,48 @@ ${mist}
         <div class="avrow"><button type="button" class="avbtn" id="pf-av" aria-label="Changer ma photo">${m.profile.avatar ? `<img src="${esc(m.profile.avatar)}" alt="">` : '<span>＋</span>'}</button><div style="display:grid;gap:8px;flex:1"><input type="text" id="pf-ps" maxlength="24" placeholder="Mon pseudo (visible dans la communauté)" value="${esc(m.profile.pseudo)}" aria-label="Mon pseudo"><input type="text" id="pf-bio" maxlength="140" placeholder="Une phrase sur ton goût" value="${esc(m.profile.bio)}" aria-label="Ma phrase"></div></div>
         <input type="file" id="pf-file" accept="image/*" hidden>
         <div class="row"><button class="cta" id="pf-save"><span>Enregistrer</span></button>${m.profile.avatar ? '<button class="ghost" id="pf-rm">Retirer la photo</button>' : ''}</div><p class="mono" id="pf-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p></div>
-        <div class="card" style="display:grid;gap:12px"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>Mon offre</b><span class="mono" style="text-transform:none;letter-spacing:0">${esc(m.label)}${m.expired ? ' · expirée' : ''}</span></div>
+        ${ART ? '' : `<div class="card" style="display:grid;gap:12px"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>Mon offre</b><span class="mono" style="text-transform:none;letter-spacing:0">${esc(m.label)}${m.expired ? ' · expirée' : ''}</span></div>
           ${bar('Conseils IA ce mois-ci', m.usage.adv, m.limits.adv)}${bar('Échanges avec le parfumier', m.usage.chat, m.limits.chat)}
           <div class="row"><button class="ghost" id="pf-plans">${paid || m.admin ? 'Voir les offres' : 'Passer à Premium'}</button>${paid && P.cfg.whopHub ? `<a class="ghost" style="display:inline-grid;place-items:center" href="${esc(P.cfg.whopHub)}" target="_blank" rel="noopener noreferrer">Gérer mon abonnement</a>` : ''}</div>
           <button class="ghost" id="pf-inst" type="button">Installer sur mon écran d'accueil</button></div>
+        `}
         ${m.admin ? '<div class="card" style="display:grid;gap:8px;border-color:var(--wine)"><b>Mode éditeur</b><p class="soft small" style="margin:0">Tu es seul à voir ceci. Dans chaque fiche parfum et chaque inspiration, des outils te laissent modifier prix, textes, masquage et classements : le changement est public tout de suite.</p><button class="ghost" id="pf-stats" type="button">Voir les chiffres</button><p class="mono" id="pf-st" style="text-transform:none;letter-spacing:0;white-space:pre-line"></p></div>' : ''}`;
       const msg = $('#pf-msg', card), fileIn = $('#pf-file', card);
       $('#pf-av', card).onclick = () => fileIn.click();
       fileIn.onchange = async () => { const f = fileIn.files && fileIn.files[0]; if (!f) return; msg.textContent = '…'; try { const url = await P.avatar(f); await P.saveProfile({ avatar: url }); paintAvatar(); draw(); } catch (e) { msg.textContent = 'Cette photo ne passe pas. Essaie-en une autre.'; } };
       if ($('#pf-rm', card)) $('#pf-rm', card).onclick = async () => { try { await P.saveProfile({ avatar: '' }); paintAvatar(); draw(); } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
       $('#pf-save', card).onclick = async () => { msg.textContent = '…'; try { await P.saveProfile({ pseudo: $('#pf-ps', card).value.trim(), bio: $('#pf-bio', card).value.trim() }); msg.textContent = 'Enregistré ✓'; } catch (e) { msg.textContent = e.code === 'pseudo' ? 'Pseudo : 2 à 24 lettres, chiffres, espaces ou . _ -' : 'Échec, réessaie.'; } };
-      $('#pf-plans', card).onclick = () => { I.closeSheet(); D.plans(''); };
-      $('#pf-inst', card).onclick = () => { I.closeSheet(); installTip(true); };
-      if ($('#pf-stats', card)) $('#pf-stats', card).onclick = async () => { const el = $('#pf-st', card); el.textContent = '…'; try { const s = await P.admin.stats(); el.textContent = `${s.accounts} comptes\nOffres : ${Object.entries(s.plans).map(([k, v]) => k + ' ' + v).join(', ') || 'aucune'}\nCe mois-ci : ${s.usage.adv} conseils IA, ${s.usage.chat} échanges, ${s.usage.ident} analyses`; } catch (e) { el.textContent = 'Indisponible.'; } };
+      if ($('#pf-plans', card)) $('#pf-plans', card).onclick = () => { I.closeSheet(); D.plans(''); };
+      if ($('#pf-inst', card)) $('#pf-inst', card).onclick = () => { I.closeSheet(); installTip(true); };
+      if ($('#pf-stats', card)) $('#pf-stats', card).onclick = async () => { const el = $('#pf-st', card); el.textContent = '…'; try { const s = await P.admin.stats(); el.textContent = s.text || `${s.accounts} comptes (${s.verified} confirmés)\nOffres : ${Object.entries(s.plans).map(([k, v]) => k + ' ' + v).join(', ') || 'aucune'}\nCe mois-ci : ${s.usage.adv} conseils IA, ${s.usage.chat} échanges, ${s.usage.ident} analyses\nCoût IA estimé : ${s.aiCostUsd} $\n\n14 derniers jours (inscrits, confirmés, activés, voyages)\n${(s.days || []).map((d) => `${d.d.slice(5)}  ${d.signup}  ${d.verify}  ${d.activate}  ${d.voyage}`).join('\n')}`; } catch (e) { el.textContent = 'Indisponible.'; } };
     };
-    anchor.parentNode.insertBefore(card, anchor); draw();
-    P.load().then(draw).catch(() => draw());
+    anchor.parentNode.insertBefore(card, anchor); let ex = null; const drawX = () => { draw(); if (ART || !P.me()) return; if (ex) ex.remove(); extras(card, P.me()); ex = card.nextSibling; };
+    drawX();
+    P.load().then(drawX).catch(() => { if (ART && !P.me()) card.innerHTML = '<div class="card"><b>Mon profil public</b><p class="soft small" style="margin:0">Le profil et la communauté ont besoin de la base de l\'artefact. Ouvre l\'artefact depuis ton compte claude.ai connecté.</p></div>'; else draw(); });
+  }
+
+
+  // ---------- Version publique : confirmation d'adresse, support, outils de l'éditeur ----------
+  const BOX = 'text-transform:none;letter-spacing:0;white-space:pre-line;min-height:16px';
+  function extras(card, m) {
+    const wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:14px;margin-top:14px'; card.after(wrap);
+    if (m.verified === false) {
+      const b = document.createElement('div'); b.className = 'card'; b.style.cssText = 'display:grid;gap:8px;border-color:var(--wine)';
+      b.innerHTML = '<b>Confirme ton adresse</b><p class="soft small" style="margin:0">Les conseils IA sont en attente : ouvre le lien reçu par courriel (regarde aussi les indésirables).</p><div class="row"><button class="ghost" id="ex-re" type="button">Renvoyer le lien</button></div><p class="mono" id="ex-rm" style="' + BOX + '"></p>';
+      wrap.appendChild(b); $('#ex-re', b).onclick = async () => { const el = $('#ex-rm', b); el.textContent = '…'; try { const j = await D.plan.resend(); el.textContent = j.verified ? 'Déjà confirmée.' : j.sent ? 'Le lien est reparti.' : 'L\'envoi de courriel n\'est pas encore actif, écris-moi ci-dessous.'; } catch (e) { el.textContent = e.code === 'rate' ? 'Trop d\'envois, réessaie plus tard.' : 'Échec, réessaie.'; } };
+    }
+    const sp = document.createElement('div'); sp.className = 'card'; sp.style.cssText = 'display:grid;gap:10px';
+    sp.innerHTML = '<b>Une question, un souci ?</b><p class="soft small" style="margin:0">Écris-moi ici, je te réponds par courriel.</p><textarea id="sp-t" rows="3" maxlength="1200" placeholder="Ton message" aria-label="Ton message"></textarea><div class="row"><button class="ghost" id="sp-go" type="button">Envoyer</button></div><p class="mono" id="sp-m" style="' + BOX + '"></p>';
+    wrap.appendChild(sp);
+    $('#sp-go', sp).onclick = async () => { const el = $('#sp-m', sp), t = $('#sp-t', sp).value.trim(); if (t.length < 5) { el.textContent = 'Écris au moins une phrase.'; return; } el.textContent = '…'; try { await D.plan.support(t, '', 'question'); $('#sp-t', sp).value = ''; el.textContent = 'Message envoyé, merci.'; } catch (e) { el.textContent = e.code === 'rate' ? 'Trop de messages, réessaie plus tard.' : 'Échec, réessaie.'; } };
+    if (!m.admin) return;
+    const ed = document.createElement('div'); ed.className = 'card'; ed.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)';
+    ed.innerHTML = '<b>Suivi de l\'éditeur</b><div class="row"><button class="ghost" id="ed-su" type="button">Messages reçus</button><button class="ghost" id="ed-mo" type="button">Inspirations signalées</button><button class="ghost" id="ed-bk" type="button">Télécharger une sauvegarde</button></div><div id="ed-out" style="display:grid;gap:8px"></div>';
+    wrap.appendChild(ed); const out = $('#ed-out', ed);
+    const fail = (e) => { out.textContent = e.code === 'forbidden' ? 'Réservé à l\'éditeur.' : 'Échec, réessaie.'; };
+    $('#ed-su', ed).onclick = async () => { out.textContent = '…'; try { const j = await D.plan.admin.support(); out.innerHTML = j.items.length ? j.items.map((x) => `<div class="card" style="display:grid;gap:6px"><small class="mono" style="text-transform:none;letter-spacing:0">${esc(x.email)} · ${new Date(x.ts).toLocaleString('fr-FR')}</small><span style="white-space:pre-line">${esc(x.message)}</span><button class="ghost" data-sd="${esc(x.id)}" type="button">Traité, supprimer</button></div>`).join('') : '<p class="soft small">Aucun message.</p>'; $$('[data-sd]', out).forEach((b) => (b.onclick = async () => { try { await D.plan.admin.supportDone(b.dataset.sd); b.closest('.card').remove(); } catch (e) { fail(e); } })); } catch (e) { fail(e); } };
+    $('#ed-mo', ed).onclick = async () => { out.textContent = '…'; try { const j = await D.plan.admin.moderation(); out.innerHTML = j.items.length ? j.items.map((x) => `<div class="card" style="display:grid;gap:6px"><b>${esc(x.title)}</b><small class="mono" style="text-transform:none;letter-spacing:0">par ${esc(x.pseudo)} · ${x.reports} signalement${x.reports > 1 ? 's' : ''}${x.hidden ? ' · masquée' : ''}</small>${x.desc ? `<span>${esc(x.desc)}</span>` : ''}<div class="row"><button class="ghost" data-mr="${esc(x.id)}" type="button">Rétablir</button><button class="ghost danger" data-md="${esc(x.id)}" type="button">Supprimer</button></div></div>`).join('') : '<p class="soft small">Aucune inspiration signalée.</p>'; const act = (attr, a) => $$('[' + attr + ']', out).forEach((b) => (b.onclick = async () => { try { await D.plan.admin.moderate(b.getAttribute(attr), a); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-mr', 'restore'); act('data-md', 'delete'); } catch (e) { fail(e); } };
+    $('#ed-bk', ed).onclick = async () => { out.textContent = '…'; try { const txt = await D.plan.admin.backup(), a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'application/json' })); a.download = 'sillage-sauvegarde-' + new Date().toISOString().slice(0, 10) + '.json'; document.body.appendChild(a); a.click(); a.remove(); out.textContent = 'Sauvegarde téléchargée. Garde-la hors de ton téléphone.'; } catch (e) { fail(e); } };
   }
 
   // ---------- Inspirations : les miennes (privées par défaut) et celles de la communauté ----------
@@ -6353,8 +6420,9 @@ ${mist}
         if (ins.cid) { await P.community.remove(ins.cid); ins.cid = ''; I.save(); showAfter(); return; }
         if (!m || !m.limits.publish) return D.plans('plan');
         if (!m.profile.pseudo) { msg.textContent = 'Choisis d\'abord un pseudo dans ton profil, il sera affiché avec ta liste.'; return; }
+        if (!$('#si-pub', pn).dataset.ok) { $('#si-pub', pn).dataset.ok = 1; msg.textContent = 'Les membres verront ta liste et ton pseudo. Pas de lien, d\'adresse ni d\'insulte : sinon elle est retirée. Touche encore le bouton pour confirmer.'; return; }
         msg.textContent = '…'; const j = await P.community.publish({ id: '', title: ins.title, desc: ins.desc, items: ins.items }); ins.cid = j.id; I.save(); showAfter();
-      } catch (e) { msg.textContent = { plan: 'La publication est réservée à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', limit: 'Tu as déjà 10 inspirations publiques.', rate: 'Trop de publications, réessaie plus tard.', network: 'Pas de connexion.' }[e.code] || 'Échec, réessaie.'; }
+      } catch (e) { msg.textContent = { plan: 'La publication est réservée à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', limit: 'Tu as déjà 10 inspirations publiques.', rate: 'Trop de publications, réessaie plus tard.', rules: 'Ni lien, ni adresse, ni insulte dans le titre ou la description.', network: 'Pas de connexion.' }[e.code] || 'Échec, réessaie.'; }
     };
     const showAfter = () => { I.closeSheet(); if (I.PL.sub === 'mine') I.render(true); showInsp(ins); };
     $('#si-del', pn).onclick = async (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer la suppression'; return; } if (ins.cid) { try { await P.community.remove(ins.cid); } catch (e) { /* déjà retirée */ } } const L = mine(); L.splice(L.indexOf(ins), 1); I.save(); I.closeSheet(); I.render(true); };
@@ -6450,10 +6518,11 @@ ${mist}
   }
   function onLogin() { paintAvatar(); scheduleInstall(); }
   window.SillageProduct = { subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
-  try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
+  if (!ART) try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
   P.content().then(applyContent).catch(() => {});
-  if (D.account.loggedIn()) { P.load().then(() => { paintAvatar(); }).catch(() => {}); scheduleInstall(); }
-  try { const tk = new URLSearchParams(location.search).get('reset'); if (tk && /^[a-f0-9]{64}$/.test(tk) && !D.account.loggedIn()) setTimeout(() => { if (!$('#acct')) I.showAccount('force', { reset: tk }); }, 1200); } catch (e) { /* ok */ }
+  if (ART) P.load().then(() => paintAvatar()).catch(() => {});
+  else if (D.account.loggedIn()) { P.load().then(() => { paintAvatar(); }).catch(() => {}); scheduleInstall(); }
+  if (!ART) try { const tk = new URLSearchParams(location.search).get('reset'); if (tk && /^[a-f0-9]{64}$/.test(tk) && !D.account.loggedIn()) setTimeout(() => { if (!$('#acct')) I.showAccount('force', { reset: tk }); }, 1200); } catch (e) { /* ok */ }
 })();
 
 </script>

@@ -53,7 +53,7 @@ ok(await u.pg.locator('#profileBtn img.hav').count() === 1, 'profil : la photo r
 await u.pg.keyboard.press('Escape'); await u.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; });
 // 2. offres : la clé Whop active Premium
 await u.pg.evaluate(() => window.SillageDemo.plans('quota')); await u.pg.waitForSelector('#lic-k'); await u.pg.screenshot({ path: OUT + '/p2_offres.png' });
-ok(/Gratuit/.test(await u.pg.locator('#sheet').innerText()) && /5,99/.test(await u.pg.locator('#sheet').innerText()) && /79 €/.test(await u.pg.locator('#sheet').innerText()), 'offres : Gratuit, Premium 5,99 € et fondateur 79 € affichés');
+ok(/Gratuit/.test(await u.pg.locator('#sheet').innerText()) && /5,99/.test(await u.pg.locator('#sheet').innerText()) && /99 €/.test(await u.pg.locator('#sheet').innerText()), 'offres : Gratuit, Premium 5,99 € et fondateur 99 € affichés');
 await u.pg.fill('#lic-k', 'LIC_FAUX_1234'); await u.pg.click('#lic-go'); await u.pg.waitForFunction(() => /n'existe pas/.test(document.querySelector('#lic-msg').textContent)); ok(true, 'offres : une fausse clé est refusée avec un message clair');
 await u.pg.fill('#lic-k', 'LIC_E2E_OK'); await u.pg.click('#lic-go'); await u.pg.waitForFunction(() => /C'est activé/.test(document.querySelector('#lic-msg').textContent), null, { timeout: 8000 });
 ok((await (await fetch(base + '/api/account/me', { headers: { authorization: 'Bearer ' + u.tok } })).json()).plan === 'premium', 'offres : la clé Whop active Premium');
@@ -67,7 +67,7 @@ await u.pg.fill('#ei-t', 'Mes boisés du dimanche'); await u.pg.fill('#ei-d', 'P
 for (const q of ['Sauvage', 'Santal 33']) { await u.pg.fill('#ei-q', q); await u.pg.waitForSelector('#ei-res .vrh'); await u.pg.locator('#ei-res .vrh').first().click(); }
 await u.pg.click('#ei-save'); await u.pg.waitForSelector('#si-pub'); await u.pg.screenshot({ path: OUT + '/p4_insp.png' }); ok(/privée/i.test(await u.pg.locator('#sheet').innerText()), 'inspirations : une nouvelle inspiration est privée par défaut');
 ok((await (await fetch(base + '/api/community', { headers: { authorization: 'Bearer ' + u.tok } })).json()).items.length === 0, 'inspirations : privée = absente de la communauté');
-await u.pg.click('#si-pub'); await u.pg.waitForFunction(() => /publique/i.test(document.querySelector('#sheet').innerText), null, { timeout: 8000 });
+await u.pg.click('#si-pub'); ok(/Touche encore/i.test(await u.pg.locator('#si-msg').innerText()), 'publier : les règles s\'affichent avant la confirmation'); await u.pg.click('#si-pub'); await u.pg.waitForFunction(() => /publique/i.test(document.querySelector('#sheet').innerText), null, { timeout: 8000 });
 const comm = (await (await fetch(base + '/api/community', { headers: { authorization: 'Bearer ' + u.tok } })).json()).items; ok(comm.length === 1 && comm[0].pseudo === 'Léa du 37' && comm[0].items.length === 2, 'inspirations : publique = visible dans la communauté, avec son pseudo');
 await u.pg.evaluate(() => { document.getElementById('sheet').hidden = true; document.getElementById('sheet').innerHTML = ''; document.body.style.overflow = ''; });
 const v = await open('visiteur@e2e.test'); await v.pg.click('[data-tab=play]'); await v.pg.waitForSelector('.plsubtabs'); await v.pg.click('[data-sub=comm]'); await v.pg.waitForSelector('.myc'); await v.pg.screenshot({ path: OUT + '/p5_comm.png' });

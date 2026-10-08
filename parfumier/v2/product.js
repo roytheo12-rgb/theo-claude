@@ -1,10 +1,10 @@
 // Sillage en ligne : offre et profil, inspirations privées et communauté, installation sur l'écran d'accueil, éditeur public.
-// Chargé après l'appli, seulement dans la version connectée au serveur (jamais dans la version claude.ai).
+// Chargé après l'appli. Version publique : le serveur (SillageDemo). Version claude.ai : la base de l'artefact (SillageBackend, artifact-backend.js).
 (function () {
   'use strict';
-  const D = window.SillageDemo, I = window.SillageInternals;
+  const D = window.SillageDemo || window.SillageBackend, I = window.SillageInternals;
   if (!D || !I) return;
-  const { esc, $, $$, E } = I, P = D.plan, S = () => I.S();
+  const { esc, $, $$, E } = I, P = D.plan, S = () => I.S(), ART = !!P.artifact;
   const pk = (h, n) => E.norm(h) + '|' + E.norm(n);
   const list3 = (a) => (a.length > 1 ? a.slice(0, -1).join(', ') + ' et ' + a[a.length - 1] : a[0] || '');
   const entryOf = (h, n) => I.dbList().find((e) => !e.ed && E.norm(e.name) === E.norm(n) && (!h || E.norm(e.house) === E.norm(h))) || null;
@@ -75,22 +75,48 @@
         <div class="avrow"><button type="button" class="avbtn" id="pf-av" aria-label="Changer ma photo">${m.profile.avatar ? `<img src="${esc(m.profile.avatar)}" alt="">` : '<span>＋</span>'}</button><div style="display:grid;gap:8px;flex:1"><input type="text" id="pf-ps" maxlength="24" placeholder="Mon pseudo (visible dans la communauté)" value="${esc(m.profile.pseudo)}" aria-label="Mon pseudo"><input type="text" id="pf-bio" maxlength="140" placeholder="Une phrase sur ton goût" value="${esc(m.profile.bio)}" aria-label="Ma phrase"></div></div>
         <input type="file" id="pf-file" accept="image/*" hidden>
         <div class="row"><button class="cta" id="pf-save"><span>Enregistrer</span></button>${m.profile.avatar ? '<button class="ghost" id="pf-rm">Retirer la photo</button>' : ''}</div><p class="mono" id="pf-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p></div>
-        <div class="card" style="display:grid;gap:12px"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>Mon offre</b><span class="mono" style="text-transform:none;letter-spacing:0">${esc(m.label)}${m.expired ? ' · expirée' : ''}</span></div>
+        ${ART ? '' : `<div class="card" style="display:grid;gap:12px"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>Mon offre</b><span class="mono" style="text-transform:none;letter-spacing:0">${esc(m.label)}${m.expired ? ' · expirée' : ''}</span></div>
           ${bar('Conseils IA ce mois-ci', m.usage.adv, m.limits.adv)}${bar('Échanges avec le parfumier', m.usage.chat, m.limits.chat)}
           <div class="row"><button class="ghost" id="pf-plans">${paid || m.admin ? 'Voir les offres' : 'Passer à Premium'}</button>${paid && P.cfg.whopHub ? `<a class="ghost" style="display:inline-grid;place-items:center" href="${esc(P.cfg.whopHub)}" target="_blank" rel="noopener noreferrer">Gérer mon abonnement</a>` : ''}</div>
           <button class="ghost" id="pf-inst" type="button">Installer sur mon écran d'accueil</button></div>
+        `}
         ${m.admin ? '<div class="card" style="display:grid;gap:8px;border-color:var(--wine)"><b>Mode éditeur</b><p class="soft small" style="margin:0">Tu es seul à voir ceci. Dans chaque fiche parfum et chaque inspiration, des outils te laissent modifier prix, textes, masquage et classements : le changement est public tout de suite.</p><button class="ghost" id="pf-stats" type="button">Voir les chiffres</button><p class="mono" id="pf-st" style="text-transform:none;letter-spacing:0;white-space:pre-line"></p></div>' : ''}`;
       const msg = $('#pf-msg', card), fileIn = $('#pf-file', card);
       $('#pf-av', card).onclick = () => fileIn.click();
       fileIn.onchange = async () => { const f = fileIn.files && fileIn.files[0]; if (!f) return; msg.textContent = '…'; try { const url = await P.avatar(f); await P.saveProfile({ avatar: url }); paintAvatar(); draw(); } catch (e) { msg.textContent = 'Cette photo ne passe pas. Essaie-en une autre.'; } };
       if ($('#pf-rm', card)) $('#pf-rm', card).onclick = async () => { try { await P.saveProfile({ avatar: '' }); paintAvatar(); draw(); } catch (e) { msg.textContent = 'Échec, réessaie.'; } };
       $('#pf-save', card).onclick = async () => { msg.textContent = '…'; try { await P.saveProfile({ pseudo: $('#pf-ps', card).value.trim(), bio: $('#pf-bio', card).value.trim() }); msg.textContent = 'Enregistré ✓'; } catch (e) { msg.textContent = e.code === 'pseudo' ? 'Pseudo : 2 à 24 lettres, chiffres, espaces ou . _ -' : 'Échec, réessaie.'; } };
-      $('#pf-plans', card).onclick = () => { I.closeSheet(); D.plans(''); };
-      $('#pf-inst', card).onclick = () => { I.closeSheet(); installTip(true); };
-      if ($('#pf-stats', card)) $('#pf-stats', card).onclick = async () => { const el = $('#pf-st', card); el.textContent = '…'; try { const s = await P.admin.stats(); el.textContent = `${s.accounts} comptes\nOffres : ${Object.entries(s.plans).map(([k, v]) => k + ' ' + v).join(', ') || 'aucune'}\nCe mois-ci : ${s.usage.adv} conseils IA, ${s.usage.chat} échanges, ${s.usage.ident} analyses`; } catch (e) { el.textContent = 'Indisponible.'; } };
+      if ($('#pf-plans', card)) $('#pf-plans', card).onclick = () => { I.closeSheet(); D.plans(''); };
+      if ($('#pf-inst', card)) $('#pf-inst', card).onclick = () => { I.closeSheet(); installTip(true); };
+      if ($('#pf-stats', card)) $('#pf-stats', card).onclick = async () => { const el = $('#pf-st', card); el.textContent = '…'; try { const s = await P.admin.stats(); el.textContent = s.text || `${s.accounts} comptes (${s.verified} confirmés)\nOffres : ${Object.entries(s.plans).map(([k, v]) => k + ' ' + v).join(', ') || 'aucune'}\nCe mois-ci : ${s.usage.adv} conseils IA, ${s.usage.chat} échanges, ${s.usage.ident} analyses\nCoût IA estimé : ${s.aiCostUsd} $\n\n14 derniers jours (inscrits, confirmés, activés, voyages)\n${(s.days || []).map((d) => `${d.d.slice(5)}  ${d.signup}  ${d.verify}  ${d.activate}  ${d.voyage}`).join('\n')}`; } catch (e) { el.textContent = 'Indisponible.'; } };
     };
-    anchor.parentNode.insertBefore(card, anchor); draw();
-    P.load().then(draw).catch(() => draw());
+    anchor.parentNode.insertBefore(card, anchor); let ex = null; const drawX = () => { draw(); if (ART || !P.me()) return; if (ex) ex.remove(); extras(card, P.me()); ex = card.nextSibling; };
+    drawX();
+    P.load().then(drawX).catch(() => { if (ART && !P.me()) card.innerHTML = '<div class="card"><b>Mon profil public</b><p class="soft small" style="margin:0">Le profil et la communauté ont besoin de la base de l\'artefact. Ouvre l\'artefact depuis ton compte claude.ai connecté.</p></div>'; else draw(); });
+  }
+
+
+  // ---------- Version publique : confirmation d'adresse, support, outils de l'éditeur ----------
+  const BOX = 'text-transform:none;letter-spacing:0;white-space:pre-line;min-height:16px';
+  function extras(card, m) {
+    const wrap = document.createElement('div'); wrap.style.cssText = 'display:grid;gap:14px;margin-top:14px'; card.after(wrap);
+    if (m.verified === false) {
+      const b = document.createElement('div'); b.className = 'card'; b.style.cssText = 'display:grid;gap:8px;border-color:var(--wine)';
+      b.innerHTML = '<b>Confirme ton adresse</b><p class="soft small" style="margin:0">Les conseils IA sont en attente : ouvre le lien reçu par courriel (regarde aussi les indésirables).</p><div class="row"><button class="ghost" id="ex-re" type="button">Renvoyer le lien</button></div><p class="mono" id="ex-rm" style="' + BOX + '"></p>';
+      wrap.appendChild(b); $('#ex-re', b).onclick = async () => { const el = $('#ex-rm', b); el.textContent = '…'; try { const j = await D.plan.resend(); el.textContent = j.verified ? 'Déjà confirmée.' : j.sent ? 'Le lien est reparti.' : 'L\'envoi de courriel n\'est pas encore actif, écris-moi ci-dessous.'; } catch (e) { el.textContent = e.code === 'rate' ? 'Trop d\'envois, réessaie plus tard.' : 'Échec, réessaie.'; } };
+    }
+    const sp = document.createElement('div'); sp.className = 'card'; sp.style.cssText = 'display:grid;gap:10px';
+    sp.innerHTML = '<b>Une question, un souci ?</b><p class="soft small" style="margin:0">Écris-moi ici, je te réponds par courriel.</p><textarea id="sp-t" rows="3" maxlength="1200" placeholder="Ton message" aria-label="Ton message"></textarea><div class="row"><button class="ghost" id="sp-go" type="button">Envoyer</button></div><p class="mono" id="sp-m" style="' + BOX + '"></p>';
+    wrap.appendChild(sp);
+    $('#sp-go', sp).onclick = async () => { const el = $('#sp-m', sp), t = $('#sp-t', sp).value.trim(); if (t.length < 5) { el.textContent = 'Écris au moins une phrase.'; return; } el.textContent = '…'; try { await D.plan.support(t, '', 'question'); $('#sp-t', sp).value = ''; el.textContent = 'Message envoyé, merci.'; } catch (e) { el.textContent = e.code === 'rate' ? 'Trop de messages, réessaie plus tard.' : 'Échec, réessaie.'; } };
+    if (!m.admin) return;
+    const ed = document.createElement('div'); ed.className = 'card'; ed.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)';
+    ed.innerHTML = '<b>Suivi de l\'éditeur</b><div class="row"><button class="ghost" id="ed-su" type="button">Messages reçus</button><button class="ghost" id="ed-mo" type="button">Inspirations signalées</button><button class="ghost" id="ed-bk" type="button">Télécharger une sauvegarde</button></div><div id="ed-out" style="display:grid;gap:8px"></div>';
+    wrap.appendChild(ed); const out = $('#ed-out', ed);
+    const fail = (e) => { out.textContent = e.code === 'forbidden' ? 'Réservé à l\'éditeur.' : 'Échec, réessaie.'; };
+    $('#ed-su', ed).onclick = async () => { out.textContent = '…'; try { const j = await D.plan.admin.support(); out.innerHTML = j.items.length ? j.items.map((x) => `<div class="card" style="display:grid;gap:6px"><small class="mono" style="text-transform:none;letter-spacing:0">${esc(x.email)} · ${new Date(x.ts).toLocaleString('fr-FR')}</small><span style="white-space:pre-line">${esc(x.message)}</span><button class="ghost" data-sd="${esc(x.id)}" type="button">Traité, supprimer</button></div>`).join('') : '<p class="soft small">Aucun message.</p>'; $$('[data-sd]', out).forEach((b) => (b.onclick = async () => { try { await D.plan.admin.supportDone(b.dataset.sd); b.closest('.card').remove(); } catch (e) { fail(e); } })); } catch (e) { fail(e); } };
+    $('#ed-mo', ed).onclick = async () => { out.textContent = '…'; try { const j = await D.plan.admin.moderation(); out.innerHTML = j.items.length ? j.items.map((x) => `<div class="card" style="display:grid;gap:6px"><b>${esc(x.title)}</b><small class="mono" style="text-transform:none;letter-spacing:0">par ${esc(x.pseudo)} · ${x.reports} signalement${x.reports > 1 ? 's' : ''}${x.hidden ? ' · masquée' : ''}</small>${x.desc ? `<span>${esc(x.desc)}</span>` : ''}<div class="row"><button class="ghost" data-mr="${esc(x.id)}" type="button">Rétablir</button><button class="ghost danger" data-md="${esc(x.id)}" type="button">Supprimer</button></div></div>`).join('') : '<p class="soft small">Aucune inspiration signalée.</p>'; const act = (attr, a) => $$('[' + attr + ']', out).forEach((b) => (b.onclick = async () => { try { await D.plan.admin.moderate(b.getAttribute(attr), a); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-mr', 'restore'); act('data-md', 'delete'); } catch (e) { fail(e); } };
+    $('#ed-bk', ed).onclick = async () => { out.textContent = '…'; try { const txt = await D.plan.admin.backup(), a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'application/json' })); a.download = 'sillage-sauvegarde-' + new Date().toISOString().slice(0, 10) + '.json'; document.body.appendChild(a); a.click(); a.remove(); out.textContent = 'Sauvegarde téléchargée. Garde-la hors de ton téléphone.'; } catch (e) { fail(e); } };
   }
 
   // ---------- Inspirations : les miennes (privées par défaut) et celles de la communauté ----------
@@ -132,8 +158,9 @@
         if (ins.cid) { await P.community.remove(ins.cid); ins.cid = ''; I.save(); showAfter(); return; }
         if (!m || !m.limits.publish) return D.plans('plan');
         if (!m.profile.pseudo) { msg.textContent = 'Choisis d\'abord un pseudo dans ton profil, il sera affiché avec ta liste.'; return; }
+        if (!$('#si-pub', pn).dataset.ok) { $('#si-pub', pn).dataset.ok = 1; msg.textContent = 'Les membres verront ta liste et ton pseudo. Pas de lien, d\'adresse ni d\'insulte : sinon elle est retirée. Touche encore le bouton pour confirmer.'; return; }
         msg.textContent = '…'; const j = await P.community.publish({ id: '', title: ins.title, desc: ins.desc, items: ins.items }); ins.cid = j.id; I.save(); showAfter();
-      } catch (e) { msg.textContent = { plan: 'La publication est réservée à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', limit: 'Tu as déjà 10 inspirations publiques.', rate: 'Trop de publications, réessaie plus tard.', network: 'Pas de connexion.' }[e.code] || 'Échec, réessaie.'; }
+      } catch (e) { msg.textContent = { plan: 'La publication est réservée à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', limit: 'Tu as déjà 10 inspirations publiques.', rate: 'Trop de publications, réessaie plus tard.', rules: 'Ni lien, ni adresse, ni insulte dans le titre ou la description.', network: 'Pas de connexion.' }[e.code] || 'Échec, réessaie.'; }
     };
     const showAfter = () => { I.closeSheet(); if (I.PL.sub === 'mine') I.render(true); showInsp(ins); };
     $('#si-del', pn).onclick = async (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer la suppression'; return; } if (ins.cid) { try { await P.community.remove(ins.cid); } catch (e) { /* déjà retirée */ } } const L = mine(); L.splice(L.indexOf(ins), 1); I.save(); I.closeSheet(); I.render(true); };
@@ -229,8 +256,9 @@
   }
   function onLogin() { paintAvatar(); scheduleInstall(); }
   window.SillageProduct = { subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
-  try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
+  if (!ART) try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
   P.content().then(applyContent).catch(() => {});
-  if (D.account.loggedIn()) { P.load().then(() => { paintAvatar(); }).catch(() => {}); scheduleInstall(); }
-  try { const tk = new URLSearchParams(location.search).get('reset'); if (tk && /^[a-f0-9]{64}$/.test(tk) && !D.account.loggedIn()) setTimeout(() => { if (!$('#acct')) I.showAccount('force', { reset: tk }); }, 1200); } catch (e) { /* ok */ }
+  if (ART) P.load().then(() => paintAvatar()).catch(() => {});
+  else if (D.account.loggedIn()) { P.load().then(() => { paintAvatar(); }).catch(() => {}); scheduleInstall(); }
+  if (!ART) try { const tk = new URLSearchParams(location.search).get('reset'); if (tk && /^[a-f0-9]{64}$/.test(tk) && !D.account.loggedIn()) setTimeout(() => { if (!$('#acct')) I.showAccount('force', { reset: tk }); }, 1200); } catch (e) { /* ok */ }
 })();

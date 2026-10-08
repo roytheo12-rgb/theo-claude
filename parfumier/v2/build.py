@@ -90,7 +90,7 @@ def page(scripts, head_extra=""):
 
 mode = sys.argv[1] if len(sys.argv) > 1 else "artifact"
 if mode == "artifact":
-    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'houseorder.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + imgpack_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'enrich.js') + js(up/'shops.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js')
+    scripts = js(up/'data.js') + js(up/'desc.js') + js(up/'tips.js') + js(up/'playlists.js') + js(up/'houseorder.js') + js(up/'bios.js') + js(up/'index.js') + js(up/'imgdb.js') + js(up/'imgnew.js') + js(up/'imgweb.js') + imgpack_artifact() + js(up/'facts.js') + js(up/'fiches.js') + js(up/'profils.js') + js(up/'descintel.js') + js(up/'editorial.js') + js(up/'enrich.js') + js(up/'shops.js') + js(up/'expert.js') + js(up/'engine.js') + js(d/'art.js') + js(d/'fx.js') + prompt_script() + js(d/'app.js') + js(d/'artifact-backend.js') + js(d/'product.js')
     out = d/'sillage.html'
     out.write_text(page(scripts))
     print(out, out.stat().st_size)

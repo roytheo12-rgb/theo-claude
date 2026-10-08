@@ -31,7 +31,7 @@
     let r;
     try { r = await fetch('/api/day', { method: 'POST', headers: headers(), body: JSON.stringify(body) }); } catch (e) { throw { code: 'network' }; }
     const j = await r.json().catch(() => ({}));
-    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : 'quota'); throw { code: 'rate_limited' }; }
+    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : j.code === 'verify' ? 'verify' : 'quota'); throw { code: 'rate_limited' }; }
     if (!r.ok) throw { code: 'server' };
     if (typeof j.left === 'number') left = j.left;
     return j.data;
@@ -41,7 +41,7 @@
   async function need(args) {
     let r; try { r = await fetch('/api/need', { method: 'POST', headers: headers(), body: JSON.stringify(args) }); } catch (e) { throw { code: 'network' }; }
     const j = await r.json().catch(() => ({}));
-    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : 'quota'); throw { code: 'rate_limited' }; }
+    if (r.status === 429) { left = 0; upsell(j.code === 'busy' ? 'busy' : j.code === 'verify' ? 'verify' : 'quota'); throw { code: 'rate_limited' }; }
     if (!r.ok) throw { code: 'server' };
     if (typeof j.left === 'number') left = j.left;
     return j.data;
@@ -113,7 +113,11 @@
     saveProfile: async (p) => { const j = await call('profile', 'PUT', p); ME = j.me; return j; },
     avatar: (file) => squareJpeg(file, 160),
     community: { list: () => api('/api/community'), publish: (rec) => api('/api/community', 'POST', rec), remove: (id) => api('/api/community/' + id, 'DELETE'), like: (id) => api('/api/community/' + id + '/like', 'POST', {}), report: (id) => api('/api/community/' + id + '/report', 'POST', {}) },
-    admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats') },
+    admin: { edit: (op) => api('/api/admin/content', 'PUT', op), stats: () => api('/api/admin/stats'), support: () => api('/api/admin/support'), supportDone: (id) => api('/api/admin/support/' + id, 'DELETE'), moderation: () => api('/api/admin/moderation'), moderate: (id, action) => api('/api/admin/moderation/' + id, 'POST', { action }),
+      backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
+    verified: () => !ME || ME.verified !== false, resend: () => call('resend', 'POST', {}),
+    support: (message, email, kind) => api('/api/support', 'POST', { message, email, kind }),
+    track: (e) => { if (token) fetch('/api/track', { method: 'POST', headers: authH(), body: JSON.stringify({ e }) }).catch(() => {}); },
     content: () => Promise.race([fetch('/api/content', { cache: 'no-store' }).then((r) => r.json()), new Promise((res) => setTimeout(() => res(null), 2500))]).catch(() => null),
   };
   Object.assign(account, { me: () => ME });
@@ -127,8 +131,8 @@
   // ---- Les offres : ce qu'on a, ce qu'on peut avoir, et où entrer sa clé Whop
   const OFFERS = [
     ['free', 'Gratuit', '0 €', ['3 conseils IA par mois', '20 échanges avec le parfumier', 'Collection jusqu\'à 12 parfums', '2 inspirations privées']],
-    ['premium', 'Premium', '5,99 € par mois', ['Ou 49 € par an', '60 conseils IA par mois', '300 échanges avec le parfumier', 'Collection illimitée', 'Inspirations privées et publiques']],
-    ['founder', 'Membre fondateur', '79 € à vie', ['Un seul paiement, pour toujours', 'Tout le Premium, sans abonnement', 'Limité aux 100 premiers membres']],
+    ['premium', 'Premium', '5,99 € TTC par mois', ['Ou 49 € TTC par an', '40 conseils IA par mois', '200 échanges avec le parfumier', 'Collection illimitée', 'Inspirations privées et publiques']],
+    ['founder', 'Membre fondateur', '99 € TTC à vie', ['Un seul paiement, pour toujours', 'Tout le Premium, sans abonnement', 'Limité aux 50 premiers membres']],
   ];
   function plans(reason) {
     const H = window.SillageHooks; if (!H) return;
@@ -146,8 +150,26 @@
       catch (er) { pn.querySelector('#lic-go').disabled = false; msg.textContent = { license: 'Cette clé n\'existe pas. Vérifie-la.', inactive: 'Cet abonnement n\'est plus actif.', product: 'Cette clé ne correspond à aucune offre Sillage.', taken: 'Cette clé est déjà utilisée par un autre compte.', rate: 'Trop d\'essais, réessaie dans une heure.', whop_net: 'Whop ne répond pas, réessaie dans un instant.', whop_off: 'L\'activation n\'est pas encore ouverte.' }[er.code] || 'Activation impossible pour l\'instant.'; }
     };
   }
+  // Adresse non confirmée : les conseils IA attendent le clic sur le lien reçu par courriel.
+  function verifySheet() {
+    const H = window.SillageHooks; if (!H) return;
+    const pn = H.openSheet(`<div><h2>Confirme ton adresse</h2><p style="color:var(--muted);margin-top:8px">Pour activer les conseils IA, ouvre le lien que je t'ai envoyé par courriel${acctEmail ? ' à ' + esc(acctEmail) : ''}. Pense à regarder tes courriers indésirables. Le reste de l'appli reste utilisable.</p></div>
+      <div class="row"><button class="cta" id="vf-re"><span>Renvoyer le lien</span></button><button class="ghost" id="vf-ok">J'ai confirmé</button></div><p class="mono" id="vf-msg" style="text-transform:none;letter-spacing:0;min-height:16px"></p>`);
+    const msg = pn.querySelector('#vf-msg');
+    pn.querySelector('#vf-re').onclick = async () => { msg.textContent = '…'; try { const j = await call('resend', 'POST', {}); msg.textContent = j.verified ? 'Ton adresse est déjà confirmée.' : j.sent ? 'Le lien est reparti. Il peut mettre une minute.' : 'L\'envoi de courriel n\'est pas encore actif. Écris-moi depuis ton profil, je le fais à la main.'; } catch (e) { msg.textContent = e.code === 'rate' ? 'Trop d\'envois, réessaie dans une heure.' : 'Échec, réessaie.'; } };
+    pn.querySelector('#vf-ok').onclick = async () => { msg.textContent = '…'; try { await loadMe(); } catch (e) { /* hors ligne */ } if (ME && ME.verified !== false) { await refresh(); H.closeSheet(); if (H.refresh) H.refresh(); } else msg.textContent = 'Pas encore confirmé. Ouvre le lien du courriel, puis reviens.'; };
+  }
+  // Lien reçu par courriel : /?verify=… confirme l'adresse puis nettoie l'adresse de la page.
+  async function checkVerifyLink() {
+    let tk = null; try { tk = new URLSearchParams(location.search).get('verify'); } catch (e) { /* ok */ }
+    if (!tk || !/^[a-f0-9]{64}$/.test(tk)) return;
+    try { history.replaceState(null, '', location.pathname); } catch (e) { /* ok */ }
+    let ok = false; try { const r = await fetch('/api/account/verify', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ token: tk }) }); ok = r.ok; } catch (e) { /* hors ligne */ }
+    setTimeout(() => { const H = window.SillageHooks; if (!H) return; if (ok && token) refresh(); const pn = H.openSheet(`<div><h2>${ok ? 'Adresse confirmée' : 'Lien invalide'}</h2><p style="color:var(--muted);margin-top:8px">${ok ? 'Tes conseils IA sont activés.' : 'Ce lien a déjà servi ou a expiré. Connecte-toi, puis demande un nouveau lien depuis ton profil.'}</p></div><div class="row"><button class="cta" id="vl-ok"><span>Continuer</span></button></div>`); pn.querySelector('#vl-ok').onclick = H.closeSheet; }, 1500);
+  }
   function upsell(reason) {
     const H = window.SillageHooks; if (!H) return;
+    if (reason === 'verify') return verifySheet();
     if (token && ['quota', 'locked', 'busy', 'plan', 'cta'].includes(reason)) return plans(reason);
     const [title, text] = TEXT[reason] || TEXT.quota;
     const pn = H.openSheet(`<div><h2>${esc(title)}</h2><p style="color:var(--muted);margin-top:8px">${esc(text)}</p></div>
@@ -186,7 +208,7 @@
       let r; try { r = await fetch('/api/chat', { method: 'POST', headers: authH(), body: JSON.stringify({ prompt: String(prompt).slice(0, 12000) }) }); } catch (e) { throw { code: 'network' }; }
       const j = await r.json().catch(() => ({}));
       if (r.status === 401) { setSession(null); try { window.dispatchEvent(new Event('sillage:expired')); } catch (e) { /* ok */ } throw { code: 'auth' }; }
-      if (r.status === 429) { if (ME) ME.usage.chat = ME.limits.chat; upsell('quota'); throw { code: 'rate_limited' }; }
+      if (r.status === 429) { if (j.code !== 'verify' && ME) ME.usage.chat = ME.limits.chat; upsell(j.code === 'verify' ? 'verify' : 'quota'); throw { code: 'rate_limited' }; }
       if (!r.ok) throw { code: 'server' };
       if (ME) ME.usage.chat += 1;
       return j.data;
@@ -196,4 +218,5 @@
   window.claude = { use: async (name) => (name === 'sample' ? (token ? chatSample : locked) : null) };
   window.SillageDemo = { plan: sub, plans, account, day, need, left: () => left, identLeft: () => identLeft, identify, confirm, catalog, refresh, upsell };
   refresh().then(() => { if (window.SillageHooks) window.SillageHooks.rerender(); });
+  checkVerifyLink();
 })();

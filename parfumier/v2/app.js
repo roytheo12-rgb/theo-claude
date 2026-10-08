@@ -1672,7 +1672,8 @@
     if ($('#alogout', pn)) $('#alogout', pn).onclick = async () => { await window.SillageDemo.account.logout(); if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if ($('#adel', pn)) $('#adel', pn).onclick = async (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer la suppression'; return; } try { await window.SillageDemo.account.remove(); } catch (er) { /* déjà supprimé */ } if (needAcct()) afterLeave(); else { closeSheet(); render(true); } };
     if (window.SillageProduct) window.SillageProduct.profile(pn);
-    mountTaste($('#tedit', pn), ['notes', 'vibes', 'occ']);
+    mountTaste($('#tedit', pn), ['vibes', 'occ']);
+    { const nc = document.createElement('div'); nc.className = 'card'; nc.style.cssText = 'display:grid;gap:10px'; const nl = [...(S.settings.liked || [])].length, na = [...(S.settings.avoid || [])].length; nc.innerHTML = `<b>Mes notes</b><p class="soft small" style="margin:0">${nl} aimée${nl > 1 ? 's' : ''}, ${na} fuie${na > 1 ? 's' : ''}. Elles sont rangées par famille.</p><button class="ghost" id="pnotes" type="button">Ouvrir mes notes</button>`; const ta = $('#tedit', pn); ta.parentNode.insertBefore(nc, ta); $('#pnotes', nc).onclick = openNotes; }
     $('#exp', pn).onclick = () => { const t = $('#io', pn); t.value = JSON.stringify(S); t.select(); try { navigator.clipboard.writeText(t.value).then(() => { $('#iomsg', pn).textContent = 'Copié. Garde ce texte dans tes notes.'; }, () => { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; }); } catch (e) { $('#iomsg', pn).textContent = 'Sélectionné : copie-le à la main.'; } };
     $('#imp', pn).onclick = () => { try { const d = JSON.parse($('#io', pn).value); if (!Array.isArray(d.collection)) throw 0; S = Object.assign(DEF(), d); save(); closeSheet(); render(); } catch (e) { $('#iomsg', pn).textContent = 'Sauvegarde invalide.'; } };
     $('#reset', pn).onclick = (e) => { if (!e.target.dataset.sure) { e.target.dataset.sure = 1; e.target.textContent = 'Confirmer : tout vider'; return; } S = DEF(); S.collection = []; S.wishlist = []; save(); closeSheet(); render(); };
@@ -2525,12 +2526,29 @@
     const s = S.settings, cust = [...(s.liked || []), ...(s.avoid || [])].filter((n) => !NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n))));
     const chip = (n) => { const st = noteSt(n); return `<button type="button" class="chip nt ${st > 0 ? 'on' : st < 0 ? 'no' : ''}" data-nt="${esc(n)}" aria-pressed="${st !== 0}">${esc(n)}</button>`; };
     let h = `<div class="card tsum"><p class="mono">Ton profil olfactif</p><p class="rd" data-tsum>${esc(olfSummary())}</p><div class="tmeter"><i data-tmi></i></div><p class="mono" data-tml style="text-transform:none;letter-spacing:0"></p></div>`;
+    const gp = parts.filter((x) => /^ng\d$/.test(x)).map((x) => NOTE_GROUPS[+x[2]]);
+    if (gp.length) h += `<div class="tpart"><p class="mono">${esc(gp[0][0])}</p><p class="soft">Touche une note une fois pour dire que tu l'adores, deux fois pour dire que tu la fuis, trois fois pour l'effacer.</p><div class="chips">${gp[0][2].map(chip).join('')}</div></div>`;
+    if (parts.includes('ngx')) h += `<div class="tpart"><p class="mono">Une autre note</p><p class="soft">Cherche une note qui n'est dans aucune famille, puis touche-la pour la fuir ou l'effacer.</p><div class="acwrap"><input type="text" id="tnadd" placeholder="figue, thé, rhum, iris…" autocomplete="off" aria-label="Ajouter une note"><div class="aclist" id="tnac" hidden></div></div><div class="chips" data-tcust>${cust.map(chip).join('')}</div></div>`;
     if (parts.includes('notes')) h += `<div class="tpart"><p class="mono">Les notes</p><p class="soft">Touche une note une fois pour dire que tu l'adores, deux fois pour dire que tu la fuis, trois fois pour l'effacer.</p>
       ${NOTE_GROUPS.map((g) => `<p class="mono tg">${esc(g[0])}</p><div class="chips">${g[2].map(chip).join('')}</div>`).join('')}
       <p class="mono tg">Une autre note</p><div class="acwrap"><input type="text" id="tnadd" placeholder="figue, thé, rhum, iris…" autocomplete="off" aria-label="Ajouter une note"><div class="aclist" id="tnac" hidden></div></div><div class="chips" data-tcust>${cust.map(chip).join('')}</div></div>`;
     if (parts.includes('vibes')) h += `<div class="tpart"><p class="mono">Ton ambiance</p><p class="soft">Choisis tout ce qui te ressemble.</p>${pillSet('vibes', VIBE_L, true, 'data-vb')}<p class="mono tg">Sa présence</p>${pillSet('power', POWER_L, false, 'data-pw')}</div>`;
     if (parts.includes('occ')) h += `<div class="tpart"><p class="mono">Quand tu le portes</p>${pillSet('occ', OCC_L, true, 'data-oc')}<p class="mono tg">Budget par flacon <b data-bval>${capLabel(s.budget)}</b></p><input type="range" id="tbud" min="0" max="${CAPS.length - 1}" step="1" value="${capIdx(s.budget)}" aria-label="Budget par flacon"></div>`;
     return h;
+  }
+  // Mes notes : une page par famille de notes, chacune s'ouvre depuis la liste.
+  function openNotes() {
+    const cnt = (g) => { const l = g[2].filter((n) => noteSt(n) > 0).length, a = g[2].filter((n) => noteSt(n) < 0).length; return (l || a) ? `${l} aimée${l > 1 ? 's' : ''}${a ? `, ${a} fuie${a > 1 ? 's' : ''}` : ''}` : 'Rien de choisi'; };
+    const cust = [...(S.settings.liked || []), ...(S.settings.avoid || [])].filter((n) => !NOTE_GROUPS.some((g) => g[2].some((x) => E.norm(x) === E.norm(n)))).length;
+    const pn = openSheet(`<div><h2>Mes notes</h2><p style="color:var(--muted);margin-top:6px">Choisis une famille. Dis ce que tu adores et ce que tu fuis, je m'en sers tout de suite.</p></div>
+      <div class="mylist">${NOTE_GROUPS.map((g, i) => `<button type="button" class="myc" data-ng="${i}"><b>${esc(g[0])}</b><small>${cnt(g)}</small></button>`).join('')}<button type="button" class="myc" data-ng="x"><b>Une autre note</b><small>${cust ? cust + ' ajoutée' + (cust > 1 ? 's' : '') : 'Chercher une note précise'}</small></button></div>
+      <div class="row"><button class="ghost" id="nclose">Fermer</button></div>`);
+    $('#nclose', pn).onclick = closeSheet;
+    $$('[data-ng]', pn).forEach((b) => (b.onclick = () => openNoteGroup(b.dataset.ng)));
+  }
+  function openNoteGroup(k) {
+    const pn = openSheet(`<div class="row"><button class="ghost" id="nback">‹ Mes notes</button></div><div id="ntp" class="tprof"></div>`);
+    mountTaste($('#ntp', pn), [k === 'x' ? 'ngx' : 'ng' + k]); $('#nback', pn).onclick = openNotes;
   }
   function mountTaste(root, parts) {
     root.innerHTML = tasteHtml(parts);
@@ -2679,7 +2697,7 @@
       if ($('#vSkip', root)) $('#vSkip', root).onclick = () => done(true);
     };
     const drawEnd = () => {
-      const pr = applyVoy(R), th = sitThemes(4), ax = pr.axisV.map((v, i) => [E.AXN[i], v]).filter(([a]) => !['originalite', 'clivage', 'formalite', 'evolution', 'densite'].includes(a));
+      const pr = applyVoy(R); try { const PD = window.SillageDemo; if (PD && PD.plan.track) PD.plan.track('voyage'); } catch (e) { /* mesure facultative */ } const th = sitThemes(4), ax = pr.axisV.map((v, i) => [E.AXN[i], v]).filter(([a]) => !['originalite', 'clivage', 'formalite', 'evolution', 'densite'].includes(a));
       const pos = ax.filter(([, v]) => v > .5).sort((x, y) => y[1] - x[1]).slice(0, 4).map(([a]) => E.AXL[a]), neg = ax.filter(([, v]) => v < -.5).sort((x, y) => x[1] - y[1]).slice(0, 3).map(([a]) => E.AXL[a]);
       const dn = pr.axisV[AXI('densite')], tone = dn > .7 ? 'des parfums qui se remarquent' : dn < -.5 ? 'des parfums discrets, près de la peau' : 'une présence mesurée';
       let recs = []; try { recs = tipsData().recs.slice(0, 3); } catch (e) { recs = []; }

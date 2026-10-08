@@ -14,7 +14,7 @@ Statuts Whop qui donnent l'accès : `active`, `trialing`, `past_due` (période d
 ## À faire une fois
 
 ### Côté Whop
-1. Crée trois offres : Premium mensuel (5,99 €), Premium annuel (49 €), Fondateur (79 € une fois, **stock limité à 100**).
+1. Crée trois offres : Premium mensuel (5,99 € TTC), Premium annuel (49 € TTC), Fondateur (99 € TTC une fois, **stock limité à 50**).
 2. Pour chaque produit, ajoute l'expérience qui délivre une **clé de licence** (« software licensing » dans l'interface de Whop ; les noms exacts peuvent différer).
 3. Note l'identifiant de chaque produit (`prod_…`) et crée une **clé API** avec le droit de lire les memberships (`member:basic:read`).
 4. Dans la configuration de paiement, ajoute la case de renonciation au droit de rétractation (voir les conditions générales, article 6).
@@ -22,7 +22,7 @@ Statuts Whop qui donnent l'accès : `active`, `trialing`, `past_due` (période d
 ### Côté Cloudflare (dans `demo-public/`)
 ```bash
 npx wrangler secret put WHOP_API_KEY      # la clé API Whop
-npx wrangler secret put ADMIN_EMAILS      # ton email : ce compte devient « éditeur »
+# ADMIN_EMAILS est déjà dans wrangler.toml (roytheo12@gmail.com). Pour un autre courriel, change la valeur là-bas.
 npx wrangler secret put RESEND_API_KEY    # pour les emails « mot de passe oublié » (resend.com, gratuit au départ)
 npx wrangler secret put MAIL_FROM         # ex. Sillage <noreply@ton-domaine.fr> (domaine vérifié chez Resend)
 ```
@@ -57,3 +57,12 @@ Le site est une appli installable : manifeste, icônes et service worker sont se
 
 ## Ce qui reste à vérifier sur de vrais appareils
 Installation sur iPhone et Android, ouverture hors ligne, réception de l'email de réinitialisation, achat test Whop de bout en bout, résiliation test (l'accès doit tomber dans les 24 h).
+
+## Confirmation d'email, support, modération et sauvegardes
+
+- **Confirmation d'email** : à l'inscription, un lien valable 7 jours part par courriel (Resend). Tant qu'il n'est pas ouvert, le compte n'a droit à aucun conseil IA, ce qui coupe l'intérêt des faux comptes. Pour l'activer : `npx wrangler secret put RESEND_API_KEY` et `MAIL_FROM = "Sillage <bonjour@ton-domaine.fr>"` dans `[vars]`. Sans ces deux réglages, l'inscription reste libre (comme avant).
+- **Support** : le formulaire du profil enregistre les messages (conservés 12 mois) et t'envoie un courriel. Tu les lis, et tu les supprimes une fois traités, dans le profil, bloc « Suivi de l'éditeur ».
+- **Modération** : les inspirations publiques refusent liens, adresses et insultes. 3 signalements masquent une inspiration ; tu la rétablis ou la supprimes depuis « Inspirations signalées ».
+- **Sauvegardes** : bouton « Télécharger une sauvegarde » (fichier JSON, à garder hors du téléphone). Pour une copie automatique chaque nuit : crée un dépôt R2 (`npx wrangler r2 bucket create sillage-backups`) puis décommente les lignes `r2_buckets` et `triggers` de `wrangler.toml`. Les 14 dernières copies sont gardées.
+- **Chiffres** : « Voir les chiffres » donne les comptes, les offres, la consommation IA et son coût estimé, et 4 compteurs par jour sur 14 jours (inscrits, confirmés, activés, voyages terminés).
+- **Version claude.ai** : le profil, « Mes inspirations », « Communauté » et le mode éditeur y fonctionnent aussi, avec la base de l'artefact. Pas d'offres ni de Whop là-bas. Le mode éditeur y est réservé au propriétaire de l'artefact.
