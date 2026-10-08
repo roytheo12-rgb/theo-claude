@@ -2,6 +2,7 @@
 // limite chaque visiteur à MAX_TRIES essais et récolte les inscriptions.
 import Anthropic from '@anthropic-ai/sdk';
 import { dayPrompt, identifyPrompt, needPrompt } from './prompt.mjs';
+import { makeSocial } from './social.js';
 import { makeAccount, runBackup } from './account.js';
 
 const JSON_H = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
@@ -73,8 +74,11 @@ export function makeWorker(deps = {}) {
       // Compteurs du jour (inscriptions, confirmations, activations, parcours terminés) : sans donnée personnelle.
       const track = async (name) => { try { const k = `m:${today()}`, c = JSON.parse((await kv.get(k)) || '{}'); c[name] = (c[name] || 0) + 1; await kv.put(k, JSON.stringify(c), { expirationTtl: 60 * 60 * 24 * 400 }); } catch (e) { /* mesure facultative */ } };
       const mailVerify = async (id, email) => { const tk = randHex(32); await kv.put(`ver:${await fullSha(tk)}`, id, { expirationTtl: 60 * 60 * 24 * 7 }); return sendMail(email, 'Confirme ton adresse Sillage', `<p>Bonjour,</p><p>Pour activer tes conseils IA, confirme ton adresse en ouvrant ce lien : <a href="${url.origin}/?verify=${tk}">${url.origin}/?verify=${tk}</a></p><p>Il est valable 7 jours. Si tu n'as pas créé de compte, ignore ce message.</p>`); };
-      const acc = makeAccount({ kv, env, reply, clean, hex, fullSha, randHex, int, deps, sendMail, track, mailVerify, ipHash });
+      let social = null;
+      const acc = makeAccount({ kv, env, reply, clean, hex, fullSha, randHex, int, deps, sendMail, track, mailVerify, ipHash, regLink: (o, u) => (social ? social.regLink(o, u) : ''), eraseSocial: (id) => (social ? social.erase(id) : null) });
+      social = makeSocial({ kv, env, reply, clean, randHex, fullSha, acc, ipHash, sendMail });
       { const r = await acc.handle(request, url); if (r) return r; }
+      { const r = await social.handle(request, url); if (r) return r; }
 
       // ---- Parfumier en conversation (modèle léger) : réservé aux comptes, compté par offre
       if (url.pathname === '/api/chat' && request.method === 'POST') {
