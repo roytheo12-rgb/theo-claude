@@ -195,5 +195,7 @@
     view: () => {}, myStats: async () => ({ days: 30, links: [], postViews: 0, followers: (await readAll('follows')).filter((d) => (d.data.ids || []).includes(uid)).length }),
     brandMe: async () => ({ brand: null }),
   };
+  // Remise à zéro de mon compte dans la base de l'artefact : tout ce qui m'appartient, rien de ce qui est aux autres.
+  plan.resetMine = async () => { await need(); for (const c of ['community', 'posts', 'follows', 'ratings', 'reports', 'likes', 'feedback', 'notifs']) { try { await db.doc(c + '/' + uid).delete(); } catch (e) { /* absent */ } } ME = null; ready = null; };
   window.SillageBackend = { plan, plans: () => {}, account: { loggedIn: () => true, email: () => '' } };
 })();

@@ -121,5 +121,10 @@ if (await t.pg.locator('#vRedo').count()) {
   await t.pg.click('#vNext'); await t.pg.waitForSelector('#vDk'); ok(/Ton image/.test(await t.pg.locator('.voy').first().innerText()), 'voyage : sans famille aimée, on passe aux questions suivantes');
   await t.pg.click('#vDk'); await t.pg.waitForTimeout(300); ok(!/Ton image/.test(await t.pg.locator('.voy').first().innerText()), 'voyage : « Je ne sais pas » passe à la question suivante');
 } else console.log('(voyage non lancé depuis cet écran)');
+// remise à zéro complète
+await closeSheet(t.pg); await t.pg.click('#profileBtn'); await t.pg.waitForSelector('#reset0'); ok(await t.pg.locator('#reset0').count() === 1, 'remise à zéro : le bouton existe dans l\'artefact');
+await t.pg.click('#reset0'); await Promise.all([t.pg.waitForEvent('load', { timeout: 15000 }), t.pg.click('#reset0')]); await t.pg.waitForTimeout(1500);
+ok(!('community/user-theo' in SHARED) && !('posts/user-theo' in SHARED) && !('follows/user-theo' in SHARED) && !('notifs/user-theo' in SHARED), 'remise à zéro : les documents du compte sont effacés de la base');
+ok('community/user-marie' in SHARED, 'remise à zéro : les données des autres membres ne sont pas touchées');
 ok(t.errs.length === 0 && m.errs.length === 0, 'aucune erreur JavaScript : ' + JSON.stringify([...t.errs, ...m.errs]));
 await browser.close(); server.close(); console.log('\nTests artefact réussis.');
