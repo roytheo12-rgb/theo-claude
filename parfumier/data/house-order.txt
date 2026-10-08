@@ -265,7 +265,7 @@ Vanille Supermassive
 Bois d'Ascèse
 Superclassique
 Tonka Extrême
-Rose Supercritique => Rose Supercritical
+Rose Supercritique
 Iris Palladium
 Encens Asakusa
 Héliotrope Milky
@@ -298,16 +298,15 @@ Terra
 Borabora
 Adèle
 ## Ella K
-Reflet sur l'Okavango
-Lettre de Pushkar
-Harmattan
-Ghibli
-Kandahar
-Camélia Intrépide
-Fugue en Syrie
-Aqua Mysteri
-Pluie sur Ha Long
+Amber K
 Musc K
+Ghibli
+Lettre de Pushkar
+Reflet sur l'Okavango
+Harmattan
+Pluie sur Ha Long
+Camelia K
+Rose de Pushkar
 ## Dries Van Noten
 Soie Malaquais
 Fleur du Mal
@@ -545,7 +544,6 @@ My Shadow
 First Dream of the Year
 Dear Diary
 Cricket Song
-Forbidden Incense
 ## Les Indémodables
 Vanille Havane
 Cuir de Chine

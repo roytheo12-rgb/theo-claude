@@ -85,7 +85,6 @@
     ['Sydney', 'Contes de Parfums', 'aquatique', ['bergamote', 'ananas', 'anis', 'accord marin', 'jasmin', 'rose', 'poivre rose', 'muscade', 'cèdre', 'amberwood', 'mousse de chêne', 'musc'], 3, 3, 2, 0],
     ['724', 'Maison Francis Kurkdjian', 'musqué', ['bergamote', 'aldéhydes', 'pois de senteur', 'jasmin d\'Égypte', 'seringat', 'musc blanc', 'santal'], 3, 4, 2, 170],
     ['The Musc', 'Essential Parfums', 'musqué', ['gingembre rouge', 'lavandin', 'cire d\'abeille', 'santal', 'musc blanc'], 3, 4, 3, 82],
-    ['Ella K', 'Ella K Parfums', 'ambré', [], 3, 4, 3, 0],
     ['Bianco Latte', 'Giardini di Toscana', 'gourmand', ['caramel', 'miel', 'coumarine', 'vanille', 'musc blanc'], 3, 4, 3, 125],
     ['Fleur Narcotique', 'Ex Nihilo', 'floral', ['bergamote', 'litchi', 'osmanthus', 'jasmin', 'freesia', 'pivoine', 'fleur d\'oranger', 'santal', 'mousse', 'musc'], 4, 5, 3, 420],
     ['Gris Charnel Extrait', 'BDK Parfums', 'boisé', ['cardamome', 'thé noir', 'figue', 'iris', 'ciste', 'vétiver', 'patchouli', 'vanille', 'santal', 'cèdre', 'fève tonka'], 4, 5, 4, 270],
@@ -166,7 +165,7 @@
     ['Fève Nectar', 4, ['date', 'perso'], { size: 10, left: 100, use: 'special' }], ['724', 4, ['pro', 'perso']], ['Radical Rose', 4, ['date', 'event']], ['Néroli Hasbaya', 4, ['perso', 'famille']],
     ['Nasaj', 4, ['event', 'famille']], ['Acne Studios', 4, ['pro', 'date']], ['Le Male', 4, ['amis', 'event']],
   ];
-  const WISH = ['Tam Dao Eau de Parfum', 'Ombre Nomade', 'Stellar Times', 'Rouge Trafalgar', 'Ganymede', 'Purpose', 'Portrait of a Lady', 'Jasmin Rouge', 'Étoile Filante', 'Paradoxe Intense', 'Miss Dior Essence', 'La Vie est Belle', 'Scandal By Night', 'Aqua Allegoria Rosa Verde', 'Shalimar', 'J\'adore', 'Stronger With You Intensely', 'Power of You', 'L\'Interdit Rouge', 'Pour un Homme de Caron', 'Boss Bottled', 'Ambre Russe', 'Ella K', 'Pure Musc Blanc', 'Sydney', 'Libre Le Parfum', 'L\'Eau Pâle'];
+  const WISH = ['Tam Dao Eau de Parfum', 'Ombre Nomade', 'Stellar Times', 'Rouge Trafalgar', 'Ganymede', 'Purpose', 'Portrait of a Lady', 'Jasmin Rouge', 'Étoile Filante', 'Paradoxe Intense', 'Miss Dior Essence', 'La Vie est Belle', 'Scandal By Night', 'Aqua Allegoria Rosa Verde', 'Shalimar', 'J\'adore', 'Stronger With You Intensely', 'Power of You', 'L\'Interdit Rouge', 'Pour un Homme de Caron', 'Boss Bottled', 'Ambre Russe', 'Pure Musc Blanc', 'Sydney', 'Libre Le Parfum', 'L\'Eau Pâle'];
   if (typeof module !== 'undefined') module.exports = { CATALOG, OWNED, WISH };
   else { root.CATALOG = CATALOG; root.OWNED = OWNED; root.WISH = WISH; }
 })(typeof window !== 'undefined' ? window : globalThis);

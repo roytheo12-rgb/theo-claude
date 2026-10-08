@@ -81,7 +81,7 @@ Les Eaux Primordiales|Vanille Supercritical|
 Les Eaux Primordiales|Blanc de Sienne|
 Les Eaux Primordiales|Envolée de Sienne|
 Les Eaux Primordiales|Resine Supercritical|
-Les Eaux Primordiales|Rose Supercritical|
+Les Eaux Primordiales|Rose Supercritique|
 D'Orsay|T.B. (Tubéreuse)|
 D'Orsay|J.R. (Vétiver)|
 D'Orsay|A.R. (Oud)|
