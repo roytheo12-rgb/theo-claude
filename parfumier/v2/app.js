@@ -994,6 +994,16 @@
     NPOOL = { l: L, p }; return p;
   }
   const PRICE_TIERS = [['p1', 'Moins de 100 €', (p) => p > 0 && p < 100], ['p2', '100 à 200 €', (p) => p >= 100 && p < 200], ['p3', '200 à 300 €', (p) => p >= 200 && p < 300], ['p4', '300 € et plus', (p) => p >= 300]];
+  // Ordre voulu des parfums d'une maison (data/house-order.txt) et des maisons mises en tête.
+  const HORD = (() => { const m = {}; Object.keys(window.HOUSE_ORDER || {}).forEach((h, hi) => { const o = { hi, idx: {} }; window.HOUSE_ORDER[h].forEach((n, i) => { o.idx[E.norm(n)] = i; }); m[h] = o; }); return m; })();
+  // Les incontournables : d'abord la sélection voulue (data/incontournables-top.txt), puis le reste de la liste habituelle.
+  const incList = () => {
+    const by = new Map(dbList().map((e) => [E.norm(e.house) + '|' + E.norm(e.name), e])), seen = new Set(), out = [];
+    const take = (k) => { const e = by.get(k); if (e && !e.ed && !seen.has(k)) { seen.add(k); out.push(e); } };
+    (window.INC_TOP || []).forEach(([h, n]) => take(E.norm(h) + '|' + E.norm(n)));
+    (window.INCONT || []).forEach(take); return out;
+  };
+  const houseRank = (e) => { const o = HORD[E.norm(e.house)]; if (!o) return 1e6; const i = o.idx[E.norm(e.name)]; return i == null ? 1e5 : i; };
   function groupsOf(db, facet) {
     const m = new Map(), put = (k, label, e) => { if (!m.has(k)) m.set(k, { key: k, label, items: [] }); m.get(k).items.push(e); };
     if (facet === 'brand') db.forEach((e) => put(E.norm(e.house), e.house, e));
@@ -1004,7 +1014,9 @@
     else if (facet === 'nose') db.forEach((e) => (e.noses || []).forEach((n) => put(E.norm(n), n, e)));
     let g = [...m.values()];
     const FAME = {}; (window.HOUSE_FAME || []).forEach((h, i) => { FAME[E.norm(h)] = i; }); const fr = (l) => { const k = FAME[E.norm(l)]; return k == null ? 1e6 : k; };
-    g = facet === 'brand' ? g.sort((a, b) => fr(a.label) - fr(b.label) || b.items.length - a.items.length || a.label.localeCompare(b.label, 'fr')) : facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'tag' ? g.sort((a, b) => Object.keys(window.TAGS || {}).indexOf(a.key) - Object.keys(window.TAGS || {}).indexOf(b.key)) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
+    if (facet === 'brand') g.forEach((x) => { if (HORD[E.norm(x.label)]) x.items.sort((p, q) => houseRank(p) - houseRank(q)); });
+    const hh = (l) => { const o = HORD[E.norm(l)]; return o ? o.hi : 1e6; };
+    g = facet === 'brand' ? g.sort((a, b) => hh(a.label) - hh(b.label) || fr(a.label) - fr(b.label) || b.items.length - a.items.length || a.label.localeCompare(b.label, 'fr')) : facet === 'nose' ? g.sort((a, b) => a.label.localeCompare(b.label, 'fr')) : facet === 'tag' ? g.sort((a, b) => Object.keys(window.TAGS || {}).indexOf(a.key) - Object.keys(window.TAGS || {}).indexOf(b.key)) : facet === 'price' ? g.sort((a, b) => a.key.localeCompare(b.key)) : g.sort((a, b) => b.items.length - a.items.length);
     return g;
   }
   const entryKey = (e) => E.norm(e.house + ' ' + e.name);
@@ -1038,7 +1050,7 @@
     const sub = (e) => [e.house, e.family ? (e.guess ? '≈ ' : '') + famLabel(e.family) : '', e.conc && e.conc !== 'EDP' ? e.conc.split(',').map((x) => CONC_L[x] || x).join('/') : '', e.price ? '≈ ' + e.price + ' €' : ''].filter(Boolean).join(' · ');
     const card = (e, i) => { const k = entryKey(e), have = haveIt(e), on = sel.has(k), d = window.DESC && window.DESC[e.name];
       return `<button type="button" class="xc ${on ? 'on' : ''}" data-xk="${esc(k)}" ${have ? 'disabled' : ''}>${xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc(sub(e))}</small>${d && e.cat ? `<em>${tx(d[1])}</em>` : ''}${tagPills(e)}</span><i class="xm">${have ? '✓ ' + (o.mode === 'wish' ? 'dans ta wishlist' : 'chez toi') : on ? '✓' : '+'}</i></button>`; };
-    const popular = () => { const by = new Map(dbList().map((e) => [E.norm(e.house) + '|' + E.norm(e.name), e])); return (window.INCONT || []).map((k) => by.get(k)).filter((e) => e && !e.ed); };
+    const popular = () => incList();
     const search = (qq) => { const nq = E.norm(qq), L = view(dbList(), true); return L.map((e) => { const n = E.norm(e.name), h = E.norm(e.house), nh = h + ' ' + n; const r = n === nq ? 0 : n.startsWith(nq) ? 1 : nh.startsWith(nq) ? 2 : n.includes(nq) ? 3 : nh.includes(nq) ? 4 : nq.split(' ').every((w) => nh.includes(w)) ? 5 : 9; return { e, r }; }).filter((x) => x.r < 9).sort((a, b) => a.r - b.r || (imgOf(b.e) ? 1 : 0) - (imgOf(a.e) ? 1 : 0) || (b.e.cat ? 1 : 0) - (a.e.cat ? 1 : 0)).slice(0, 80).map((x) => x.e); };
     const foot = () => { const n = sel.size; return `<div class="exp-foot"><span class="mono">${n ? n + ' choisi' + (n > 1 ? 's' : '') : 'Touche un parfum pour le choisir'}</span><button class="cta" id="xgo" ${n ? '' : 'disabled'}><span>${esc(o.cta(n))}</span></button></div>`; };
     function body() {
@@ -1099,7 +1111,8 @@
       return true;
     });
     const rank = (e) => { if (!nq) return 5; const n = E.norm(e.name); return n === nq ? 0 : n.startsWith(nq) ? 1 : E.norm(e.house + ' ' + e.name).startsWith(nq) ? 2 : n.includes(nq) ? 3 : 4; };
-    return r.sort((a, b) => rank(a) - rank(b) || (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0) || (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || a.name.localeCompare(b.name, 'fr'));
+    const oneHouse = !!SRCH.house && !nq;
+    return r.sort((a, b) => rank(a) - rank(b) || (oneHouse ? houseRank(a) - houseRank(b) : 0) || (imgOf(b) ? 1 : 0) - (imgOf(a) ? 1 : 0) || (b.cat ? 1 : 0) - (a.cat ? 1 : 0) || a.name.localeCompare(b.name, 'fr'));
   }
   function rowCard(e) {
     const d = window.DESC && window.DESC[e.name], inCol = S.collection.some((p) => E.norm(p.name) === E.norm(e.name)), inW = hasWish(e.name);
@@ -1216,7 +1229,7 @@
   const SD = { facet: 'brand', all: false };
   const ENVIES = [['Frais pour le bureau', 'frais pour le bureau'], ['Une soirée qui marque', 'une soirée qui marque, sillage fort'], ['Premier rendez-vous', 'premier rendez-vous, pas trop sucré'], ['Cocooning d\'hiver', 'vanille pour l\'hiver'], ['Chaleur d\'été', 'frais pour l\'été'], ['Original, qui ose', 'un parfum original et clivant'], ['Doux et propre', 'musc propre et doux'], ['Compléter ma collection', 'un parfum pour compléter ma collection']];
   const pCard = (e, badge) => `<button type="button" class="pc" data-ent="${esc(entryKey(e))}">${badge ? `<i class="pcm">${badge}</i>` : ''}${xThumb(e)}<b>${esc(e.name)}</b><small>${esc(e.house)}</small>${e.price ? `<em>≈ ${e.price} €</em>` : ''}</button>`;
-  const popularList = () => { const by = new Map(dbList().map((e) => [E.norm(e.house) + '|' + E.norm(e.name), e])); return (window.INCONT || []).map((k) => by.get(k)).filter((e) => e && !e.ed); };
+  const popularList = () => incList();
   const sFilters = () => SRCH.tags.length || SRCH.style || SRCH.price || SRCH.house || SRCH.note || SRCH.nose || SRCH.conc || SRCH.gen || SRCH.photo;
   function bindEnt(root) { const look = plLook(); $$('[data-ent]', root).forEach((b) => (b.onclick = () => { const e = look.get(b.dataset.ent); if (e) openEntry(e); })); }
   function viewSearch() {

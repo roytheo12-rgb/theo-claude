@@ -77,7 +77,16 @@ for f in sorted(x for x in (root / 'incoming').rglob('*') if x.is_file() and 'pl
     if c is None: bad.append(f.name + ' (fond non uni)'); continue
     bb = c.getbbox()
     if not bb: bad.append(f.name + ' (vide)'); continue
-    c = c.crop(bb); c.thumbnail((760, 760), Image.LANCZOS)
+    c = c.crop(bb)
+    # légende sous le flacon (« nom du parfum Maison » en blanc cassé) : on garde le premier bloc continu si le reste est petit
+    _al = np.asarray(c)[:, :, 3]; _r = np.where((_al > 20).sum(axis=1) > 2)[0]
+    if len(_r):
+        _end = _r[0]
+        for _x in _r[1:]:
+            if _x - _end > 6: break
+            _end = _x
+        if (_r[-1] - _end) > 0 and (_r[-1] - _end) < 0.2 * c.height: c = c.crop((0, 0, c.width, _end + 1))
+    c.thumbnail((760, 760), Image.LANCZOS)
     fn = f'img/p/{slug(t[0])}-{slug(t[1])}.webp'; c.save(root / 'v2' / fn, 'WEBP', quality=86, method=6)
     shots[norm(t[0]) + '|' + norm(t[1])] = fn; done.append(f.name)
 sh.write_text(json.dumps(shots, ensure_ascii=False, indent=0), encoding='utf-8')

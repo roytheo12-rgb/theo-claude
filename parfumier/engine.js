@@ -364,6 +364,9 @@
   // Maisons surtout populaires aux États-Unis : elles ne passent plus devant les icônes des playlists d'inspiration.
   const US_HYPE = new Set(['le labo', 'byredo', 'tom ford', 'kilian', 'glossier', 'phlur', 'kayali', 'bond no 9', 'ds durga', 'd s and durga', 'jo malone', 'jo malone london', 'ralph lauren', 'fenty', 'charlotte tilbury', 'maison margiela', 'by redo', 'marc jacobs', 'calvin klein', 'michael kors', 'coach', 'estee lauder', 'clinique', 'tommy hilfiger', 'donna karan', 'dkny', 'victoria s secret', 'bath body works', 'elizabeth arden', 'kenneth cole', 'guess', 'juicy couture', 'anna sui', 'sarah jessica parker', 'ariana grande', 'britney spears', 'skylar', 'sol de janeiro'].map(norm));
   const usHype = (c) => { const HA = root.HOUSE_ALIAS || {}; return US_HYPE.has(norm(HA[norm(c.house)] || c.house)); };
+  // Maisons qu'on met franchement en avant : très belle parfumerie. Frédéric Malle d'abord, Amouage ensuite.
+  const HOUSE_BOOST = { 'frederic malle': 2.9, 'amouage': 1.0 };
+  const houseBoost = (c) => { const HA = root.HOUSE_ALIAS || {}; return HOUSE_BOOST[norm(HA[norm(c.house)] || c.house)] || 0; };
   const nicheTop = (c) => { const HA = root.HOUSE_ALIAS || {}; return NICHE_TOP.has(norm(HA[norm(c.house)] || c.house)); };
   // Style d'achat : « luxe » (haut de gamme), « malin » (bons prix) ou rien. Retourne un score de -1 à 1 et si le parfum est à écarter franchement.
   function tierAdj(c, tier, price) {
@@ -475,7 +478,7 @@
     if (U && U.themeAff) { const ab = themeAffBonus(c, U.themeAff), kw = st.sitAff && st.prestige ? 1.8 : .8; max += st.sitAff && st.prestige ? 2 : 1; s += ab.v * kw; if (ab.why && !why.some((x) => /univers/.test(x))) why.push(ab.why); }
     if (max <= 0) { max = 4; s += clamp(Object.values(o.acc).length, 0, 3); }
     max += 1.2; s += 1.2 * fameOf(c);
-    if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; else if (usHype(c)) s -= .8; }
+    if (st.prestige) { max += 1; if (nicheTop(c)) s += 1; else if (usHype(c)) s -= .8; s += .4 * houseBoost(c); }
     if (st.prestige && (st.tier === 'luxe' || st.tier === 'malin')) { const ta = tierAdj(c, st.tier); max += 1.6; s += 1.6 * Math.max(ta.v, -1) + (ta.v < 0 ? 0 : 0); }
     { const pv = provenOf(c); if (pv.v) { max += 0.8; s += 0.8 * pv.v; if (pv.n >= 4 && !why.some((x) => /univers|tout en haut/.test(x))) why.push('cité dans ' + pv.n + ' playlists d\'inspiration'); } }
     const asked = new Set([...need.fams, ...need.like.flatMap((k) => noteHits(norm(k)))]);
@@ -1160,7 +1163,7 @@
       const tA = themeAffBonus(c, THAFF), tO = themeBonus(c, OCCTH, 1.2); fv += tA.v * (settings.sitAff ? 3 : .8) + tO.v * .5;
       if (!fwhy) fwhy = tA.why || (tO.v >= .4 ? tO.why : '');
       const pvn = provenOf(c);
-      const tr = tierAdj(c, settings.tier), total = t.s + 2.2 * tr.v + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige ? (nicheTop(c) ? 1.5 : usHype(c) ? -1.6 : 0) : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 1.5 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
+      const tr = tierAdj(c, settings.tier), total = t.s + 2.2 * tr.v + (settings.looseColl ? .12 : 1.2) * gap + (settings.prestige ? (nicheTop(c) ? 1.5 : usHype(c) ? -1.6 : 0) + houseBoost(c) : 0) + Math.min(3, mates.length) * (settings.looseColl ? .1 : .4) + 0.9 * fameOf(c) + 1.5 * pvn.v + (af != null ? 4.5 * af : 0) + jit + (wishedSet.has(norm(c.name)) ? 0.3 : 0) + sFit + budFit + tierFit + hf + fv;
       out.push({
         c, proven: pvn.n, taste: t.s, hits: t.hits, gap, gapLabel: gapMax >= 1.5 ? gapLabel : null, mates: mates.slice(0, 3),
         total, axisFit: af, axisWhy: why, pitch: (profOf(c) || {}).pitch || '', diff: (profOf(c) || {}).diff || '', pct: matchPct(af, t.s, gapMax, sFit, budget > 0 && c.price > budget, budget > 0 && c.price > 0 && c.price <= budget, hf, wishedSet.has(norm(c.name))), overBudget: budget > 0 && c.price > budget,

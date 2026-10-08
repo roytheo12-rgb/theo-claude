@@ -1,0 +1,530 @@
+# Ordre d'affichage des parfums d'une maison quand aucune recommandation précise ne s'applique (recherche, explorer, fiches de maison).
+# Un « ## Maison » puis un parfum par ligne, du plus important au moins important. Les parfums de la maison non cités viennent ensuite dans l'ordre habituel.
+# Les maisons citées passent aussi en tête de « Toutes les maisons », dans cet ordre.
+## Chanel
+Coromandel
+Le Lion de Chanel
+Sycomore
+Bois des Îles
+Cuir de Russie
+1957
+31 Rue Cambon
+Bleu de Chanel Parfum
+Coco Mademoiselle Intense
+N°5 Eau de Parfum
+## Dior
+Bois d'Argent
+Ambre Nuit
+Oud Ispahan
+Gris Dior
+Tobacolor
+Vanilla Diorama
+Jasmin des Anges
+Sauvage Elixir
+Dior Homme Intense
+Fahrenheit
+## Yves Saint Laurent
+Tuxedo
+Babycat
+6 Place Saint Sulpice
+Caftan
+Caban
+Tuxedo Absolu
+Blouse
+Y Eau de Parfum
+La Nuit de L'Homme Bleu Électrique
+Libre Eau de Parfum
+## Guerlain
+Spiritueuse Double Vanille
+Angélique Noire
+Cuir Béluga
+Tobacco Honey
+Rose Barbare
+Néroli Plein Sud
+Bois d'Arménie
+L'Homme Idéal Eau de Parfum
+Mon Guerlain Eau de Parfum
+Shalimar Eau de Parfum
+## Hermès
+Ambre Narguilé
+Poivre Samarcande
+Osmanthe Yunnan
+Santal Massoïa
+Vetiver Tonka
+Rose Ikebana
+Myrrhe Eglantine
+Terre d'Hermès Eau de Toilette
+H24 Eau de Parfum
+Un Jardin sur le Nil
+## Tom Ford
+Oud Wood
+Tobacco Vanille
+Ebène Fumé
+Beau de Jour
+Oud Minérale
+Vanille Fatale
+Lost Cherry
+Ombré Leather
+Noir Extreme
+Costa Azzurra
+## Armani
+Bois d'Encens
+Rouge Malachite
+Myrrhe Impériale
+Santal Dan Sha
+Oud Royal
+Cuir Majesté
+Ambre Eccentrico
+Acqua di Giò Profondo
+Armani Code Parfum
+Stronger With You Intensely
+## Louis Vuitton
+Ombre Nomade
+Les Sables Roses
+Météore
+Orage
+Imagination
+L'Immensité
+Ambre des Merveilles
+Afternoon Swim
+Pacific Chill
+On The Beach
+## Jean Paul Gaultier
+Le Male Elixir
+Le Beau Le Parfum
+Le Male Le Parfum
+Scandal Pour Homme Le Parfum
+La Belle Le Parfum
+Classique Essence de Parfum
+Gaultier Divine
+Le Male Eau de Toilette
+Ultra Male
+La Belle Eau de Parfum
+## Byredo
+Vanille Antique
+Reine de Nuit
+Bibliothèque
+Sellier
+Mojave Ghost
+Black Saffron
+De Los Santos
+Bal d'Afrique
+Gypsy Water
+Blanche
+## Le Labo
+Gaiac 10
+Vanille 44
+Poivre 23
+Mousse de Chêne 30
+Tabac 28
+Musc 25
+Thé Noir 29
+Santal 33
+Another 13
+Rose 31
+## Maison Francis Kurkdjian
+Baccarat Rouge 540
+Grand Soir
+Gentle Fluidity Gold
+Oud Silk Mood
+Oud
+Oud Cashmere Mood
+Amyris Homme Extrait
+Baccarat Rouge 540 Extrait
+Oud Satin Mood Extrait
+Aqua Universalis
+## Diptyque
+Eau Duelle Eau de Parfum
+34 Boulevard Saint-Germain
+Tempo
+Philosykos Eau de Parfum
+Orphéon
+Eau Capitale
+Fleur de Peau
+Do Son
+L'Eau Papier
+Tam Dao
+## Maison Margiela
+Jazz Club
+By the Fireplace
+Under the Stars
+Autumn Vibes
+Whispers in the Library
+Coffee Break
+Matcha Meditation
+Lazy Sunday Morning
+Beach Walk
+Bubble Bath
+## Jo Malone
+Myrrh & Tonka
+Velvet Rose & Oud
+Scarlet Poppy
+Oud & Bergamot
+Vetiver & Golden Vanilla
+Dark Amber & Ginger Lily
+Tuberose Angelica
+Wood Sage & Sea Salt
+English Pear & Freesia
+Lime Basil & Mandarin
+## Creed
+Royal Oud
+Green Irish Tweed
+Silver Mountain Water
+Original Santal
+Original Vetiver
+Royal Princess Oud
+Neroli Sauvage
+Aventus
+Aventus for Her
+Virgin Island Water
+## Parfums de Marly
+Carlisle
+Herod
+Haltane
+Althaïr Exclusif
+Delina Exclusif
+Oajan
+Layton Exclusif
+Layton
+Delina
+Althaïr
+## Kilian
+Angels' Share
+Black Phantom
+Straight to Heaven
+Sacred Wood
+Intoxicated
+Old Fashioned
+Angels' Share on the Rocks
+Love, Don't Be Shy
+Good Girl Gone Bad
+Princess
+## Frédéric Malle
+The Moon
+Portrait of a Lady
+Musc Ravageur
+Carnal Flower
+Promise
+French Lover
+Monsieur.
+Bigarade
+En Passant
+## Contes de Parfums
+Tabac Rouge
+Milano
+Cuba
+Dubai
+Londres => London
+Tel Aviv
+New York
+Rome
+Buenos Aires
+Los Angeles
+## Les Eaux Primordiales
+Vanille Supermassive
+Bois d'Ascèse
+Superclassique
+Tonka Extrême
+Rose Supercritique => Rose Supercritical
+Iris Palladium
+Encens Asakusa
+Héliotrope Milky
+Aqua Millefolia
+Ambre Superfluide
+## D'Orsay
+Dandy => Le Dandy
+J'ai l'air
+Tilleul
+Sur tes lèvres
+Vouloir être ailleurs
+Chypre
+Mille Ivresses
+Lointaine
+À cœur perdu
+Désirée
+## Place de la Rêverie
+Santal de Paris
+Fève Nectar
+Passion Riviera
+## Giardini di Toscana
+Bianco Latte
+Borea
+Celeste
+Blu Indaco
+Shabby Chic
+Capri
+Rosae
+Terra
+Borabora
+Adèle
+## Ella K
+Reflet sur l'Okavango
+Lettre de Pushkar
+Harmattan
+Ghibli
+Kandahar
+Camélia Intrépide
+Fugue en Syrie
+Aqua Mysteri
+Pluie sur Ha Long
+Musc K
+## Dries Van Noten
+Soie Malaquais
+Fleur du Mal
+Rock the Myrrh
+Havana Gold
+Raving Rose
+Vanille Camouflage
+Velvet Violet
+Santal Greenery
+Jardin de l'Orangerie
+Neon Garden
+## Clive Christian
+No. 1 Masculine
+X Masculine => X For Men
+1872 Masculine => 1872 For Men
+Jump Up and Kiss Me Hedonistic
+Rock Rose
+Town & Country
+Crab Apple Blossom
+No. 1 Feminine
+X Feminine => X For Women
+1872 Feminine => 1872 For Women
+## Oman Luxury
+Royal Incense
+Oud Aquilaria
+Paramour
+Impression
+Oud Osmanthus
+Molamola
+Overture
+Oud Al Mukhallat
+Kashmir
+Aurum
+## Initio
+Oud for Greatness
+Side Effect
+Atomic Rose
+Paragon
+Rehab
+Blessed Baraka
+Mystic Experience
+Musk Therapy
+High Frequency
+Psychedelic Love
+## Nishane
+Ani
+Hacivat
+Hundred Silent Ways
+Wulong Cha
+Fan Your Flames
+Ani X
+Hacivat X
+Nefs
+Ege
+Ambra Calabria
+## Amouage
+Guidance 46
+Reflection 45
+Overture Man
+Jubilation XXV
+Interlude Black Iris
+Enclave
+Purpose
+Reflection Man
+Interlude Man
+Guidance
+## Xerjoff
+Alexandria II
+Naxos
+Torino21
+40 Knots
+Cruz del Sur II
+Italica
+Richwood
+Erba Pura
+La Capitale
+Erba Gold
+## Acqua di Parma
+Colonia Oud
+Leather
+Mirto di Panarea
+Sandalo
+Osmanthus
+Quercia
+Yuzu
+Colonia
+Fico di Amalfi
+Arancia di Capri
+## Penhaligon's
+The Tragedy of Lord George
+Halfeti
+Halfeti Leather
+The Blazing Mr Sam
+The Inimitable William Penhaligon
+The Bewitching Yasmine
+The Uncompromising Sohan
+Endymion
+Juniper Sling
+Quercus
+## Serge Lutens
+Chergui
+Ambre Sultan
+Fille en Aiguilles
+Borneo 1834
+La Couche du Diable
+Un Bois Vanille
+Five O'Clock Au Gingembre
+Féminité du Bois
+La Religieuse
+Noir de Noir
+## L'Artisan Parfumeur
+Timbuktu
+Tea for Two
+Un Air de Bretagne
+Passage d'Enfer
+Premier Figuier Extrême
+Mûre et Musc Extrême
+Couleur Vanille
+Histoire d'Orangers
+L'Eau d'Ambre
+Premier Figuier
+## Maison Crivelli
+Hibiscus Mahajád
+Oud Maracujá
+Papyrus Moléculaire
+Iris Malikhân
+Rose Saltifolia
+Santal Volcanique
+Ingredients 07/2012
+Hibiscus Mahajád Extrait
+Bois Datcha
+Absinthe Boréale
+## Ex Nihilo
+Fleur Narcotique Extrait
+Gold Immortals
+Blue Talisman
+The Hedonist
+Honoré Delights
+Speed Legends
+Santal Calling
+Fleur Narcotique
+Lust in Paradise
+Vesper Glitz
+## BDK Parfums
+Gris Charnel Extrait
+Tabac Rose
+Vanille Leather
+Rouge Smoking Extrait
+Crème de Cuir
+Villa Neroli
+Sel d'Argent
+Gris Charnel
+Pas Ce Soir
+Rouge Smoking
+## Marc-Antoine Barrois
+Ganymede
+Ganymede Extrait
+Encelade
+Aldebaran
+Tilia
+B683
+## Matière Première
+Santal Austral Extrait
+Radical Rose Extrait
+Falcon Leather Extrait
+Crystal Saffron Extrait
+Vanilla Powder
+Encens Suave Extrait
+Bois d'Ébène
+Parisian Musc
+Santal Austral
+Radical Rose
+## Memo Paris
+African Leather
+Italian Leather
+Iberian Leather
+French Leather
+Ocean Leather
+Sintra
+Marfa
+Winter Palace
+Inlé
+Lalibela
+## Houbigant
+Fougère Royale
+Quelques Fleurs
+Duc de Vervins
+Cologne Intense
+Orangers en Fleurs
+Ambre des Abysses
+Bois Mystique
+Fougère Royale Eau de Parfum
+Duc de Vervins Eau de Toilette
+Quelques Fleurs L'Original
+## Essential Parfums
+Bois Impérial
+Bois Impérial Extrait
+Divine Vanille
+Orange X Santal
+Nice Bergamote
+The Musc
+Rose Magnetic
+Fig Infusion
+Mon Vetiver
+Nice Bergamote Extrait
+## Parfum d'Empire
+Ambre Russe
+Azemour les Orangers
+Eau Suave
+Wazamba
+Tabac Tabou
+Le Cri
+Cuir Ottoman
+Corsica Furiosa
+Yuzu Fou
+Aziyadé
+## Horace
+Vetiver
+Ambre
+Cèdre
+Épices
+Patchouli
+Cuir
+Bois
+Cologne
+Sport
+Original
+## Une Nuit Nomade
+Ambre Khandjar
+Sugar Leather
+Jardins de Misfah
+Nothing But Sea And Sky
+Jardin de Bormes
+Sun Bleached
+Mr. Vetiver
+Sune Bayo
+Memory Motel
+Flamenco Néroli
+## Floraïku
+One Umbrella for Two
+Between Two Trees
+I Am Coming Home
+The Mountain Standing Still
+Sleeping on the Roof
+My Shadow
+First Dream of the Year
+Dear Diary
+Cricket Song
+Forbidden Incense
+## Les Indémodables
+Vanille Havane
+Cuir de Chine
+Iris Perle
+Musc Tonkin
+Chypre Azural
+Fougère Emeraude
+Oriental Velours
+Ambre Suave
+Rose de Jamal
+Jardins de Kérylos

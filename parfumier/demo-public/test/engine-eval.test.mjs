@@ -149,3 +149,11 @@ assert.equal(fail, 0, fail + ' besoin(s) en dessous du seuil');
   assert.notDeepEqual(a, b, 'les situations changent la liste');
   console.log('ok voyage : les ambiances choisies orientent les conseils (' + b.slice(0, 4).join(', ') + ')');
 }
+
+// ── Frédéric Malle est mis en avant dans les conseils, et « Superstitious » n'existe pas ──
+{
+  const r = E.recommend(P, [], [], { gender: 'm', age: 30, seed: 'fm', prestige: true, looseColl: true, liked: ['vanille'] }).sort((a, b) => b.total - a.total).slice(0, 14);
+  assert.ok(r.filter((x) => /malle/i.test(x.c.house)).length >= 3, 'Frédéric Malle bien représenté dans les conseils');
+  assert.ok(!P.some((c) => /superstitious/i.test(c.name)), 'Superstitious (Frédéric Malle) a disparu');
+  console.log('ok Frédéric Malle en avant, Superstitious retiré');
+}
