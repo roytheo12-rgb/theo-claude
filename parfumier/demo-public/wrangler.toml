@@ -22,6 +22,7 @@ IDENT_IP_MAX_PER_DAY = "40" # analyses par adresse IP et par jour
 IDENT_DAILY_CAP = "600"     # analyses au total par jour
 MAX_TRIES = "2"             # essais par visiteur
 IP_MAX_PER_DAY = "6"        # essais par adresse IP et par jour (contourne les visiteurs qui changent de navigateur)
+ADMIN_EMAILS = "roytheo12@gmail.com"  # ce compte devient « éditeur » (un courriel n'est pas un secret)
 DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confondus : ton plafond de dépense
 # Secrets à définir en ligne de commande (jamais dans ce fichier) :
 #   npx wrangler secret put ANTHROPIC_API_KEY
@@ -34,3 +35,12 @@ DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confond
 # Secrets à définir en ligne de commande :
 #   npx wrangler secret put WHOP_API_KEY      (clé API Whop, droit member:basic:read)
 #   npx wrangler secret put ADMIN_EMAILS      (ton email : ce compte devient « éditeur »)
+
+# --- Sauvegarde quotidienne (facultatif mais conseillé) ---
+# 1) npx wrangler r2 bucket create sillage-backups   2) décommente les lignes ci-dessous
+# [[r2_buckets]]
+# binding = "BACKUPS"
+# bucket_name = "sillage-backups"
+# [triggers]
+# crons = ["17 3 * * *"]
+# Courriel (confirmation d'adresse, mot de passe oublié) : npx wrangler secret put RESEND_API_KEY ; MAIL_FROM = "Sillage <bonjour@ton-domaine.fr>"

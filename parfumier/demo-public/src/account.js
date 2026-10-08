@@ -4,8 +4,8 @@
 // Ce que chaque offre permet. Les chiffres viennent de l'analyse de rentabilité (docs/RENTABILITE.md) ; ajuste-les ici, rien d'autre à changer.
 export const PLANS = {
   free: { label: 'Gratuit', adv: 3, chat: 20, ident: 15, col: 12, insp: 2, publish: false },
-  premium: { label: 'Premium', adv: 60, chat: 300, ident: 200, col: 100000, insp: 30, publish: true },
-  founder: { label: 'Membre fondateur', adv: 60, chat: 300, ident: 200, col: 100000, insp: 30, publish: true },
+  premium: { label: 'Premium', adv: 40, chat: 200, ident: 150, col: 100000, insp: 30, publish: true },
+  founder: { label: 'Membre fondateur', adv: 40, chat: 200, ident: 150, col: 100000, insp: 30, publish: true },
   admin: { label: 'Éditeur', adv: 100000, chat: 100000, ident: 100000, col: 100000, insp: 100000, publish: true },
 };
 const GOOD_STATUS = ['active', 'trialing', 'past_due', 'completed'];   // Whop : past_due = période de grâce, completed = achat unique (fondateur)
@@ -17,7 +17,7 @@ const month = () => new Date().toISOString().slice(0, 7);
 const jparse = (s, d) => { try { return s ? JSON.parse(s) : d; } catch (e) { return d; } };
 
 export function makeAccount(h) {
-  const { kv, env, reply, clean, hex, fullSha, randHex, int, deps } = h;
+  const { kv, env, reply, clean, hex, fullSha, randHex, int, deps, sendMail, track, mailVerify } = h;
   // Les limites de chaque offre se règlent par variable d'environnement (FREE_ADV, PREMIUM_ADV…), sans toucher au code.
   const plans = Object.fromEntries(Object.entries(PLANS).map(([k, v]) => [k, Object.assign({}, v, ['adv', 'chat', 'ident', 'col', 'insp'].reduce((o, f) => { const e = env[(k === 'founder' ? 'PREMIUM' : k.toUpperCase()) + '_' + f.toUpperCase()]; if (e !== undefined && k !== 'admin') o[f] = int(e, v[f]); return o; }, {}))]));
   const adminEmails = String(env.ADMIN_EMAILS || '').toLowerCase().split(/[\s,;]+/).filter(Boolean);
@@ -67,15 +67,15 @@ export function makeAccount(h) {
   async function meter(request, kind) {
     const a = await auth(request); if (!a) return null;
     const acct = await acctOf(a.id); if (!acct) return null;
-    const p = await planOf(a.id, acct.email), lim = plans[p.plan][kind], u = await usageOf(a.id);
-    return { ok: u[kind] < lim, plan: p.plan, left: Math.max(0, lim - u[kind]), commit: async () => { u[kind] += 1; await kv.put(usageKey(a.id), JSON.stringify(u), { expirationTtl: 60 * 60 * 24 * 70 }); } };
+    const p = await planOf(a.id, acct.email), lim = plans[p.plan][kind], u = await usageOf(a.id), unverified = acct.verified === false;
+    return { ok: !unverified && u[kind] < lim, verify: unverified, plan: p.plan, left: unverified ? 0 : Math.max(0, lim - u[kind]), commit: async () => { u[kind] += 1; await kv.put(usageKey(a.id), JSON.stringify(u), { expirationTtl: 60 * 60 * 24 * 70 }); } };
   }
 
   async function me(a) {
     const acct = await acctOf(a.id); if (!acct) return null;
     const p = await planOf(a.id, acct.email), u = await usageOf(a.id), prof = jparse(await kv.get(`prof:${a.id}`), {});
     const L = plans[p.plan];
-    return { email: acct.email, plan: p.plan, label: L.label, status: p.status, until: p.until || null, expired: !!p.expired, admin: p.plan === 'admin', limits: { adv: L.adv, chat: L.chat, ident: L.ident, col: L.col, insp: L.insp, publish: L.publish }, usage: u, profile: { pseudo: prof.pseudo || '', avatar: prof.avatar || '', bio: prof.bio || '' } };
+    return { email: acct.email, verified: acct.verified !== false, plan: p.plan, label: L.label, status: p.status, until: p.until || null, expired: !!p.expired, admin: p.plan === 'admin', limits: { adv: L.adv, chat: L.chat, ident: L.ident, col: L.col, insp: L.insp, publish: L.publish }, usage: u, profile: { pseudo: prof.pseudo || '', avatar: prof.avatar || '', bio: prof.bio || '' } };
   }
 
   const cleanItems = (items, max) => (Array.isArray(items) ? items : []).slice(0, max).map((x) => ({ n: clean(x && x.n, 80), h: clean(x && x.h, 60) })).filter((x) => x.n.length >= 2);
@@ -100,6 +100,19 @@ export function makeAccount(h) {
     await kv.put('content', text); return c;
   }
 
+  // Règles de la communauté : ni lien, ni adresse, ni insulte. Le reste se règle par signalement.
+  const BAD = /(https?:|www\.|@|\.(com|fr|net|org|io|ru)\b|connard|salope|\bpute\b|enculé|encule|nazi|\bfdp\b|\bntm\b|\bpd\b|nègre|negre)/i;
+  const breaksRules = (...t) => t.some((x) => BAD.test(String(x || '')));
+  const eachKey = async (prefix, fn) => { let cursor; do { const page = await kv.list({ prefix, cursor }); for (const k of page.keys) await fn(k.name); cursor = page.list_complete ? undefined : page.cursor; } while (cursor); };
+  // Suppression complète d'un compte : tout ce qui le concerne disparaît (les sauvegardes sont détruites au plus tard 14 jours plus tard).
+  async function erase(id) {
+    const plan = jparse(await kv.get(`plan:${id}`), null);
+    if (plan && plan.license) await kv.delete(`lic:${await fullSha(plan.license)}`);
+    for (const k of [`acct:${id}`, `data:${id}`, `prof:${id}`, `plan:${id}`]) await kv.delete(k);
+    await eachKey(`u:${id}:`, (k) => kv.delete(k));
+    await eachKey('comm:', async (k) => { const r = jparse(await kv.get(k), null); if (r && r.author === id) await kv.delete(k); });
+  }
+
   // Retourne une Response si la route est la sienne, sinon null.
   async function handle(request, url) {
     const path = url.pathname, method = request.method;
@@ -108,7 +121,35 @@ export function makeAccount(h) {
 
     if (path === '/api/content' && method === 'GET') { const c = await content(); return new Response(JSON.stringify(c), { headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-cache' } }); }
 
+    // ---- Confirmation de l'adresse courriel (lien reçu à l'inscription)
+    if (path === '/api/account/verify' && method === 'POST') {
+      const b = await body(); const tk = String(b && b.token || ''); if (!/^[a-f0-9]{64}$/.test(tk)) return reply({ code: 'token' }, 400);
+      const k = `ver:${await fullSha(tk)}`, id = await kv.get(k); if (!id) return reply({ code: 'token' }, 400);
+      const rec = await acctOf(id); if (!rec) return reply({ code: 'token' }, 400);
+      if (rec.verified === false) { rec.verified = true; await kv.put(`acct:${id}`, JSON.stringify(rec)); await track('verify'); }
+      await kv.delete(k); return reply({ ok: true });
+    }
+    // ---- Messages au support (connecté ou non)
+    if (path === '/api/support' && method === 'POST') {
+      const b = await body(); const msg = clean(b && b.message, 1200); if (msg.length < 5) return reply({ code: 'message' }, 400);
+      const au = await auth(request), acct0 = au ? await acctOf(au.id) : null, email = acct0 ? acct0.email : clean(b.email, 120).toLowerCase();
+      if (!acct0 && !/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,}$/.test(email)) return reply({ code: 'email' }, 400);
+      const who = au ? au.id : 'anon';
+      if (!(await rate(who + h.ipHash, 'sup', 5))) return reply({ code: 'rate' }, 429);
+      const id = Date.now().toString(36) + randHex(3);
+      await kv.put(`sup:${id}`, JSON.stringify({ id, email, message: msg, kind: clean(b.kind, 20) || 'question', ts: Date.now() }), { expirationTtl: 60 * 60 * 24 * 365 });
+      if (adminEmails.length) await sendMail(adminEmails, 'Sillage : nouveau message de ' + email, `<p><b>${email}</b></p><p>${msg.replace(/</g, '&lt;')}</p>`);
+      return reply({ ok: true });
+    }
+
     const a = await auth(request);
+    if (path === '/api/track' && method === 'POST') { if (!a) return reply({ code: 'auth' }, 401); const b = await body(); if (b && ['voyage'].includes(b.e)) await track(b.e); return reply({ ok: true }); }
+    if (path === '/api/account/resend' && method === 'POST') {
+      if (!a) return reply({ code: 'auth' }, 401); const acct = await acctOf(a.id); if (!acct) return reply({ code: 'auth' }, 401);
+      if (acct.verified !== false) return reply({ ok: true, verified: true });
+      if (!(await rate(a.id, 'rsd', 3))) return reply({ code: 'rate' }, 429);
+      const sent = await mailVerify(a.id, acct.email); return reply({ ok: true, sent });
+    }
     // ---- Compte : profil, offre, licence
     if (path === '/api/account/me' && method === 'GET') { if (!a) return reply({ code: 'auth' }, 401); const m = await me(a); return m ? reply(m) : reply({ code: 'auth' }, 401); }
     if (path === '/api/account/activate' && method === 'POST') {
@@ -122,6 +163,7 @@ export function makeAccount(h) {
       if (owner && owner !== a.id) return reply({ code: 'taken' }, 409);
       await kv.put(lk, a.id);
       await kv.put(`plan:${a.id}`, JSON.stringify({ plan: v.plan, license: lic, status: v.status, valid: true, until: v.until, checkedAt: Date.now(), since: Date.now() }));
+      await track('activate');
       return reply({ ok: true, me: await me(a) });
     }
     if (path === '/api/account/profile' && method === 'PUT') {
@@ -150,6 +192,7 @@ export function makeAccount(h) {
       const prof = jparse(await kv.get(`prof:${a.id}`), {}); if (!prof.pseudo) return reply({ code: 'pseudo' }, 400);
       const b = await body(); if (!b) return reply({ code: 'json' }, 400);
       const title = clean(b.title, 60), items = cleanItems(b.items, 30); if (title.length < 3 || items.length < 2) return reply({ code: 'content' }, 400);
+      if (breaksRules(title, b.desc)) return reply({ code: 'rules' }, 400);
       if (!(await rate(a.id, 'pub', 12))) return reply({ code: 'rate' }, 429);
       const id = clean(b.id, 24).replace(/[^a-z0-9]/gi, '') || randHex(8), prev = jparse(await kv.get(`comm:${id}`), null);
       if (prev && prev.author !== a.id) return reply({ code: 'taken' }, 409);
@@ -176,17 +219,46 @@ export function makeAccount(h) {
       const r = await editContent(b); if (!r) return reply({ code: 'bad_op' }, 400); if (r === 'too_big') return reply({ code: 'too_big' }, 413);
       return reply({ ok: true, v: r.v });
     }
+    const adminOnly = async () => { if (!a) return null; const acct = await acctOf(a.id); return acct && adminEmails.includes(acct.email) ? acct : null; };
     if (path === '/api/admin/stats' && method === 'GET') {
-      if (!a) return reply({ code: 'auth' }, 401);
-      const acct = await acctOf(a.id); if (!acct || !adminEmails.includes(acct.email)) return reply({ code: 'forbidden' }, 403);
-      const out = { accounts: 0, plans: {}, usage: { adv: 0, chat: 0, ident: 0 } }; let cursor;
-      do { const page = await kv.list({ prefix: 'plan:', cursor }); for (const k of page.keys) { const r = jparse(await kv.get(k.name), {}); const p = r.valid === false ? 'expired' : r.plan; out.plans[p] = (out.plans[p] || 0) + 1; } cursor = page.list_complete ? undefined : page.cursor; } while (cursor);
-      cursor = undefined; do { const page = await kv.list({ prefix: 'acct:', cursor }); out.accounts += page.keys.length; cursor = page.list_complete ? undefined : page.cursor; } while (cursor);
-      cursor = undefined; do { const page = await kv.list({ prefix: `u:`, cursor }); for (const k of page.keys) { if (!k.name.endsWith(':' + month())) continue; const u = jparse(await kv.get(k.name), {}); out.usage.adv += u.adv || 0; out.usage.chat += u.chat || 0; out.usage.ident += u.ident || 0; } cursor = page.list_complete ? undefined : page.cursor; } while (cursor);
+      if (!(await adminOnly())) return reply({ code: a ? 'forbidden' : 'auth' }, a ? 403 : 401);
+      const out = { accounts: 0, verified: 0, plans: {}, usage: { adv: 0, chat: 0, ident: 0 }, days: [], aiCostUsd: 0 };
+      await eachKey('plan:', async (k) => { const r = jparse(await kv.get(k), {}); const p = r.valid === false ? 'expired' : r.plan; out.plans[p] = (out.plans[p] || 0) + 1; });
+      await eachKey('acct:', async (k) => { const r = jparse(await kv.get(k), {}); out.accounts++; if (r.verified !== false) out.verified++; });
+      await eachKey('u:', async (k) => { if (!k.endsWith(':' + month())) return; const u = jparse(await kv.get(k), {}); out.usage.adv += u.adv || 0; out.usage.chat += u.chat || 0; out.usage.ident += u.ident || 0; });
+      for (let i = 0; i < 14; i++) { const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10), c = jparse(await kv.get(`m:${d}`), {}); out.days.push({ d, signup: c.signup || 0, verify: c.verify || 0, activate: c.activate || 0, voyage: c.voyage || 0 }); }
+      out.aiCostUsd = Math.round((out.usage.adv * 0.03 + out.usage.chat * 0.0005 + out.usage.ident * 0.0003) * 100) / 100;   // estimation
       return reply(out);
     }
+    if (path === '/api/admin/support' && method === 'GET') { if (!(await adminOnly())) return reply({ code: 'forbidden' }, 403); const items = []; await eachKey('sup:', async (k) => { const r = jparse(await kv.get(k), null); if (r) items.push(r); }); items.sort((x, y) => y.ts - x.ts); return reply({ items: items.slice(0, 60) }); }
+    const sm = path.match(/^\/api\/admin\/support\/([a-z0-9]{4,24})$/i);
+    if (sm && method === 'DELETE') { if (!(await adminOnly())) return reply({ code: 'forbidden' }, 403); await kv.delete(`sup:${sm[1]}`); return reply({ ok: true }); }
+    // Modération : les inspirations signalées ou masquées, à rétablir ou supprimer
+    if (path === '/api/admin/moderation' && method === 'GET') { if (!(await adminOnly())) return reply({ code: 'forbidden' }, 403); const items = []; await eachKey('comm:', async (k) => { const r = jparse(await kv.get(k), null); if (r && (r.reports || r.hidden)) items.push({ id: r.id, title: r.title, desc: r.desc, pseudo: r.pseudo, reports: r.reports || 0, hidden: !!r.hidden }); }); return reply({ items }); }
+    const mm = path.match(/^\/api\/admin\/moderation\/([a-z0-9]{4,24})$/i);
+    if (mm && method === 'POST') { if (!(await adminOnly())) return reply({ code: 'forbidden' }, 403); const b = await body(); const r = jparse(await kv.get(`comm:${mm[1]}`), null); if (!r) return reply({ code: 'not_found' }, 404); if (b && b.action === 'delete') await kv.delete(`comm:${mm[1]}`); else if (b && b.action === 'restore') { r.hidden = false; r.reports = 0; await kv.put(`comm:${mm[1]}`, JSON.stringify(r)); } else return reply({ code: 'bad_op' }, 400); return reply({ ok: true }); }
+    // Sauvegarde à la demande (téléchargement depuis l'appli, réservé à l'éditeur)
+    if (path === '/api/admin/backup' && method === 'GET') { if (!(await adminOnly())) return reply({ code: 'forbidden' }, 403); const dump = await dumpAll(kv); return new Response(JSON.stringify(dump), { headers: { 'content-type': 'application/json; charset=utf-8', 'content-disposition': `attachment; filename="sillage-sauvegarde-${new Date().toISOString().slice(0, 10)}.json"`, 'cache-control': 'no-store' } }); }
     return null;
   }
 
-  return { handle, meter, auth, planOf, me };
+  return { handle, meter, auth, planOf, me, erase };
+}
+
+// ---- Sauvegarde : tout ce qui ne se reconstruit pas (sessions et compteurs de limites exclus)
+const BACKUP_PREFIXES = ['acct:', 'plan:', 'prof:', 'data:', 'comm:', 'lic:', 'sup:', 'm:', 'u:', 'email:', 'ent:', 'cand:'];
+export async function dumpAll(kv) {
+  const out = { v: 1, at: new Date().toISOString(), keys: {} };
+  for (const prefix of BACKUP_PREFIXES) { let cursor; do { const page = await kv.list({ prefix, cursor }); for (const k of page.keys) { const v = await kv.get(k.name); if (v !== null) out.keys[k.name] = v; } cursor = page.list_complete ? undefined : page.cursor; } while (cursor); }
+  const c = await kv.get('content'); if (c !== null) out.keys.content = c;
+  return out;
+}
+// Écrit la sauvegarde du jour dans R2 (dépôt BACKUPS) et détruit celles de plus de 14 jours. Sans R2, ne fait rien.
+export async function runBackup(env) {
+  if (!env.BACKUPS || !env.SILLAGE) return { ok: false, reason: 'no_r2' };
+  const day = new Date().toISOString().slice(0, 10);
+  await env.BACKUPS.put(`sillage-${day}.json`, JSON.stringify(await dumpAll(env.SILLAGE)));
+  const keep = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10), list = await env.BACKUPS.list({ prefix: 'sillage-' });
+  for (const o of list.objects || []) { const d = o.key.slice(8, 18); if (d < keep) await env.BACKUPS.delete(o.key); }
+  return { ok: true, day };
 }

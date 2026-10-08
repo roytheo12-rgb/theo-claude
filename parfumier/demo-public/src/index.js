@@ -2,7 +2,7 @@
 // limite chaque visiteur à MAX_TRIES essais et récolte les inscriptions.
 import Anthropic from '@anthropic-ai/sdk';
 import { dayPrompt, identifyPrompt, needPrompt } from './prompt.mjs';
-import { makeAccount } from './account.js';
+import { makeAccount, runBackup } from './account.js';
 
 const JSON_H = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
 const reply = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: JSON_H });
@@ -67,13 +67,19 @@ export function makeWorker(deps = {}) {
       const ipKey = `ip:${ipHash}:${today()}`, ipIdentKey = `ipi:${ipHash}:${today()}`;
 
       // ---- Comptes, offres Whop, profil, communauté, éditeur
-      const acc = makeAccount({ kv, env, reply, clean, hex, fullSha, randHex, int, deps });
+      const doFetch = deps.fetch || ((...x) => fetch(...x));
+      // Courriel via Resend (si RESEND_API_KEY et MAIL_FROM sont définis) ; renvoie false si rien n'est configuré ou si l'envoi échoue.
+      const sendMail = async (to, subject, html) => { if (!env.RESEND_API_KEY || !env.MAIL_FROM) return false; try { const r = await doFetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify({ from: env.MAIL_FROM, to: [].concat(to), subject, html }) }); return !!(r && r.ok !== false); } catch (e) { return false; } };
+      // Compteurs du jour (inscriptions, confirmations, activations, parcours terminés) : sans donnée personnelle.
+      const track = async (name) => { try { const k = `m:${today()}`, c = JSON.parse((await kv.get(k)) || '{}'); c[name] = (c[name] || 0) + 1; await kv.put(k, JSON.stringify(c), { expirationTtl: 60 * 60 * 24 * 400 }); } catch (e) { /* mesure facultative */ } };
+      const mailVerify = async (id, email) => { const tk = randHex(32); await kv.put(`ver:${await fullSha(tk)}`, id, { expirationTtl: 60 * 60 * 24 * 7 }); return sendMail(email, 'Confirme ton adresse Sillage', `<p>Bonjour,</p><p>Pour activer tes conseils IA, confirme ton adresse en ouvrant ce lien : <a href="${url.origin}/?verify=${tk}">${url.origin}/?verify=${tk}</a></p><p>Il est valable 7 jours. Si tu n'as pas créé de compte, ignore ce message.</p>`); };
+      const acc = makeAccount({ kv, env, reply, clean, hex, fullSha, randHex, int, deps, sendMail, track, mailVerify, ipHash });
       { const r = await acc.handle(request, url); if (r) return r; }
 
       // ---- Parfumier en conversation (modèle léger) : réservé aux comptes, compté par offre
       if (url.pathname === '/api/chat' && request.method === 'POST') {
         const M = await acc.meter(request, 'chat'); if (!M) return reply({ code: 'auth' }, 401);
-        if (!M.ok) return reply({ code: 'quota', plan: M.plan, left: 0 }, 429);
+        if (!M.ok) return reply({ code: M.verify ? 'verify' : 'quota', plan: M.plan, left: 0 }, 429);
         let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
         const prompt = typeof body.prompt === 'string' ? body.prompt : ''; if (prompt.length < 10 || prompt.length > 12000) return reply({ code: 'prompt' }, 400);
         let text;
@@ -106,7 +112,7 @@ export function makeWorker(deps = {}) {
         if (typeof body.collection !== 'string' || body.collection.length < 20 || body.collection.length > 26000) return reply({ code: 'collection' }, 400);
 
         const used = int(await kv.get(`v:${vid}`), 0), ipUsed = int(await kv.get(ipKey), 0);
-        if (M ? !M.ok : (used >= max || ipUsed >= ipMax)) return reply({ code: 'quota', left: 0, plan: M && M.plan }, 429);
+        if (M ? !M.ok : (used >= max || ipUsed >= ipMax)) return reply({ code: M && M.verify ? 'verify' : 'quota', left: 0, plan: M && M.plan }, 429);
         const capKey = `cap:${today()}`;
         if (int(await kv.get(capKey), 0) >= cap) return reply({ code: 'busy', left: Math.max(0, max - used) }, 429);
 
@@ -161,7 +167,7 @@ export function makeWorker(deps = {}) {
         let body; try { body = await request.json(); } catch (e) { return reply({ code: 'json' }, 400); }
         const need = clean(body.need, 500); if (need.length < 3) return reply({ code: 'need' }, 400);
         const used = int(await kv.get(`v:${vid}`), 0), ipUsed = int(await kv.get(ipKey), 0);
-        if (M ? !M.ok : (used >= max || ipUsed >= ipMax)) return reply({ code: 'quota', left: 0, plan: M && M.plan }, 429);
+        if (M ? !M.ok : (used >= max || ipUsed >= ipMax)) return reply({ code: M && M.verify ? 'verify' : 'quota', left: 0, plan: M && M.plan }, 429);
         const capKey = `cap:${today()}`;
         if (int(await kv.get(capKey), 0) >= cap) return reply({ code: 'busy', left: Math.max(0, max - used) }, 429);
         const g = body.profile && typeof body.profile === 'object' ? body.profile : {}, age = Math.round(Number(g.age));
@@ -199,7 +205,7 @@ export function makeWorker(deps = {}) {
         for (const l of lines) { const raw = await kv.get(`ent:${normName(l)}`); if (raw) hits.push(JSON.parse(raw)); else misses.push(l); }
         if (lines.length && !misses.length) return reply({ data: { items: hits }, cached: hits.length, identLeft: undefined });
         const used = int(await kv.get(`iv:${vid}`), 0), ipUsed = int(await kv.get(ipIdentKey), 0), capKey = `icap:${today()}`;
-        if (M ? !M.ok : (used >= identMax || ipUsed >= ipIdentMax)) return reply({ code: 'quota', identLeft: 0, plan: M && M.plan }, 429);
+        if (M ? !M.ok : (used >= identMax || ipUsed >= ipIdentMax)) return reply({ code: M && M.verify ? 'verify' : 'quota', identLeft: 0, plan: M && M.plan }, 429);
         if (int(await kv.get(capKey), 0) >= identCap) return reply({ code: 'busy' }, 429);
         const content = [];
         if (hasImg) content.push({ type: 'image', source: { type: 'base64', media_type: img.media_type, data: img.data } });
@@ -264,8 +270,10 @@ export function makeWorker(deps = {}) {
           if (sub === 'signup') {
             if (rec) return reply({ code: 'exists' }, 409);
             const sl = randHex(16);
-            await kv.put(`acct:${id}`, JSON.stringify({ email, salt: sl, hash: await pbkdf2(password, sl), created: new Date().toISOString() }));
-            return reply({ ok: true, token: await session(id) });
+            const needVerify = !!(env.RESEND_API_KEY && env.MAIL_FROM);
+            await kv.put(`acct:${id}`, JSON.stringify({ email, salt: sl, hash: await pbkdf2(password, sl), created: new Date().toISOString(), ...(needVerify ? { verified: false } : {}) }));
+            await track('signup'); if (needVerify) await mailVerify(id, email);
+            return reply({ ok: true, token: await session(id), verified: !needVerify });
           }
           if (!rec || !same(rec.hash, await pbkdf2(password, rec.salt))) return reply({ code: 'credentials' }, 401);
           const d = JSON.parse((await kv.get(`data:${id}`)) || 'null');
@@ -276,18 +284,14 @@ export function makeWorker(deps = {}) {
           const email = String(b.email || '').trim().toLowerCase(); if (!EMAIL_RE.test(email)) return reply({ code: 'email' }, 400);
           const rl = `ac:forgot:${await sha(ip + 'fg')}:${new Date().toISOString().slice(0, 13)}`, nf = int(await kv.get(rl), 0); if (nf >= 5) return reply({ code: 'rate' }, 429); await kv.put(rl, String(nf + 1), { expirationTtl: 7200 });
           const id = await fullSha(email + salt), rec = JSON.parse((await kv.get(`acct:${id}`)) || 'null');
-          if (rec && env.RESEND_API_KEY && env.MAIL_FROM) {
-            const tk = randHex(32); await kv.put(`rst:${await fullSha(tk)}`, id, { expirationTtl: 3600 });
-            const link = `${url.origin}/?reset=${tk}`, send = deps.fetch || ((...x) => fetch(...x));
-            try { await send('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' }, body: JSON.stringify({ from: env.MAIL_FROM, to: [email], subject: 'Ton nouveau mot de passe Sillage', html: `<p>Bonjour,</p><p>Pour choisir un nouveau mot de passe, ouvre ce lien dans l'heure : <a href="${link}">${link}</a></p><p>Si tu n'as rien demandé, ignore ce message.</p>` }) }); } catch (e) { /* l'envoi échoue en silence : la personne peut redemander */ }
-          }
+          if (rec) { const tk = randHex(32); await kv.put(`rst:${await fullSha(tk)}`, id, { expirationTtl: 3600 }); const link = `${url.origin}/?reset=${tk}`; await sendMail(email, 'Ton nouveau mot de passe Sillage', `<p>Bonjour,</p><p>Pour choisir un nouveau mot de passe, ouvre ce lien dans l'heure : <a href="${link}">${link}</a></p><p>Si tu n'as rien demandé, ignore ce message.</p>`); }
           return reply({ ok: true });
         }
         if (sub === 'reset' && request.method === 'POST') {
           const tk = String(b.token || ''), password = String(b.password || ''); if (!/^[a-f0-9]{64}$/.test(tk) || password.length < 8 || password.length > 100) return reply({ code: 'password' }, 400);
           const rk = `rst:${await fullSha(tk)}`, id = await kv.get(rk); if (!id) return reply({ code: 'token' }, 400);
           const rec = JSON.parse((await kv.get(`acct:${id}`)) || 'null'); if (!rec) return reply({ code: 'token' }, 400);
-          const sl = randHex(16); rec.salt = sl; rec.hash = await pbkdf2(password, sl); await kv.put(`acct:${id}`, JSON.stringify(rec)); await kv.delete(rk);
+          const sl = randHex(16); rec.salt = sl; rec.hash = await pbkdf2(password, sl); if (rec.verified === false) rec.verified = true; await kv.put(`acct:${id}`, JSON.stringify(rec)); await kv.delete(rk);
           return reply({ ok: true, token: await session(id), email: rec.email });
         }
         const a = await auth(); if (!a) return reply({ code: 'auth' }, 401);
@@ -298,7 +302,7 @@ export function makeWorker(deps = {}) {
           const ts = Date.now(); await kv.put(`data:${a.id}`, JSON.stringify({ ts, data: b.data })); return reply({ ok: true, ts });
         }
         if (sub === 'logout' && request.method === 'POST') { await kv.delete(`sess:${await fullSha(a.token)}`); return reply({ ok: true }); }
-        if (sub === 'delete' && request.method === 'POST') { await kv.delete(`acct:${a.id}`); await kv.delete(`data:${a.id}`); await kv.delete(`sess:${await fullSha(a.token)}`); return reply({ ok: true }); }
+        if (sub === 'delete' && request.method === 'POST') { await acc.erase(a.id); await kv.delete(`sess:${await fullSha(a.token)}`); return reply({ ok: true }); }
         return reply({ code: 'not_found' }, 404);
       }
 
@@ -337,4 +341,9 @@ export function makeWorker(deps = {}) {
   };
 }
 
-export default makeWorker();
+const worker = makeWorker();
+export default {
+  fetch: (req, env, ctx) => worker.fetch(req, env, ctx),
+  // Sauvegarde quotidienne (Cron Trigger) dans R2 si le dépôt BACKUPS est relié.
+  scheduled: (event, env, ctx) => ctx.waitUntil(runBackup(env)),
+};

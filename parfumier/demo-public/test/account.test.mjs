@@ -6,7 +6,7 @@ const store = new Map();
 const kv = { async get(k) { return store.has(k) ? store.get(k) : null; }, async put(k, v) { store.set(k, v); }, async delete(k) { store.delete(k); }, async list({ prefix, cursor }) { return { keys: [...store.keys()].filter((k) => k.startsWith(prefix || '')).map((name) => ({ name })), list_complete: true }; } };
 let aiCalls = 0;
 const client = { messages: { async create(req) { aiCalls++; const t = JSON.stringify(req.messages); if (t.includes('CANDIDATS')) return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"compris":"ok","picks":[{"name":"A","house":"B"}]}' }] }; if (req.model.includes('haiku')) return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"reply":"Bonjour"}' }] }; return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"pick":"p1","reason":"x"}' }] }; } } };
-const memberships = { LIC_PREMIUM_OK: { id: 'mem_1', status: 'active', product_id: 'prod_PREMIUM', current_period_end: '2099-01-01' }, LIC_FOUNDER_OK: { id: 'mem_2', status: 'completed', product_id: 'prod_FOUNDER' }, LIC_PREMIUM_2: { id: 'mem_5', status: 'active', product_id: 'prod_PREMIUM' }, LIC_CANCELED: { id: 'mem_3', status: 'canceled', product_id: 'prod_PREMIUM' }, LIC_UNKNOWN_PRODUCT: { id: 'mem_4', status: 'active', product_id: 'prod_OTHER' } };
+const memberships = { LIC_PREMIUM_OK: { id: 'mem_1', status: 'active', product_id: 'prod_PREMIUM', current_period_end: '2099-01-01' }, LIC_FOUNDER_OK: { id: 'mem_2', status: 'completed', product_id: 'prod_FOUNDER' }, LIC_PREMIUM_3: { id: 'mem_6', status: 'active', product_id: 'prod_PREMIUM' }, LIC_PREMIUM_2: { id: 'mem_5', status: 'active', product_id: 'prod_PREMIUM' }, LIC_CANCELED: { id: 'mem_3', status: 'canceled', product_id: 'prod_PREMIUM' }, LIC_UNKNOWN_PRODUCT: { id: 'mem_4', status: 'active', product_id: 'prod_OTHER' } };
 let whopDown = false;
 const fetchMock = async (url, init) => {
   assert.match(init.headers.authorization, /^Bearer WHOP_KEY$/);
@@ -34,7 +34,7 @@ await t('une clé inconnue, annulée ou d\'un autre produit ne donne aucun accè
   assert.equal((await (await call('/api/account/me', { token: alice })).json()).plan, 'free');
 });
 await t('une clé valide active Premium, et la limite change', async () => {
-  const r = await call('/api/account/activate', { method: 'POST', body: { license: 'LIC_PREMIUM_OK' }, token: alice }); const j = await r.json(); assert.equal(r.status, 200); assert.equal(j.me.plan, 'premium'); assert.equal(j.me.limits.adv, 60); assert.equal(j.me.limits.publish, true);
+  const r = await call('/api/account/activate', { method: 'POST', body: { license: 'LIC_PREMIUM_OK' }, token: alice }); const j = await r.json(); assert.equal(r.status, 200); assert.equal(j.me.plan, 'premium'); assert.equal(j.me.limits.adv, 40); assert.equal(j.me.limits.publish, true);
   assert.equal((await call('/api/day', { method: 'POST', body: day, token: alice })).status, 200);
 });
 await t('une clé ne sert qu\'à un seul compte', async () => { const bob = await signup('bob@example.com'); const r = await call('/api/account/activate', { method: 'POST', body: { license: 'LIC_PREMIUM_OK' }, token: bob }); assert.equal(r.status, 409); });
@@ -105,5 +105,67 @@ await t('mot de passe oublié : lien unique envoyé par email, nouveau mot de pa
   assert.equal((await c2('/api/account/reset', { token: tk, password: 'autremdp999' })).status, 400);   // usage unique
   assert.equal((await c2('/api/account/login', { email: 'zoe@example.com', password: 'motdepasse1' })).status, 401);
   assert.equal((await c2('/api/account/login', { email: 'zoe@example.com', password: 'nouveaumdp99' })).status, 200);
+});
+await t('vérification de l\'adresse : sans confirmation, pas de conseil IA ; le lien débloque ; renvoi limité', async () => {
+  const mails = []; const w3 = makeWorker({ client, fetch: async (u, init) => { if (String(u).includes('resend')) { mails.push(JSON.parse(init.body)); return new Response('{}'); } return fetchMock(u, init); } });
+  const env3 = { ...env, RESEND_API_KEY: 'k', MAIL_FROM: 'Sillage <noreply@sillage.test>' };
+  const c3 = (path, o = {}) => w3.fetch(new Request('https://demo.test' + path, { method: o.method || 'POST', body: o.body ? JSON.stringify(o.body) : undefined, headers: { 'content-type': 'application/json', 'cf-connecting-ip': '6.6.6.' + (++n % 200), ...(o.token ? { authorization: 'Bearer ' + o.token } : {}) } }), env3);
+  const tok = (await (await c3('/api/account/signup', { body: { email: 'fake1@example.com', password: 'motdepasse1' } })).json()).token;
+  assert.equal(mails.length, 1); assert.equal((await (await c3('/api/account/me', { method: 'GET', token: tok })).json()).verified, false);
+  const r = await c3('/api/day', { body: day, token: tok }); assert.equal(r.status, 429); assert.equal((await r.json()).code, 'verify');
+  assert.equal((await c3('/api/account/verify', { body: { token: 'a'.repeat(64) } })).status, 400);
+  const link = mails[0].html.match(/verify=([a-f0-9]{64})/)[1];
+  assert.equal((await c3('/api/account/verify', { body: { token: link } })).status, 200);
+  assert.equal((await c3('/api/account/verify', { body: { token: link } })).status, 400);   // usage unique
+  assert.equal((await c3('/api/day', { body: day, token: tok })).status, 200);
+  const tok2 = (await (await c3('/api/account/signup', { body: { email: 'fake2@example.com', password: 'motdepasse1' } })).json()).token;
+  let last; for (let i = 0; i < 4; i++) last = await c3('/api/account/resend', { token: tok2 }); assert.equal(last.status, 429);
+});
+await t('support : message enregistré, courriel à l\'éditeur, lecture et suppression réservées', async () => {
+  assert.equal((await call('/api/support', { method: 'POST', body: { message: 'ok', email: 'a@b.fr' } })).status, 400);
+  assert.equal((await call('/api/support', { method: 'POST', body: { message: 'Mon abonnement ne s\'active pas', email: 'pasunmail' } })).status, 400);
+  assert.equal((await call('/api/support', { method: 'POST', body: { message: 'Mon abonnement ne s\'active pas', email: 'x@y.fr' } })).status, 200);
+  const theo = (await (await call('/api/account/login', { method: 'POST', body: { email: 'theo@example.com', password: 'motdepasse1' } })).json()).token;
+  assert.equal((await call('/api/admin/support', { token: alice })).status, 403);
+  const l = await (await call('/api/admin/support', { token: theo })).json(); assert.equal(l.items.length, 1); assert.equal(l.items[0].email, 'x@y.fr');
+  assert.equal((await call('/api/admin/support/' + l.items[0].id, { method: 'DELETE', token: theo })).status, 200);
+  assert.equal((await (await call('/api/admin/support', { token: theo })).json()).items.length, 0);
+});
+await t('suivi : compteurs sans donnée personnelle, statistiques sur 14 jours', async () => {
+  assert.equal((await call('/api/track', { method: 'POST', body: { e: 'voyage' } })).status, 401);
+  await call('/api/track', { method: 'POST', body: { e: 'voyage' }, token: alice }); await call('/api/track', { method: 'POST', body: { e: 'autre' }, token: alice });
+  const theo = (await (await call('/api/account/login', { method: 'POST', body: { email: 'theo@example.com', password: 'motdepasse1' } })).json()).token;
+  const st = await (await call('/api/admin/stats', { token: theo })).json(); assert.equal(st.days.length, 14); assert.equal(st.days[0].voyage, 1); assert.ok(st.days[0].signup >= 5);
+});
+await t('modération : titre contraire aux règles refusé ; signalé puis rétabli ou supprimé par l\'éditeur', async () => {
+  const pro2 = await signup('pro2@example.com'); await call('/api/account/activate', { method: 'POST', body: { license: 'LIC_PREMIUM_3' }, token: pro2 }); await call('/api/account/profile', { method: 'PUT', body: { pseudo: 'Pro Deux' }, token: pro2 });
+  const bad = await call('/api/community', { method: 'POST', body: { title: 'Écris-moi sur whatsapp pour des remises', desc: 'http://spam.example', items: [{ n: 'A1', h: 'B' }, { n: 'A2', h: 'B' }] }, token: pro2 }); assert.equal(bad.status, 400); assert.equal((await bad.json()).code, 'rules');
+  const good = await call('/api/community', { method: 'POST', body: { title: 'Mes boisés du soir', desc: 'Cèdre et vétiver', items: [{ n: 'Santal 33', h: 'Le Labo' }, { n: 'Tam Dao', h: 'Diptyque' }] }, token: pro2 }); assert.equal(good.status, 200); 
+  const theo = (await (await call('/api/account/login', { method: 'POST', body: { email: 'theo@example.com', password: 'motdepasse1' } })).json()).token;
+  const list = await (await call('/api/community', { token: alice })).json(); const cid = list.items.find((x) => x.title === 'Mes boisés du soir').id;
+  for (const e of ['m1@example.com', 'm2@example.com', 'm3@example.com']) await call(`/api/community/${cid}/report`, { method: 'POST', token: await signup(e) });
+  assert.equal((await call('/api/admin/moderation', { token: alice })).status, 403);
+  const mod = await (await call('/api/admin/moderation', { token: theo })).json(); assert.equal(mod.items[0].hidden, true);
+  assert.equal((await call('/api/admin/moderation/' + cid, { method: 'POST', body: { action: 'restore' }, token: theo })).status, 200);
+  assert.equal((await (await call('/api/community', { token: alice })).json()).items.some((x) => x.id === cid), true);
+  assert.equal((await call('/api/admin/moderation/' + cid, { method: 'POST', body: { action: 'delete' }, token: theo })).status, 200);
+  assert.equal((await (await call('/api/community', { token: alice })).json()).items.some((x) => x.id === cid), false);
+});
+await t('suppression du compte : tout part (données, profil, offre, licence libérée)', async () => {
+  const e = await signup('erase@example.com'); await call('/api/account/activate', { method: 'POST', body: { license: 'LIC_FOUNDER_OK' }, token: e }).catch(() => 0);
+  await call('/api/account/profile', { method: 'PUT', body: { pseudo: 'Efface' }, token: e });
+  assert.equal((await call('/api/account/delete', { method: 'POST', body: {}, token: e })).status, 200);
+  assert.equal((await call('/api/account/me', { token: e })).status, 401);
+  assert.equal((await call('/api/account/login', { method: 'POST', body: { email: 'erase@example.com', password: 'motdepasse1' } })).status, 401);
+  assert.equal([...store.keys()].some((k) => k.startsWith('acct:') && store.get(k).includes('erase@example.com')), false);
+});
+await t('sauvegarde : export éditeur, copie R2 quotidienne, purge après 14 jours', async () => {
+  const theo = (await (await call('/api/account/login', { method: 'POST', body: { email: 'theo@example.com', password: 'motdepasse1' } })).json()).token;
+  assert.equal((await call('/api/admin/backup', { token: alice })).status, 403);
+  const d = await (await call('/api/admin/backup', { token: theo })).json(); assert.ok(Object.keys(d.keys).some((k) => k.startsWith('acct:'))); assert.ok(!Object.keys(d.keys).some((k) => k.startsWith('sess:')));
+  const { runBackup } = await import('../src/account.js'); const r2 = new Map(); const old = 'sillage-2020-01-01.json'; r2.set(old, '{}');
+  const bucket = { async put(k, v) { r2.set(k, v); }, async delete(k) { r2.delete(k); }, async list() { return { objects: [...r2.keys()].map((key) => ({ key })) }; } };
+  assert.equal((await runBackup({ SILLAGE: kv })).ok, false);
+  const res = await runBackup({ SILLAGE: kv, BACKUPS: bucket }); assert.equal(res.ok, true); assert.ok(r2.has(`sillage-${res.day}.json`)); assert.equal(r2.has(old), false);
 });
 console.log(ok, 'tests réussis');
