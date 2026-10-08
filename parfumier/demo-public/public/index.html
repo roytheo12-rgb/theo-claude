@@ -1114,6 +1114,8 @@ a.chip { text-decoration: none; display: inline-block; }
 .myc { padding: 14px 16px; }
 .row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; }
 .row3 .ghost { padding: 12px 4px; font-size: 11px; letter-spacing: .08em; }
+.mrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; }
+.mrow .soft { text-align: right; white-space: nowrap; }
 
 </style>
 </head><body>
@@ -3386,7 +3388,7 @@ ${mist}
       backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
     social: {
       caps: { brand: true, stats: true },
-      followers: () => api('/api/followers'), comments: (id) => api('/api/post/' + id + '/comments'), comment: (id, txt) => api('/api/post/' + id + '/comments', 'POST', { txt }), delComment: (cid) => api('/api/comment/' + cid, 'DELETE'),
+      members: (q) => api('/api/members?q=' + encodeURIComponent(q || '')), followers: () => api('/api/followers'), comments: (id) => api('/api/post/' + id + '/comments'), comment: (id, txt) => api('/api/post/' + id + '/comments', 'POST', { txt }), delComment: (cid) => api('/api/comment/' + cid, 'DELETE'),
       notifs: () => api('/api/notifs'), notifCount: () => api('/api/notifs?count=1'), notifsRead: () => api('/api/notifs/read', 'POST', {}),
       adminSales: () => api('/api/admin/sales'), paySales: (by) => api('/api/admin/sales/pay/' + by, 'POST', {}),
       follow: (by, on) => api('/api/follow', 'POST', { by, on }), following: () => api('/api/following'),
@@ -4445,11 +4447,16 @@ ${mist}
   const NAV = { search: 'search', me: 'lists' };
   function searchBar() {
     const v = $('#view'), bar = document.createElement('div'); bar.className = 'plsubtabs';
-    bar.innerHTML = [['search', 'Recherche'], ['tips', 'Conseils']].map(([k, l]) => `<button type="button" class="${NAV.search === k ? 'on' : ''}" data-ssub="${k}">${l}</button>`).join('');
+    bar.innerHTML = [['search', 'Recherche'], ['tips', 'Conseils'], ['members', 'Membres']].map(([k, l]) => `<button type="button" class="${NAV.search === k ? 'on' : ''}" data-ssub="${k}">${l}</button>`).join('');
     v.insertBefore(bar, v.firstChild);
     $$('[data-ssub]', bar).forEach((b) => (b.onclick = () => { NAV.search = b.dataset.ssub; render(true); }));
   }
-  function viewSearch() { if (NAV.search === 'tips') return viewTips(); viewSearchMain(); searchBar(); }
+  function viewMembers() {
+    $('#view').innerHTML = '<section class="sec"><header><h2>Membres</h2><span class="mono">trouver des gens à suivre</span></header><div id="mbody"></div></section>';
+    if (window.SillageProduct && window.SillageProduct.social) window.SillageProduct.social.members($('#mbody')); else $('#mbody').innerHTML = '<p class="plintro">La recherche de membres arrive avec la version en ligne.</p>';
+    searchBar();
+  }
+  function viewSearch() { if (NAV.search === 'tips') return viewTips(); if (NAV.search === 'members') return viewMembers(); viewSearchMain(); searchBar(); }
   function viewTips() { viewTipsMain(); if (tab === 'search') searchBar(); }
   function viewMe() { if (window.SillageProduct && window.SillageProduct.me) return window.SillageProduct.me(NAV.me, viewWish); viewWish(); }
   function viewFeedTab() { if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.pourToi(); $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2></header><p class="plintro">Le fil de tes abonnements arrive avec la version en ligne.</p></section>'; }
@@ -6863,6 +6870,23 @@ ${mist}
     catch (e) { $('#pp-l', body).textContent = errT(e); }
   }
 
+  // ---------- Recherche > Membres ----------
+  function members(body) {
+    body.innerHTML = '<div class="sbar"><input type="search" id="mq" placeholder="Chercher un membre ou une marque" autocomplete="off" aria-label="Chercher un membre"></div><div id="ml" class="peoplelist"></div>';
+    const list = $('#ml', body); let timer = 0, seq = 0;
+    const run = async () => {
+      const my = ++seq, q0 = $('#mq', body).value.trim(); list.innerHTML = '<p class="soft small">…</p>';
+      try {
+        const j = await N.members(q0); if (my !== seq) return;
+        list.innerHTML = j.items.length ? `<p class="mono">${q0 ? 'Résultats' : 'Les plus suivis'}</p>` + j.items.map((a) => `<div class="mrow">${head(a)}<span class="soft small">${a.followers} abonné${a.followers > 1 ? 's' : ''}${a.me ? ' · c\'est toi' : ''}</span></div>`).join('') : `<div class="empty"><b>Personne ne correspond</b><p class="soft">${q0 ? 'Essaie un autre pseudo, ou une partie du nom.' : 'Les membres apparaissent ici dès qu\'ils ont choisi un pseudo.'}</p></div>`;
+        bindCard(list);
+      } catch (e) { if (my === seq) list.innerHTML = `<p class="soft small">${esc(e.code === 'auth' ? 'Connecte-toi pour chercher des membres.' : errT(e))}</p>`; }
+    };
+    $('#mq', body).oninput = () => { clearTimeout(timer); timer = setTimeout(run, 280); };
+    if (!logged()) return needAccount(body, 'Trouve des gens à suivre');
+    run();
+  }
+
   // ---------- Notifications ----------
   const NTXT = { follow: (n) => `<b>${esc(n.author ? n.author.pseudo : 'Quelqu\'un')}</b> te suit`, comment: (n) => `<b>${esc(n.author ? n.author.pseudo : 'Quelqu\'un')}</b> a commenté ta publication : « ${esc(n.txt)} »`, sale: (n) => `Une vente est passée par ton lien : <b>${esc(n.txt)}</b>`, brand: (n) => esc(n.txt) };
   async function openNotifs() {
@@ -7000,7 +7024,7 @@ ${mist}
     $('#eb-p', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminPosts(); out.innerHTML = j.items.length ? j.items.map((p) => `<div class="card" style="display:grid;gap:6px"><b>${esc(p.author.pseudo)}</b><small class="mono" style="text-transform:none;letter-spacing:0">${p.reports} signalement${p.reports > 1 ? 's' : ''}${p.hidden ? ' · masquée' : ''}</small><span>${esc(p.txt)}</span><div class="row"><button class="ghost" data-pa="${esc(p.id)}" type="button">Rétablir</button><button class="ghost danger" data-pz="${esc(p.id)}" type="button">Supprimer</button></div></div>`).join('') : '<p class="soft small">Aucune publication signalée.</p>'; const act = (a, v) => $$('[' + a + ']', out).forEach((b) => (b.onclick = async () => { try { await N.postAct(b.getAttribute(a), v); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-pa', 'restore'); act('data-pz', 'delete'); } catch (e) { fail(e); } };
   }
 
-  SP.social = { feed, pourToi, community, member, rating, profileCards, postSheet };
+  SP.social = { feed, pourToi, community, members, member, rating, profileCards, postSheet };
   SP.me = me;
   initBell();
 })();

@@ -19,6 +19,8 @@ const SCHEMA = [
   'CREATE TABLE IF NOT EXISTS notifs (id TEXT PRIMARY KEY, u TEXT NOT NULL, kind TEXT, frm TEXT, ref TEXT, txt TEXT, ts INTEGER, seen INTEGER DEFAULT 0)',
   'CREATE INDEX IF NOT EXISTS notifs_u ON notifs (u, ts)',
   'CREATE TABLE IF NOT EXISTS sales (id TEXT PRIMARY KEY, code TEXT, owner TEXT, amount INTEGER, commission INTEGER, creator INTEGER, ref TEXT UNIQUE, ts INTEGER, paid INTEGER DEFAULT 0)',
+  'CREATE TABLE IF NOT EXISTS members (id TEXT PRIMARY KEY, nrm TEXT, ts INTEGER)',
+  'CREATE INDEX IF NOT EXISTS members_nrm ON members (nrm)',
   'CREATE TABLE IF NOT EXISTS wishes (u TEXT PRIMARY KEY, pub INTEGER DEFAULT 0, items TEXT, ts INTEGER)',
 ];
 const READY = new WeakSet();
@@ -38,7 +40,7 @@ export function makeSocial(h) {
   const count = async (id, d) => { const r = await q('INSERT INTO ev (d, kind, target, owner, n) VALUES (?, ?, ?, ?, 1) ON CONFLICT (d, kind, target) DO UPDATE SET n = n + 1', d, ...id).run(); return r; };
 
   const notify = async (u, kind, frm, ref, txt, id) => { if (!u || u === frm) return; await q('INSERT OR IGNORE INTO notifs (id, u, kind, frm, ref, txt, ts) VALUES (?, ?, ?, ?, ?, ?, ?)', id || randHex(8), u, kind, frm || '', ref || '', txt || '', Date.now()).run(); };
-  const PLATFORM_CUT = Math.min(100, Math.max(0, parseInt(env.PLATFORM_CUT, 10) >= 0 ? parseInt(env.PLATFORM_CUT, 10) : 30));
+  const PLATFORM_CUT = Math.min(100, Math.max(0, parseInt(env.PLATFORM_CUT, 10) >= 0 ? parseInt(env.PLATFORM_CUT, 10) : 20));
   // ---- Outils partagés
   const acctOf = (id) => acc.acctOf(id);
   const prof = async (id) => jp(await kv.get(`prof:${id}`), {});
@@ -61,7 +63,7 @@ export function makeSocial(h) {
 
   async function handle(request, url) {
     const path = url.pathname, method = request.method;
-    const mine = /^\/api\/(follow|following|followers|notifs|comment|conversion|feed|post|posts|rating|ratings|u|wishlist|brand|my|view|go|admin\/brands|admin\/posts|admin\/sales)(\/|$)/.test(path);
+    const mine = /^\/api\/(follow|following|followers|members|notifs|comment|conversion|feed|post|posts|rating|ratings|u|wishlist|brand|my|view|go|admin\/brands|admin\/posts|admin\/sales)(\/|$)/.test(path);
     if (!mine) return null;
     if (!db) return reply({ code: 'social_off' }, 503);
     await init();
@@ -129,6 +131,16 @@ export function makeSocial(h) {
     if (path === '/api/following' && method === 'GET') {
       const cache = {}, out = []; for (const r of (await q('SELECT b FROM follows WHERE a = ? ORDER BY ts DESC LIMIT 200', a.id).all()).results) out.push(await author(r.b, cache));
       return reply({ items: out });
+    }
+    // ---- Recherche de membres : par pseudo (ou nom de marque vérifiée), les plus suivis d'abord
+    if (path === '/api/members' && method === 'GET') {
+      const t0 = nrm(url.searchParams.get('q') || '').slice(0, 40), cache = {}, ids = new Set(), out = [];
+      const rows = t0 ? (await q('SELECT m.id AS id, (SELECT COUNT(*) FROM follows f WHERE f.b = m.id) AS n FROM members m WHERE m.nrm LIKE ? ORDER BY n DESC, m.ts DESC LIMIT 20', '%' + t0 + '%').all()).results
+        : (await q('SELECT m.id AS id, (SELECT COUNT(*) FROM follows f WHERE f.b = m.id) AS n FROM members m ORDER BY n DESC, m.ts DESC LIMIT 20').all()).results;
+      for (const r of rows) ids.add(r.id);
+      if (t0) for (const r of (await q('SELECT acct FROM brands WHERE status = \'verified\' LIMIT 100').all()).results) { /* filtrage après calcul du nom affiché */ ids.add(r.acct); }
+      for (const id of ids) { const au = await author(id, cache); if (!au.pseudo) continue; if (t0 && !nrm(au.pseudo).includes(t0) && !nrm((await prof(id)).pseudo || '').includes(t0)) continue; const n = (await q('SELECT COUNT(*) AS n FROM follows WHERE b = ?', id).first()).n; out.push(Object.assign({ followers: n, me: id === a.id }, au)); }
+      out.sort((x, y) => y.followers - x.followers); return reply({ items: out.slice(0, 20) });
     }
     if (path === '/api/followers' && method === 'GET') {
       const cache = {}, out = []; for (const r of (await q('SELECT a FROM follows WHERE b = ? ORDER BY ts DESC LIMIT 200', a.id).all()).results) out.push(await author(r.a, cache));
@@ -296,6 +308,8 @@ export function makeSocial(h) {
     return null;
   }
 
+  // Annuaire des membres : le pseudo (sans accents ni majuscules) pour la recherche.
+  async function indexMember(id, pseudo) { if (!db) return; await init(); if (!pseudo) await q('DELETE FROM members WHERE id = ?', id).run(); else await q('INSERT INTO members (id, nrm, ts) VALUES (?, ?, ?) ON CONFLICT (id) DO UPDATE SET nrm = excluded.nrm', id, nrm(pseudo), Date.now()).run(); }
   // Lien enregistré pour son auteur : le code est stable, le même lien donne toujours le même code.
   async function regLink(owner, u) {
     if (!db || !u) return ''; await init();
@@ -305,9 +319,9 @@ export function makeSocial(h) {
   // Effacement du compte : tout ce qui le concerne part (les compteurs de clics restent, ils sont anonymes).
   async function erase(id) {
     if (!db) return; await init();
-    await db.batch([q('DELETE FROM follows WHERE a = ? OR b = ?', id, id), q('DELETE FROM ratings WHERE u = ?', id), q('DELETE FROM posts WHERE a = ?', id), q('DELETE FROM post_reports WHERE u = ?', id), q('DELETE FROM wishes WHERE u = ?', id), q('DELETE FROM brands WHERE acct = ?', id), q('DELETE FROM links WHERE owner = ?', id), q('DELETE FROM comments WHERE u = ?', id), q('DELETE FROM notifs WHERE u = ? OR frm = ?', id, id), q('DELETE FROM sales WHERE owner = ? AND paid = 1', id)]);
+    await db.batch([q('DELETE FROM follows WHERE a = ? OR b = ?', id, id), q('DELETE FROM ratings WHERE u = ?', id), q('DELETE FROM posts WHERE a = ?', id), q('DELETE FROM post_reports WHERE u = ?', id), q('DELETE FROM wishes WHERE u = ?', id), q('DELETE FROM brands WHERE acct = ?', id), q('DELETE FROM links WHERE owner = ?', id), q('DELETE FROM members WHERE id = ?', id), q('DELETE FROM comments WHERE u = ?', id), q('DELETE FROM notifs WHERE u = ? OR frm = ?', id, id), q('DELETE FROM sales WHERE owner = ? AND paid = 1', id)]);
   }
-  return { handle, regLink, erase };
+  return { handle, regLink, erase, indexMember };
 }
 
 // Sauvegarde : toutes les tables, en JSON.

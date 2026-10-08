@@ -130,6 +130,11 @@
   const notifyTo = async (to, n) => { if (!to || to === uid) return; const s0 = await db.doc('notifs/' + to).get(); const d = s0.exists ? JSON.parse(JSON.stringify(s0.data())) : { items: [] }; if (n.id && (d.items || []).some((x) => x.id === n.id)) return; d.items = [Object.assign({ id: Math.random().toString(16).slice(2, 10), ts: Date.now(), seen: false, from: uid }, n)].concat(d.items || []).slice(0, 40); await db.doc('notifs/' + to).set(d); };
   plan.social = {
     caps: { brand: false, stats: false },
+    members: async (q) => {
+      await need(); const t0 = nrm(q), [com, fol] = await Promise.all([comMap(), readAll('follows')]);
+      const items = Object.keys(com).filter((id) => com[id].pseudo && (!t0 || nrm(com[id].pseudo).includes(t0))).map((id) => Object.assign({ followers: fol.filter((d) => (d.data.ids || []).includes(id)).length, me: id === uid }, asAuthor(id, com)));
+      return { items: items.sort((x, y) => y.followers - x.followers).slice(0, 20) };
+    },
     followers: async () => { await need(); const [all, com] = await Promise.all([readAll('follows'), comMap()]); return { items: all.filter((d) => (d.data.ids || []).includes(uid)).map((d) => asAuthor(d.id, com)) }; },
     comments: async (id) => { await need(); const [s0, com] = await Promise.all([db.doc('comments/' + id).get(), comMap()]); return { items: (s0.exists ? s0.data().items || [] : []).map((x) => ({ id: x.id, txt: x.txt, ts: x.ts, post: id, author: asAuthor(x.u, com) })) }; },
     comment: async (id, txt) => {

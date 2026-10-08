@@ -85,7 +85,7 @@ Installation sur iPhone et Android, ouverture hors ligne, réception de l'email 
 
 ## Commissions sur les liens
 
-**Le principe** : chaque lien de boutique publié passe par `/api/go/<code>`. Au moment du clic, Sillage peut réécrire le lien avec **son** identifiant d'affilié (règles `AFFIL_RULES`). Si une vente est faite, le réseau (Awin, Impact, Effiliation…) te la signale ; tu en gardes `PLATFORM_CUT` % (30 % par défaut) et le reste est dû au créateur du lien.
+**Le principe** : chaque lien de boutique publié passe par `/api/go/<code>`. Au moment du clic, Sillage peut réécrire le lien avec **son** identifiant d'affilié (règles `AFFIL_RULES`). Si une vente est faite, le réseau (Awin, Impact, Effiliation…) te la signale ; tu en gardes `PLATFORM_CUT` % (20 % par défaut : au niveau des plateformes comparables, et assez bas pour que les créateurs préfèrent passer par toi) et le reste est dû au créateur du lien.
 
 1. Inscris-toi comme éditeur chez le réseau d'affiliation ou chez la marque, et récupère ton identifiant. Ce sont des démarches à faire de ton côté : je ne peux pas les faire pour toi.
 2. Dans `wrangler.toml`, remplis `AFFIL_RULES` : une règle par boutique. `param` ajoute un paramètre (`?aff=sillage&sub=<code>`), `tpl` enveloppe le lien dans l'adresse de suivi du réseau (`{url}` et `{sub}` sont remplacés). Une boutique sans règle reste un lien normal, sans commission.

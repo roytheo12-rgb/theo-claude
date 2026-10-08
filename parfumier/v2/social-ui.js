@@ -145,6 +145,23 @@
     catch (e) { $('#pp-l', body).textContent = errT(e); }
   }
 
+  // ---------- Recherche > Membres ----------
+  function members(body) {
+    body.innerHTML = '<div class="sbar"><input type="search" id="mq" placeholder="Chercher un membre ou une marque" autocomplete="off" aria-label="Chercher un membre"></div><div id="ml" class="peoplelist"></div>';
+    const list = $('#ml', body); let timer = 0, seq = 0;
+    const run = async () => {
+      const my = ++seq, q0 = $('#mq', body).value.trim(); list.innerHTML = '<p class="soft small">…</p>';
+      try {
+        const j = await N.members(q0); if (my !== seq) return;
+        list.innerHTML = j.items.length ? `<p class="mono">${q0 ? 'Résultats' : 'Les plus suivis'}</p>` + j.items.map((a) => `<div class="mrow">${head(a)}<span class="soft small">${a.followers} abonné${a.followers > 1 ? 's' : ''}${a.me ? ' · c\'est toi' : ''}</span></div>`).join('') : `<div class="empty"><b>Personne ne correspond</b><p class="soft">${q0 ? 'Essaie un autre pseudo, ou une partie du nom.' : 'Les membres apparaissent ici dès qu\'ils ont choisi un pseudo.'}</p></div>`;
+        bindCard(list);
+      } catch (e) { if (my === seq) list.innerHTML = `<p class="soft small">${esc(e.code === 'auth' ? 'Connecte-toi pour chercher des membres.' : errT(e))}</p>`; }
+    };
+    $('#mq', body).oninput = () => { clearTimeout(timer); timer = setTimeout(run, 280); };
+    if (!logged()) return needAccount(body, 'Trouve des gens à suivre');
+    run();
+  }
+
   // ---------- Notifications ----------
   const NTXT = { follow: (n) => `<b>${esc(n.author ? n.author.pseudo : 'Quelqu\'un')}</b> te suit`, comment: (n) => `<b>${esc(n.author ? n.author.pseudo : 'Quelqu\'un')}</b> a commenté ta publication : « ${esc(n.txt)} »`, sale: (n) => `Une vente est passée par ton lien : <b>${esc(n.txt)}</b>`, brand: (n) => esc(n.txt) };
   async function openNotifs() {
@@ -282,7 +299,7 @@
     $('#eb-p', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminPosts(); out.innerHTML = j.items.length ? j.items.map((p) => `<div class="card" style="display:grid;gap:6px"><b>${esc(p.author.pseudo)}</b><small class="mono" style="text-transform:none;letter-spacing:0">${p.reports} signalement${p.reports > 1 ? 's' : ''}${p.hidden ? ' · masquée' : ''}</small><span>${esc(p.txt)}</span><div class="row"><button class="ghost" data-pa="${esc(p.id)}" type="button">Rétablir</button><button class="ghost danger" data-pz="${esc(p.id)}" type="button">Supprimer</button></div></div>`).join('') : '<p class="soft small">Aucune publication signalée.</p>'; const act = (a, v) => $$('[' + a + ']', out).forEach((b) => (b.onclick = async () => { try { await N.postAct(b.getAttribute(a), v); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-pa', 'restore'); act('data-pz', 'delete'); } catch (e) { fail(e); } };
   }
 
-  SP.social = { feed, pourToi, community, member, rating, profileCards, postSheet };
+  SP.social = { feed, pourToi, community, members, member, rating, profileCards, postSheet };
   SP.me = me;
   initBell();
 })();

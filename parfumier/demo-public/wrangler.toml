@@ -57,5 +57,5 @@ DAILY_CAP = "150"           # essais IA maximum par jour, tous visiteurs confond
 # AFFIL_RULES : règles de réécriture des liens par boutique. Exemples :
 #   [{"host":"marque.fr","param":"aff","value":"sillage","sub":"sub"},
 #    {"host":"shop.fr","tpl":"https://www.awin1.com/cread.php?awinmid=111&awinaffid=222&clickref={sub}&ued={url}"}]
-# PLATFORM_CUT = "30"   # ta part en % de la commission reçue (le reste va au créateur)
+# PLATFORM_CUT = "20"   # ta part en % de la commission reçue (le reste va au créateur)
 # Secret du webhook de ventes : npx wrangler secret put CONV_SECRET   (puis POST/GET /api/conversion?key=…)

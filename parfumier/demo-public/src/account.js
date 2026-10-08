@@ -194,6 +194,7 @@ export function makeAccount(h) {
       if (b.avatar !== undefined) { if (b.avatar === '') avatar = ''; else if (typeof b.avatar === 'string' && b.avatar.length <= 70000 && AVATAR_RE.test(b.avatar)) avatar = b.avatar; else return reply({ code: 'avatar' }, 400); }
       const links = b.links === undefined ? prev.links || [] : (Array.isArray(b.links) ? b.links : []).slice(0, 3).map(cleanUrl).filter(Boolean);
       if (pseudo) await kv.put(`by:${a.id.slice(0, 12)}`, a.id);
+      if (h.indexMember) await h.indexMember(a.id, pseudo);
       await kv.put(`prof:${a.id}`, JSON.stringify({ pseudo, avatar, bio: b.bio === undefined ? prev.bio || '' : clean(b.bio, 140), links }));
       return reply({ ok: true, me: await me(a) });
     }

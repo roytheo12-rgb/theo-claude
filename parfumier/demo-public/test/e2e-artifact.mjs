@@ -99,6 +99,9 @@ await m.pg.evaluate(() => { const e = window.SillageInternals.dbList().find((x) 
 await m.pg.waitForSelector('[data-st="4"]', { timeout: 6000 }); await m.pg.click('[data-st="4"]'); await m.pg.fill('#rv-t', 'Très bien'); await m.pg.click('#rv-go'); await m.pg.waitForFunction(() => /enregistré/.test(document.querySelector('#rv-m').textContent), null, { timeout: 5000 });
 ok(Object.values(SHARED['ratings/user-marie'].m)[0].stars === 4, 'réseau : l\'avis est enregistré'); await closeSheet(m.pg);
 await t.pg.click('#profileBtn'); await t.pg.waitForSelector('#nw-fo'); ok(await t.pg.locator('#br-in').count() === 0, 'artefact : pas d\'espace marque'); await closeSheet(t.pg);
+// recherche de membres
+await closeSheet(t.pg); await t.pg.click('#dock [data-tab="search"]'); await t.pg.waitForSelector('[data-ssub="members"]'); await t.pg.click('[data-ssub="members"]'); await t.pg.waitForSelector('#mq'); await t.pg.fill('#mq', 'mar'); await t.pg.waitForFunction(() => /Marie/.test(document.querySelector('#ml').innerText) && !/Théo/.test(document.querySelector('#ml').innerText), null, { timeout: 6000 });
+ok(/Marie/.test(await t.pg.locator('#ml').innerText()), 'membres : la recherche trouve Marie'); await t.pg.click('#ml .fhead'); await t.pg.waitForSelector('#mb-fo'); ok(true, 'membres : le profil s\'ouvre depuis les résultats'); await closeSheet(t.pg);
 // retours : le membre écrit, le propriétaire lit
 await m.pg.click('#profileBtn'); await m.pg.waitForSelector('#sp-go'); await m.pg.click('[data-k="idee"]'); await m.pg.fill('#sp-t', 'Ajouter un mode sombre'); await m.pg.click('#sp-go'); await m.pg.waitForFunction(() => /envoyé/.test(document.querySelector('#sp-m').textContent));
 ok(Object.keys(SHARED).includes('feedback/user-marie') && SHARED['feedback/user-marie'].items[0].kind === 'idee', 'retours : l\'idée est enregistrée');

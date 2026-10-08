@@ -136,6 +136,14 @@ await t('catégories de playlists : définies par l\'éditeur, une catégorie in
   const r2 = await J(await call('/api/community', { method: 'POST', body: { title: 'Hors catégorie', items: [{ n: 'Santal 33', h: 'Le Labo' }, { n: 'Tam Dao', h: 'Diptyque' }], cat: 'Inconnue' }, token: cr.token }));
   const items = (await J(await call('/api/community', { token: carl.token }))).items; assert.equal(items.find((x) => x.id === r.id).cat, 'Rentrée'); assert.equal(items.find((x) => x.id === r2.id).cat, '');
 });
+await t('recherche de membres : par pseudo sans tenir compte des accents ni de la casse, les plus suivis d\'abord, compte requis', async () => {
+  assert.equal((await call('/api/members?q=ali')).status, 401);
+  const r = await J(await call('/api/members?q=ALI', { token: carl.token })); assert.equal(r.items[0].pseudo, 'Alice'); assert.equal(r.items[0].followers, 1); assert.equal(r.items.some((x) => x.pseudo === 'Bob'), false);
+  assert.deepEqual((await J(await call('/api/members?q=cr%C3%A9a', { token: carl.token }))).items.map((x) => x.pseudo).sort(), ['Créa', 'Créa2']);
+  const all = await J(await call('/api/members', { token: carl.token })); assert.equal(all.items[0].pseudo, 'Alice'); assert.ok(all.items.length >= 4);
+  assert.equal((await J(await call('/api/members?q=' + encodeURIComponent('zzzzzz'), { token: carl.token }))).items.length, 0);
+  assert.equal((await J(await call('/api/members?q=carl', { token: carl.token }))).items[0].me, true);
+});
 await t('wishlist : privée par défaut, publique au choix', async () => {
   await call('/api/wishlist', { method: 'PUT', body: { pub: false, items: [{ n: 'Bois Farine', h: 'Lutens' }] }, token: bob.token });
   assert.equal((await J(await call('/api/u/' + bob.by, { token: carl.token }))).wishlist, null);

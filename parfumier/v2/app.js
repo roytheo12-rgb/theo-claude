@@ -934,11 +934,16 @@
   const NAV = { search: 'search', me: 'lists' };
   function searchBar() {
     const v = $('#view'), bar = document.createElement('div'); bar.className = 'plsubtabs';
-    bar.innerHTML = [['search', 'Recherche'], ['tips', 'Conseils']].map(([k, l]) => `<button type="button" class="${NAV.search === k ? 'on' : ''}" data-ssub="${k}">${l}</button>`).join('');
+    bar.innerHTML = [['search', 'Recherche'], ['tips', 'Conseils'], ['members', 'Membres']].map(([k, l]) => `<button type="button" class="${NAV.search === k ? 'on' : ''}" data-ssub="${k}">${l}</button>`).join('');
     v.insertBefore(bar, v.firstChild);
     $$('[data-ssub]', bar).forEach((b) => (b.onclick = () => { NAV.search = b.dataset.ssub; render(true); }));
   }
-  function viewSearch() { if (NAV.search === 'tips') return viewTips(); viewSearchMain(); searchBar(); }
+  function viewMembers() {
+    $('#view').innerHTML = '<section class="sec"><header><h2>Membres</h2><span class="mono">trouver des gens à suivre</span></header><div id="mbody"></div></section>';
+    if (window.SillageProduct && window.SillageProduct.social) window.SillageProduct.social.members($('#mbody')); else $('#mbody').innerHTML = '<p class="plintro">La recherche de membres arrive avec la version en ligne.</p>';
+    searchBar();
+  }
+  function viewSearch() { if (NAV.search === 'tips') return viewTips(); if (NAV.search === 'members') return viewMembers(); viewSearchMain(); searchBar(); }
   function viewTips() { viewTipsMain(); if (tab === 'search') searchBar(); }
   function viewMe() { if (window.SillageProduct && window.SillageProduct.me) return window.SillageProduct.me(NAV.me, viewWish); viewWish(); }
   function viewFeedTab() { if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.pourToi(); $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2></header><p class="plintro">Le fil de tes abonnements arrive avec la version en ligne.</p></section>'; }
