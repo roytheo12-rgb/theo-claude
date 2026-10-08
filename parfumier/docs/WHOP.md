@@ -82,3 +82,17 @@ Installation sur iPhone et Android, ouverture hors ligne, réception de l'email 
 5. **Liens suivis** : tout lien publié (vidéo, offre) passe par `/api/go/<code>` qui compte puis redirige. Seuls les liens `https` enregistrés par un membre sont redirigés.
 6. **Sauvegarde** : le fichier de sauvegarde contient aussi les tables D1.
 7. **Version claude.ai** : abonnements, publications, avis et fil marchent avec la base de l'artefact. Pas de marques, de liens suivis ni de statistiques de clics là-bas.
+
+## Commissions sur les liens
+
+**Le principe** : chaque lien de boutique publié passe par `/api/go/<code>`. Au moment du clic, Sillage peut réécrire le lien avec **son** identifiant d'affilié (règles `AFFIL_RULES`). Si une vente est faite, le réseau (Awin, Impact, Effiliation…) te la signale ; tu en gardes `PLATFORM_CUT` % (30 % par défaut) et le reste est dû au créateur du lien.
+
+1. Inscris-toi comme éditeur chez le réseau d'affiliation ou chez la marque, et récupère ton identifiant. Ce sont des démarches à faire de ton côté : je ne peux pas les faire pour toi.
+2. Dans `wrangler.toml`, remplis `AFFIL_RULES` : une règle par boutique. `param` ajoute un paramètre (`?aff=sillage&sub=<code>`), `tpl` enveloppe le lien dans l'adresse de suivi du réseau (`{url}` et `{sub}` sont remplacés). Une boutique sans règle reste un lien normal, sans commission.
+3. Dans le réseau, configure la notification de vente (postback) vers `https://TON-SITE/api/conversion?key=TON_SECRET&code={sub}&amount={montant}&commission={commission}&ref={commande}`. Définis `CONV_SECRET` avec `npx wrangler secret put CONV_SECRET`. Chaque commande n'est comptée qu'une fois.
+4. Chaque créateur voit ses gains et ce qui lui est dû dans « Mes chiffres ». Toi, tu vois le total, ta part et ce qu'il reste à reverser dans « Commissions » (profil, bloc éditeur). « Payé » remet le compteur du créateur à zéro. **Les virements, eux, restent manuels.**
+5. Côté légal : les conditions (article 7 sexies) et la confidentialité décrivent déjà ce fonctionnement. Il faudra un statut qui permet d'encaisser (micro-entreprise) et la déclaration des commissions. Pour reverser de l'argent à des tiers de façon régulière, vérifie avec un comptable : au-delà de petits montants, un prestataire de paiement (Stripe Connect, par exemple) est plus sûr.
+
+## Notifications et commentaires
+
+La cloche en haut montre le nombre de nouveautés : nouvel abonné, commentaire sous une publication, vente. Les commentaires sont limités à 300 caractères, sans lien ni adresse, et l'auteur de la publication peut les supprimer.

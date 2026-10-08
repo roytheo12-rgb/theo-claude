@@ -59,7 +59,7 @@
         const [authors, likes, reps] = await Promise.all([readAll('community'), readAll('likes'), readAll('reports')]);
         const cnt = (docs, id) => docs.filter((d) => (d.data.ids || []).includes(id)).length;
         const out = [];
-        authors.forEach((a) => (a.data.pub || []).forEach((x) => { if (cnt(reps, x.id) < 3) out.push({ id: x.id, title: x.title, desc: x.desc, items: x.items, video: x.video || '', ad: !!x.ad, cover: x.cover || '', avatar: a.data.avatar || '', links: a.data.links || [], by: a.id, pseudo: a.data.pseudo || 'Anonyme', ts: x.ts || 0, likes: cnt(likes, x.id), mine: a.id === uid, by: a.id }); }));
+        authors.forEach((a) => (a.data.pub || []).forEach((x) => { if (cnt(reps, x.id) < 3) out.push({ id: x.id, title: x.title, desc: x.desc, items: x.items, video: x.video || '', ad: !!x.ad, cover: x.cover || '', cat: x.cat || '', avatar: a.data.avatar || '', links: a.data.links || [], by: a.id, pseudo: a.data.pseudo || 'Anonyme', ts: x.ts || 0, likes: cnt(likes, x.id), mine: a.id === uid, by: a.id }); }));
         out.sort((x, y) => y.ts - x.ts); return { items: out.slice(0, 200) };
       },
       publish: async (rec) => {
@@ -69,7 +69,9 @@
         cur.pub = Array.isArray(cur.pub) ? cur.pub : []; const id = rec.id && cur.pub.some((x) => x.id === rec.id) ? rec.id : Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
         if (!cur.pub.some((x) => x.id === id) && cur.pub.length >= 10) throw { code: 'limit' };
         const cover = typeof rec.cover === 'string' && rec.cover.length <= 40000 && /^data:image\/(jpeg|webp);base64,/.test(rec.cover) ? rec.cover : '';
-        const row = { id, title, desc: clean(rec.desc, 240), items: its, video: url(rec.video), ad: !!rec.ad, cover, ts: Date.now() }; const i = cur.pub.findIndex((x) => x.id === id); if (i >= 0) cur.pub[i] = row; else cur.pub.push(row);
+        let cats = ['Soirée', 'Bureau', 'Été', 'Hiver', 'Cadeau', 'Petit budget', 'Découverte']; try { const cs = await db.doc('content/main').get(); if (cs.exists && Array.isArray(cs.data().cats) && cs.data().cats.length) cats = cs.data().cats; } catch (e) { /* défaut */ }
+        const cat = cats.includes(clean(rec.cat, 24)) ? clean(rec.cat, 24) : '';
+        const row = { id, cat, title: clean(rec.title, 60), desc: clean(rec.desc, 240), items: its, video: url(rec.video), ad: !!rec.ad, cover, ts: Date.now() }; const i = cur.pub.findIndex((x) => x.id === id); if (i >= 0) cur.pub[i] = row; else cur.pub.push(row);
         await db.doc('community/' + uid).set(cur); return { id };
       },
       remove: async (id) => {
@@ -103,6 +105,7 @@
           case 'plAdd': { if (!title || !it) throw { code: 'bad_op' }; c.plAdd[title] = (c.plAdd[title] || []).filter((x) => !same(x)); c.plAdd[title].push(it); c.plDel[title] = (c.plDel[title] || []).filter((x) => !same(x)); break; }
           case 'plDel': { if (!title || !it) throw { code: 'bad_op' }; c.plAdd[title] = (c.plAdd[title] || []).filter((x) => !same(x)); c.plDel[title] = (c.plDel[title] || []).filter((x) => !same(x)); c.plDel[title].push(it); break; }
           case 'plPos': { const pos = Math.round(Number(b.pos)); if (!title || !it || !(pos >= 1 && pos <= 500)) throw { code: 'bad_op' }; c.plPos[title] = (c.plPos[title] || []).filter((x) => !same(x)); c.plPos[title].push({ n: it.n, h: it.h, pos }); break; }
+          case 'cats': { const list = (Array.isArray(b.list) ? b.list : []).map((x) => clean(x, 24)).filter(Boolean).slice(0, 12); if (!list.length) throw { code: 'bad_op' }; c.cats = [...new Set(list)]; break; }
           default: throw { code: 'bad_op' };
         }
         c.v = (c.v || 0) + 1; c.ts = Date.now(); if (JSON.stringify(c).length > 400000) throw { code: 'too_big' };
@@ -124,11 +127,24 @@
   const asAuthor = (by, com) => { const d = (com[by] || {}); return { by, pseudo: d.pseudo || 'Anonyme', avatar: d.avatar || '', brand: false }; };
   const comMap = async () => { const m = {}; (await readAll('community')).forEach((d) => { m[d.id] = d.data; }); return m; };
   const repCount = (reps, id) => reps.filter((d) => (d.data.ids || []).includes('p:' + id)).length;
+  const notifyTo = async (to, n) => { if (!to || to === uid) return; const s0 = await db.doc('notifs/' + to).get(); const d = s0.exists ? JSON.parse(JSON.stringify(s0.data())) : { items: [] }; if (n.id && (d.items || []).some((x) => x.id === n.id)) return; d.items = [Object.assign({ id: Math.random().toString(16).slice(2, 10), ts: Date.now(), seen: false, from: uid }, n)].concat(d.items || []).slice(0, 40); await db.doc('notifs/' + to).set(d); };
   plan.social = {
     caps: { brand: false, stats: false },
+    followers: async () => { await need(); const [all, com] = await Promise.all([readAll('follows'), comMap()]); return { items: all.filter((d) => (d.data.ids || []).includes(uid)).map((d) => asAuthor(d.id, com)) }; },
+    comments: async (id) => { await need(); const [s0, com] = await Promise.all([db.doc('comments/' + id).get(), comMap()]); return { items: (s0.exists ? s0.data().items || [] : []).map((x) => ({ id: x.id, txt: x.txt, ts: x.ts, post: id, author: asAuthor(x.u, com) })) }; },
+    comment: async (id, txt) => {
+      await need(); const cur = await myDoc(); if (!cur.pseudo) throw { code: 'pseudo' }; const t0 = clean(txt, 300); if (t0.length < 2) throw { code: 'content' }; if (BAD.test(t0)) throw { code: 'rules' };
+      const s0 = await db.doc('comments/' + id).get(); const d = s0.exists ? JSON.parse(JSON.stringify(s0.data())) : { items: [] }; const cid = Math.random().toString(16).slice(2, 10) + Date.now().toString(16).slice(-6); d.items = (d.items || []).concat({ id: cid, u: uid, txt: t0, ts: Date.now() }).slice(-100); await db.doc('comments/' + id).set(d);
+      const posts = await readAll('posts'); const pa = posts.find((p) => (p.data.items || []).some((x) => x.id === id)); if (pa) await notifyTo(pa.id, { kind: 'comment', ref: id, txt: t0.slice(0, 80) }); return { ok: true, id: cid };
+    },
+    delComment: async (cid, post) => { await need(); const s0 = await db.doc('comments/' + post).get(); if (!s0.exists) return { ok: true }; const d = JSON.parse(JSON.stringify(s0.data())); const c = (d.items || []).find((x) => x.id === cid); if (!c) return { ok: true }; const posts = await readAll('posts'); const pa = posts.find((p) => (p.data.items || []).some((x) => x.id === post)); if (c.u !== uid && !(pa && pa.id === uid) && !owner) throw { code: 'forbidden' }; d.items = d.items.filter((x) => x.id !== cid); await db.doc('comments/' + post).set(d); return { ok: true }; },
+    notifs: async () => { await need(); const [s0, com] = await Promise.all([db.doc('notifs/' + uid).get(), comMap()]); const items = (s0.exists ? s0.data().items || [] : []).map((x) => ({ id: x.id, kind: x.kind, ref: x.ref || '', txt: x.txt || '', ts: x.ts, seen: !!x.seen, author: x.from ? asAuthor(x.from, com) : null })); return { items, unread: items.filter((x) => !x.seen).length }; },
+    notifCount: async () => { await need(); const s0 = await db.doc('notifs/' + uid).get(); return { unread: (s0.exists ? s0.data().items || [] : []).filter((x) => !x.seen).length }; },
+    notifsRead: async () => { await need(); const s0 = await db.doc('notifs/' + uid).get(); if (!s0.exists) return { ok: true }; const d = JSON.parse(JSON.stringify(s0.data())); d.items = (d.items || []).map((x) => Object.assign({}, x, { seen: true })); await db.doc('notifs/' + uid).set(d); return { ok: true }; },
+    adminSales: async () => ({ sales: 0, amount: 0, commission: 0, creators: 0, platform: 0, cut: 0, due: [] }), paySales: async () => ({ ok: true, paid: 0 }),
     follow: async (by, on) => {
       await need(); if (by === uid) throw { code: 'self' };
-      const s0 = await db.doc('follows/' + uid).get(); const ids = new Set(s0.exists ? s0.data().ids || [] : []); if (on === false) ids.delete(by); else ids.add(by); await db.doc('follows/' + uid).set({ ids: [...ids] });
+      const s0 = await db.doc('follows/' + uid).get(); const ids = new Set(s0.exists ? s0.data().ids || [] : []); const had = ids.has(by); if (on === false) ids.delete(by); else ids.add(by); await db.doc('follows/' + uid).set({ ids: [...ids] }); if (on !== false && !had) await notifyTo(by, { kind: 'follow', id: 'f:' + uid });
       const all = await readAll('follows'); return { ok: true, following: on !== false, followers: all.filter((d) => (d.data.ids || []).includes(by)).length };
     },
     following: async () => { await need(); const s0 = await db.doc('follows/' + uid).get(); const com = await comMap(); return { items: (s0.exists ? s0.data().ids || [] : []).map((b) => asAuthor(b, com)) }; },
@@ -144,9 +160,9 @@
     reportPost: async (id) => { await need(); const s0 = await db.doc('reports/' + uid).get(); const ids = new Set(s0.exists ? s0.data().ids || [] : []); ids.add('p:' + id); await db.doc('reports/' + uid).set({ ids: [...ids] }); return { ok: true }; },
     feed: async (scope, before) => {
       await need(); before = before || Date.now() + 1;
-      const [posts, com, reps, fol, lists, rat] = await Promise.all([readAll('posts'), comMap(), readAll('reports'), db.doc('follows/' + uid).get(), plan.community.list(), readAll('ratings')]);
+      const [posts, com, reps, fol, lists, rat, cms] = await Promise.all([readAll('posts'), comMap(), readAll('reports'), db.doc('follows/' + uid).get(), plan.community.list(), readAll('ratings'), readAll('comments')]); const ccount = (id) => { const d = cms.find((c) => c.id === id); return d ? (d.data.items || []).length : 0; };
       const set = new Set(fol.exists ? fol.data().ids || [] : []); set.add(uid); const only = scope === 'follow', items = [];
-      posts.forEach((d) => (d.data.items || []).forEach((x) => { if (x.ts < before && (!only || set.has(d.id)) && repCount(reps, x.id) < 3) items.push({ t: 'post', id: x.id, ts: x.ts, author: asAuthor(d.id, com), txt: x.txt, img: x.img || '', video: x.video || '', ad: !!x.ad, brand: false, ph: x.ph || '', pn: x.pn || '' }); }));
+      posts.forEach((d) => (d.data.items || []).forEach((x) => { if (x.ts < before && (!only || set.has(d.id)) && repCount(reps, x.id) < 3) items.push({ cc: ccount(x.id), t: 'post', id: x.id, ts: x.ts, author: asAuthor(d.id, com), txt: x.txt, img: x.img || '', video: x.video || '', ad: !!x.ad, brand: false, ph: x.ph || '', pn: x.pn || '' }); }));
       lists.items.forEach((r) => { if (r.ts < before && (!only || set.has(r.by))) items.push(Object.assign({ t: 'list', author: asAuthor(r.by, com) }, r)); });
       if (only) rat.forEach((d) => { if (!set.has(d.id)) return; Object.values(d.data.m || {}).forEach((r) => { if (r.txt && r.ts < before) items.push({ t: 'rating', id: d.id + r.n, ts: r.ts, author: asAuthor(d.id, com), n: r.n, h: r.h, stars: r.stars, txt: r.txt }); }); });
       items.sort((x, y) => y.ts - x.ts); const page = items.slice(0, 30); return { items: page, next: page.length === 30 ? page[29].ts : 0 };

@@ -148,7 +148,7 @@ await pg.click('[data-xn="Francis Kurkdjian"]'); await pg.waitForSelector('.nose
 const nb = await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length); await pg.click('#xgo'); await pg.waitForTimeout(600);
 ok(await pg.evaluate(() => JSON.parse(localStorage.getItem('sillage.v3')).collection.length) === nb + 1, 'ajout depuis l\'explorateur : le parfum choisi rejoint la collection');
 // 5b4. wishlist : à sentir / senti, exploration, verdict
-await pg.click('[data-tab=wish]'); await pg.waitForSelector('#wexp'); await pg.click('#wexp'); await pg.waitForSelector('#xq'); await pg.fill('#xq', 'jazz club'); await pg.waitForSelector('.xc'); await pg.locator('.xc').first().click(); await pg.click('#xgo'); await pg.waitForTimeout(500);
+await pg.click('[data-tab=wish]'); await pg.waitForSelector('[data-msub=wish]'); await pg.click('[data-msub=wish]'); await pg.waitForSelector('#wexp'); await pg.click('#wexp'); await pg.waitForSelector('#xq'); await pg.fill('#xq', 'jazz club'); await pg.waitForSelector('.xc'); await pg.locator('.xc').first().click(); await pg.click('#xgo'); await pg.waitForTimeout(500);
 ok(/À sentir · 1/.test(await pg.textContent('.wtabs')), 'wishlist : le parfum est « à sentir »');
 await pg.click('[data-wsm]'); await pg.waitForSelector('[data-wv=love]'); await pg.click('[data-wv=love]'); ok(/Senti · 1/.test(await pg.textContent('.wtabs')) && await pg.locator('[data-wv=love].on').count() === 1, 'wishlist : « senti » avec un verdict (J\'adore)');
 ok(await pg.locator('.card.lex h3').count() === 1, 'un mot, une astuce ou un peu d\'histoire de parfum');
@@ -187,7 +187,7 @@ await pg.screenshot({ path: OUT + '/pl2_detail.png', fullPage: true });
 await pg.locator('.plist .xc:not(.off)').first().click(); await pg.waitForSelector('#sheet:not([hidden]) .big-bottle'); await pg.click('#ex'); await pg.click('#plback'); await pg.waitForSelector('.plcard');
 await pg.click('[data-psec="Spécial"]'); await pg.locator('.plcard', { hasText: 'Layering' }).first().click(); await pg.waitForSelector('.plcombo');
 ok(await pg.locator('.plcombo').count() === 5, 'layering : cinq combinaisons proposées');
-await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist', { state: 'attached' }); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
+await pg.click('[data-tab=search]'); await pg.waitForSelector('[data-ssub=tips]'); await pg.click('[data-ssub=tips]'); await pg.waitForSelector('.tiplist', { state: 'attached' }); ok(await pg.locator('.tipc').count() >= 1 && await pg.locator('.tiplist li').count() >= 1, 'conseils : de quoi compléter la collection, et des conseils');
 await pg.screenshot({ path: OUT + '/e_tips.png', fullPage: true });
 { ok(await pg.locator('.tipk, .disc').count() === 0 && !(await pg.evaluate(() => /À découvrir/.test(document.body.innerText))), 'conseils : la rubrique « À découvrir » n\'existe plus');
   const tabs = ['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish']; let okAll = true;
@@ -200,7 +200,7 @@ ok(await pg.locator('[data-want]').count() === 5, 'accueil : effet recherché (c
 await pg.click('[data-cat=mouvement]'); ok(await pg.locator('[data-sc=match]').count() === 1 && await pg.locator('[data-sc=zone]').count() === 1, 'sport & voyage : jour de match et dans la zone');
 if (!(await pg.locator('[data-mood=stresse]').count())) { await pg.click('[data-refine]'); await pg.waitForTimeout(200); }
 ok(await pg.locator('[data-mood=stresse]').count() === 1 && await pg.locator('[data-mood=blues]').count() === 1 && await pg.locator('[data-mood=focus]').count() === 1, 'mood : stressé, pas au top, focus');
-await pg.click('[data-tab=tips]'); await pg.waitForSelector('.tiplist, .tipc', { state: 'attached' });
+await pg.click('[data-tab=search]'); await pg.waitForSelector('[data-ssub=tips]'); await pg.click('[data-ssub=tips]'); await pg.waitForSelector('.tiplist, .tipc', { state: 'attached' });
 { const names = await pg.$$eval('.tipc b', (els) => els.map((e) => e.textContent.trim().toLowerCase())); ok(new Set(names).size === names.length, 'conseils : jamais deux fois le même parfum (' + names.length + ' fiches)'); const fam = await pg.$$eval('.tipc', (els) => els.map((e) => (e.querySelector('small') || {}).textContent.split('·')[0].trim() + '|' + e.querySelector('b').textContent.trim().split(/\s+/)[0].toLowerCase())); ok(new Set(fam).size === fam.length, 'conseils : jamais deux versions du même parfum (Haltane…)'); }
 // 5c. tout est sauvegardé d'un jour à l'autre : on recharge la page
 await pg.reload(); await pg.waitForTimeout(3600);

@@ -25,6 +25,7 @@ const open = async (id, owner) => {
   await pg.goto('http://localhost:' + PORT + '/?seed=demo'); await pg.waitForTimeout(3500); await pg.evaluate(() => { const g = document.querySelector('#pSkip'); if (g) g.click(); }); await pg.waitForTimeout(500);
   return { pg, errs };
 };
+const shot = (pg, n) => (process.env.SHOTS ? pg.screenshot({ path: '/tmp/shots/' + n + '.png' }) : null);
 const closeSheet = (pg) => pg.evaluate(() => { const s = document.getElementById('sheet'); s.hidden = true; s.innerHTML = ''; document.body.style.overflow = ''; });
 const t = await open('user-theo', true);
 // profil
@@ -43,17 +44,18 @@ ok(!/Fleurs|Frais et agrumes/.test(await t.pg.locator('#ntp').innerText()), 'not
 await t.pg.click('#nback'); await t.pg.waitForSelector('[data-ng]'); ok(/1 aimée/.test(await t.pg.locator('[data-ng="2"]').innerText()), 'notes : la liste compte la note choisie');
 await closeSheet(t.pg);
 // inspirations
-await t.pg.click('#dock [data-tab="play"]'); await t.pg.waitForSelector('.plsubtabs'); ok(/Mes inspirations/.test(await t.pg.locator('.plsubtabs').innerText()) && /Communauté/.test(await t.pg.locator('.plsubtabs').innerText()), 'artefact : « Mes inspirations » et « Communauté » sont visibles');
-await t.pg.click('[data-sub="mine"]'); await t.pg.click('#mi-new'); await t.pg.fill('#ei-t', 'Cuirs de minuit'); await t.pg.fill('#ei-d', 'Pour les soirs d\'hiver');
+await t.pg.click('#dock [data-tab="play"]'); await t.pg.waitForSelector('.plsubtabs'); ok(!/Mes inspirations/.test(await t.pg.locator('.plsubtabs').innerText()) && /Communauté/.test(await t.pg.locator('.plsubtabs').innerText()), 'inspirations : « Univers Sillage » et « Communauté » seulement, mes playlists sont dans le profil');
+await t.pg.click('#dock [data-tab="wish"]'); await t.pg.waitForSelector('#mi-new'); await shot(t.pg, 'profil_listes'); ok(await t.pg.locator('[data-msub]').count() === 4, 'profil : Playlists, Publications, Abonnés, Wishlist'); await t.pg.click('#mi-new'); await t.pg.fill('#ei-t', 'Cuirs de minuit'); await t.pg.fill('#ei-d', 'Pour les soirs d\'hiver');
 for (const q of ['tobacco', 'santal']) { await t.pg.fill('#ei-q', q); await t.pg.waitForSelector('[data-rh]'); await t.pg.click('[data-rh="0"]'); }
 await t.pg.fill('#ei-v', 'https://youtu.be/abc123'); await t.pg.check('#ei-ad'); await t.pg.click('[data-ln="0"]'); await t.pg.fill('[data-lu="0"]', 'https://marque.example/p?aff=theo');
 await t.pg.setInputFiles('#ei-cf', { name: 'c.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64') }); await t.pg.waitForSelector('#ei-cv img', { timeout: 4000 }); ok(true, 'couverture : la photo est choisie');
+await t.pg.click('[data-cat="Soirée"]');
 await t.pg.fill('#ei-v', 'http://pas-https.fr'); await t.pg.click('#ei-save'); await t.pg.waitForFunction(() => /https/.test(document.querySelector('#ei-msg').textContent)); ok(true, 'créateur : un lien sans https est refusé');
 await t.pg.fill('#ei-v', 'https://youtu.be/abc123');
 await t.pg.click('#ei-save'); await t.pg.waitForSelector('#si-pub');
 ok(await t.pg.locator('a.xlink[rel*="sponsored"]').count() === 1 && await t.pg.locator('a.vlink').count() === 1 && /partenariat/i.test(await t.pg.locator('#sheet').innerText()), 'créateur : lien d\'offre, vidéo et mention de partenariat affichés'); ok(/Privée/i.test(await t.pg.locator('#sheet').innerText()), 'artefact : une inspiration est privée par défaut');
 await t.pg.click('#si-pub'); await t.pg.click('#si-pub'); await t.pg.waitForFunction(() => /Publique/i.test(document.querySelector('#sheet').innerText), null, { timeout: 6000 });
-ok(SHARED['community/user-theo'].pub.length === 1 && SHARED['community/user-theo'].pub[0].cover.startsWith('data:image/jpeg'), 'artefact : la publication et sa couverture sont dans la base');
+ok(SHARED['community/user-theo'].pub[0].cat === 'Soirée', 'catégories : la playlist est rangée dans « Soirée »'); ok(SHARED['community/user-theo'].pub.length === 1 && SHARED['community/user-theo'].pub[0].cover.startsWith('data:image/jpeg'), 'artefact : la publication et sa couverture sont dans la base');
 await closeSheet(t.pg);
 // aperçu de mon profil public
 await t.pg.click('#profileBtn'); await t.pg.waitForSelector('#pf-pv'); await t.pg.fill('#pf-ln', 'https://youtube.com/@theo\nhttps://instagram.com/theo'); await t.pg.click('#pf-save'); await t.pg.waitForFunction(() => /Enregistré/.test(document.querySelector('#pf-msg').textContent));
@@ -63,22 +65,33 @@ await t.pg.click('#cr-share'); await t.pg.waitForFunction(() => /copi|Partag/i.t
 await closeSheet(t.pg);
 // un autre membre
 const m = await open('user-marie', false);
-await m.pg.click('#dock [data-tab="play"]'); await m.pg.waitForSelector('.plsubtabs'); await m.pg.click('[data-sub="comm"]'); await m.pg.waitForSelector('[data-fl]', { timeout: 6000 }); ok(/Cuirs de minuit/.test(await m.pg.locator('#subbody').innerText()), 'communauté : l\'autre membre voit l\'inspiration publiée');
+await m.pg.click('#dock [data-tab="play"]'); await m.pg.waitForSelector('.plsubtabs'); await m.pg.click('[data-sub="comm"]'); await m.pg.waitForSelector('[data-fl]', { timeout: 6000 }); await shot(m.pg, 'communaute'); ok(/Cuirs de minuit/.test(await m.pg.locator('#subbody').innerText()), 'communauté : l\'autre membre voit l\'inspiration publiée');
 await m.pg.click('[data-fl]'); await m.pg.waitForSelector('#sc-like'); ok(await m.pg.locator('a.xlink').count() === 1, 'communauté : le membre voit le lien de l\'offre');
 await m.pg.click('#sc-pf'); await m.pg.waitForSelector('#mb-fo'); ok(/Théo/.test(await m.pg.locator('#sheet').innerText()), 'communauté : le profil du créateur s\'ouvre'); await closeSheet(m.pg); await m.pg.click('[data-fl]'); await m.pg.waitForSelector('#sc-like'); await m.pg.click('#sc-like'); await m.pg.waitForFunction(() => /\(1\)/.test(document.querySelector('#sc-like').textContent));
 ok(SHARED['likes/user-marie'].ids.length === 1, 'communauté : le like est enregistré');
 ok(await m.pg.locator('.card:has-text("Mode éditeur")').count() === 0 && await m.pg.locator('#sc-del').count() === 0, 'communauté : pas d\'outil d\'éditeur pour un membre');
 await closeSheet(m.pg);
 // réseau : publication, abonnement, fil, avis
-await t.pg.click('#dock [data-tab="play"]'); await t.pg.click('[data-sub="comm"]'); await t.pg.waitForSelector('#fp'); await t.pg.click('#fp'); await t.pg.waitForSelector('#po-t');
+await t.pg.click('#dock [data-tab="tips"]'); await t.pg.waitForSelector('#fp'); await t.pg.click('#fp'); await t.pg.waitForSelector('#po-t');
 await t.pg.fill('#po-t', 'Mon top des boisés du soir'); await t.pg.fill('#po-v', 'https://youtu.be/xyz'); await t.pg.click('#po-go'); await t.pg.waitForSelector('[data-fid]', { timeout: 6000 });
 ok(SHARED['posts/user-theo'].items[0].txt === 'Mon top des boisés du soir', 'réseau : la publication est enregistrée et apparaît dans le fil');
 await closeSheet(t.pg);
-await m.pg.click('#dock [data-tab="play"]'); await m.pg.click('[data-sub="comm"]'); await m.pg.waitForSelector('[data-fid]', { timeout: 6000 });
+await m.pg.click('#dock [data-tab="tips"]'); await m.pg.waitForSelector('#fp'); await m.pg.click('[data-sc="all"]'); await m.pg.waitForSelector('[data-fid]', { timeout: 6000 });
 await m.pg.click('[data-fid] .fhead'); await m.pg.waitForSelector('#mb-fo'); await m.pg.click('#mb-fo'); await m.pg.waitForFunction(() => /Abonné/.test(document.querySelector('#mb-fo').textContent));
-ok(SHARED['follows/user-marie'].ids.includes('user-theo'), 'réseau : l\'abonnement est enregistré'); ok(/1 abonné/.test(await m.pg.locator('#sheet').innerText()), 'réseau : le compteur d\'abonnés monte');
+ok(SHARED['follows/user-marie'].ids.includes('user-theo'), 'réseau : l\'abonnement est enregistré'); await shot(m.pg, 'membre'); ok(/1 abonné/.test(await m.pg.locator('#sheet').innerText()), 'réseau : le compteur d\'abonnés monte');
 await closeSheet(m.pg);
 await m.pg.click('[data-sc="follow"]'); await m.pg.waitForSelector('[data-fid]', { timeout: 6000 }); ok(await m.pg.locator('[data-fid]').count() === 1, 'réseau : « Abonnements » montre la publication de la personne suivie');
+// commentaires et notifications
+await m.pg.evaluate(() => window.SillageBackend.plan.saveProfile({ pseudo: 'Marie' }));
+await m.pg.click('#dock [data-tab="tips"]'); await m.pg.waitForSelector('[data-fid]', { timeout: 6000 }); await m.pg.click('[data-fid] [data-cm]'); await m.pg.waitForSelector('[data-ci]'); await m.pg.fill('[data-ci]', 'Très belle sélection'); await m.pg.click('[data-cs]'); await m.pg.waitForFunction(() => /Très belle sélection/.test(document.querySelector('[data-cmb]').innerText), null, { timeout: 5000 });
+await shot(m.pg, 'pourtoi_commentaires'); ok(SHARED['comments/' + SHARED['posts/user-theo'].items[0].id].items.length === 1, 'commentaires : le commentaire est enregistré et affiché');
+ok(SHARED['notifs/user-theo'].items.some((x) => x.kind === 'comment') && SHARED['notifs/user-theo'].items.some((x) => x.kind === 'follow'), 'notifications : abonnement et commentaire notifiés à l\'auteur');
+await t.pg.reload(); await t.pg.waitForTimeout(3500); await t.pg.evaluate(() => { const g = document.querySelector('#pSkip'); if (g) g.click(); }); await t.pg.waitForFunction(() => { const n = document.querySelector('#bellN'); return n && !n.hidden && /2/.test(n.textContent); }, null, { timeout: 8000 }); ok(true, 'notifications : la cloche affiche 2 nouveautés');
+await t.pg.click('#bellBtn'); await t.pg.waitForSelector('.notif'); await shot(t.pg, 'notifs'); ok(/commenté/.test(await t.pg.locator('#sheet').innerText()) && /te suit/.test(await t.pg.locator('#sheet').innerText()), 'notifications : la liste détaille chaque nouveauté'); await t.pg.waitForFunction(() => document.querySelector('#bellN').hidden, null, { timeout: 5000 });
+await closeSheet(t.pg);
+await t.pg.click('#dock [data-tab="wish"]'); await t.pg.waitForSelector('.mestats'); ok(/1\s*abonné/.test(await t.pg.locator('.mestats').innerText()) && /1\s*publication/.test(await t.pg.locator('.mestats').innerText()), 'profil : compteurs de publications et d\'abonnés');
+await shot(t.pg, 'profil'); await t.pg.click('[data-msub="posts"]'); await t.pg.waitForSelector('[data-fid]'); ok(true, 'profil : mes publications');
+await t.pg.click('[data-msub="people"]'); await t.pg.waitForSelector('#pp-l .fhead', { timeout: 5000 }); ok(/Marie/.test(await t.pg.locator('#pp-l').innerText()), 'profil : la liste des abonnés');
 // avis : marie note un parfum, théo (qui la suit) le voit
 await t.pg.evaluate(() => { const S = window.SillageInternals; });
 await m.pg.evaluate(() => window.SillageBackend.plan.saveProfile({ pseudo: 'Marie' }));
@@ -97,7 +110,7 @@ const key = await t.pg.evaluate(() => { const e = window.SillageInternals.dbList
 await t.pg.waitForSelector('#ed-ps', { timeout: 5000 }); await t.pg.fill('#ed-p', '123'); await t.pg.click('#ed-ps'); await t.pg.waitForTimeout(1500); console.log('msg:', await t.pg.locator('#ed-msg').innerText(), JSON.stringify(Object.keys(SHARED)));
 ok(Object.values(SHARED['content/main'].price).includes(123), 'artefact : le prix de l\'éditeur est enregistré dans la base');
 // voyage : « Je ne sais pas »
-await closeSheet(t.pg); await t.pg.click('#dock [data-tab="tips"]'); await t.pg.waitForTimeout(600);
+await closeSheet(t.pg); await t.pg.click('#dock [data-tab="search"]'); await t.pg.waitForSelector('[data-ssub="tips"]'); await t.pg.click('[data-ssub="tips"]'); await t.pg.waitForTimeout(600);
 if (await t.pg.locator('#vRedo').count()) {
   await t.pg.click('#vRedo'); await t.pg.waitForSelector('#vNext'); await t.pg.click('#vNext'); await t.pg.waitForSelector('[data-sv="-1"]');
   ok(await t.pg.locator('[data-sv="-1"]').count() === 4 && /Je ne sais pas/.test(await t.pg.locator('.vsc').first().innerText()), 'voyage : chaque odeur a une case « Je ne sais pas »');

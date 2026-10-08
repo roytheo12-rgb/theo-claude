@@ -1072,10 +1072,53 @@ a.chip { text-decoration: none; display: inline-block; }
 .myc.hascov { background-size: cover; background-position: center; }
 .rvrow { display: grid; gap: 4px; }
 
+.barr { display: flex; gap: 8px; align-items: center; }
+#bellBtn { position: relative; }
+#bellN { position: absolute; top: -3px; right: -3px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--wine); color: #fff; font: 600 10px/17px var(--f-ui, sans-serif); text-align: center; }
+
+/* ---- Réseau : espacement et lisibilité (fil, profil, communauté, commentaires) ---- */
+#pt, #subbody, #mebody { display: grid; gap: 20px; }
+.mepro { display: grid; gap: 18px; }
+.mepro > header { margin-bottom: 0; }
+.mecard { display: flex; gap: 16px; align-items: center; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(242, 235, 224, .03); }
+.mecard .hav.big { width: 72px; height: 72px; }
+.meinfo { display: grid; gap: 4px; min-width: 0; }
+.meinfo b { font: 400 22px/1.2 var(--f-display, serif); }
+.mestats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mestats button { display: grid; gap: 2px; justify-items: center; padding: 12px 6px; border: 1px solid var(--line); border-radius: 12px; background: none; color: var(--ink); cursor: pointer; }
+.mestats b { font: 400 22px/1 var(--f-display, serif); } .mestats span { font-size: 12px; opacity: .6; }
+.flist { gap: 18px; }
+.fcard { padding: 16px; gap: 12px; }
+.fcard .row, .fcard .fact { margin-top: 2px; }
+.empty { display: grid; gap: 10px; justify-items: start; padding: 22px 18px; border: 1px dashed var(--line); border-radius: 14px; }
+.empty p { margin: 0; }
+.cmbox { display: grid; gap: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.cmt { display: grid; gap: 4px; padding-left: 4px; }
+.cmform { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.cgroup { display: grid; gap: 12px; }
+.cgroup header { display: flex; justify-content: space-between; align-items: baseline; }
+.cgroup h3 { margin: 0; font: 400 20px/1.2 var(--f-display, serif); }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ccard { display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; min-height: 150px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background-color: rgba(242, 235, 224, .05); background-size: cover; background-position: center; color: var(--ink); text-align: left; cursor: pointer; }
+.ccard b { font: 400 17px/1.2 var(--f-display, serif); } .ccard small { opacity: .7; font-size: 12px; }
+.notif { display: flex; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: none; color: var(--ink); text-align: left; cursor: pointer; }
+.notif.new { border-color: var(--wine); background: rgba(180, 57, 74, .12); }
+.notif span { display: grid; gap: 2px; font-size: 14px; line-height: 1.4; } .notif small { opacity: .55; font-size: 12px; }
+.notif .hav { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex: none; }
+.peoplelist { display: grid; gap: 14px; }
+#mebody .mylist, #subbody .mylist { gap: 12px; }
+#mebody .cta.full, #mebody > .cta { justify-self: start; }
+.plsubtabs { margin-bottom: 6px; }
+.sec > .chips, .sec .chips { margin-bottom: 4px; }
+.mylist { display: grid; gap: 12px; }
+.myc { padding: 14px 16px; }
+.row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; }
+.row3 .ghost { padding: 12px 4px; font-size: 11px; letter-spacing: .08em; }
+
 </style>
 </head><body>
 <div id="app">
-  <header class="bar"><div class="mark">sillage</div><button class="iconbtn" id="profileBtn" aria-label="Profil et sauvegarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.8-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></button></header>
+  <header class="bar"><div class="mark">sillage</div><div class="barr"><button class="iconbtn" id="bellBtn" aria-label="Notifications" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21h4"/></svg><b id="bellN" hidden></b></button><button class="iconbtn" id="profileBtn" aria-label="Profil et sauvegarde"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.6"/><path d="M4.8 20c.9-3.6 3.8-5.4 7.2-5.4s6.3 1.8 7.2 5.4"/></svg></button></div></header>
   <main id="view"></main>
 </div>
 <nav class="dock" id="dock" aria-label="Navigation">
@@ -1086,7 +1129,7 @@ a.chip { text-decoration: none; display: inline-block; }
   <button data-tab="tips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.8 8.2l-2 5.6-5.6 2 2-5.6z"/></svg>pour toi</button>
   <button data-tab="play"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></svg>inspirations</button>
   <button data-tab="walk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>balade</button>
-  <button data-tab="wish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M7 4h10v17l-5-3.6L7 21z"/></svg>wishlist</button>
+  <button data-tab="wish"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20.5c.8-3.8 3.8-5.8 7-5.8s6.2 2 7 5.8"/></svg>profil</button>
 </nav>
 <div id="splash" role="presentation"><div><div class="lg"><span style="--i:0">s</span><span style="--i:1">i</span><span style="--i:2">l</span><span style="--i:3">l</span><span style="--i:4">a</span><span style="--i:5">g</span><span style="--i:6">e</span></div><svg viewBox="0 0 200 14" fill="none" stroke="#b4394a" stroke-width="2.2" stroke-linecap="round"><path d="M0 7Q12 0 25 7T50 7T75 7T100 7T125 7T150 7T175 7T200 7"/></svg><div class="tg">Cabinet de parfumerie</div></div></div>
 <div id="story" hidden></div>
@@ -3343,6 +3386,9 @@ ${mist}
       backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
     social: {
       caps: { brand: true, stats: true },
+      followers: () => api('/api/followers'), comments: (id) => api('/api/post/' + id + '/comments'), comment: (id, txt) => api('/api/post/' + id + '/comments', 'POST', { txt }), delComment: (cid) => api('/api/comment/' + cid, 'DELETE'),
+      notifs: () => api('/api/notifs'), notifCount: () => api('/api/notifs?count=1'), notifsRead: () => api('/api/notifs/read', 'POST', {}),
+      adminSales: () => api('/api/admin/sales'), paySales: (by) => api('/api/admin/sales/pay/' + by, 'POST', {}),
       follow: (by, on) => api('/api/follow', 'POST', { by, on }), following: () => api('/api/following'),
       feed: (scope, before) => api('/api/feed?scope=' + (scope === 'follow' ? 'follow' : 'all') + (before ? '&before=' + before : '')),
       post: (b) => api('/api/post', 'POST', b), delPost: (id) => api('/api/post/' + id, 'DELETE'), reportPost: (id) => api('/api/post/' + id + '/report', 'POST', {}),
@@ -3775,7 +3821,7 @@ ${mist}
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
     $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish'].indexOf(tab) * 100}%)`;
     $('#view').dataset.v = tab;
-    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
+    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewFeedTab, play: viewPlay, walk: viewWalk, wish: viewMe })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
     setTimeout(ensureRatings, 0); pfSchedule();
   }
@@ -4395,13 +4441,25 @@ ${mist}
       BCACHE[key] = html; paint(html);
     }, 20);
   }
-  function viewTips() {
+  // Navigation interne : « Recherche » a deux volets (la recherche et les conseils), « Profil » en a quatre.
+  const NAV = { search: 'search', me: 'lists' };
+  function searchBar() {
+    const v = $('#view'), bar = document.createElement('div'); bar.className = 'plsubtabs';
+    bar.innerHTML = [['search', 'Recherche'], ['tips', 'Conseils']].map(([k, l]) => `<button type="button" class="${NAV.search === k ? 'on' : ''}" data-ssub="${k}">${l}</button>`).join('');
+    v.insertBefore(bar, v.firstChild);
+    $$('[data-ssub]', bar).forEach((b) => (b.onclick = () => { NAV.search = b.dataset.ssub; render(true); }));
+  }
+  function viewSearch() { if (NAV.search === 'tips') return viewTips(); viewSearchMain(); searchBar(); }
+  function viewTips() { viewTipsMain(); if (tab === 'search') searchBar(); }
+  function viewMe() { if (window.SillageProduct && window.SillageProduct.me) return window.SillageProduct.me(NAV.me, viewWish); viewWish(); }
+  function viewFeedTab() { if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.pourToi(); $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2></header><p class="plintro">Le fil de tes abonnements arrive avec la version en ligne.</p></section>'; }
+  function viewTipsMain() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
     let PLN = null; try { const pl = S.collection.length ? collectionPlan() : null; PLN = pl && pl.strategies.length ? pl : null; } catch (e) { PLN = null; }
     const hasProfile = S.collection.length || (s.liked || []).length || (s.vibes || []).length;
     $('#view').innerHTML = `
-      <section class="sec tp"><header><h2>Pour toi</h2><span class="mono">ton parfumier privé</span></header>
+      <section class="sec tp"><header><h2>Conseils</h2><span class="mono">ton parfumier privé</span></header>
         <div class="card pricecard"><div class="row" style="justify-content:space-between;align-items:baseline"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${capLabel(s.budget)}</b></div>
           <input type="range" id="budget" min="0" max="${CAPS.length - 1}" step="1" value="${capIdx(s.budget)}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.budget ? 'Aucun conseil ne dépasse ce prix' : 'Aucun plafond : tous les prix, jusqu\'aux plus grands flacons'}</p>
           <div class="tiersrow"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.tier ? 'Ton style' : 'Choisis ton style pour des conseils plus justes'}</p><div class="chips" id="tiersel">${TIERS.map(([k, l]) => `<button type="button" class="chip ${s.tier === k ? 'on' : ''}" data-tier="${k}">${l}</button>`).join('')}</div></div></div>
@@ -4875,7 +4933,7 @@ ${mist}
   const popularList = () => incList();
   const sFilters = () => SRCH.tags.length || SRCH.style || SRCH.price || SRCH.house || SRCH.note || SRCH.nose || SRCH.conc || SRCH.gen || SRCH.photo;
   function bindEnt(root) { const look = plLook(); $$('[data-ent]', root).forEach((b) => (b.onclick = () => { const e = look.get(b.dataset.ent); if (e) openEntry(e); })); }
-  function viewSearch() {
+  function viewSearchMain() {
     const act = [...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.gen ? ['gen', ({ f: 'Féminin', m: 'Masculin', u: 'Mixte' })[SRCH.gen]] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean);
     $('#view').innerHTML = `
       <section class="sec srch"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
@@ -4974,7 +5032,7 @@ ${mist}
   const HOUSE_SITE = { 'dior': 'https://www.dior.com/fr_fr/beauty/parfums', 'yves saint laurent': 'https://www.yslbeauty.fr/parfums', 'guerlain': 'https://www.guerlain.com/fr/fr-fr/c/lart-et-la-matiere-collection.html', 'hermes': 'https://www.hermes.com/fr/fr/category/parfums/', 'tom ford': 'https://www.tomfordbeauty.com/collections/fragrance', 'chanel': 'https://www.chanel.com/fr/parfums/', 'parfums de marly': 'https://parfums-de-marly.com/fr/collections/fragrances', 'jo malone': 'https://www.jomalone.fr/products/colognes', 'mancera': 'https://www.manceraparfums.com/fr/', 'khadlaj': 'https://www.fragrantica.fr/designer/Khadlaj-Perfumes.html', 'oman luxury': 'https://odorare.fr/collections/oman-luxury', 'ella k': 'https://www.ellakparfums.com/', 'horace': 'https://www.horace.com/', 'ex nihilo': 'https://www.exnihilo-paris.com/', 'maison francis kurkdjian': 'https://www.franciskurkdjian.com/fr/', 'frederic malle': 'https://www.fredericmalle.com/', 'xerjoff': 'https://www.xerjoff.com/', 'maison crivelli': 'https://www.maisoncrivelli.com/', 'parfum d empire': 'https://www.parfumdempire.com/' };
   const siteOf = (e) => HOUSE_SITE[E.norm(e.house)] || null;
   const goPlaylist = (title) => { const p = (window.PLAYLISTS || []).find((x) => x.t === title); if (!p) return; closeSheet(); tab = 'play'; PL.id = p.id; render(); };
-  const goNeedText = (t) => { closeSheet(); tab = 'search'; render(); setTimeout(() => { const n = $('#need'); if (n) { n.value = t; const g = $('#needgo'); if (g) g.click(); window.scrollTo(0, 0); } }, 60); };
+  const goNeedText = (t) => { closeSheet(); tab = 'search'; NAV.search = 'search'; render(); setTimeout(() => { const n = $('#need'); if (n) { n.value = t; const g = $('#needgo'); if (g) g.click(); window.scrollTo(0, 0); } }, 60); };
   const edOf = (e) => { const ED = window.EDITORIAL || {}, HA = window.HOUSE_ALIAS || {}; return ED[E.norm((HA[E.norm(e.house)] || e.house)) + '|' + E.norm(e.name)] || ED[E.norm(e.house) + '|' + E.norm(e.name)] || null; };
   const edHtml = (e) => {
     const d = edOf(e); if (!d) return '';
@@ -5029,13 +5087,13 @@ ${mist}
       ${(e.noses || []).length ? `<div><p class="mono">Créé par</p><div class="chips" style="margin-top:8px">${e.noses.slice(0, 4).map((n) => `<button class="chip" data-nz="${esc(n)}">${esc(n)}</button>`).join('')}</div>${e.noses.length >= 3 ? '<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:8px">Plusieurs nez sont cités pour ce parfum : les sources divergent.</p>' : ''}</div>` : ''}`;
   }
   function bindFiche(pn) {
-    $$('[data-nz]', pn).forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.nz; closeSheet(); tab = 'search'; render(); }));
+    $$('[data-nz]', pn).forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.nz; closeSheet(); tab = 'search'; NAV.search = 'search'; render(); }));
     $$('[data-gopl]', pn).forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl)));
     $$('[data-gosit]', pn).forEach((b) => (b.onclick = () => goNeedText(b.dataset.gosit)));
-    $$('[data-gotag]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.tags = [b.dataset.gotag]; SRCH.limit = 40; tab = 'search'; render(); }));
-    $$('[data-gonote]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.note = b.dataset.gonote; SRCH.limit = 40; tab = 'search'; render(); }));
-    $$('[data-gohouse]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.house = b.dataset.gohouse; SRCH.limit = 40; tab = 'search'; render(); }));
-    $$('[data-gofam]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.style = b.dataset.gofam; SRCH.limit = 40; tab = 'search'; render(); }));
+    $$('[data-gotag]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.tags = [b.dataset.gotag]; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
+    $$('[data-gonote]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.note = b.dataset.gonote; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
+    $$('[data-gohouse]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.house = b.dataset.gohouse; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
+    $$('[data-gofam]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.style = b.dataset.gofam; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
     $$('[data-adn]', pn).forEach((b) => { if (!b.onclick) b.onclick = () => goNeedText(b.dataset.adn); });
   }
   function openEntry(e) {
@@ -5598,7 +5656,7 @@ ${mist}
         <div class="plist">${p.ps.map((x, i) => (p.grp && plGrpAt(p, i) >= 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[plGrpAt(p, i)].t)}</p>${p.grp[plGrpAt(p, i)].d ? `<p class="pld">${tx(p.grp[plGrpAt(p, i)].d)}</p>` : ''}</div>` : '') + row(x, i)).join('')}</div>
         ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
       </section>`;
-    $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; render(); } else goNeedText(v); }));
+    $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); } else goNeedText(v); }));
     $('#plback').onclick = () => { PL.id = 0; render(); };
     if (window.SillageProduct) window.SillageProduct.playlist(p, $('#view'));
     const open = (i) => { const e = st.es[i], x = p.ps[i]; if (e) return openEntry(e); const pn = openSheet(`<div><h2>${esc(x.q)}</h2><p class="mono" style="margin-top:6px">Pas encore dans la base de Sillage</p></div><p style="color:var(--muted);font-size:14px">Ce parfum fait partie de la liste « ${esc(p.t)} », mais je n'ai pas encore sa fiche. Tu peux le garder en wishlist pour le sentir.</p><div class="row">${hasWish(x.q) ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="cta" id="plw"><span>À sentir</span></button>'}<button class="ghost" id="ex">Fermer</button></div>`); $('#ex', pn).onclick = closeSheet; if ($('#plw', pn)) $('#plw', pn).onclick = () => { addWish({ name: x.q, house: '', family: '', notes: [], price: 0, st: 'smell' }); save(); closeSheet(); viewPlaylist(p); }; };
@@ -6296,7 +6354,7 @@ ${mist}
   window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); }, refresh: () => { try { render(true); } catch (e) { /* ok */ } } };
   // Ce que la couche produit (offres, profil, communauté, éditeur : product.js) a le droit de toucher dans l'appli.
   window.SillageInternals = {
-    S: () => S, save, dbList: () => dbList(), entryKey, openEntry, openSheet, closeSheet, esc, $, $$, E, xThumb, pCard, famLabel, showAccount: (f, o) => showAccount(f, o), render: (k) => render(k), PLS: () => PLS, PL, tab: () => tab, goTab: (t) => { tab = t; render(); },
+    S: () => S, NAV, save, dbList: () => dbList(), entryKey, openEntry, openSheet, closeSheet, esc, $, $$, E, xThumb, pCard, famLabel, showAccount: (f, o) => showAccount(f, o), render: (k) => render(k), PLS: () => PLS, PL, tab: () => tab, goTab: (t) => { tab = t; render(); },
     bust: () => { DBL = null; NPOOL = null; BIOM = null; ENTP = null; HMED = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]); },
   };
 
@@ -6329,6 +6387,8 @@ ${mist}
 
   // ---------- Contenu public modifié par l'éditeur ----------
   let CONTENT = {};
+  const DEFAULT_CATS = ['Soirée', 'Bureau', 'Été', 'Hiver', 'Cadeau', 'Petit budget', 'Découverte'];
+  const getCats = () => (Array.isArray(CONTENT.cats) && CONTENT.cats.length ? CONTENT.cats : DEFAULT_CATS);
   const same = (x, it) => (x.h && x.n ? E.norm(x.h) === E.norm(it.h) && E.norm(x.n) === E.norm(it.n) : E.norm(x.q) === E.norm(it.h + ' ' + it.n));
   const grpAdjust = (p, idx, delta) => { if (!p.grp) return; let a = 0; for (const g of p.grp) { if (idx < a + g.n || g === p.grp[p.grp.length - 1]) { g.n += delta; return; } a += g.n; } };
   function applyContent(c) {
@@ -6449,7 +6509,7 @@ ${mist}
   const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
   function subtabs(view) {
     const head = $('header', view); if (!head) return; const bar = document.createElement('div'); bar.className = 'plsubtabs';
-    bar.innerHTML = [['', 'Univers Sillage'], ['mine', 'Mes inspirations'], ['comm', 'Communauté']].map(([k, l]) => `<button type="button" class="${(I.PL.sub || '') === k ? 'on' : ''}" data-sub="${k}">${l}</button>`).join('');
+    bar.innerHTML = [['', 'Univers Sillage'], ['comm', 'Communauté']].map(([k, l]) => `<button type="button" class="${(I.PL.sub || '') === k ? 'on' : ''}" data-sub="${k}">${l}</button>`).join('');
     head.parentNode.insertBefore(bar, head.nextSibling);
     $$('[data-sub]', bar).forEach((b) => (b.onclick = () => { I.PL.sub = b.dataset.sub; I.PL.id = 0; I.render(); }));
   }
@@ -6466,7 +6526,7 @@ ${mist}
   const REL = 'sponsored nofollow noopener noreferrer';
   const itemRows = (items) => items.map((x, i) => { const e = entryOf(x.h, x.n), u = safeUrl(x.u); const row = e ? `<button type="button" class="xc" data-ie="${i}">${I.xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc(e.house)}</small></span><i class="xm">›</i></button>` : `<div class="xc off"><span class="xth ph">?</span><span class="xt"><b>${esc(x.n)}</b><small>${esc(x.h || 'Pas dans la base')}</small></span></div>`; return `<div class="xrow">${row}${u ? `<a class="xlink" href="${esc(u)}" target="_blank" rel="${REL}">Voir l'offre sur ${esc(hostOf(u))} ↗</a>` : ''}</div>`; }).join('');
   const videoLink = (r) => { const u = safeUrl(r.video); return u ? `<a class="ghost vlink" href="${esc(u)}" target="_blank" rel="${REL}">▶ Voir la vidéo sur ${esc(hostOf(u))}</a>` : ''; };
-  const adNote = (r) => ((r.ad || (r.items || []).some((x) => safeUrl(x.u))) ? `<p class="soft small" style="margin:0">${r.ad ? 'Partenariat : cette liste peut être sponsorisée. ' : ''}Certains liens sont des liens partenaires (le créateur peut toucher une commission). Sillage ne les contrôle pas.</p>` : '');
+  const adNote = (r) => ((r.ad || (r.items || []).some((x) => safeUrl(x.u))) ? `<p class="soft small" style="margin:0">${r.ad ? 'Partenariat : cette liste peut être sponsorisée. ' : ''}Certains liens sont des liens partenaires : si tu achètes après un clic, le créateur et Sillage peuvent toucher une commission, sans frais pour toi. Sillage ne contrôle pas les boutiques.</p>` : '');
   // Partager : lien public si la liste l'est (version en ligne), sinon le texte de la liste.
   async function shareOut(title, text, url) {
     try { if (navigator.share) { await navigator.share({ title, text, url: url || undefined }); return 'Partagé ✓'; } } catch (e) { if (e && e.name === 'AbortError') return ''; }
@@ -6476,9 +6536,9 @@ ${mist}
   const shareUrl = (kind, id) => (ART || !id ? '' : location.origin + '/?' + kind + '=' + id);
   const bindRows = (pn, items) => $$('[data-ie]', pn).forEach((b) => (b.onclick = () => { const x = items[+b.dataset.ie], e = entryOf(x.h, x.n); if (e) I.openEntry(e); }));
   function playSub(sub) {
-    $('#view').innerHTML = `<section class="sec"><header><h2>Inspirations</h2><span class="mono">${sub === 'mine' ? 'les tiennes' : 'la communauté'}</span></header><div id="subbody"></div></section>`;
+    $('#view').innerHTML = `<section class="sec"><header><h2>Inspirations</h2><span class="mono">par catégorie</span></header><div id="subbody"></div></section>`;
     subtabs($('#view')); const body = $('#subbody');
-    if (sub === 'mine') return viewMine(body); return viewComm(body);
+    return viewComm(body);
   }
   function viewMine(body) {
     const L = mine(), m = P.me(), max = m ? m.limits.insp : 2;
@@ -6489,7 +6549,7 @@ ${mist}
     $('#mi-new', body).onclick = () => { if (L.length >= max) return D.plans('plan'); editInsp(null); };
     $$('[data-mi]', body).forEach((b) => (b.onclick = () => showInsp(L.find((x) => x.id === b.dataset.mi))));
   }
-  const pubOf = (r, id) => ({ id, cover: r.cover || '', title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
+  const pubOf = (r, id) => ({ id, cat: r.cat || '', cover: r.cover || '', title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
   function showInsp(ins) {
     if (!ins) return;
     const pn = I.openSheet(`${ins.cover ? `<img class="covimg" src="${esc(ins.cover)}" alt="">` : ''}<div><p class="mono">${ins.cid ? 'Publique dans la communauté' : 'Privée, toi seul la vois'}</p><h2>${esc(ins.title)}</h2>${ins.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(ins.desc)}</p>` : ''}</div>
@@ -6509,14 +6569,15 @@ ${mist}
         msg.textContent = '…'; const j = await P.community.publish(pubOf(ins, '')); ins.cid = j.id; I.save(); showAfter();
       } catch (e) { msg.textContent = { plan: 'La publication est réservée à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', limit: 'Tu as déjà 10 inspirations publiques.', rate: 'Trop de publications, réessaie plus tard.', rules: 'Ni lien, ni adresse, ni insulte dans le titre ou la description.', network: 'Pas de connexion.' }[e.code] || 'Échec, réessaie.'; }
     };
-    const showAfter = () => { I.closeSheet(); if (I.PL.sub === 'mine') I.render(true); showInsp(ins); };
+    const showAfter = () => { I.closeSheet(); I.render(true); showInsp(ins); };
     $('#si-del', pn).onclick = async (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer la suppression'; return; } if (ins.cid) { try { await P.community.remove(ins.cid); } catch (e) { /* déjà retirée */ } } const L = mine(); L.splice(L.indexOf(ins), 1); I.save(); I.closeSheet(); I.render(true); };
   }
   function editInsp(ins) {
-    const d = ins ? { id: ins.id, cover: ins.cover || '', title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), cover: '', title: '', desc: '', video: '', ad: false, items: [] };
+    const d = ins ? { id: ins.id, cat: ins.cat || '', cover: ins.cover || '', title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), cat: '', cover: '', title: '', desc: '', video: '', ad: false, items: [] };
     const pn = I.openSheet(`<div><h2>${ins ? 'Modifier' : 'Nouvelle'} inspiration</h2></div>
       <input type="text" id="ei-t" maxlength="60" placeholder="Son titre (ex. Cuirs de minuit)" value="${esc(d.title)}" aria-label="Titre"><textarea id="ei-d" rows="2" maxlength="240" placeholder="Une phrase pour la décrire" aria-label="Description">${esc(d.desc)}</textarea>
       <div class="covrow"><button type="button" class="cover-btn" id="ei-cv">${d.cover ? `<img src="${esc(d.cover)}" alt="">` : '<span>＋ Photo de couverture</span>'}</button>${d.cover ? '<button type="button" class="ghost" id="ei-cx">Retirer la photo</button>' : ''}<input type="file" id="ei-cf" accept="image/*" hidden></div>
+      <p class="mono">Catégorie dans la communauté</p><div class="chips" id="ei-cat">${getCats().map((c) => `<button type="button" class="chip ${d.cat === c ? 'on' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div>
       <input type="url" id="ei-v" maxlength="300" placeholder="Lien d'une vidéo ou d'un post (https://…), facultatif" value="${esc(d.video)}" aria-label="Lien de la vidéo"><label class="chk"><input type="checkbox" id="ei-ad" ${d.ad ? 'checked' : ''}><span>Cette liste est un partenariat ou une publicité</span></label>
       <div><p class="mono">Ses parfums</p><div id="ei-list" class="xlist"></div></div>
       <input type="search" id="ei-q" placeholder="Chercher un parfum à ajouter…" autocomplete="off" aria-label="Chercher un parfum"><div id="ei-res" class="vrres"></div>
@@ -6527,6 +6588,7 @@ ${mist}
       $$('[data-up]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.up; if (i > 0) { [d.items[i - 1], d.items[i]] = [d.items[i], d.items[i - 1]]; drawList(); } }));
       $$('[data-dn]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.dn; if (i < d.items.length - 1) { [d.items[i + 1], d.items[i]] = [d.items[i], d.items[i + 1]]; drawList(); } }));
       $$('[data-rm]', pn).forEach((b) => (b.onclick = () => { d.items.splice(+b.dataset.rm, 1); drawList(); })); };
+    $$('[data-cat]', pn).forEach((b) => (b.onclick = () => { d.cat = d.cat === b.dataset.cat ? '' : b.dataset.cat; $$('[data-cat]', pn).forEach((x) => x.classList.toggle('on', x.dataset.cat === d.cat)); }));
     $('#ei-cv', pn).onclick = () => $('#ei-cf', pn).click();
     if ($('#ei-cx', pn)) $('#ei-cx', pn).onclick = () => { d.cover = ''; $('#ei-cv', pn).innerHTML = '<span>＋ Photo de couverture</span>'; $('#ei-cx', pn).remove(); };
     $('#ei-cf', pn).onchange = async () => { const f = $('#ei-cf', pn).files[0]; if (!f) return; try { d.cover = await fitJpeg(f, 480, 270, 38000); $('#ei-cv', pn).innerHTML = `<img src="${esc(d.cover)}" alt="">`; } catch (e) { $('#ei-msg', pn).textContent = 'Cette photo ne passe pas. Essaie-en une autre.'; } };
@@ -6537,14 +6599,14 @@ ${mist}
       const msg = $('#ei-msg', pn); d.title = $('#ei-t', pn).value.trim(); d.desc = $('#ei-d', pn).value.trim(); d.video = $('#ei-v', pn).value.trim(); d.ad = $('#ei-ad', pn).checked;
       if ((d.video && !safeUrl(d.video)) || d.items.some((x) => x.u && !safeUrl(x.u))) { msg.textContent = 'Les liens doivent commencer par https://'; return; }
       if (d.title.length < 3) { msg.textContent = 'Donne-lui un titre (3 lettres au moins).'; return; } if (d.items.length < 2) { msg.textContent = 'Ajoute au moins 2 parfums.'; return; }
-      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { cover: d.cover || '', title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
+      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { cat: d.cat || '', cover: d.cover || '', title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
       I.save();
       if (rec.cid) { try { await P.community.publish(pubOf(rec, rec.cid)); } catch (e) { /* la copie publique se mettra à jour à la prochaine publication */ } }
-      I.closeSheet(); I.PL.sub = 'mine'; I.goTab('play'); showInsp(rec);
+      I.closeSheet(); I.NAV.me = 'lists'; I.goTab('wish'); showInsp(rec);
     };
   }
   async function viewComm(body) {
-    if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.feed(body);
+    if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.community(body);
     body.innerHTML = '<p class="plintro">Les listes que des membres ont choisi de partager. Elles viennent après celles de Sillage : à toi de voir ce qui t\'inspire.</p><span class="shim" style="display:block;height:120px"></span>';
     let j; try { j = await P.community.list(); } catch (e) { body.innerHTML = '<p class="soft">Impossible de charger pour l\'instant. Réessaie dans un instant.</p>'; return; }
     const L = j.items || [];
@@ -6643,7 +6705,7 @@ ${mist}
     instT = setInterval(() => { n++; if (n > 40) { clearInterval(instT); instT = null; return; } if (!D.account.loggedIn() || $('#prof') || $('#onb') || $('#acct') || ($('#story') && !$('#story').hidden) || ($('#sheet') && !$('#sheet').hidden)) return; clearInterval(instT); instT = null; installTip(false); }, 4000);
   }
   function onLogin() { paintAvatar(); scheduleInstall(); }
-  window.SillageProduct = { util: { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, showCreator, entryOf, pk, listText, mine, BOX }, subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
+  window.SillageProduct = { util: { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, showCreator, entryOf, pk, listText, mine, viewMine, getCats, showInsp, editInsp, previewMine, BOX }, subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
   if (!ART) try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
   P.content().then(applyContent).catch(() => {});
   if (!ART) openShared();
@@ -6675,13 +6737,32 @@ ${mist}
   const linkOut = (u, txt) => (safeUrl(u) || String(u).startsWith('/api/go/') ? `<a class="ghost vlink" href="${esc(u)}" target="_blank" rel="${REL}">${txt}</a>` : '');
   const bindCard = (root) => {
     $$('[data-mb]', root).forEach((b) => (b.onclick = () => member(b.dataset.mb)));
+    $$('[data-cm]', root).forEach((b) => (b.onclick = () => toggleComments(root, b)));
     $$('[data-pt]', root).forEach((b) => (b.onclick = () => { const e = I.dbList().find((x) => !x.ed && pk(x.house, x.name) === b.dataset.pt); if (e) I.openEntry(e); }));
   };
+
+  // ---------- Commentaires sous une publication ----------
+  function toggleComments(root, btn) {
+    const id = btn.dataset.cm, box = $('[data-cmb="' + id + '"]', root); if (!box) return;
+    if (!box.hidden) { box.hidden = true; return; }
+    box.hidden = false; box.innerHTML = '<p class="soft small">…</p>';
+    const m = P.me(), draw = async () => {
+      let j; try { j = await N.comments(id); } catch (e) { box.innerHTML = `<p class="soft small">${esc(errT(e))}</p>`; return; }
+      const mineBy = m && m.profile ? m.profile.by : '', postMine = mineBy && btn.dataset.pa === mineBy;
+      box.innerHTML = (j.items.length ? j.items.map((c) => `<div class="cmt">${head(c.author, c.ts)}<p class="ftxt">${esc(c.txt)}</p>${(c.author.by === mineBy || postMine || P.isAdmin()) ? `<button type="button" class="linkbtn danger" data-cd="${esc(c.id)}">Supprimer</button>` : ''}</div>`).join('') : '<p class="soft small">Aucun commentaire.</p>')
+        + (logged() ? `<div class="cmform"><input type="text" maxlength="300" placeholder="Ajouter un commentaire" aria-label="Commentaire" data-ci><button type="button" class="ghost" data-cs>Envoyer</button></div><p class="mono" data-cmsg style="${BOX}"></p>` : '<p class="soft small">Connecte-toi pour commenter.</p>');
+      bindCard(box);
+      const msg = $('[data-cmsg]', box);
+      $$('[data-cd]', box).forEach((d) => (d.onclick = async () => { try { await N.delComment(d.dataset.cd, id); draw(); } catch (e) { if (msg) msg.textContent = errT(e); } }));
+      if ($('[data-cs]', box)) $('[data-cs]', box).onclick = async () => { const t0 = $('[data-ci]', box).value.trim(); if (t0.length < 2) { msg.textContent = 'Écris au moins un mot.'; return; } msg.textContent = '…'; try { await N.comment(id, t0); btn.textContent = 'Commentaires (' + ((parseInt((btn.textContent.match(/\((\d+)\)/) || [0, 0])[1], 10) || 0) + 1) + ')'; draw(); } catch (e) { msg.textContent = errT(e); } };
+    };
+    draw();
+  }
 
   function card(x) {
     if (x.t === 'post') {
       return `<article class="fcard" data-fid="${esc(x.id)}">${head(x.author, x.ts)}${x.txt ? `<p class="ftxt">${esc(x.txt)}</p>` : ''}${x.img ? `<img class="fimg" src="${esc(x.img)}" alt="" loading="lazy">` : ''}${perfumeTag(x)}${x.video ? `<div class="row">${linkOut(x.video, '▶ Voir la vidéo ou le lien ↗')}</div>` : ''}${labels(x)}
-        <div class="fact"><button type="button" class="linkbtn" data-pr="${esc(x.id)}">Signaler</button><button type="button" class="linkbtn danger" data-pd="${esc(x.id)}" hidden>Supprimer</button></div></article>`;
+        <div class="fact"><button type="button" class="linkbtn" data-cm="${esc(x.id)}" data-pa="${esc(x.author.by)}">Commentaires${x.cc ? ' (' + x.cc + ')' : ''}</button><button type="button" class="linkbtn" data-pr="${esc(x.id)}">Signaler</button><button type="button" class="linkbtn danger" data-pd="${esc(x.id)}" hidden>Supprimer</button></div><div class="cmbox" data-cmb="${esc(x.id)}" hidden></div></article>`;
     }
     if (x.t === 'list') {
       return `<article class="fcard">${head(x.author, x.ts)}<button type="button" class="myc ${x.cover ? 'hascov' : ''}" data-fl="${esc(x.id)}" ${x.cover ? `style="background-image:linear-gradient(90deg,rgba(8,8,10,.92) 35%,rgba(8,8,10,.3)),url('${esc(x.cover)}')"` : ''}><b>${esc(x.title)}</b><small>${x.items.length} parfums${x.video ? ' · vidéo' : ''}${x.ad ? ' · partenariat' : ''}</small>${x.desc ? `<em>${esc(x.desc)}</em>` : ''}</button></article>`;
@@ -6689,14 +6770,24 @@ ${mist}
     return `<article class="fcard">${head(x.author, x.ts)}<p class="ftxt"><span class="stars">${stars(x.stars)}</span> ${esc(x.n)}${x.h ? ' · ' + esc(x.h) : ''}</p><p class="ftxt">${esc(x.txt)}</p><button type="button" class="ptag" data-pt="${esc(pk(x.h, x.n))}">Voir la fiche ›</button></article>`;
   }
 
-  // ---------- Le fil de la communauté ----------
+  // ---------- Pour toi : l'activité des gens que tu suis ----------
+  const needAccount = (body, why) => {
+    body.innerHTML = `<div class="empty"><b>${esc(why)}</b><p class="soft">Crée un compte gratuit pour suivre des gens, publier et noter les parfums.</p><button class="cta" id="na-go"><span>Créer un compte</span></button></div>`;
+    $('#na-go', body).onclick = () => I.showAccount('force');
+  };
+  function pourToi() {
+    $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2><span class="mono">l\'activité de tes abonnements</span></header><div id="pt"></div></section>';
+    const body = $('#pt'); if (!logged()) return needAccount(body, 'Le fil de tes amis');
+    feed(body);
+  }
   async function feed(body) {
-    let scope = 'all', items = [], next = 0, busy = false;
+    let scope = 'follow', items = [], next = 0, busy = false;
     const m = P.me();
-    body.innerHTML = '<p class="plintro">Les publications et les listes des membres. Suis des gens pour retrouver leurs avis et leurs listes dans « Abonnements ».</p><div class="chips" id="fs"><button type="button" class="chip on" data-sc="all">Tout</button><button type="button" class="chip" data-sc="follow">Abonnements</button></div><div class="row"><button class="cta" id="fp"><span>Publier</span></button></div><div id="fl" class="flist"></div><div class="row"><button class="ghost" id="fm" hidden>Voir plus</button></div><p class="mono" id="fmsg" style="' + BOX + '"></p>';
+    body.innerHTML = '<div class="chips" id="fs"><button type="button" class="chip on" data-sc="follow">Mes abonnements</button><button type="button" class="chip" data-sc="all">Découvrir</button></div><div class="row"><button class="cta" id="fp"><span>Publier</span></button></div><div id="fl" class="flist"></div><div class="row"><button class="ghost" id="fm" hidden>Voir plus</button></div><p class="mono" id="fmsg" style="' + BOX + '"></p>';
     const list = $('#fl', body), msg = $('#fmsg', body), more = $('#fm', body);
     const paint = (fresh) => {
-      list.innerHTML = items.length ? items.map(card).join('') : `<p class="soft">${scope === 'follow' ? 'Rien pour l\'instant. Ouvre un profil depuis « Tout » et touche « Suivre ».' : 'Rien pour l\'instant. Sois le premier à publier.'}</p>`;
+      list.innerHTML = items.length ? items.map(card).join('') : (scope === 'follow' ? '<div class="empty"><b>Rien pour l\'instant</b><p class="soft">Dès que les gens que tu suis publient, partagent une playlist ou notent un parfum, ça arrive ici.</p><button class="ghost" id="fd-go" type="button">Trouver des gens à suivre</button></div>' : '<div class="empty"><b>Rien pour l\'instant</b><p class="soft">Sois le premier à publier.</p></div>');
+      if ($('#fd-go', list)) $('#fd-go', list).onclick = () => $('[data-sc="all"]', body).click();
       bindCard(list);
       $$('[data-fl]', list).forEach((b) => (b.onclick = () => { const x = items.find((i) => i.t === 'list' && i.id === b.dataset.fl); if (x) showComm(Object.assign({ pseudo: x.author.pseudo, by: x.author.by }, x), { ro: !logged() }); }));
       $$('[data-pr]', list).forEach((b) => (b.onclick = async () => { try { await N.reportPost(b.dataset.pr); b.textContent = 'Signalé, merci'; b.disabled = true; } catch (e) { msg.textContent = errT(e); } }));
@@ -6712,8 +6803,81 @@ ${mist}
     };
     $$('[data-sc]', body).forEach((b) => (b.onclick = () => { scope = b.dataset.sc; $$('[data-sc]', body).forEach((x) => x.classList.toggle('on', x === b)); load(true); }));
     more.onclick = () => load(false);
-    $('#fp', body).onclick = () => { if (!logged()) return D.account && I.showAccount ? I.showAccount('force') : 0; postSheet(() => load(true)); };
+    $('#fp', body).onclick = () => postSheet(() => load(true));
     load(true);
+  }
+
+  // ---------- Inspirations > Communauté : les playlists des membres, par catégorie ----------
+  async function community(body) {
+    const cats = SP.util.getCats();
+    body.innerHTML = '<p class="plintro">Les playlists des membres, rangées par catégorie. Elles viennent après celles de Sillage.</p><span class="shim" style="display:block;height:120px"></span>';
+    let j; try { j = await P.community.list(); } catch (e) { body.innerHTML = '<p class="soft">Impossible de charger pour l\'instant. Réessaie dans un instant.</p>'; return; }
+    const all = j.items || []; let cur = '';
+    const draw = () => {
+      const groups = [...cats, ''].map((c) => [c, all.filter((x) => (cats.includes(x.cat) ? x.cat : '') === c)]).filter(([c, l]) => l.length && (!cur || cur === c));
+      body.innerHTML = `<p class="plintro">Les playlists des membres, rangées par catégorie. Elles viennent après celles de Sillage.</p>
+        ${all.length ? `<div class="chips plsecs"><button class="chip ${cur ? '' : 'on'}" data-cc="">Tout</button>${cats.filter((c) => all.some((x) => x.cat === c)).map((c) => `<button class="chip ${cur === c ? 'on' : ''}" data-cc="${esc(c)}">${esc(c)}</button>`).join('')}</div>` : ''}
+        ${groups.length ? groups.map(([c, l]) => `<section class="cgroup"><header><h3>${esc(c || 'Autres')}</h3><span class="mono">${l.length}</span></header><div class="cgrid">${l.map((x) => `<button type="button" class="ccard ${x.cover ? 'hascov' : ''}" data-fl="${esc(x.id)}" ${x.cover ? `style="background-image:linear-gradient(180deg,rgba(8,8,10,.15) 20%,rgba(8,8,10,.92)),url('${esc(x.cover)}')"` : ''}><b>${esc(x.title)}</b><small>par ${esc(x.pseudo)} · ${x.items.length} parfums${x.likes ? ' · ♥ ' + x.likes : ''}</small></button>`).join('')}</div></section>`).join('') : '<div class="empty"><b>Aucune playlist pour l\'instant</b><p class="soft">Publie la tienne depuis ton profil, onglet Playlists.</p></div>'}`;
+      $$('[data-cc]', body).forEach((b) => (b.onclick = () => { cur = b.dataset.cc; draw(); }));
+      $$('[data-fl]', body).forEach((b) => (b.onclick = () => { const x = all.find((i) => i.id === b.dataset.fl); if (x) showComm(x, { ro: !logged() }); }));
+    };
+    draw();
+  }
+
+  // ---------- Profil : mes publications, mes playlists, mes abonnés, ma wishlist ----------
+  async function me(sub, wishFn) {
+    const v = $('#view'), m = P.me(), SUBS = [['lists', 'Playlists'], ['posts', 'Publications'], ['people', 'Abonnés'], ['wish', 'Wishlist']];
+    let j = null;
+    if (logged() && m && m.profile && m.profile.by) { try { j = await N.profile(m.profile.by); } catch (e) { j = null; } }
+    const pf = m && m.profile ? m.profile : { pseudo: '', avatar: '', bio: '', by: '' };
+    const hdr = `<section class="sec mepro"><header><h2>Profil</h2><span class="mono">${logged() ? 'ton espace' : 'sur cet appareil'}</span></header>
+      <div class="mecard">${avatar(pf, 'big')}<div class="meinfo"><b>${esc(pf.pseudo || 'Sans pseudo')}</b>${pf.bio ? `<span class="soft">${esc(pf.bio)}</span>` : ''}</div></div>
+      ${j ? `<div class="mestats"><button type="button" data-ms="posts"><b>${j.posts.length}</b><span>publication${j.posts.length > 1 ? 's' : ''}</span></button><button type="button" data-ms="people"><b>${j.followers}</b><span>abonné${j.followers > 1 ? 's' : ''}</span></button><button type="button" data-ms="people2"><b>${j.following}</b><span>abonnement${j.following > 1 ? 's' : ''}</span></button></div>` : ''}
+      <div class="row3"><button class="ghost" id="me-ed" type="button">Modifier</button>${logged() && pf.by ? '<button class="ghost" id="me-pv" type="button">Aperçu public</button><button class="ghost" id="me-sh" type="button">Partager</button>' : ''}</div>
+      <div class="plsubtabs">${SUBS.map(([k, l]) => `<button type="button" class="${sub === k ? 'on' : ''}" data-msub="${k}">${l}</button>`).join('')}</div>
+      <div id="mebody"></div></section>`;
+    const bindHdr = () => {
+      $$('[data-msub]', v).forEach((b) => (b.onclick = () => { I.NAV.me = b.dataset.msub; I.render(true); }));
+      $$('[data-ms]', v).forEach((b) => (b.onclick = () => { I.NAV.me = b.dataset.ms === 'posts' ? 'posts' : 'people'; I.NAV.people = b.dataset.ms === 'people2' ? 'following' : 'followers'; I.render(true); }));
+      $('#me-ed', v).onclick = () => $('#profileBtn').click();
+      if ($('#me-pv', v)) $('#me-pv', v).onclick = () => SP.util.previewMine();
+      if ($('#me-sh', v)) $('#me-sh', v).onclick = async () => { const t0 = (pf.pseudo || 'Un membre') + ' sur Sillage'; const r = await shareOut(t0, t0, shareUrl('u', pf.by)); if (r) { const mm = $('#mebody', v); if (mm) mm.insertAdjacentHTML('afterbegin', `<p class="mono" style="${BOX}">${esc(r)}</p>`); } };
+    };
+    if (sub === 'wish') { wishFn(); v.insertAdjacentHTML('afterbegin', hdr.replace('<div id="mebody"></div></section>', '</section>')); bindHdr(); return; }
+    v.innerHTML = hdr; bindHdr(); const body = $('#mebody', v);
+    if (sub === 'lists') return SP.util.viewMine(body);
+    if (!logged()) return needAccount(body, sub === 'posts' ? 'Tes publications' : 'Tes abonnés et abonnements');
+    if (sub === 'posts') {
+      body.innerHTML = `<div class="row"><button class="cta" id="mp-new"><span>Publier</span></button></div><div class="flist" id="mp-l"></div>`;
+      const posts = j ? j.posts : [];
+      $('#mp-l', body).innerHTML = posts.length ? posts.map(card).join('') : '<div class="empty"><b>Aucune publication</b><p class="soft">Un avis, une photo, une vidéo : ce que tu publies apparaît dans le fil de tes abonnés.</p></div>';
+      bindCard(body); $$('[data-pd]', body).forEach((b) => { b.hidden = false; b.onclick = async () => { try { await N.delPost(b.dataset.pd); I.render(true); } catch (e) { /* ok */ } }; }); $$('[data-pr]', body).forEach((b) => b.remove());
+      $('#mp-new', body).onclick = () => postSheet(() => I.render(true));
+      return;
+    }
+    // abonnés / abonnements
+    const which = I.NAV.people || 'followers';
+    body.innerHTML = `<div class="chips"><button type="button" class="chip ${which === 'followers' ? 'on' : ''}" data-pw="followers">Abonnés</button><button type="button" class="chip ${which === 'following' ? 'on' : ''}" data-pw="following">Abonnements</button></div><div id="pp-l" class="peoplelist">…</div>`;
+    $$('[data-pw]', body).forEach((b) => (b.onclick = () => { I.NAV.people = b.dataset.pw; I.render(true); }));
+    try { const r = which === 'following' ? await N.following() : await N.followers(); $('#pp-l', body).innerHTML = r.items.length ? r.items.map((x) => head(x)).join('') : `<div class="empty"><b>${which === 'following' ? 'Tu ne suis personne' : 'Pas encore d\'abonnés'}</b><p class="soft">${which === 'following' ? 'Ouvre un profil depuis « Découvrir » dans Pour toi.' : 'Partage ton profil pour que les gens te suivent.'}</p></div>`; bindCard($('#pp-l', body)); }
+    catch (e) { $('#pp-l', body).textContent = errT(e); }
+  }
+
+  // ---------- Notifications ----------
+  const NTXT = { follow: (n) => `<b>${esc(n.author ? n.author.pseudo : 'Quelqu\'un')}</b> te suit`, comment: (n) => `<b>${esc(n.author ? n.author.pseudo : 'Quelqu\'un')}</b> a commenté ta publication : « ${esc(n.txt)} »`, sale: (n) => `Une vente est passée par ton lien : <b>${esc(n.txt)}</b>`, brand: (n) => esc(n.txt) };
+  async function openNotifs() {
+    const pn = I.openSheet('<div><h2>Notifications</h2></div><div id="nt-l" class="flist">…</div>');
+    try {
+      const j = await N.notifs();
+      $('#nt-l', pn).innerHTML = j.items.length ? j.items.map((n) => `<button type="button" class="notif ${n.seen ? '' : 'new'}" data-nk="${esc(n.kind)}" data-nb="${esc(n.author ? n.author.by : '')}">${n.author ? avatar(n.author) : '<span class="hav ph">✓</span>'}<span>${(NTXT[n.kind] || (() => 'Nouvelle activité'))(n)}<small>${when(n.ts)}</small></span></button>`).join('') : '<div class="empty"><b>Rien de nouveau</b><p class="soft">Tu seras prévenu ici d\'un nouvel abonné, d\'un commentaire ou d\'une vente.</p></div>';
+      $$('[data-nk]', pn).forEach((b) => (b.onclick = () => { const k = b.dataset.nk, by = b.dataset.nb; I.closeSheet(); if (k === 'follow' && by) member(by); else if (k === 'comment') { I.NAV.me = 'posts'; I.goTab('wish'); } else if (k === 'sale') { I.NAV.me = 'lists'; I.goTab('wish'); } }));
+      if (j.unread) { await N.notifsRead(); const bn = $('#bellN'); if (bn) bn.hidden = true; }
+    } catch (e) { $('#nt-l', pn).textContent = errT(e); }
+  }
+  function initBell() {
+    const b = $('#bellBtn'), n = $('#bellN'); if (!b || b.dataset.on) return; b.dataset.on = '1'; b.onclick = openNotifs;
+    const poll = async () => { if (!logged()) { b.hidden = true; return; } try { const r = await N.notifCount(); b.hidden = false; n.textContent = r.unread > 9 ? '9+' : r.unread; n.hidden = !r.unread; } catch (e) { /* pas de réseau ou pas de base */ } };
+    poll(); setInterval(poll, 60000); window.addEventListener('sillage:me', poll);
   }
 
   // ---------- Publier ----------
@@ -6794,9 +6958,10 @@ ${mist}
     const out = $('#nw-out', net), msg = $('#nw-m', net), items = () => (I.S().wishlist || []).map((w) => ({ n: w.name, h: w.house }));
     N.wishlistPub().then((r) => { $('#nw-pub', net).checked = !!r.pub; }).catch(() => {});
     $('#nw-pub', net).onchange = async (ev) => { try { await N.wishlist(ev.target.checked, items()); msg.textContent = ev.target.checked ? 'Wishlist publique ✓ (mise à jour à chaque changement de ce réglage)' : 'Wishlist privée ✓'; } catch (e) { ev.target.checked = !ev.target.checked; msg.textContent = errT(e); } };
-    $('#nw-st', net).onclick = async () => { out.textContent = '…'; try { const s = await N.myStats(); out.innerHTML = `<p class="ftxt" style="white-space:pre-line">${s.followers} abonné${s.followers > 1 ? 's' : ''}${ART ? '' : `\n${s.postViews} vues de tes publications (30 jours)`}</p>${(s.links || []).length ? `<p class="mono">Clics sur tes liens (30 jours)</p>${s.links.map((l) => `<div class="eir"><span><b>${esc(hostOf(l.url))}</b><small>${esc(l.url.slice(0, 60))}</small></span><span class="eib"><b>${l.n}</b></span></div>`).join('')}` : ''}`; } catch (e) { out.textContent = errT(e); } };
+    $('#nw-st', net).onclick = async () => { out.textContent = '…'; try { const s = await N.myStats(); out.innerHTML = `<p class="ftxt" style="white-space:pre-line">${s.followers} abonné${s.followers > 1 ? 's' : ''}${ART ? '' : `\n${s.postViews} vues de tes publications (30 jours)`}${s.sales ? `\nGains : ${s.sales.earned.toFixed(2).replace('.', ',')} € (${s.sales.due.toFixed(2).replace('.', ',')} € à recevoir) pour ${s.sales.n} vente${s.sales.n > 1 ? 's' : ''}, ta part est de ${s.sales.share} % de la commission` : ''}</p>${(s.links || []).length ? `<p class="mono">Clics sur tes liens (30 jours)</p>${s.links.map((l) => `<div class="eir"><span><b>${esc(hostOf(l.url))}</b><small>${esc(l.url.slice(0, 60))}</small></span><span class="eib"><b>${l.n}</b></span></div>`).join('')}` : ''}`; } catch (e) { out.textContent = errT(e); } };
     $('#nw-fo', net).onclick = async () => { out.textContent = '…'; try { const j = await N.following(); out.innerHTML = j.items.length ? j.items.map((a) => head(a)).join('') : '<p class="soft small">Tu ne suis personne pour l\'instant.</p>'; $$('[data-mb]', out).forEach((b) => (b.onclick = () => { I.closeSheet(); member(b.dataset.mb); })); } catch (e) { out.textContent = errT(e); } };
     if (N.caps.brand) brandCard(wrap, m);
+    if (m.admin) catsCard(wrap);
     if (m.admin && N.caps.brand) editorCards(wrap);
   }
   function brandCard(wrap, m) {
@@ -6821,15 +6986,23 @@ ${mist}
         <p class="soft small" style="margin:0">Les chiffres sont des compteurs, sans aucune donnée sur les personnes.</p>`;
     }).catch(() => { box.textContent = 'Indisponible pour l\'instant.'; });
   }
+  function catsCard(wrap) {
+    const c = document.createElement('div'); c.className = 'card'; c.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)'; wrap.appendChild(c);
+    c.innerHTML = `<b>Éditeur : catégories de playlists</b><p class="soft small" style="margin:0">Une catégorie par ligne (12 au plus). Les membres en choisissent une en publiant, la communauté est rangée avec.</p><textarea id="ct-t" rows="6" maxlength="400" aria-label="Catégories">${esc(SP.util.getCats().join('\n'))}</textarea><div class="row"><button class="ghost" id="ct-go" type="button">Enregistrer</button></div><p class="mono" id="ct-m" style="${BOX}"></p>`;
+    $('#ct-go', c).onclick = async () => { const list = $('#ct-t', c).value.split('\n').map((x) => x.trim()).filter(Boolean), mm = $('#ct-m', c); if (!list.length) { mm.textContent = 'Garde au moins une catégorie.'; return; } mm.textContent = '…'; try { await P.admin.edit({ op: 'cats', list }); const ct = await P.content(); if (SP.applyContent) SP.applyContent(ct); mm.textContent = 'Enregistré ✓'; } catch (e) { mm.textContent = errT(e); } };
+  }
   function editorCards(wrap) {
     const c = document.createElement('div'); c.className = 'card'; c.style.cssText = 'display:grid;gap:10px;border-color:var(--wine)'; wrap.appendChild(c);
-    c.innerHTML = '<b>Éditeur : marques et publications</b><div class="row"><button class="ghost" id="eb-b" type="button">Marques à valider</button><button class="ghost" id="eb-p" type="button">Publications signalées</button></div><div id="eb-o" style="display:grid;gap:8px"></div>';
+    c.innerHTML = '<b>Éditeur : marques et publications</b><div class="row"><button class="ghost" id="eb-s" type="button">Commissions</button><button class="ghost" id="eb-b" type="button">Marques à valider</button><button class="ghost" id="eb-p" type="button">Publications signalées</button></div><div id="eb-o" style="display:grid;gap:8px"></div>';
     const out = $('#eb-o', c), fail = (e) => { out.textContent = errT(e); };
+    $('#eb-s', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminSales(); const eur = (x) => x.toFixed(2).replace('.', ',') + ' €'; out.innerHTML = `<p class="ftxt" style="white-space:pre-line">${j.sales} vente${j.sales > 1 ? 's' : ''} pour ${eur(j.amount)}\nCommission reçue : ${eur(j.commission)}\nPart de Sillage (${j.cut} %) : ${eur(j.platform)}\nPart des créateurs : ${eur(j.creators)}</p>${j.due.length ? '<p class="mono">À reverser</p>' + j.due.map((d) => `<div class="eir"><span><b>${esc(d.author.pseudo)}</b></span><span class="eib"><b>${eur(d.due)}</b><button type="button" class="ghost" data-pay="${esc(d.author.by)}">Payé</button></span></div>`).join('') : '<p class="soft small">Rien à reverser.</p>'}`; $$('[data-pay]', out).forEach((b) => (b.onclick = async () => { try { await N.paySales(b.dataset.pay); b.closest('.eir').remove(); } catch (e) { fail(e); } })); } catch (e) { fail(e); } };
     $('#eb-b', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminBrands(); out.innerHTML = j.items.length ? j.items.map((b) => `<div class="card" style="display:grid;gap:6px"><b>${esc(b.name)}</b><small class="mono" style="text-transform:none;letter-spacing:0">${esc(b.status)} · ${esc(b.site)}</small><span>${esc((b.houses || []).join(', '))}</span>${b.bio ? `<span>${esc(b.bio)}</span>` : ''}<div class="row"><a class="ghost vlink" href="${esc(b.site)}" target="_blank" rel="noopener noreferrer">Voir le site ↗</a><button class="ghost" data-bv="${esc(b.by)}" type="button">Valider</button><button class="ghost danger" data-br="${esc(b.by)}" type="button">${b.status === 'verified' ? 'Retirer' : 'Refuser'}</button></div></div>`).join('') : '<p class="soft small">Aucune demande.</p>'; const act = (a, v) => $$('[' + a + ']', out).forEach((b) => (b.onclick = async () => { try { await N.brandAct(b.getAttribute(a), v); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-bv', 'verify'); act('data-br', 'revoke'); } catch (e) { fail(e); } };
     $('#eb-p', c).onclick = async () => { out.textContent = '…'; try { const j = await N.adminPosts(); out.innerHTML = j.items.length ? j.items.map((p) => `<div class="card" style="display:grid;gap:6px"><b>${esc(p.author.pseudo)}</b><small class="mono" style="text-transform:none;letter-spacing:0">${p.reports} signalement${p.reports > 1 ? 's' : ''}${p.hidden ? ' · masquée' : ''}</small><span>${esc(p.txt)}</span><div class="row"><button class="ghost" data-pa="${esc(p.id)}" type="button">Rétablir</button><button class="ghost danger" data-pz="${esc(p.id)}" type="button">Supprimer</button></div></div>`).join('') : '<p class="soft small">Aucune publication signalée.</p>'; const act = (a, v) => $$('[' + a + ']', out).forEach((b) => (b.onclick = async () => { try { await N.postAct(b.getAttribute(a), v); b.closest('.card').remove(); } catch (e) { fail(e); } })); act('data-pa', 'restore'); act('data-pz', 'delete'); } catch (e) { fail(e); } };
   }
 
-  SP.social = { feed, member, rating, profileCards, postSheet };
+  SP.social = { feed, pourToi, community, member, rating, profileCards, postSheet };
+  SP.me = me;
+  initBell();
 })();
 
 </script>

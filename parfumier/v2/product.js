@@ -11,6 +11,8 @@
 
   // ---------- Contenu public modifié par l'éditeur ----------
   let CONTENT = {};
+  const DEFAULT_CATS = ['Soirée', 'Bureau', 'Été', 'Hiver', 'Cadeau', 'Petit budget', 'Découverte'];
+  const getCats = () => (Array.isArray(CONTENT.cats) && CONTENT.cats.length ? CONTENT.cats : DEFAULT_CATS);
   const same = (x, it) => (x.h && x.n ? E.norm(x.h) === E.norm(it.h) && E.norm(x.n) === E.norm(it.n) : E.norm(x.q) === E.norm(it.h + ' ' + it.n));
   const grpAdjust = (p, idx, delta) => { if (!p.grp) return; let a = 0; for (const g of p.grp) { if (idx < a + g.n || g === p.grp[p.grp.length - 1]) { g.n += delta; return; } a += g.n; } };
   function applyContent(c) {
@@ -131,7 +133,7 @@
   const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
   function subtabs(view) {
     const head = $('header', view); if (!head) return; const bar = document.createElement('div'); bar.className = 'plsubtabs';
-    bar.innerHTML = [['', 'Univers Sillage'], ['mine', 'Mes inspirations'], ['comm', 'Communauté']].map(([k, l]) => `<button type="button" class="${(I.PL.sub || '') === k ? 'on' : ''}" data-sub="${k}">${l}</button>`).join('');
+    bar.innerHTML = [['', 'Univers Sillage'], ['comm', 'Communauté']].map(([k, l]) => `<button type="button" class="${(I.PL.sub || '') === k ? 'on' : ''}" data-sub="${k}">${l}</button>`).join('');
     head.parentNode.insertBefore(bar, head.nextSibling);
     $$('[data-sub]', bar).forEach((b) => (b.onclick = () => { I.PL.sub = b.dataset.sub; I.PL.id = 0; I.render(); }));
   }
@@ -148,7 +150,7 @@
   const REL = 'sponsored nofollow noopener noreferrer';
   const itemRows = (items) => items.map((x, i) => { const e = entryOf(x.h, x.n), u = safeUrl(x.u); const row = e ? `<button type="button" class="xc" data-ie="${i}">${I.xThumb(e)}<span class="xt"><b>${esc(e.name)}</b><small>${esc(e.house)}</small></span><i class="xm">›</i></button>` : `<div class="xc off"><span class="xth ph">?</span><span class="xt"><b>${esc(x.n)}</b><small>${esc(x.h || 'Pas dans la base')}</small></span></div>`; return `<div class="xrow">${row}${u ? `<a class="xlink" href="${esc(u)}" target="_blank" rel="${REL}">Voir l'offre sur ${esc(hostOf(u))} ↗</a>` : ''}</div>`; }).join('');
   const videoLink = (r) => { const u = safeUrl(r.video); return u ? `<a class="ghost vlink" href="${esc(u)}" target="_blank" rel="${REL}">▶ Voir la vidéo sur ${esc(hostOf(u))}</a>` : ''; };
-  const adNote = (r) => ((r.ad || (r.items || []).some((x) => safeUrl(x.u))) ? `<p class="soft small" style="margin:0">${r.ad ? 'Partenariat : cette liste peut être sponsorisée. ' : ''}Certains liens sont des liens partenaires (le créateur peut toucher une commission). Sillage ne les contrôle pas.</p>` : '');
+  const adNote = (r) => ((r.ad || (r.items || []).some((x) => safeUrl(x.u))) ? `<p class="soft small" style="margin:0">${r.ad ? 'Partenariat : cette liste peut être sponsorisée. ' : ''}Certains liens sont des liens partenaires : si tu achètes après un clic, le créateur et Sillage peuvent toucher une commission, sans frais pour toi. Sillage ne contrôle pas les boutiques.</p>` : '');
   // Partager : lien public si la liste l'est (version en ligne), sinon le texte de la liste.
   async function shareOut(title, text, url) {
     try { if (navigator.share) { await navigator.share({ title, text, url: url || undefined }); return 'Partagé ✓'; } } catch (e) { if (e && e.name === 'AbortError') return ''; }
@@ -158,9 +160,9 @@
   const shareUrl = (kind, id) => (ART || !id ? '' : location.origin + '/?' + kind + '=' + id);
   const bindRows = (pn, items) => $$('[data-ie]', pn).forEach((b) => (b.onclick = () => { const x = items[+b.dataset.ie], e = entryOf(x.h, x.n); if (e) I.openEntry(e); }));
   function playSub(sub) {
-    $('#view').innerHTML = `<section class="sec"><header><h2>Inspirations</h2><span class="mono">${sub === 'mine' ? 'les tiennes' : 'la communauté'}</span></header><div id="subbody"></div></section>`;
+    $('#view').innerHTML = `<section class="sec"><header><h2>Inspirations</h2><span class="mono">par catégorie</span></header><div id="subbody"></div></section>`;
     subtabs($('#view')); const body = $('#subbody');
-    if (sub === 'mine') return viewMine(body); return viewComm(body);
+    return viewComm(body);
   }
   function viewMine(body) {
     const L = mine(), m = P.me(), max = m ? m.limits.insp : 2;
@@ -171,7 +173,7 @@
     $('#mi-new', body).onclick = () => { if (L.length >= max) return D.plans('plan'); editInsp(null); };
     $$('[data-mi]', body).forEach((b) => (b.onclick = () => showInsp(L.find((x) => x.id === b.dataset.mi))));
   }
-  const pubOf = (r, id) => ({ id, cover: r.cover || '', title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
+  const pubOf = (r, id) => ({ id, cat: r.cat || '', cover: r.cover || '', title: r.title, desc: r.desc, video: r.video || '', ad: !!r.ad, items: r.items });
   function showInsp(ins) {
     if (!ins) return;
     const pn = I.openSheet(`${ins.cover ? `<img class="covimg" src="${esc(ins.cover)}" alt="">` : ''}<div><p class="mono">${ins.cid ? 'Publique dans la communauté' : 'Privée, toi seul la vois'}</p><h2>${esc(ins.title)}</h2>${ins.desc ? `<p style="color:var(--muted);margin-top:8px">${esc(ins.desc)}</p>` : ''}</div>
@@ -191,14 +193,15 @@
         msg.textContent = '…'; const j = await P.community.publish(pubOf(ins, '')); ins.cid = j.id; I.save(); showAfter();
       } catch (e) { msg.textContent = { plan: 'La publication est réservée à Premium.', pseudo: 'Choisis d\'abord un pseudo dans ton profil.', limit: 'Tu as déjà 10 inspirations publiques.', rate: 'Trop de publications, réessaie plus tard.', rules: 'Ni lien, ni adresse, ni insulte dans le titre ou la description.', network: 'Pas de connexion.' }[e.code] || 'Échec, réessaie.'; }
     };
-    const showAfter = () => { I.closeSheet(); if (I.PL.sub === 'mine') I.render(true); showInsp(ins); };
+    const showAfter = () => { I.closeSheet(); I.render(true); showInsp(ins); };
     $('#si-del', pn).onclick = async (ev) => { if (!ev.target.dataset.sure) { ev.target.dataset.sure = 1; ev.target.textContent = 'Confirmer la suppression'; return; } if (ins.cid) { try { await P.community.remove(ins.cid); } catch (e) { /* déjà retirée */ } } const L = mine(); L.splice(L.indexOf(ins), 1); I.save(); I.closeSheet(); I.render(true); };
   }
   function editInsp(ins) {
-    const d = ins ? { id: ins.id, cover: ins.cover || '', title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), cover: '', title: '', desc: '', video: '', ad: false, items: [] };
+    const d = ins ? { id: ins.id, cat: ins.cat || '', cover: ins.cover || '', title: ins.title, desc: ins.desc, video: ins.video || '', ad: !!ins.ad, items: ins.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) } : { id: uid(), cat: '', cover: '', title: '', desc: '', video: '', ad: false, items: [] };
     const pn = I.openSheet(`<div><h2>${ins ? 'Modifier' : 'Nouvelle'} inspiration</h2></div>
       <input type="text" id="ei-t" maxlength="60" placeholder="Son titre (ex. Cuirs de minuit)" value="${esc(d.title)}" aria-label="Titre"><textarea id="ei-d" rows="2" maxlength="240" placeholder="Une phrase pour la décrire" aria-label="Description">${esc(d.desc)}</textarea>
       <div class="covrow"><button type="button" class="cover-btn" id="ei-cv">${d.cover ? `<img src="${esc(d.cover)}" alt="">` : '<span>＋ Photo de couverture</span>'}</button>${d.cover ? '<button type="button" class="ghost" id="ei-cx">Retirer la photo</button>' : ''}<input type="file" id="ei-cf" accept="image/*" hidden></div>
+      <p class="mono">Catégorie dans la communauté</p><div class="chips" id="ei-cat">${getCats().map((c) => `<button type="button" class="chip ${d.cat === c ? 'on' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div>
       <input type="url" id="ei-v" maxlength="300" placeholder="Lien d'une vidéo ou d'un post (https://…), facultatif" value="${esc(d.video)}" aria-label="Lien de la vidéo"><label class="chk"><input type="checkbox" id="ei-ad" ${d.ad ? 'checked' : ''}><span>Cette liste est un partenariat ou une publicité</span></label>
       <div><p class="mono">Ses parfums</p><div id="ei-list" class="xlist"></div></div>
       <input type="search" id="ei-q" placeholder="Chercher un parfum à ajouter…" autocomplete="off" aria-label="Chercher un parfum"><div id="ei-res" class="vrres"></div>
@@ -209,6 +212,7 @@
       $$('[data-up]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.up; if (i > 0) { [d.items[i - 1], d.items[i]] = [d.items[i], d.items[i - 1]]; drawList(); } }));
       $$('[data-dn]', pn).forEach((b) => (b.onclick = () => { const i = +b.dataset.dn; if (i < d.items.length - 1) { [d.items[i + 1], d.items[i]] = [d.items[i], d.items[i + 1]]; drawList(); } }));
       $$('[data-rm]', pn).forEach((b) => (b.onclick = () => { d.items.splice(+b.dataset.rm, 1); drawList(); })); };
+    $$('[data-cat]', pn).forEach((b) => (b.onclick = () => { d.cat = d.cat === b.dataset.cat ? '' : b.dataset.cat; $$('[data-cat]', pn).forEach((x) => x.classList.toggle('on', x.dataset.cat === d.cat)); }));
     $('#ei-cv', pn).onclick = () => $('#ei-cf', pn).click();
     if ($('#ei-cx', pn)) $('#ei-cx', pn).onclick = () => { d.cover = ''; $('#ei-cv', pn).innerHTML = '<span>＋ Photo de couverture</span>'; $('#ei-cx', pn).remove(); };
     $('#ei-cf', pn).onchange = async () => { const f = $('#ei-cf', pn).files[0]; if (!f) return; try { d.cover = await fitJpeg(f, 480, 270, 38000); $('#ei-cv', pn).innerHTML = `<img src="${esc(d.cover)}" alt="">`; } catch (e) { $('#ei-msg', pn).textContent = 'Cette photo ne passe pas. Essaie-en une autre.'; } };
@@ -219,14 +223,14 @@
       const msg = $('#ei-msg', pn); d.title = $('#ei-t', pn).value.trim(); d.desc = $('#ei-d', pn).value.trim(); d.video = $('#ei-v', pn).value.trim(); d.ad = $('#ei-ad', pn).checked;
       if ((d.video && !safeUrl(d.video)) || d.items.some((x) => x.u && !safeUrl(x.u))) { msg.textContent = 'Les liens doivent commencer par https://'; return; }
       if (d.title.length < 3) { msg.textContent = 'Donne-lui un titre (3 lettres au moins).'; return; } if (d.items.length < 2) { msg.textContent = 'Ajoute au moins 2 parfums.'; return; }
-      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { cover: d.cover || '', title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
+      const L = mine(); let rec = ins; if (!rec) { rec = { id: d.id, cid: '' }; L.push(rec); } Object.assign(rec, { cat: d.cat || '', cover: d.cover || '', title: d.title, desc: d.desc, video: d.video, ad: d.ad, items: d.items.map((x) => ({ n: x.n, h: x.h, u: x.u || '' })) });
       I.save();
       if (rec.cid) { try { await P.community.publish(pubOf(rec, rec.cid)); } catch (e) { /* la copie publique se mettra à jour à la prochaine publication */ } }
-      I.closeSheet(); I.PL.sub = 'mine'; I.goTab('play'); showInsp(rec);
+      I.closeSheet(); I.NAV.me = 'lists'; I.goTab('wish'); showInsp(rec);
     };
   }
   async function viewComm(body) {
-    if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.feed(body);
+    if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.community(body);
     body.innerHTML = '<p class="plintro">Les listes que des membres ont choisi de partager. Elles viennent après celles de Sillage : à toi de voir ce qui t\'inspire.</p><span class="shim" style="display:block;height:120px"></span>';
     let j; try { j = await P.community.list(); } catch (e) { body.innerHTML = '<p class="soft">Impossible de charger pour l\'instant. Réessaie dans un instant.</p>'; return; }
     const L = j.items || [];
@@ -325,7 +329,7 @@
     instT = setInterval(() => { n++; if (n > 40) { clearInterval(instT); instT = null; return; } if (!D.account.loggedIn() || $('#prof') || $('#onb') || $('#acct') || ($('#story') && !$('#story').hidden) || ($('#sheet') && !$('#sheet').hidden)) return; clearInterval(instT); instT = null; installTip(false); }, 4000);
   }
   function onLogin() { paintAvatar(); scheduleInstall(); }
-  window.SillageProduct = { util: { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, showCreator, entryOf, pk, listText, mine, BOX }, subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
+  window.SillageProduct = { util: { esc, $, $$, I, D, P, ART, safeUrl, hostOf, REL, itemRows, bindRows, videoLink, adNote, shareOut, shareUrl, fitJpeg, showComm, showCreator, entryOf, pk, listText, mine, viewMine, getCats, showInsp, editInsp, previewMine, BOX }, subtabs, playSub, profile, entry, playlist, limitAdd, onLogin, installTip, applyContent };
   if (!ART) try { if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('/sw.js').catch(() => {}); } catch (e) { /* ok */ }
   P.content().then(applyContent).catch(() => {});
   if (!ART) openShared();

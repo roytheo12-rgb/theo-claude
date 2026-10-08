@@ -35,3 +35,9 @@ Comptes, mot de passe oublié par email, reconnexion après expiration sans rien
 - Liens suivis et statistiques, profils de marques vérifiés avec abonnement marque, étiquette « Contenu de marque », indépendance de l'IA testée.
 - À faire ensuite : notifications d'abonnement, commentaires sous les publications, messages entre membres, recherche de membres, export RGPD des données du réseau, statistiques par période choisie, import de listes depuis une vidéo.
 - Avant d'ouvrir aux marques : mentions légales à jour (nom, statut, SIRET) et une vingtaine de créateurs actifs à leur montrer.
+
+## Fait ensuite
+- Notifications (cloche : abonné, commentaire, vente) et commentaires sous les publications.
+- Commission sur les liens : réécriture par règles, webhook de ventes, partage créateur / Sillage, gains visibles, suivi des versements (virements manuels).
+- Navigation : Recherche (Recherche, Conseils), Pour toi (activité des abonnements), Inspirations (Univers, Communauté par catégorie), Profil (playlists, publications, abonnés, wishlist). Catégories de playlists réglables par l'éditeur.
+- À faire : messages entre membres, recherche de membres, mentions, notifications push, versements automatiques (prestataire de paiement).

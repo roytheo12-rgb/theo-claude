@@ -1060,3 +1060,46 @@ a.chip { text-decoration: none; display: inline-block; }
 .covimg { width: 100%; max-height: 190px; object-fit: cover; border-radius: 12px; }
 .myc.hascov { background-size: cover; background-position: center; }
 .rvrow { display: grid; gap: 4px; }
+
+.barr { display: flex; gap: 8px; align-items: center; }
+#bellBtn { position: relative; }
+#bellN { position: absolute; top: -3px; right: -3px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--wine); color: #fff; font: 600 10px/17px var(--f-ui, sans-serif); text-align: center; }
+
+/* ---- Réseau : espacement et lisibilité (fil, profil, communauté, commentaires) ---- */
+#pt, #subbody, #mebody { display: grid; gap: 20px; }
+.mepro { display: grid; gap: 18px; }
+.mepro > header { margin-bottom: 0; }
+.mecard { display: flex; gap: 16px; align-items: center; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: rgba(242, 235, 224, .03); }
+.mecard .hav.big { width: 72px; height: 72px; }
+.meinfo { display: grid; gap: 4px; min-width: 0; }
+.meinfo b { font: 400 22px/1.2 var(--f-display, serif); }
+.mestats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mestats button { display: grid; gap: 2px; justify-items: center; padding: 12px 6px; border: 1px solid var(--line); border-radius: 12px; background: none; color: var(--ink); cursor: pointer; }
+.mestats b { font: 400 22px/1 var(--f-display, serif); } .mestats span { font-size: 12px; opacity: .6; }
+.flist { gap: 18px; }
+.fcard { padding: 16px; gap: 12px; }
+.fcard .row, .fcard .fact { margin-top: 2px; }
+.empty { display: grid; gap: 10px; justify-items: start; padding: 22px 18px; border: 1px dashed var(--line); border-radius: 14px; }
+.empty p { margin: 0; }
+.cmbox { display: grid; gap: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.cmt { display: grid; gap: 4px; padding-left: 4px; }
+.cmform { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.cgroup { display: grid; gap: 12px; }
+.cgroup header { display: flex; justify-content: space-between; align-items: baseline; }
+.cgroup h3 { margin: 0; font: 400 20px/1.2 var(--f-display, serif); }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ccard { display: flex; flex-direction: column; justify-content: flex-end; gap: 4px; min-height: 150px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background-color: rgba(242, 235, 224, .05); background-size: cover; background-position: center; color: var(--ink); text-align: left; cursor: pointer; }
+.ccard b { font: 400 17px/1.2 var(--f-display, serif); } .ccard small { opacity: .7; font-size: 12px; }
+.notif { display: flex; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: none; color: var(--ink); text-align: left; cursor: pointer; }
+.notif.new { border-color: var(--wine); background: rgba(180, 57, 74, .12); }
+.notif span { display: grid; gap: 2px; font-size: 14px; line-height: 1.4; } .notif small { opacity: .55; font-size: 12px; }
+.notif .hav { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex: none; }
+.peoplelist { display: grid; gap: 14px; }
+#mebody .mylist, #subbody .mylist { gap: 12px; }
+#mebody .cta.full, #mebody > .cta { justify-self: start; }
+.plsubtabs { margin-bottom: 6px; }
+.sec > .chips, .sec .chips { margin-bottom: 4px; }
+.mylist { display: grid; gap: 12px; }
+.myc { padding: 14px 16px; }
+.row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; }
+.row3 .ghost { padding: 12px 4px; font-size: 11px; letter-spacing: .08em; }

@@ -117,6 +117,9 @@
       backup: async () => { const r = await fetch('/api/admin/backup', { headers: authH() }); if (!r.ok) throw { code: 'server' }; return r.text(); } },
     social: {
       caps: { brand: true, stats: true },
+      followers: () => api('/api/followers'), comments: (id) => api('/api/post/' + id + '/comments'), comment: (id, txt) => api('/api/post/' + id + '/comments', 'POST', { txt }), delComment: (cid) => api('/api/comment/' + cid, 'DELETE'),
+      notifs: () => api('/api/notifs'), notifCount: () => api('/api/notifs?count=1'), notifsRead: () => api('/api/notifs/read', 'POST', {}),
+      adminSales: () => api('/api/admin/sales'), paySales: (by) => api('/api/admin/sales/pay/' + by, 'POST', {}),
       follow: (by, on) => api('/api/follow', 'POST', { by, on }), following: () => api('/api/following'),
       feed: (scope, before) => api('/api/feed?scope=' + (scope === 'follow' ? 'follow' : 'all') + (before ? '&before=' + before : '')),
       post: (b) => api('/api/post', 'POST', b), delPost: (id) => api('/api/post/' + id, 'DELETE'), reportPost: (id) => api('/api/post/' + id + '/report', 'POST', {}),

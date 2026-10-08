@@ -310,7 +310,7 @@
     $$('#dock button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab));
     $('#dock .ind').style.transform = `translateX(${['today', 'shelf', 'search', 'tips', 'play', 'walk', 'wish'].indexOf(tab) * 100}%)`;
     $('#view').dataset.v = tab;
-    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewTips, play: viewPlay, walk: viewWalk, wish: viewWish })[tab]();
+    ({ today: viewToday, shelf: viewShelf, search: viewSearch, tips: viewFeedTab, play: viewPlay, walk: viewWalk, wish: viewMe })[tab]();
     if (!keepScroll) window.scrollTo(0, 0);
     setTimeout(ensureRatings, 0); pfSchedule();
   }
@@ -930,13 +930,25 @@
       BCACHE[key] = html; paint(html);
     }, 20);
   }
-  function viewTips() {
+  // Navigation interne : « Recherche » a deux volets (la recherche et les conseils), « Profil » en a quatre.
+  const NAV = { search: 'search', me: 'lists' };
+  function searchBar() {
+    const v = $('#view'), bar = document.createElement('div'); bar.className = 'plsubtabs';
+    bar.innerHTML = [['search', 'Recherche'], ['tips', 'Conseils']].map(([k, l]) => `<button type="button" class="${NAV.search === k ? 'on' : ''}" data-ssub="${k}">${l}</button>`).join('');
+    v.insertBefore(bar, v.firstChild);
+    $$('[data-ssub]', bar).forEach((b) => (b.onclick = () => { NAV.search = b.dataset.ssub; render(true); }));
+  }
+  function viewSearch() { if (NAV.search === 'tips') return viewTips(); viewSearchMain(); searchBar(); }
+  function viewTips() { viewTipsMain(); if (tab === 'search') searchBar(); }
+  function viewMe() { if (window.SillageProduct && window.SillageProduct.me) return window.SillageProduct.me(NAV.me, viewWish); viewWish(); }
+  function viewFeedTab() { if (window.SillageProduct && window.SillageProduct.social) return window.SillageProduct.social.pourToi(); $('#view').innerHTML = '<section class="sec"><header><h2>Pour toi</h2></header><p class="plintro">Le fil de tes abonnements arrive avec la version en ligne.</p></section>'; }
+  function viewTipsMain() {
     const s = S.settings, T = tipsData(); RECS = T.recs;
     const dsc = (c) => (window.DESC && window.DESC[c.name] ? window.DESC[c.name][1] : (c.notes || []).slice(0, 4).join(', '));
     let PLN = null; try { const pl = S.collection.length ? collectionPlan() : null; PLN = pl && pl.strategies.length ? pl : null; } catch (e) { PLN = null; }
     const hasProfile = S.collection.length || (s.liked || []).length || (s.vibes || []).length;
     $('#view').innerHTML = `
-      <section class="sec tp"><header><h2>Pour toi</h2><span class="mono">ton parfumier privé</span></header>
+      <section class="sec tp"><header><h2>Conseils</h2><span class="mono">ton parfumier privé</span></header>
         <div class="card pricecard"><div class="row" style="justify-content:space-between;align-items:baseline"><b>Prix maximum par flacon</b><b id="bval" style="font-family:var(--f-display);font-size:20px">${capLabel(s.budget)}</b></div>
           <input type="range" id="budget" min="0" max="${CAPS.length - 1}" step="1" value="${capIdx(s.budget)}" aria-label="Prix maximum par flacon"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.budget ? 'Aucun conseil ne dépasse ce prix' : 'Aucun plafond : tous les prix, jusqu\'aux plus grands flacons'}</p>
           <div class="tiersrow"><p class="mono" style="text-transform:none;letter-spacing:0;margin:0">${s.tier ? 'Ton style' : 'Choisis ton style pour des conseils plus justes'}</p><div class="chips" id="tiersel">${TIERS.map(([k, l]) => `<button type="button" class="chip ${s.tier === k ? 'on' : ''}" data-tier="${k}">${l}</button>`).join('')}</div></div></div>
@@ -1410,7 +1422,7 @@
   const popularList = () => incList();
   const sFilters = () => SRCH.tags.length || SRCH.style || SRCH.price || SRCH.house || SRCH.note || SRCH.nose || SRCH.conc || SRCH.gen || SRCH.photo;
   function bindEnt(root) { const look = plLook(); $$('[data-ent]', root).forEach((b) => (b.onclick = () => { const e = look.get(b.dataset.ent); if (e) openEntry(e); })); }
-  function viewSearch() {
+  function viewSearchMain() {
     const act = [...SRCH.tags.map((t) => ['t:' + t, (window.TAGS || {})[t]]), SRCH.style ? ['style', famLabel(SRCH.style)] : null, SRCH.price ? ['price', (PRICE_TIERS.find((x) => x[0] === SRCH.price) || [])[1]] : null, SRCH.house ? ['house', SRCH.house] : null, SRCH.note ? ['note', 'Note ' + SRCH.note] : null, SRCH.nose ? ['nose', SRCH.nose] : null, SRCH.conc ? ['conc', SRCH.conc] : null, SRCH.gen ? ['gen', ({ f: 'Féminin', m: 'Masculin', u: 'Mixte' })[SRCH.gen]] : null, SRCH.photo ? ['photo', 'Avec photo'] : null].filter(Boolean);
     $('#view').innerHTML = `
       <section class="sec srch"><header><h2>Recherche</h2><span class="mono" id="scount"></span></header>
@@ -1509,7 +1521,7 @@
   const HOUSE_SITE = { 'dior': 'https://www.dior.com/fr_fr/beauty/parfums', 'yves saint laurent': 'https://www.yslbeauty.fr/parfums', 'guerlain': 'https://www.guerlain.com/fr/fr-fr/c/lart-et-la-matiere-collection.html', 'hermes': 'https://www.hermes.com/fr/fr/category/parfums/', 'tom ford': 'https://www.tomfordbeauty.com/collections/fragrance', 'chanel': 'https://www.chanel.com/fr/parfums/', 'parfums de marly': 'https://parfums-de-marly.com/fr/collections/fragrances', 'jo malone': 'https://www.jomalone.fr/products/colognes', 'mancera': 'https://www.manceraparfums.com/fr/', 'khadlaj': 'https://www.fragrantica.fr/designer/Khadlaj-Perfumes.html', 'oman luxury': 'https://odorare.fr/collections/oman-luxury', 'ella k': 'https://www.ellakparfums.com/', 'horace': 'https://www.horace.com/', 'ex nihilo': 'https://www.exnihilo-paris.com/', 'maison francis kurkdjian': 'https://www.franciskurkdjian.com/fr/', 'frederic malle': 'https://www.fredericmalle.com/', 'xerjoff': 'https://www.xerjoff.com/', 'maison crivelli': 'https://www.maisoncrivelli.com/', 'parfum d empire': 'https://www.parfumdempire.com/' };
   const siteOf = (e) => HOUSE_SITE[E.norm(e.house)] || null;
   const goPlaylist = (title) => { const p = (window.PLAYLISTS || []).find((x) => x.t === title); if (!p) return; closeSheet(); tab = 'play'; PL.id = p.id; render(); };
-  const goNeedText = (t) => { closeSheet(); tab = 'search'; render(); setTimeout(() => { const n = $('#need'); if (n) { n.value = t; const g = $('#needgo'); if (g) g.click(); window.scrollTo(0, 0); } }, 60); };
+  const goNeedText = (t) => { closeSheet(); tab = 'search'; NAV.search = 'search'; render(); setTimeout(() => { const n = $('#need'); if (n) { n.value = t; const g = $('#needgo'); if (g) g.click(); window.scrollTo(0, 0); } }, 60); };
   const edOf = (e) => { const ED = window.EDITORIAL || {}, HA = window.HOUSE_ALIAS || {}; return ED[E.norm((HA[E.norm(e.house)] || e.house)) + '|' + E.norm(e.name)] || ED[E.norm(e.house) + '|' + E.norm(e.name)] || null; };
   const edHtml = (e) => {
     const d = edOf(e); if (!d) return '';
@@ -1564,13 +1576,13 @@
       ${(e.noses || []).length ? `<div><p class="mono">Créé par</p><div class="chips" style="margin-top:8px">${e.noses.slice(0, 4).map((n) => `<button class="chip" data-nz="${esc(n)}">${esc(n)}</button>`).join('')}</div>${e.noses.length >= 3 ? '<p class="mono" style="text-transform:none;letter-spacing:0;margin-top:8px">Plusieurs nez sont cités pour ce parfum : les sources divergent.</p>' : ''}</div>` : ''}`;
   }
   function bindFiche(pn) {
-    $$('[data-nz]', pn).forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.nz; closeSheet(); tab = 'search'; render(); }));
+    $$('[data-nz]', pn).forEach((b) => (b.onclick = () => { SRCH.nose = b.dataset.nz; closeSheet(); tab = 'search'; NAV.search = 'search'; render(); }));
     $$('[data-gopl]', pn).forEach((b) => (b.onclick = () => goPlaylist(b.dataset.gopl)));
     $$('[data-gosit]', pn).forEach((b) => (b.onclick = () => goNeedText(b.dataset.gosit)));
-    $$('[data-gotag]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.tags = [b.dataset.gotag]; SRCH.limit = 40; tab = 'search'; render(); }));
-    $$('[data-gonote]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.note = b.dataset.gonote; SRCH.limit = 40; tab = 'search'; render(); }));
-    $$('[data-gohouse]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.house = b.dataset.gohouse; SRCH.limit = 40; tab = 'search'; render(); }));
-    $$('[data-gofam]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.style = b.dataset.gofam; SRCH.limit = 40; tab = 'search'; render(); }));
+    $$('[data-gotag]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.tags = [b.dataset.gotag]; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
+    $$('[data-gonote]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.note = b.dataset.gonote; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
+    $$('[data-gohouse]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.house = b.dataset.gohouse; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
+    $$('[data-gofam]', pn).forEach((b) => (b.onclick = () => { closeSheet(); SRCH.style = b.dataset.gofam; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); }));
     $$('[data-adn]', pn).forEach((b) => { if (!b.onclick) b.onclick = () => goNeedText(b.dataset.adn); });
   }
   function openEntry(e) {
@@ -2133,7 +2145,7 @@
         <div class="plist">${p.ps.map((x, i) => (p.grp && plGrpAt(p, i) >= 0 ? `<div class="plgrp"><p class="mono">${esc(p.grp[plGrpAt(p, i)].t)}</p>${p.grp[plGrpAt(p, i)].d ? `<p class="pld">${tx(p.grp[plGrpAt(p, i)].d)}</p>` : ''}</div>` : '') + row(x, i)).join('')}</div>
         ${combos.length ? `<div><p class="mono">Combinaisons à essayer</p><div class="plcombos">${combos.map((c) => `<div class="plcombo">${sm(c[0])}<i>+</i>${sm(c[1])}</div>`).join('')}</div></div>` : ''}
       </section>`;
-    $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; render(); } else goNeedText(v); }));
+    $$('[data-adn]').forEach((b) => (b.onclick = () => { const v = b.dataset.adn.slice(2); if (b.dataset.adn.startsWith('n:')) { SRCH.note = v; SRCH.limit = 40; tab = 'search'; NAV.search = 'search'; render(); } else goNeedText(v); }));
     $('#plback').onclick = () => { PL.id = 0; render(); };
     if (window.SillageProduct) window.SillageProduct.playlist(p, $('#view'));
     const open = (i) => { const e = st.es[i], x = p.ps[i]; if (e) return openEntry(e); const pn = openSheet(`<div><h2>${esc(x.q)}</h2><p class="mono" style="margin-top:6px">Pas encore dans la base de Sillage</p></div><p style="color:var(--muted);font-size:14px">Ce parfum fait partie de la liste « ${esc(p.t)} », mais je n'ai pas encore sa fiche. Tu peux le garder en wishlist pour le sentir.</p><div class="row">${hasWish(x.q) ? '<span class="mono">Dans ta wishlist ♡</span>' : '<button class="cta" id="plw"><span>À sentir</span></button>'}<button class="ghost" id="ex">Fermer</button></div>`); $('#ex', pn).onclick = closeSheet; if ($('#plw', pn)) $('#plw', pn).onclick = () => { addWish({ name: x.q, house: '', family: '', notes: [], price: 0, st: 'smell' }); save(); closeSheet(); viewPlaylist(p); }; };
@@ -2831,7 +2843,7 @@
   window.SillageHooks = { openSheet, closeSheet, rerender: () => { if (tab === 'today' && $('#story').hidden && $('#sheet').hidden && !$('#onb')) viewToday(); }, refresh: () => { try { render(true); } catch (e) { /* ok */ } } };
   // Ce que la couche produit (offres, profil, communauté, éditeur : product.js) a le droit de toucher dans l'appli.
   window.SillageInternals = {
-    S: () => S, save, dbList: () => dbList(), entryKey, openEntry, openSheet, closeSheet, esc, $, $$, E, xThumb, pCard, famLabel, showAccount: (f, o) => showAccount(f, o), render: (k) => render(k), PLS: () => PLS, PL, tab: () => tab, goTab: (t) => { tab = t; render(); },
+    S: () => S, NAV, save, dbList: () => dbList(), entryKey, openEntry, openSheet, closeSheet, esc, $, $$, E, xThumb, pCard, famLabel, showAccount: (f, o) => showAccount(f, o), render: (k) => render(k), PLS: () => PLS, PL, tab: () => tab, goTab: (t) => { tab = t; render(); },
     bust: () => { DBL = null; NPOOL = null; BIOM = null; ENTP = null; HMED = null; Object.keys(BCACHE).forEach((k) => delete BCACHE[k]); },
   };
 
