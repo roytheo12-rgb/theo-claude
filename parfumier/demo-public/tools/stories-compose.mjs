@@ -35,7 +35,9 @@ ${last ? '' : '<div class="mark">SILLAGE</div>'}
 ${last ? '<div class="cta"><span>LIEN EN BIO</span></div>' : `<div class="ph"><img src="${img}"></div>`}`;
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const pg = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+const ONLY = process.argv[3] ? process.argv[3].split(',') : null;
 for (const [id, raw, t, s] of FRAMES) {
+  if (ONLY && !ONLY.some((o) => id.startsWith(o))) continue;
   await pg.setContent(page(t, s, raw ? b64(raw) : '', !raw)); await pg.waitForTimeout(250);
   await pg.screenshot({ path: path.join(OUT, 'sillage-story-' + id + '.jpg'), type: 'jpeg', quality: 92 });
 }
