@@ -23,7 +23,9 @@ for f in sorted(inbox.glob('*')) if inbox.exists() else []:
     if f.suffix.lower() not in ('.jpg', '.jpeg', '.png', '.webp'): continue
     mp = MAP.get(f.name)
     if mp == '-': continue
-    k = slug(mp) if mp else slug(f.stem); p = by_slug.get(k) or by_id.get(f.stem.strip()) or by_slug.get(re.sub(r'^\d+-', '', k))
+    k = slug(mp) if mp else slug(f.stem)
+    # Un fichier nommé dans covers-map.txt ne va qu'à la playlist qu'il nomme : si elle a été fusionnée ou supprimée, on ignore l'image (sinon son numéro tombait sur une autre playlist et écrasait sa couverture).
+    p = by_slug.get(k) if mp else (by_slug.get(k) or by_id.get(f.stem.strip()) or by_slug.get(re.sub(r'^\d+-', '', k)))
     if not p: lost.append(f.name); continue
     im = split(f)[0] if f.name in MAP else Image.open(f).convert('RGB'); im.thumbnail((900, 900)); im.save(out / (p['s'] + '.webp'), 'WEBP', quality=78, method=6); done += 1
 print('couvertures :', done, '| fichiers sans playlist :', lost)
