@@ -3,6 +3,8 @@
 Durée : **≈ 1:58** · Langue : français · Voix off : Henry (ou ElevenLabs en secours)
 Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente).
 
+> **Mise à jour V3.2** : nouvelle ouverture validée par Théo : toits de Paris → la fenêtre de Nadia vue de dehors → on traverse la vitre → l'intérieur. Même construction côté Julien (l'hôtel à l'aube → la fenêtre du bureau → l'intérieur). Acte I : 45 s. Prompts complets dans FLOW.md.
+>
 > **Mise à jour V3.1** : le compte-rendu arrive **au même instant** chez le candidat et chez le recruteur. Plus de « en premier » nulle part (la démo le dit encore : à corriger).
 >
 > **Mises à jour V3 (elles priment sur tout le reste)**
@@ -67,19 +69,23 @@ Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente)
 
 Sources : **S** = Seedance (à partir d'une image clé Nano Banana) · **C** = codé par Claude · **I** = image fixe animée dans CapCut (zoom lent, 0 crédit)
 
-### ACTE I — SÉPARÉS (0:00–0:41) · 1.37:1
+### ACTE I — SÉPARÉS (0:00–0:45) · 1.37:1 · *(V3.2 : ouverture « toits → fenêtre → intérieur », demandée par Théo ; prompts dans FLOW.md)*
 
 | # | Temps | Image | Src | Voix off | Son |
 |---|---|---|---|---|---|
-| P01 | 0:00–0:04 | Noir | — | **V1** « Dis-moi, Nadia… combien de candidatures as-tu envoyées ces trois derniers mois ? » | Pluie qui monte |
-| P02 | 0:04–0:09 | **Plan large du studio de Nadia**, symétrique : fenêtre au centre, pluie, Nadia à sa petite table. Vert froid. Travelling avant lent. | S | *(suite de V1)* | Pluie, néon qui grésille |
-| P03 | 0:09–0:11 | **Insert : l'uniforme repassé** sur la porte, le pin en laiton accroche la lumière | I | — | — |
-| P04 | 0:11–0:16 | **Nadia en plan taille**, à gauche, elle regarde à droite. Le téléphone vibre, elle le retourne sans le lire. | S | **V2** « Et combien sont restées sans réponse ? » | Vibration |
-| P05 | 0:16–0:21 | **Julien en plan taille**, à droite, il regarde à gauche. Il repose un CV sur la pile. Ambre. | S | **V3** « Et toi, Julien… as-tu enfin trouvé la perle rare ? » | **La vibration de P04 continue 1 s** |
-| P06 | 0:21–0:27 | **Traversée de l'hôtel**, 3 flashs de 2 s reliés par des panoramiques fouettés : réception tendue · rush en salle · casier vide | I ou S | — | Sons d'ambiance seuls, la musique coupe à chaque flash |
-| P07 | 0:27–0:31 | **Insert en plongée** : le CV de Nadia, avec sa photo dans *son* vert, glisse sur la pile des refus | S | **V4** « Ce serait dommage de passer à côté d'une belle rencontre… » | Papier qui glisse |
-| P08 | 0:31–0:37 | Noir, texte mot à mot : *Le problème n'est pas le nombre de CV.* | C | **V5** « Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'**observer**. » | Silence |
-| P09 | 0:37–0:41 | **Retour chez Nadia.** Son téléphone s'illumine sur la table (écran illisible). Elle le prend. **La caméra avance dans l'écran.** | S | — | Un seul « clic » |
+| P01 | 0:00–0:04 | **Les toits de Paris sous la pluie**, la nuit. La caméra descend vers une seule fenêtre éclairée en vert. | S | **V1** « Dis-moi, Nadia… combien de candidatures as-tu envoyées ces trois derniers mois ? » | Pluie sur le zinc |
+| P01b | 0:04–0:07 | **La fenêtre de Nadia vue de l'extérieur** : façade haussmannienne, balcon en fer forgé, néon vert, le tailleur deviné derrière la vitre | S | *(suite de V1)* | Pluie, gouttière |
+| P02 | 0:07–0:09 | **On traverse la vitre** : de l'extérieur à l'intérieur du studio, en un seul mouvement | S | *(fin de V1)* | La pluie s'étouffe, le néon grésille |
+| P03 | 0:09–0:12 | **Le tailleur qui attend** sur la porte, les escarpins posés dessous. Personne. | S | — | Pluie sur la vitre |
+| P04 | 0:12–0:17 | **Nadia en plan taille**, à gauche, elle regarde à droite. Le téléphone vibre, elle le retourne sans le lire. | S | **V2** « Et combien sont restées sans réponse ? » | Vibration |
+| P05a | 0:17–0:20 | **L'hôtel à l'aube**, façade symétrique, pavés mouillés, une seule fenêtre ambrée au centre (miroir de P01) | S | **V3** commence : « Et toi, Julien… » | **La vibration de P04 continue 1 s**, puis la ville qui s'éveille |
+| P05b | 0:20–0:25 | **On traverse la fenêtre du bureau** (miroir de P01b–P02) jusqu'à **Julien en plan taille**, à droite ; il met un CV de côté et finit en regardant à gauche. Ambre. | S | « …as-tu enfin trouvé la perle rare ? » | Papier, horloge |
+| P06 | 0:25–0:31 | **Traversée de l'hôtel**, 3 flashs de 2 s reliés par des panoramiques fouettés : réception tendue · rush en salle · casier vide | S | — | Sons d'ambiance seuls, la musique coupe à chaque flash |
+| P07 | 0:31–0:35 | **Insert en plongée** : le CV de Nadia, avec sa photo dans *son* vert, glisse sur la pile des refus | S | **V4** « Ce serait dommage de passer à côté d'une belle rencontre… » | Papier qui glisse |
+| P08 | 0:35–0:41 | Noir, texte mot à mot : *Le problème n'est pas le nombre de CV.* | C | **V5** « Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'**observer**. » | Silence |
+| P09 | 0:41–0:45 | **Retour chez Nadia.** Son téléphone s'illumine sur la table (écran illisible). Elle le prend. **La caméra avance dans l'écran.** | S | — | Un seul « clic » |
+
+> **V3.2 :** l'acte I passe de 41 à 45 s. Tous les temps des actes II, III et IV ci-dessous sont **décalés de +4 s** (l'acte II commence à 0:45).
 
 ### ACTE II — RELIÉS (0:41–1:26) · 16:9 · entièrement codé
 
