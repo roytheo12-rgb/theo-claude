@@ -1,6 +1,6 @@
 # Google Flow (Veo 3.1) — tous les plans filmés, prompts complets, calés sur la voix off
 
-**Version 3.2.** Ouverture « toits → fenêtre → intérieur » chez Nadia, et la même construction en miroir chez Julien (l'hôtel à l'aube → la fenêtre de son bureau → l'intérieur).
+**Version 3.3.** Ouverture « toits → fenêtre → on traverse la vitre → **directement sur Nadia** » (plus de plan de pièce vide), la même construction en miroir chez Julien (l'hôtel à l'aube → la fenêtre de son bureau → l'intérieur), et un plan de **Nadia devant l'hôtel** à l'acte III (P10b).
 
 Chaque plan donne : 🎙️ **ce qu'on entend** (repère, **jamais** dans le prompt) · **le but** · **les images** à créer (prompt complet) et **ce qu'il faut joindre** · **les réglages Flow** · **le prompt vidéo complet**, à copier-coller tel quel · **ce qu'on garde** · **la synchro** · **ce qu'il faut vérifier** · **CapCut**.
 
@@ -39,7 +39,7 @@ Tous les prompts sont **complets** : le préfixe de style est déjà dedans. Tu 
 ⚠️ Utilise **les versions recadrées** (`studio_nadia_16x9.jpg`, `fenetre_nadia.jpg`) : avec les bandes noires, Veo garde les bandes dans la vidéo.
 
 ### Les règles qui valent pour tous les plans
-- **Personne dans P01, P01b, P02, P03, P05a** : Nadia n'apparaît qu'en P04, Julien qu'en P05b.
+- **Personne à l'image dans P01 et P05a.** Nadia apparaît derrière sa vitre dès la fin de P01b ; Julien derrière la sienne à la fin de P05a.
 - **Le miroir** : Nadia à gauche du cadre, elle regarde à droite ; Julien à droite, il regarde à gauche ; yeux à 40 % de la hauteur (`references/grille_capcut.png`).
 - **Chez Nadia : nuit, pluie, vert.** **Chez Julien : aube, pluie finie, ambre.** Même ville, même nuit, deux lumières.
 - **Aucun monument** (ni tour Eiffel, ni Sacré-Cœur) : la tour Eiffel illuminée la nuit pose un problème de droits, et ça fait carte postale. Les toits en zinc suffisent à dire Paris.
@@ -47,15 +47,17 @@ Tous les prompts sont **complets** : le préfixe de style est déjà dedans. Tu 
 
 ---
 
-# ACTE I — SÉPARÉS (0:00 → 0:45) · 1.37:1
+# ACTE I — SÉPARÉS (0:00 → 0:43) · 1.37:1
 
-## La construction : un seul mouvement de caméra, des toits jusqu'au tailleur
+## La construction : un seul mouvement de caméra, des toits jusqu'à Nadia
 
 ```
-P01 toits ──► K01b ──► P01b façade ──► FENÊTRE ──► P02 la vitre ──► STUDIO ──► P03 ──► K03 tailleur
-           (même image)              (ton image 4)                (ton image 5)
+P01 toits ──► K01b ──► P01b façade ──► K01c ──► P02 la vitre ──► K04 ──► P04 le téléphone
+           (même image)          (ton image 4 + Nadia        (Nadia sur le canapé,
+                                  sur le canapé)              le tailleur derrière elle)
 ```
-Quatre clips, mais **chaque fin de clip est exactement le début du suivant** : à l'écran, c'est un seul plan-séquence qui descend des toits, s'approche de sa fenêtre, traverse la vitre et finit sur le tailleur.
+Trois clips soudés (chaque fin de clip est exactement le début du suivant), puis P04 qui part de la même image : à l'écran, c'est **un seul plan-séquence** qui descend des toits, s'approche de sa fenêtre, où on la devine déjà sur son canapé, traverse la vitre et **arrive directement sur elle**. Pas de plan de pièce vide.
+Le tailleur reste dans l'histoire : on le voit derrière la vitre, puis **pendu à la porte derrière elle** dans chaque plan de la scène.
 Julien a la même construction, plus courte (P05a → P05b), en ambre.
 
 ---
@@ -64,24 +66,29 @@ Julien a la même construction, plus courte (P05a → P05b), en ambre.
 🎙️ **V1** *« Dis-moi, Nadia… combien de candidatures as-tu envoyées ces trois derniers mois ? »* (commence vers 0,5 s, continue sur P01b et P02)
 **But :** Paris, la nuit, la pluie, des milliers de fenêtres éteintes. Une seule est allumée, en vert : la sienne.
 
-**Image de départ K01** · joindre **Fenêtre** en `[STYLE] palette, light and facade style only`
+**Image de départ K01 : ✅ tu l'as générée** (l'image du toit vers la fenêtre).
+- Si la fenêtre y est **petite, au loin** : c'est K01, tu génères K01b ci-dessous comme image d'arrivée.
+- Si la fenêtre y est **déjà grande, vue de face** : ton image **est** K01b. Saute P01, et commence directement par P01b avec ton image en départ (on gagne 4 s, je recale la voix).
+- **Envoie-la-moi** pour que je vérifie le cadrage (la fenêtre doit tenir dans le recadrage 1.37, entre 12 % et 88 % de la largeur).
+
+Pour mémoire, le prompt de K01 si tu dois la refaire · joindre **Fenêtre** en `[STYLE] palette, light and facade style only`
 ```
 Cinematic film still, 16:9, 35mm anamorphic look. High wide establishing shot over the zinc rooftops of Paris at night under heavy rain, seen from slightly above roof level. A sea of grey-blue zinc mansard roofs, rows of terracotta chimney pots, small dormer windows, wet roofs reflecting the faint city glow. Every window is dark except one: in the center of the frame, in the top floors of a Haussmann building in the middle distance, a single tall French window glows with a cold sickly green fluorescent light. Visible rain streaks, mist, low clouds. Cold desaturated blue-green color grade, lifted blacks, deep shadows, subtle 35mm film grain. No people, no landmarks, no Eiffel Tower, no text, no logos, no signage.
 ```
 
-**Image d'arrivée K01b** · joindre **Fenêtre** en `[SETTING] keep facade and window identical`
+**Image d'arrivée K01b** · joindre **ton image K01** en `[SETTING] same building and window` et **Fenêtre** en `[SETTING] keep facade and window identical`
 ```
-Cinematic film still, 16:9, 35mm lens. Night, heavy rain. The same Haussmann building as Image 1, seen from across the narrow street at the height of its top floors, frontal and centered: carved pale stone facade darkened by rain, wrought-iron balconies, a zinc mansard roof with chimney pots at the top of the frame. In the exact center, the same tall French window as Image 1, lit from inside with a cold green fluorescent light, the interior soft and indistinct at this distance. All the other windows of the facade are dark. Rain streaks across the frame, water dripping from the balcony rails. Cold desaturated blue-green grade, lifted blacks, subtle film grain. No people, no text, no logos.
+Cinematic film still, 16:9, 35mm lens. Night, heavy rain. The same Haussmann building and the same lit window as Image 1, seen from across the narrow street at the height of its top floors, frontal and centered: carved pale stone facade darkened by rain, wrought-iron balconies, a zinc mansard roof with chimney pots at the top of the frame. In the exact center, the tall French window from Image 2, lit from inside with a cold green fluorescent light, the interior soft and indistinct at this distance. All the other windows of the facade are dark. Rain streaks across the frame, water dripping from the balcony rails. Cold desaturated blue-green grade, lifted blacks, subtle film grain. No people visible, no text, no logos.
 ```
 
-**Réglages :** départ **K01** · arrivée **K01b** · Quality · 8 s
+**Réglages :** départ **K01** (ton image) · arrivée **K01b** · Quality · 8 s
 **Prompt vidéo :**
 ```
 Cinematic film shot, photorealistic, 35mm anamorphic look, stabilized camera, precise and deliberate movement, never handheld. Keep the setting, colors and lighting identical to the reference frames. No people, no text, no logos, no landmarks.
 
-Scene: night over the zinc rooftops of Paris under heavy rain. Thousands of dark windows; only one window glows, with a cold green fluorescent light, in the top floors of a Haussmann building in the middle distance.
+Scene: night over the zinc rooftops of Paris under heavy rain. Thousands of dark windows; only one window glows, with a cold green fluorescent light, in the top floors of a Haussmann building.
 
-Camera: one slow, continuous, elegant crane-down and push-in, like a drone gliding between the chimney pots. It starts high above the roofs, descends gently past the wet chimneys and glides across the narrow street toward the lit window, ending frontal and centered on the facade at the height of the top floors. Constant speed, no shake, no cuts.
+Camera: one slow, continuous, elegant crane-down and push-in, like a drone gliding between the chimney pots. It starts above the roofs, descends gently past the wet chimneys and glides across the narrow street toward the lit window, ending frontal and centered on the facade at the height of the top floors. Constant speed, no shake, no cuts.
 
 Action and atmosphere: steady heavy rain, water running along the zinc gutters and dripping from the chimney pots, a thin mist between the roofs. At 5 seconds the green light in the window flickers once, like a tired fluorescent tube. The light in the window stays cold green; everything else stays dark blue-green.
 
@@ -93,119 +100,91 @@ Audio: heavy rain on zinc roofs, water gurgling in the gutters, a distant city h
 ```
 **On garde :** les **4 dernières secondes** (de 4 à 8 s), pour finir exactement sur K01b.
 **Synchro :** la voix commence 0,5 s après le début du plan.
-**Vérifier :** aucune silhouette, une seule fenêtre allumée, pas de monument, la fenêtre bien au centre (elle doit survivre au recadrage 1.37).
+**Vérifier :** une seule fenêtre allumée, pas de monument, la fenêtre bien au centre.
 **CapCut :** 0,5 s de noir avec la pluie qui monte avant l'image, puis fondu d'ouverture de 12 images. Recadrage 1.37.
 
 ---
 
-## P01b · 0:04–0:07 · Sa fenêtre, vue de dehors
+## P01b · 0:04–0:07 · Sa fenêtre, vue de dehors : elle est là
 🎙️ *(suite de V1 : « …combien de candidatures as-tu envoyées… »)*
-**But :** on s'approche. Derrière la vitre embuée : sa vie, et le tailleur qui attend, déjà, à gauche.
+**But :** on s'approche, et derrière la vitre embuée on la découvre : Nadia, seule sur son canapé, la lueur de l'ordinateur sur le visage. Le tailleur attend sur la porte, à gauche.
 
-**Image de départ :** **K01b** · **Image d'arrivée :** **Fenêtre** (`fenetre_nadia.jpg`)
+**Image d'arrivée K01c** (ton image 4 avec Nadia dedans) · joindre **Fenêtre** en `[SETTING] keep this exact image` et **Fiche Nadia** en `[CHARACTER] keep face, curly bun, gold hoop earrings and gold necklace identical`
+```
+Same image as Image 1, identical framing, facade, balcony, rain, window and interior, same cold green color grade. Only change: Nadia, the same young woman as Image 2, now sits on the grey sofa inside, seen through the fogged, rain-streaked glass, on the left part of the sofa, in a soft grey knit sweater, turned three-quarter toward the right where an open laptop sits on the coffee table, the cold glow of the laptop on her face. She is small in the frame, slightly blurred by the glass and the rain, but recognizable. The navy suit still hangs on the door on the left. No text, no logos.
+```
+**Image de départ :** **K01b** · **Image d'arrivée :** **K01c**
 **Réglages :** Quality · 8 s
 **Prompt vidéo :**
 ```
-Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Keep the facade, window, interior, colors and lighting identical to the reference frames. No people, no text, no logos.
+Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Keep the facade, the window, the interior, the woman, the colors and the lighting identical to the reference frames. No text, no logos.
 
-Scene: night, heavy rain, the pale stone facade of a Haussmann building with a wrought-iron balcony. A tall French window lit from inside with a cold green fluorescent light; through the fogged, rain-streaked glass we glimpse a small studio apartment: a navy blue suit hanging on a door on the left, a tiny kitchen, bookshelves, a string of small warm lights, a grey sofa with blankets, a candle on a coffee table.
+Scene: night, heavy rain, the pale stone facade of a Haussmann building with a wrought-iron balcony. A tall French window lit from inside with a cold green fluorescent light. Through the fogged, rain-streaked glass, a small studio apartment: a navy blue suit hanging on a door on the left, a tiny kitchen, bookshelves, a grey sofa with blankets; on the sofa, a young woman alone, in front of her laptop, its cold glow on her face.
 
 Camera: one slow continuous push-in across the street toward the window, perfectly frontal and centered, ending close to the glass with the wrought-iron balcony rail crossing the lower part of the frame. Constant slow speed, no shake.
 
-Action and atmosphere: raindrops hit the glass and run down it in thin streams; condensation on the inside of the panes; water drips from the balcony rail; the fluorescent tube inside flickers very slightly once. Nobody is in the room.
+Action and atmosphere: raindrops hit the glass and run down it in thin streams; condensation on the inside of the panes; water drips from the balcony rail. Inside, the young woman barely moves: she looks at her laptop, tired, motionless. The fluorescent tube flickers very slightly once.
 
 Light and grade: cold sickly green-cyan interior light against the dark wet stone, lifted blacks, desaturated, subtle 35mm film grain, rain glistening on the iron.
 
-End frame: the window exactly as in the last reference frame, frontal and centered, still.
+End frame: the window exactly as in the last reference frame, frontal and centered, the woman visible on the sofa through the glass, still.
 
 Audio: rain on the stone and on the iron balcony, water dripping from the rail, the faint buzz of a fluorescent tube behind the glass. No music, no speech.
 ```
-**On garde :** les 8 s, **accélérées en ×2,7** (≈ 3 s) avec une courbe de vitesse douce (voir CapCut).
-**Vérifier :** on reconnaît bien ton image 4 à la fin, le tailleur est visible à gauche derrière la vitre, personne dans la pièce.
+**On garde :** les 8 s, **accélérées en ×2,7** (≈ 3 s) avec une courbe de vitesse douce.
+**Vérifier :** on reconnaît bien ton image 4, Nadia est sur le canapé (même pull que dans P04), le tailleur est à gauche.
 **CapCut :** **extraire l'audio** avant d'accélérer (sinon la pluie sonne aigu), puis Vitesse → Courbe → Personnalisée : rapide au début, ralentie sur les 0,5 dernières secondes. Recadrage 1.37.
 
 ---
 
-## P02 · 0:07–0:09 · On traverse la vitre
+## P02 · 0:07–0:10 · On traverse la vitre, et on arrive sur elle
 🎙️ *(fin de V1 : « …ces trois derniers mois ? »)*
-**But :** le moment le plus cinématique de l'ouverture : la caméra passe à travers la vitre mouillée et se retrouve à l'intérieur… dans le même vert.
+**But :** le moment le plus cinématique de l'ouverture : la caméra passe à travers la vitre mouillée et avance jusqu'à Nadia. On ne quitte plus la scène : P04 commence sur la dernière image de ce plan.
 
-**Image de départ :** **Fenêtre** (`fenetre_nadia.jpg`) · **Image d'arrivée :** **Studio** (`studio_nadia_16x9.jpg`)
+**Image de départ :** **K01c** · **Image d'arrivée :** **K04** (voir P04 : elle se crée **avant** ce plan)
 **Réglages :** Quality · 8 s
 **Prompt vidéo :**
 ```
-Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Keep the window, the room, the objects, the colors and the lighting identical to the reference frames. No people, no text, no logos.
+Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Restrained, natural acting. Keep the window, the room, the objects, the woman's face, hair, earrings, necklace and sweater, the colors and the lighting identical to the reference frames. No text, no logos, no readable screen content.
 
-Scene: night, heavy rain. We start outside a tall French window of a Haussmann building, lit from inside with a cold green fluorescent light, and end inside the small Parisian studio apartment behind it.
+Scene: night, heavy rain. We start outside a tall French window of a Haussmann building, lit from inside with a cold green fluorescent light, a young woman visible on the sofa behind the glass; we end inside the small Parisian studio apartment, close to her.
 
-Camera: one slow, continuous, seamless push forward that passes straight through the rain-streaked window glass. Between 2 and 4 seconds the raindrops and streams on the glass fill the frame, go soft and out of focus, and slide past the lens; the camera emerges inside the room and keeps gliding forward, then settles on the wide view of the studio: the navy suit on the door on the left, the small kitchen with the fluorescent tube in the center, the grey sofa with blankets, the coffee table with a mug and a candle, the tall window streaked with rain on the right. One unbroken move, constant speed, no cut, no morphing of the room.
+Camera: one slow, continuous, seamless push forward that passes straight through the rain-streaked window glass. Between 1.5 and 3.5 seconds the raindrops and streams on the glass fill the frame, go soft and out of focus, and slide past the lens; the camera emerges inside the room and keeps gliding forward toward the woman on the sofa, then settles into a waist-up medium shot of her, eye-level, slightly left of center, with the navy suit hanging on the door softly out of focus in the background on the left. One unbroken move, constant speed, no cut, no morphing of the room or of her face.
 
-Action and atmosphere: rain runs down the glass; once inside, the rain becomes muffled; the fluorescent tube flickers once; the candle flame trembles slightly. Nobody is in the room.
+Action: the young woman sits on the sofa, looking at the laptop on the coffee table on the right side of the frame, tired, almost motionless; one slow blink, a small breath. She does not look at the camera.
 
-Light and grade: cold sickly green-cyan, desaturated, lifted blacks, the small warm points of the string lights and the candle kept very discreet, subtle 35mm film grain.
+Light and grade: cold sickly green-cyan, desaturated, lifted blacks, the laptop glow on her face from the right, subtle 35mm film grain.
 
-End frame: the wide view of the empty studio exactly as in the last reference frame, still.
+End frame: waist-up medium shot of her looking toward the right side of the frame, exactly as in the last reference frame, still.
 
-Audio: loud rain outside that becomes suddenly muffled as we pass through the glass, then the quiet room: rain against the window, the faint buzz of the fluorescent tube. No music, no speech.
+Audio: loud rain outside that becomes suddenly muffled as we pass through the glass, then the quiet room: rain against the window, the faint buzz of the fluorescent tube, the soft hum of a laptop. No music, no speech.
 ```
-**On garde :** les 8 s **en rampe de vitesse** (≈ 2 s à l'écran) : rapide jusqu'à la vitre, **ralenti au moment où les gouttes passent devant l'objectif**, de nouveau rapide, puis posé sur le studio.
-**Vérifier :** pas de déformation de la pièce, pas de silhouette qui apparaît dans un reflet.
-**Plan B si Veo déforme la pièce :** garde la fin de P01b collée à la vitre et coupe sur le studio avec un **fondu enchaîné de 10 images** posé sur les gouttes floues. Ça marche très bien aussi.
+**On garde :** 3 s, en **rampe de vitesse** : rapide jusqu'à la vitre, **ralenti au moment où les gouttes passent devant l'objectif**, puis une avancée douce et posée sur elle.
+**Vérifier :** pas de déformation de la pièce ni de son visage pendant le passage, elle ne regarde pas la caméra, la dernière image est bien K04.
+**Plan B si Veo déforme la pièce :** garde la fin de P01b collée à la vitre et coupe sur K04 avec un **fondu enchaîné de 10 images** posé sur les gouttes floues.
 **CapCut :** audio extrait et gardé à vitesse normale (le passage du son « dehors → dedans » est le meilleur effet du plan). Recadrage 1.37.
 
 ---
 
-## P03 · 0:09–0:12 · Le tailleur qui attend
-🎙️ *(silence : la pluie seule)*
-**But :** sa tenue d'entretien, prête depuis longtemps, qui attend un rendez-vous. Elle n'est pas là. C'est le début de l'arc du vêtement : ce tailleur, elle le portera dans P11.
-
-**Image de départ :** **Studio** (`studio_nadia_16x9.jpg`)
-**Image d'arrivée K03** · joindre **Studio** en `[SETTING] keep room identical`
-```
-Cinematic film still, 16:9, 50mm lens, shallow depth of field. Night, the same small Parisian studio apartment as Image 1, same cold sickly green-cyan fluorescent light. Close medium shot of the navy blue suit jacket and matching skirt on a wooden hanger hanging on the white panelled apartment door, carefully pressed, a pair of black heels on the old wooden floor below, placed side by side. The suit sits slightly left of center. In the soft background on the right, out of focus: the rain-streaked window and the faint string lights. Desaturated, lifted blacks, subtle 35mm film grain. Nobody in frame. No text, no logos.
-```
-**Réglages :** départ **Studio** · arrivée **K03** · Quality · 8 s
-**Prompt vidéo :**
-```
-Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Keep the room, the suit, the colors and the lighting identical to the reference frames. No people, no text, no logos.
-
-Scene: night, the small Parisian studio apartment, empty, cold green fluorescent light, rain on the window.
-
-Camera: a slow, smooth lateral track from right to left combined with a gentle push-in, from the wide view of the room toward the white door on the left, ending in a close medium shot of the navy suit hanging on the door above a pair of black heels. The focus pulls slowly from the room onto the suit. Calm, constant speed, settling at the end.
-
-Action and atmosphere: nobody in the room. Rain runs down the window. The fluorescent kitchen light flickers once. The candle flame on the coffee table trembles. The suit hangs perfectly still: pressed, ready, waiting.
-
-Light and grade: cold sickly green-cyan, desaturated, lifted blacks, the navy of the suit kept deep and clean, subtle 35mm film grain.
-
-End frame: close medium shot of the navy suit and the heels, still, exactly as in the last reference frame.
-
-Audio: rain against the window, the faint buzz of the fluorescent tube, a distant car passing on a wet street. No music, no speech.
-```
-**On garde :** 3 s : les 8 s avec une courbe de vitesse (rapide au début, **lente et posée sur le tailleur pendant la dernière seconde et demie**).
-**Vérifier :** le tailleur reste **bleu marine** (pas noir, pas gris), personne dans la pièce.
-**CapCut :** étalonnage vert renforcé (TSL : orange et jaune à saturation −50, pour éteindre la guirlande et la bougie). Recadrage 1.37.
-
----
-
-## P04 · 0:12–0:17 · Le téléphone retourné
+## P04 · 0:10–0:15 · Le téléphone retourné
 🎙️ **V2** *« Et combien sont restées sans réponse ? »* (commence vers 0,5 s)
-**But :** encore une candidature sans réponse. Elle ne lit même plus.
+**But :** encore une candidature sans réponse. Elle ne lit même plus. Le tailleur, derrière elle, attend toujours.
 
-**Image de départ K04** · joindre **Studio** en `[SETTING] keep room identical` et **Fiche Nadia** en `[CHARACTER] keep face, curly bun, gold hoop earrings and gold necklace identical`
+**Image K04** (fin de P02, départ de P04) · joindre **Studio** en `[SETTING] keep room identical` et **Fiche Nadia** en `[CHARACTER] keep face, curly bun, gold hoop earrings and gold necklace identical`
 ```
-Cinematic film still, 16:9, 35mm lens, eye-level. Night, the same small Parisian studio apartment as Image 1, same cold sickly green-cyan fluorescent light, rain on the window. Medium shot, waist-up. Nadia, the same young woman as Image 2, identical face, curly hair in a bun, gold hoop earrings, gold necklace, wearing a soft grey knit sweater, sits on the grey sofa slightly left of center, three-quarter view, looking toward the right side of the frame at an open laptop on the coffee table; her face lit by the cold glow of the laptop from the right; her phone face up on the table next to the mug; a few printed pages on the table, blank and unreadable. Tired but dignified. Desaturated, lifted blacks, subtle 35mm film grain. Her eyes at 40% of the frame height from the top. No text, no logos, no readable screen.
+Cinematic film still, 16:9, 35mm lens, eye-level, camera placed on the window side of the room looking in. Night, the same small Parisian studio apartment as Image 1, same cold sickly green-cyan fluorescent light. Medium shot, waist-up. Nadia, the same young woman as Image 2, identical face, curly hair in a bun, gold hoop earrings, gold necklace, wearing a soft grey knit sweater, sits on the left part of the grey sofa, slightly left of center, three-quarter view, looking toward the right side of the frame at an open laptop on the coffee table; her face lit by the cold glow of the laptop from the right; her phone face up on the table next to the mug; a few printed pages, blank and unreadable. In the soft out-of-focus background on the left, the navy blue suit hanging on the white door. Tired but dignified. Desaturated, lifted blacks, subtle 35mm film grain. Her eyes at 40% of the frame height from the top. No text, no logos, no readable screen.
 ```
-**Vérifier K04 avec `references/grille_capcut.png`** : yeux à 40 % de la hauteur, Nadia sur l'axe vert (43 %).
+**Vérifier K04 avec `references/grille_capcut.png`** : yeux à 40 % de la hauteur, Nadia sur l'axe vert (43 %), le tailleur visible dans le flou à gauche (au-delà de 12 % de la largeur, sinon le recadrage 1.37 le coupe).
 **Réglages :** départ **K04** · Quality · 8 s
 **Prompt vidéo :**
 ```
 Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Restrained, natural acting. Keep her face, hair, earrings, necklace, clothes, the room, the colors and the lighting identical to the reference frame. Keep her inside the central area of the frame. No text, no logos, no readable screen content.
 
-Scene: night, the small Parisian studio apartment, cold green fluorescent light, rain on the window. The young woman sits on the sofa in front of her laptop, tired.
+Scene: night, the small Parisian studio apartment, cold green fluorescent light, rain on the window. The young woman sits on the sofa in front of her laptop, tired. Behind her, out of focus, a navy suit hangs on the door.
 
 Action, second by second: 0 to 1 s, she looks at the laptop screen, still. At 1 s her phone vibrates on the wooden coffee table and its screen lights up. 1.5 to 3 s, she glances at it for a moment; her shoulders drop very slightly; without reading it, she slowly turns the phone face down on the table. 3 to 8 s, she looks back toward the right side of the frame and stays still, eyes tired, a slow breath out. No smile, no tears: restrained.
 
-Camera: a very slow, barely perceptible push-in. Eye-level, steady.
+Camera: a very slow, barely perceptible push-in, continuing the movement of the previous shot. Eye-level, steady.
 
 Light and grade: cold sickly green-cyan, desaturated, lifted blacks, the laptop glow on her face from the right, subtle 35mm film grain.
 
@@ -216,11 +195,11 @@ Audio: rain on the window, a phone vibrating on a wooden table, a quiet exhale. 
 **On garde :** 5 s (de 0 à 5 s) · **Synchro :** la vibration (1 s) tombe sur « sans réponse ».
 **État final :** elle regarde **vers la droite**, immobile (raccord regard avec Julien).
 **Vérifier :** visage identique à la fiche, créoles et collier, téléphone bien retourné, aucun texte lisible.
-**CapCut :** recadrage 1.37. **Le son de la vibration déborde de 1 s sur P05a.**
+**CapCut :** **pas de coupe visible entre P02 et P04** : c'est la même image, la caméra continue d'avancer. Recadrage 1.37. **Le son de la vibration déborde de 1 s sur P05a.**
 
 ---
 
-## P05a · 0:17–0:20 · L'hôtel à l'aube
+## P05a · 0:15–0:18 · L'hôtel à l'aube
 🎙️ **V3** commence : *« Et toi, Julien… »*
 **But :** le miroir de P01. Même ville, la nuit qui s'achève, mais l'autre monde : la pluie s'est arrêtée, les pavés brillent, l'hôtel est symétrique et ambré. Une seule fenêtre allumée au centre : son bureau.
 
@@ -256,9 +235,9 @@ Audio: last drops falling from the awnings, a few early birds, a distant street 
 
 ---
 
-## P05b · 0:20–0:25 · On traverse sa fenêtre · Julien met un CV de côté
+## P05b · 0:18–0:23 · On traverse sa fenêtre · Julien met un CV de côté
 🎙️ *« …as-tu enfin trouvé la perle rare ? »*
-**But :** le miroir de P02 : on traverse sa vitre comme on a traversé celle de Nadia. Il cherche, et le papier ne lui dit rien.
+**But :** le miroir de P02 : on traverse sa vitre comme on a traversé celle de Nadia, et on arrive directement sur lui. Il cherche, et le papier ne lui dit rien.
 
 **Image de départ :** **K05b**
 **Image d'arrivée K05c** · joindre **K05b** en `[SETTING] keep office identical` et **Fiche Julien** en `[CHARACTER] keep face, thin steel glasses and charcoal three-piece suit identical`
@@ -290,7 +269,7 @@ Audio: the faint sound of the city outside that becomes muffled as we pass the g
 
 ---
 
-## P06 · 0:25–0:31 · Ce que coûte une mauvaise embauche · 3 plans de 2 s
+## P06 · 0:23–0:29 · Ce que coûte une mauvaise embauche · 3 plans de 2 s
 🎙️ *(pas de voix : la musique coupe net à chaque plan)*
 **But :** les conséquences dans l'hôtel, pièce par pièce. Les personnes mal recrutées sont toujours **de dos ou floues**, jamais humiliées.
 
@@ -330,7 +309,7 @@ Audio: a buzzing bulb, a metal locker door creaking, distant kitchen noise. No m
 
 ---
 
-## P07 · 0:31–0:35 · Le CV de Nadia sur la pile des refus
+## P07 · 0:29–0:33 · Le CV de Nadia sur la pile des refus
 🎙️ **V4** *« Ce serait dommage de passer à côté d'une belle rencontre… »*
 **But :** le seul lien entre leurs deux mondes, c'est un papier qu'on écarte. Sa photo est **dans son vert**, sur le bureau **ambré** de Julien.
 
@@ -361,17 +340,17 @@ Audio: a sheet of paper landing softly on paper, quiet office room tone, a clock
 
 ---
 
-## P08 · 0:35–0:41 · Le problème · ✏️ codé par moi
+## P08 · 0:33–0:39 · Le problème · ✏️ codé par moi
 🎙️ **V5** *« Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'observer. »*
 Texte animé sur noir, 0 crédit. Je te le livre en MP4.
 
 ---
 
-## P09 · 0:41–0:45 · La fin de la scène chez elle : le téléphone s'illumine
+## P09 · 0:39–0:43 · La fin de la scène chez elle : le téléphone s'illumine
 🎙️ *(silence, un « clic »)* → enchaîne sur **V6** « Voici JobResolute. » (début de l'acte II)
 **But :** le même téléphone qu'elle avait retourné dans P04. Cette fois il s'allume par en dessous, en **ambre** : la première touche de chaud dans son monde vert. Elle le retourne, elle regarde, et on entre dans l'écran.
 
-**Image de départ K09** · joindre **Studio** en `[SETTING] keep room identical`, **Fiche Nadia** en `[CHARACTER]` et **K04** en `[REFERENCE] same framing and outfit`
+**Image de départ K09** · joindre **Studio** en `[SETTING] keep room identical`, **Fiche Nadia** en `[CHARACTER]` et **K04** en `[REFERENCE] same outfit, same sofa`
 ```
 Cinematic film still, 16:9, 35mm lens, slightly wider than Image 3, eye-level. Late night, the same small Parisian studio apartment as Image 1, almost dark: the fluorescent tube is off, only the cold blue-green glow of the rainy window and the dim laptop light. Nadia, the same young woman as Image 2, identical face, curly bun, gold hoop earrings, gold necklace, grey knit sweater, sits on the grey sofa slightly left of center, her laptop half-closed. On the coffee table, her phone lies face down and glows warmly from underneath, a thin halo of amber light spilling onto the wood. She turns her head toward it. Cold desaturated blue-green grade except for that small amber glow, subtle 35mm film grain. No text, no logos.
 ```
@@ -437,13 +416,49 @@ Audio: a laptop lid closing softly, a chair sliding back on a wooden floor, fabr
 
 ---
 
-## P11 · 0:04–0:10 · La rencontre
+## P10b · 0:04–0:07 · Nadia devant l'hôtel
+🎙️ *(pas de voix : la musique et la ville)*
+**But :** le miroir de P05a. La même façade que Julien voyait à l'aube, mais en plein jour, après la pluie. Nadia traverse la place **en tailleur**, celui qui attendait sur sa porte. **Elle passe de l'ombre fraîche au soleil chaud** : c'est ici que son vert la quitte, juste avant d'entrer dans l'ambre du lobby.
+
+**Image de départ K10c** · joindre **K05a** en `[SETTING] same hotel facade and square, now in daylight`, **Fiche Nadia** en `[CHARACTER] keep face, curly bun, gold hoop earrings and gold necklace identical` et **Studio** en `[REFERENCE] the navy suit and black heels hanging on the door`
+```
+Cinematic film still, 16:9, perfectly symmetrical centered composition, one-point perspective. Late morning in Paris, just after the rain, sunny. The same grand old-world palace hotel facade as Image 1, across the same small cobbled square, frontal and perfectly centered, now in warm golden daylight: ornate pale stone, burgundy awnings, brass revolving door at the bottom center, wet cobblestones glistening in the sun. In the foreground on the left, still in the cool blue shadow of a building, Nadia, the same young woman as Image 2, identical face, curly bun, gold hoop earrings, wearing the navy blue suit and black heels from Image 3, seen from three-quarter back, walking toward the hotel. The rest of the square is bathed in warm amber sunlight. Her head in the middle band of the frame. Warm amber grade with a cool shadow on the left, subtle 35mm film grain, Wes Anderson symmetry. No text, no hotel name, no logos, no signage.
+```
+**Image d'arrivée K10d** · mêmes références
+```
+Cinematic film still, 16:9, perfectly symmetrical centered composition. The same palace hotel entrance as Image 1, in warm golden daylight. Nadia, the same young woman as Image 2, in her navy blue suit and black heels, seen from behind, stands at the exact center of the frame in front of the brass revolving door, her hand resting on the brass push bar, about to go in, her head slightly raised. Warm sunlight on her shoulders and hair, no cold light left. Her head in the middle band of the frame. Warm amber grade, subtle 35mm film grain. No text, no hotel name, no logos, no signage.
+```
+**Réglages :** départ **K10c** · arrivée **K10d** · Quality · 8 s
+**Prompt vidéo :**
+```
+Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Restrained, natural acting. Keep her face, hair, earrings, navy suit and heels, the hotel facade, the colors and the lighting identical to the reference frames. Perfectly symmetrical. Keep her head in the middle band of the frame. No text, no hotel name, no logos, no signage.
+
+Scene: late morning in Paris, just after the rain, sunny. A grand old-world palace hotel facade across a small wet cobbled square, perfectly symmetrical, brass revolving door at the center.
+
+Action, second by second: 0 to 2 s, the young woman in the navy suit walks out of the cool blue shadow on the left of the square. At 2 s she steps into the warm golden sunlight: the light on her changes from cold to warm. 2 to 6 s, she crosses the square toward the revolving door with a calm, steady, confident walk, her heels clicking on the wet cobblestones. 6 to 8 s, she stops in front of the revolving door at the exact center of the frame, lifts her head slightly, takes a short breath, and rests her hand on the brass push bar.
+
+Camera: a slow, smooth, centered follow from behind, gliding forward on the center axis of the facade, ending perfectly symmetrical behind her. Constant speed, no shake.
+
+Light and grade: warm golden amber sunlight, wet cobblestones glistening, a cool blue shadow only on the left at the start, subtle 35mm film grain.
+
+End frame: she stands at the exact center in front of the revolving door, seen from behind, her hand on the brass bar, still.
+
+Audio: heels on wet cobblestones, a few pigeons taking off, a distant street, the revolving door starting to turn at the very end. No music, no speech.
+```
+**On garde :** 3 s : les 8 s en ×2,7 avec une courbe (rapide pendant la traversée, **normale sur les deux dernières secondes** : l'arrêt, le souffle, la main sur la barre).
+**Raccord :** P11 commence quand elle sort de la porte tournante, à l'intérieur : coupe dans le mouvement.
+**Vérifier :** **le même tailleur que sur sa porte**, le même visage, aucune enseigne, le passage ombre froide → soleil chaud bien visible.
+**CapCut :** audio extrait et gardé à vitesse normale. Recadrage 2.39.
+
+---
+
+## P11 · 0:07–0:13 · La rencontre
 🎙️ **V17** *« La décision finale sera la tienne, Julien. »* (commence vers 1,5 s)
 **But :** leur premier plan ensemble. Nadia porte **le tailleur qui attendait sur sa porte**, et elle entre **dans l'ambre** : son vert a disparu.
 
-**Image de départ K11** · joindre **Fiche Nadia**, **Fiche Julien**, **K03** en `[REFERENCE] same navy suit and heels` et **Style hôtel** en `[STYLE]`
+**Image de départ K11** · joindre **Fiche Nadia**, **Fiche Julien**, **Studio** en `[REFERENCE] the navy suit and black heels hanging on the door` et **Style hôtel** en `[STYLE]`
 ```
-Cinematic film still, 16:9, perfectly symmetrical one-point perspective. Daytime, a grand old-world palace hotel lobby: black and white checkerboard marble floor, dark walnut paneling, pleated amber lampshades, brass revolving door at the exact center of the background, deep burgundy armchairs. Nadia, the same young woman as Image 1, identical face, curly bun, gold hoop earrings, wearing the navy blue suit and black heels from Image 3, has just stepped through the revolving door, calm and confident, warm light on her face. Julien, the same man as Image 2, walks toward her from the right side. Both heads in the middle band of the frame. Warm amber grade, rich shadows, subtle 35mm film grain. No text, no logos, no signage.
+Cinematic film still, 16:9, perfectly symmetrical one-point perspective. Daytime, a grand old-world palace hotel lobby: black and white checkerboard marble floor, dark walnut paneling, pleated amber lampshades, brass revolving door at the exact center of the background, deep burgundy armchairs. Nadia, the same young woman as Image 1, identical face, curly bun, gold hoop earrings, wearing the navy blue suit and black heels from Image 3, has just come out of the revolving door into the lobby, calm and confident, warm light on her face. Julien, the same man as Image 2, walks toward her from the right side. Both heads in the middle band of the frame. Warm amber grade, rich shadows, subtle 35mm film grain. No text, no logos, no signage.
 ```
 **Image d'arrivée K11b** · mêmes références
 ```
@@ -471,7 +486,7 @@ Audio: the revolving door turning, heels and shoes on marble, a hushed lobby. No
 
 ---
 
-## P12 · 0:10–0:19 · La maison de poupée
+## P12 · 0:13–0:22 · La maison de poupée
 🎙️ **V18** *« Et toi, Nadia, quelle que soit la décision, on reste à tes côtés. »*
 **But :** la bonne combinaison : tout s'enchaîne, la caméra ne s'arrête jamais. Nadia est **en uniforme** : la fin de l'arc du vêtement (le tailleur qui attend → le tailleur porté → l'uniforme).
 
@@ -508,19 +523,19 @@ The camera keeps tracking slowly from left to right at the same speed, without s
 ---
 
 ## Ordre de production
-1. Recadrages ✅ (`studio_nadia_16x9.jpg`, `fenetre_nadia.jpg`, dans le dépôt)
+1. Recadrages ✅ (`studio_nadia_16x9.jpg`, `fenetre_nadia.jpg`) · K01 ✅ (ton image des toits) → **envoie-la-moi**
 2. **K04 + K05a + K05b + K05c** → grille → **envoie-les-moi**
 3. **P04 + P05a + P05b** → **envoie-les-moi** (test du miroir)
-4. **K01 + K01b → P01**, **P01b**, **P02**, **K03 → P03** (l'ouverture complète)
+4. **K01b + K01c** → **P01**, **P01b**, **P02** (l'ouverture complète, qui finit sur K04)
 5. **P06a/b/c**, **K07 → P07**
 6. **K09 + K09b → P09** → envoie-moi la dernière image
-7. **K10 + K10b → P10** · **K11 + K11b → P11**
+7. **K10 + K10b → P10** · **K10c + K10d → P10b** · **K11 + K11b → P11**
 8. Fiche Nadia en uniforme → **K12 → P12** + Extend
 
 ## Montage CapCut (rappel)
 - Pose **la voix off d'abord** et cale les plans dessus (les synchros sont données plan par plan).
 - **Acte I en 1.37:1, acte III en 2.39:1** (masques).
-- Pour P01 → P03 et P05a → P05b : **extrais l'audio avant d'accélérer**, et garde l'ambiance à vitesse normale.
+- Pour P01b, P02, P05a, P05b et P10b : **extrais l'audio avant d'accélérer**, et garde l'ambiance à vitesse normale.
 - Ambiance de Veo **sous** la voix off (≈ −18 dB). Musique : pizzicato et célesta.
-- Vert chez Nadia, ambre chez Julien, et **Nadia dans l'ambre à partir de P11**.
-- L'acte I dure maintenant **45 s** : l'acte II commence à **0:45**.
+- Vert chez Nadia, ambre chez Julien, et **Nadia passe dans l’ambre à P10b** (ombre froide → soleil), tout ambre à P11.
+- L'acte I dure maintenant **43 s** (l'acte II commence à **0:43**), et l'acte III **22 s**.

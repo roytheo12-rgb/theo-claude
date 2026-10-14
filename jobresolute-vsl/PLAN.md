@@ -3,7 +3,7 @@
 Durée : **≈ 1:58** · Langue : français · Voix off : Henry (ou ElevenLabs en secours)
 Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente).
 
-> **Mise à jour V3.2** : nouvelle ouverture validée par Théo : toits de Paris → la fenêtre de Nadia vue de dehors → on traverse la vitre → l'intérieur. Même construction côté Julien (l'hôtel à l'aube → la fenêtre du bureau → l'intérieur). Acte I : 45 s. Prompts complets dans FLOW.md.
+> **Mise à jour V3.3** (remplace la V3.2) : ouverture toits de Paris → la fenêtre de Nadia vue de dehors, elle est déjà sur son canapé → on traverse la vitre et **on arrive directement sur elle** (plus de plan de pièce vide ; le tailleur reste visible sur la porte derrière elle). Même construction côté Julien. Acte III : **P10b, Nadia en tailleur devant l'hôtel**, avant le lobby. Prompts complets dans FLOW.md.
 >
 > **Mise à jour V3.1** : le compte-rendu arrive **au même instant** chez le candidat et chez le recruteur. Plus de « en premier » nulle part (la démo le dit encore : à corriger).
 >
@@ -69,23 +69,22 @@ Version 1 : DRH / programme pilote. Version 2 : BA (même film, fin différente)
 
 Sources : **S** = Seedance (à partir d'une image clé Nano Banana) · **C** = codé par Claude · **I** = image fixe animée dans CapCut (zoom lent, 0 crédit)
 
-### ACTE I — SÉPARÉS (0:00–0:45) · 1.37:1 · *(V3.2 : ouverture « toits → fenêtre → intérieur », demandée par Théo ; prompts dans FLOW.md)*
+### ACTE I — SÉPARÉS (0:00–0:43) · 1.37:1 · *(V3.3 : ouverture « toits → fenêtre → directement sur Nadia », demandée par Théo ; prompts dans FLOW.md)*
 
 | # | Temps | Image | Src | Voix off | Son |
 |---|---|---|---|---|---|
 | P01 | 0:00–0:04 | **Les toits de Paris sous la pluie**, la nuit. La caméra descend vers une seule fenêtre éclairée en vert. | S | **V1** « Dis-moi, Nadia… combien de candidatures as-tu envoyées ces trois derniers mois ? » | Pluie sur le zinc |
-| P01b | 0:04–0:07 | **La fenêtre de Nadia vue de l'extérieur** : façade haussmannienne, balcon en fer forgé, néon vert, le tailleur deviné derrière la vitre | S | *(suite de V1)* | Pluie, gouttière |
-| P02 | 0:07–0:09 | **On traverse la vitre** : de l'extérieur à l'intérieur du studio, en un seul mouvement | S | *(fin de V1)* | La pluie s'étouffe, le néon grésille |
-| P03 | 0:09–0:12 | **Le tailleur qui attend** sur la porte, les escarpins posés dessous. Personne. | S | — | Pluie sur la vitre |
-| P04 | 0:12–0:17 | **Nadia en plan taille**, à gauche, elle regarde à droite. Le téléphone vibre, elle le retourne sans le lire. | S | **V2** « Et combien sont restées sans réponse ? » | Vibration |
-| P05a | 0:17–0:20 | **L'hôtel à l'aube**, façade symétrique, pavés mouillés, une seule fenêtre ambrée au centre (miroir de P01) | S | **V3** commence : « Et toi, Julien… » | **La vibration de P04 continue 1 s**, puis la ville qui s'éveille |
-| P05b | 0:20–0:25 | **On traverse la fenêtre du bureau** (miroir de P01b–P02) jusqu'à **Julien en plan taille**, à droite ; il met un CV de côté et finit en regardant à gauche. Ambre. | S | « …as-tu enfin trouvé la perle rare ? » | Papier, horloge |
-| P06 | 0:25–0:31 | **Traversée de l'hôtel**, 3 flashs de 2 s reliés par des panoramiques fouettés : réception tendue · rush en salle · casier vide | S | — | Sons d'ambiance seuls, la musique coupe à chaque flash |
-| P07 | 0:31–0:35 | **Insert en plongée** : le CV de Nadia, avec sa photo dans *son* vert, glisse sur la pile des refus | S | **V4** « Ce serait dommage de passer à côté d'une belle rencontre… » | Papier qui glisse |
-| P08 | 0:35–0:41 | Noir, texte mot à mot : *Le problème n'est pas le nombre de CV.* | C | **V5** « Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'**observer**. » | Silence |
-| P09 | 0:41–0:45 | **Retour chez Nadia.** Son téléphone s'illumine sur la table (écran illisible). Elle le prend. **La caméra avance dans l'écran.** | S | — | Un seul « clic » |
+| P01b | 0:04–0:07 | **La fenêtre de Nadia vue de l'extérieur** : façade haussmannienne, balcon en fer forgé, néon vert. Derrière la vitre, Nadia seule sur son canapé ; le tailleur sur la porte. | S | *(suite de V1)* | Pluie, gouttière |
+| P02 | 0:07–0:10 | **On traverse la vitre et on arrive directement sur elle**, en plan taille ; le tailleur flou derrière elle | S | *(fin de V1)* | La pluie s'étouffe, le néon grésille |
+| P04 | 0:10–0:15 | **Suite du même mouvement.** Nadia à gauche, elle regarde à droite. Le téléphone vibre, elle le retourne sans le lire. | S | **V2** « Et combien sont restées sans réponse ? » | Vibration |
+| P05a | 0:15–0:18 | **L'hôtel à l'aube**, façade symétrique, pavés mouillés, une seule fenêtre ambrée au centre (miroir de P01) | S | **V3** commence : « Et toi, Julien… » | **La vibration de P04 continue 1 s**, puis la ville qui s'éveille |
+| P05b | 0:18–0:23 | **On traverse la fenêtre du bureau** (miroir de P02) jusqu'à **Julien en plan taille**, à droite ; il met un CV de côté et finit en regardant à gauche. Ambre. | S | « …as-tu enfin trouvé la perle rare ? » | Papier, horloge |
+| P06 | 0:23–0:29 | **Traversée de l'hôtel**, 3 flashs de 2 s reliés par des panoramiques fouettés : réception tendue · rush en salle · casier vide | S | — | Sons d'ambiance seuls, la musique coupe à chaque flash |
+| P07 | 0:29–0:33 | **Insert en plongée** : le CV de Nadia, avec sa photo dans *son* vert, glisse sur la pile des refus | S | **V4** « Ce serait dommage de passer à côté d'une belle rencontre… » | Papier qui glisse |
+| P08 | 0:33–0:39 | Noir, texte mot à mot : *Le problème n'est pas le nombre de CV.* | C | **V5** « Le problème n'est pas le nombre de CV. C'est ce qu'on est capable d'**observer**. » | Silence |
+| P09 | 0:39–0:43 | **Retour chez Nadia.** Son téléphone s'illumine sur la table (écran illisible). Elle le prend. **La caméra avance dans l'écran.** | S | — | Un seul « clic » |
 
-> **V3.2 :** l'acte I passe de 41 à 45 s. Tous les temps des actes II, III et IV ci-dessous sont **décalés de +4 s** (l'acte II commence à 0:45).
+> **V3.3 :** l'acte I dure 43 s (au lieu de 41) : l'acte II commence à **0:43**, soit **+2 s** sur les temps ci-dessous. Les temps de l'acte III sont à jour (P10b ajouté, +3 s). L'acte IV est décalé de **+5 s** : il commence à 1:50, le film dure **≈ 2:03**.
 
 ### ACTE II — RELIÉS (0:41–1:26) · 16:9 · entièrement codé
 
@@ -107,13 +106,14 @@ Sources : **S** = Seedance (à partir d'une image clé Nano Banana) · **C** = c
 | M11 | 1:21–1:24 | **La ligne courbe dézoome** : tout le parcours apparaît, du clic à la décision, les 3 chapitres alignés | **V16** « Pas un outil de plus. **Tout le parcours.** » |
 | M12 | 1:24–1:26 | **Sortie d'écran** : on recule hors de l'ordinateur de Julien → acte III | — |
 
-### ACTE III — RÉUNIS (1:26–1:45) · 2.39:1
+### ACTE III — RÉUNIS (1:28–1:50, temps V3.3 à jour) · 2.39:1
 
 | # | Temps | Image | Src | Voix off |
 |---|---|---|---|---|
-| P10 | 1:26–1:30 | Suite de la sortie d'écran : on est dans le bureau de Julien. Il se lève et regarde vers la porte. Ambre. | S | — |
-| P11 | 1:30–1:36 | **Le lobby.** Nadia passe la porte tournante, **elle entre dans l'ambre** (plus de vert). Julien vient à sa rencontre, poignée de main. **Premier plan où ils sont ensemble.** | S | **V17** « La décision finale sera la tienne, Julien. » |
-| P12 | 1:36–1:45 | **Travelling latéral « maison de poupée »** : on longe l'hôtel pièce par pièce. Nadia en uniforme au service, l'équipe en phase. La caméra ne s'arrête jamais. | S | **V18** « Et toi, Nadia, quelle que soit la décision, on reste à tes côtés. » |
+| P10 | 1:28–1:32 | Suite de la sortie d'écran : on est dans le bureau de Julien. Il se lève et regarde vers la porte. Ambre. | S | — |
+| P10b | 1:32–1:35 | **Nadia devant l'hôtel**, en plein jour, en tailleur. Elle traverse la place, passe de l'ombre froide au soleil, s'arrête devant la porte tournante, la main sur la barre (miroir de P05a). | S | — |
+| P11 | 1:35–1:41 | **Le lobby.** Nadia passe la porte tournante, **elle entre dans l'ambre** (plus de vert). Julien vient à sa rencontre, poignée de main. **Premier plan où ils sont ensemble.** | S | **V17** « La décision finale sera la tienne, Julien. » |
+| P12 | 1:41–1:50 | **Travelling latéral « maison de poupée »** : on longe l'hôtel pièce par pièce. Nadia en uniforme au service, l'équipe en phase. La caméra ne s'arrête jamais. | S | **V18** « Et toi, Nadia, quelle que soit la décision, on reste à tes côtés. » |
 
 ### ACTE IV — PREUVES ET APPEL À L'ACTION (1:45–1:58) · 16:9 · codé
 
