@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- Écran du Mac de Julien au début de P10 (raccord avec la fin de M12).
+     Rendu en 1440×900 points × 2 = 2880×1800 px (écran de MacBook Pro 15").
+     Même contenu que l'écran de M12 : « ◉ Décision humaine » · « Décision validée · tracée », avec la barre de l'app en haut. -->
+<link rel="stylesheet" href="base.css">
+<style>
+html,body{width:1440px;height:900px;background:var(--ivoire)}
+body{color:var(--encre)}
+.bar{position:absolute;left:0;right:0;top:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;border-bottom:1px solid #e3dbcf;background:#f8f4ec}
+.brand{font:600 24px "ID";letter-spacing:-.03em;color:var(--encre)}
+.brand span{color:var(--bordeaux)}
+.ctx{font:600 13px "IT";letter-spacing:.14em;text-transform:uppercase;color:var(--taupe)}
+.mid{position:absolute;left:0;right:0;top:64px;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px}
+.big{display:inline-block;border-radius:99px;background:var(--bordeaux);color:var(--ivoire);font:600 40px "IT";padding:30px 54px}
+.big b{color:var(--laiton2);font-weight:600}
+.log{font:500 26px "IT";color:var(--taupe)}
+.who{font:600 15px "IT";letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);background:rgba(94,26,36,.08);padding:12px 20px;border-radius:99px}
+</style></head>
+<body>
+<div class="bar"><div class="brand">Job<span>Resolute</span></div><div class="ctx">Compte-rendu · Chef de Rang</div></div>
+<div class="mid">
+  <div class="big"><b>◉</b> Décision humaine</div>
+  <div class="log">Décision validée · tracée</div>
+  <div class="who">Validé par Julien</div>
+</div>
+</body></html>

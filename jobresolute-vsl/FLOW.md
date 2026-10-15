@@ -389,9 +389,9 @@ Audio: soft rain on the window, a short phone vibration, a soft notification chi
 🎙️ *(silence)* : enchaîne sur M12 (on recule hors de l'ordinateur du recruteur)
 **But :** la décision humaine est prise. Julien va à la rencontre.
 
-**Image de départ K10** · joindre **K05c** en `[SETTING] keep office identical` et **Fiche Julien** en `[CHARACTER]`
+**Image de départ K10** · joindre **K05c** en `[SETTING] keep office identical`, **Fiche Julien** en `[CHARACTER]` et **`references/raccords/mac_decision_JobResolute.png`** en `[SCREEN] display exactly this image on the laptop screen`
 ```
-Cinematic film still, 16:9, 35mm lens. Daytime, the same symmetrical walnut-paneled hotel HR office as Image 1, warm amber light. Close shot framed on an open laptop on the black lacquered desk, its screen glowing ivory, content blank and unreadable, filling most of the frame and perfectly centered. Behind it, slightly out of focus, Julien, the same man as Image 2, seated, thin steel glasses, charcoal three-piece suit. Warm amber grade, subtle 35mm film grain. No text, no logos.
+Cinematic film still, 16:9, 35mm lens. Daytime, the same symmetrical walnut-paneled hotel HR office as Image 1, warm amber light. Close shot framed on an open silver laptop on the black lacquered desk, its screen displaying exactly Image 3 (an ivory app screen with a burgundy button in the center), filling most of the frame and perfectly centered, seen straight on. Behind it, slightly out of focus, Julien, the same man as Image 2, seated, thin steel glasses, charcoal three-piece suit. Warm amber grade, subtle 35mm film grain. No text, no logos.
 ```
 **Image d'arrivée K10b** · mêmes références
 ```
@@ -413,6 +413,7 @@ End frame: he stands still behind the desk, looking toward the door on the left.
 Audio: a laptop lid closing softly, a chair sliding back on a wooden floor, fabric rustle, quiet room tone. No music, no speech.
 ```
 **On garde :** 4 s (les 8 s en ×2, ou de 2,5 à 6,5 s) · **Raccord :** M12 finit sur l'écran de l'ordinateur, P10 commence dessus.
+**L'écran du Mac :** `references/raccords/mac_decision_JobResolute.png` (2880 × 1800), le même contenu que la fin de M12. Veo déformera le texte pendant le recul : **dans CapCut, incruste l'image sur l'écran** avec le suivi de mouvement (le Mac est vu de face, donc un simple suivi de position et d'échelle suffit). Dans le prompt vidéo, garde « no readable screen content » : c'est l'incrustation qui affiche le texte.
 
 ---
 
