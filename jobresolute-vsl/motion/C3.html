@@ -3,7 +3,7 @@
 <!-- C3 · Carton de chapitre III · Décider · 1,2 s · coupe franche -->
 <link rel="stylesheet" href="base.css">
 <style>
-body{background:radial-gradient(ellipse 55% 50% at 50% 45%,#4a1520 0%,#1c070b 55%,#050203 100%)}
+body{background:radial-gradient(ellipse 60% 55% at 50% 45%,#121212 0%,#050505 55%,#000 100%)}
 .border{position:absolute;inset:70px;border:1.5px solid rgba(200,195,188,.55)}
 .border2{position:absolute;inset:82px;border:1px solid rgba(200,195,188,.28)}
 .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -15,17 +15,29 @@ h1{font:600 210px/1 "ID";letter-spacing:-.035em;color:var(--ivoire)}
 .steps{position:absolute;bottom:130px;left:0;right:0;display:flex;justify-content:center;gap:56px;font:500 16px "IT";letter-spacing:.32em;text-transform:uppercase;color:rgba(244,239,230,.32)}
 .steps .on{color:var(--ivoire)}
 .steps .on::after{content:"";display:block;height:1.5px;background:var(--laiton);margin-top:10px;margin-right:.32em}
+.hm{display:inline-block;overflow:hidden;padding:0 .04em .1em;vertical-align:bottom}
+#ht{display:inline-block}
+.orn i{transform-origin:50% 50%}
 </style></head>
 <body>
 <div class="border"></div><div class="border2"></div>
-<div class="c" id="c"><div class="kicker">Chapitre III</div><div class="orn"><i></i><b></b><i></i></div><h1>Décider</h1></div>
-<div class="steps"><div>I · Observer</div><div>II · Associer</div><div class="on">III · Décider</div></div>
+<div class="c" id="c"><div class="kicker" id="kk">Chapitre III</div><div class="orn" id="orn"><i></i><b></b><i></i></div><h1><span class="hm"><span id="ht">Décider</span></span></h1></div>
+<div class="steps" id="st"><div>I · Observer</div><div>II · Associer</div><div class="on">III · Décider</div></div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
 window.DURATION = 1.2;
 window.seek = t => {
-  document.getElementById('c').style.transform = `scale(${lerp(1, 1.025, t / 1.2)})`;
+  const $ = id => document.getElementById(id);
+  // V6 : le titre sort de son masque, le filet se trace depuis le centre, tout le reste suit ; coupe franche en entrée et en sortie
+  const h = expoOut(prog(t, 0.0, 0.5));
+  $('ht').style.transform = `translateY(${(1 - h) * 105}%)`;
+  fadeUp($('kk'), t, 0.08, 0.4, 10);
+  const o = expoOut(prog(t, 0.12, 0.5));
+  $('orn').querySelectorAll('i').forEach(i => i.style.transform = `scaleX(${o})`);
+  $('orn').querySelector('b').style.opacity = o;
+  fadeUp($('st'), t, 0.2, 0.45, 8);
+  $('c').style.transform = `scale(${lerp(1, 1.04, easeInOut(t / 1.2))})`;
   grain(t);
 };
 window.seek(0);

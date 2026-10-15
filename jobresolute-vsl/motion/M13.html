@@ -45,8 +45,8 @@ function beat(el, t, a, b) {
 window.seek = t => {
   beat($('s1'), t, 0.1, 3.0);
   $('n1').textContent = fmt(Math.round(5400 * easeOut(prog(t, 0.2, 1.4)) / 10) * 10);
-  beat($('s2'), t, 3.0, 5.6);
-  $('n2').textContent = Math.round(44 * easeOut(prog(t, 3.1, 1.2)));
+  beat($('s2'), t, 2.65, 5.6);
+  $('n2').textContent = Math.round(44 * easeOut(prog(t, 2.75, 1.2)));
   [0, 1, 2].forEach(i => {
     const e = $('t' + i), p = spring(prog(t, 5.6 + i * 0.15, 0.8));
     e.style.opacity = clamp(p * 1.3); e.style.transform = `translateY(${(1 - p) * 40}px)`;

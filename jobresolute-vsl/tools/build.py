@@ -14,27 +14,31 @@ FF = os.environ.get('FFMPEG_PATH', 'ffmpeg')
 CUT = ('fade', 0.04)  # coupe franche (une image)
 
 # (séquence, transition vers la suivante)
+# V6 : trois familles de transitions seulement (MOTION.md §8) :
+#   poussée vers l'avant (zoomin) · glissé latéral candidat ↔ recruteur (smoothleft/smoothright) · coupe franche (cartons)
+#   + raccords d'objet en fondu court là où le même objet reste à l'écran.
+PUSH = ('zoomin', 0.5)
 ACTES = {
     'acte2': [
-        ('M01', ('fade', 0.6)),        # dissolve Apple
+        ('M01', PUSH),                 # le logo cède la place aux promesses en avançant
         ('M02', CUT),
         ('C1', CUT),
-        ('M03a', ('smoothleft', 0.7)), # de Julien à Nadia : glissé doux
-        ('M03', ('fade', 0.5)),
-        ('M04', ('smoothleft', 0.7)),  # de Nadia à Julien
+        ('M03a', ('smoothleft', 0.6)), # du recruteur au candidat : glissé
+        ('M03', PUSH),
+        ('M04', ('smoothright', 0.6)), # du candidat au recruteur : glissé en miroir
         ('M05', CUT),
         ('C2', CUT),
-        ('M06', ('fade', 0.6)),
+        ('M06', PUSH),
         ('M07', CUT),
         ('C3', CUT),
-        ('M08', ('fade', 0.5)),        # même téléphone, même place : raccord invisible
-        ('M09', ('zoomin', 0.6)),
-        ('M10', ('fade', 0.5)),        # même cercle : raccord invisible
-        ('M10b', ('fade', 0.6)),
-        ('M11', ('fade', 0.6)),
+        ('M08', ('fade', 0.35)),       # même téléphone, même place : raccord d'objet
+        ('M09', PUSH),
+        ('M10', ('fade', 0.35)),       # même cercle : raccord d'objet
+        ('M10b', PUSH),
+        ('M11', PUSH),
         ('M12', None),
     ],
-    'acte4': [('M13', ('fade', 0.7)), ('M14', ('fade', 0.7)), ('M15', None)],
+    'acte4': [('M13', PUSH), ('M14', PUSH), ('M15', None)],
 }
 SORTIE = {'acte2': 'ACTE2.mp4', 'acte4': 'ACTE4.mp4'}
 

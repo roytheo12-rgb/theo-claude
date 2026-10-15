@@ -89,3 +89,34 @@ On ne copie ni l'un ni l'autre : pas de pastel Anderson, pas de bleu Apple, pas 
 ---
 
 **Non défini, à demander :** la musique exacte (pizzicato et célesta pour l'acte I, piano minimaliste pour l'acte II : titre à choisir dans CapCut) et le logo définitif de JobResolute (en attendant, le logotype est écrit en Inter Display 600).
+
+---
+
+## 8. V6 — Consignes de motion design « présentation de startup » (recherche du 15/10, demande de Théo)
+
+Sources : guide « Claude Opus 5.5 Motion Design » (aiidelist.com), prompt « motion design system » (YouMind), fil CoCréateur, article de Charlie Hills. Ce qui en ressort, traduit en règles pour ce film :
+
+**Rôle et méthode.** Agir en motion designer senior et réalisateur de film produit. Storyboard d'abord, puis animation, puis inspection des images rendues (planche contact), puis polissage du timing, et seulement ensuite le rendu final. « Un code qui tourne n'est pas une image juste. » Corrections classées P0 (obligatoire), P1 (majeur), P2 (finition).
+
+**Fond et couleurs (V6).** Fond **noir** (dégradé `#121212` → `#000`), texte blanc. Plus de fond bordeaux ni de reflets colorés. Le bordeaux ne reste que dans l'interface du produit (boutons, barres), le vert seulement là où Théo l'a choisi.
+
+**Rythme.** Quelque chose de signifiant change toutes les 1 à 2 s. Aucun temps mort. Mais au moins **un instant de quasi-immobilité** avant chaque grande révélation (0,3 à 0,6 s). Un titre reste lisible au moins 1,2 s.
+
+**Courbes, selon la fonction (jamais un seul réglage pour tout).**
+- Interface (cartes, téléphones, boutons) : ressort serré, dépassement minime.
+- Caméra : accélération et décélération douces (ease-in-out), cadrage qui va vers ce qui compte.
+- Texte : sortie de masque en courbe exponentielle (arrivée nette, fin très douce).
+- Chiffres : montée progressive.
+- Interdit : rebond élastique, secousses, rotations gratuites.
+
+**Typographie cinétique.** Les mots **sortent d'un masque** (ils montent depuis une ligne invisible), un par un, décalage 0,05 s, 0,55 s chacun. Une seule famille (Inter Display), chiffres tabulaires. Le sens pilote le mouvement : l'échelle pour l'importance.
+
+**Transitions : trois familles seulement, réutilisées.**
+1. **Poussée vers l'avant** (zoom à travers) : on avance dans le récit.
+2. **Glissé latéral** : on passe du candidat au recruteur (le miroir du film).
+3. **Coupe franche sur le temps** : les cartons de chapitre.
+Et les **raccords d'objet** (un élément déjà à l'écran devient le suivant) partout où c'est possible : même téléphone, même cercle, même écran.
+
+**Interdits ajoutés.** Particules, halos lumineux appuyés, reflets d'objectif, séparation RVB, faux tableaux de bord, cartes qui flottent sans raison. Une transition forte vaut mieux que cinq effets.
+
+**Contrôle avant livraison.** Planche contact de chaque séquence : débordements, hiérarchie, espacements, couleurs hors charte, zones de sécurité, raccords cassés.
