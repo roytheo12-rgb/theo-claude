@@ -12,14 +12,11 @@ On ne copie ni l'un ni l'autre : pas de pastel Anderson, pas de bleu Apple, pas 
 
 | Rôle | Hex | Usage |
 |---|---|---|
-| Noir (fond principal, V4) | `#070808` → `#020303` | Fond du motion design, actes II et IV. **Demande de Théo : plus noir, avec des reflets de couleur pris dans les scènes filmées.** |
-| Reflet vert d'eau | `rgba(47,96,90,.30)` | Reflet à gauche du cadre : le monde de Nadia (étalonnage de son studio) |
-| Reflet ambre | `rgba(224,160,80,.24)` | Reflet à droite du cadre : le monde de Julien (l'hôtel). Les deux reflets reprennent le miroir du film |
-| Ambre (lumière) | `#e0a050` | Halo derrière les écrans. Jamais en aplat, jamais sur du texte. |
+| Fond (V5, demande de Théo) | dégradé radial `#3d111a` → `#16060a` → `#040102` | Fond du motion design (actes II et IV, et P08) : le bordeaux sombre des cartons de chapitre. **Plus de reflets vert d'eau ni ambre, plus de halo ambre.** |
 | Bordeaux (accent fort) | `#5e1a24` | Cartons de chapitre, boutons, barres de score, sélection |
 | Bordeaux clair | `#7a2533` | Dégradé des barres et du centre des cartons |
-| Laiton (accent texte) | `#b89560` | Mots mis en valeur sur fond sombre, filets, bordures |
-| Laiton clair | `#d4af74` | Mot mis en valeur dans les grandes phrases (meilleur contraste) |
+| Gris clair (ex-laiton, V5) | `#a9a39b` | Mots mis en valeur sur fond sombre, filets, bordures |
+| Blanc (ex-laiton clair, V5) | `#ffffff` | Mot mis en valeur dans les grandes phrases (meilleur contraste) |
 | Ivoire (nappe) | `#f4efe6` | Texte sur fond sombre, cartes d'interface |
 | Ivoire ombré | `#ebe4d8` | Blocs secondaires dans les cartes |
 | Encre | `#1a1411` | Texte sur les cartes ivoire |
@@ -41,7 +38,7 @@ On ne copie ni l'un ni l'autre : pas de pastel Anderson, pas de bleu Apple, pas 
   - légende sous un écran : 46 px ;
   - chiffre de score : 128 px ;
   - texte d'interface : 15-26 px.
-- **Une seule ligne par phrase** si possible, deux au maximum. Un seul mot mis en valeur par phrase, en laiton clair.
+- **Une seule ligne par phrase** si possible, deux au maximum. Un seul mot mis en valeur par phrase, en blanc pur (V5 : **plus aucun texte doré**, demande de Théo).
 - **Interdit :** SF Pro (licence Apple), toute police serif en titre, les majuscules sur une phrase entière.
 
 ## 3. Rythme : entrée, tenue, sortie

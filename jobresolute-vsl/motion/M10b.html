@@ -35,10 +35,10 @@ const A = [...Array(n)].map((_, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI
 const G = A.map((_, i) => [330 + (i % 5) * 120, 400 + Math.floor(i / 5) * 140]);
 const GEM = 6;
 $('s').innerHTML = `<defs><filter id="bl"><feGaussianBlur stdDeviation="3"/></filter></defs>` +
-  A.map((p, i) => `<g id="a${i}"><circle r="38" fill="${i === GEM ? '#5e1a24' : '#e2d9cc'}" stroke="${i === GEM ? '#d4af74' : 'none'}" stroke-width="3"/>
-   <g filter="url(#bl)"><circle cy="-8" r="12" fill="${i === GEM ? '#d4af74' : '#8c7a6a'}"/><path d="M-20 24 Q0 -2 20 24 Z" fill="${i === GEM ? '#d4af74' : '#8c7a6a'}"/></g></g>`).join('') +
-  `<circle id="halo" r="70" fill="none" stroke="#d4af74" stroke-width="2" opacity="0"/>
-   <path id="lk" d="" fill="none" stroke="#d4af74" stroke-width="2.5" stroke-dasharray="8 8" opacity="0"/>`;
+  A.map((p, i) => `<g id="a${i}"><circle r="38" fill="${i === GEM ? '#5e1a24' : '#e2d9cc'}" stroke="${i === GEM ? '#ffffff' : 'none'}" stroke-width="3"/>
+   <g filter="url(#bl)"><circle cy="-8" r="12" fill="${i === GEM ? '#ffffff' : '#8c7a6a'}"/><path d="M-20 24 Q0 -2 20 24 Z" fill="${i === GEM ? '#ffffff' : '#8c7a6a'}"/></g></g>`).join('') +
+  `<circle id="halo" r="70" fill="none" stroke="#ffffff" stroke-width="2" opacity="0"/>
+   <path id="lk" d="" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="8 8" opacity="0"/>`;
 const cw = words($('cap'));
 window.seek = t => {
   // Le cercle se range en vivier

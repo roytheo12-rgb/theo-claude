@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="base.css">
 <style>
 #ph{left:790px;top:110px}
-.hero{height:170px;border-radius:18px;background:linear-gradient(135deg,#3a2616,var(--noyer));position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(224,160,80,.55),transparent 60%)}
+.hero{height:170px;border-radius:18px;background:linear-gradient(135deg,#3a1018,var(--noyer));position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(122,37,51,.55),transparent 60%)}
 #btn{position:absolute;left:24px;right:24px;bottom:30px;text-align:center}
 .rowi{display:flex;justify-content:space-between;align-items:center;font:500 14px "IT";color:#3d332d;height:34px;border-bottom:1px solid #e6ded1}
 .rowi s{height:9px;border-radius:5px;background:#d3c9bc}
@@ -48,7 +48,7 @@ window.seek = t => {
   $('tap').style.transform = `scale(${lerp(0.4, 1.6, k)})`;
   const b = $('btn'); const on = t >= 1.05;
   b.style.transform = `scale(${on ? lerp(0.96, 1, easeOut(prog(t, 1.05, 0.3))) : 1})`;
-  b.style.boxShadow = on ? `0 0 ${30 * (1 - prog(t, 1.4, 1))}px rgba(212,175,116,.6)` : 'none';
+  b.style.boxShadow = on ? `0 0 ${30 * (1 - prog(t, 1.4, 1))}px rgba(255,255,255,.6)` : 'none';
   ['i1', 'i2', 'i3', 'i4'].forEach((id, i) => fadeUp($(id), t, 0.3 + i * 0.1, 0.4, 8));
   sheen($('ph').querySelector('.scr'), t, 0.35);
   revealWords(cw, t, 1.2);

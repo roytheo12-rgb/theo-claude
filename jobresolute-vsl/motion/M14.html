@@ -33,7 +33,7 @@ $('grid').innerHTML = E.map((e, i) => `<div class="eng" id="e${i}"><div class="n
 // Le réseau qui relie les moteurs (le « système nerveux »)
 const cx = i => 210 + (i % 4) * 380.5 + 179, cy = i => 370 + Math.floor(i / 4) * 152 + 65;
 const L = [[0, 1], [1, 2], [2, 3], [4, 5], [5, 6], [6, 7], [0, 4], [1, 5], [2, 6], [3, 7], [1, 6], [2, 5]];
-$('net').innerHTML = L.map(([a, b], k) => `<line id="l${k}" x1="${cx(a)}" y1="${cy(a)}" x2="${cx(b)}" y2="${cy(b)}" stroke="#d4af74" stroke-width="1.5" opacity=".45"/>`).join('');
+$('net').innerHTML = L.map(([a, b], k) => `<line id="l${k}" x1="${cx(a)}" y1="${cy(a)}" x2="${cx(b)}" y2="${cy(b)}" stroke="#ffffff" stroke-width="1.5" opacity=".45"/>`).join('');
 const tw = words($('ti'));
 window.seek = t => {
   fadeUp($('top').querySelector('.kt'), t, 0.1, 0.5, 8);
@@ -42,7 +42,7 @@ window.seek = t => {
   L.forEach((l, k) => { const e = $('l' + k); const len = Math.hypot(cx(l[0]) - cx(l[1]), cy(l[0]) - cy(l[1])); e.setAttribute('stroke-dasharray', len); e.setAttribute('stroke-dashoffset', len * (1 - easeOut(prog(t, 2.4 + k * 0.06, 0.7)))); });
   // Une impulsion lumineuse traverse le réseau
   const pulse = (t * 0.6) % 1;
-  E.forEach((_, i) => { if (t > 3.2) $('e' + i).style.borderColor = `rgba(212,175,116,${0.18 + 0.4 * Math.max(0, 1 - Math.abs(pulse * 8 - i))})`; });
+  E.forEach((_, i) => { if (t > 3.2) $('e' + i).style.borderColor = `rgba(255,255,255,${0.18 + 0.4 * Math.max(0, 1 - Math.abs(pulse * 8 - i))})`; });
   fadeUp($('adn'), t, 3.6, 0.7, 12);
   fx(t, 8, { push: 0.025 });
 };

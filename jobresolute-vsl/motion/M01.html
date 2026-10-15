@@ -9,9 +9,9 @@
 html,body{background:#000}
 .stage{perspective:1800px}
 .dev{position:absolute;left:50%;top:50%;transform-style:preserve-3d;border-radius:54px;background:#0b0b0c;
-  box-shadow:-18px 0 60px rgba(70,140,130,.28),18px 0 60px rgba(224,160,80,.26),0 70px 120px rgba(0,0,0,.9),0 0 0 2px #2a2b2c inset}
+  box-shadow:-18px 0 60px rgba(122,37,51,.28),18px 0 60px rgba(122,37,51,.26),0 70px 120px rgba(0,0,0,.9),0 0 0 2px #2a2b2c inset}
 .screen{position:absolute;overflow:hidden;background:#fff}
-.dark{position:absolute;inset:0;opacity:0;background:radial-gradient(ellipse 45% 55% at 12% 55%,rgba(47,96,90,.30),transparent 70%),radial-gradient(ellipse 45% 55% at 88% 45%,rgba(224,160,80,.24),transparent 70%),linear-gradient(#0b0c0c,#020303)}
+.dark{position:absolute;inset:0;opacity:0;background:radial-gradient(ellipse 60% 55% at 50% 45%,#3d111a 0%,#16060a 55%,#040102 100%)}
 .ui{position:absolute;left:50%;top:50%;width:393px;height:852px;margin:-426px 0 0 -196.5px;transform-origin:50% 50%}
 .island{position:absolute;top:11px;left:50%;width:126px;height:37px;margin-left:-63px;border-radius:20px;background:#000}
 .status{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:4px 30px 0 46px;color:#000}
@@ -22,7 +22,7 @@ html,body{background:#000}
 .load i{display:block;width:40%;height:100%;background:#34c26a;border-radius:3px}
 .home{position:absolute;bottom:8px;left:50%;width:139px;height:5px;margin-left:-69.5px;border-radius:3px;background:rgba(0,0,0,.85)}
 .logo{position:absolute;left:0;right:0;top:50%;text-align:center;font-family:"ID";font-weight:600;letter-spacing:-.04em;line-height:1;white-space:nowrap}
-.floor{position:absolute;left:50%;top:50%;width:520px;height:90px;margin-left:-260px;border-radius:50%;background:radial-gradient(ellipse,rgba(224,160,80,.16),rgba(47,96,90,.10) 45%,transparent 70%);filter:blur(10px)}
+.floor{position:absolute;left:50%;top:50%;width:520px;height:90px;margin-left:-260px;border-radius:50%;background:radial-gradient(ellipse,rgba(122,37,51,.16),rgba(122,37,51,.10) 45%,transparent 70%);filter:blur(10px)}
 .ring{position:absolute;left:50%;top:50%;border:1.5px solid var(--laiton);border-radius:50%;opacity:0}
 </style></head>
 <body>
@@ -54,7 +54,7 @@ html,body{background:#000}
 window.DURATION = 5;
 const $ = id => document.getElementById(id);
 const mix = (a, b, p) => `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], p))).join(',')})`;
-const NOIR = [0, 0, 0], IVOIRE = [244, 239, 230], LAITON = [212, 175, 116];
+const NOIR = [0, 0, 0], IVOIRE = [244, 239, 230], LAITON = [255, 255, 255];
 // Image 0 calée sur la fin de P09 : écran de face, centré en largeur, centre à 46 % de la hauteur, 59 % de la hauteur de l'image
 const W0 = 294, H0 = 637, Y0 = -43;    // écran du téléphone (proportions d'un iPhone : 393 × 852)
 window.seek = t => {

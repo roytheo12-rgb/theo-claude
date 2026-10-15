@@ -29,9 +29,9 @@ const nlinks = [0, 1, 2, 3, 4];
 const svg = $('map');
 svg.innerHTML =
   links.map((l, i) => `<line id="l${i}" x1="${P[l[0]][0]}" y1="${P[l[0]][1]}" x2="${P[l[1]][0]}" y2="${P[l[1]][1]}" stroke="#b9ab98" stroke-width="2"/>`).join('') +
-  nlinks.map(i => `<line id="n${i}" x1="${N[0]}" y1="${N[1]}" x2="${P[i][0]}" y2="${P[i][1]}" stroke="#b89560" stroke-width="2.5"/>`).join('') +
+  nlinks.map(i => `<line id="n${i}" x1="${N[0]}" y1="${N[1]}" x2="${P[i][0]}" y2="${P[i][1]}" stroke="#a9a39b" stroke-width="2.5"/>`).join('') +
   P.map((p, i) => `<circle id="c${i}" cx="${p[0]}" cy="${p[1]}" r="34" fill="#e2d9cc" stroke="#c9bcaa" stroke-width="2"/>`).join('') +
-  `<circle id="halo" cx="${N[0]}" cy="${N[1]}" r="60" fill="rgba(94,26,36,.10)"/><circle id="nc" cx="${N[0]}" cy="${N[1]}" r="40" fill="#5e1a24" stroke="#d4af74" stroke-width="3"/>`;
+  `<circle id="halo" cx="${N[0]}" cy="${N[1]}" r="60" fill="rgba(94,26,36,.10)"/><circle id="nc" cx="${N[0]}" cy="${N[1]}" r="40" fill="#5e1a24" stroke="#ffffff" stroke-width="3"/>`;
 const len = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 const cw = words($('cap'));
 window.seek = t => {

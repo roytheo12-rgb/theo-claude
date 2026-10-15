@@ -59,7 +59,7 @@ window.seek = t => {
     const c = $('c' + i); const p = spring(prog(t, 0.7 + i * 0.16, 0.7));
     c.style.opacity = clamp(p * 1.3); c.style.transform = `translateX(${(1 - p) * 60}px)`;
     const v = prog(t, 1.9 + i * 0.12, 0.3); c.querySelector('em').style.opacity = v;
-    c.style.borderColor = `rgba(212,175,116,${0.14 + v * 0.4})`;
+    c.style.borderColor = `rgba(255,255,255,${0.14 + v * 0.4})`;
   });
   sheen($('ph').querySelector('.scr'), t, 0.35);
   revealWords(cw, t, 2.3);
