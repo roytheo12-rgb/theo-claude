@@ -389,31 +389,33 @@ Audio: soft rain on the window, a short phone vibration, a soft notification chi
 🎙️ *(silence)* : enchaîne sur M12 (on recule hors de l'ordinateur du recruteur)
 **But :** la décision humaine est prise. Julien va à la rencontre.
 
+> ⚠️ **Piège à éviter :** l'écran ne peut pas faire face à la caméra **et** à Julien en même temps. Si la caméra est en face de lui et voit l'écran, c'est que Julien regarde le dos de son ordinateur. On filme donc **par-dessus son épaule** : l'écran fait face à Julien **et** à la caméra. La caméra recule puis tourne autour du bureau pendant qu'il se lève.
+
 **Image de départ K10** · joindre **K05c** en `[SETTING] keep office identical`, **Fiche Julien** en `[CHARACTER]` et **`references/raccords/mac_decision_JobResolute.png`** en `[SCREEN] display exactly this image on the laptop screen`
 ```
-Cinematic film still, 16:9, 35mm lens. Daytime, the same symmetrical walnut-paneled hotel HR office as Image 1, warm amber light. Close shot framed on an open silver laptop on the black lacquered desk, its screen displaying exactly Image 3 (an ivory app screen with a burgundy button in the center), filling most of the frame and perfectly centered, seen straight on. Behind it, slightly out of focus, Julien, the same man as Image 2, seated, thin steel glasses, charcoal three-piece suit. Warm amber grade, subtle 35mm film grain. No text, no logos.
+Cinematic film still, 16:9, 35mm lens. Daytime, the same walnut-paneled hotel HR office as Image 1, warm amber light. Over-the-shoulder shot from behind Julien, the same man as Image 2, seated at the black lacquered desk: his right shoulder in charcoal three-piece suit and the back of his head softly out of focus on the left edge of the frame. In front of him, facing him and facing the camera, an open silver laptop whose screen displays exactly Image 3 (an ivory app screen with a burgundy button in the center); the screen fills most of the frame and is perfectly centered, seen straight on. Beyond the laptop, out of focus, the walnut paneling and the office door. Warm amber grade, subtle 35mm film grain. No text, no logos.
 ```
-**Image d'arrivée K10b** · mêmes références
+**Image d'arrivée K10b** · joindre **K05c** en `[SETTING]` et **Fiche Julien** en `[CHARACTER]`
 ```
-Cinematic film still, 16:9, perfectly symmetrical medium wide shot of the same walnut-paneled HR office as Image 1, daytime, warm amber light. Julien, the same man as Image 2, standing behind his desk, jacket buttoned, the laptop half-closed in front of him, looking toward the office door on the left with a calm, decided expression. His head in the middle band of the frame. Warm amber grade, subtle 35mm film grain. No text, no logos.
+Cinematic film still, 16:9, 35mm lens, three-quarter front medium wide shot of the same walnut-paneled HR office as Image 1, daytime, warm amber light. Julien, the same man as Image 2, thin steel glasses, charcoal three-piece suit, standing behind his black lacquered desk, jacket buttoned, the laptop closed on the desk in front of him, turned toward the office door on the left of the frame with a calm, decided expression. His head in the middle band of the frame. Warm amber grade, subtle 35mm film grain. No text, no logos.
 ```
 **Réglages :** départ **K10** · arrivée **K10b** · Quality · 8 s
 **Prompt vidéo :**
 ```
-Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Restrained, natural acting. Keep his face, glasses, suit, the office, the colors and the lighting identical to the reference frames. Perfectly symmetrical. No text, no logos, no readable screen content.
+Cinematic film shot, photorealistic, 35mm lens, stabilized camera, precise and deliberate movement, never handheld. Restrained, natural acting. Keep his face, glasses, suit, the office, the colors and the lighting identical to the reference frames. No text, no logos, no readable screen content.
 
-Scene: daytime, a symmetrical walnut-paneled hotel HR office, warm amber light, a black lacquered desk with an open laptop glowing ivory.
+Scene: daytime, a walnut-paneled hotel HR office, warm amber light. A man in a charcoal three-piece suit sits at a black lacquered desk, looking at the open laptop in front of him; the laptop screen faces him.
 
-Camera and action, second by second: 0 to 3 s, the camera pulls back slowly and smoothly from the glowing laptop screen, revealing the office and the man behind it. 3 to 4.5 s, he gently half-closes the laptop. 4.5 to 6.5 s, he stands up and buttons his jacket. 6.5 to 8 s, he looks toward the office door on the left, calm and decided. The camera ends perfectly centered and still.
+Camera and action, second by second: 0 to 2.5 s, over his shoulder, the camera pulls back slowly from the glowing laptop screen, revealing his shoulder and the desk; he looks at the screen for a moment, then gives a small, satisfied nod. 2.5 to 4 s, he gently closes the laptop. 4 to 6 s, he stands up and buttons his jacket while the camera keeps pulling back and arcs smoothly around the desk to a three-quarter front view of him. 6 to 8 s, he turns toward the office door on the left, calm and decided. The camera settles, still.
 
 Light and grade: warm amber and honey, soft daylight through the tall window, rich shadows, subtle 35mm film grain.
 
-End frame: he stands still behind the desk, looking toward the door on the left.
+End frame: three-quarter front, he stands still behind the desk, the laptop closed, looking toward the door on the left.
 
 Audio: a laptop lid closing softly, a chair sliding back on a wooden floor, fabric rustle, quiet room tone. No music, no speech.
 ```
 **On garde :** 4 s (les 8 s en ×2, ou de 2,5 à 6,5 s) · **Raccord :** M12 finit sur l'écran de l'ordinateur, P10 commence dessus.
-**L'écran du Mac :** `references/raccords/mac_decision_JobResolute.png` (2880 × 1800), le même contenu que la fin de M12. Veo déformera le texte pendant le recul : **dans CapCut, incruste l'image sur l'écran** avec le suivi de mouvement (le Mac est vu de face, donc un simple suivi de position et d'échelle suffit). Dans le prompt vidéo, garde « no readable screen content » : c'est l'incrustation qui affiche le texte.
+**L'écran du Mac :** `references/raccords/mac_decision_JobResolute.png` (2880 × 1800), le même contenu que la fin de M12. Veo déformera le texte pendant le recul : **dans CapCut, incruste l'image sur l'écran** avec le suivi de mouvement (sur les 2 premières secondes, l'écran reste de face : un suivi de position et d'échelle suffit ; ensuite il se ferme, l'incrustation peut s'effacer en fondu dès qu'il commence à rabattre l'écran). Dans le prompt vidéo, garde « no readable screen content » : c'est l'incrustation qui affiche le texte.
 
 ---
 
