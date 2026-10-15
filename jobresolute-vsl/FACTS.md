@@ -74,6 +74,9 @@ Source : la démo JobResolute (données fictives de démonstration) et le texte 
 - « JobResolute » · « Chargement » · heure de la barre d'état « 23:12 » (à valider)
 - Exception de style demandée par Théo : fond blanc, logo noir, barre de chargement verte (#34c26a). Uniquement sur cet écran d'iPhone, pas dans le reste du motion design.
 
+## Écran du Mac de Julien (fin de M12, début de P10, validé par Théo)
+- « ✓ Décision validée » en vert (#2a9d57) · « JobResolute » en noir · fond blanc. Exception de style limitée à cet écran.
+
 ## Chiffres et preuves autorisés
 - 44 % des 319 000 projets de recrutement CHR jugés difficiles à pourvoir en 2026 (France Travail, enquête BMO 2026)
 - Protocole de validation en 8 étapes
