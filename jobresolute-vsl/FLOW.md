@@ -489,39 +489,53 @@ Audio: the revolving door turning, heels and shoes on marble, a hushed lobby. No
 
 ---
 
-## P12 · 0:13–0:22 · La maison de poupée
+## P12 · 0:13–0:22 · La maison de poupée : on suit Nadia de la salle à la salle des employés
 🎙️ **V18** *« Et toi, Nadia, quelle que soit la décision, on reste à tes côtés. »*
-**But :** la bonne combinaison : tout s'enchaîne, la caméra ne s'arrête jamais. Nadia est **en uniforme** : la fin de l'arc du vêtement (le tailleur qui attend → le tailleur porté → l'uniforme).
+**But :** tout se passe bien. L'hôtel est coupé en deux comme une maison de poupée : on voit plusieurs pièces côte à côte. Nadia, **en uniforme**, traverse **le restaurant**, puis **la cuisine**, et arrive dans **la salle des employés**, où l'équipe l'accueille. La caméra la suit de gauche à droite, sans jamais s'arrêter. C'est la fin de l'arc du vêtement : le tailleur qui attend → le tailleur porté → l'uniforme.
 
-**D'abord, la fiche « Nadia en uniforme »** · joindre **Fiche Nadia**
-```
-Character sheet, front view and three-quarter view side by side, plain warm neutral background, soft even light. The same young woman as Image 1, identical face, curly hair in a low bun, gold hoop earrings and gold necklace, wearing a fitted black hotel dining-room service uniform with a discreet brass pin and a white shirt collar. Photorealistic, 35mm film grain. No text, no logos.
-```
-**Image de départ K12** · joindre **Fiche Nadia en uniforme**, **Fiche Julien** et **Style hôtel** en `[STYLE]`
-```
-Cinematic film still, 16:9, wide frontal cross-section view of a grand old-world palace hotel like a dollhouse, several rooms side by side seen through open doorways in the dividing walls, all in warm amber light, perfectly level camera: on the left the lobby with its checkerboard floor and brass revolving door, in the center the dining room with white tablecloths and brass sconces, on the right a service corridor. In the dining room, Nadia, the same young woman as Image 1 in her black service uniform with a brass pin, serves a table calmly and gracefully; her colleagues in matching uniforms move in sync around her. In the lobby doorway, Julien, the same man as Image 2, watches. All heads in the middle band of the frame. Warm amber grade, Wes Anderson symmetry, subtle 35mm film grain. No text, no logos.
-```
-**Réglages :** départ **K12** · Quality · 8 s, puis **« Extend »** dans Flow pour prolonger le travelling (≈ +7 s)
-**Prompt vidéo :**
-```
-Cinematic film shot, photorealistic, 35mm lens, stabilized camera on a dolly, precise and deliberate movement, never handheld. Restrained, natural acting. Keep both faces, her black service uniform with the brass pin, his three-piece suit and glasses, the hotel, the colors and the lighting identical to the reference frame. Keep all heads in the middle band of the frame. No text, no logos.
+> ⚠️ **Avec l'assistant de Flow : une étape par message.** Si tu lui colles tout le plan d'un coup, il saute les images et lance directement la vidéo (c'est ce qui s'est passé). Commence chaque message par « Génère uniquement une image, pas de vidéo », et refuse (Reject) toute proposition de vidéo tant que les 3 images ne sont pas validées. Pour la vidéo, demande **Veo 3.1 Quality**, pas Lite : c'est le dernier plan filmé du film, il doit être le plus beau.
 
-Scene: a wide cross-section of a grand palace hotel like a dollhouse, rooms side by side seen through open doorways, all in warm amber light.
+### Étape 1 · La fiche « Nadia en uniforme » (image)
+Joindre : **le visage de Nadia** (ta vraie référence) en `[CHARACTER]`
+```
+Generate only an image, no video. Character sheet of the same young woman as the attached image, identical face, skin tone and curly hair tied in a low bun, gold hoop earrings and a thin gold necklace. Full body front view and three-quarter view side by side. She wears an elegant hotel restaurant service uniform: fitted black waistcoat over a crisp white shirt, black tailored trousers, black polished shoes, a small brass pin on the waistcoat. Plain warm neutral background, soft even light, photorealistic, 35mm film grain. No text, no logos.
+```
+**Vérifier :** c'est bien son visage, l'uniforme est sobre et noir, le pin en laiton est visible.
 
-Camera: one slow, continuous, perfectly level lateral tracking shot from left to right, passing room after room through the doorways. The camera never stops and never changes speed.
+### Étape 2 · Image de départ K12a : Nadia dans le restaurant (image)
+Joindre : **Fiche Nadia en uniforme** en `[CHARACTER]`, **le visage de Julien** (ton image du bureau) en `[CHARACTER]`, ton image de lobby en `[STYLE] palette and light only`
+```
+Generate only an image, no video. Cinematic film still, 16:9, wide frontal cross-section view of a grand old-world palace hotel, like a dollhouse cut open: three rooms side by side, separated by thin walls with open doorways, all seen from the front at the same height, perfectly level camera. On the left, the restaurant: white tablecloths, crystal glasses, brass sconces, dark walnut paneling, a few elegant guests at their tables. In the center, the kitchen: steel counters, copper pans, cooks in white working calmly. On the right, the staff room: lockers, a wooden table, a coffee machine, three colleagues in the same black uniforms chatting. Nadia, the same young woman as Image 1, in her black service uniform with the brass pin, stands in the restaurant on the left, placing a plate in front of a smiling guest. Julien, the same man as Image 2, in his charcoal three-piece suit and thin steel glasses, stands at the restaurant entrance on the far left, watching her with a quiet smile. The camera frames the restaurant and the beginning of the kitchen; the staff room is partly out of frame on the right. Warm amber light everywhere, Wes Anderson symmetry, subtle 35mm film grain. All heads in the middle band of the frame, between 30% and 70% of the height. No text, no logos, no signage.
+```
 
-Action, second by second: 0 to 2 s, in the lobby doorway, the man in the three-piece suit gives a quiet, approving nod. 2 to 6 s, in the dining room, the young woman in the black service uniform serves a table calmly and gracefully; a guest thanks her with a smile; her colleagues move in sync around her, like a well-rehearsed choreography. 6 to 8 s, the camera continues toward the service corridor where a colleague hands her a tray with a friendly look.
+### Étape 3 · Image d'arrivée K12b : Nadia dans la salle des employés (image)
+Joindre : **K12a** en `[SETTING] same dollhouse hotel, same rooms`, **Fiche Nadia en uniforme** en `[CHARACTER]`
+```
+Generate only an image, no video. Same dollhouse cross-section of the hotel as Image 1, same height, same level camera, same warm amber light, but the camera has moved to the right: the kitchen is now on the left of the frame and the staff room in the center. In the staff room, Nadia, the same young woman as Image 2, in her black service uniform with the brass pin, has just walked in; her three colleagues in the same black uniforms welcome her with warm smiles, one hands her a cup of coffee, she smiles back, relaxed and happy, fully part of the team. Lockers, a wooden table, soft warm light. Wes Anderson symmetry, subtle 35mm film grain. All heads in the middle band of the frame, between 30% and 70% of the height. No text, no logos.
+```
+**Vérifier les 3 images avant la vidéo :** même visage de Nadia partout, même uniforme, même hauteur de caméra entre K12a et K12b, têtes dans la bande centrale (le format 2.39 coupe le haut et le bas).
+
+### Étape 4 · La vidéo (Frames to Video)
+**Réglages :** départ **K12a** · arrivée **K12b** · **Veo 3.1 Quality** · 16:9 · 8 s
+```
+Cinematic film shot, photorealistic, 35mm lens, camera on a dolly track, precise and deliberate movement, never handheld. Restrained, natural acting. Keep the faces, her black service uniform with the brass pin, his three-piece suit and glasses, the hotel, the colors and the lighting identical to the reference frames. Keep all heads in the middle band of the frame. No text, no logos.
+
+Scene: a grand palace hotel seen as a dollhouse cross-section, three rooms side by side through open doorways: the restaurant on the left, the kitchen in the center, the staff room on the right. Warm amber light everywhere.
+
+Camera: one slow, continuous, perfectly level lateral tracking shot from left to right, following the young woman in the black uniform at her walking pace, keeping her near the center of the frame. The camera never stops, never changes height, never cuts.
+
+Action, second by second: 0 to 2 s, in the restaurant, she places a plate in front of a guest who thanks her with a smile; at the entrance on the left, the man in the three-piece suit gives her a quiet, approving nod. 2 to 4.5 s, she walks to the right with an empty tray, calm and confident, through the doorway into the kitchen; the cooks work in harmony, one of them gives her a friendly nod as she passes. 4.5 to 6.5 s, she crosses the kitchen and walks through the next doorway into the staff room. 6.5 to 8 s, her colleagues welcome her with warm smiles, one hands her a cup of coffee, she smiles back, at ease, part of the team.
 
 Light and grade: warm amber and honey everywhere, rich shadows, subtle 35mm film grain, Wes Anderson symmetry.
 
-Audio: soft cutlery, a quiet laugh, glasses clinking gently, warm room tone. No music, no speech.
+End frame: the staff room in the center, she smiles with her colleagues, exactly as in the last reference frame.
+
+Audio: soft cutlery and murmurs in the restaurant, then the gentle bustle of the kitchen, then a quiet laugh in the staff room, warm room tone. No music, no speech.
 ```
-**Prompt pour « Extend »** (à la suite du clip) :
-```
-The camera keeps tracking slowly from left to right at the same speed, without stopping: past the service corridor into the next room, a small staff room where the team shares a short, warm moment; the young woman in the black uniform is among them, at ease, smiling. Same warm amber light, same faces, same uniforms. No text, no logos. Audio: soft murmurs without words, warm room tone. No music, no speech.
-```
-**On garde :** 9 s (clip + extension) · **Synchro :** on arrive sur Nadia au moment de « on reste à tes côtés ».
-**Vérifier :** visage de Nadia identique, la caméra ne s'arrête jamais, aucun saut au raccord de l'extension.
+**On garde :** les 8 s, **ralenties à ×0,9** dans CapCut (≈ 9 s). Pas besoin d'Extend : avec l'image d'arrivée, la fin est verrouillée.
+**Synchro :** elle entre dans la salle des employés sur « on reste à tes côtés ».
+**Vérifier :** son visage reste le même pendant tout le travelling, la caméra ne s'arrête jamais, aucun mur ne se déforme au passage des portes.
+**CapCut :** recadrage 2.39, étalonnage ambre.
 
 ---
 
@@ -533,7 +547,7 @@ The camera keeps tracking slowly from left to right at the same speed, without s
 5. **P06a/b/c**, **K07 → P07**
 6. **K09 + K09b → P09** → envoie-moi la dernière image
 7. **K10 + K10b → P10** · **K10c + K10d → P10b** · **K11 + K11b → P11**
-8. Fiche Nadia en uniforme → **K12 → P12** + Extend
+8. Fiche Nadia en uniforme → **K12a + K12b → P12** (une étape par message dans l'assistant de Flow)
 
 ## Montage CapCut (rappel)
 - Pose **la voix off d'abord** et cale les plans dessus (les synchros sont données plan par plan).
