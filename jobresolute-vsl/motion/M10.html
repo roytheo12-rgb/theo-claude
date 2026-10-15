@@ -13,6 +13,7 @@
 <script src="lib.js"></script>
 <script>
 window.DURATION = 4.2;
+window.SFX = [[0.05, 'pop', 0.25], [0.25, 'pop', 0.25], [0.45, 'pop', 0.25], [0.95, 'tick', 0.22], [1.05, 'tick', 0.22], [1.15, 'tick', 0.22], [1.25, 'tick', 0.22], [1.35, 'tick', 0.22], [1.45, 'tick', 0.22], [1.55, 'tick', 0.22], [1.65, 'tick', 0.22], [1.75, 'tick', 0.22], [1.85, 'tick', 0.22], [2.2, 'swish_r', 0.4], [2.4, 'pop', 0.4]];
 const $ = id => document.getElementById(id);
 const C = [960, 430], R = 300, n = 10;
 const A = [...Array(n)].map((_, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [C[0] + R * Math.cos(a), C[1] + R * 0.78 * Math.sin(a)]; });

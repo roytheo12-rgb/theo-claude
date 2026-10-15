@@ -7,7 +7,9 @@ la transition se joue dans cette marge, donc aucun plan n'est raccourci.
 Usage : python3 tools/build.py acte2 | acte4 | tout
 Variables : FFMPEG_PATH, CHROME_PATH.
 """
-import os, re, subprocess, sys
+import json, os, re, subprocess, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sfx
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FF = os.environ.get('FFMPEG_PATH', 'ffmpeg')
@@ -23,9 +25,9 @@ ACTES = {
         ('M01', PUSH),                 # le logo cède la place aux promesses en avançant
         ('M02', CUT),
         ('C1', CUT),
-        ('M03a', ('smoothleft', 0.6)), # du recruteur au candidat : glissé
-        ('M03', PUSH),
-        ('M04', ('smoothright', 0.6)), # du candidat au recruteur : glissé en miroir
+        ('M03a', ('smoothright', 0.6)),# du recruteur au candidat (à gauche) : l'offre s'envole, on glisse vers la gauche
+        ('M03', ('fade', 0.3)),        # même téléphone, même place : raccord d'objet
+        ('M04', ('smoothleft', 0.6)),  # du candidat au recruteur (à droite) : glissé en miroir
         ('M05', CUT),
         ('C2', CUT),
         ('M06', PUSH),
@@ -46,6 +48,19 @@ SORTIE = {'acte2': 'ACTE2.mp4', 'acte4': 'ACTE4.mp4'}
 def duration(seq):
     html = open(os.path.join(ROOT, 'motion', seq + '.html')).read()
     return float(re.search(r'window\.DURATION\s*=\s*([\d.]+)', html).group(1))
+
+
+def cues(seq):
+    """Sons déclarés par la séquence : window.SFX = [[t, 'type', gain], ...]"""
+    html = open(os.path.join(ROOT, 'motion', seq + '.html')).read()
+    m = re.search(r'window\.SFX\s*=\s*(\[.*?\]);', html, re.S)
+    if not m:
+        return []
+    return [(c[0], c[1], c[2] if len(c) > 2 else 1.0) for c in json.loads(m.group(1).replace("'", '"'))]
+
+
+# Un son par famille de transition (MOTION.md §8)
+TRANS_SFX = {'zoomin': ('whoosh', -0.22, 0.7), 'smoothleft': ('swish_l', -0.2, 0.6), 'smoothright': ('swish_r', -0.2, 0.6)}
 
 
 def render(seq, tail):
@@ -81,7 +96,23 @@ def build(acte):
     cmd = [FF, '-y', '-v', 'error', *inputs, '-filter_complex', ';'.join(parts), '-map', prev,
            '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-r', '25', out]
     subprocess.run(cmd, check=True)
-    print(f'{out} : {acc:.2f} s')
+    # Effets sonores : ceux de chaque séquence + un par transition, puis mixage dans le MP4
+    track, start = [], 0.0
+    for k, (seq, tr) in enumerate(seqs):
+        track += [(start + t, kind, g) for t, kind, g in cues(seq)]
+        if k > 0 and seq.startswith('C'):
+            track.append((start, 'impact', 0.8))      # carton de chapitre : coupe franche sur un impact
+        start += duration(seq)
+        if tr and tr[0] in TRANS_SFX:
+            kind, dt, g = TRANS_SFX[tr[0]]
+            track.append((start + dt, kind, g))
+    wav = out.replace('.mp4', '_sfx.wav')
+    sfx.render(track, acc, wav)
+    tmp = out.replace('.mp4', '_tmp.mp4')
+    subprocess.run([FF, '-y', '-v', 'error', '-i', out, '-i', wav, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
+                    '-c:a', 'aac', '-b:a', '192k', '-shortest', tmp], check=True)
+    os.replace(tmp, out)
+    print(f'{out} : {acc:.2f} s, {len(track)} sons')
 
 
 if __name__ == '__main__':

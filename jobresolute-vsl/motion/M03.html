@@ -3,7 +3,7 @@
 <!-- M03 · OBSERVER · Un clic, « Je suis intéressée » · « Un clic. Pas de CV. » · 3,5 s -->
 <link rel="stylesheet" href="base.css">
 <style>
-#ph{left:790px;top:110px}
+#ph{left:500px;top:110px}
 .hero{height:170px;border-radius:18px;background:linear-gradient(135deg,#3a1018,var(--noyer));position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(255,255,255,0.11),transparent 60%)}
 #btn{position:absolute;left:24px;right:24px;bottom:30px;text-align:center}
@@ -33,17 +33,24 @@
 <script src="lib.js"></script>
 <script>
 window.DURATION = 3.5;
+window.SFX = [[0.05, 'land', 0.4], [0.35, 'pop', 0.4], [1.05, 'tap', 0.9], [1.12, 'pop', 0.45]];
 const $ = id => document.getElementById(id);
 $('cur').innerHTML = CURSOR;
 const cw = words($('cap'));
 window.seek = t => {
-  enter3d($('ph'), t, 0, { ry0: 26, ry1: 16, rx: 4 });
+  // Le téléphone arrive de la gauche (on vient du recruteur) et se pose dans la pose exacte du début de M04
+  const e = spring(prog(t, 0, 0.8), 11), ph = $('ph');
+  ph.style.opacity = clamp(e * 1.8); ph.style.filter = e < 0.98 ? `blur(${(1 - clamp(e)) * 10}px)` : '';
+  ph.style.transform = `translateX(${(1 - e) * -320}px) rotateY(${lerp(34, 14, e)}deg) rotateX(4deg)`;
+  // L'offre publiée vient se poser en haut de l'écran
+  const o = expoOut(prog(t, 0.3, 0.5));
+  ph.querySelectorAll('.scr > .k, .scr > .h, .scr > .hero').forEach(el => { el.style.opacity = o; el.style.transform = `scale(${lerp(1.12, 1, o)})`; el.style.transformOrigin = '50% 0'; });
   // Le doigt arrive sur le bouton et touche (1,05 s)
   const c = easeOut(prog(t, 0.45, 0.6));
-  $('cur').style.left = lerp(1260, 985, c) + 'px'; $('cur').style.top = lerp(900, 735, c) + 'px';
+  $('cur').style.left = lerp(970, 695, c) + 'px'; $('cur').style.top = lerp(900, 735, c) + 'px';
   $('cur').style.opacity = clamp(prog(t, 0.4, 0.2)) * (1 - prog(t, 1.6, 0.3));
   const k = prog(t, 1.05, 0.5);
-  $('tap').style.left = 955 + 'px'; $('tap').style.top = 705 + 'px';
+  $('tap').style.left = 665 + 'px'; $('tap').style.top = 705 + 'px';
   $('tap').style.opacity = k > 0 && k < 1 ? (1 - k) : 0;
   $('tap').style.transform = `scale(${lerp(0.4, 1.6, k)})`;
   const b = $('btn'); const on = t >= 1.05;
@@ -52,7 +59,7 @@ window.seek = t => {
   ['i1', 'i2', 'i3', 'i4'].forEach((id, i) => fadeUp($(id), t, 0.3 + i * 0.1, 0.4, 8));
   sheen($('ph').querySelector('.scr'), t, 0.35);
   revealWords(cw, t, 1.2);
-  fx(t, 3.5);
+  fx(t, 3.5, { push: 0 });   // caméra fixe : M04 reprend exactement ce cadre
 };
 window.seek(0);
 </script>

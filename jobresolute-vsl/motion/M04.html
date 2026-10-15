@@ -40,10 +40,12 @@
 <script src="lib.js"></script>
 <script>
 window.DURATION = 4.5;
+window.SFX = [[0.3, 'pop', 0.3], [0.4, 'pop', 0.3], [0.5, 'pop', 0.3], [0.7, 'tick', 0.25], [0.86, 'tick', 0.25], [1.02, 'tick', 0.25], [1.18, 'tick', 0.25], [1.34, 'tick', 0.25], [1.15, 'tap', 0.9], [1.6, 'chime', 0.35], [1.9, 'tick', 0.3], [2.02, 'tick', 0.3], [2.14, 'tick', 0.3], [2.26, 'tick', 0.3], [2.38, 'tick', 0.3]];
 const $ = id => document.getElementById(id);
 const cw = words($('cap'));
 window.seek = t => {
-  enter3d($('ph'), t, 0, { ry0: 24, ry1: 14, rx: 4 });
+  // Même téléphone, même place, même pose que la fin de M03 : seul l'écran change
+  $('ph').style.opacity = 1; $('ph').style.transform = 'rotateY(14deg) rotateX(4deg)';
   ['o1', 'o2', 'o3'].forEach((id, i) => fadeUp($(id), t, 0.3 + i * 0.1, 0.4, 10));
   // Nadia choisit B
   const s = easeOut(prog(t, 1.2, 0.3)), o2 = $('o2');

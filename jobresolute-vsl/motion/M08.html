@@ -23,7 +23,7 @@
 <body>
 <div class="bg"></div>
 <div class="chap"><b>III</b> · Décider</div>
-<div class="stage" id="stage">
+<div class="stage" id="stage"><div id="cam" style="position:absolute;inset:0;transform-origin:747px 452px">
   <div class="desk"></div>
   <div class="glow" id="gl" style="left:200px;top:200px;width:600px;height:600px"></div>
   <div class="phone" id="ph"><div class="scr"><div class="notch"></div>
@@ -42,13 +42,14 @@
   <div class="lbl" id="lj" style="left:820px;width:840px;text-align:center;color:var(--laiton2)">Le recruteur</div>
   <div class="glow" id="gl2" style="left:940px;top:170px;width:600px;height:600px"></div>
   <div id="sync" style="position:absolute;left:672px;top:452px;width:150px;height:2px;background:var(--laiton2);transform-origin:50% 50%"></div>
-  <div id="dot" style="position:absolute;left:739px;top:445px;width:16px;height:16px;border-radius:50%;background:var(--laiton2);box-shadow:0 0 18px rgba(255,255,255,.9)"></div>
+  <div id="dot" style="position:absolute;left:739px;top:445px;width:16px;height:16px;border-radius:50%;background:var(--laiton2);box-shadow:0 0 18px rgba(255,255,255,.9)"></div></div>
 </div>
 <div class="cap" id="cap">Le même résultat, *au* *même* *instant*.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
 window.DURATION = 4;
+window.SFX = [[0.05, 'land', 0.35], [0.5, 'riser', 0.3], [0.9, 'notif', 0.85], [1.4, 'pop', 0.35]];
 const $ = id => document.getElementById(id);
 const cw = words($('cap'));
 window.seek = t => {
@@ -72,6 +73,7 @@ window.seek = t => {
   fadeUp($('sig'), t, T + 0.5, 0.45, 8);
   sheen($('ls'), t, T + 0.1); sheen($('ph').querySelector('.scr'), t, T + 0.1);
   revealWords(cw, t, T + 0.3);
+  $('cam').style.transform = `scale(${lerp(1.3, 1, easeInOut(prog(t, 0.95, 1.2)))})`;
   fx(t, 4);
 };
 window.seek(0);

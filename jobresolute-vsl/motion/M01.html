@@ -52,6 +52,7 @@ html,body{background:#000}
 <script src="lib.js"></script>
 <script>
 window.DURATION = 5;
+window.SFX = [[0.0, 'land', 0.25], [1.7, 'tick', 0.5], [1.6, 'riser', 0.45], [2.25, 'dive', 0.8], [3.15, 'shimmer', 0.7]];
 const $ = id => document.getElementById(id);
 const mix = (a, b, p) => `rgb(${a.map((v, i) => Math.round(lerp(v, b[i], p))).join(',')})`;
 const NOIR = [0, 0, 0], IVOIRE = [244, 239, 230], LAITON = [255, 255, 255];

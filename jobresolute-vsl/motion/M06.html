@@ -41,7 +41,7 @@
 <body>
 <div class="bg"></div>
 <div class="chap"><b>II</b> · Associer</div>
-<div class="stage" id="stage">
+<div class="stage" id="stage"><div id="cam" style="position:absolute;inset:0;transform-origin:560px 420px">
   <div class="card back" id="back"><div class="pl">Pipeline · Chef de Rang</div>
     <div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div><div class="pc"><i></i><s></s></div></div>
   <div class="card main" id="main">
@@ -57,13 +57,14 @@
       </div></div>
     <div class="obs" id="obs"><div class="o"><h4>Observé</h4>Sous pression, priorise une solution concrète avant d'escalader.</div><div class="o u"><h4>Reste incertain</h4>Protocoles VIP et allergènes, à approfondir en entretien.</div></div>
     <div class="dec" id="dec"><b>◉</b> Décision humaine</div>
-  </div>
+  </div></div>
 </div>
 <div class="cap" id="cap">Un résultat qui *s'explique*.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
 window.DURATION = 4;
+window.SFX = [[0.05, 'land', 0.4], [0.4, 'tick', 0.22], [0.52, 'tick', 0.22], [0.64, 'tick', 0.22], [0.76, 'tick', 0.22], [0.88, 'tick', 0.22], [1.3, 'pop', 0.4], [1.8, 'chime', 0.3]];
 const $ = id => document.getElementById(id);
 const capWords = words($('cap'));
 const bars = [...document.querySelectorAll('.t i')];
@@ -93,6 +94,7 @@ window.seek = t => {
   // Légende mot à mot
   revealWords(capWords, t, 1.6);
   sheen($('main'), t, 0.55);
+  $('cam').style.transform = `scale(${lerp(1.35, 1, easeInOut(prog(t, 0.6, 1.3)))})`;
   fx(t, 4, { push: 0 });
 };
 window.seek(0);

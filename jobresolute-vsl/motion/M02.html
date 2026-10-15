@@ -1,17 +1,21 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<!-- M02 · Les 4 promesses d'Henry en miroir typographique (le candidat à gauche, le recruteur à droite) · 6 s -->
+<!-- M02 · Les 4 promesses en miroir (le candidat à gauche, le recruteur à droite) · 6 s
+     V6 : un fil relie les deux côtés en zigzag. Un point blanc (le lien que crée JobResolute) va de chaque promesse à la suivante
+     et trace le fil derrière lui ; chaque ligne sort de son masque quand le point l'atteint. -->
 <link rel="stylesheet" href="base.css">
 <style>
-.row{position:absolute;width:1400px}
-.row.l{left:180px;text-align:left}
-.row.r{right:180px;text-align:right}
-.who{font:600 16px "IT";letter-spacing:.32em;text-transform:uppercase;color:var(--laiton);margin-bottom:12px}
-.line{font:600 70px/1.05 "ID";letter-spacing:-.03em;color:var(--ivoire)}
+.row{position:absolute;width:1300px}
+.row.l{left:200px;text-align:left}
+.row.r{right:200px;text-align:right}
+.who{font:600 15px "IT";letter-spacing:.32em;text-transform:uppercase;color:rgba(244,239,230,.5);margin-bottom:14px}
+.line{font:600 64px/1.05 "ID";letter-spacing:-.03em;color:var(--ivoire)}
+svg{position:absolute;left:0;top:0}
 </style></head>
 <body>
 <div class="bg"></div>
 <div class="stage" id="stage">
+  <svg width="1920" height="1080"><path id="fil" d="" fill="none" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/><circle id="dot" r="9" fill="#fff"/><circle id="ring" r="9" fill="none" stroke="#fff" stroke-width="1.5"/></svg>
   <div class="row l" style="top:150px"><div class="who" id="w0">Le candidat</div><div class="line" id="l0">Démontrer, *sans* *contrainte*.</div></div>
   <div class="row r" style="top:340px"><div class="who" id="w1">Le recruteur</div><div class="line" id="l1">Évaluer, *sans* *a* *priori*.</div></div>
   <div class="row l" style="top:530px"><div class="who" id="w2">Le candidat</div><div class="line" id="l2">Comprendre *son* *résultat*.</div></div>
@@ -21,18 +25,55 @@
 <script src="lib.js"></script>
 <script>
 window.DURATION = 6;
+const S = [0.35, 1.65, 2.95, 4.25];                       // départ de chaque promesse
+window.SFX = [[0.35, 'pop', 0.5], [1.1, 'swish_r', 0.35], [1.65, 'pop', 0.5], [2.4, 'swish_l', 0.35], [2.95, 'pop', 0.5], [3.7, 'swish_r', 0.35], [4.25, 'pop', 0.6]];
 const $ = id => document.getElementById(id);
 const L = [0, 1, 2, 3].map(i => words($('l' + i)));
+// Les ancres du fil : à gauche avant les lignes du candidat, à droite après celles du recruteur.
+// Le fil passe dans les espaces entre les lignes (à angle droit), jamais à travers le texte.
+const A = [[160, 236], [1760, 426], [160, 616], [1760, 806]];
+const GAP = [0, 300, 490, 680];
+const route = i => [A[i - 1], [A[i - 1][0], GAP[i]], [A[i][0], GAP[i]], A[i]];
+function along(pts, p) {                                   // point à la fraction p de la longueur d'une polyligne
+  const seg = pts.slice(1).map((q, k) => Math.hypot(q[0] - pts[k][0], q[1] - pts[k][1]));
+  let d = p * seg.reduce((a, b) => a + b, 0), out = [pts[0]];
+  for (let k = 0; k < seg.length; k++) {
+    if (d <= seg[k]) { const u = seg[k] ? d / seg[k] : 0; const q = [lerp(pts[k][0], pts[k + 1][0], u), lerp(pts[k][1], pts[k + 1][1], u)]; out.push(q); return out; }
+    d -= seg[k]; out.push(pts[k + 1]);
+  }
+  return out;
+}
 window.seek = t => {
+  // Le point voyage d'une ancre à la suivante (0,55 s, accélération et décélération douces) et trace le fil derrière lui
+  let path = [], cur = A[0];
+  const q0 = expoOut(prog(t, 0.05, 0.4));
+  cur = [A[0][0], lerp(A[0][1] - 60, A[0][1], q0)];
+  path.push(A[0]);
+  S.forEach((s, i) => {
+    if (i === 0) return;
+    const p = easeInOut(prog(t, s - 0.55, 0.55));
+    if (p <= 0) return;
+    const pts = along(route(i), p);
+    path = path.concat(pts.slice(1)); cur = pts[pts.length - 1];
+  });
+  const x = cur[0], y = cur[1];
+  $('fil').setAttribute('d', t > 0.3 && path.length > 1 ? 'M' + path.map(q => q[0] + ' ' + q[1]).join(' L') : '');
+  $('dot').setAttribute('cx', x); $('dot').setAttribute('cy', y);
+  $('dot').setAttribute('opacity', clamp(prog(t, 0, 0.2)));
+  // Anneau d'arrivée sur chaque ancre
+  const last = S.filter(s => t >= s).length - 1;
+  const rp = last >= 0 ? prog(t, S[last], 0.6) : 0;
+  $('ring').setAttribute('cx', last >= 0 ? A[last][0] : x); $('ring').setAttribute('cy', last >= 0 ? A[last][1] : y);
+  $('ring').setAttribute('r', 9 + 26 * expoOut(rp)); $('ring').setAttribute('opacity', rp > 0 && rp < 1 ? 1 - rp : 0);
   [0, 1, 2, 3].forEach(i => {
-    const s = 0.25 + i * 1.3;
-    fadeUp($('w' + i), t, s, 0.4, 8);
-    revealWords(L[i], t, s + 0.1);
-    // Les promesses déjà dites s'effacent légèrement pour guider l'œil
-    const dim = prog(t, s + 1.3, 0.4) * 0.45 * (i < 3 ? 1 : 0);
+    const s = S[i];
+    fadeUp($('w' + i), t, s - 0.05, 0.4, 8);
+    revealWords(L[i], t, s);
+    // Les promesses déjà dites s'effacent pour guider l'œil
+    const dim = prog(t, s + 1.3, 0.4) * 0.55 * (i < 3 ? 1 : 0);
     $('l' + i).style.opacity = 1 - dim; $('w' + i).style.opacity = Math.min(Number($('w' + i).style.opacity), 1 - dim);
   });
-  fx(t, 6, { push: 0.025 });
+  fx(t, 6, { push: 0.03 });
 };
 window.seek(0);
 </script>

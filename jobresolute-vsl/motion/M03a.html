@@ -18,7 +18,7 @@
 <body>
 <div class="bg"></div>
 <div class="chap"><b>I</b> · Observer</div>
-<div class="stage" id="stage">
+<div class="stage" id="stage"><div id="cam" style="position:absolute;inset:0;transform-origin:820px 250px">
   <div class="laptop" id="lap"><div class="lid"><div class="scr">
     <div class="side" id="side"></div>
     <div class="main">
@@ -34,11 +34,15 @@
   <div class="tap" id="tap"></div>
   <div class="cursor" id="cur"></div>
 </div>
+  <div class="card" id="fly" style="left:1120px;top:600px;width:360px;padding:20px 24px;opacity:0"><div class="k">Offre · Le Beauregard, Paris</div><div class="h" style="margin-top:6px;font-size:20px">Chef de Rang, service gastronomique</div></div>
+</div>
 <div class="cap" id="cap">Rien à installer. Personne à *former*.</div>
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
 window.DURATION = 4;
+// Sons : frappe du titre, validation des 9 étapes, clic sur « Publier », l'offre qui part vers le candidat
+window.SFX = [[0.35, 'type', 0.45], [0.45, 'tick', 0.25], [0.58, 'tick', 0.25], [0.71, 'tick', 0.25], [0.84, 'tick', 0.25], [0.97, 'tick', 0.25], [1.1, 'tick', 0.25], [1.23, 'tick', 0.25], [1.36, 'tick', 0.25], [1.49, 'tick', 0.25], [2.05, 'tap', 0.8], [2.25, 'pop', 0.5], [2.75, 'swish_l', 0.6]];
 const $ = id => document.getElementById(id);
 $('cur').innerHTML = CURSOR;
 const STEPS = ['Informations du poste', 'Assistant de rédaction', 'Tâches critiques', 'Contraintes', 'Situations', 'Pondération du Fit', 'Barème', 'Ressources', 'Récapitulatif'];
@@ -62,6 +66,13 @@ window.seek = t => {
   b.style.transform = `scale(${on ? lerp(0.95, 1, easeOut(prog(t, 2.05, 0.3))) : 1})`;
   b.style.boxShadow = on ? `0 0 ${30 * (1 - prog(t, 2.3, 1))}px rgba(255,255,255,.6)` : 'none';
   sheen($('lap').querySelector('.scr'), t, 0.4);
+  // Caméra : on part serré sur le titre qui s'écrit, puis on découvre tout l'écran
+  $('cam').style.transform = `scale(${lerp(1.45, 1, easeInOut(prog(t, 0.25, 1.4)))})`;
+  // L'offre publiée sort du bouton, se pose, puis part vers la gauche (vers le candidat)
+  const f = $('fly'), a = expoOut(prog(t, 2.2, 0.45)), g = Math.pow(prog(t, 2.75, 0.65), 2.2);
+  f.style.opacity = clamp(a * 1.5) * (1 - prog(t, 3.3, 0.1));
+  f.style.transform = `translate(${-g * 1700}px, ${lerp(60, 0, a) - g * 40}px) scale(${lerp(0.6, 1, a) * lerp(1, 0.8, g)}) rotate(${-g * 4}deg)`;
+  f.style.filter = g > 0 ? `blur(${g * 6}px)` : '';
   revealWords(cw, t, 1.6);
   fx(t, 4);
 };
