@@ -393,7 +393,7 @@ Audio: soft rain on the window, a short phone vibration, a soft notification chi
 
 **Image de départ K10** · joindre **K05c** en `[SETTING] keep office identical`, **Fiche Julien** en `[CHARACTER]` et **`references/raccords/mac_decision_JobResolute.png`** en `[SCREEN] display exactly this image on the laptop screen`
 ```
-Cinematic film still, 16:9, 35mm lens. Daytime, the same walnut-paneled hotel HR office as Image 1, warm amber light. Over-the-shoulder shot from behind Julien, the same man as Image 2, seated at the black lacquered desk: his right shoulder in charcoal three-piece suit and the back of his head softly out of focus on the left edge of the frame. In front of him, facing him and facing the camera, an open silver laptop whose screen displays exactly Image 3 (an ivory app screen with a burgundy button in the center); the screen fills most of the frame and is perfectly centered, seen straight on. Beyond the laptop, out of focus, the walnut paneling and the office door. Warm amber grade, subtle 35mm film grain. No text, no logos.
+Cinematic film still, 16:9, 35mm lens. Daytime, the same walnut-paneled hotel HR office as Image 1, warm amber light. Over-the-shoulder shot from behind Julien, the same man as Image 2, seated at the black lacquered desk: his right shoulder in charcoal three-piece suit and the back of his head softly out of focus on the left edge of the frame. In front of him, facing him and facing the camera, an open silver laptop whose screen displays exactly Image 3 (a plain white screen with a black wordmark in the center); the screen fills most of the frame and is perfectly centered, seen straight on. Beyond the laptop, out of focus, the walnut paneling and the office door. Warm amber grade, subtle 35mm film grain. No text, no logos.
 ```
 **Image d'arrivée K10b** · joindre **K05c** en `[SETTING]` et **Fiche Julien** en `[CHARACTER]`
 ```
@@ -415,7 +415,7 @@ End frame: three-quarter front, he stands still behind the desk, the laptop clos
 Audio: a laptop lid closing softly, a chair sliding back on a wooden floor, fabric rustle, quiet room tone. No music, no speech.
 ```
 **On garde :** 4 s (les 8 s en ×2, ou de 2,5 à 6,5 s) · **Raccord :** M12 finit sur l'écran de l'ordinateur, P10 commence dessus.
-**L'écran du Mac :** `references/raccords/mac_decision_JobResolute.png` (2880 × 1800), le même contenu que la fin de M12. Veo déformera le texte pendant le recul : **dans CapCut, incruste l'image sur l'écran** avec le suivi de mouvement (sur les 2 premières secondes, l'écran reste de face : un suivi de position et d'échelle suffit ; ensuite il se ferme, l'incrustation peut s'effacer en fondu dès qu'il commence à rabattre l'écran). Dans le prompt vidéo, garde « no readable screen content » : c'est l'incrustation qui affiche le texte.
+**L'écran du Mac :** `references/raccords/mac_decision_JobResolute.png` (2880 × 1800), le logotype JobResolute en noir sur blanc. Veo déformera le texte pendant le recul : **dans CapCut, incruste l'image sur l'écran** avec le suivi de mouvement (sur les 2 premières secondes, l'écran reste de face : un suivi de position et d'échelle suffit ; ensuite il se ferme, l'incrustation peut s'effacer en fondu dès qu'il commence à rabattre l'écran). Dans le prompt vidéo, garde « no readable screen content » : c'est l'incrustation qui affiche le texte.
 
 ---
 
