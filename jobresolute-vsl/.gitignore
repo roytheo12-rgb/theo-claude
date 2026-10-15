@@ -3,3 +3,4 @@ node_modules/
 rendus/*
 !rendus/ACTE2.mp4
 !rendus/ACTE4.mp4
+__pycache__/
