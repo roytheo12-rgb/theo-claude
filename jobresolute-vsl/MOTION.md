@@ -12,8 +12,9 @@ On ne copie ni l'un ni l'autre : pas de pastel Anderson, pas de bleu Apple, pas 
 
 | Rôle | Hex | Usage |
 |---|---|---|
-| Noyer (fond principal) | `#1c130d` | Fond du motion design, actes II et IV |
-| Noyer profond | `#120b07` | Bas des dégradés de fond, vignettage |
+| Noir (fond principal, V4) | `#070808` → `#020303` | Fond du motion design, actes II et IV. **Demande de Théo : plus noir, avec des reflets de couleur pris dans les scènes filmées.** |
+| Reflet vert d'eau | `rgba(47,96,90,.30)` | Reflet à gauche du cadre : le monde de Nadia (étalonnage de son studio) |
+| Reflet ambre | `rgba(224,160,80,.24)` | Reflet à droite du cadre : le monde de Julien (l'hôtel). Les deux reflets reprennent le miroir du film |
 | Ambre (lumière) | `#e0a050` | Halo derrière les écrans. Jamais en aplat, jamais sur du texte. |
 | Bordeaux (accent fort) | `#5e1a24` | Cartons de chapitre, boutons, barres de score, sélection |
 | Bordeaux clair | `#7a2533` | Dégradé des barres et du centre des cartons |

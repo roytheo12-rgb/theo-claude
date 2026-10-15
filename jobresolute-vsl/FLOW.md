@@ -534,3 +534,17 @@ The camera slowly tracks from left to right on a dolly, at the same height, foll
 - Ambiance de Veo **sous** la voix off (≈ −18 dB). Musique : pizzicato et célesta.
 - Vert chez Nadia, ambre chez Julien, et **Nadia passe dans l’ambre à P10b** (ombre froide → soleil), tout ambre à P11.
 - L'acte I dure maintenant **43 s** (l'acte II commence à **0:43**), et l'acte III **22 s**.
+
+---
+
+## Raccords entre tes clips Flow et mes vidéos (CapCut)
+
+| Après | Mettre | Transition | Réglages précis |
+|---|---|---|---|
+| **P07** (le CV tombe sur la pile) | **P08.mp4** | **Fondu au noir** | Transition « Fondu au noir » de **0,4 s**. Le bruit du papier qui se pose reste avant la coupe ; la voix V5 commence 0,3 s après le noir. |
+| **P08.mp4** | **P09** | **Fondu depuis le noir** | Transition « Fondu » de **0,5 s**. P09 sort du noir sur la pluie : le premier son de P09 doit entrer avant l'image. |
+| **P09** (le téléphone dans ses mains, écran iPhone incrusté) | **ACTE2.mp4** | **Fondu enchaîné (Mélanger)** | **0,5 s**. La première image d'ACTE2 est le même téléphone, de face, à la même place (centré, centre de l'écran à 46 % de la hauteur, écran sur 59 % de la hauteur) : les mains et la pièce disparaissent, le téléphone reste et se met à flotter sur fond noir. Vérifie en superposant les deux images : si l'écran de P09 n'est pas exactement au même endroit, ajuste P09 (position et échelle) sur ses dernières images pour qu'il tombe sur celui d'ACTE2. |
+| **ACTE2.mp4** (finit sur l'écran blanc « ✓ Décision validée » en plein cadre) | **P10** | **Zoom arrière par images clés** + fondu de 4 images | Sur P10 : image clé au **début** : échelle **360 %**, position recentrée sur l'écran du Mac (l'écran doit remplir l'image) ; image clé à **0,8 s** : échelle **100 %**, position 0. Courbe « Lissage ». Ajoute un fondu enchaîné de **4 images** entre ACTE2 et P10. Résultat : on sort de l'écran et on découvre Julien de dos, dans son bureau. |
+| **P12** (la maison de poupée) | **ACTE4.mp4** | **Fondu au noir** | **0,6 s**, sur la fin de la phrase V18. ACTE4 commence dans le noir. |
+
+> Si tu m'envoies P07, P09, P10 et P12 (les fichiers Flow), je peux faire ces raccords moi-même, à l'image près, et te rendre des clips de transition prêts à poser.
