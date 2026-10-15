@@ -19,7 +19,9 @@ CUT = ('fade', 0.04)  # coupe franche (une image)
 # V6 : trois familles de transitions seulement (MOTION.md §8) :
 #   poussée vers l'avant (zoomin) · glissé latéral candidat ↔ recruteur (smoothleft/smoothright) · coupe franche (cartons)
 #   + raccords d'objet en fondu court là où le même objet reste à l'écran.
-PUSH = ('zoomin', 0.5)
+# La transition « zoomin » de ffmpeg passe par un voile gris sur fond noir (vu dans l'export de Théo) : fondu enchaîné à la place,
+# la poussée vers l'avant est portée par la caméra de chaque séquence.
+PUSH = ('fade', 0.5)
 ACTES = {
     'acte2': [
         ('M01', PUSH),                 # le logo cède la place aux promesses en avançant
@@ -60,7 +62,7 @@ def cues(seq):
 
 
 # Un son par famille de transition (MOTION.md §8)
-TRANS_SFX = {'zoomin': ('whoosh', -0.22, 0.7), 'smoothleft': ('swish_l', -0.2, 0.6), 'smoothright': ('swish_r', -0.2, 0.6)}
+TRANS_SFX = {'zoomin': ('whoosh', -0.22, 0.7), 'fade': ('whoosh', -0.2, 0.5), 'smoothleft': ('swish_l', -0.2, 0.6), 'smoothright': ('swish_r', -0.2, 0.6)}
 
 
 def render(seq, tail):
@@ -103,7 +105,7 @@ def build(acte):
         if k > 0 and seq.startswith('C'):
             track.append((start, 'impact', 0.8))      # carton de chapitre : coupe franche sur un impact
         start += duration(seq)
-        if tr and tr[0] in TRANS_SFX:
+        if tr and tr[0] in TRANS_SFX and not (tr[0] == 'fade' and tr[1] < 0.45):   # raccords d'objet : pas de souffle
             kind, dt, g = TRANS_SFX[tr[0]]
             track.append((start + dt, kind, g))
     wav = out.replace('.mp4', '_sfx.wav')

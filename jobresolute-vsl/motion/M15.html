@@ -33,7 +33,7 @@
 <div class="grain"></div><div class="vignette"></div>
 <script src="lib.js"></script>
 <script>
-window.DURATION = 12;
+window.DURATION = 15;   // V8 : l'appel à l'action reste 3 s de plus à l'écran (l'export de Théo finissait sur 9 s de noir)
 window.SFX = [[2.8, 'whoosh', 0.35], [3.4, 'shimmer', 0.75], [5.8, 'land', 0.4], [6.05, 'land', 0.4]];
 const $ = id => document.getElementById(id);
 const O = 3.4;
@@ -48,7 +48,7 @@ window.seek = t => {
   // Deux portes d'entrée, même film
   [0, 1].forEach(i => { const e = $('c' + i), p = spring(prog(t, O + 2.4 + i * 0.25, 0.8)); e.style.opacity = clamp(p * 1.3); e.style.transform = `translateY(${(1 - p) * 30}px)`; sheen(e, t, O + 3.2 + i * 0.3, 1.0); });
   $('c0').style.boxShadow = `0 0 ${24 + 10 * Math.sin(t * 2.5)}px rgba(255,255,255,${0.25 * clamp(prog(t, O + 3, 0.5))})`;
-  fx(t, 12, { push: 0.015 });
+  fx(t, 15, { push: 0.015 });
 };
 window.seek(0);
 </script>
