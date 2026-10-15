@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<!-- P08 · Acte I · Le problème · texte mot à mot sur noir, fond noir plein (le texte tient dans la largeur du format 1.37) · 6 s
+     Voix off V5 : « Le problème n’est pas le nombre de CV. C'est ce qu'on est capable d'observer. » -->
+<link rel="stylesheet" href="base.css">
+<style>
+html,body{background:#000}
+.l{position:absolute;left:0;right:0;top:50%;margin-top:-50px;text-align:center;font:600 80px/1.2 "ID";letter-spacing:-.03em;color:var(--ivoire)}
+</style></head>
+<body>
+<div class="l" id="a">Le problème n’est pas le nombre de CV.</div>
+<div class="l" id="b">C’est ce qu’on est capable *d’observer*.</div>
+<div class="grain"></div><div class="vignette"></div>
+<script src="lib.js"></script>
+<script>
+window.DURATION = 6;
+const $ = id => document.getElementById(id);
+const wa = words($('a')), wb = words($('b'));
+window.seek = t => {
+  // Phrase 1 : entre mot à mot, tient, puis sort d'un bloc (fondu flou 0,3 s)
+  revealWords(wa, t, 0.4);
+  const out = prog(t, 2.75, 0.3);
+  $('a').style.opacity = 1 - out; $('a').style.filter = `blur(${out * 12}px)`;
+  // Phrase 2 : entre mot à mot, « observer » en laiton clair, tient jusqu'à la fin
+  revealWords(wb, t, 3.15);
+  grain(t);
+};
+window.seek(0);
+</script>
+</body></html>
